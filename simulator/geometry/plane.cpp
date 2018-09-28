@@ -1,4 +1,4 @@
-#include <simulator/plane.hpp>
+#include <simulator/geometry/plane.hpp>
 
 namespace sim {
 namespace geom {

@@ -8,10 +8,10 @@
 using namespace std;
 
 // Custom includes
-#include <simulator/geometry.hpp>
-#include <simulator/plane.hpp>
-#include <simulator/triangle.hpp>
-#include <simulator/sphere.hpp>
+#include <simulator/geometry/geometry.hpp>
+#include <simulator/geometry/triangle.hpp>
+#include <simulator/geometry/sphere.hpp>
+#include <simulator/geometry/plane.hpp>
 #include <simulator/particle.hpp>
 
 namespace sim {

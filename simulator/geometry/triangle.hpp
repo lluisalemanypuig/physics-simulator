@@ -5,7 +5,7 @@
 using namespace glm;
 
 // Custom includes
-#include <simulator/geometry.hpp>
+#include <simulator/geometry/geometry.hpp>
 
 namespace sim {
 namespace geom {

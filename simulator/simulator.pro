@@ -9,19 +9,19 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 INCLUDEPATH += ..
 
 HEADERS += \
+    geometry/geometry.hpp \
+    geometry/triangle.hpp \
+    geometry/sphere.hpp \
+    geometry/plane.hpp \
     simulator.hpp \
-    geometry.hpp \
-    triangle.hpp \
-    sphere.hpp \
-    plane.hpp \
     particle.hpp
 
 SOURCES += \
+    geometry/geometry.cpp \
+    geometry/triangle.cpp \
+    geometry/sphere.cpp \
+    geometry/plane.cpp \
     simulator.cpp \
-    geometry.cpp \
-    triangle.cpp \
-    sphere.cpp \
-    plane.cpp \
     particle.cpp
 
 
