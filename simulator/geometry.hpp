@@ -10,7 +10,7 @@ namespace geom {
 /// Enumeration for the type of geometry.
 enum geom_type {
 	none = -1,
-	plane, triangle, sphere
+	Plane, Triangle, Sphere
 };
 
 /**

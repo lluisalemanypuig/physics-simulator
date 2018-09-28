@@ -39,7 +39,7 @@ bool plane::is_inside(const vec3& p, float tol) const {
 }
 
 geom_type plane::get_geom_type() const {
-	return geom_type::plane;
+	return geom_type::Plane;
 }
 
 float plane::dist_point_plane(const vec3& p) const {

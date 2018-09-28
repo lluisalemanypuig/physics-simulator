@@ -22,7 +22,7 @@ bool triangle::is_inside(const vec3& p) {
 }
 
 geom_type triangle::get_geom_type() const {
-	return geom_type::triangle;
+	return geom_type::Triangle;
 }
 
 } // -- namespace geom

@@ -22,7 +22,7 @@ bool sphere::is_inside(const vec3& p) {
 }
 
 geom_type sphere::get_geom_type() const {
-	return geom_type::sphere;
+	return geom_type::Sphere;
 }
 
 } // -- namespace geom
