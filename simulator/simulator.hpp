@@ -39,6 +39,12 @@ class simulator {
 		/// The set of particles in the simulation
 		vector<particle *> ps;
 
+
+		/// Gravity of the simulation.
+		vec3 gravity;
+		/// Current time of the simulation.
+		float stime;
+
 	public:
 		/// Default constructor
 		simulator();
@@ -80,22 +86,42 @@ class simulator {
 		void add_sphere(geom::sphere *s);
 
 		/**
+		 * @brief Resets the simulation to its original state.
+		 *
+		 * Sets to 0 the time of the simulation (see @ref stime).
+		 */
+		void reset_simulation();
+
+		/**
 		 * @brief Apply a time step to the simulation.
 		 *
 		 * Particles move according to time. Parameter
 		 * @e dt indicates how much time has passed since
 		 * the last time step.
-		 * @param dt Floating point value strictly greater
-		 * than 0.
+		 * @param dt Strictly positive value.
 		 */
 		void apply_time_step(float dt);
+
+		// SETTERS
+
+		/**
+		 * @brief Sets the gravity vector.
+		 *
+		 * Gravity is always applied to all particles, except those
+		 * that are fixed.
+		 */
+		void set_gravity(const vec3& g);
 
 		// GETTERS
 
 		/// Get i-th particle.
-		particle& get_particle(size_t i);
-		/// Get i-th particle.
 		const particle& get_particle(size_t i) const;
+		/// Get all particles.
+		const vector<particle *>& get_all_particles() const;
+		/// Get all fixed objects of the scene.
+		const vector<geom::geometry *>& get_fixed_objects() const;
+		/// Get current time.
+		float get_current_time() const;
 };
 
 } // -- namespace sim
