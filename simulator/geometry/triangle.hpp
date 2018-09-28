@@ -16,7 +16,7 @@ namespace geom {
 class triangle : public geometry {
 	private:
 		/// The vertices of the triangle.
-		vec3 vertex1, vertex2, vertex3;
+		vec3 v1, v2, v3;
 
 	public:
 		/// Default constructor.
