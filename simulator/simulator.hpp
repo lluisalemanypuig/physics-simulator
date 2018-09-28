@@ -5,9 +5,14 @@
 using namespace std;
 
 // Custom includes
-#include "geometry.hpp"
+#include <simulator/geometry.hpp>
 
 namespace sim {
+
+enum class solver : std::int8_t {
+	none = -1,
+	EulerOrig, EulerSemi, Verlet
+};
 
 /**
  * @brief Simulator class.

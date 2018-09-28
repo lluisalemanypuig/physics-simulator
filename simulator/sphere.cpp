@@ -1,4 +1,4 @@
-#include "sphere.hpp"
+#include <simulator/sphere.hpp>
 
 namespace sim {
 namespace geom {

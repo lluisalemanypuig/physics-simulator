@@ -1,4 +1,4 @@
-#include "triangle.hpp"
+#include <simulator/triangle.hpp>
 
 namespace sim {
 namespace geom {

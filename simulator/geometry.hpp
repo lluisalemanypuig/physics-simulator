@@ -49,7 +49,7 @@ class geometry {
 		 * false if otherwise. Depending on the type of geometry this
 		 * method has a different geometrical interpretation.
 		 */
-		virtual bool is_inside(const vec3& p) = 0;
+		virtual bool is_inside(const vec3& p) const = 0;
 
 		/// Returns the type of geometry of this object.
 		virtual geom_type get_geom_type() const;

@@ -13,13 +13,15 @@ HEADERS += \
     geometry.hpp \
     triangle.hpp \
     sphere.hpp \
-    plane.hpp
+    plane.hpp \
+    particle.hpp
 
 SOURCES += \
     simulator.cpp \
     geometry.cpp \
     triangle.cpp \
     sphere.cpp \
-    plane.cpp
+    plane.cpp \
+    particle.cpp
 
 
