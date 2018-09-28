@@ -7,6 +7,12 @@ using namespace glm;
 namespace sim {
 namespace geom {
 
+/// Enumeration for the type of geometry.
+enum geom_type {
+	none = -1,
+	plane, triangle, sphere
+};
+
 /**
  * @brief All geometrical on the scene
  *
@@ -44,6 +50,9 @@ class geometry {
 		 * method has a different geometrical interpretation.
 		 */
 		virtual bool is_inside(const vec3& p) = 0;
+
+		/// Returns the type of geometry of this object.
+		virtual geom_type get_geom_type() const;
 };
 
 } // -- namespace geom

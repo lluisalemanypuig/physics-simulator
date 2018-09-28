@@ -26,6 +26,8 @@ class sphere : public geometry {
 
 		void set_position(const vec3& p);
 		bool is_inside(const vec3& p);
+
+		geom_type get_geom_type() const;
 };
 
 } // -- namespace geom

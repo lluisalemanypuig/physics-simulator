@@ -21,5 +21,9 @@ bool plane::is_inside(const vec3& p) {
 	return false;
 }
 
+geom_type plane::get_geom_type() const {
+	return geom_type::plane;
+}
+
 } // -- namespace geom
 } // -- namespace sim
