@@ -13,6 +13,9 @@ using namespace glm;
 #include <simulator/particle.hpp>
 using namespace sim;
 
+// Custom includes
+#include "utils.hpp"
+
 namespace study_cases {
 
 	void bouncing_ball();
