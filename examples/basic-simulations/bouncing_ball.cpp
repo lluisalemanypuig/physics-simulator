@@ -47,14 +47,30 @@ namespace study_cases {
 		// initialised using the function.
 		const particle *p = S.add_particle();
 
-		vec3 D(-2.0f, -1.0f, -2.0f);
-		vec3 E( 2.0f,  4.0f,  2.0f);
-		vec3 F( 2.0f,  4.0f, -2.0f);
-		plane *ramp = new plane(D, E, F);
-		S.add_plane(ramp);
+		vec3 C(-2.0f, 0.0f,  2.0f);
+		vec3 D(-2.0f, 0.0f, -2.0f);
+		vec3 E( 2.0f, 4.0f,  0.0f);
+		triangle *ramp = new triangle(C, E, D);
+
+		vec3 ramp_normal = ramp->get_plane().get_normal();
+		cout << ramp_normal.x << "," << ramp_normal.y << "," << ramp_normal.z << endl;
+		cout << ramp->get_plane().get_constant() << endl;
+
+		S.add_geometry(ramp);
+
+		vec3 F(-6.0f, 0.0f, -2.0f);
+		vec3 G(-6.0f, 0.0f,  2.0f);
+		vec3 H(-7.0f, 4.0f,  0.0f);
+		triangle *bouncer = new triangle(F, H, G);
+
+		vec3 bouncer_normal = bouncer->get_plane().get_normal();
+		cout << bouncer_normal.x << "," << bouncer_normal.y << "," << bouncer_normal.z << endl;
+		cout << bouncer->get_plane().get_constant() << endl;
+
+		S.add_geometry(bouncer);
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
-		S.add_plane(floor);
+		S.add_geometry(floor);
 		// -----------------------------------------
 
 		vector<vec3> trajectory;
