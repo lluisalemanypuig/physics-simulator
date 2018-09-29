@@ -88,6 +88,9 @@ class particle {
 		 */
 		void acceleterate(const vec3& v);
 
+		/// Decreases the lifetime by @e t.
+		void reduce_lifetime(float t);
+
 		// SETTERS
 
 		/// Sets the current position of the particle. See @ref cur_pos.

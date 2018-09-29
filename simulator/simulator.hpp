@@ -4,6 +4,7 @@
 #include <assert.h>
 
 // C++ includes
+#include <functional>
 #include <iostream>
 #include <cstdint>
 #include <vector>
@@ -76,6 +77,27 @@ class simulator {
 		/// Solver used to update each particle's position.
 		solver_type solver;
 
+		/**
+		 * @brief Initialiser applied to all added particles.
+		 *
+		 * Whenever @ref add_particle() or
+		 * @ref add_particles(size_t)
+		 * are called the attributes of the particles are
+		 * initialised using @ref global_init.
+		 *
+		 * Whenever the lifetime of a particle goes below 0,
+		 * then it is reset, also using this initialiser.
+		 *
+		 * The behaviour of the function at the creation of
+		 * the simulator is not to do anything.
+		 *
+		 * The gravity of a particle is always set to
+		 * be equal to the simulator's (see @ref gravity).
+		 * However, it is set before calling the initialiser
+		 * function.
+		 */
+		function<void (particle *p)> global_init;
+
 	private:
 		/**
 		 * @brief Update a particle's position.
@@ -121,10 +143,6 @@ class simulator {
 			const vec3& prev, const vec3& inter, const vec3& next,
 			float dt, particle *p
 		);
-		/**
-		 * @brief Reset a particle's state.
-		 */
-		void reset_particle(particle *p);
 
 	public:
 		/// Default constructor
@@ -138,6 +156,8 @@ class simulator {
 		void add_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
+		 *
+		 * The initialser function (see @ref global_init) is not called.
 		 * @param p A non-null pointer to the object.
 		 */
 		void add_particle(particle *p);
@@ -192,6 +212,16 @@ class simulator {
 		 * that are fixed.
 		 */
 		void set_gravity(const vec3& g);
+
+		/**
+		 * @brief Sets the particle initialiser function.
+		 * @param f This function need not return any value. The
+		 * pointer passed as parameter is always guaranteed to
+		 * be non-null. This function will be called the first time
+		 * the lifetime of the particle has reached a value equal to
+		 * or smaller than 0..
+		 */
+		void set_initialiser(const function<void (particle *p)>& f);
 
 		// GETTERS
 

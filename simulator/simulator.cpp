@@ -55,16 +55,13 @@ void simulator::update_upon_collision
 
 }
 
-void simulator::reset_particle(particle *p) {
-
-}
-
 // PUBLIC
 
 simulator::simulator(const solver_type& s) {
 	gravity = vec3(0.0f, -9.81f, 0.0f);
 	stime = 0.0f;
 	solver = s;
+	global_init = [](particle *p) { };
 }
 
 simulator::~simulator() {
@@ -83,10 +80,9 @@ simulator::~simulator() {
 // MODIFIERS
 
 void simulator::add_particle() {
-	// for now, add an empty particle.
-	// In the future, create initialiser class
 	particle *p = new particle();
 	p->set_force(gravity);
+	global_init(p);
 	ps.push_back(p);
 }
 
@@ -128,18 +124,29 @@ void simulator::apply_time_step(float dt) {
 		if (p->is_fixed()) {
 			continue;
 		}
-		if (p->get_lifetime() < stime) {
-			reset_particle(p);
+		// reset a particle whenever it dies
+		if (p->get_lifetime() < 0.0f) {
+			global_init(p);
 		}
+		// particles age, like we all do :(
+		p->reduce_lifetime(dt);
 
+		// apply solver to predict next position and
+		// velocity of the particle
 		vec3 prev_pos = p->get_current_position();
 		update_particle(prev_pos, dt, p);
 		vec3 next_pos = p->get_current_position();
 		vec3 next_vel = p->get_velocity();
 
+		// intersection point between the particle and
+		// the geometry
 		vec3 inter(0.0f, 0.0f, 0.0f);
 
+		// check collision between the particle and
+		// every fixed geometrical object in the scene
 		for (geometry *g : scene_fixed) {
+
+			// for planes, collision is simpler to check
 			if (g->get_geom_type() == geom_type::Plane) {
 
 				const plane *pl = static_cast<const plane *>(g);
@@ -158,6 +165,10 @@ void simulator::apply_time_step(float dt) {
 
 void simulator::set_gravity(const vec3& g) {
 	gravity = g;
+}
+
+void simulator::set_initialiser(const function<void (particle *p)>& f) {
+	global_init = f;
 }
 
 // GETTERS

@@ -54,6 +54,10 @@ void particle::acceleterate(const vec3& v) {
 	velocity += v;
 }
 
+void particle::reduce_lifetime(float t) {
+	lifetime -= t;
+}
+
 // SETTERS
 
 void particle::set_position(const float& x, const float& y, const float& z) {
