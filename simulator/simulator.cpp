@@ -4,6 +4,12 @@ namespace sim {
 
 // PRIVATE
 
+void simulator::init_particle(particle *p) {
+	cout << "Initialise particle!" << endl;
+	p->set_force(gravity);
+	global_init(p);
+}
+
 void simulator::update_particle(const vec3& cur_pos, float dt, particle *p) {
 
 	switch (solver) {
@@ -79,11 +85,11 @@ simulator::~simulator() {
 
 // MODIFIERS
 
-void simulator::add_particle() {
+const particle *simulator::add_particle() {
 	particle *p = new particle();
-	p->set_force(gravity);
-	global_init(p);
+	init_particle(p);
 	ps.push_back(p);
+	return p;
 }
 
 void simulator::add_particle(particle *p) {
@@ -126,7 +132,7 @@ void simulator::apply_time_step(float dt) {
 		}
 		// reset a particle whenever it dies
 		if (p->get_lifetime() < 0.0f) {
-			global_init(p);
+			init_particle(p);
 		}
 		// particles age, like we all do :(
 		p->reduce_lifetime(dt);

@@ -80,25 +80,40 @@ class simulator {
 		/**
 		 * @brief Initialiser applied to all added particles.
 		 *
-		 * Whenever @ref add_particle() or
-		 * @ref add_particles(size_t)
-		 * are called the attributes of the particles are
-		 * initialised using @ref global_init.
+		 * Whenever @ref add_particle() or @ref add_particles(size_t)
+		 * are called, the attributes of the particles are initialised
+		 * using @ref global_init.
 		 *
-		 * Whenever the lifetime of a particle goes below 0,
-		 * then it is reset, also using this initialiser.
+		 * This initialisation is also done whenever the lifetime of a
+		 * particle goes below 0. Note that, in this case, some attributes
+		 * like the velocity and position may not be zero, as a result
+		 * of running the simulation.
 		 *
-		 * The behaviour of the function at the creation of
-		 * the simulator is not to do anything.
+		 * The default behaviour of the function is not to do anything,
+		 * that is, the attribtues of the particle are not modified
+		 * at all.
 		 *
-		 * The gravity of a particle is always set to
-		 * be equal to the simulator's (see @ref gravity).
-		 * However, it is set before calling the initialiser
-		 * function.
+		 * It is important to mention that the force applied to a particle
+		 * is always set to be equal to the simulator's gravity (see @ref gravity).
+		 * However, it is set before calling the initialiser function.
+		 * Therefore, it is recommended to use the method @ref particle::add_force
+		 * if it is to be modified.
 		 */
 		function<void (particle *p)> global_init;
 
 	private:
+
+		/**
+		 * @brief Initialises a particle using @ref global_init.
+		 *
+		 * First, it sets the force applied to the particle to be
+		 * the simulator's gravity (see @ref gravity). Then,
+		 * calls @ref global_init to initialise the rest of its
+		 * attributes.
+		 * @param p The particle to be initialsed.
+		 */
+		void init_particle(particle *p);
+
 		/**
 		 * @brief Update a particle's position.
 		 * @param p Particle to be updated.
@@ -153,7 +168,7 @@ class simulator {
 		// MODIFIERS
 
 		/// Adds a particle to the simulation.
-		void add_particle();
+		const particle *add_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
@@ -196,10 +211,14 @@ class simulator {
 		/**
 		 * @brief Apply a time step to the simulation.
 		 *
-		 * Particles move according to time. Parameter
-		 * @e dt indicates how much time has passed since
-		 * the last time step.
-		 * @param dt Strictly positive value.
+		 * Particles move according to time. Parameter @e dt indicates
+		 * how much time has passed since the last time step.
+		 *
+		 * Whenever a particle's lifetime has reached 0, method
+		 * @ref init_particle(particle*) is called.
+		 *
+		 * @param dt Strictly positive value representing how much the
+		 * time must be incremented.
 		 */
 		void apply_time_step(float dt);
 
