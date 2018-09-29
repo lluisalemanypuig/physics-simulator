@@ -1,5 +1,8 @@
 #pragma once
 
+// C includes
+#include <string.h>
+
 // C++ includes
 #include <iostream>
 using namespace std;
@@ -18,6 +21,6 @@ using namespace sim;
 
 namespace study_cases {
 
-	void bouncing_ball();
+	void bouncing_ball(int argc, char *argv[]);
 
 } // -- namespace study_cases

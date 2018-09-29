@@ -2,17 +2,41 @@
 
 namespace study_cases {
 
-	void bouncing_ball() {
-		// time step
-		const float dt = 0.01f;
-		const float total_time = 10.0f;
+	void bouncing_ball(int argc, char *argv[]) {
+		float dt = 0.01f;
+		float total_time = 2.0f;
+		float bounce = 1.0f;
+		float lifetime = 2.0f;
+
+		for (int i = 1; i < argc; ++i) {
+			if (strcmp(argv[i], "--lifetime") == 0) {
+				lifetime = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--bounce") == 0) {
+				bounce = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--total-time") == 0) {
+				total_time = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--step") == 0) {
+				dt = atof(argv[i + 1]);
+				++i;
+			}
+			else {
+				cerr << "Unknown option '" << string(argv[i]) << "'" << endl;
+			}
+		}
 
 		simulator S(solver_type::EulerSemi);
 		S.set_initialiser(
-		[](particle *p) {
+		[lifetime,bounce](particle *p) {
 			p->set_position(vec3(0.0f, 10.0f, 0.0f));
-			p->set_lifetime(2.0f);
+			p->set_lifetime(lifetime);
 			p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
+			p->set_bouncing(bounce);
 		}
 		);
 

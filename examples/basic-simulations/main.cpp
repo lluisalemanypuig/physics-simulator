@@ -5,7 +5,7 @@ using namespace std;
 // Custom includes
 #include "study_cases.hpp"
 
-int main() {
-	study_cases::bouncing_ball();
+int main(int argc, char *argv[]) {
+	study_cases::bouncing_ball(argc, argv);
 }
 
