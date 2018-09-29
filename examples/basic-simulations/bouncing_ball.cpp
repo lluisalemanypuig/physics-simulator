@@ -18,7 +18,6 @@ namespace study_cases {
 		p->set_force( S.get_gravity() );
 		S.add_particle(p);
 
-
 		vec3 D(-2.0f, -1.0f, -2.0f);
 		vec3 E( 2.0f,  4.0f,  2.0f);
 		vec3 F( 2.0f,  4.0f, -2.0f);
