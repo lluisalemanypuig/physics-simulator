@@ -17,7 +17,7 @@ void sphere::set_position(const vec3& p) {
 
 }
 
-bool sphere::is_inside(const vec3& p) {
+bool sphere::is_inside(const vec3& p, float tol) {
 	return false;
 }
 

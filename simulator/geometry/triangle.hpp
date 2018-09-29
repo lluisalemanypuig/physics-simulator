@@ -30,7 +30,7 @@ class triangle : public geometry {
 
 		// GETTERS
 
-		bool is_inside(const vec3& p);
+		bool is_inside(const vec3& p, float tol = 1.e-7f);
 		geom_type get_geom_type() const;
 };
 

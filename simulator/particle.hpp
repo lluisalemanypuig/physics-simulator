@@ -72,6 +72,21 @@ class particle {
 		 * @post @ref force += @e f
 		 */
 		void add_force(const vec3& f);
+		/**
+		 * @brief Translate the particle according to vector @e v.
+		 *
+		 * Increment current position (see @ref cur_pos) by @e v.
+		 * @param v The direction of the translation.
+		 */
+		void translate(const vec3& v);
+		/**
+		 * @brief Increment the velocity of the particle.
+		 *
+		 * Increments the velocity of the particle (see @ref velocity)
+		 * by @e v.
+		 * @param v The direction of the acceleration.
+		 */
+		void acceleterate(const vec3& v);
 
 		// SETTERS
 

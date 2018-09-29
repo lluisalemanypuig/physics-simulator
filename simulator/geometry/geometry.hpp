@@ -45,11 +45,24 @@ class geometry {
 		/**
 		 * @brief Returns whether a point is inside the geometry.
 		 * @param p The point to check whether it is inside the geometry.
+		 * @param tol Optional tolerance to deal corerctly with equalities.
 		 * @return Returns true if @e p is inside the geometry. Returns
 		 * false if otherwise. Depending on the type of geometry this
 		 * method has a different geometrical interpretation.
 		 */
-		virtual bool is_inside(const vec3& p) const = 0;
+		virtual bool is_inside(const vec3& p, float tol = 1.e-7f) const = 0;
+
+		/**
+		 * @brief Returns true if the segment [@e p1, @e p2 ] intersects with
+		 * the geometry.
+		 * @param p1 The first endpoint of the segment.
+		 * @param p2 The second endpoint of the segment.
+		 * @param p_inter The intersection point between the segment and the
+		 * geometry.
+		 * @return Returns true if the segment and the geometry intersect.
+		 * In this case, the value in @e p_inter will be the intersection point.
+		 */
+		virtual bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const = 0;
 
 		/// Returns the type of geometry of this object.
 		virtual geom_type get_geom_type() const;

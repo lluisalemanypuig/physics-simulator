@@ -29,12 +29,17 @@ class plane : public geometry {
 		plane();
 		/**
 		 * @brief Construct a plane with a point and a normal.
-		 * @param p Point.
 		 * @param n Normal vector of the plane.
+		 * @param p Point.
 		 * @post @ref normal takes the normalisation of the vector @e n.
 		 */
-		plane(const vec3& p, const vec3& n);
-		/// Construct plane with three points.
+		plane(const vec3& n, const vec3& p);
+		/**
+		 * @brief Construct plane with three points.
+		 *
+		 * The normal of the plane is defined as the cross product
+		 * of the vectors from @e p0 to @e p1 and from @e p0 to @e p2.
+		 */
 		plane(const vec3& p0, const vec3& p1, const vec3& p2);
 		/// Destructor.
 		~plane();
@@ -66,12 +71,26 @@ class plane : public geometry {
 		 * @e tol.
 		 */
 		bool is_inside(const vec3& p, float tol = 1.e-7f) const;
+
 		geom_type get_geom_type() const;
 
 		/// Returns the distance between point @e p and this plane.
 		float dist_point_plane(const vec3& p) const;
 		/// Returns the project of point @e p onto the plane.
 		vec3 closest_point_plane(const vec3& p) const;
+		/// Returns the normal of this plane.
+		const vec3& get_normal() const;
+		/// Returns the independent term of this plane's equation.
+		float get_constant() const;
+
+		/**
+		 * @brief Returns if the segment defined by the points @e p1 and @e p2 intersects
+		 * with the plane.
+		 * @param[in] p1 First endpoint of the segment.
+		 * @param[in] p2 Second endpoint of the segment.
+		 * @return Returns true if there is intersection.
+		 */
+		bool intersec_segment(const vec3& p1, const vec3& p2) const;
 		/**
 		 * @brief Returns the intersection between this plane and the segment
 		 * defined by the points @e p1 and @e p2.

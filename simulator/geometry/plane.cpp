@@ -12,7 +12,7 @@ plane::plane() {
 	dconst = 0.0f;
 }
 
-plane::plane(const vec3& p, const vec3& n) {
+plane::plane(const vec3& n, const vec3& p) {
 	normal = glm::normalize(n);
 	dconst = -glm::dot(p, normal);
 }
@@ -51,14 +51,26 @@ vec3 plane::closest_point_plane(const vec3& p) const {
 	return p + r*normal;
 }
 
-bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
+const vec3& plane::get_normal() const {
+	return normal;
+}
+
+float plane::get_constant() const {
+	return dconst;
+}
+
+bool plane::intersec_segment(const vec3& p1, const vec3& p2) const {
 	float d1 = dist_point_plane(p1);
 	float d2 = dist_point_plane(p2);
-	if (d1*d2 > 0) {
+	return d1*d2 < 0.0f;
+}
+
+bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
+	if (not intersec_segment(p1,p2)) {
 		return false;
 	}
 
-	float r = (-dconst - glm::dot(p1, normal)) / glm::dot((p2 - p1), normal);
+	float r = (-dconst - glm::dot(p1, normal))/glm::dot((p2 - p1), normal);
 	p_inter = (1 - r)*p1 + r*p2;
 	return true;
 }

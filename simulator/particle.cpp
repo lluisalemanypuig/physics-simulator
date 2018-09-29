@@ -46,6 +46,14 @@ void particle::add_force(const vec3& f) {
 	force += f;
 }
 
+void particle::translate(const vec3& v) {
+	cur_pos += v;
+}
+
+void particle::acceleterate(const vec3& v) {
+	velocity += v;
+}
+
 // SETTERS
 
 void particle::set_position(const float& x, const float& y, const float& z) {

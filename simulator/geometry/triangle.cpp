@@ -17,7 +17,7 @@ void triangle::set_position(const vec3& p) {
 
 }
 
-bool triangle::is_inside(const vec3& p) {
+bool triangle::is_inside(const vec3& p, float tol) {
 	return false;
 }
 
