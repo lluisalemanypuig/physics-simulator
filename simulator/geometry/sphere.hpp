@@ -32,7 +32,7 @@ class sphere : public geometry {
 
 		// GETTERS
 
-		bool is_inside(const vec3& p, float tol = 1.e-7f);
+		bool is_inside(const vec3& p, float tol = 1.e-7f) const;
 		geom_type get_geom_type() const;
 };
 

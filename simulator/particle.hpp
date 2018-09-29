@@ -23,7 +23,7 @@ class particle {
 		vec3 prev_pos;
 		/// Force currently applied to the particle.
 		vec3 force;
-		// Current velocity of the particle.
+		/// Current velocity of the particle.
 		vec3 velocity;
 
 		/// Bouncing coefficient of the particle.

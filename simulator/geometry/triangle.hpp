@@ -15,8 +15,12 @@ namespace geom {
  */
 class triangle : public geometry {
 	private:
-		/// The vertices of the triangle.
-		vec3 v1, v2, v3;
+		/// The first vertex of the triangle.
+		vec3 v1;
+		/// The second vertex of the triangle.
+		vec3 v2;
+		/// The third vertex of the triangle.
+		vec3 v3;
 
 	public:
 		/// Default constructor.
@@ -30,7 +34,7 @@ class triangle : public geometry {
 
 		// GETTERS
 
-		bool is_inside(const vec3& p, float tol = 1.e-7f);
+		bool is_inside(const vec3& p, float tol = 1.e-7f) const;
 		geom_type get_geom_type() const;
 };
 

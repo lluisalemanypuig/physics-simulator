@@ -19,6 +19,31 @@ using namespace std;
 namespace sim {
 using namespace geom;
 
+/**
+ * @brief The different types of solvers.
+ *
+ * - EulerOrig: implements the usual version of the Euler solver.
+ * Position and velocity are updated with the usual formulas, and
+ * in this order.
+ \verbatim
+ xc := current position
+ new position = xc + time step * current velocity
+ new volcity = xc + time step * force / particle mass
+ \endverbatim
+ *
+ * - EulerSemi: implements a slightly different version from the
+ * @e EulerOrig solver. Although it uses the same formulas,
+ * the velocity is updated first, and then the position is updated.
+ *
+ * - Verlet: this solver does not use the particle's velocity to update
+ * its position. However, the velocity is still updated.
+ \verbatim
+ xc := current position
+ xp := previous position
+ new position = xc + k*(xc - xp) + force * time step * force / particle mass
+ new velocity = (xn - xc)/time step
+ \endverbatim
+ */
 enum class solver_type : int8_t {
 	none = -1,
 	EulerOrig, EulerSemi, Verlet
@@ -70,7 +95,6 @@ class simulator {
 		 * @param d Constant, independent term of the plane's equation.
 		 * @param next_pos The position of the particle predicted by the solver.
 		 * @param next_vel The velocity of the particle predicted by the solver.
-		 * @param dt The time step used.
 		 * @param p The particle to be updated.
 		 */
 		void update_collision_plane
