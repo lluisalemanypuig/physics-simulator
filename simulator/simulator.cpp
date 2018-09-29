@@ -32,42 +32,13 @@ void simulator::update_particle(const vec3& cur_pos, float dt, particle *p) {
 	}
 }
 
-void simulator::update_collision_plane
-(
-	const vec3& n, float d,
-	const vec3& next_pos, const vec3& next_vel,
-	particle *p
-)
-{
-	vec3 Wn = (glm::dot(next_pos, n) + d)*n;
-	float bounce = p->get_bouncing();
-	p->set_position( next_pos - (1 + bounce)*Wn );
-
-	float nv_dot = glm::dot(n, next_vel);
-	p->set_velocity( next_vel - (1 + bounce)*(nv_dot*n) );
-}
-
-void simulator::update_upon_collision
-(
-	const geometry *g,
-	const vec3& prev, const vec3& inter, const vec3& next,
-	float dt, particle *p
-)
-{
-
-	if (g->get_geom_type() == geom_type::Plane) {
-		// nothing, already handled
-	}
-
-}
-
 // PUBLIC
 
 simulator::simulator(const solver_type& s) {
 	gravity = vec3(0.0f, -9.81f, 0.0f);
 	stime = 0.0f;
 	solver = s;
-	global_init = [](particle *p) { };
+	global_init = [](particle *) { };
 }
 
 simulator::~simulator() {
@@ -103,19 +74,9 @@ void simulator::add_particles(size_t n) {
 	}
 }
 
-void simulator::add_plane(plane *p) {
-	assert(p != nullptr);
-	scene_fixed.push_back(p);
-}
-
-void simulator::add_triangle(triangle *t) {
-	assert(t != nullptr);
-	scene_fixed.push_back(t);
-}
-
-void simulator::add_sphere(sphere *s) {
-	assert(s != nullptr);
-	scene_fixed.push_back(s);
+void simulator::add_geometry(geometry *g) {
+	assert(g != nullptr);
+	scene_fixed.push_back(g);
 }
 
 void simulator::reset_simulation() {
@@ -142,24 +103,16 @@ void simulator::apply_time_step(float dt) {
 		vec3 prev_pos = p->get_current_position();
 		update_particle(prev_pos, dt, p);
 		vec3 next_pos = p->get_current_position();
-		vec3 next_vel = p->get_velocity();
-
-		// intersection point between the particle and
-		// the geometry
-		vec3 inter(0.0f, 0.0f, 0.0f);
 
 		// check collision between the particle and
 		// every fixed geometrical object in the scene
 		for (geometry *g : scene_fixed) {
 
-			// for planes, collision is simpler to check
-			if (g->get_geom_type() == geom_type::Plane) {
-
-				const plane *pl = static_cast<const plane *>(g);
-				if (pl->intersec_segment(prev_pos, next_pos)) {
-					update_collision_plane
-					(pl->get_normal(), pl->get_constant(), next_pos, next_vel, p);
-				}
+			// if the particle collides with some geometry
+			// then the geometry is in charge of updating
+			// this particle's position, velocity, ...
+			if (g->intersec_segment(prev_pos, next_pos)) {
+				g->update_upon_collision(p);
 			}
 		}
 	}

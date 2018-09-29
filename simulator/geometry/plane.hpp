@@ -6,6 +6,7 @@ using namespace glm;
 
 // Custom includes
 #include <simulator/geometry/geometry.hpp>
+#include <simulator/particle.hpp>
 
 namespace sim {
 namespace geom {
@@ -56,8 +57,9 @@ class plane : public geometry {
 		/**
 		 * @brief Sets the position of this plane.
 		 *
-		 * Modifies @ref dconst so that the plane's equation is satisifed.
-		 * @param p Point.
+		 * Modifies @ref dconst so that the plane's equation is
+		 * satisifed by point @e p.
+		 * @param p Force the plane to go through this point.
 		 */
 		void set_position(const vec3& p);
 
@@ -110,6 +112,9 @@ class plane : public geometry {
 		 */
 		bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const;
 
+		// OTHERS
+
+		void update_upon_collision(particle *p) const;
 };
 
 } // -- namespace geom

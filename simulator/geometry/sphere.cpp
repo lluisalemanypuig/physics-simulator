@@ -25,5 +25,11 @@ geom_type sphere::get_geom_type() const {
 	return geom_type::Sphere;
 }
 
+// OTHERS
+
+void sphere::update_upon_collision(particle *p) const {
+
+}
+
 } // -- namespace geom
 } // -- namespace sim

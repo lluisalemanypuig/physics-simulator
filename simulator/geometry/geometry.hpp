@@ -4,6 +4,9 @@
 #include <glm/vec3.hpp>
 using namespace glm;
 
+// simulator includes
+#include <simulator/particle.hpp>
+
 namespace sim {
 namespace geom {
 
@@ -38,7 +41,7 @@ class geometry {
 		 * For each type of object that implements this class,
 		 * setting the position has a different geometrical
 		 * interpretation.
-		 * @param p The new position of the object.
+		 * @param p The "new position" of the object.
 		 */
 		virtual void set_position(const vec3& p) = 0;
 
@@ -53,6 +56,15 @@ class geometry {
 		virtual bool is_inside(const vec3& p, float tol = 1.e-7f) const = 0;
 
 		/**
+		 * @brief Returns if the segment defined by the points @e p1
+		 * and @e p2 intersects the geometry.
+		 * @param[in] p1 First endpoint of the segment.
+		 * @param[in] p2 Second endpoint of the segment.
+		 * @return Returns true if there is intersection.
+		 */
+		virtual bool intersec_segment(const vec3& p1, const vec3& p2) const = 0;
+
+		/**
 		 * @brief Returns true if the segment [@e p1, @e p2 ] intersects with
 		 * the geometry.
 		 * @param p1 The first endpoint of the segment.
@@ -63,6 +75,27 @@ class geometry {
 		 * In this case, the value in @e p_inter will be the intersection point.
 		 */
 		virtual bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const = 0;
+
+		/**
+		 * @brief Update a particle collision in a collision with geometry.
+		 *
+		 * Assumig that particle @e p collided with this geometry, update its
+		 * position accordingly.
+		 *
+		 * For example, some geometry may be 'bouncy', the may give the particle
+		 * some extra speed. This needs to be updated in this method.
+		 *
+		 * The particle is given in a state modified by a solver. That is,
+		 * the particle's position, velocity, force, ... have the value
+		 * calculated by a solver after applying the current time step.
+		 *
+		 * This method is called only when it is sure that there has
+		 * been a collision: the segment joining the particle's previous
+		 * position and the current position intersects the geometry.
+		 *
+		 * @param p The particle to be updated.
+		 */
+		virtual void update_upon_collision(particle *p) const = 0;
 
 		/// Returns the type of geometry of this object.
 		virtual geom_type get_geom_type() const;

@@ -6,12 +6,22 @@ using namespace glm;
 
 // Custom includes
 #include <simulator/geometry/geometry.hpp>
+#include <simulator/geometry/plane.hpp>
+#include <simulator/particle.hpp>
 
 namespace sim {
 namespace geom {
 
 /**
  * @brief Class that implements a triangle.
+ *
+ * A triangle is, informally, a polygonal object of three
+ * sides of arbitrary length, whose endpoints are
+ * defined by three vertices (see @ref v1, @ref v2, @ref v3).
+ *
+ * These three vertices all lie on a plane (see @ref pl),
+ * the creation of which depends on the order of the vertices
+ * ther are given in.
  */
 class triangle : public geometry {
 	private:
@@ -22,20 +32,51 @@ class triangle : public geometry {
 		/// The third vertex of the triangle.
 		vec3 v3;
 
+		/// Plane associated to the triangle.
+		plane pl;
+
 	public:
 		/// Default constructor.
 		triangle();
+		///
+		/**
+		 * @brief Constructor with points.
+		 *
+		 * The plane associated to this triangle (see @ref pl)
+		 * is built using these vertices in the same order they
+		 * are given in this method.
+		 */
+		triangle(const vec3& p1,const vec3& p2,const vec3& p3);
 		/// Destructor.
 		~triangle();
 
 		// SETTERS
 
-		void set_position(const vec3& p);
+		/**
+		 * @brief Sets the position of this triangle.
+		 *
+		 * The vertices of the triangle are translated according
+		 * to vector @e v.
+		 * @param v Vector representing the direction in which
+		 * every vertex moves.
+		 */
+		void set_position(const vec3& v);
 
 		// GETTERS
 
+		/// Returns a constant reference to the assiociated plane (@ref pl).
+		const plane& get_plane() const;
+
 		bool is_inside(const vec3& p, float tol = 1.e-7f) const;
+
 		geom_type get_geom_type() const;
+
+		bool intersec_segment(const vec3& p1, const vec3& p2) const;
+		bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const;
+
+		// OTHERS
+
+		void update_upon_collision(particle *p) const;
 };
 
 } // -- namespace geom

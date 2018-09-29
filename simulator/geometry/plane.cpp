@@ -75,5 +75,17 @@ bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) cons
 	return true;
 }
 
+void plane::update_upon_collision(particle *p) const {
+	const vec3& next_pos = p->get_current_position();
+	const vec3& next_vel = p->get_velocity();
+
+	vec3 Wn = (glm::dot(next_pos, normal) + dconst)*normal;
+	float bounce = p->get_bouncing();
+	p->set_position( next_pos - (1 + bounce)*Wn );
+
+	float nv_dot = glm::dot(normal, next_vel);
+	p->set_velocity( next_vel - (1 + bounce)*(nv_dot*normal) );
+}
+
 } // -- namespace geom
 } // -- namespace sim

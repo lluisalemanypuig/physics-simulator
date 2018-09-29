@@ -6,6 +6,7 @@ using namespace glm;
 
 // Custom includes
 #include <simulator/geometry/geometry.hpp>
+#include <simulator/particle.hpp>
 
 namespace sim {
 namespace geom {
@@ -34,6 +35,10 @@ class sphere : public geometry {
 
 		bool is_inside(const vec3& p, float tol = 1.e-7f) const;
 		geom_type get_geom_type() const;
+
+		// OTHERS
+
+		void update_upon_collision(particle *p) const;
 };
 
 } // -- namespace geom
