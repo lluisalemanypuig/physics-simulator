@@ -4,19 +4,24 @@ namespace study_cases {
 
 	void bouncing_ball() {
 		// time step
-		const float dt = 0.01;
-		const float total_time = 3.0f;
+		const float dt = 0.01f;
+		const float total_time = 10.0f;
 
 		simulator S(solver_type::EulerSemi);
+		S.set_initialiser(
+		[](particle *p) {
+			p->set_position(vec3(0.0f, 10.0f, 0.0f));
+			p->set_lifetime(2.0f);
+			p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
+		}
+		);
 
 		// -----------------------------------------
 		// -- initialise simulator
 
-		// the only particle bouncing up and down
-		particle *p = new particle();
-		p->set_position(vec3(0.0f, 5.0f, 0.0f));
-		p->set_force( S.get_gravity() );
-		S.add_particle(p);
+		// the only particle bouncing up and down,
+		// initialised using the function.
+		const particle *p = S.add_particle();
 
 		vec3 D(-2.0f, -1.0f, -2.0f);
 		vec3 E( 2.0f,  4.0f,  2.0f);
