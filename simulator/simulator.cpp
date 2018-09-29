@@ -77,6 +77,7 @@ void simulator::add_particles(size_t n) {
 void simulator::add_geometry(geometry *g) {
 	assert(g != nullptr);
 	scene_fixed.push_back(g);
+	cout << "Fixed objects: " << scene_fixed.size() << endl;
 }
 
 void simulator::reset_simulation() {
@@ -106,14 +107,27 @@ void simulator::apply_time_step(float dt) {
 
 		// check collision between the particle and
 		// every fixed geometrical object in the scene
+		int i = 0;
 		for (geometry *g : scene_fixed) {
 
 			// if the particle collides with some geometry
 			// then the geometry is in charge of updating
 			// this particle's position, velocity, ...
+
 			if (g->intersec_segment(prev_pos, next_pos)) {
+				cout << "Collision with geometry! " << i << endl;
+
+				char k;
+				cin >> k;
+
 				g->update_upon_collision(p);
+
+				// no need to check collision
+				// with other geometry...
+				continue;
 			}
+
+			++i;
 		}
 	}
 

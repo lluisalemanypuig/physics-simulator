@@ -47,27 +47,27 @@ namespace study_cases {
 		// initialised using the function.
 		const particle *p = S.add_particle();
 
-		vec3 C(-2.0f, 0.0f,  2.0f);
-		vec3 D(-2.0f, 0.0f, -2.0f);
-		vec3 E( 2.0f, 4.0f,  0.0f);
-		triangle *ramp = new triangle(C, E, D);
-
-		vec3 ramp_normal = ramp->get_plane().get_normal();
-		cout << ramp_normal.x << "," << ramp_normal.y << "," << ramp_normal.z << endl;
-		cout << ramp->get_plane().get_constant() << endl;
-
+		vec3 B(-2.0f, 0.0f,  2.0f);
+		vec3 C(-2.0f, 0.0f, -2.0f);
+		vec3 D( 2.0f, 4.0f,  0.0f);
+		triangle *ramp = new triangle(B, D, C);
 		S.add_geometry(ramp);
 
-		vec3 F(-6.0f, 0.0f, -2.0f);
-		vec3 G(-6.0f, 0.0f,  2.0f);
-		vec3 H(-7.0f, 4.0f,  0.0f);
-		triangle *bouncer = new triangle(F, H, G);
-
-		vec3 bouncer_normal = bouncer->get_plane().get_normal();
-		cout << bouncer_normal.x << "," << bouncer_normal.y << "," << bouncer_normal.z << endl;
-		cout << bouncer->get_plane().get_constant() << endl;
-
+		vec3 E( 1.0f, 0.0f, -2.0f);
+		vec3 F( 1.0f, 0.0f,  2.0f);
+		vec3 G(-1.0f, 4.0f,  0.0f);
+		triangle *bouncer = new triangle(E, G, F);
 		S.add_geometry(bouncer);
+
+		cout << "Ramp:" << endl;
+		vec3 ramp_normal = ramp->get_plane().get_normal();
+		cout << ramp_normal.x << "*x + " << ramp_normal.y << "*y + " << ramp_normal.z << "*z + "
+			 << ramp->get_plane().get_constant() << endl;
+
+		cout << "Bouncer:" << endl;
+		vec3 bouncer_normal = bouncer->get_plane().get_normal();
+		cout << bouncer_normal.x << "*x + " << bouncer_normal.y << "*y + " << bouncer_normal.z << "*z + "
+			 << bouncer->get_plane().get_constant() << endl;
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
@@ -79,6 +79,10 @@ namespace study_cases {
 			S.apply_time_step(dt);
 			vec3 cur_pos = p->get_current_position();
 			trajectory.push_back(cur_pos);
+
+			cout << "Point({"
+				 << cur_pos.x << "," << cur_pos.y << "," << cur_pos.z
+				 << "})";
 		}
 
 		cout.setf(ios::fixed);
