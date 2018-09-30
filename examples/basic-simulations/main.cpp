@@ -6,6 +6,6 @@ using namespace std;
 #include "study_cases.hpp"
 
 int main(int argc, char *argv[]) {
-	study_cases::bouncing_ball(argc, argv);
+	study_cases::bouncing_particle(argc, argv);
 }
 

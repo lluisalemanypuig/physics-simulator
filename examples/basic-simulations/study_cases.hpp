@@ -21,6 +21,6 @@ using namespace sim;
 
 namespace study_cases {
 
-	void bouncing_ball(int argc, char *argv[]);
+	void bouncing_particle(int argc, char *argv[]);
 
 } // -- namespace study_cases

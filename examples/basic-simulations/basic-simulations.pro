@@ -18,8 +18,8 @@ CONFIG(debug, debug|release) {
 }
 
 SOURCES += main.cpp \
-    bouncing_ball.cpp \
-    utils.cpp
+    utils.cpp \
+    bouncing_particle.cpp
 
 HEADERS += \
     study_cases.hpp \
