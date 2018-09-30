@@ -112,6 +112,8 @@ namespace study_cases {
 		S.add_geometry(floor);
 		// -----------------------------------------
 
+		timing::time_point begin = timing::now();
+
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
@@ -119,6 +121,9 @@ namespace study_cases {
 			vec3 cur_pos = p->get_current_position();
 			trajectory.push_back(cur_pos);
 		}
+
+		timing::time_point end = timing::now();
+		cout << "Simulation completed in " << timing::elapsed_seconds(begin, end) << " s" << endl;
 
 		cout.setf(ios::fixed);
 		cout.precision(4);
