@@ -120,7 +120,7 @@ void simulator::apply_time_step(float dt) {
 
 				// no need to check collision
 				// with other geometry...
-				break;
+				//break;
 			}
 		}
 	}
