@@ -19,17 +19,17 @@ namespace study_cases {
 	}
 
 	void make_bouncer_plane(simulator& S) {
-		vec3 E(-6.0f, 0.0f, -2.0f);
-		vec3 F(-6.0f, 0.0f,  2.0f);
-		vec3 G(-9.0f, 4.0f,  0.0f);
+		vec3 E(-5.0f, 0.0f, -1.5f);
+		vec3 F(-5.1f, 0.0f,  1.0f);
+		vec3 G(-9.0f, 4.0f, -1.0f);
 		plane *bouncer = new plane(E, G, F);
 		S.add_geometry(bouncer);
 	}
 
 	void make_bouncer_triangle(simulator& S) {
-		vec3 E(-6.0f, 0.0f, -2.0f);
-		vec3 F(-6.0f, 0.0f,  2.0f);
-		vec3 G(-9.0f, 4.0f,  0.0f);
+		vec3 E(-5.0f, 0.0f, -1.5f);
+		vec3 F(-5.1f, 0.0f,  1.0f);
+		vec3 G(-9.0f, 4.0f, -1.0f);
 		triangle *bouncer = new triangle(E, G, F);
 		S.add_geometry(bouncer);
 	}
