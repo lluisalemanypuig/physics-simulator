@@ -9,7 +9,7 @@ namespace study_cases {
 		plane *ramp = new plane(B, D, C);
 		S.add_geometry(ramp);
 
-		cout << "Ramp:" << endl;
+		cout << "Ramp (plane):" << endl;
 		vec3 normal = ramp->get_normal();
 		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
 			 << ramp->get_constant() << endl;
@@ -22,7 +22,7 @@ namespace study_cases {
 		triangle *ramp = new triangle(B, D, C);
 		S.add_geometry(ramp);
 
-		cout << "Ramp:" << endl;
+		cout << "Ramp (triangle):" << endl;
 		vec3 normal = ramp->get_plane().get_normal();
 		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
 			 << ramp->get_plane().get_constant() << endl;
@@ -35,7 +35,7 @@ namespace study_cases {
 		plane *bouncer = new plane(E, G, F);
 		S.add_geometry(bouncer);
 
-		cout << "Bouncer:" << endl;
+		cout << "Bouncer (plane):" << endl;
 		vec3 normal = bouncer->get_normal();
 		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
 			 << bouncer->get_constant() << endl;
@@ -48,7 +48,7 @@ namespace study_cases {
 		triangle *bouncer = new triangle(E, G, F);
 		S.add_geometry(bouncer);
 
-		cout << "Bouncer:" << endl;
+		cout << "Bouncer (triangle):" << endl;
 		vec3 normal = bouncer->get_plane().get_normal();
 		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
 			 << bouncer->get_plane().get_constant() << endl;
@@ -141,8 +141,10 @@ namespace study_cases {
 
 			cout << "Point({"
 				 << cur_pos.x << "," << cur_pos.y << "," << cur_pos.z
-				 << "})";
+				 << "})"
+				 << endl;
 		}
+		cout << endl;
 
 		cout.setf(ios::fixed);
 		cout.precision(4);
