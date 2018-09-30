@@ -66,7 +66,7 @@ bool plane::is_inside(const vec3& p, float tol) const {
 bool plane::intersec_segment(const vec3& p1, const vec3& p2) const {
 	float d1 = dist_point_plane(p1);
 	float d2 = dist_point_plane(p2);
-	return d1*d2 < 0.0f;
+	return d1*d2 <= 0.0f;
 }
 
 bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
