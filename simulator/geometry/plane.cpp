@@ -82,15 +82,26 @@ bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) cons
 // OTHERS
 
 void plane::update_upon_collision(particle *p) const {
-	const vec3& next_pos = p->get_current_position();
-	const vec3& next_vel = p->get_velocity();
+	// predicted position and velocity
+	const vec3& pred_pos = p->get_current_position();
+	const vec3& pred_vel = p->get_velocity();
 
-	vec3 Wn = (glm::dot(next_pos, normal) + dconst)*normal;
+	// Wn is a vector normal to the plane with
+	// direction towards the intersection point
+	// (this point is not needed to calculate Wn)
+	vec3 Wn = (glm::dot(pred_pos, normal) + dconst)*normal;
+
+	// update position (with bouncing coefficient)
 	float bounce = p->get_bouncing();
-	p->set_position( next_pos - (1 + bounce)*Wn );
+	p->set_position( pred_pos - (1 + bounce)*Wn );
 
-	float nv_dot = glm::dot(normal, next_vel);
-	p->set_velocity( next_vel - (1 + bounce)*(nv_dot*normal) );
+	// update velocity
+	float nv_dot = glm::dot(normal, pred_vel);
+	p->set_velocity( pred_vel - (1 + bounce)*(nv_dot*normal) );
+
+	// update velocity (2 -> with friction coefficient)
+	vec3 vt = pred_vel - glm::dot(normal,pred_vel)*normal;
+	p->set_velocity( p->get_velocity() - p->get_friction()*vt );
 }
 
 void plane::display(ostream& os) const {

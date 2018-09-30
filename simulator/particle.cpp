@@ -6,8 +6,10 @@ namespace sim {
 
 void particle::init() {
 	prev_pos = vec3(0.0f,0.0f,0.0f);
+	cur_pos = vec3(0.0f,0.0f,0.0f);
 	force = vec3(0.0f,0.0f,0.0f);
 	velocity = vec3(0.0f,0.0f,0.0f);
+	friction = 0.0f;
 	bouncing = 1.0f;
 	lifetime = 10.0f;
 	fixed = false;
@@ -15,24 +17,19 @@ void particle::init() {
 
 // PUBLIC
 
-particle::particle()
-:
-cur_pos(0.0f,0.0f,0.0f)
-{
+particle::particle() {
 	init();
+	cur_pos = vec3(0.0f,0.0f,0.0f);
 }
 
-particle::particle(const float& x, const float& y, const float& z)
-{
+particle::particle(const float& x, const float& y, const float& z) {
+	init();
 	cur_pos = vec3(x,y,z);
-	init();
 }
 
-particle::particle(const vec3& pos)
-:
-cur_pos(pos)
-{
+particle::particle(const vec3& pos) {
 	init();
+	cur_pos = pos;
 }
 
 particle::~particle() { }
@@ -55,6 +52,7 @@ void particle::acceleterate(const vec3& v) {
 }
 
 void particle::reduce_lifetime(float t) {
+	assert(t >= 0.0f);
 	lifetime -= t;
 }
 
@@ -116,6 +114,10 @@ vec3 particle::get_force() const {
 
 vec3 particle::get_velocity() const {
 	return velocity;
+}
+
+float particle::get_friction() const {
+	return friction;
 }
 
 float particle::get_bouncing() const {

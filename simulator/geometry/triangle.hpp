@@ -1,5 +1,9 @@
 #pragma once
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // glm includes
 #include <glm/glm.hpp>
 using namespace glm;

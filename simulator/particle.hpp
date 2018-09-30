@@ -1,5 +1,8 @@
 #pragma once
 
+// C inlcudes
+#include <assert.h>
+
 // glm includes
 #include <glm/glm.hpp>
 using namespace glm;
@@ -26,6 +29,8 @@ class particle {
 		/// Current velocity of the particle.
 		vec3 velocity;
 
+		/// Friction coefficient of the particle.
+		float friction;
 		/// Bouncing coefficient of the particle.
 		float bouncing;
 		/**
@@ -88,7 +93,10 @@ class particle {
 		 */
 		void acceleterate(const vec3& v);
 
-		/// Decreases the lifetime by @e t.
+		/**
+		 * @brief Decreases the lifetime by @e t.
+		 * @param t A value equal to or greater than 0.
+		*/
 		void reduce_lifetime(float t);
 
 		// SETTERS
@@ -113,6 +121,8 @@ class particle {
 		/// Sets the force of the particle. See @ref force.
 		void set_force(const vec3& f);
 
+		/// Sets the friction coefficient of the particle. See @ref friction.
+		void set_friction(float f);
 		/// Sets the bouncing coefficient of the particle. See @ref bouncing.
 		void set_bouncing(float b);
 		/// Sets the lifetime of the particle. See @ref lifetime.
@@ -130,6 +140,8 @@ class particle {
 		vec3 get_force() const;
 		/// Returns the velocity of the particle. See @ref velocity.
 		vec3 get_velocity() const;
+		/// Returns the friction coefficient of the particle. See @ref friction.
+		float get_friction() const;
 		/// Returns the bouncing coefficient of the particle. See @ref bouncing.
 		float get_bouncing() const;
 		/// Returns the lifetime of the particle. See @ref lifetime.
