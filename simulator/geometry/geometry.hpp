@@ -35,6 +35,8 @@ class geometry {
 		/// Destructor
 		virtual ~geometry();
 
+		virtual void display() const;
+
 		/**
 		 * @brief Sets the position of the geometry.
 		 *
@@ -53,7 +55,7 @@ class geometry {
 		 * false if otherwise. Depending on the type of geometry this
 		 * method has a different geometrical interpretation.
 		 */
-		virtual bool is_inside(const vec3& p, float tol = 1.e-7f) const = 0;
+		virtual bool is_inside(const vec3& p, float tol = 1.e-6f) const = 0;
 
 		/**
 		 * @brief Returns if the segment defined by the points @e p1
@@ -67,9 +69,9 @@ class geometry {
 		/**
 		 * @brief Returns true if the segment [@e p1, @e p2 ] intersects with
 		 * the geometry.
-		 * @param p1 The first endpoint of the segment.
-		 * @param p2 The second endpoint of the segment.
-		 * @param p_inter The intersection point between the segment and the
+		 * @param[in] p1 The first endpoint of the segment.
+		 * @param[in] p2 The second endpoint of the segment.
+		 * @param[out] p_inter The intersection point between the segment and the
 		 * geometry.
 		 * @return Returns true if the segment and the geometry intersect.
 		 * In this case, the value in @e p_inter will be the intersection point.

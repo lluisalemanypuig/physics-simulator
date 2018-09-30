@@ -1,5 +1,8 @@
 #include <simulator/geometry/plane.hpp>
 
+#include <iostream>
+using namespace std;
+
 namespace sim {
 namespace geom {
 
@@ -25,6 +28,16 @@ plane::plane(const vec3& p0, const vec3& p1, const vec3& p2) {
 }
 
 plane::~plane() { }
+
+void plane::display() const {
+	cout << "I am a plane" << endl;
+	cout << "    with plane equation:" << endl;
+	const vec3& n = get_normal();
+	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
+		 << get_constant() << " = 0" << endl;
+}
+
+// SETTERS
 
 void plane::set_position(const vec3& p) {
 	dconst = -glm::dot(p, normal);

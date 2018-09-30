@@ -87,6 +87,12 @@ void simulator::reset_simulation() {
 void simulator::apply_time_step(float dt) {
 	assert(dt > 0.0f);
 
+	char step;
+	if (stime - dt <= 1.79f and 1.79f <= stime + dt) {
+		cout << "Entering time 1.79" << endl;
+		cin >> step;
+	}
+
 	for (particle *p : ps) {
 		// ignore fixed particles
 		if (p->is_fixed()) {
@@ -105,10 +111,23 @@ void simulator::apply_time_step(float dt) {
 		update_particle(prev_pos, dt, p);
 		vec3 next_pos = p->get_current_position();
 
+		cout << "    Segment("
+			 << "Point({" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << "}),"
+			 << "Point({" << next_pos.x << "," << next_pos.y << "," << next_pos.z << "})"
+			 << ")"
+			 << endl;
+
 		// check collision between the particle and
 		// every fixed geometrical object in the scene
-		int i = 0;
-		for (geometry *g : scene_fixed) {
+
+		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
+			const geometry *g = scene_fixed[i];
+
+			if (stime - dt <= 1.79f and 1.79f <= stime + dt) {
+				cout << "Testing collision with geometry: " << i << endl;
+				g->display();
+				cin >> step;
+			}
 
 			// if the particle collides with some geometry
 			// then the geometry is in charge of updating
@@ -117,17 +136,26 @@ void simulator::apply_time_step(float dt) {
 			if (g->intersec_segment(prev_pos, next_pos)) {
 				cout << "Collision with geometry! " << i << endl;
 
-				char k;
-				cin >> k;
-
 				g->update_upon_collision(p);
+
+				cout << "Position of particle before collision:" << endl;
+				cout << "Point({" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << "})" << endl;
+				cout << "Position of particle after collision:" << endl;
+				vec3 col_pos = p->get_current_position();
+				cout << "Point({" << col_pos.x << "," << col_pos.y << "," << col_pos.z << "})" << endl;
+
+				cin >> step;
 
 				// no need to check collision
 				// with other geometry...
-				continue;
+				break;
 			}
-
-			++i;
+			else {
+				if (stime - dt <= 1.79f and 1.79f <= stime + dt) {
+					cout << "    No collision" << endl;
+					cin >> step;
+				}
+			}
 		}
 	}
 

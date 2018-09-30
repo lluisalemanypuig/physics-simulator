@@ -50,6 +50,8 @@ class triangle : public geometry {
 		/// Destructor.
 		~triangle();
 
+		void display() const;
+
 		// SETTERS
 
 		/**
@@ -67,7 +69,7 @@ class triangle : public geometry {
 		/// Returns a constant reference to the assiociated plane (@ref pl).
 		const plane& get_plane() const;
 
-		bool is_inside(const vec3& p, float tol = 1.e-7f) const;
+		bool is_inside(const vec3& p, float tol = 1.e-6f) const;
 
 		geom_type get_geom_type() const;
 
