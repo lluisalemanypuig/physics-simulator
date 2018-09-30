@@ -50,8 +50,6 @@ class triangle : public geometry {
 		/// Destructor.
 		~triangle();
 
-		void display() const;
-
 		// SETTERS
 
 		/**
@@ -79,6 +77,7 @@ class triangle : public geometry {
 		// OTHERS
 
 		void update_upon_collision(particle *p) const;
+		void display(ostream& os = cout) const;
 };
 
 } // -- namespace geom

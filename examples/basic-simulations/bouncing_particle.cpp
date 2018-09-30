@@ -8,11 +8,6 @@ namespace study_cases {
 		vec3 D( 2.0f, 4.0f,  0.0f);
 		plane *ramp = new plane(B, D, C);
 		S.add_geometry(ramp);
-
-		cout << "Ramp (plane):" << endl;
-		vec3 normal = ramp->get_normal();
-		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
-			 << ramp->get_constant() << endl;
 	}
 
 	void make_ramp_triangle(simulator& S) {
@@ -21,11 +16,6 @@ namespace study_cases {
 		vec3 D( 2.0f, 4.0f,  0.0f);
 		triangle *ramp = new triangle(B, D, C);
 		S.add_geometry(ramp);
-
-		cout << "Ramp (triangle):" << endl;
-		vec3 normal = ramp->get_plane().get_normal();
-		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
-			 << ramp->get_plane().get_constant() << endl;
 	}
 
 	void make_bouncer_plane(simulator& S) {
@@ -34,11 +24,6 @@ namespace study_cases {
 		vec3 G(-9.0f, 4.0f,  0.0f);
 		plane *bouncer = new plane(E, G, F);
 		S.add_geometry(bouncer);
-
-		cout << "Bouncer (plane):" << endl;
-		vec3 normal = bouncer->get_normal();
-		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
-			 << bouncer->get_constant() << endl;
 	}
 
 	void make_bouncer_triangle(simulator& S) {
@@ -47,33 +32,6 @@ namespace study_cases {
 		vec3 G(-9.0f, 4.0f,  0.0f);
 		triangle *bouncer = new triangle(E, G, F);
 		S.add_geometry(bouncer);
-
-		cout << "Bouncer (triangle):" << endl;
-		vec3 normal = bouncer->get_plane().get_normal();
-		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
-			 << bouncer->get_plane().get_constant() << endl;
-
-		//Segment(Point({-6.37753,0.749225,0}),Point({-6.5031,0.699194,0}))
-		vec3 A(-6.37753,0.749225,0);
-		vec3 B(-6.5031,0.699194,0);
-		cout << "Segment(Point({-6.37753,0.749225,0}),Point({-6.5031,0.699194,0}))" << endl;
-		if (bouncer->intersec_segment(A,B)) {
-			cout << "    intersects bouncer" << endl;
-		}
-		else {
-			cout << "    NOT intersects bouncer" << endl;
-		}
-
-		//Segment(Point({-6.5031,0.699194,0}),Point({-6.62867,0.648182,0}))
-		vec3 C(-6.5031,0.699194,0);
-		vec3 D(-6.62867,0.648182,0);
-		cout << "Segment(Point({-6.5031,0.699194,0}),Point({-6.62867,0.648182,0}))" << endl;
-		if (bouncer->intersec_segment(C,D)) {
-			cout << "    intersects bouncer" << endl;
-		}
-		else {
-			cout << "    NOT intersects bouncer" << endl;
-		}
 	}
 
 	void bouncing_particle(int argc, char *argv[]) {
@@ -152,23 +110,15 @@ namespace study_cases {
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
-
-		cout << "Floor (plane):" << endl;
-		vec3 normal = floor->get_normal();
-		cout << normal.x << "*x + " << normal.y << "*y + " << normal.z << "*z + "
-			 << floor->get_constant() << endl;
 		// -----------------------------------------
 
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			cout << "Simulation time: " << S.get_current_time() << endl;
-
 			S.apply_time_step(dt);
 			vec3 cur_pos = p->get_current_position();
 			trajectory.push_back(cur_pos);
 		}
-		cout << endl;
 
 		cout.setf(ios::fixed);
 		cout.precision(4);

@@ -39,6 +39,7 @@ class sphere : public geometry {
 		// OTHERS
 
 		void update_upon_collision(particle *p) const;
+		void display(ostream& os = cout) const;
 };
 
 } // -- namespace geom

@@ -1,5 +1,9 @@
 #pragma once
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // glm includes
 #include <glm/vec3.hpp>
 using namespace glm;
@@ -35,7 +39,7 @@ class geometry {
 		/// Destructor
 		virtual ~geometry();
 
-		virtual void display() const;
+		// SETTERS
 
 		/**
 		 * @brief Sets the position of the geometry.
@@ -46,6 +50,11 @@ class geometry {
 		 * @param p The "new position" of the object.
 		 */
 		virtual void set_position(const vec3& p) = 0;
+
+		// GETTERS
+
+		/// Returns the type of geometry of this object.
+		virtual geom_type get_geom_type() const;
 
 		/**
 		 * @brief Returns whether a point is inside the geometry.
@@ -78,6 +87,8 @@ class geometry {
 		 */
 		virtual bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const = 0;
 
+		// OTHERS
+
 		/**
 		 * @brief Update a particle collision in a collision with geometry.
 		 *
@@ -99,8 +110,8 @@ class geometry {
 		 */
 		virtual void update_upon_collision(particle *p) const = 0;
 
-		/// Returns the type of geometry of this object.
-		virtual geom_type get_geom_type() const;
+		/// Output on stream @e os information about this geometry.
+		virtual void display(ostream& os = cout) const = 0;
 };
 
 } // -- namespace geom

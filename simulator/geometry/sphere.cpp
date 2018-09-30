@@ -31,5 +31,9 @@ void sphere::update_upon_collision(particle *p) const {
 
 }
 
+void sphere::display(ostream& os) const {
+
+}
+
 } // -- namespace geom
 } // -- namespace sim

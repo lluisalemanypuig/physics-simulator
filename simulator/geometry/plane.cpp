@@ -1,8 +1,5 @@
 #include <simulator/geometry/plane.hpp>
 
-#include <iostream>
-using namespace std;
-
 namespace sim {
 namespace geom {
 
@@ -29,26 +26,10 @@ plane::plane(const vec3& p0, const vec3& p1, const vec3& p2) {
 
 plane::~plane() { }
 
-void plane::display() const {
-	cout << "I am a plane" << endl;
-	cout << "    with plane equation:" << endl;
-	const vec3& n = get_normal();
-	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-		 << get_constant() << " = 0" << endl;
-}
-
 // SETTERS
 
 void plane::set_position(const vec3& p) {
 	dconst = -glm::dot(p, normal);
-}
-
-bool plane::is_inside(const vec3& p, float tol) const {
-	float dist = glm::dot(p, normal) + dconst;
-	if (dist <= tol) {
-		return true;
-	}
-	return false;
 }
 
 geom_type plane::get_geom_type() const {
@@ -72,6 +53,16 @@ float plane::get_constant() const {
 	return dconst;
 }
 
+// GETTERS
+
+bool plane::is_inside(const vec3& p, float tol) const {
+	float dist = glm::dot(p, normal) + dconst;
+	if (dist <= tol) {
+		return true;
+	}
+	return false;
+}
+
 bool plane::intersec_segment(const vec3& p1, const vec3& p2) const {
 	float d1 = dist_point_plane(p1);
 	float d2 = dist_point_plane(p2);
@@ -88,6 +79,8 @@ bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) cons
 	return true;
 }
 
+// OTHERS
+
 void plane::update_upon_collision(particle *p) const {
 	const vec3& next_pos = p->get_current_position();
 	const vec3& next_vel = p->get_velocity();
@@ -98,6 +91,14 @@ void plane::update_upon_collision(particle *p) const {
 
 	float nv_dot = glm::dot(normal, next_vel);
 	p->set_velocity( next_vel - (1 + bounce)*(nv_dot*normal) );
+}
+
+void plane::display(ostream& os) const {
+	os << "I am a plane" << endl;
+	os << "    with plane equation:" << endl;
+	const vec3& n = get_normal();
+	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
+	   << get_constant() << " = 0" << endl;
 }
 
 } // -- namespace geom

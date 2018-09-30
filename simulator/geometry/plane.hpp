@@ -1,5 +1,9 @@
 #pragma once
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // glm includes
 #include <glm/glm.hpp>
 using namespace glm;
@@ -52,8 +56,6 @@ class plane : public geometry {
 		/// Destructor.
 		~plane();
 
-		void display() const;
-
 		// SETTERS
 
 		/**
@@ -66,6 +68,17 @@ class plane : public geometry {
 		void set_position(const vec3& p);
 
 		// GETTERS
+
+		geom_type get_geom_type() const;
+
+		/// Returns the distance between point @e p and this plane.
+		float dist_point_plane(const vec3& p) const;
+		/// Returns the project of point @e p onto the plane.
+		vec3 closest_point_plane(const vec3& p) const;
+		/// Returns the normal of this plane.
+		const vec3& get_normal() const;
+		/// Returns the independent term of this plane's equation.
+		float get_constant() const;
 
 		/**
 		 * @brief Returns true if @e p satisfies this plane's equation.
@@ -82,17 +95,6 @@ class plane : public geometry {
 		 * @e tol.
 		 */
 		bool is_inside(const vec3& p, float tol = 1.e-6f) const;
-
-		geom_type get_geom_type() const;
-
-		/// Returns the distance between point @e p and this plane.
-		float dist_point_plane(const vec3& p) const;
-		/// Returns the project of point @e p onto the plane.
-		vec3 closest_point_plane(const vec3& p) const;
-		/// Returns the normal of this plane.
-		const vec3& get_normal() const;
-		/// Returns the independent term of this plane's equation.
-		float get_constant() const;
 
 		/**
 		 * @brief Returns if the segment defined by the points @e p1 and @e p2 intersects
@@ -117,6 +119,7 @@ class plane : public geometry {
 		// OTHERS
 
 		void update_upon_collision(particle *p) const;
+		void display(ostream& os = cout) const;
 };
 
 } // -- namespace geom
