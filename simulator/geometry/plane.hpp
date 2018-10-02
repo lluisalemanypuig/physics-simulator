@@ -53,6 +53,8 @@ class plane : public geometry {
 		 * of the vectors from @e p0 to @e p1 and from @e p0 to @e p2.
 		 */
 		plane(const vec3& p0, const vec3& p1, const vec3& p2);
+		/// Copy constructor.
+		plane(const plane& p);
 		/// Destructor.
 		~plane();
 

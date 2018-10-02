@@ -62,6 +62,8 @@ class particle {
 		particle(const float& x, const float& y, const float& z);
 		/// Construct particle with position as a vec3.
 		particle(const vec3& pos);
+		// Copy constructor.
+		particle(const particle& p);
 		/// Destructor.
 		~particle();
 

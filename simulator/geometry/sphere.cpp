@@ -7,11 +7,14 @@ namespace geom {
 
 // PUBLIC
 
-sphere::sphere() {
+sphere::sphere() { }
+
+sphere::sphere(const sphere& s) : geometry(s) {
+	centre = s.centre;
+	R = s.R;
 }
 
-sphere::~sphere() {
-}
+sphere::~sphere() { }
 
 void sphere::set_position(const vec3& p) {
 

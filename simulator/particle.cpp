@@ -32,6 +32,18 @@ particle::particle(const vec3& pos) {
 	cur_pos = pos;
 }
 
+particle::particle(const particle& p) {
+	cur_pos = p.cur_pos;
+	prev_pos = p.prev_pos;
+	force = p.force;
+	velocity = p.velocity;
+
+	friction = p.friction;
+	bouncing = p.bouncing;
+	lifetime = p.lifetime;
+	fixed = p.fixed;
+}
+
 particle::~particle() { }
 
 // MODIFIERS

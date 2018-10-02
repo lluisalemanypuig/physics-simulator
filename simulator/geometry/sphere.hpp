@@ -24,6 +24,8 @@ class sphere : public geometry {
 	public:
 		/// Default constructor.
 		sphere();
+		/// Copy constructor.
+		sphere(const sphere& s);
 		/// Destructor.
 		~sphere();
 

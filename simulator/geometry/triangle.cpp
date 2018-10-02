@@ -25,6 +25,13 @@ triangle::triangle(const vec3& p1,const vec3& p2,const vec3& p3) {
 	pl = plane(v1, v2, v3);
 }
 
+triangle::triangle(const triangle& t) : geometry(t) {
+	v1 = t.v1;
+	v2 = t.v2;
+	v3 = t.v3;
+	pl = t.pl;
+}
+
 triangle::~triangle() { }
 
 // SETTERS

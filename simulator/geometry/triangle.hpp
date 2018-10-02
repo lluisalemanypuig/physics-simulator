@@ -42,7 +42,6 @@ class triangle : public geometry {
 	public:
 		/// Default constructor.
 		triangle();
-		///
 		/**
 		 * @brief Constructor with points.
 		 *
@@ -51,6 +50,8 @@ class triangle : public geometry {
 		 * are given in this method.
 		 */
 		triangle(const vec3& p1,const vec3& p2,const vec3& p3);
+		/// Copy constructor.
+		triangle(const triangle& t);
 		/// Destructor.
 		~triangle();
 

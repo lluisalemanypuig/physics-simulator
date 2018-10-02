@@ -36,6 +36,8 @@ class geometry {
 	public:
 		/// Default constructor
 		geometry();
+		/// Copy constructor
+		geometry(const geometry& g);
 		/// Destructor
 		virtual ~geometry();
 

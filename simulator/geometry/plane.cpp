@@ -24,6 +24,11 @@ plane::plane(const vec3& p0, const vec3& p1, const vec3& p2) {
 	dconst = -glm::dot(p0, normal);
 }
 
+plane::plane(const plane& p) : geometry(p) {
+	normal = p.normal;
+	dconst = p.dconst;
+}
+
 plane::~plane() { }
 
 // SETTERS
