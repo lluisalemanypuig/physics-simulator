@@ -99,12 +99,62 @@ void simulator::apply_time_step(float dt) {
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		vec3 prev_pos = p->get_current_position();
+		const vec3& prev_pos = p->get_current_position();
 		update_particle(prev_pos, dt, p);
-		vec3 next_pos = p->get_current_position();
+		vec3 pred_pos = p->get_current_position();
 
-		// check collision between the particle and
-		// every fixed geometrical object in the scene
+		/* The main idea implemented in the following loop
+		 * is the following:
+		 *  -> We now know a prediction of the next position
+		 *     of the particle thanks to the solver. This is
+		 *     the "predicted position", stored in variable
+		 *     'pred_pos'.
+		 *
+		 *  -> Now we have a segment ('prev_pos','pred_pos')
+		 *     with which we can check collision with other
+		 *     geometry.
+		 *
+		 *  -> However, we should not update the particle with
+		 *     the first collision that has been detected.
+		 *     Instead, a prediction of the result of the
+		 *     collision is obtained and stored in 'pred_particle'.
+		 *     This particle is called the "predicted particle".
+		 *     Notice that this predicted particle also contains
+		 *     the predicted velocity, and may have other attributes
+		 *     modified after the collision (as part of the result
+		 *	   of the collision).
+		 *
+		 *  -> Then, checking the collision is done with the
+		 *     new segment from prev_pos to the position of
+		 *     the predicted particle. The position of the
+		 *     predicted particle, when there is any collision,
+		 *     is stored in variable 'pred_pos'.
+		 *
+		 *  -> Therefore, after the first collision, we have
+		 *     a prediction of the result of that collision
+		 *     of the particle with some geometry. Then, the
+		 *     second collision is detected with the segment
+		 *     from the previous position ('prev_pos') and
+		 *     the position of the predicted particle ('pred_pos').
+		 *     However, be aware now that the result of the
+		 *     second collision is NOT done with the state
+		 *     of the predicted particle. Instead, it is done
+		 *     with the original state of the particle.
+		 *
+		 *  -> The state that the particle takes is the state
+		 *     of the predicted particle at the end of the loop
+		 *     (only if there had been any collision).
+		 *
+		 */
+
+		// copy the particle at its current state
+		// and use it to predict the update
+		particle pred_particle;
+
+		// Check collision between the particle and
+		// every fixed geometrical object in the scene.
+		// Set boolean to true if any collision took place.
+		bool collide = false;
 
 		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
 			const geometry *g = scene_fixed[i];
@@ -113,15 +163,21 @@ void simulator::apply_time_step(float dt) {
 			// then the geometry is in charge of updating
 			// this particle's position, velocity, ...
 
-			if (g->intersec_segment(prev_pos, next_pos)) {
+			if (g->intersec_segment(prev_pos, pred_pos)) {
+				collide = true;
+				pred_particle = *p;
 
-				// geometry updates the particle
-				g->update_upon_collision(p);
+				// geometry updates the predicted particle
+				g->update_upon_collision(&pred_particle);
 
-				// no need to check collision
-				// with other geometry...
-				//break;
+				// keep track of the predicted particle's position
+				pred_pos = pred_particle.get_current_position();
 			}
+		}
+
+		// give the particle the proper final state
+		if (collide) {
+			*p = pred_particle;
 		}
 	}
 
