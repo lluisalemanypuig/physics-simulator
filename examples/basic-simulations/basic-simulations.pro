@@ -19,7 +19,9 @@ CONFIG(debug, debug|release) {
 
 SOURCES += main.cpp \
     utils.cpp \
-    bouncing_particle.cpp
+    floor.cpp \
+    tri_tri_plane.cpp \
+    study_cases.cpp
 
 HEADERS += \
     study_cases.hpp \
