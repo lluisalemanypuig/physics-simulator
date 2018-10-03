@@ -205,8 +205,6 @@ class simulator {
 
 		/// Return constant reference to i-th particle.
 		const particle& get_particle(size_t i) const;
-		/// Returns all particles.
-		const vector<particle *>& get_all_particles() const;
 		/// Returns all fixed objects of the scene.
 		const vector<geometry *>& get_fixed_objects() const;
 		/// Returns the current simulation time.

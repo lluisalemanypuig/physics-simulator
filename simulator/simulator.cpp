@@ -200,10 +200,6 @@ const particle& simulator::get_particle(size_t i) const {
 	return *ps[i];
 }
 
-const vector<particle *>& simulator::get_all_particles() const {
-	return ps;
-}
-
 const vector<geometry *>& simulator::get_fixed_objects() const {
 	return scene_fixed;
 }
