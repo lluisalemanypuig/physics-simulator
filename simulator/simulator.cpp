@@ -73,9 +73,39 @@ void simulator::add_particles(size_t n) {
 	}
 }
 
+void simulator::remove_particle(size_t i) {
+	assert(i < ps.size());
+
+	// in the position i:
+	// 1. free the memory,
+	// 2. put a valid pointer to another particle,
+	// to the vector: shrink it to delete the
+	// unused position at the end
+
+	delete ps[i];
+	size_t N = ps.size();
+	std::swap(ps[i], ps[N - 1]);
+	ps.pop_back();
+}
+
 void simulator::add_geometry(geometry *g) {
 	assert(g != nullptr);
 	scene_fixed.push_back(g);
+}
+
+void simulator::remove_geometry(size_t i) {
+	assert(i < scene_fixed.size());
+
+	// in the position i:
+	// 1. free the memory,
+	// 2. put a valid pointer to another particle,
+	// to the vector: shrink it to delete the
+	// unused position at the end
+
+	delete scene_fixed[i];
+	size_t N = scene_fixed.size();
+	std::swap(scene_fixed[i], scene_fixed[N - 1]);
+	scene_fixed.pop_back();
 }
 
 void simulator::reset_simulation() {
@@ -210,6 +240,14 @@ float simulator::get_current_time() const {
 
 const vec3& simulator::get_gravity() const {
 	return gravity;
+}
+
+size_t simulator::n_particles() const {
+	return ps.size();
+}
+
+size_t simulator::n_geometry() const {
+	return scene_fixed.size();
 }
 
 } // -- namespace sim

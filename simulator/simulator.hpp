@@ -150,6 +150,16 @@ class simulator {
 		void add_particles(size_t n);
 
 		/**
+		 * @brief Removes the @e i-th particle.
+		 *
+		 * Frees the memory occupied by the particle in the @e i-th
+		 * position. Therefore, any pointer to that particle becomes
+		 * invalid.
+		 * @param i The index of the particle in [0, number of particles).
+		 */
+		void remove_particle(size_t i);
+
+		/**
 		 * @brief Adds a geomtrical object to the scene.
 		 *
 		 * The geometrical object is added to @ref scene_fixed.
@@ -159,6 +169,16 @@ class simulator {
 		 * @param g A non-null pointer to the object.
 		 */
 		void add_geometry(geometry *g);
+
+		/**
+		 * @brief Removes the @e i-th fixed geometrical object.
+		 *
+		 * Frees the memory occupied by the geometrical object in the @e i-th
+		 * position. Therefore, any pointer to that object becomes
+		 * invalid.
+		 * @param i The index of the object in [0, number of geometrical objects).
+		 */
+		void remove_geometry(size_t i);
 
 		/**
 		 * @brief Resets the simulation to its original state.
@@ -211,6 +231,10 @@ class simulator {
 		float get_current_time() const;
 		/// Returns the gravity of the scene.
 		const vec3& get_gravity() const;
+		/// Returns the number of particles.
+		size_t n_particles() const;
+		/// Returns the number of fixed geometrical objects.
+		size_t n_geometry() const;
 };
 
 } // -- namespace sim
