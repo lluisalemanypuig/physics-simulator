@@ -59,6 +59,10 @@ enum class solver_type : int8_t {
  *
  * Use method @ref apply_time_step(float) to make the
  * simulation run.
+ *
+ * Use method @ref add_geometry to add fixed geometrical
+ * objects (spheres, triangles, planes) with which the
+ * particles may collide with.
  */
 class simulator {
 	private:
@@ -136,6 +140,9 @@ class simulator {
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialser function (see @ref global_init) is not called.
+		 *
+		 * The caller should not free the object, since the simulator
+		 * will take care of that.
 		 * @param p A non-null pointer to the object.
 		 */
 		void add_particle(particle *p);
@@ -146,6 +153,9 @@ class simulator {
 		 * @brief Adds a geomtrical object to the scene.
 		 *
 		 * The geometrical object is added to @ref scene_fixed.
+		 *
+		 * The caller should not free the object, since the simulator
+		 * will take care of that.
 		 * @param g A non-null pointer to the object.
 		 */
 		void add_geometry(geometry *g);
