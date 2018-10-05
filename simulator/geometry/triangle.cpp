@@ -7,7 +7,7 @@ float triangle_area(const vec3& p1, const vec3& p2, const vec3& p3) {
 	return glm::length(glm::cross(vivj, vivk))/2.0f;
 }
 
-namespace sim {
+namespace physim {
 namespace geom {
 
 // LOCAL-DEFINED

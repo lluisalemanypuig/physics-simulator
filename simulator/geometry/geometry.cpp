@@ -1,6 +1,6 @@
 #include <simulator/geometry/geometry.hpp>
 
-namespace sim {
+namespace physim {
 namespace geom {
 
 // PUBLIC

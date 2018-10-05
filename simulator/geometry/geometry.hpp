@@ -11,7 +11,7 @@ using namespace glm;
 // simulator includes
 #include <simulator/particle.hpp>
 
-namespace sim {
+namespace physim {
 namespace geom {
 
 /// Enumeration for the type of geometry.

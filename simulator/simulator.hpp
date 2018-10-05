@@ -17,7 +17,7 @@ using namespace std;
 #include <simulator/geometry/plane.hpp>
 #include <simulator/particle.hpp>
 
-namespace sim {
+namespace physim {
 using namespace geom;
 
 /**

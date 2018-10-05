@@ -1,6 +1,6 @@
 #include <simulator/geometry/sphere.hpp>
 
-namespace sim {
+namespace physim {
 namespace geom {
 
 // PRIVATE

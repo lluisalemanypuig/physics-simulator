@@ -1,6 +1,6 @@
 #include <simulator/particle.hpp>
 
-namespace sim {
+namespace physim {
 
 // PRIVATE
 

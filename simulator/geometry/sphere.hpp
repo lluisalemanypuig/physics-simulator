@@ -8,7 +8,7 @@ using namespace glm;
 #include <simulator/geometry/geometry.hpp>
 #include <simulator/particle.hpp>
 
-namespace sim {
+namespace physim {
 namespace geom {
 
 /**

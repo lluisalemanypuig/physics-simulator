@@ -1,6 +1,6 @@
 #include <simulator/simulator.hpp>
 
-namespace sim {
+namespace physim {
 
 // PRIVATE
 

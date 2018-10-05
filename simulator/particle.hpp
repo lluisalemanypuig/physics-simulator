@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 using namespace glm;
 
-namespace sim {
+namespace physim {
 
 /**
  * @brief Class implementing a particle.
