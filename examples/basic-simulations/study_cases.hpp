@@ -14,7 +14,7 @@ using namespace glm;
 // simulator includes
 #include <simulator/simulator.hpp>
 #include <simulator/particle.hpp>
-using namespace sim;
+using namespace physim;
 
 // Custom includes
 #include "utils.hpp"
