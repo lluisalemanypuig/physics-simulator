@@ -98,6 +98,10 @@ void particle::set_force(const vec3& f) {
 	force = f;
 }
 
+void particle::set_friction(float f) {
+	friction = f;
+}
+
 void particle::set_bouncing(float b) {
 	bouncing = b;
 }
