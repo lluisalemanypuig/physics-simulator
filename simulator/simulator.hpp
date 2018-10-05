@@ -158,6 +158,13 @@ class simulator {
 		 * @param i The index of the particle in [0, number of particles).
 		 */
 		void remove_particle(size_t i);
+		/**
+		 * @brief Deletes all particles in this simulator.
+		 *
+		 * Deletes all the objects in @ref ps and clears the
+		 * container.
+		 */
+		void clear_particles();
 
 		/**
 		 * @brief Adds a geomtrical object to the scene.
@@ -179,6 +186,13 @@ class simulator {
 		 * @param i The index of the object in [0, number of geometrical objects).
 		 */
 		void remove_geometry(size_t i);
+		/**
+		 * @brief Deletes all geometry in this simulator.
+		 *
+		 * Deletes all the objects in @ref scene_fixed and clears
+		 * the container.
+		 */
+		void clear_geometry();
 
 		/**
 		 * @brief Resets the simulation to its original state.
@@ -217,7 +231,7 @@ class simulator {
 		 * pointer passed as parameter is always guaranteed to
 		 * be non-null. This function will be called the first time
 		 * the lifetime of the particle has reached a value equal to
-		 * or smaller than 0..
+		 * or smaller than 0.
 		 */
 		void set_initialiser(const function<void (particle *p)>& f);
 

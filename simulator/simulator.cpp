@@ -41,16 +41,8 @@ simulator::simulator(const solver_type& s) {
 }
 
 simulator::~simulator() {
-	for (geometry *g : scene_fixed) {
-		if (g != nullptr) {
-			delete g;
-		}
-	}
-	for (particle *p : ps) {
-		if (p != nullptr) {
-			delete p;
-		}
-	}
+	clear_geometry();
+	clear_particles();
 }
 
 // MODIFIERS
@@ -88,6 +80,15 @@ void simulator::remove_particle(size_t i) {
 	ps.pop_back();
 }
 
+void simulator::clear_particles() {
+	for (particle *p : ps) {
+		if (p != nullptr) {
+			delete p;
+		}
+	}
+	ps.clear();
+}
+
 void simulator::add_geometry(geometry *g) {
 	assert(g != nullptr);
 	scene_fixed.push_back(g);
@@ -106,6 +107,15 @@ void simulator::remove_geometry(size_t i) {
 	size_t N = scene_fixed.size();
 	std::swap(scene_fixed[i], scene_fixed[N - 1]);
 	scene_fixed.pop_back();
+}
+
+void simulator::clear_geometry() {
+	for (geometry *g : scene_fixed) {
+		if (g != nullptr) {
+			delete g;
+		}
+	}
+	scene_fixed.clear();
 }
 
 void simulator::reset_simulation() {
