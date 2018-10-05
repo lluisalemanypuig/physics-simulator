@@ -15,6 +15,7 @@ namespace study_cases {
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
+		cout << "    --vel v:        initial value of velocity along x.    Default: -10.0" << endl;
 	}
 
 	void roll_on_floor(int argc, char *argv[]) {
@@ -23,6 +24,7 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 1.0f;
 		float friction = 0.0f;
+		float vx = -10.0f;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
@@ -49,6 +51,10 @@ namespace study_cases {
 				friction = atof(argv[i + 1]);
 				++i;
 			}
+			else if (strcmp(argv[i], "--vel") == 0) {
+				vx = atof(argv[i + 1]);
+				++i;
+			}
 			else {
 				cerr << "Unknown option '" << string(argv[i]) << "'" << endl;
 			}
@@ -56,10 +62,15 @@ namespace study_cases {
 
 		simulator S(solver_type::EulerSemi);
 		S.set_initialiser(
-		[lifetime,bounce,friction](particle *p) {
+		[lifetime,bounce,friction,vx](particle *p) {
 			p->set_lifetime(lifetime);
-			p->set_position(vec3(10.0f, 0.0f, 0.0f));
-			p->set_velocity(vec3(-10.0f, 0.0f, 0.0f));
+			p->set_position(vec3(10.0f,0.0f,0.0f));
+			p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
+			p->set_velocity(vec3(vx,0.0f,0.0f));
+
+			p->set_bouncing(bounce);
+			p->set_friction(friction);
+			p->set_lifetime(lifetime);
 		}
 		);
 
@@ -68,13 +79,7 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
-		particle *p = new particle();
-		p->set_bouncing(bounce);
-		p->set_friction(friction);
-		p->set_lifetime(lifetime);
-		p->set_position(vec3(10.0f, 0.0f, 0.0f));
-		p->set_velocity(vec3(-10.0f, 0.0f, 0.0f));
-		S.add_particle(p);
+		const particle *p = S.add_particle();
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
@@ -85,7 +90,7 @@ namespace study_cases {
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			vec3 cur_pos = p->get_current_position();
+			vec3 cur_pos = p->get_position();
 			trajectory.push_back(cur_pos);
 			S.apply_time_step(dt);
 		}

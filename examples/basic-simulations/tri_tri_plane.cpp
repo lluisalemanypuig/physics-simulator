@@ -118,20 +118,19 @@ namespace study_cases {
 		S.set_initialiser(
 		[lifetime,bounce,friction](particle *p) {
 			p->set_lifetime(lifetime);
-			p->set_position(vec3(0.0f, 10.0f, 0.0f));
-			p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
+			p->set_position(vec3(0.0f,10.0f,0.0f));
+			p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
+			p->set_velocity(vec3(0.0f,0.0f,0.0f));
+
+			p->set_bouncing(bounce);
+			p->set_friction(friction);
+			p->set_lifetime(lifetime);
 		}
 		);
 
 		// -----------------------------------------
 		// -- initialise simulator
-		particle *p = new particle();
-		p->set_bouncing(bounce);
-		p->set_friction(friction);
-		p->set_lifetime(lifetime);
-		p->set_position(vec3(0.0f, 10.0f, 0.0f));
-		p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
-		S.add_particle(p);
+		const particle *p = S.add_particle();
 
 		if (ramp_plane) {
 			make_ramp_plane(S);
@@ -156,7 +155,7 @@ namespace study_cases {
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			vec3 cur_pos = p->get_current_position();
+			vec3 cur_pos = p->get_position();
 			trajectory.push_back(cur_pos);
 			S.apply_time_step(dt);
 		}
