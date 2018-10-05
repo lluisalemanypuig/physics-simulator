@@ -9,23 +9,28 @@ void simulator::init_particle(particle *p) {
 	global_init(p);
 }
 
-void simulator::update_particle(const vec3& cur_pos, float dt, particle *p) {
+void simulator::update_particle(float dt, particle *p) {
 
 	switch (solver) {
 		case solver_type::EulerOrig:
-			p->set_prev_position( cur_pos );
+			//p->save_position();
+			p->save_velocity();
+
 			p->translate( p->get_velocity()*dt );
 			p->acceleterate( p->get_force()*dt );
 			break;
 
 		case solver_type::EulerSemi:
-			p->set_prev_position( cur_pos );
+			//p->save_position();
+			p->save_velocity();
+
 			p->acceleterate( p->get_force()*dt );
 			p->translate( p->get_velocity()*dt );
 			break;
 
 		case solver_type::Verlet:
 			break;
+
 		default:
 			cerr << "Error: no solver assigned" << endl;
 	}
@@ -120,6 +125,11 @@ void simulator::clear_geometry() {
 
 void simulator::reset_simulation() {
 	stime = 0.0f;
+	for (particle *p : ps) {
+		if (not p->is_fixed()) {
+			global_init(p);
+		}
+	}
 }
 
 void simulator::apply_time_step(float dt) {
@@ -130,18 +140,21 @@ void simulator::apply_time_step(float dt) {
 		if (p->is_fixed()) {
 			continue;
 		}
-		// reset a particle whenever it dies
-		if (p->get_lifetime() < 0.0f) {
+		// reset a particle when it dies
+		if (p->get_lifetime() <= 0.0f) {
 			init_particle(p);
+			// do not smiulate this particle
+			// until the next step
+			continue;
 		}
 		// particles age, like we all do :(
 		p->reduce_lifetime(dt);
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		const vec3& prev_pos = p->get_current_position();
-		update_particle(prev_pos, dt, p);
-		vec3 pred_pos = p->get_current_position();
+		const vec3& prev_pos = p->get_position();
+		update_particle(dt, p);
+		vec3 pred_pos = p->get_position();
 
 		/* The main idea implemented in the following loop
 		 * is the following:
@@ -211,7 +224,7 @@ void simulator::apply_time_step(float dt) {
 				g->update_upon_collision(&pred_particle);
 
 				// keep track of the predicted particle's position
-				pred_pos = pred_particle.get_current_position();
+				pred_pos = pred_particle.get_position();
 			}
 		}
 
@@ -222,13 +235,6 @@ void simulator::apply_time_step(float dt) {
 	}
 
 	stime += dt;
-}
-
-void simulator::reset_simulation() {
-	stime = 0.0;
-	for (particle *p : ps) {
-		global_init(p);
-	}
 }
 
 // SETTERS

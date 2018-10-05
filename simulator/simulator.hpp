@@ -102,10 +102,13 @@ class simulator {
 		 * at all.
 		 *
 		 * It is important to mention that the force applied on a particle
-		 * is always set to be equal to the simulator's gravity (see @ref gravity).
-		 * However, it is set before calling the initialiser function.
-		 * Therefore, it is recommended to use the method @ref particle::add_force
-		 * if it is to be modified.
+		 * is always set to be equal to the simulator's gravity (see @ref
+		 * gravity). However, it is set before calling the initialiser
+		 * function. Therefore, it is recommended to use the method @ref
+		 * particle::add_force if it is to be modified.
+		 *
+		 * It is recommended to set the particle's 'previous' state
+		 * to null values.
 		 */
 		function<void (particle *p)> global_init;
 
@@ -128,7 +131,7 @@ class simulator {
 		 * @param cur_pos Current position of the particle.
 		 * @param dt Time step applied.
 		 */
-		void update_particle(const vec3& cur_pos, float dt, particle *p);
+		void update_particle(float dt, particle *p);
 
 	public:
 		/// Default constructor
@@ -199,9 +202,11 @@ class simulator {
 		void clear_geometry();
 
 		/**
-		 * @brief Resets the simulation to its original state.
+		 * @brief Resets the simulation to its initial state.
 		 *
-		 * Sets to 0 the time of the simulation (see @ref stime).
+		 * Resets the simulation time (see @ref stime) to 0 and
+		 * initialises all particles with the initialser function
+		 * @ref global_init.
 		 */
 		void reset_simulation();
 
@@ -218,15 +223,6 @@ class simulator {
 		 * time must be incremented.
 		 */
 		void apply_time_step(float dt);
-
-		/**
-		 * @brief Resets the simulation to its initial state.
-		 *
-		 * Resets the simulation time (see @ref stime) to 0 and
-		 * initialises all particles with the initialser function
-		 * @ref global_init.
-		 */
-		void reset_simulation();
 
 		// SETTERS
 

@@ -21,13 +21,13 @@ namespace physim {
 class particle {
 	private:
 		/// Current position of the particle.
-		vec3 cur_pos;
-		/// Previous position of the particle.
-		vec3 prev_pos;
+		vec3 pos;
 		/// Force currently applied to the particle.
 		vec3 force;
+		/// Prevous velocity of the particle.
+		vec3 prev_velocity;
 		/// Current velocity of the particle.
-		vec3 velocity;
+		vec3 cur_velocity;
 
 		/// Friction coefficient of the particle.
 		float friction;
@@ -48,12 +48,6 @@ class particle {
 		 * other force will have any effect on it).
 		 */
 		bool fixed;
-
-	private:
-
-		/// Initialises all particle's attribute to null values
-		/// except for @ref cur_pos.
-		void init();
 
 	public:
 		/// Default constructor.
@@ -101,6 +95,16 @@ class particle {
 		*/
 		void reduce_lifetime(float t);
 
+		/// Initialises all particle's attribute to null values except for @ref cur_pos.
+		void init();
+
+		/**
+		 * @brief Saves the current velocity in the particle's state.
+		 *
+		 * Copies @ref cur_velocity into @ref prev_velocity.
+		 */
+		void save_velocity();
+
 		// SETTERS
 
 		/// Sets the current position of the particle. See @ref cur_pos.
@@ -108,14 +112,14 @@ class particle {
 		/// Sets the current position of the particle. See @ref cur_pos.
 		void set_position(const vec3& pos);
 
-		/// Sets the previous position of the particle. See @ref prev_pos.
-		void set_prev_position(const float& x, const float& y, const float& z);
-		/// Sets the previous position of the particle. See @ref prev_pos.
-		void set_prev_position(const vec3& pos);
+		/// Sets the previous velocity of the particle. See @ref prev_velocity.
+		void set_previous_velocity(const float& x, const float& y, const float& z);
+		/// Sets the previous velocity of the particle. See @ref prev_velocity.
+		void set_previous_velocity(const vec3& vel);
 
-		/// Sets the velocity of the particle. See @ref velocity.
+		/// Sets the current velocity of the particle. See @ref cur_velocity.
 		void set_velocity(const float& x, const float& y, const float& z);
-		/// Sets the velocity of the particle. See @ref velocity.
+		/// Sets the current velocity of the particle. See @ref cur_velocity.
 		void set_velocity(const vec3& vel);
 
 		/// Sets the force of the particle. See @ref force.
@@ -135,12 +139,12 @@ class particle {
 		// GETTERS
 
 		/// Returns the current position. See @ref cur_pos.
-		vec3 get_current_position() const;
-		/// Returns the previous position. See @ref prev_pos.
-		vec3 get_previous_position() const;
+		vec3 get_position() const;
 		/// Returns the force applied to the particle. See @ref force.
 		vec3 get_force() const;
-		/// Returns the velocity of the particle. See @ref velocity.
+		/// Returns the previous velocity of the particle. See @ref prev_velocity.
+		vec3 get_previous_velocity() const;
+		/// Returns the current velocity of the particle. See @ref cur_velocity.
 		vec3 get_velocity() const;
 		/// Returns the friction coefficient of the particle. See @ref friction.
 		float get_friction() const;
