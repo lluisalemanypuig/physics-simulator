@@ -5,7 +5,7 @@
  *
  * Main namespace of this library.
  */
-namespace sim {
+namespace physim {
 
     /**
      * @brief Geometry objects.

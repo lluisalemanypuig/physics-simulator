@@ -128,7 +128,6 @@ class simulator {
 		/**
 		 * @brief Update a particle's position.
 		 * @param p Particle to be updated.
-		 * @param cur_pos Current position of the particle.
 		 * @param dt Time step applied.
 		 */
 		void update_particle(float dt, particle *p);

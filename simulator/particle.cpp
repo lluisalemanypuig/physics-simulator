@@ -22,10 +22,11 @@ particle::particle(const vec3& p) {
 }
 
 particle::particle(const particle& p) {
+	prev_pos = p.prev_pos;
 	cur_pos = p.cur_pos;
-	force = p.force;
 	prev_velocity = p.prev_velocity;
 	cur_velocity = p.cur_velocity;
+	force = p.force;
 
 	friction = p.friction;
 	bouncing = p.bouncing;
@@ -37,13 +38,6 @@ particle::~particle() { }
 
 // MODIFIERS
 
-void particle::add_force(const float& x, const float& y, const float& z) {
-	force += vec3(x,y,z);
-}
-void particle::add_force(const vec3& f) {
-	force += f;
-}
-
 void particle::translate(const vec3& v) {
 	cur_pos += v;
 }
@@ -52,16 +46,24 @@ void particle::acceleterate(const vec3& v) {
 	cur_velocity += v;
 }
 
+void particle::add_force(const float& x, const float& y, const float& z) {
+	force += vec3(x,y,z);
+}
+void particle::add_force(const vec3& f) {
+	force += f;
+}
+
 void particle::reduce_lifetime(float t) {
 	assert(t >= 0.0f);
 	lifetime -= t;
 }
 
 void particle::init() {
-	cur_pos = vec3(0.0f,0.0f,0.0f);
-	force = vec3(0.0f,0.0f,0.0f);
+	prev_pos = vec3(0.0f,0.0f,0.0f);
+	//cur_pos = vec3(0.0f,0.0f,0.0f);
 	prev_velocity = vec3(0.0f,0.0f,0.0f);
 	cur_velocity = vec3(0.0f,0.0f,0.0f);
+	force = vec3(0.0f,0.0f,0.0f);
 	friction = 0.0f;
 	bouncing = 1.0f;
 	lifetime = 10.0f;
@@ -131,23 +133,23 @@ void particle::set_fixed(bool f) {
 
 // GETTERS
 
-vec3 particle::get_previous_position() const {
+const vec3& particle::get_previous_position() const {
 	return prev_pos;
 }
 
-vec3 particle::get_position() const {
+const vec3& particle::get_position() const {
 	return cur_pos;
 }
 
-vec3 particle::get_previous_velocity() const {
+const vec3& particle::get_previous_velocity() const {
 	return prev_velocity;
 }
 
-vec3 particle::get_velocity() const {
+const vec3& particle::get_velocity() const {
 	return cur_velocity;
 }
 
-vec3 particle::get_force() const {
+const vec3& particle::get_force() const {
 	return force;
 }
 
