@@ -7,17 +7,17 @@ namespace geom {
 
 // PUBLIC
 
-plane::plane() {
+plane::plane() : geometry() {
 	normal = vec3(0.0f,0.0f,0.0f);
 	dconst = 0.0f;
 }
 
-plane::plane(const vec3& n, const vec3& p) {
+plane::plane(const vec3& n, const vec3& p) : geometry() {
 	normal = glm::normalize(n);
 	dconst = -glm::dot(p, normal);
 }
 
-plane::plane(const vec3& p0, const vec3& p1, const vec3& p2) {
+plane::plane(const vec3& p0, const vec3& p1, const vec3& p2) : geometry() {
 	vec3 v1 = p1 - p0;
 	vec3 v2 = p2 - p0;
 	normal = glm::normalize(glm::cross(v1, v2));

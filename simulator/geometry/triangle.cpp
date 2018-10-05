@@ -16,9 +16,9 @@ namespace geom {
 
 // PUBLIC
 
-triangle::triangle() { }
+triangle::triangle() : geometry() { }
 
-triangle::triangle(const vec3& p1,const vec3& p2,const vec3& p3) {
+triangle::triangle(const vec3& p1,const vec3& p2,const vec3& p3) : geometry() {
 	v1 = p1;
 	v2 = p2;
 	v3 = p3;
