@@ -30,7 +30,15 @@ namespace study_cases {
 	 * Simply a particle bouncing vertically
 	 * on a plane (the floor).
 	 */
-	void floor(int argc, char *argv[]);
+	void bounce_on_floor(int argc, char *argv[]);
+
+	/**
+	 * @brief Floor study case.
+	 *
+	 * Simply a particle bouncing vertically
+	 * on a plane (the floor).
+	 */
+	void roll_on_floor(int argc, char *argv[]);
 
 	/**
 	 * @brief Triangle-triangle-floor case

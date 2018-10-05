@@ -19,9 +19,10 @@ CONFIG(debug, debug|release) {
 
 SOURCES += main.cpp \
     utils.cpp \
-    floor.cpp \
     tri_tri_plane.cpp \
-    study_cases.cpp
+    study_cases.cpp \
+    bounce_floor.cpp \
+    roll_floor.cpp
 
 HEADERS += \
     study_cases.hpp \

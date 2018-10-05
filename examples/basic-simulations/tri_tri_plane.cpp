@@ -18,15 +18,16 @@ namespace study_cases {
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
-		cout << "    --lifetime t:   the lifetime of the particle" << endl;
-		cout << "    --bounce b:     bouncing coefficient of the particle" << endl;
-		cout << "    --total-time t: total time of the simulation" << endl;
-		cout << "    --step t:       time step of the simulation" << endl;
+		cout << "    --lifetime t:   the lifetime of the particle.         Default: 2.0" << endl;
+		cout << "    --total-time t: total time of the simulation.         Default: 2.0" << endl;
+		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
+		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
+		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
 		cout << endl;
-		cout << "    --ramp-plane      : make the simulation use the 'ramp' as a plane" << endl;
-		cout << "    --bouncer-plane   : make the simulation use the 'bouncer' as a plane" << endl;
-		cout << "    --ramp-triangle   : make the simulation use the 'ramp' as a triangle" << endl;
-		cout << "    --bouncer-triangle: make the simulation use the 'bouncer' as a triangle" << endl;
+		cout << "    --ramp-plane      : make the simulation use the 'ramp' as a plane.       Default: true" << endl;
+		cout << "    --bouncer-plane   : make the simulation use the 'bouncer' as a plane.    Default: true" << endl;
+		cout << "    --ramp-triangle   : make the simulation use the 'ramp' as a triangle.    Default: false" << endl;
+		cout << "    --bouncer-triangle: make the simulation use the 'bouncer' as a triangle. Default: false" << endl;
 	}
 
 	void make_ramp_plane(simulator& S) {
@@ -64,8 +65,9 @@ namespace study_cases {
 	void tri_tri_floor(int argc, char *argv[]) {
 		float dt = 0.01f;
 		float total_time = 2.0f;
-		float bounce = 1.0f;
 		float lifetime = 2.0f;
+		float bounce = 1.0f;
+		float friction = 0.0f;
 
 		bool ramp_plane = true;
 		bool bouncer_plane = true;
@@ -79,16 +81,20 @@ namespace study_cases {
 				lifetime = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--bounce") == 0) {
-				bounce = atof(argv[i + 1]);
-				++i;
-			}
 			else if (strcmp(argv[i], "--total-time") == 0) {
 				total_time = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--step") == 0) {
 				dt = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--bounce") == 0) {
+				bounce = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--friction") == 0) {
+				friction = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--ramp-plane") == 0) {
@@ -110,17 +116,22 @@ namespace study_cases {
 
 		simulator S(solver_type::EulerSemi);
 		S.set_initialiser(
-		[lifetime,bounce](particle *p) {
-			p->set_position(vec3(0.0f, 10.0f, 0.0f));
+		[lifetime,bounce,friction](particle *p) {
 			p->set_lifetime(lifetime);
+			p->set_position(vec3(0.0f, 10.0f, 0.0f));
 			p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
-			p->set_bouncing(bounce);
 		}
 		);
 
 		// -----------------------------------------
 		// -- initialise simulator
-		const particle *p = S.add_particle();
+		particle *p = new particle();
+		p->set_bouncing(bounce);
+		p->set_friction(friction);
+		p->set_lifetime(lifetime);
+		p->set_position(vec3(0.0f, 10.0f, 0.0f));
+		p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
+		S.add_particle(p);
 
 		if (ramp_plane) {
 			make_ramp_plane(S);
@@ -145,9 +156,9 @@ namespace study_cases {
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			S.apply_time_step(dt);
 			vec3 cur_pos = p->get_current_position();
 			trajectory.push_back(cur_pos);
+			S.apply_time_step(dt);
 		}
 
 		timing::time_point end = timing::now();
