@@ -25,6 +25,8 @@ class sphere : public geometry {
 	public:
 		/// Default constructor.
 		sphere();
+		/// Constructor with centre and radius.
+		sphere(const vec3& c, float r);
 		/// Copy constructor.
 		sphere(const sphere& s);
 		/// Destructor.

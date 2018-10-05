@@ -7,7 +7,12 @@ namespace geom {
 
 // PUBLIC
 
-sphere::sphere() { }
+sphere::sphere() : geometry() { }
+
+sphere::sphere(const vec3& c, float r) : geometry() {
+	C = c;
+	R = r;
+}
 
 sphere::sphere(const sphere& s) : geometry(s) {
 	C = s.C;
@@ -61,7 +66,6 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 		return false;
 	}
 
-	/* formula from the slides... */
 	/*
 	 * The intersection point between a segment and
 	 * a sphere is the point of the segment
@@ -77,32 +81,32 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 	 *
 	 * where
 	 *	a = v**v
-	 *	b = 2v**(p - C)
+	 *	b = 2( v**(p - C) )
 	 *	c = C**C + p**p - 2(p**C) - r*r
 	 *
-	 * with
-	 *	v = q - p
 	 */
 
 	// coefficients of quadratic equation
-	vec3 v = q - p;
-	float a = glm::dot(v,v);
-	float b = 2.0f*glm::dot(v, p - C);
-	float c = glm::dot(C,C) + glm::dot(p,p) - 2.0f*glm::dot(p,C) - R*R;
+	const vec3 v = q - p;
+	const float a = glm::dot(v,v);
+	const float b = 2.0f*glm::dot(p - C,v);
+	const float c = glm::dot(C,C) + glm::dot(p,p) - 2.0f*glm::dot(p,C) - R*R;
 
 	// discriminant of the quadratic equation
-	float discr = b*b - 4.0f*a*c;
+	const float discr = b*b - 4.0f*a*c;
 
 	// make sure the discriminant is positive
 	// to be safe that we can compute the square root
 	assert(discr >= 0.0f);
 
-	float L = (-b*b + sqrt(discr))/(2.0f*a);
-	// if the solution with '+' is not valid
-	// the compute the other solution
-	if (0.0f < L or L > 1.0f) {
-		L = (-b*b - sqrt(discr))/(2.0f*a);
+	float L = (-b + sqrt(discr))/(2.0f*a);
+
+	if (L < 0.0f or 1.0f < L) {
+		L = (-b - sqrt(discr))/(2.0f*a);
 	}
+
+	// make sure that L has the right value
+	assert(0.0f <= L and L <= 1.0f);
 
 	// compute intersection point
 	p_inter = (1 - L)*p + L*q;
@@ -116,8 +120,11 @@ void sphere::update_upon_collision(particle *p) const {
 	// that goes through the intersection point
 
 	// compute intersection point
+	const vec3& prev_pos = p->get_previous_position();
+	const vec3& next_pos = p->get_position();
+
 	vec3 I;
-	bool r = intersec_segment(p->get_previous_position(), p->get_position(), I);
+	bool r = intersec_segment(prev_pos, next_pos, I);
 	if (not r) {
 		return;
 	}

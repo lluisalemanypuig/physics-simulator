@@ -152,8 +152,16 @@ void simulator::apply_time_step(float dt) {
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		const vec3& prev_pos = p->get_position();
 		update_particle(dt, p);
+
+		/* The following two lines are equivalent to:
+		 *
+		 *	vec3 prev_pos = p->get_position()
+		 *	update_particle(dt, p);
+		 *	vec3 pred_pos = p->get_position();
+		 */
+
+		const vec3& prev_pos = p->get_previous_position();
 		vec3 pred_pos = p->get_position();
 
 		/* The main idea implemented in the following loop
