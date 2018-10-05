@@ -57,12 +57,16 @@ enum class solver_type : int8_t {
  * movement of particles and systems of particles (like
  * springs systems).
  *
- * Use method @ref apply_time_step(float) to make the
- * simulation run.
+ * Use method @ref apply_time_step to run the simulation
+ * step by step.
  *
  * Use method @ref add_geometry to add fixed geometrical
  * objects (spheres, triangles, planes) with which the
  * particles may collide with.
+ *
+ * Function @ref reset_simulation resets all particle to
+ * their original state using the initialiser function
+ * (see @ref global_init).
  */
 class simulator {
 	private:
@@ -97,7 +101,7 @@ class simulator {
 		 * that is, the attribtues of the particle are not modified
 		 * at all.
 		 *
-		 * It is important to mention that the force applied to a particle
+		 * It is important to mention that the force applied on a particle
 		 * is always set to be equal to the simulator's gravity (see @ref gravity).
 		 * However, it is set before calling the initialiser function.
 		 * Therefore, it is recommended to use the method @ref particle::add_force
@@ -214,6 +218,15 @@ class simulator {
 		 * time must be incremented.
 		 */
 		void apply_time_step(float dt);
+
+		/**
+		 * @brief Resets the simulation to its initial state.
+		 *
+		 * Resets the simulation time (see @ref stime) to 0 and
+		 * initialises all particles with the initialser function
+		 * @ref global_init.
+		 */
+		void reset_simulation();
 
 		// SETTERS
 

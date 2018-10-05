@@ -224,6 +224,13 @@ void simulator::apply_time_step(float dt) {
 	stime += dt;
 }
 
+void simulator::reset_simulation() {
+	stime = 0.0;
+	for (particle *p : ps) {
+		global_init(p);
+	}
+}
+
 // SETTERS
 
 void simulator::set_gravity(const vec3& g) {
