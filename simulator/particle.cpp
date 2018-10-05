@@ -8,21 +8,21 @@ namespace physim {
 
 particle::particle() {
 	init();
-	pos = vec3(0.0f,0.0f,0.0f);
+	cur_pos = vec3(0.0f,0.0f,0.0f);
 }
 
 particle::particle(const float& x, const float& y, const float& z) {
 	init();
-	pos = vec3(x,y,z);
+	cur_pos = vec3(x,y,z);
 }
 
 particle::particle(const vec3& p) {
 	init();
-	pos = p;
+	cur_pos = p;
 }
 
 particle::particle(const particle& p) {
-	pos = p.pos;
+	cur_pos = p.cur_pos;
 	force = p.force;
 	prev_velocity = p.prev_velocity;
 	cur_velocity = p.cur_velocity;
@@ -45,7 +45,7 @@ void particle::add_force(const vec3& f) {
 }
 
 void particle::translate(const vec3& v) {
-	pos += v;
+	cur_pos += v;
 }
 
 void particle::acceleterate(const vec3& v) {
@@ -58,7 +58,7 @@ void particle::reduce_lifetime(float t) {
 }
 
 void particle::init() {
-	pos = vec3(0.0f,0.0f,0.0f);
+	cur_pos = vec3(0.0f,0.0f,0.0f);
 	force = vec3(0.0f,0.0f,0.0f);
 	prev_velocity = vec3(0.0f,0.0f,0.0f);
 	cur_velocity = vec3(0.0f,0.0f,0.0f);
@@ -68,17 +68,28 @@ void particle::init() {
 	fixed = false;
 }
 
+void particle::save_position() {
+	prev_pos = cur_pos;
+}
+
 void particle::save_velocity() {
 	prev_velocity = cur_velocity;
 }
 
 // SETTERS
 
+void particle::set_previous_position(const float& x, const float& y, const float& z) {
+	prev_pos = vec3(x,y,z);
+}
+void particle::set_previous_position(const vec3& p) {
+	prev_pos = p;
+}
+
 void particle::set_position(const float& x, const float& y, const float& z) {
-	pos = vec3(x,y,z);
+	cur_pos = vec3(x,y,z);
 }
 void particle::set_position(const vec3& p) {
-	pos = p;
+	cur_pos = p;
 }
 
 void particle::set_previous_velocity(const float& x, const float& y, const float& z) {
@@ -120,12 +131,12 @@ void particle::set_fixed(bool f) {
 
 // GETTERS
 
-vec3 particle::get_position() const {
-	return pos;
+vec3 particle::get_previous_position() const {
+	return prev_pos;
 }
 
-vec3 particle::get_force() const {
-	return force;
+vec3 particle::get_position() const {
+	return cur_pos;
 }
 
 vec3 particle::get_previous_velocity() const {
@@ -134,6 +145,10 @@ vec3 particle::get_previous_velocity() const {
 
 vec3 particle::get_velocity() const {
 	return cur_velocity;
+}
+
+vec3 particle::get_force() const {
+	return force;
 }
 
 float particle::get_friction() const {

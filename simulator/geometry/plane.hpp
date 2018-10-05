@@ -40,7 +40,7 @@ class plane : public geometry {
 		/// Default constructor.
 		plane();
 		/**
-		 * @brief Construct a plane with a point and a normal.
+		 * @brief Construct a plane with a normal and a point.
 		 * @param n Normal vector of the plane.
 		 * @param p Point.
 		 * @post @ref normal takes the normalisation of the vector @e n.

@@ -20,14 +20,16 @@ namespace physim {
  */
 class particle {
 	private:
+		/// Previous position of the particle.
+		vec3 prev_pos;
 		/// Current position of the particle.
-		vec3 pos;
-		/// Force currently applied to the particle.
-		vec3 force;
+		vec3 cur_pos;
 		/// Prevous velocity of the particle.
 		vec3 prev_velocity;
 		/// Current velocity of the particle.
 		vec3 cur_velocity;
+		/// Force currently applied to the particle.
+		vec3 force;
 
 		/// Friction coefficient of the particle.
 		float friction;
@@ -55,7 +57,7 @@ class particle {
 		/// Construct particle with position as 3 float values.
 		particle(const float& x, const float& y, const float& z);
 		/// Construct particle with position as a vec3.
-		particle(const vec3& pos);
+		particle(const vec3& cur_pos);
 		// Copy constructor.
 		particle(const particle& p);
 		/// Destructor.
@@ -99,6 +101,12 @@ class particle {
 		void init();
 
 		/**
+		 * @brief Saves the current position in the particle's state.
+		 *
+		 * Copies @ref cur_pos into @ref prev_pos.
+		 */
+		void save_position();
+		/**
 		 * @brief Saves the current velocity in the particle's state.
 		 *
 		 * Copies @ref cur_velocity into @ref prev_velocity.
@@ -107,10 +115,15 @@ class particle {
 
 		// SETTERS
 
+		/// Sets the previous position of the particle. See @ref prev_pos.
+		void set_previous_position(const float& x, const float& y, const float& z);
+		/// Sets the previous position of the particle. See @ref prev_pos.
+		void set_previous_position(const vec3& cur_pos);
+
 		/// Sets the current position of the particle. See @ref cur_pos.
 		void set_position(const float& x, const float& y, const float& z);
 		/// Sets the current position of the particle. See @ref cur_pos.
-		void set_position(const vec3& pos);
+		void set_position(const vec3& cur_pos);
 
 		/// Sets the previous velocity of the particle. See @ref prev_velocity.
 		void set_previous_velocity(const float& x, const float& y, const float& z);
@@ -138,14 +151,16 @@ class particle {
 
 		// GETTERS
 
+		/// Returns the previous position. See @ref prev_pos.
+		vec3 get_previous_position() const;
 		/// Returns the current position. See @ref cur_pos.
 		vec3 get_position() const;
-		/// Returns the force applied to the particle. See @ref force.
-		vec3 get_force() const;
 		/// Returns the previous velocity of the particle. See @ref prev_velocity.
 		vec3 get_previous_velocity() const;
 		/// Returns the current velocity of the particle. See @ref cur_velocity.
 		vec3 get_velocity() const;
+		/// Returns the force applied to the particle. See @ref force.
+		vec3 get_force() const;
 		/// Returns the friction coefficient of the particle. See @ref friction.
 		float get_friction() const;
 		/// Returns the bouncing coefficient of the particle. See @ref bouncing.

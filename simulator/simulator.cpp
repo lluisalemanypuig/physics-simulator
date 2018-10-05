@@ -13,7 +13,7 @@ void simulator::update_particle(float dt, particle *p) {
 
 	switch (solver) {
 		case solver_type::EulerOrig:
-			//p->save_position();
+			p->save_position();
 			p->save_velocity();
 
 			p->translate( p->get_velocity()*dt );
@@ -21,7 +21,7 @@ void simulator::update_particle(float dt, particle *p) {
 			break;
 
 		case solver_type::EulerSemi:
-			//p->save_position();
+			p->save_position();
 			p->save_velocity();
 
 			p->acceleterate( p->get_force()*dt );
@@ -218,6 +218,8 @@ void simulator::apply_time_step(float dt) {
 
 			if (g->intersec_segment(prev_pos, pred_pos)) {
 				collide = true;
+
+				// recover original particle's state
 				pred_particle = *p;
 
 				// geometry updates the predicted particle
