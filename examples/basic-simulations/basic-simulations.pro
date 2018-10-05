@@ -17,14 +17,16 @@ CONFIG(debug, debug|release) {
     LIBS += -L../../simulator-debug/ -lsimulator
 }
 
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     utils.cpp \
-    tri_tri_plane.cpp \
     study_cases.cpp \
+    tri_tri_plane.cpp \
     bounce_floor.cpp \
+    bounce_sphere.cpp \
     roll_floor.cpp
 
 HEADERS += \
-    study_cases.hpp \
-    utils.hpp
+    utils.hpp \
+    study_cases.hpp
 

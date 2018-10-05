@@ -5,6 +5,7 @@ namespace study_cases {
 	void list_all_cases() {
 		cout << "bounce-floor : particle bouncing on a floor." << endl;
 		cout << "roll-floor   : particle rolling on a floor." << endl;
+		cout << "bounce-sphere: particle bouncing on a sphere." << endl;
 		cout << "tri2f        : two triangles on a floor. The particle" << endl;
 		cout << "               falls directly on a triangle and bounces." << endl;
 	}
@@ -20,6 +21,9 @@ namespace study_cases {
 		}
 		else if (strcmp(argv[1], "roll-floor") == 0) {
 			roll_on_floor(argc, argv);
+		}
+		else if (strcmp(argv[1], "bounce-sphere") == 0) {
+			bounce_on_sphere(argc, argv);
 		}
 		else if (strcmp(argv[1], "tri2f") == 0) {
 			tri_tri_floor(argc, argv);

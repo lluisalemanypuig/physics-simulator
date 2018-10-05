@@ -24,25 +24,25 @@ namespace study_cases {
 	void list_all_cases();
 	void choose_case(int argc, char *argv[]);
 
-	/**
-	 * @brief Floor study case.
-	 *
+	/* -- Floor (1) study case --
 	 * Simply a particle bouncing vertically
 	 * on a plane (the floor).
 	 */
 	void bounce_on_floor(int argc, char *argv[]);
 
-	/**
-	 * @brief Floor study case.
-	 *
+	/* -- Floor (2) study case --
 	 * Simply a particle bouncing vertically
 	 * on a plane (the floor).
 	 */
 	void roll_on_floor(int argc, char *argv[]);
 
-	/**
-	 * @brief Triangle-triangle-floor case
-	 *
+	/* -- Sphere study case --
+	 * A aprticle falling onto a sphere below its
+	 * initial position.
+	 */
+	void bounce_on_sphere(int argc, char *argv[]);
+
+	/* -- Triangle-triangle-floor case --
 	 * This scene contains two triangles and a floor.
 	 * The trangles are almost facing each other.
 	 */
