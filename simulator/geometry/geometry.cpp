@@ -6,7 +6,7 @@ namespace geom {
 // PUBLIC
 
 geometry::geometry() { }
-geometry::geometry(const geometry& g) { }
+geometry::geometry(const geometry& ) { }
 geometry::~geometry() { }
 
 geom_type geometry::get_geom_type() const {
