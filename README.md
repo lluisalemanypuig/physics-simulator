@@ -24,11 +24,11 @@ the version 0.9.5)
 
 One can build the library by issuing the following commands:
 
-    cd /path/to/library
-    mkdir simulator-release
-    qmake -makefile simulator/simulator.pro -o simulator-release/Makefile
-    cd simulator-release
-    make
+        cd /path/to/library
+        mkdir simulator-release
+        qmake -makefile simulator/simulator.pro -o simulator-release/Makefile
+        cd simulator-release
+        make
 
 ## Context
 
