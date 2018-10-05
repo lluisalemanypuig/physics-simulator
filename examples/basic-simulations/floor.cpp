@@ -61,15 +61,16 @@ namespace study_cases {
 		// -----------------------------------------
 		// -- initialise simulator
 
+		// the only particle bouncing up and down,
+		// initialised using the function.
 		const particle *p = S.add_particle();
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
-
 		// -----------------------------------------
 
+		// execute simulation
 		timing::time_point begin = timing::now();
-
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
@@ -79,6 +80,11 @@ namespace study_cases {
 		}
 
 		timing::time_point end = timing::now();
+
+		S.clear_geometry();
+		S.clear_particles();
+
+		// output result
 		cout << "Simulation completed in " << timing::elapsed_seconds(begin, end) << " s" << endl;
 
 		cout.setf(ios::fixed);
