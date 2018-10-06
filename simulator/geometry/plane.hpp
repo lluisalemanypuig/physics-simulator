@@ -47,6 +47,18 @@ class plane : public geometry {
 		 */
 		plane(const vec3& n, const vec3& p);
 		/**
+		 * @brief Construct a plane with a normal and the equation's independent term.
+		 *
+		 * The plane's equation is
+		 \verbatim
+		 dot(n,X) + d = 0
+		 \endverbatim
+		 * @param n Normal vector of the plane.
+		 * @param d Independent term of the plane's equation.
+		 * @post @ref normal takes the normalisation of the vector @e n.
+		 */
+		plane(const vec3& n, float d);
+		/**
 		 * @brief Construct plane with three points.
 		 *
 		 * The normal of the plane is defined as the cross product

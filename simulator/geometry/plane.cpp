@@ -17,6 +17,11 @@ plane::plane(const vec3& n, const vec3& p) : geometry() {
 	dconst = -glm::dot(p, normal);
 }
 
+plane::plane(const vec3& n, float d) : geometry() {
+	normal = glm::normalize(n);
+	dconst = d;
+}
+
 plane::plane(const vec3& p0, const vec3& p1, const vec3& p2) : geometry() {
 	vec3 v1 = p1 - p0;
 	vec3 v2 = p2 - p0;
