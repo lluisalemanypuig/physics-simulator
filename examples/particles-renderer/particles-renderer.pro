@@ -2,23 +2,34 @@ TEMPLATE = app
 TARGET = particles-renderer
 
 QT += core gui opengl
-CONFIG  += c++11
+CONFIG += c++11
 
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-INCLUDEPATH += .
+INCLUDEPATH += . ../..
+
+CONFIG(release, debug|release) {
+	LIBS += -L../../simulator-release/ -lsimulator
+}
+CONFIG(debug, debug|release) {
+	LIBS += -L../../simulator-debug/ -lsimulator
+}
 
 FORMS += mainwindow.ui
 
 SOURCES +=          \
     main.cpp        \
     mainwindow.cpp \
-    simulation_renderer.cpp
+    simulation_renderer.cpp \
+    utils.cpp \
+    scene_0.cpp \
+    scene_lab.cpp
 
 HEADERS +=          \
-    mainwindow.h \
-    simulation_renderer.hpp
+    simulation_renderer.hpp \
+    utils.hpp \
+    mainwindow.hpp
 
 DISTFILES += \
     shaders/simpleshader.vert \
