@@ -199,12 +199,21 @@ class simulator {
 		 * the container.
 		 */
 		void clear_geometry();
+		/**
+		 * @brief Clears the simulation to an empty state;
+		 *
+		 * Deletes all particles, geometry and resets the simulation time.
+		 * 
+		 * That is, calls @ref clear_particles, @ref clear_geometry,
+		 * and sets @ref stime to 0.
+		 */
+		void clear_simulation();
 
 		/**
 		 * @brief Resets the simulation to its initial state.
 		 *
 		 * Resets the simulation time (see @ref stime) to 0 and
-		 * initialises all particles with the initialser function
+		 * initialises all particles with the initialiser function
 		 * @ref global_init.
 		 */
 		void reset_simulation();

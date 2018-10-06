@@ -87,9 +87,7 @@ void simulator::remove_particle(size_t i) {
 
 void simulator::clear_particles() {
 	for (particle *p : ps) {
-		if (p != nullptr) {
-			delete p;
-		}
+		delete p;
 	}
 	ps.clear();
 }
@@ -116,11 +114,15 @@ void simulator::remove_geometry(size_t i) {
 
 void simulator::clear_geometry() {
 	for (geometry *g : scene_fixed) {
-		if (g != nullptr) {
-			delete g;
-		}
+		delete g;
 	}
 	scene_fixed.clear();
+}
+
+void simulator::clear_simulation() {
+	clear_particles();
+	clear_geometry();
+	stime = 0.0f;
 }
 
 void simulator::reset_simulation() {
@@ -140,11 +142,11 @@ void simulator::apply_time_step(float dt) {
 		if (p->is_fixed()) {
 			continue;
 		}
-		// reset a particle when it dies
+		// Reset a particle when it dies.
+		// Do not smiulate this particle
+		// until the next step
 		if (p->get_lifetime() <= 0.0f) {
 			init_particle(p);
-			// do not smiulate this particle
-			// until the next step
 			continue;
 		}
 		// particles age, like we all do :(
@@ -217,6 +219,9 @@ void simulator::apply_time_step(float dt) {
 		// Set boolean to true if any collision took place.
 		bool collide = false;
 
+		cout << "----------------------" << endl;
+		cout << "At (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
+
 		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
 			const geometry *g = scene_fixed[i];
 
@@ -224,7 +229,15 @@ void simulator::apply_time_step(float dt) {
 			// then the geometry is in charge of updating
 			// this particle's position, velocity, ...
 
+			cout << "Detect collision of segment:" << endl;
+			cout << "    (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
+			cout << "    (" << pred_pos.x << "," << pred_pos.y << "," << pred_pos.z << ")" << endl;
+			cout << "against geometry:" << endl;
+			g->display();
+
 			if (g->intersec_segment(prev_pos, pred_pos)) {
+				cout << "Collision!" << endl;
+
 				collide = true;
 
 				// recover original particle's state
@@ -235,6 +248,9 @@ void simulator::apply_time_step(float dt) {
 
 				// keep track of the predicted particle's position
 				pred_pos = pred_particle.get_position();
+			}
+			else {
+				cout << "No collision!" << endl;
 			}
 		}
 
