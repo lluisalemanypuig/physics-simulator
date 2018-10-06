@@ -24,7 +24,8 @@ SOURCES += \
     tri_tri_plane.cpp \
     bounce_floor.cpp \
     bounce_sphere.cpp \
-    roll_floor.cpp
+    roll_floor.cpp \
+    roll_plane_sphere.cpp
 
 HEADERS += \
     utils.hpp \

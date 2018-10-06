@@ -48,4 +48,12 @@ namespace study_cases {
 	 */
 	void tri_tri_floor(int argc, char *argv[]);
 
+	/* -- Roll-plane-sphere case --
+	 * This scene contains a plane and a sphere.
+	 * The particle starts rolling down the plane
+	 * then collides with a sphere at the bottom of
+	 * the plane.
+	 */
+	void roll_plane_sphere(int argc, char *argv[]);
+
 } // -- namespace study_cases

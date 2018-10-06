@@ -65,7 +65,7 @@ namespace study_cases {
 		S.set_initialiser(
 		[lifetime,bounce,friction,ix](particle *p) {
 			p->set_lifetime(lifetime);
-			p->set_position(vec3(ix,10.0f,0.0f));
+			p->set_position(vec3(ix,5.0f,0.0f));
 			p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
 			p->set_velocity(vec3(0.0f,0.0f,0.0f));
 
@@ -82,9 +82,11 @@ namespace study_cases {
 		// initialised using the function.
 		const particle *p = S.add_particle();
 
-		sphere *ball = new sphere(vec3(0.0f,0.0f,0.0f), 5.0f);
-
+		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
 		S.add_geometry(ball);
+
+		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
+		S.add_geometry(floor);
 		// -----------------------------------------
 
 		// execute simulation
