@@ -68,22 +68,35 @@ namespace study_cases {
 			}
 		}
 
-		simulator S(solver_type::EulerSemi);
-		S.set_initialiser(
-		[lifetime,bounce,friction,vx](particle *p) {
-			p->set_lifetime(lifetime);
-			p->set_position(vec3(10.0f,0.0f,0.0f));
-			p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
-			p->set_velocity(vec3(vx,0.0f,0.0f));
-
-			p->set_bouncing(bounce);
-			p->set_friction(friction);
-			p->set_lifetime(lifetime);
-		}
+		initialiser init;
+		init.set_pos_initialiser(
+			[](particle *p) {
+				p->set_previous_position(vec3(0.0f,0.0f,0.0f));
+				p->set_position(vec3(10.0f,0.0f,0.0f));
+			}
 		);
+		init.set_vel_initialiser(
+			[&](particle *p) {
+				p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
+				p->set_velocity(vec3(vx,0.0f,0.0f));
+			}
+		);
+		init.set_lifetime_initialiser(
+			[&](particle *p) { p->set_lifetime(lifetime); }
+		);
+		init.set_bounce_initialiser(
+			[&](particle *p) { p->set_bouncing(bounce); }
+		);
+		init.set_friction_initialiser(
+			[&](particle *p) { p->set_friction(friction); }
+		);
+
+		simulator S(solver_type::EulerSemi);
 
 		// -----------------------------------------
 		// -- initialise simulator
+
+		S.set_initialiser(init);
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
