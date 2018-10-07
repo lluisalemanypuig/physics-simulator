@@ -34,6 +34,17 @@ void initialiser::operator()(particle *p) const {
 	initialise_particle(p);
 }
 
+initialiser& initialiser::operator= (const initialiser& i) {
+	pos = i.pos;
+	vel = i.vel;
+	force = i.force;
+	bounce = i.bounce;
+	friction = i.friction;
+	lifetime = i.lifetime;
+	fixed = i.fixed;
+	return *this;
+}
+
 // SETTERS
 
 void initialiser::set_pos_initialiser(const partinit& f) {
@@ -97,8 +108,6 @@ const partinit& initialiser::set_fixed_initialiser() const {
 // INITIALISE A PARTICLE
 
 void initialiser::initialise_particle(particle *p) const {
-
-
 	pos(p);
 	vel(p);
 	force(p);
@@ -107,6 +116,5 @@ void initialiser::initialise_particle(particle *p) const {
 	lifetime(p);
 	fixed(p);
 }
-
 
 } // -- namespace physim

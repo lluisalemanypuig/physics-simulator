@@ -218,8 +218,8 @@ void simulator::apply_time_step(float dt) {
 		// Set boolean to true if any collision took place.
 		bool collide = false;
 
-		cout << "----------------------" << endl;
-		cout << "At (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
+		//cout << "----------------------" << endl;
+		//cout << "At (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
 
 		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
 			const geometry *g = scene_fixed[i];
@@ -228,14 +228,14 @@ void simulator::apply_time_step(float dt) {
 			// then the geometry is in charge of updating
 			// this particle's position, velocity, ...
 
-			cout << "Detect collision of segment:" << endl;
-			cout << "    (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
-			cout << "    (" << pred_pos.x << "," << pred_pos.y << "," << pred_pos.z << ")" << endl;
-			cout << "against geometry:" << endl;
-			g->display();
+			//cout << "Detect collision of segment:" << endl;
+			//cout << "    (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
+			//cout << "    (" << pred_pos.x << "," << pred_pos.y << "," << pred_pos.z << ")" << endl;
+			//cout << "against geometry:" << endl;
+			//g->display();
 
 			if (g->intersec_segment(prev_pos, pred_pos)) {
-				cout << "Collision!" << endl;
+				//cout << "Collision!" << endl;
 
 				collide = true;
 
@@ -249,7 +249,7 @@ void simulator::apply_time_step(float dt) {
 				pred_pos = pred_particle.get_position();
 			}
 			else {
-				cout << "No collision!" << endl;
+				//cout << "No collision!" << endl;
 			}
 		}
 

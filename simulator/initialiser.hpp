@@ -71,6 +71,9 @@ class initialiser {
 		 */
 		void operator()(particle *p) const;
 
+		/// Assignation operator.
+		initialiser& operator= (const initialiser& i);
+
 		// SETTERS
 
 		/// Sets position initialiser. See @ref pos.
