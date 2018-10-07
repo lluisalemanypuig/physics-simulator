@@ -18,21 +18,22 @@ CONFIG(debug, debug|release) {
 
 FORMS += mainwindow.ui
 
-SOURCES +=          \
-    main.cpp        \
-    mainwindow.cpp \
-    simulation_renderer.cpp \
-    utils.cpp \
-    scene_0.cpp \
+SOURCES +=					\
+	main.cpp				\
+	mainwindow.cpp			\
+	simulation_renderer.cpp	\
+	utils.cpp				\
+	scene_0.cpp				\
     scene_lab.cpp
 
-HEADERS +=          \
+HEADERS +=					\
     simulation_renderer.hpp \
-    utils.hpp \
-    mainwindow.hpp
+	utils.hpp				\
+	mainwindow.hpp			\
+    render_geometry.hpp
 
-DISTFILES += \
-    shaders/simpleshader.vert \
+DISTFILES +=					\
+	shaders/simpleshader.vert	\
     shaders/simpleshader.frag
 
 RESOURCES += \

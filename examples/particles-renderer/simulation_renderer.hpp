@@ -1,6 +1,7 @@
 #pragma once
 
 // C++ includes
+#include <functional>
 #include <iostream>
 using namespace std;
 
@@ -15,8 +16,10 @@ using namespace std;
 // Simulator includes
 #include <simulator/simulator.hpp>
 using namespace physim;
+using namespace geom;
 
 // Custom includes
+#include "render_geometry.hpp"
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -35,15 +38,17 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		bool exe_sim;	// when false, stop the running simulation
 		bool running;	// is true iff the simulation is running
 
-		int i;
-
-		simulator S;	// simulator object
-		float dt;		// time step
-		float tt;		// simulation total time
+		vector<rgeom *> G;	// wrapped geometrical objects of the scene
+		simulator S;		// simulator object
+		bool scene_cleared;	// if true then the simulation was cleared
+							// the scene needs to be remade
+		float dt;			// time step
+		float tt;			// simulation total time
 
 	private:
 		void set_projection(float aspect);
 		void set_modelview();
+		void draw_rgeom(rgeom *rg);
 
 	protected:
 		void initializeGL();
@@ -57,18 +62,32 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		SimulationRenderer(QWidget *parent);
 		~SimulationRenderer();
 
-		// SIMULATION CONTROL
+		// -- SIMULATION CONTROL
 
 		void run_simulation();		// executes the simulation
 		void pause_simulation();	// pauses the simulation
 		void reset_simulation();	// resets the simulation
 		void clear_simulation();	// clears the simulation
 
-		// GETTERS
+		// Adds the wrapped geometrical objects to the vector 'G'.
+		// Adds the underlying geometrical objects to the simulator 'S'.
+		void add_rgeom(rgeom *rg);
+		// Adds n particles to the simulator
+		void add_particles(size_t n = 1);
+		// Sets the initialiser function to the simulator
+		void set_initialiser(const function<void (particle *)>& f);
+		// Sets the solver
+		void set_solver(const solver_type& s = solver_type::EulerOrig);
 
-		simulator& get_simulator();
+		// -- GETTERS
 
-		// SETTERS
+		bool is_scene_cleared() const;
+
+		// -- SETTERS
+
+		// sets 'scene_cleared' to false, so that
+		// we can run the application
+		void set_scene_made();
 
 		void set_fps(float fps);
 		void set_show_fps(bool show);

@@ -24,6 +24,10 @@ SimulationRenderer *MainWindow::get_SimRend() {
 }
 
 void MainWindow::make_scene(SimulationRenderer *sr) {
+	if (not sr->is_scene_cleared()) {
+		return;
+	}
+
 	switch (current_tab) {
 		case 0:
 			make_scene_0(sr);
@@ -33,6 +37,8 @@ void MainWindow::make_scene(SimulationRenderer *sr) {
 			make_scene_lab(sr);
 			break;
 	}
+
+	sr->set_scene_made();
 }
 
 // PRIVATE SLOTS
@@ -42,6 +48,11 @@ void MainWindow::on_PBrun_clicked() {
 	ui->PBclear->setEnabled(false);
 
 	SimulationRenderer *sr = get_SimRend();
+
+	if (sr->is_scene_cleared()) {
+		make_scene(sr);
+	}
+
 	sr->run_simulation();
 }
 
@@ -71,6 +82,7 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 	current_tab = index;
 
 	// make appropriate scene for the new renderer
+	// only if the simulation was not cleared
 	make_scene( get_SimRend() );
 
 	// enable all buttons

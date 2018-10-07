@@ -30,6 +30,30 @@ void SimulationRenderer::set_modelview() {
 	program->release();
 }
 
+void SimulationRenderer::draw_rgeom(rgeom *rg) {
+	geom::geometry *g = rg->get_underlying();
+	geom_type gt = g->get_geom_type();
+
+	switch (gt) {
+		case geom_type::Plane:
+			program->bind();
+			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+
+			rplane *rp = static_cast<rplane *>(rg);
+			glBegin(GL_QUADS);
+				glVertex3f(rp->p1.x, rp->p1.y, rp->p1.z);
+				glVertex3f(rp->p2.x, rp->p2.y, rp->p2.z);
+				glVertex3f(rp->p3.x, rp->p3.y, rp->p3.z);
+				glVertex3f(rp->p4.x, rp->p4.y, rp->p4.z);
+			glEnd();
+			program->release();
+			break;
+
+		default:
+			cerr << "No type for geometry" << endl;
+	}
+}
+
 // PROTECTED
 
 void SimulationRenderer::initializeGL() {
@@ -107,8 +131,6 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	angleY = 0.0f;
 	distance = 2.0f;
 
-	i = 0;
-
 	program = nullptr;
 
 	FPS = 60.0f;
@@ -116,6 +138,9 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	exe_sim = true;
 	running = false;
 
+	// set to true so that it can be made
+	// when launching the application
+	scene_cleared = true;
 	dt = 0.01f;
 	tt = 10.0f;
 }
@@ -127,6 +152,9 @@ SimulationRenderer::~SimulationRenderer() {
 }
 
 void SimulationRenderer::run_simulation() {
+	assert(not scene_cleared);
+
+	/*
 	running = true;
 
 	timing::time_point begin, end;
@@ -160,17 +188,26 @@ void SimulationRenderer::run_simulation() {
 	if (i == 1000) {
 		i = 0;
 	}
+	*/
 
-	/*
 	running = true;
+	timing::time_point begin, end;
 
-	while (S.get_current_time() <= total_time and exe_sim) {
+	while (S.get_current_time() <= tt and exe_sim) {
 		begin = timing::now();
 
 		S.apply_time_step(dt);
 
+		makeCurrent();
+
 		// update screen with the particles
 		// ....
+		for (rgeom *rg : G) {
+			draw_rgeom(rg);
+		}
+
+		doneCurrent();
+		update();
 
 		end = timing::now();
 		double frame = timing::elapsed_seconds(begin, end);
@@ -185,10 +222,12 @@ void SimulationRenderer::run_simulation() {
 	running = false;
 	exe_sim = true;
 
-	if (S.get_current_time() > total_time) {
+	// the loop may have stopped due to the
+	// 'pause' button -> reset simulation
+	// only if necessary
+	if (S.get_current_time() > tt) {
 		S.reset_simulation();
 	}
-	*/
 }
 
 void SimulationRenderer::pause_simulation() {
@@ -196,20 +235,46 @@ void SimulationRenderer::pause_simulation() {
 }
 
 void SimulationRenderer::reset_simulation() {
-	i = 0;
+	S.reset_simulation();
 }
 
 void SimulationRenderer::clear_simulation() {
 	S.clear_simulation();
+	for (rgeom *rg : G) {
+		delete rg;
+	}
+	G.clear();
+	scene_cleared = true;
+}
+
+void SimulationRenderer::add_rgeom(rgeom *rg) {
+	G.push_back(rg);
+	S.add_geometry( rg->get_underlying() );
+}
+
+void SimulationRenderer::set_initialiser(const function<void (particle *)>& f) {
+	S.set_initialiser(f);
+}
+
+void SimulationRenderer::add_particles(size_t n) {
+	S.add_particles(n);
+}
+
+void SimulationRenderer::set_solver(const solver_type& s) {
+	S.set_solver(s);
 }
 
 // GETTERS
 
-simulator& SimulationRenderer::get_simulator() {
-	return S;
+bool SimulationRenderer::is_scene_cleared() const {
+	return scene_cleared;
 }
 
 // SETTERS
+
+void SimulationRenderer::set_scene_made() {
+	scene_cleared = false;
+}
 
 void SimulationRenderer::set_fps(float fps) {
 	FPS = fps;

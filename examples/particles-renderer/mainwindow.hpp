@@ -7,6 +7,9 @@ using namespace std;
 // Qt includes
 #include <QMainWindow>
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // Custom includes
 #include "simulation_renderer.hpp"
 
