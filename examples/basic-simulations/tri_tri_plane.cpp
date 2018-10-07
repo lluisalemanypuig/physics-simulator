@@ -198,6 +198,14 @@ namespace study_cases {
 				cerr << "Could not open output file '" << output << "'" << endl;
 			}
 			else {
+				fout << "Configuration:" << endl;
+				fout << "    step time: " << dt << endl;
+				fout << "    total time: " << total_time << endl;
+				fout << "    lifetime: " << lifetime << endl;
+				fout << "    bounce: " << bounce << endl;
+				fout << "    friction: " << friction << endl;
+				fout << "    ramp plane: " << (ramp_plane ? "Yes" : "No") << endl;
+				fout << "    bouncer plane: " << (bouncer_plane ? "Yes" : "No") << endl;
 				for (size_t i = 0; i < trajectory.size(); ++i) {
 					const vec3& v = trajectory[i];
 					fout << v.x << "," << v.y << "," << v.z << endl;
