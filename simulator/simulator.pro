@@ -14,7 +14,8 @@ HEADERS += \
     geometry/sphere.hpp \
     geometry/plane.hpp \
     simulator.hpp \
-    particle.hpp
+    particle.hpp \
+    initialiser.hpp
 
 SOURCES += \
     geometry/geometry.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
     geometry/sphere.cpp \
     geometry/plane.cpp \
     simulator.cpp \
-    particle.cpp
+    particle.cpp \
+    initialiser.cpp
 
 

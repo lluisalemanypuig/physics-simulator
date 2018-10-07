@@ -15,6 +15,7 @@ using namespace std;
 #include <simulator/geometry/triangle.hpp>
 #include <simulator/geometry/sphere.hpp>
 #include <simulator/geometry/plane.hpp>
+#include <simulator/initialiser.hpp>
 #include <simulator/particle.hpp>
 
 namespace physim {
@@ -110,7 +111,7 @@ class simulator {
 		 * It is recommended to set the particle's 'previous' state
 		 * to null values.
 		 */
-		function<void (particle *p)> global_init;
+		initialiser global_init;
 
 	private:
 
@@ -250,7 +251,7 @@ class simulator {
 		 * the lifetime of the particle has reached a value equal to
 		 * or smaller than 0.
 		 */
-		void set_initialiser(const function<void (particle *p)>& f);
+		void set_initialiser(const initialiser& f);
 
 		/**
 		 * @brief Sets the type of solver.
@@ -263,6 +264,19 @@ class simulator {
 
 		// GETTERS
 
+		/**
+		 * @brief Returns all particles in the simulation.
+		 *
+		 * Note that the constant reference is to the container.
+		 * It cannot be added or deleted any of its particles,
+		 * however the particle's attributes may be modified.
+		 *
+		 * The behaviour of the modified particles in the simulation
+		 * will change according to the modifications.
+		 * @return Returns a constant reference to the structure
+		 * containing all particles.
+		 */
+		const vector<particle *>& get_particles() const;
 		/// Return constant reference to i-th particle.
 		const particle& get_particle(size_t i) const;
 		/// Returns all fixed objects of the scene.
@@ -275,6 +289,10 @@ class simulator {
 		size_t n_particles() const;
 		/// Returns the number of fixed geometrical objects.
 		size_t n_geometry() const;
+		/// Returns the initialiser functions.
+		initialiser& get_initialiser();
+		/// Returns a constant reference to the initialiser functions.
+		const initialiser& get_initialiser() const;
 };
 
 } // -- namespace sim

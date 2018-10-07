@@ -6,7 +6,7 @@ namespace physim {
 
 void simulator::init_particle(particle *p) {
 	p->set_force(gravity);
-	global_init(p);
+	global_init.initialise_particle(p);
 }
 
 void simulator::update_particle(float dt, particle *p) {
@@ -42,7 +42,6 @@ simulator::simulator(const solver_type& s) {
 	gravity = vec3(0.0f, -9.81f, 0.0f);
 	stime = 0.0f;
 	solver = s;
-	global_init = [](particle *) { };
 }
 
 simulator::~simulator() {
@@ -129,7 +128,7 @@ void simulator::reset_simulation() {
 	stime = 0.0f;
 	for (particle *p : ps) {
 		if (not p->is_fixed()) {
-			global_init(p);
+			global_init.initialise_particle(p);
 		}
 	}
 }
@@ -269,11 +268,19 @@ void simulator::set_gravity(const vec3& g) {
 	gravity = g;
 }
 
-void simulator::set_initialiser(const function<void (particle *p)>& f) {
+void simulator::set_initialiser(const initialiser& f) {
 	global_init = f;
 }
 
+void simulator::set_solver(const solver_type& s) {
+	solver = s;
+}
+
 // GETTERS
+
+const vector<particle *>& simulator::get_particles() const {
+	return ps;
+}
 
 const particle& simulator::get_particle(size_t i) const {
 	return *ps[i];
@@ -297,6 +304,14 @@ size_t simulator::n_particles() const {
 
 size_t simulator::n_geometry() const {
 	return scene_fixed.size();
+}
+
+initialiser& simulator::get_initialiser() {
+	return global_init;
+}
+
+const initialiser& simulator::get_initialiser() const {
+	return global_init;
 }
 
 } // -- namespace sim
