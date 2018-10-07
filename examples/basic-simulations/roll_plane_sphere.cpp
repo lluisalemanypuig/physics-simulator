@@ -118,38 +118,58 @@ namespace study_cases {
 		S.clear_particles();
 
 		// output result
-		cout << "Simulation completed in " << timing::elapsed_seconds(begin, end) << " s" << endl;
+		cerr << "Simulation completed in " << timing::elapsed_seconds(begin, end) << " s" << endl;
 
-		// first in Geogebra format
-		cout.setf(ios::fixed);
-		cout.precision(4);
-		cout << "{";
-		for (size_t i = 0; i < trajectory.size(); ++i) {
-			const vec3& v = trajectory[i];
-			cout << "Point({"
-				 << v.x << "," << v.y << "," << v.z
-				 << "})";
-			if (i < trajectory.size() - 1) {
-				cout << ",";
+		if (output == "none") {
+			cout.setf(ios::fixed);
+			cout.precision(4);
+
+			// only in GeoGebra format
+			cout << "{";
+			for (size_t i = 0; i < trajectory.size(); ++i) {
+				const vec3& v = trajectory[i];
+				cout << "Point({"
+					 << v.x << "," << v.y << "," << v.z
+					 << "})";
+				if (i < trajectory.size() - 1) {
+					cout << ",";
+				}
 			}
+			cout << "}" << endl;
 		}
-		cout << "}" << endl;
-
-		// store trajectory in output file
-		if (output != "none") {
+		else {
+			// store trajectory in output file
 			ofstream fout;
 			fout.open(output.c_str());
 			if (not fout.is_open()) {
 				cerr << "Could not open output file '" << output << "'" << endl;
 			}
 			else {
-				fout << "Configuration:" << endl;
-				fout << "    step time: " << dt << endl;
-				fout << "    total time: " << total_time << endl;
-				fout << "    lifetime: " << lifetime << endl;
-				fout << "    bounce: " << bounce << endl;
-				fout << "    friction: " << friction << endl;
-				fout << "    initial z: " << iz << endl;
+				fout.setf(ios::fixed);
+				fout.precision(4);
+
+				// configuration
+				fout << "step-time: " << dt << endl;
+				fout << "total-time: " << total_time << endl;
+				fout << "lifetime: " << lifetime << endl;
+				fout << "bounce: " << bounce << endl;
+				fout << "friction: " << friction << endl;
+				fout << "initial-z: " << iz << endl;
+
+				// first in Geogebra format
+				fout << "{";
+				for (size_t i = 0; i < trajectory.size(); ++i) {
+					const vec3& v = trajectory[i];
+					fout << "Point({"
+						 << v.x << "," << v.y << "," << v.z
+						 << "})";
+					if (i < trajectory.size() - 1) {
+						fout << ",";
+					}
+				}
+				fout << "}" << endl;
+
+				// then in plain text
 				for (size_t i = 0; i < trajectory.size(); ++i) {
 					const vec3& v = trajectory[i];
 					fout << v.x << "," << v.y << "," << v.z << endl;
