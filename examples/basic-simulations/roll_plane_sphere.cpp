@@ -17,9 +17,13 @@ namespace study_cases {
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
 		cout << "    --initial-z z:  the initial value of the z position of the particle." << endl;
 		cout << "                                                          Default: 0.0" << endl;
+		cout << endl;
+		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
 	void roll_plane_sphere(int argc, char *argv[]) {
+		string output = "none";
+
 		float dt = 0.01f;
 		float total_time = 2.0f;
 		float lifetime = 2.0f;
@@ -54,6 +58,10 @@ namespace study_cases {
 			}
 			else if (strcmp(argv[i], "--initial-z") == 0) {
 				iz = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
+				output = string(argv[i + 1]);
 				++i;
 			}
 			else {
@@ -116,7 +124,7 @@ namespace study_cases {
 		cout.setf(ios::fixed);
 		cout.precision(4);
 		cout << "{";
-		for (uint i = 0; i < trajectory.size(); ++i) {
+		for (size_t i = 0; i < trajectory.size(); ++i) {
 			const vec3& v = trajectory[i];
 			cout << "Point({"
 				 << v.x << "," << v.y << "," << v.z
@@ -126,6 +134,22 @@ namespace study_cases {
 			}
 		}
 		cout << "}" << endl;
+
+		// store trajectory in output file
+		if (output != "none") {
+			ofstream fout;
+			fout.open(output.c_str());
+			if (not fout.is_open()) {
+				cerr << "Could not open output file '" << output << "'" << endl;
+			}
+			else {
+				for (size_t i = 0; i < trajectory.size(); ++i) {
+					const vec3& v = trajectory[i];
+					fout << v.x << "," << v.y << "," << v.z << endl;
+				}
+				fout.close();
+			}
+		}
 	}
 
 } // -- namespace study_cases

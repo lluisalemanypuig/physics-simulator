@@ -5,6 +5,7 @@
 
 // C++ includes
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 // glm includes

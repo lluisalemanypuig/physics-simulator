@@ -28,6 +28,8 @@ namespace study_cases {
 		cout << "    --bouncer-plane   : make the simulation use the 'bouncer' as a plane.    Default: true" << endl;
 		cout << "    --ramp-triangle   : make the simulation use the 'ramp' as a triangle.    Default: false" << endl;
 		cout << "    --bouncer-triangle: make the simulation use the 'bouncer' as a triangle. Default: false" << endl;
+		cout << endl;
+		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
 	void make_ramp_plane(simulator& S) {
@@ -63,6 +65,8 @@ namespace study_cases {
 	}
 
 	void tri_tri_floor(int argc, char *argv[]) {
+		string output = "none";
+
 		float dt = 0.01f;
 		float total_time = 2.0f;
 		float lifetime = 2.0f;
@@ -95,6 +99,10 @@ namespace study_cases {
 			}
 			else if (strcmp(argv[i], "--friction") == 0) {
 				friction = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
+				output = string(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--ramp-plane") == 0) {
@@ -171,7 +179,7 @@ namespace study_cases {
 		cout.setf(ios::fixed);
 		cout.precision(4);
 		cout << "{";
-		for (uint i = 0; i < trajectory.size(); ++i) {
+		for (size_t i = 0; i < trajectory.size(); ++i) {
 			const vec3& v = trajectory[i];
 			cout << "Point({"
 				 << v.x << "," << v.y << "," << v.z
@@ -181,6 +189,22 @@ namespace study_cases {
 			}
 		}
 		cout << "}" << endl;
+
+		// store trajectory in output file
+		if (output != "none") {
+			ofstream fout;
+			fout.open(output.c_str());
+			if (not fout.is_open()) {
+				cerr << "Could not open output file '" << output << "'" << endl;
+			}
+			else {
+				for (size_t i = 0; i < trajectory.size(); ++i) {
+					const vec3& v = trajectory[i];
+					fout << v.x << "," << v.y << "," << v.z << endl;
+				}
+				fout.close();
+			}
+		}
 	}
 
 } // -- namespace study_cases
