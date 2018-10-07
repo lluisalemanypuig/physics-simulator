@@ -33,4 +33,6 @@ void MainWindow::make_scene_0(SimulationRenderer *sr) {
 	floor->pl = new plane(vec3(0.0f,1.0f,0.0f), floor->p1);
 
 	sr->add_rgeom(floor);
+
+	sr->add_particles(1);
 }

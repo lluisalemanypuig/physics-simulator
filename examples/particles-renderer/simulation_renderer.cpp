@@ -65,12 +65,10 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 void SimulationRenderer::draw_particles() {
 	program->bind();
 	program->setUniformValue("color", QVector4D(1.0f, 1.0f, 1.0f, 1.0));
+	program->setUniformValue("is_point", true);
 
-	size_t n_parts = S.n_particles();
-	for (size_t i = 0; i < n_parts; ++i) {
-		const particle& p = S.get_particle(i);
-
-		const vec3& pos = p.get_position();
+	for (size_t i = 0; i < S.n_particles(); ++i) {
+		const vec3& pos = S.get_particle(i).get_position();
 
 		glBegin(GL_POINTS);
 		glVertex3f(pos.x, pos.y, pos.z);
@@ -102,7 +100,6 @@ void SimulationRenderer::initializeGL() {
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	glPointSize(5.0f);
 }
 
 void SimulationRenderer::resizeGL(int w, int h) {
@@ -184,6 +181,7 @@ void SimulationRenderer::run_simulation() {
 	while (S.get_current_time() <= tt and exe_sim) {
 		begin = timing::now();
 
+		//cout << "time step: " << dt << endl;
 		S.apply_time_step(dt);
 
 		makeCurrent();

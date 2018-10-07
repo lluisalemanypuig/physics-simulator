@@ -34,7 +34,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	bool ok;
 	float b = text.toFloat(&ok);
 	if (ok) {
-		bounce = [&b](particle *p) { p->set_bouncing(b); };
+		bounce = [b](particle *p) { p->set_bouncing(b); };
 		cout << "Log: using '" << b << "' for bouncing coefficient" << endl;
 		return;
 	}
@@ -54,7 +54,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 	bool ok;
 	float f = text.toFloat(&ok);
 	if (ok) {
-		fric = [&f](particle *p) { p->set_friction(f); };
+		fric = [f](particle *p) { p->set_friction(f); };
 		cout << "Log: using '" << f << "' for friction coefficient" << endl;
 		return;
 	}
@@ -64,7 +64,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 }
 
 void MainWindow::get_init_lifetime(partinit& lifetime) {
-	const QString& text = ui->lEFriction->text();
+	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
 		lifetime = [&](particle *p) { p->set_lifetime( this->U(this->eng) ); };
 		cout << "Log: using random values for lifetime" << endl;
@@ -74,7 +74,7 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	bool ok;
 	float l = text.toFloat(&ok);
 	if (ok) {
-		lifetime = [&l](particle *p) { p->set_lifetime(l); };
+		lifetime = [l](particle *p) { p->set_lifetime(l); };
 		cout << "Log: using '" << l << "' for lifetime" << endl;
 		return;
 	}
