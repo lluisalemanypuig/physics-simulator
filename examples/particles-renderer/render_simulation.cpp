@@ -77,8 +77,6 @@ void SimulationRenderer::draw_particles() {
 	program->release();
 }
 
-// PROTECTED
-
 void SimulationRenderer::initializeGL() {
 	initializeOpenGLFunctions();
 
@@ -143,3 +141,7 @@ void SimulationRenderer::mouseMoveEvent(QMouseEvent *event) {
 	doneCurrent();
 	update();
 }
+
+// PROTECTED
+
+// PUBLIC

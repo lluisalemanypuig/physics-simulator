@@ -46,13 +46,12 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 
 	private:
+		// scene-rendering functions
 		void set_projection(float aspect);
 		void set_modelview();
-
 		void draw_geom(rgeom *rg);
 		void draw_particles();
 
-	protected:
 		void initializeGL();
 		void resizeGL(int w, int h);
 		void paintGL();

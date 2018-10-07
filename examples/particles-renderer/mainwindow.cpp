@@ -150,6 +150,7 @@ void MainWindow::on_PBrun_clicked() {
 
 	on_CBfpsCount_toggled( ui->CBfpsCount->isChecked() );
 
+	// run the simulation
 	sr->run_simulation();
 }
 
@@ -188,6 +189,8 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 }
 
 void MainWindow::on_lEBounce_returnPressed() {
+	// obtain bouncing coefficient initialiser
+	// and set it to the appropriate simulator
 	partinit bounce;
 	get_init_bounce(bounce);
 
@@ -195,6 +198,7 @@ void MainWindow::on_lEBounce_returnPressed() {
 	initialiser& I = sr->get_simulator().get_initialiser();
 	I.set_bounce_initialiser(bounce);
 
+	// change bouncing coefficient of all particles
 	const vector<particle *>& ps = sr->get_simulator().get_particles();
 	for (particle *p : ps) {
 		bounce(p);
@@ -202,6 +206,8 @@ void MainWindow::on_lEBounce_returnPressed() {
 }
 
 void MainWindow::on_lEFriction_returnPressed() {
+	// obtain friction coefficient initialiser
+	// and set it to the appropriate simulator
 	partinit fric;
 	get_init_friction(fric);
 
@@ -209,6 +215,7 @@ void MainWindow::on_lEFriction_returnPressed() {
 	initialiser& I = sr->get_simulator().get_initialiser();
 	I.set_friction_initialiser(fric);
 
+	// change friction coefficient of all particles
 	const vector<particle *>& ps = sr->get_simulator().get_particles();
 	for (particle *p : ps) {
 		fric(p);
@@ -216,6 +223,8 @@ void MainWindow::on_lEFriction_returnPressed() {
 }
 
 void MainWindow::on_lELifeTime_returnPressed() {
+	// obtain lifetime initialiser and set
+	// it to the appropriate simulator
 	partinit lifetime;
 	get_init_lifetime(lifetime);
 
@@ -223,6 +232,7 @@ void MainWindow::on_lELifeTime_returnPressed() {
 	initialiser& I = sr->get_simulator().get_initialiser();
 	I.set_lifetime_initialiser(lifetime);
 
+	// change lifetime of all particles
 	const vector<particle *>& ps = sr->get_simulator().get_particles();
 	for (particle *p : ps) {
 		lifetime(p);
