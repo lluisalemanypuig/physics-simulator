@@ -252,6 +252,15 @@ class simulator {
 		 */
 		void set_initialiser(const function<void (particle *p)>& f);
 
+		/**
+		 * @brief Sets the type of solver.
+		 *
+		 * There are several types of solvers.
+		 * See enumeration @ref solver_type.
+		 * @param s The type of sovler to be used.
+		 */
+		void set_solver(const solver_type& s);
+
 		// GETTERS
 
 		/// Return constant reference to i-th particle.
