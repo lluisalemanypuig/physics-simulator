@@ -32,7 +32,10 @@ class MainWindow : public QMainWindow {
 		int current_tab;
 
 		default_random_engine eng;
-		uniform_real_distribution<float> U;
+		// generator for random numbers between 0 and 1
+		uniform_real_distribution<float> U01;
+		// generator for random numbers between 0 and 10
+		uniform_real_distribution<float> U010;
 
 	private:
 		SimulationRenderer *get_SimRend(int t);
@@ -55,11 +58,12 @@ class MainWindow : public QMainWindow {
 
 		void on_TWscenes_currentChanged(int index);
 
-		void on_lEfps_returnPressed();
 		void on_lEBounce_returnPressed();
 		void on_lEFriction_returnPressed();
-		void on_lETimeStep_returnPressed();
 		void on_lELifeTime_returnPressed();
+
+		void on_lEfps_returnPressed();
+		void on_lETimeStep_returnPressed();
 		void on_lETotalTime_returnPressed();
 
 		void on_CBfpsCount_toggled(bool checked);

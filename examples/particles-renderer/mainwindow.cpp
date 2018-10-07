@@ -26,7 +26,7 @@ SimulationRenderer *MainWindow::get_SimRend() {
 void MainWindow::get_init_bounce(partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
-		bounce = [&](particle *p) { p->set_bouncing( this->U(this->eng) ); };
+		bounce = [&](particle *p) { p->set_bouncing( this->U01(this->eng) ); };
 		cout << "Log: using random values for bouncing coefficient" << endl;
 		return;
 	}
@@ -46,7 +46,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 void MainWindow::get_init_friction(partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
-		fric = [&](particle *p) { p->set_friction( this->U(this->eng) ); };
+		fric = [&](particle *p) { p->set_friction( this->U01(this->eng) ); };
 		cout << "Log: using random values for friction coefficient" << endl;
 		return;
 	}
@@ -66,7 +66,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 void MainWindow::get_init_lifetime(partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
-		lifetime = [&](particle *p) { p->set_lifetime( this->U(this->eng) ); };
+		lifetime = [&](particle *p) { p->set_lifetime( this->U010(this->eng) ); };
 		cout << "Log: using random values for lifetime" << endl;
 		return;
 	}
@@ -88,7 +88,14 @@ void MainWindow::make_scene(SimulationRenderer *sr) {
 		return;
 	}
 
-	sr->set_total_time( ui->lETotalTime->text().toFloat() );
+	bool ok;
+	float tt = ui->lETotalTime->text().toFloat(&ok);
+	if (not ok) {
+		cerr << "Error: invalid text in 'total time' text box." << endl;
+		return;
+	}
+
+	sr->set_total_time(tt);
 
 	switch (current_tab) {
 		case 0:
@@ -125,9 +132,23 @@ void MainWindow::on_PBrun_clicked() {
 
 	SimulationRenderer *sr = get_SimRend();
 
+	// make scene if necessary
 	if (sr->is_scene_cleared()) {
 		make_scene(sr);
 	}
+
+	// set all attributes (initialiser, fps,
+	// total time, time step, show fps, ...)
+
+	on_lEBounce_returnPressed();
+	on_lEFriction_returnPressed();
+	on_lELifeTime_returnPressed();
+
+	on_lEfps_returnPressed();
+	on_lETimeStep_returnPressed();
+	on_lETotalTime_returnPressed();
+
+	on_CBfpsCount_toggled( ui->CBfpsCount->isChecked() );
 
 	sr->run_simulation();
 }
@@ -166,21 +187,17 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 	ui->PBclear->setEnabled(true);
 }
 
-void MainWindow::on_lEfps_returnPressed() {
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend(i);
-		sr->set_fps( ui->lEfps->text().toFloat() );
-	}
-}
-
 void MainWindow::on_lEBounce_returnPressed() {
 	partinit bounce;
 	get_init_bounce(bounce);
 
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend();
-		initialiser& I = sr->get_simulator().get_initialiser();
-		I.set_bounce_initialiser(bounce);
+	SimulationRenderer *sr = get_SimRend();
+	initialiser& I = sr->get_simulator().get_initialiser();
+	I.set_bounce_initialiser(bounce);
+
+	const vector<particle *>& ps = sr->get_simulator().get_particles();
+	for (particle *p : ps) {
+		bounce(p);
 	}
 }
 
@@ -188,25 +205,13 @@ void MainWindow::on_lEFriction_returnPressed() {
 	partinit fric;
 	get_init_friction(fric);
 
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend();
-		initialiser& I = sr->get_simulator().get_initialiser();
-		I.set_friction_initialiser(fric);
-	}
-}
+	SimulationRenderer *sr = get_SimRend();
+	initialiser& I = sr->get_simulator().get_initialiser();
+	I.set_friction_initialiser(fric);
 
-void MainWindow::on_lETimeStep_returnPressed() {
-	bool ok = true;
-	float dt = ui->lETimeStep->text().toFloat(&ok);
-
-	if (not ok) {
-		cerr << "Error: invalid text in 'time step' text box." << endl;
-		return;
-	}
-
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend();
-		sr->set_time_step( dt );
+	const vector<particle *>& ps = sr->get_simulator().get_particles();
+	for (particle *p : ps) {
+		fric(p);
 	}
 }
 
@@ -214,11 +219,38 @@ void MainWindow::on_lELifeTime_returnPressed() {
 	partinit lifetime;
 	get_init_lifetime(lifetime);
 
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend();
-		initialiser& I = sr->get_simulator().get_initialiser();
-		I.set_lifetime_initialiser(lifetime);
+	SimulationRenderer *sr = get_SimRend();
+	initialiser& I = sr->get_simulator().get_initialiser();
+	I.set_lifetime_initialiser(lifetime);
+
+	const vector<particle *>& ps = sr->get_simulator().get_particles();
+	for (particle *p : ps) {
+		lifetime(p);
 	}
+}
+
+void MainWindow::on_lEfps_returnPressed() {
+	bool ok;
+	float fps = ui->lEfps->text().toFloat(&ok);
+	if (not ok) {
+		cerr << "Error: invalid text in 'fps' text box." << endl;
+		return;
+	}
+
+	SimulationRenderer *sr = get_SimRend();
+	sr->set_fps( fps );
+}
+
+void MainWindow::on_lETimeStep_returnPressed() {
+	bool ok;
+	float dt = ui->lETimeStep->text().toFloat(&ok);
+	if (not ok) {
+		cerr << "Error: invalid text in 'time step' text box." << endl;
+		return;
+	}
+
+	SimulationRenderer *sr = get_SimRend();
+	sr->set_time_step( dt );
 }
 
 void MainWindow::on_lETotalTime_returnPressed() {
@@ -229,17 +261,13 @@ void MainWindow::on_lETotalTime_returnPressed() {
 		return;
 	}
 
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend();
-		sr->set_total_time(tt);
-	}
+	SimulationRenderer *sr = get_SimRend();
+	sr->set_total_time(tt);
 }
 
 void MainWindow::on_CBfpsCount_toggled(bool checked) {
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend(i);
-		sr->set_show_fps(checked);
-	}
+	SimulationRenderer *sr = get_SimRend();
+	sr->set_show_fps(checked);
 }
 
 // PUBLIC
@@ -252,7 +280,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 	random_device r;
 	eng = default_random_engine(r());
-	U = uniform_real_distribution<float>(0.0f,1.0f);
+	U01 = uniform_real_distribution<float>(0.0f,1.0f);
+	U010 = uniform_real_distribution<float>(0.0f,10.0f);
 
 	current_tab = ui->TWscenes->currentIndex();
 }
