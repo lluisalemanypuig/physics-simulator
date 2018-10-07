@@ -1,14 +1,21 @@
 #pragma once
 
 // C++ includes
+#include <functional>
 #include <iostream>
+#include <random>
 using namespace std;
 
 // Qt includes
 #include <QMainWindow>
 
 // glm includes
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+
+// simulator includes
+#include <simulator/initialiser.hpp>
+#include <simulator/simulator.hpp>
+using namespace physim;
 
 // Custom includes
 #include "simulation_renderer.hpp"
@@ -24,13 +31,21 @@ class MainWindow : public QMainWindow {
 		Ui::MainWindow *ui;
 		int current_tab;
 
+		default_random_engine eng;
+		uniform_real_distribution<float> U;
+
 	private:
 		SimulationRenderer *get_SimRend(int t);
 		SimulationRenderer *get_SimRend();
 
+		void get_init_bounce(partinit& p);
+		void get_init_friction(partinit& p);
+		void get_init_lifetime(partinit& p);
+
 		void make_scene_0(SimulationRenderer *sr);
 		void make_scene_lab(SimulationRenderer *sr);
 		void make_scene(SimulationRenderer *sr);
+		void make_init_with_params(initialiser& i);
 
 	private slots:
 		void on_PBrun_clicked();
@@ -41,6 +56,12 @@ class MainWindow : public QMainWindow {
 		void on_TWscenes_currentChanged(int index);
 
 		void on_lEfps_returnPressed();
+		void on_lEBounce_returnPressed();
+		void on_lEFriction_returnPressed();
+		void on_lETimeStep_returnPressed();
+		void on_lELifeTime_returnPressed();
+		void on_lETotalTime_returnPressed();
+
 		void on_CBfpsCount_toggled(bool checked);
 
 	public:

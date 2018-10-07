@@ -20,7 +20,8 @@ void SimulationRenderer::set_projection(float aspect) {
 void SimulationRenderer::set_modelview() {
 	QMatrix4x4 modelviewMatrix;
 
-	modelviewMatrix.translate(0, 0, -distance);
+	modelviewMatrix.translate(0.0f, 0.0f, -20.0f);
+	modelviewMatrix.translate(0.0f, 0.0f, -distance);
 	modelviewMatrix.rotate(angleX, 1.0f, 0.0f, 0.0f);
 	modelviewMatrix.rotate(angleY, 0.0f, 1.0f, 0.0f);
 
@@ -30,16 +31,18 @@ void SimulationRenderer::set_modelview() {
 	program->release();
 }
 
-void SimulationRenderer::draw_rgeom(rgeom *rg) {
+void SimulationRenderer::draw_geom(rgeom *rg) {
 	geom::geometry *g = rg->get_underlying();
 	geom_type gt = g->get_geom_type();
+
+	rplane *rp = nullptr;
 
 	switch (gt) {
 		case geom_type::Plane:
 			program->bind();
 			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
 
-			rplane *rp = static_cast<rplane *>(rg);
+			rp = static_cast<rplane *>(rg);
 			glBegin(GL_QUADS);
 				glVertex3f(rp->p1.x, rp->p1.y, rp->p1.z);
 				glVertex3f(rp->p2.x, rp->p2.y, rp->p2.z);
@@ -49,9 +52,32 @@ void SimulationRenderer::draw_rgeom(rgeom *rg) {
 			program->release();
 			break;
 
+		case geom_type::Triangle:
+
+		case geom_type::Sphere:
+
+		case geom_type::none:
 		default:
 			cerr << "No type for geometry" << endl;
 	}
+}
+
+void SimulationRenderer::draw_particles() {
+	program->bind();
+	program->setUniformValue("color", QVector4D(1.0f, 1.0f, 1.0f, 1.0));
+
+	size_t n_parts = S.n_particles();
+	for (size_t i = 0; i < n_parts; ++i) {
+		const particle& p = S.get_particle(i);
+
+		const vec3& pos = p.get_position();
+
+		glBegin(GL_POINTS);
+		glVertex3f(pos.x, pos.y, pos.z);
+		glEnd();
+	}
+
+	program->release();
 }
 
 // PROTECTED
@@ -76,6 +102,7 @@ void SimulationRenderer::initializeGL() {
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	glPointSize(5.0f);
 }
 
 void SimulationRenderer::resizeGL(int w, int h) {
@@ -87,16 +114,13 @@ void SimulationRenderer::resizeGL(int w, int h) {
 void SimulationRenderer::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	program->bind();
-	program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+	// update screen with the geometry
+	for (rgeom *rg : G) {
+		draw_geom(rg);
+	}
 
-	glBegin(GL_TRIANGLES);
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(1.0f, 1.0f, 0.0f);
-	glEnd();
-
-	program->release();
+	// update screen with the particles
+	draw_particles();
 }
 
 void SimulationRenderer::mousePressEvent(QMouseEvent *event) {
@@ -138,8 +162,8 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	exe_sim = true;
 	running = false;
 
-	// set to true so that it can be made
-	// when launching the application
+	// scene_cleared: set to true so that it can
+	// be built when launching the application
 	scene_cleared = true;
 	dt = 0.01f;
 	tt = 10.0f;
@@ -154,42 +178,6 @@ SimulationRenderer::~SimulationRenderer() {
 void SimulationRenderer::run_simulation() {
 	assert(not scene_cleared);
 
-	/*
-	running = true;
-
-	timing::time_point begin, end;
-
-	for (; i < 1000 and exe_sim; ++i) {
-		begin = timing::now();
-
-		cout << "Apply time step " << i << endl;
-
-		angleX += 0.1;
-
-		makeCurrent();
-		set_modelview();
-		doneCurrent();
-		update();
-
-		end = timing::now();
-
-		double step_time = timing::elapsed_seconds(begin, end);
-
-		cout << "Elapsed time: " << step_time << endl;
-		cout << "    -> wait: " << 1.0f/FPS - step_time << " seconds" << endl;
-
-		QCoreApplication::processEvents();
-		timing::sleep_seconds( 1.0/FPS - step_time );
-	}
-
-	running = false;
-	exe_sim = true;
-
-	if (i == 1000) {
-		i = 0;
-	}
-	*/
-
 	running = true;
 	timing::time_point begin, end;
 
@@ -199,21 +187,12 @@ void SimulationRenderer::run_simulation() {
 		S.apply_time_step(dt);
 
 		makeCurrent();
-
-		// update screen with the particles
-		// ....
-		for (rgeom *rg : G) {
-			draw_rgeom(rg);
-		}
-
+		set_modelview();
 		doneCurrent();
 		update();
 
 		end = timing::now();
 		double frame = timing::elapsed_seconds(begin, end);
-
-		cout << "Elapsed time: " << frame << endl;
-		cout << "    -> wait: " << 1.0f/FPS - frame << " seconds" << endl;
 
 		QCoreApplication::processEvents();
 		timing::sleep_seconds( 1.0/FPS - frame );
@@ -252,10 +231,6 @@ void SimulationRenderer::add_rgeom(rgeom *rg) {
 	S.add_geometry( rg->get_underlying() );
 }
 
-void SimulationRenderer::set_initialiser(const function<void (particle *)>& f) {
-	S.set_initialiser(f);
-}
-
 void SimulationRenderer::add_particles(size_t n) {
 	S.add_particles(n);
 }
@@ -265,6 +240,10 @@ void SimulationRenderer::set_solver(const solver_type& s) {
 }
 
 // GETTERS
+
+simulator& SimulationRenderer::get_simulator() {
+	return S;
+}
 
 bool SimulationRenderer::is_scene_cleared() const {
 	return scene_cleared;
@@ -290,4 +269,16 @@ void SimulationRenderer::set_time_step(float _dt) {
 
 void SimulationRenderer::set_total_time(float T) {
 	tt = T;
+}
+
+void SimulationRenderer::set_bounce_all_particles(float b) {
+	for (particle *p : S.get_particles()) {
+		p->set_bouncing(b);
+	}
+}
+
+void SimulationRenderer::set_friction_all_particles(float f) {
+	for (particle *p : S.get_particles()) {
+		p->set_friction(f);
+	}
 }

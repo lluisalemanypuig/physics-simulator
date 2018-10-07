@@ -48,7 +48,9 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 	private:
 		void set_projection(float aspect);
 		void set_modelview();
-		void draw_rgeom(rgeom *rg);
+
+		void draw_geom(rgeom *rg);
+		void draw_particles();
 
 	protected:
 		void initializeGL();
@@ -74,13 +76,12 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		void add_rgeom(rgeom *rg);
 		// Adds n particles to the simulator
 		void add_particles(size_t n = 1);
-		// Sets the initialiser function to the simulator
-		void set_initialiser(const function<void (particle *)>& f);
 		// Sets the solver
 		void set_solver(const solver_type& s = solver_type::EulerOrig);
 
 		// -- GETTERS
 
+		simulator& get_simulator();
 		bool is_scene_cleared() const;
 
 		// -- SETTERS
@@ -94,5 +95,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		void set_time_step(float dt);
 		void set_total_time(float T);
 
+		void set_bounce_all_particles(float b);
+		void set_friction_all_particles(float f);
 };
 
