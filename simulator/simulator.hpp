@@ -11,15 +11,16 @@
 using namespace std;
 
 // Custom includes
+#include <simulator/initialiser/initialiser.hpp>
 #include <simulator/geometry/geometry.hpp>
 #include <simulator/geometry/triangle.hpp>
 #include <simulator/geometry/sphere.hpp>
 #include <simulator/geometry/plane.hpp>
-#include <simulator/initialiser.hpp>
 #include <simulator/particle.hpp>
 
 namespace physim {
 using namespace geom;
+using namespace init;
 
 /**
  * @brief The different types of solvers.

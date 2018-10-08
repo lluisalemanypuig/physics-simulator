@@ -5,9 +5,10 @@
 using namespace std;
 
 // Custom includes
-#include "particle.hpp"
+#include <simulator/particle.hpp>
 
 namespace physim {
+namespace init {
 
 /// Shortcut for the initialiser function type.
 typedef function<void (particle *)> partinit;
@@ -15,12 +16,10 @@ typedef function<void (particle *)> partinit;
 /**
  * @brief The particle initialiser class.
  *
- * This class is used to initialise the attributes
- * of a particle.
+ * This class is used to initialise the attributes of a particle.
  *
- * This class has several functions as attributes,
- * each of which initialises an attribute of the
- * particle.
+ * This class has several functions as attributes, each of which
+ * initialises an attribute of the particle.
  *
  * These functions are:
  * - @ref pos : function used to initialise the position of a particle.
@@ -29,15 +28,20 @@ typedef function<void (particle *)> partinit;
  * - @ref bounce : function used to initialise the bouncing coefficient of a particle.
  * - @ref friction : function used to initialise the friction coefficient of a particle.
  * - @ref lifetime : function used to initialise the lifetime of a particle.
+ * - @ref startime : function used to initialise the starting time of a particle.
  * - @ref fixed : function used to initialise the fixed attribute of a particle.
  *
  * By default, all these function's behaviour is to do nothing.
+ *
+ * Also, they are applied in the same order as they appear listed.
+ * Therefore, for example, the position attributes can be used to initialise
+ * the velocity.
  *
  * In order to initialise a particle, use method
  * @ref initialise_particle(particle *)const .
  */
 class initialiser {
-	private:
+	protected:
 		/// Initialiser of position.
 		partinit pos;
 		/// Initialiser of velocity.
@@ -61,7 +65,7 @@ class initialiser {
 		/// Copy constructor.
 		initialiser(const initialiser& i);
 		/// Destructor.
-		~initialiser();
+		virtual ~initialiser();
 
 		// OPERATORS
 
@@ -124,4 +128,5 @@ class initialiser {
 		void initialise_particle(particle *p) const;
 };
 
+} // -- namespace init
 } // -- namespace physim

@@ -5,25 +5,33 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += staticlib
 
+QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 INCLUDEPATH += ..
 
-HEADERS += \
-    geometry/geometry.hpp \
-    geometry/triangle.hpp \
-    geometry/sphere.hpp \
-    geometry/plane.hpp \
-    simulator.hpp \
-    particle.hpp \
-    initialiser.hpp
+HEADERS +=									\
+	simulator.hpp							\
+	particle.hpp							\
+	geometry/geometry.hpp					\
+	geometry/triangle.hpp					\
+	geometry/sphere.hpp						\
+	geometry/plane.hpp						\
+	initialiser/initialiser.hpp				\
+	initialiser/rectangular_source.hpp		\
+	initialiser/rect_waterfall.hpp			\
+    initialiser/rect_fountain.hpp
 
-SOURCES += \
-    geometry/geometry.cpp \
-    geometry/triangle.cpp \
-    geometry/sphere.cpp \
-    geometry/plane.cpp \
-    simulator.cpp \
-    particle.cpp \
-    initialiser.cpp
+
+SOURCES +=									\
+	simulator.cpp							\
+	particle.cpp							\
+	geometry/geometry.cpp					\
+	geometry/triangle.cpp					\
+	geometry/sphere.cpp						\
+	geometry/plane.cpp						\
+	initialiser/initialiser.cpp				\
+	initialiser/rectangular_source.cpp		\
+	initialiser/rect_waterfall.cpp			\
+    initialiser/rect_fountain.cpp
 
 

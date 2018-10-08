@@ -1,6 +1,7 @@
 #include "initialiser.hpp"
 
 namespace physim {
+namespace init {
 
 // PRIVATE
 
@@ -117,4 +118,5 @@ void initialiser::initialise_particle(particle *p) const {
 	fixed(p);
 }
 
+} // -- namespace init
 } // -- namespace physim
