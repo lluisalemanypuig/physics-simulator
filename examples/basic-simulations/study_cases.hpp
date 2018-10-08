@@ -13,10 +13,11 @@ using namespace std;
 using namespace glm;
 
 // simulator includes
-#include <simulator/initialiser.hpp>
+#include <simulator/initialiser/initialiser.hpp>
 #include <simulator/simulator.hpp>
 #include <simulator/particle.hpp>
 using namespace physim;
+using namespace init;
 
 // Custom includes
 #include "utils.hpp"
