@@ -1,17 +1,14 @@
 #include <simulator/initialiser/rect_waterfall.hpp>
 
-#include <iostream>
-
 namespace physim {
 namespace init {
 
 // PROTECTED
 
 void rect_waterfall::make_vel_init() {
-	vel = [this](particle *p) {
-		const float r = this->U01(this->E);
+	vel = [](particle *p) {
 		p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
-		p->set_velocity(vec3(0.0f, -r*10.0f, 0.0f));
+		p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
 	};
 }
 
