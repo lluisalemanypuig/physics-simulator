@@ -112,7 +112,7 @@ class simulator {
 		 * It is recommended to set the particle's 'previous' state
 		 * to null values.
 		 */
-		initialiser global_init;
+		initialiser *global_init;
 
 	private:
 
@@ -246,13 +246,20 @@ class simulator {
 
 		/**
 		 * @brief Sets the particle initialiser function.
+		 *
+		 * Once the class has kept the pointer, it should
+		 * never be freed by the user.
+		 *
+		 * The previous initialiser is destroyed by the class.
 		 * @param f This function need not return any value. The
 		 * pointer passed as parameter is always guaranteed to
-		 * be non-null. This function will be called the first time
-		 * the lifetime of the particle has reached a value equal to
-		 * or smaller than 0.
+		 * be non-null.\n
+		 * This function will be called the first time the lifetime
+		 * of the particle has reached a value equal to or smaller
+		 * than 0.\n
+		 * The parameter cannot be null.
 		 */
-		void set_initialiser(const initialiser& f);
+		void set_initialiser(initialiser *f);
 
 		/**
 		 * @brief Sets the type of solver.
@@ -291,9 +298,9 @@ class simulator {
 		/// Returns the number of fixed geometrical objects.
 		size_t n_geometry() const;
 		/// Returns the initialiser functions.
-		initialiser& get_initialiser();
+		initialiser *get_initialiser();
 		/// Returns a constant reference to the initialiser functions.
-		const initialiser& get_initialiser() const;
+		const initialiser *get_initialiser() const;
 };
 
 } // -- namespace sim

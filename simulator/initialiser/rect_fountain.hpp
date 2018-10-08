@@ -18,10 +18,10 @@ namespace init {
  * positive values of y, and random values of x and z.
  *
  * Need to set the source size through
- * @ref rectangular_source::set_rectangle_source method
+ * @ref rect_source::set_rectangle_source method
  * so that the initialser's source is defined.
  */
-class rect_fountain : public rectangular_source {
+class rect_fountain : public rect_source {
 	protected:
 		/**
 		 * @brief Sets the velocity initialser.
@@ -34,6 +34,8 @@ class rect_fountain : public rectangular_source {
 	public:
 		/// Default constructor.
 		rect_fountain();
+		/// Copy constructor.
+		rect_fountain(const rect_fountain& f);
 		/// Destructor.
 		~rect_fountain();
 

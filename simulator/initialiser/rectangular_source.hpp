@@ -17,9 +17,23 @@ namespace init {
  * are generated within a rectangle of specific size.
  *
  * Need to set the source size through @ref set_rectangle_source
- * so that the initialser's source is defined.
+ * so that the initialser's source is defined. In this method
+ * is specified the coordinates of one of its corners and the
+ * width and length of the rectangle.
+ *
+ * The points in this rectangle, then, can be found within:
+ *
+ * [@ref x, @ref x + @ref w] x [@ref y] x [@ref z, @ref z + @ref h]
+ *
+ * where 'x' denotes the cartesian product.
+ *
+ * The objects that are instances of its subclasses must live
+ * in memory if they are to be used by the @ref simulator.
+ * That is, these must be created using 'new' and be passed
+ * as a pointer to the @ref simulator class using
+ * @ref simulator::set_initialiser.
  */
-class rectangular_source : public initialiser {
+class rect_source : public initialiser {
 	protected:
 		/// Engine used in the uniform distribution @ref U.
 		default_random_engine E;
@@ -59,9 +73,11 @@ class rectangular_source : public initialiser {
 
 	public:
 		/// Default constructor.
-		rectangular_source();
+		rect_source();
+		/// Copy constructor.
+		rect_source(const rect_source& rs);
 		/// Destructor.
-		virtual ~rectangular_source();
+		virtual ~rect_source();
 
 		// SETTERS
 
@@ -78,6 +94,7 @@ class rectangular_source : public initialiser {
 		 * @param h As seen from above, height of the rectangle.
 		 */
 		void set_rectangle_source(float x,float y, float z, float w,float h);
+
 };
 
 } // -- namespace init

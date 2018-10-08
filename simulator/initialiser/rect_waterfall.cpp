@@ -1,5 +1,7 @@
 #include <simulator/initialiser/rect_waterfall.hpp>
 
+#include <iostream>
+
 namespace physim {
 namespace init {
 
@@ -15,7 +17,12 @@ void rect_waterfall::make_vel_init() {
 
 // PUBLIC
 
-rect_waterfall::rect_waterfall() : rectangular_source() { }
+rect_waterfall::rect_waterfall() : rect_source() { }
+
+rect_waterfall::rect_waterfall(const rect_waterfall& w) : rect_source(w) {
+
+}
+
 rect_waterfall::~rect_waterfall() { }
 
 } // -- namespace init

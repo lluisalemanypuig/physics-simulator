@@ -18,10 +18,10 @@ namespace init {
  * negative values of y, and null values of x and z.
  *
  * Need to set the source size through
- * @ref rectangular_source::set_rectangle_source method
+ * @ref rect_source::set_rectangle_source method
  * so that the initialser's source is defined.
  */
-class rect_waterfall : public rectangular_source {
+class rect_waterfall : public rect_source {
 	protected:
 		/**
 		 * @brief Sets the velocity initialser.
@@ -34,6 +34,8 @@ class rect_waterfall : public rectangular_source {
 	public:
 		/// Default constructor.
 		rect_waterfall();
+		/// Copy constructor.
+		rect_waterfall(const rect_waterfall& w);
 		/// Destructor.
 		~rect_waterfall();
 

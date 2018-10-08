@@ -32,7 +32,12 @@ void rect_fountain::make_vel_init() {
 
 // PUBLIC
 
-rect_fountain::rect_fountain() : rectangular_source() { }
+rect_fountain::rect_fountain() : rect_source() { }
+
+rect_fountain::rect_fountain(const rect_fountain& f) : rect_source(f) {
+
+}
+
 rect_fountain::~rect_fountain() { }
 
 } // -- namespace init
