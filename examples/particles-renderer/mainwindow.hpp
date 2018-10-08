@@ -13,9 +13,10 @@ using namespace std;
 #include <glm/glm.hpp>
 
 // simulator includes
-#include <simulator/initialiser.hpp>
+#include <simulator/initialiser/initialiser.hpp>
 #include <simulator/simulator.hpp>
 using namespace physim;
+using namespace init;
 
 // Custom includes
 #include "simulation_renderer.hpp"

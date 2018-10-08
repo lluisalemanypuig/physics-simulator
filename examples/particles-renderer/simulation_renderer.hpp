@@ -19,6 +19,7 @@ using namespace std;
 #include <simulator/simulator.hpp>
 using namespace physim;
 using namespace geom;
+using namespace init;
 
 // Custom includes
 #include "render_geometry.hpp"
