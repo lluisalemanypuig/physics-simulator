@@ -42,7 +42,9 @@ class rplane : public rgeom {
 		glm::vec3 p1,p2,p3,p4;
 		physim::geom::plane *pl;
 	public:
-		rplane() : rgeom() {}
+		rplane() : rgeom() {
+			pl = nullptr;
+		}
 		~rplane() {}
 
 		physim::geom::geometry *get_underlying() {
@@ -58,7 +60,9 @@ class rtriangle : public rgeom {
 		glm::vec3 p1,p2,p3;
 		physim::geom::triangle *tl;
 	public:
-		rtriangle() : rgeom() {}
+		rtriangle() : rgeom() {
+			tl = nullptr;
+		}
 		~rtriangle() {}
 
 		physim::geom::geometry *get_underlying() {
@@ -74,7 +78,9 @@ class rsphere : public rgeom {
 		glm::vec3 c;
 		physim::geom::sphere *s;
 	public:
-		rsphere() : rgeom() {}
+		rsphere() : rgeom() {
+			s = nullptr;
+		}
 		~rsphere() {}
 
 		physim::geom::geometry *get_underlying() {

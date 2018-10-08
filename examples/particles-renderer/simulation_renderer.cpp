@@ -33,6 +33,11 @@ SimulationRenderer::~SimulationRenderer() {
 	if (program != nullptr) {
 		delete program;
 	}
+	S.clear_simulation();
+	for (rgeom *g : G) {
+		delete g;
+	}
+	G.clear();
 }
 
 void SimulationRenderer::run_simulation() {
