@@ -227,8 +227,8 @@ void MainWindow::on_lEBounce_returnPressed() {
 	get_init_bounce(bounce);
 
 	SimulationRenderer *sr = get_SimRend();
-	initialiser& I = sr->get_simulator().get_initialiser();
-	I.set_bounce_initialiser(bounce);
+	initialiser *I = sr->get_simulator().get_initialiser();
+	I->set_bounce_initialiser(bounce);
 
 	// change bouncing coefficient of all particles
 	const vector<particle *>& ps = sr->get_simulator().get_particles();
@@ -244,8 +244,8 @@ void MainWindow::on_lEFriction_returnPressed() {
 	get_init_friction(fric);
 
 	SimulationRenderer *sr = get_SimRend();
-	initialiser& I = sr->get_simulator().get_initialiser();
-	I.set_friction_initialiser(fric);
+	initialiser *I = sr->get_simulator().get_initialiser();
+	I->set_friction_initialiser(fric);
 
 	// change friction coefficient of all particles
 	const vector<particle *>& ps = sr->get_simulator().get_particles();
@@ -261,8 +261,8 @@ void MainWindow::on_lELifeTime_returnPressed() {
 	get_init_lifetime(lifetime);
 
 	SimulationRenderer *sr = get_SimRend();
-	initialiser& I = sr->get_simulator().get_initialiser();
-	I.set_lifetime_initialiser(lifetime);
+	initialiser *I = sr->get_simulator().get_initialiser();
+	I->set_lifetime_initialiser(lifetime);
 
 	// change lifetime of all particles
 	const vector<particle *>& ps = sr->get_simulator().get_particles();

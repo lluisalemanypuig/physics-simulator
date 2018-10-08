@@ -4,22 +4,10 @@
 
 void MainWindow::make_scene_0(SimulationRenderer *sr) {
 	// these parts of the initialiser are scene-dependent
-	initialiser& init = sr->get_simulator().get_initialiser();
-	init.set_pos_initialiser(
-		[this](particle *p) {
-			p->set_previous_position(vec3(0.0f,0.0f,0.0f));
-			float x = this->U010(this->eng) - 4.5f;
-			float z = this->U010(this->eng) - 4.5f;
-			p->set_position(vec3(x,10.0f,z));
-		}
-	);
-	init.set_vel_initialiser(
-		[](particle *p) {
-			p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
-			p->set_velocity(vec3(0.0f,0.0f,0.0f));
-		}
-	);
-	init.set_starttime_initialiser(
+
+	rect_waterfall *w = new rect_waterfall();
+	w->set_rectangle_source(-4.5f,10.0f,-4.5f, 9.0f,9.0f);
+	w->set_starttime_initialiser(
 		[this](particle *p) {
 			float s = this->U01(this->eng);
 			p->set_starttime( 2.0f*s );
@@ -28,7 +16,9 @@ void MainWindow::make_scene_0(SimulationRenderer *sr) {
 
 	// the friction,bouncing coefficient, and lifetime
 	// are parameter-dependent.
-	make_init_with_params(init);
+	make_init_with_params(*w);
+
+	sr->get_simulator().set_initialiser(w);
 
 	rplane *floor = new rplane();
 	floor->p1 = glm::vec3(-5.0f, 0.0f, -5.0f);
@@ -39,5 +29,5 @@ void MainWindow::make_scene_0(SimulationRenderer *sr) {
 
 	sr->add_rgeom(floor);
 
-	sr->add_particles(25);
+	sr->add_particles(300);
 }
