@@ -148,8 +148,21 @@ void simulator::apply_time_step(float dt) {
 			init_particle(p);
 			continue;
 		}
-		// particles age, like we all do :(
+		// is this particle allowed to move?
+		bool move = true;
+		if (p->get_starttime() > 0.0f) {
+			move = false;
+		}
+
+		// Particles age: reduce their lifetime.
+		// The 'starttime' of a particle is also reduced.
 		p->reduce_lifetime(dt);
+		p->reduce_starttime(dt);
+
+		// if this particle is not allowed to move, ignore it
+		if (not move) {
+			continue;
+		}
 
 		// apply solver to predict next position and
 		// velocity of the particle

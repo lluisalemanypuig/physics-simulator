@@ -4,6 +4,19 @@ namespace physim {
 
 // PRIVATE
 
+void particle::init() {
+	prev_pos = vec3(0.0f,0.0f,0.0f);
+	//cur_pos = vec3(0.0f,0.0f,0.0f);
+	prev_velocity = vec3(0.0f,0.0f,0.0f);
+	cur_velocity = vec3(0.0f,0.0f,0.0f);
+	force = vec3(0.0f,0.0f,0.0f);
+	friction = 0.0f;
+	bouncing = 1.0f;
+	lifetime = 10.0f;
+	starttime = 0.0f;
+	fixed = false;
+}
+
 // PUBLIC
 
 particle::particle() {
@@ -31,6 +44,7 @@ particle::particle(const particle& p) {
 	friction = p.friction;
 	bouncing = p.bouncing;
 	lifetime = p.lifetime;
+	starttime = p.starttime;
 	fixed = p.fixed;
 }
 
@@ -55,19 +69,12 @@ void particle::add_force(const vec3& f) {
 
 void particle::reduce_lifetime(float t) {
 	assert(t >= 0.0f);
-	lifetime -= t;
+	starttime -= t;
 }
 
-void particle::init() {
-	prev_pos = vec3(0.0f,0.0f,0.0f);
-	//cur_pos = vec3(0.0f,0.0f,0.0f);
-	prev_velocity = vec3(0.0f,0.0f,0.0f);
-	cur_velocity = vec3(0.0f,0.0f,0.0f);
-	force = vec3(0.0f,0.0f,0.0f);
-	friction = 0.0f;
-	bouncing = 1.0f;
-	lifetime = 10.0f;
-	fixed = false;
+void particle::reduce_starttime(float t) {
+	assert(t >= 0.0f);
+	starttime -= t;
 }
 
 void particle::save_position() {
@@ -127,6 +134,10 @@ void particle::set_lifetime(float lT) {
 	lifetime = lT;
 }
 
+void particle::set_starttime(float sT) {
+	starttime = sT;
+}
+
 void particle::set_fixed(bool f) {
 	fixed = f;
 }
@@ -163,6 +174,10 @@ float particle::get_bouncing() const {
 
 float particle::get_lifetime() const {
 	return lifetime;
+}
+
+float particle::get_starttime() const {
+	return starttime;
 }
 
 bool particle::is_fixed() const {

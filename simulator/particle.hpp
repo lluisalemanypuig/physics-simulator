@@ -43,6 +43,15 @@ class particle {
 		 */
 		float lifetime;
 		/**
+		 * @brief Starting time of a particle.
+		 *
+		 * The amount of time that has to pass for this particle
+		 * to start 'living'. In the simulation, this particle
+		 * will not start moving until this value is equal to or
+		 * less than 0.
+		 */
+		float starttime;
+		/**
 		 * @brief Is this particle fixed?
 		 *
 		 * If the particle, it will be ignored by the solver, therefore
@@ -67,6 +76,7 @@ class particle {
 		 * - @ref friction : 0
 		 * - @ref bouncing : 1
 		 * - @ref lifetime : 10
+		 * - @ref starttime : 0
 		 * - @ref fixed : false
 		 */
 		void init();
@@ -114,9 +124,16 @@ class particle {
 
 		/**
 		 * @brief Decreases the lifetime by @e t.
+		 *
 		 * @param t A value equal to or greater than 0.
-		*/
+		 */
 		void reduce_lifetime(float t);
+		/**
+		 * @brief Decreases the starttime by @e t.
+		 *
+		 * @param t A value equal to or greater than 0.
+		 */
+		void reduce_starttime(float t);
 
 		/**
 		 * @brief Saves the current position in the particle's state.
@@ -164,6 +181,8 @@ class particle {
 		void set_bouncing(float b);
 		/// Sets the lifetime of the particle. See @ref lifetime.
 		void set_lifetime(float lT);
+		/// Sets the starttime of the particle. See @ref starttime.
+		void set_starttime(float sT);
 		/// Sets whether this particle is fixed or not. See @ref fixed.
 		void set_fixed(bool f);
 
@@ -185,6 +204,8 @@ class particle {
 		float get_bouncing() const;
 		/// Returns the lifetime of the particle. See @ref lifetime.
 		float get_lifetime() const;
+		/// Returns the starttime of the particle. See @ref starttime.
+		float get_starttime() const;
 		/// Returns whether the particle is fixed or not. See @ref fixed.
 		bool is_fixed() const;
 };
