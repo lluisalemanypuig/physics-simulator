@@ -48,6 +48,7 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 	geom_type gt = g->get_geom_type();
 
 	rplane *rp = nullptr;
+	rtriangle *rt = nullptr;
 
 	switch (gt) {
 		case geom_type::Plane:
@@ -65,6 +66,17 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 			break;
 
 		case geom_type::Triangle:
+			program->bind();
+			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+
+			rt = static_cast<rtriangle *>(rg);
+			glBegin(GL_TRIANGLES);
+				glVertex3f(rt->p1.x, rt->p1.y, rt->p1.z);
+				glVertex3f(rt->p2.x, rt->p2.y, rt->p2.z);
+				glVertex3f(rt->p3.x, rt->p3.y, rt->p3.z);
+			glEnd();
+			program->release();
+			break;
 
 		case geom_type::Sphere:
 
