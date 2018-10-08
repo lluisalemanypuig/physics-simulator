@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
-    <height>563</height>
+    <width>585</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,16 +48,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="PB_scene0">
-          <property name="maximum">
-           <number>10</number>
-          </property>
-          <property name="value">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QGroupBox" name="groupBox_2">
           <property name="minimumSize">
            <size>
@@ -91,6 +81,25 @@
           </layout>
          </widget>
         </item>
+        <item>
+         <widget class="QProgressBar" name="PBar_scene0">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>10</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="lab_tab">
@@ -105,13 +114,6 @@
             <width>217</width>
             <height>128</height>
            </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QProgressBar" name="PB_labScene">
-          <property name="value">
-           <number>0</number>
           </property>
          </widget>
         </item>
@@ -188,6 +190,22 @@
             </spacer>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="PBar_labScene">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -478,7 +496,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>586</width>
+     <width>585</width>
      <height>26</height>
     </rect>
    </property>

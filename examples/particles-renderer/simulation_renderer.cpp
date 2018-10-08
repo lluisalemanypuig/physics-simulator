@@ -23,6 +23,10 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	scene_cleared = true;
 	dt = 0.01f;
 	tt = 10.0f;
+
+	// painting the fps...
+	fontColor = QColor(0.0f, 1.0f, 0.0f, 1.0f);
+	font.setFamily("Arial");
 }
 
 SimulationRenderer::~SimulationRenderer() {
@@ -40,8 +44,10 @@ void SimulationRenderer::run_simulation() {
 	while (S.get_current_time() <= tt and exe_sim) {
 		begin = timing::now();
 
-		//cout << "time step: " << dt << endl;
 		S.apply_time_step(dt);
+
+		++sim_steps;
+		p_bar->setValue( sim_steps );
 
 		makeCurrent();
 		set_modelview();
@@ -57,13 +63,6 @@ void SimulationRenderer::run_simulation() {
 
 	running = false;
 	exe_sim = true;
-
-	// the loop may have stopped due to the
-	// 'pause' button -> reset simulation
-	// only if necessary
-	if (S.get_current_time() > tt) {
-		S.reset_simulation();
-	}
 }
 
 void SimulationRenderer::pause_simulation() {
@@ -72,6 +71,12 @@ void SimulationRenderer::pause_simulation() {
 
 void SimulationRenderer::reset_simulation() {
 	S.reset_simulation();
+	sim_steps = 0;
+
+	makeCurrent();
+	set_modelview();
+	doneCurrent();
+	update();
 }
 
 void SimulationRenderer::clear_simulation() {
@@ -81,6 +86,7 @@ void SimulationRenderer::clear_simulation() {
 	}
 	G.clear();
 	scene_cleared = true;
+	sim_steps = 0;
 
 	makeCurrent();
 	set_modelview();
@@ -111,7 +117,19 @@ bool SimulationRenderer::is_scene_cleared() const {
 	return scene_cleared;
 }
 
+float SimulationRenderer::get_time_step() const {
+	return dt;
+}
+
+float SimulationRenderer::get_total_time() const {
+	return tt;
+}
+
 // SETTERS
+
+void SimulationRenderer::set_progress_bar(QProgressBar *pbar) {
+	p_bar = pbar;
+}
 
 void SimulationRenderer::set_scene_made() {
 	scene_cleared = false;

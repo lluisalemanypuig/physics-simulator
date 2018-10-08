@@ -16,11 +16,21 @@
  */
 
 class rgeom {
-	private:
+	protected:
+		bool render;
 	public:
-		rgeom() {}
+		rgeom() {
+			render = true;
+		}
 		virtual ~rgeom() {}
 
+		// SETTERS
+
+		void set_render(bool r) { render = r; }
+
+		// GETTERS
+
+		bool should_render() const { return render; }
 		virtual physim::geom::geometry *get_underlying() = 0;
 };
 

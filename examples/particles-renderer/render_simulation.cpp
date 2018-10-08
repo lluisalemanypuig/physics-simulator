@@ -20,7 +20,9 @@ void SimulationRenderer::set_projection(float aspect) {
 void SimulationRenderer::set_modelview() {
 	QMatrix4x4 modelviewMatrix;
 
-	modelviewMatrix.translate(0.0f, 0.0f, -20.0f);
+	// the -5.0f and -20.0f were added manually in order
+	// to have the whole scene visible from a distance
+	modelviewMatrix.translate(0.0f, -5.0f, -20.0f);
 	modelviewMatrix.translate(0.0f, 0.0f, -distance);
 	modelviewMatrix.rotate(angleX, 1.0f, 0.0f, 0.0f);
 	modelviewMatrix.rotate(angleY, 0.0f, 1.0f, 0.0f);
@@ -29,6 +31,16 @@ void SimulationRenderer::set_modelview() {
 	program->setUniformValue("modelview", modelviewMatrix);
 	program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
 	program->release();
+}
+
+void SimulationRenderer::draw_fps_text(QPainter *painter) {
+	QString q;
+	q.fromStdString("fps: " + std::to_string(4.0));
+
+	// Render text
+
+	painter->setPen(Qt::green);
+	painter->drawText(0,0, q);
 }
 
 void SimulationRenderer::draw_geom(rgeom *rg) {
@@ -66,13 +78,13 @@ void SimulationRenderer::draw_particles() {
 	program->bind();
 	program->setUniformValue("color", QVector4D(1.0f, 1.0f, 1.0f, 1.0));
 
+	glBegin(GL_POINTS);
 	for (size_t i = 0; i < S.n_particles(); ++i) {
 		const vec3& pos = S.get_particle(i).get_position();
 
-		glBegin(GL_POINTS);
 		glVertex3f(pos.x, pos.y, pos.z);
-		glEnd();
 	}
+	glEnd();
 
 	program->release();
 }
@@ -96,7 +108,6 @@ void SimulationRenderer::initializeGL() {
 	program->bind();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glEnable(GL_DEPTH_TEST);
 }
 
 void SimulationRenderer::resizeGL(int w, int h) {
@@ -107,9 +118,14 @@ void SimulationRenderer::resizeGL(int w, int h) {
 
 void SimulationRenderer::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	// update screen with the geometry
 	for (rgeom *rg : G) {
+		// draw geometry only if told so
+		if (not rg->should_render()) {
+			continue;
+		}
 		draw_geom(rg);
 	}
 

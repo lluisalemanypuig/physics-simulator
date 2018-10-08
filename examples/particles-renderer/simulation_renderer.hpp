@@ -10,8 +10,10 @@ using namespace std;
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QApplication>
+#include <QProgressBar>
 #include <QMouseEvent>
 #include <QMatrix4x4>
+#include <QPainter>
 
 // Simulator includes
 #include <simulator/simulator.hpp>
@@ -44,11 +46,19 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 							// the scene needs to be remade
 		float dt;			// time step
 		float tt;			// simulation total time
+		int sim_steps;		// number of steps of the simulation
+
+		QProgressBar *p_bar;// the progress bar of the simulation
+
+		// to show the fps
+		QFont font;
+		QColor fontColor;
 
 	private:
 		// scene-rendering functions
 		void set_projection(float aspect);
 		void set_modelview();
+		void draw_fps_text(QPainter *painter);
 		void draw_geom(rgeom *rg);
 		void draw_particles();
 
@@ -83,7 +93,12 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		simulator& get_simulator();
 		bool is_scene_cleared() const;
 
+		float get_time_step() const;
+		float get_total_time() const;
+
 		// -- SETTERS
+
+		void set_progress_bar(QProgressBar *pbar);
 
 		// sets 'scene_cleared' to false, so that
 		// we can run the application

@@ -40,6 +40,8 @@ class MainWindow : public QMainWindow {
 	private:
 		SimulationRenderer *get_SimRend(int t);
 		SimulationRenderer *get_SimRend();
+		QProgressBar *get_scene_bar(int t);
+		QProgressBar *get_scene_bar();
 
 		void get_init_bounce(partinit& p);
 		void get_init_friction(partinit& p);

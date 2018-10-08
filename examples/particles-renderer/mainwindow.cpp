@@ -23,6 +23,26 @@ SimulationRenderer *MainWindow::get_SimRend() {
 	return get_SimRend(current_tab);
 }
 
+QProgressBar *MainWindow::get_scene_bar(int t) {
+	QProgressBar *pb = nullptr;
+
+	switch (t) {
+		case 0:
+			pb = ui->PBar_scene0;
+			break;
+
+		default:
+			pb = ui->PBar_labScene;
+			break;
+	}
+
+	return pb;
+}
+
+QProgressBar *MainWindow::get_scene_bar() {
+	return get_scene_bar(current_tab);
+}
+
 void MainWindow::get_init_bounce(partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
@@ -135,6 +155,11 @@ void MainWindow::on_PBrun_clicked() {
 	// make scene if necessary
 	if (sr->is_scene_cleared()) {
 		make_scene(sr);
+
+		QProgressBar *s_bar = get_scene_bar();
+		s_bar->setMinimum(0);
+		s_bar->setMaximum(0);
+		s_bar->setValue(0);
 	}
 
 	// set all attributes (initialiser, fps,
@@ -152,6 +177,9 @@ void MainWindow::on_PBrun_clicked() {
 
 	// run the simulation
 	sr->run_simulation();
+
+	ui->PBreset->setEnabled(true);
+	ui->PBclear->setEnabled(true);
 }
 
 void MainWindow::on_PBpause_clicked() {
@@ -165,11 +193,15 @@ void MainWindow::on_PBpause_clicked() {
 void MainWindow::on_PBreset_clicked() {
 	SimulationRenderer *sr = get_SimRend();
 	sr->reset_simulation();
+
+	get_scene_bar()->setValue(0);
 }
 
 void MainWindow::on_PBclear_clicked() {
 	SimulationRenderer *sr = get_SimRend();
 	sr->clear_simulation();
+
+	get_scene_bar()->setValue(0);
 }
 
 void MainWindow::on_TWscenes_currentChanged(int index) {
@@ -261,6 +293,8 @@ void MainWindow::on_lETimeStep_returnPressed() {
 
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_time_step( dt );
+
+	get_scene_bar()->setMaximum( sr->get_total_time()/dt );
 }
 
 void MainWindow::on_lETotalTime_returnPressed() {
@@ -273,6 +307,8 @@ void MainWindow::on_lETotalTime_returnPressed() {
 
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_total_time(tt);
+
+	get_scene_bar()->setMaximum( tt/sr->get_time_step() );
 }
 
 void MainWindow::on_CBfpsCount_toggled(bool checked) {
@@ -294,6 +330,11 @@ MainWindow::MainWindow(QWidget *parent)
 	U010 = uniform_real_distribution<float>(0.0f,10.0f);
 
 	current_tab = ui->TWscenes->currentIndex();
+
+	for (int i = 0; i < ui->TWscenes->count(); ++i) {
+		SimulationRenderer *sr = get_SimRend(i);
+		sr->set_progress_bar( get_scene_bar(i) );
+	}
 }
 
 MainWindow::~MainWindow() {
