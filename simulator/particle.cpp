@@ -69,7 +69,7 @@ void particle::add_force(const vec3& f) {
 
 void particle::reduce_lifetime(float t) {
 	assert(t >= 0.0f);
-	starttime -= t;
+	lifetime -= t;
 }
 
 void particle::reduce_starttime(float t) {
