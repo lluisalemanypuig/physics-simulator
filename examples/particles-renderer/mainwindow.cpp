@@ -11,6 +11,10 @@ SimulationRenderer *MainWindow::get_SimRend(int t) {
 			sr = ui->GL_scene0;
 			break;
 
+		case 1:
+			sr = ui->GL_scene1;
+			break;
+
 		default:
 			sr = ui->GL_labScene;
 			break;
@@ -29,6 +33,10 @@ QProgressBar *MainWindow::get_scene_bar(int t) {
 	switch (t) {
 		case 0:
 			pb = ui->PBar_scene0;
+			break;
+
+		case 1:
+			pb = ui->PBar_scene1;
 			break;
 
 		default:
@@ -114,6 +122,10 @@ void MainWindow::make_scene(SimulationRenderer *sr) {
 	switch (current_tab) {
 		case 0:
 			make_scene_0(sr);
+			break;
+
+		case 1:
+			make_scene_1(sr);
 			break;
 
 		default:

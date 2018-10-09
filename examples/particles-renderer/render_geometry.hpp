@@ -2,6 +2,7 @@
 
 // simulator includes
 #include <simulator/geometry/geometry.hpp>
+#include <simulator/geometry/rectangle.hpp>
 #include <simulator/geometry/triangle.hpp>
 #include <simulator/geometry/sphere.hpp>
 #include <simulator/geometry/plane.hpp>
@@ -67,6 +68,24 @@ class rtriangle : public rgeom {
 
 		physim::geom::geometry *get_underlying() {
 			return tl;
+		}
+};
+
+// use the four points (they should be
+// on the triangle) to render the plane.
+class rrectangle : public rgeom {
+	private:
+	public:
+		glm::vec3 p1,p2,p3,p4;
+		physim::geom::rectangle *rl;
+	public:
+		rrectangle() : rgeom() {
+			rl = nullptr;
+		}
+		~rrectangle() {}
+
+		physim::geom::geometry *get_underlying() {
+			return rl;
 		}
 };
 

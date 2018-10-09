@@ -25,7 +25,8 @@ SOURCES +=					\
 	utils.cpp				\
 	scene_0.cpp				\
 	scene_lab.cpp			\
-    render_simulation.cpp
+    render_simulation.cpp \
+    scene_1.cpp
 
 HEADERS +=					\
     simulation_renderer.hpp \

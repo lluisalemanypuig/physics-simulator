@@ -48,6 +48,7 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 	geom_type gt = g->get_geom_type();
 
 	rplane *rp = nullptr;
+	rrectangle *rc = nullptr;
 	rtriangle *rt = nullptr;
 
 	switch (gt) {
@@ -61,6 +62,20 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 				glVertex3f(rp->p2.x, rp->p2.y, rp->p2.z);
 				glVertex3f(rp->p3.x, rp->p3.y, rp->p3.z);
 				glVertex3f(rp->p4.x, rp->p4.y, rp->p4.z);
+			glEnd();
+			program->release();
+			break;
+
+		case geom_type::Rectangle:
+			program->bind();
+			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+
+			rc = static_cast<rrectangle *>(rg);
+			glBegin(GL_QUADS);
+				glVertex3f(rc->p1.x, rc->p1.y, rc->p1.z);
+				glVertex3f(rc->p2.x, rc->p2.y, rc->p2.z);
+				glVertex3f(rc->p3.x, rc->p3.y, rc->p3.z);
+				glVertex3f(rc->p4.x, rc->p4.y, rc->p4.z);
 			glEnd();
 			program->release();
 			break;

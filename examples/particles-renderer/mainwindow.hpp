@@ -48,9 +48,12 @@ class MainWindow : public QMainWindow {
 		void get_init_friction(partinit& p);
 		void get_init_lifetime(partinit& p);
 
+		// 'make scene' functions
 		void make_scene_0(SimulationRenderer *sr);
+		void make_scene_1(SimulationRenderer *sr);
 		void make_scene_lab(SimulationRenderer *sr);
 		void make_scene(SimulationRenderer *sr);
+
 		void make_init_with_params(initialiser& i);
 
 	private slots:
