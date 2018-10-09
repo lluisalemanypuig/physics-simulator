@@ -5,39 +5,39 @@
 using namespace std;
 
 // Custom includes
-#include <simulator/initialiser/rectangular_source.hpp>
+#include <simulator/initialiser/rect_source.hpp>
 
 namespace physim {
 namespace init {
 
 /**
- * @brief A waterfall class initialiser.
+ * @brief A shower class initialiser.
  *
  * Provides a position initialiser function so that generated
- * particles behave like a waterfall: their velocity is set to
+ * particles behave like a shower: their velocity is set to
  * negative values of y, and null values of x and z.
  *
  * Need to set the source size through
- * @ref rect_source::set_rectangle_source method
+ * @ref rect_source::set_rectangular_source method
  * so that the initialser's source is defined.
  */
-class rect_waterfall : public rect_source {
+class rect_shower : public rect_source {
 	protected:
 		/**
 		 * @brief Sets the velocity initialser.
 		 *
-		 * It is made a virtual function so that this class can be
-		 * reimplemented in another one.
+		 * The velocity is set to negative values of y, and
+		 * null values of x and z.
 		 */
 		void make_vel_init();
 
 	public:
 		/// Default constructor.
-		rect_waterfall();
+		rect_shower();
 		/// Copy constructor.
-		rect_waterfall(const rect_waterfall& w);
+		rect_shower(const rect_shower& w);
 		/// Destructor.
-		~rect_waterfall();
+		~rect_shower();
 
 		// GETTERS
 
