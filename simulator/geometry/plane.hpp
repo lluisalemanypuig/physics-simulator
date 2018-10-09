@@ -62,7 +62,10 @@ class plane : public geometry {
 		 * @brief Construct plane with three points.
 		 *
 		 * The normal of the plane is defined as the cross product
-		 * of the vectors from @e p0 to @e p1 and from @e p0 to @e p2.
+		 * of the vectors from @e p0 to @e p1 and from @e p0 to @e p2:
+		 \verbatim
+		 n = normalise( (p1 - p0) x (p2 - p0) )
+		 \endverbatim
 		 */
 		plane(const vec3& p0, const vec3& p1, const vec3& p2);
 		/// Copy constructor.

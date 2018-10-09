@@ -17,53 +17,64 @@ namespace physim {
 namespace geom {
 
 /**
- * @brief Class that implements a triangle.
+ * @brief Class that implements a rectangle.
  *
- * A triangle is, informally, a polygonal object of three
- * sides of arbitrary length, whose endpoints are
- * defined by three vertices (see @ref v1, @ref v2, @ref v3).
+ * A rectangle is, informally, a polygonal object of four
+ * sides of same opposite length, whose endpoints are
+ * defined by four vertices (see @ref v1, @ref v2, @ref v3, @ref v4).
  *
- * These three vertices all lie on a plane (see @ref pl),
- * the creation of which depends on the order of the vertices
- * they are given in.
+ * These four vertices all lie on a plane (see @ref pl),
+ * the creation of which depends on the order of the first
+ * three vertices they are given in.
  */
-class triangle : public geometry {
+class rectangle : public geometry {
 	private:
-		/// The first vertex of the triangle.
+		/// The first vertex of the rectangle.
 		vec3 v1;
-		/// The second vertex of the triangle.
+		/// The second vertex of the rectangle.
 		vec3 v2;
-		/// The third vertex of the triangle.
+		/// The third vertex of the rectangle.
 		vec3 v3;
+		/// The fourth vertex of the rectangle.
+		vec3 v4;
 
-		/// Plane associated to the triangle.
+		/// Minimum x,y,z-coordinates.
+		vec3 min;
+		/// Maximum x,y,z-coordinates.
+		vec3 max;
+
+		/// Plane associated to the rectangle.
 		plane pl;
 
 	public:
 		/// Default constructor.
-		triangle();
+		rectangle();
 		/**
 		 * @brief Constructor with points.
 		 *
-		 * The plane associated to this triangle (see @ref pl)
-		 * is built using these vertices in the same order they
-		 * are given in this method.
+		 * The plane associated to this rectangle (see @ref pl)
+		 * is built using the first three vertices in the same
+		 * order they are given in this method.
 		 *
 		 * See @ref plane::plane(const vec3&,const vec3&,const vec3&)
 		 * to see how the normal is determined.
+		 *
+		 * The four points must lie on the same plane, that is,
+		 * the fourth point must lie on the plane made with the
+		 * first three vertices.
 		 */
-		triangle(const vec3& p1,const vec3& p2,const vec3& p3);
+		rectangle(const vec3& p1,const vec3& p2,const vec3& p3,const vec3& p4);
 		/// Copy constructor.
-		triangle(const triangle& t);
+		rectangle(const rectangle& t);
 		/// Destructor.
-		~triangle();
+		~rectangle();
 
 		// SETTERS
 
 		/**
-		 * @brief Sets the position of this triangle.
+		 * @brief Sets the position of this rectangle.
 		 *
-		 * The vertices of the triangle are translated according
+		 * The vertices of the rectangle are translated according
 		 * to vector @e v.
 		 * @param v Vector representing the direction in which
 		 * every vertex moves.

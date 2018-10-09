@@ -184,4 +184,8 @@ bool particle::is_fixed() const {
 	return fixed;
 }
 
+size_t particle::get_index() const {
+	return index;
+}
+
 } // -- namespace sim

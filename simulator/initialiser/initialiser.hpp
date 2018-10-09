@@ -28,7 +28,7 @@ typedef function<void (particle *)> partinit;
  * - @ref bounce : function used to initialise the bouncing coefficient of a particle.
  * - @ref friction : function used to initialise the friction coefficient of a particle.
  * - @ref lifetime : function used to initialise the lifetime of a particle.
- * - @ref startime : function used to initialise the starting time of a particle.
+ * - @ref starttime : function used to initialise the starting time of a particle.
  * - @ref fixed : function used to initialise the fixed attribute of a particle.
  *
  * By default, all these function's behaviour is to do nothing.

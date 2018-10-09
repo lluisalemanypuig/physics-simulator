@@ -35,7 +35,7 @@ namespace init {
  */
 class rect_source : public initialiser {
 	protected:
-		/// Engine used in the uniform distribution @ref U.
+		/// Engine used in the uniform distribution @ref U01.
 		default_random_engine E;
 		/// Random number generator for uniform values between 0 and 1.
 		uniform_real_distribution<float> U01;

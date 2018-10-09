@@ -60,6 +60,19 @@ class particle {
 		 */
 		bool fixed;
 
+		/**
+		 * @brief Index of the particle.
+		 *
+		 * This index is automatically set when added to the
+		 * simulator object. The collection of indexes determine
+		 * the order in which particles have been added to it.
+		 * The indexes start at 0.
+		 *
+		 * It can be used to initialise its attributes through
+		 * the @ref init::initialiser class.
+		 */
+		size_t index;
+
 	private:
 
 		/**
@@ -78,6 +91,8 @@ class particle {
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
 		 * - @ref fixed : false
+		 * - @ref index : no value assigned, since it will be
+		 * overwritten by the simulator.
 		 */
 		void init();
 
@@ -186,6 +201,9 @@ class particle {
 		/// Sets whether this particle is fixed or not. See @ref fixed.
 		void set_fixed(bool f);
 
+		/// Sets the index of the particle. See @ref index.
+		void set_index(size_t i);
+
 		// GETTERS
 
 		/// Returns the previous position. See @ref prev_pos.
@@ -208,6 +226,8 @@ class particle {
 		float get_starttime() const;
 		/// Returns whether the particle is fixed or not. See @ref fixed.
 		bool is_fixed() const;
+		/// Returns the index of the particle.
+		size_t get_index() const;
 };
 
 } // -- namespace sim
