@@ -73,6 +73,10 @@ void initialiser::set_fixed_initialiser(const partinit& f) {
 
 // GETTERS
 
+initialiser *initialiser::clone() const {
+	return new initialiser(*this);
+}
+
 const partinit& initialiser::get_pos_initialiser() const {
 	return pos;
 }

@@ -74,7 +74,13 @@ class rect_source : public initialiser {
 	public:
 		/// Default constructor.
 		rect_source();
-		/// Copy constructor.
+		/**
+		 * @brief Copy constructor.
+		 *
+		 * The function @ref initialiser::pos is not copied.
+		 * Instead, it is remade (function @ref make_pos_init is
+		 * called again).
+		 */
 		rect_source(const rect_source& rs);
 		/// Destructor.
 		virtual ~rect_source();
@@ -94,6 +100,10 @@ class rect_source : public initialiser {
 		 * @param h As seen from above, height of the rectangle.
 		 */
 		void set_rectangle_source(float x,float y, float z, float w,float h);
+
+		// GETTERS
+
+		virtual initialiser *clone() const = 0;
 
 };
 

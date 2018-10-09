@@ -132,7 +132,6 @@ void simulator::reset_simulation() {
 	int i = 0;
 	for (particle *p : ps) {
 		if (not p->is_fixed()) {
-			cout << "Initialising particle... " << i << endl;
 			global_init->initialise_particle(p);
 		}
 		++i;
@@ -281,11 +280,11 @@ void simulator::set_gravity(const vec3& g) {
 	gravity = g;
 }
 
-void simulator::set_initialiser(initialiser *f) {
+void simulator::set_initialiser(const initialiser *f) {
 	assert(f != nullptr);
 
 	delete global_init;
-	global_init = f;
+	global_init = f->clone();
 }
 
 void simulator::set_solver(const solver_type& s) {

@@ -99,6 +99,9 @@ class initialiser {
 
 		// GETTERS
 
+		/// Returns a reference to a copy of this initialiser.
+		virtual initialiser *clone() const;
+
 		/// Returns position initialiser. See @ref pos.
 		const partinit& get_pos_initialiser() const;
 		/// Returns velocity initialiser. See @ref vel.

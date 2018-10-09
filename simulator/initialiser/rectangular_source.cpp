@@ -37,6 +37,14 @@ rect_source::rect_source(const rect_source& rs) : initialiser(rs) {
 	z = rs.z;
 	w = rs.w;
 	h = rs.h;
+
+	// The function that initialises the position in 'rs'
+	// has references to its E and U01 objects. If this
+	// function was copied then the copied function will
+	// keep the references to rs's E and U01 objects, not
+	// to *this's. Therefore, remake the position initialser
+	// function. Since its random...
+	make_pos_init();
 }
 
 rect_source::~rect_source() { }

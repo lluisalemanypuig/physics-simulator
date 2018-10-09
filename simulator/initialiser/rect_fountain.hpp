@@ -34,7 +34,13 @@ class rect_fountain : public rect_source {
 	public:
 		/// Default constructor.
 		rect_fountain();
-		/// Copy constructor.
+		/**
+		 * @brief Copy constructor.
+		 *
+		 * The function @ref initialiser::pos is not copied.
+		 * Instead, it is remade (function @ref make_vel_init is
+		 * called again).
+		 */
 		rect_fountain(const rect_fountain& f);
 		/// Destructor.
 		~rect_fountain();

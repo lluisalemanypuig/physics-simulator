@@ -247,8 +247,9 @@ class simulator {
 		/**
 		 * @brief Sets the particle initialiser function.
 		 *
-		 * Once the class has kept the pointer, it should
-		 * never be freed by the user.
+		 * The simulator copies the object, therefore the intialiser
+		 * object should be freed by the user. Since the simulator
+		 * keeps its own copy, the parameter may be freed any time.
 		 *
 		 * The previous initialiser is destroyed by the class.
 		 * @param f This function need not return any value. The
@@ -259,7 +260,7 @@ class simulator {
 		 * than 0.\n
 		 * The parameter cannot be null.
 		 */
-		void set_initialiser(initialiser *f);
+		void set_initialiser(const initialiser *f);
 
 		/**
 		 * @brief Sets the type of solver.

@@ -7,8 +7,6 @@ namespace init {
 
 void rect_fountain::make_vel_init() {
 	vel = [this](particle *p) {
-		p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
-
 		const float r = this->U01(this->E);
 		const vec3& pos = p->get_position();
 
@@ -26,6 +24,7 @@ void rect_fountain::make_vel_init() {
 		// the closer to the 'z' edge the slower the z velocity
 		const float vz = (h/2.0f)/dz + r*2.0f;
 
+		p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
 		p->set_velocity(vec3(vx,vy,vz));
 	};
 }
@@ -36,6 +35,10 @@ rect_fountain::rect_fountain() : rect_source() { }
 
 rect_fountain::rect_fountain(const rect_fountain& f) : rect_source(f) {
 
+	// For the same reasons explained in
+	// rectangular_source::rectangular_source(const rectangular_source&)
+	// make the function that initialises the function again.
+	make_vel_init();
 }
 
 rect_fountain::~rect_fountain() { }

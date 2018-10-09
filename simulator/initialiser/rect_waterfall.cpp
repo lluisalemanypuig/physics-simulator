@@ -22,5 +22,11 @@ rect_waterfall::rect_waterfall(const rect_waterfall& w) : rect_source(w) {
 
 rect_waterfall::~rect_waterfall() { }
 
+// GETTERS
+
+initialiser *rect_waterfall::clone() const {
+	return new rect_waterfall(*this);
+}
+
 } // -- namespace init
 } // -- namespace physim

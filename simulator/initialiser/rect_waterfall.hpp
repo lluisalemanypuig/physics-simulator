@@ -39,6 +39,10 @@ class rect_waterfall : public rect_source {
 		/// Destructor.
 		~rect_waterfall();
 
+		// GETTERS
+
+		initialiser *clone() const;
+
 };
 
 } // -- namespace init
