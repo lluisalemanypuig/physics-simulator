@@ -150,7 +150,7 @@ namespace study_cases {
 		// -----------------------------------------
 		// -- initialise simulator
 
-		S.set_initialiser(init);
+		S.set_initialiser(&init);
 
 		const particle *p = S.add_particle();
 

@@ -5,9 +5,9 @@
 void MainWindow::make_scene_0(SimulationRenderer *sr) {
 	// these parts of the initialiser are scene-dependent
 
-	rect_waterfall *w = new rect_waterfall();
-	w->set_rectangle_source(-4.5f,10.0f,-4.5f, 9.0f,9.0f);
-	w->set_starttime_initialiser(
+	rect_waterfall w;
+	w.set_rectangle_source(-4.5f,10.0f,-4.5f, 9.0f,9.0f);
+	w.set_starttime_initialiser(
 		[this](particle *p) {
 			float s = this->U01(this->eng);
 			p->set_starttime( 2.0f*s );
@@ -16,9 +16,9 @@ void MainWindow::make_scene_0(SimulationRenderer *sr) {
 
 	// the friction,bouncing coefficient, and lifetime
 	// are parameter-dependent.
-	make_init_with_params(*w);
+	make_init_with_params(w);
 
-	sr->get_simulator().set_initialiser(w);
+	sr->get_simulator().set_initialiser(&w);
 
 	rplane *floor = new rplane();
 	floor->p1 = glm::vec3(-5.0f, 0.0f, -5.0f);

@@ -96,7 +96,7 @@ namespace study_cases {
 
 		// -----------------------------------------
 		// -- initialise simulator
-		S.set_initialiser(init);
+		S.set_initialiser(&init);
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
