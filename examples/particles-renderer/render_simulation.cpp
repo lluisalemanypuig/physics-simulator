@@ -20,9 +20,9 @@ void SimulationRenderer::set_projection(float aspect) {
 void SimulationRenderer::set_modelview() {
 	QMatrix4x4 modelviewMatrix;
 
-	// the -5.0f and -20.0f were added manually in order
+	// the -5.0f and -15.0f were added manually in order
 	// to have the whole scene visible from a distance
-	modelviewMatrix.translate(0.0f, -5.0f, -20.0f);
+	modelviewMatrix.translate(0.0f, -5.0f, -15.0f);
 	modelviewMatrix.translate(0.0f, 0.0f, -distance);
 	modelviewMatrix.rotate(angleX, 1.0f, 0.0f, 0.0f);
 	modelviewMatrix.rotate(angleY, 0.0f, 1.0f, 0.0f);
@@ -31,16 +31,6 @@ void SimulationRenderer::set_modelview() {
 	program->setUniformValue("modelview", modelviewMatrix);
 	program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
 	program->release();
-}
-
-void SimulationRenderer::draw_fps_text(QPainter *painter) {
-	QString q;
-	q.fromStdString("fps: " + std::to_string(4.0));
-
-	// Render text
-
-	painter->setPen(Qt::green);
-	painter->drawText(0,0, q);
 }
 
 void SimulationRenderer::draw_geom(rgeom *rg) {
@@ -54,7 +44,7 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 	switch (gt) {
 		case geom_type::Plane:
 			program->bind();
-			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+			program->setUniformValue("color", rg->get_color());
 
 			rp = static_cast<rplane *>(rg);
 			glBegin(GL_QUADS);
@@ -68,7 +58,7 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 
 		case geom_type::Rectangle:
 			program->bind();
-			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+			program->setUniformValue("color", rg->get_color());
 
 			rc = static_cast<rrectangle *>(rg);
 			glBegin(GL_QUADS);
@@ -82,7 +72,7 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 
 		case geom_type::Triangle:
 			program->bind();
-			program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0));
+			program->setUniformValue("color", rg->get_color());
 
 			rt = static_cast<rtriangle *>(rg);
 			glBegin(GL_TRIANGLES);
@@ -94,6 +84,8 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 			break;
 
 		case geom_type::Sphere:
+			cerr << "render of sphere not implemented" << endl;
+			break;
 
 		case geom_type::none:
 		default:

@@ -74,7 +74,7 @@ class MainWindow : public QMainWindow {
 		void on_lETimeStep_returnPressed();
 		void on_lETotalTime_returnPressed();
 
-		void on_CBfpsCount_toggled(bool checked);
+		void on_CoBsolver_currentIndexChanged(const QString &arg1);
 
 	public:
 		explicit MainWindow(QWidget *parent = 0);

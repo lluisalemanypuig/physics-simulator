@@ -13,7 +13,7 @@ using namespace std;
 #include <QProgressBar>
 #include <QMouseEvent>
 #include <QMatrix4x4>
-#include <QPainter>
+#include <QLabel>
 
 // Simulator includes
 #include <simulator/simulator.hpp>
@@ -38,8 +38,8 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		QOpenGLShaderProgram *program;
 
 		bool limit_fps;	// limit or not the frames per second
+		int fps_count;	// measured amount of fps
 		float FPS;		// fps of the simulations
-		bool show_fps;	// show fps on screen
 		bool exe_sim;	// when false, stop the running simulation
 		bool running;	// is true iff the simulation is running
 
@@ -52,16 +52,12 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		int sim_steps;		// number of steps of the simulation
 
 		QProgressBar *p_bar;// the progress bar of the simulation
-
-		// to show the fps
-		QFont font;
-		QColor fontColor;
+		QLabel *showFPS;
 
 	private:
 		// scene-rendering functions
 		void set_projection(float aspect);
 		void set_modelview();
-		void draw_fps_text(QPainter *painter);
 		void draw_geom(rgeom *rg);
 		void draw_particles();
 
@@ -102,6 +98,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// -- SETTERS
 
 		void set_progress_bar(QProgressBar *pbar);
+		void set_label_show_fps(QLabel *show_fps);
 
 		void set_limit_fps(bool l);
 
@@ -110,7 +107,6 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		void set_scene_made();
 
 		void set_fps(float fps);
-		void set_show_fps(bool show);
 		void set_time_step(float dt);
 		void set_total_time(float T);
 

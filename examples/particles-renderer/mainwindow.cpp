@@ -179,8 +179,6 @@ void MainWindow::on_PBrun_clicked() {
 	on_lETimeStep_returnPressed();
 	on_lETotalTime_returnPressed();
 
-	on_CBfpsCount_toggled( ui->CBfpsCount->isChecked() );
-
 	// run the simulation
 	sr->run_simulation();
 
@@ -289,11 +287,10 @@ void MainWindow::on_lEfps_returnPressed() {
 	if (fps > 0) {
 		sr->set_limit_fps(true);
 		sr->set_fps( fps );
-		ui->CBfpsCount->setEnabled(true);
 	}
 	else {
 		sr->set_limit_fps(false);
-		ui->CBfpsCount->setEnabled(false);
+		ui->lShowFPS->setText(QString("-1"));
 	}
 }
 
@@ -325,9 +322,22 @@ void MainWindow::on_lETotalTime_returnPressed() {
 	get_scene_bar()->setMaximum( tt/sr->get_time_step() );
 }
 
-void MainWindow::on_CBfpsCount_toggled(bool checked) {
+void MainWindow::on_CoBsolver_currentIndexChanged(const QString& arg1) {
+	cout << arg1.toStdString() << endl;
+
 	SimulationRenderer *sr = get_SimRend();
-	sr->set_show_fps(checked);
+	if (arg1 == "Euler Semi-Imp") {
+		sr->get_simulator().set_solver( solver_type::EulerSemi );
+	}
+	else if (arg1 == "Euler Implicit") {
+		sr->get_simulator().set_solver( solver_type::EulerOrig );
+	}
+	else if (arg1 == "Verlet") {
+		sr->get_simulator().set_solver( solver_type::Verlet );
+	}
+	else {
+		cerr << "Invalid value for solver type" << endl;
+	}
 }
 
 // PUBLIC
@@ -348,6 +358,13 @@ MainWindow::MainWindow(QWidget *parent)
 	for (int i = 0; i < ui->TWscenes->count(); ++i) {
 		SimulationRenderer *sr = get_SimRend(i);
 		sr->set_progress_bar( get_scene_bar(i) );
+		sr->set_label_show_fps( ui->lShowFPS );
+	}
+
+	// make scene if necessary
+	SimulationRenderer *sr = get_SimRend();
+	if (sr->is_scene_cleared()) {
+		make_scene(sr);
 	}
 }
 

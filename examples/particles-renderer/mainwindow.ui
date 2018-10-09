@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
-    <height>580</height>
+    <width>603</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,40 +48,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>407</width>
-            <height>80</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Extra options</string>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_9">
-           <item>
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>129</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
          <widget class="QProgressBar" name="PBar_scene0">
           <property name="maximumSize">
            <size>
@@ -115,40 +81,6 @@
             <height>256</height>
            </size>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBox_4">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>407</width>
-            <height>80</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Extra options</string>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>129</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
          </widget>
         </item>
         <item>
@@ -188,81 +120,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox">
-          <property name="maximumSize">
-           <size>
-            <width>407</width>
-            <height>80</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Extra options</string>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="minimumSize">
-                <size>
-                 <width>107</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Particle System:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="cBParticleSystem">
-               <property name="minimumSize">
-                <size>
-                 <width>112</width>
-                 <height>29</height>
-                </size>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Fountain</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Explosion</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Semi-sphere</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Explosion</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>147</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
          <widget class="QProgressBar" name="PBar_labScene">
           <property name="maximumSize">
            <size>
@@ -299,7 +156,7 @@
       <property name="title">
        <string>Options</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
@@ -466,6 +323,25 @@
         </layout>
        </item>
        <item>
+        <widget class="QComboBox" name="CoBsolver">
+         <item>
+          <property name="text">
+           <string>Euler Semi-Imp</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Euler Implicit</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Verlet</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
           <widget class="QPushButton" name="PBrun">
@@ -511,50 +387,100 @@
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>FPS</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>FPS</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="minimumSize">
+              <size>
+               <width>81</width>
+               <height>21</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>81</width>
+               <height>21</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Actual FPS</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QLineEdit" name="lEfps">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>60</string>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLineEdit" name="lEfps">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>60</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lShowFPS">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="CBfpsCount">
-         <property name="text">
-          <string>Show FPS count</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -566,8 +492,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>585</width>
-     <height>22</height>
+     <width>603</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -7,6 +7,9 @@
 #include <simulator/geometry/sphere.hpp>
 #include <simulator/geometry/plane.hpp>
 
+// Qt includes
+#include <QVector4D>
+
 // glm includes
 #include <glm/vec3.hpp>
 
@@ -19,19 +22,24 @@
 class rgeom {
 	protected:
 		bool render;
+		QVector4D color;
+
 	public:
 		rgeom() {
 			render = true;
+			color = QVector4D(1.0f, 0.0f, 0.0f, 1.0f);
 		}
 		virtual ~rgeom() {}
 
 		// SETTERS
 
 		void set_render(bool r) { render = r; }
+		void set_color(const QVector4D& c) { color = c; }
 
 		// GETTERS
 
 		bool should_render() const { return render; }
+		const QVector4D& get_color() const { return color; }
 		virtual physim::geom::geometry *get_underlying() = 0;
 };
 
