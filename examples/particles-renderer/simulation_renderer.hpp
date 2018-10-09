@@ -17,7 +17,7 @@ using namespace std;
 
 // Simulator includes
 #include <simulator/simulator.hpp>
-#include <simulator/initialiser/rect_waterfall.hpp>
+#include <simulator/initialiser/initialiser.hpp>
 using namespace physim;
 using namespace geom;
 using namespace init;

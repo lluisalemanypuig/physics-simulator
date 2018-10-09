@@ -5,8 +5,8 @@
 void MainWindow::make_scene_0(SimulationRenderer *sr) {
 	// these parts of the initialiser are scene-dependent
 
-	rect_waterfall w;
-	w.set_rectangle_source(-4.5f,10.0f,-4.5f, 9.0f,9.0f);
+	rect_shower w;
+	w.set_flat_source(vec3(-4.5f,10.0f,-4.5f), 9.5f,9.5f);
 	w.set_starttime_initialiser(
 		[](particle *p) {
 			p->set_starttime( p->get_index()/300.0 );
