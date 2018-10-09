@@ -10,25 +10,30 @@ void simulator::init_particle(particle *p) {
 }
 
 void simulator::update_particle(float dt, particle *p) {
+	p->save_position();
+	p->save_velocity();
+
+	const vec3& force = p->get_force();
+	const vec3& cur_vel = p->get_velocity();
+	vec3 pre_pos = p->get_previous_position();
+	vec3 cur_pos = p->get_position();
+	vec3 next_pos;
 
 	switch (solver) {
 		case solver_type::EulerOrig:
-			p->save_position();
-			p->save_velocity();
-
-			p->translate( p->get_velocity()*dt );
-			p->acceleterate( p->get_force()*dt );
+			p->translate( cur_vel*dt );
+			p->acceleterate( force*dt );
 			break;
 
 		case solver_type::EulerSemi:
-			p->save_position();
-			p->save_velocity();
-
-			p->acceleterate( p->get_force()*dt );
-			p->translate( p->get_velocity()*dt );
+			p->acceleterate( force*dt );
+			p->translate( cur_vel*dt );
 			break;
 
 		case solver_type::Verlet:
+			next_pos = cur_pos + (cur_pos - pre_pos) + force*dt*dt;
+			p->set_position( next_pos );
+			p->set_velocity( (next_pos - cur_pos)/dt );
 			break;
 
 		default:
