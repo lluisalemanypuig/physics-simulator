@@ -142,6 +142,10 @@ void particle::set_fixed(bool f) {
 	fixed = f;
 }
 
+void particle::set_index(size_t i) {
+	index = i;
+}
+
 // GETTERS
 
 const vec3& particle::get_previous_position() const {
