@@ -13,6 +13,7 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 
 	program = nullptr;
 
+	limit_fps = false;
 	FPS = 60.0f;
 	show_fps = true;
 	exe_sim = true;
@@ -62,8 +63,10 @@ void SimulationRenderer::run_simulation() {
 		end = timing::now();
 		double frame = timing::elapsed_seconds(begin, end);
 
-		QCoreApplication::processEvents();
-		timing::sleep_seconds( 1.0/FPS - frame );
+		if (limit_fps) {
+			QCoreApplication::processEvents();
+			timing::sleep_seconds( 1.0/FPS - frame );
+		}
 	}
 
 	running = false;
@@ -134,6 +137,10 @@ float SimulationRenderer::get_total_time() const {
 
 void SimulationRenderer::set_progress_bar(QProgressBar *pbar) {
 	p_bar = pbar;
+}
+
+void SimulationRenderer::set_limit_fps(bool l) {
+	limit_fps = l;
 }
 
 void SimulationRenderer::set_scene_made() {

@@ -37,6 +37,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// shader for rendering objects
 		QOpenGLShaderProgram *program;
 
+		bool limit_fps;	// limit or not the frames per second
 		float FPS;		// fps of the simulations
 		bool show_fps;	// show fps on screen
 		bool exe_sim;	// when false, stop the running simulation
@@ -101,6 +102,8 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// -- SETTERS
 
 		void set_progress_bar(QProgressBar *pbar);
+
+		void set_limit_fps(bool l);
 
 		// sets 'scene_cleared' to false, so that
 		// we can run the application

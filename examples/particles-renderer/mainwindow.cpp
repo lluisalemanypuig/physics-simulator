@@ -47,7 +47,6 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
 		bounce = [&](particle *p) { p->set_bouncing( this->U01(this->eng) ); };
-		cout << "Log: using random values for bouncing coefficient" << endl;
 		return;
 	}
 
@@ -55,7 +54,6 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	float b = text.toFloat(&ok);
 	if (ok) {
 		bounce = [b](particle *p) { p->set_bouncing(b); };
-		cout << "Log: using '" << b << "' for bouncing coefficient" << endl;
 		return;
 	}
 
@@ -67,7 +65,6 @@ void MainWindow::get_init_friction(partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
 		fric = [&](particle *p) { p->set_friction( this->U01(this->eng) ); };
-		cout << "Log: using random values for friction coefficient" << endl;
 		return;
 	}
 
@@ -75,7 +72,6 @@ void MainWindow::get_init_friction(partinit& fric) {
 	float f = text.toFloat(&ok);
 	if (ok) {
 		fric = [f](particle *p) { p->set_friction(f); };
-		cout << "Log: using '" << f << "' for friction coefficient" << endl;
 		return;
 	}
 
@@ -87,7 +83,6 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
 		lifetime = [&](particle *p) { p->set_lifetime( this->U010(this->eng) ); };
-		cout << "Log: using random values for lifetime" << endl;
 		return;
 	}
 
@@ -95,7 +90,6 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	float l = text.toFloat(&ok);
 	if (ok) {
 		lifetime = [l](particle *p) { p->set_lifetime(l); };
-		cout << "Log: using '" << l << "' for lifetime" << endl;
 		return;
 	}
 
@@ -280,7 +274,15 @@ void MainWindow::on_lEfps_returnPressed() {
 	}
 
 	SimulationRenderer *sr = get_SimRend();
-	sr->set_fps( fps );
+	if (fps > 0) {
+		sr->set_limit_fps(true);
+		sr->set_fps( fps );
+		ui->CBfpsCount->setEnabled(true);
+	}
+	else {
+		sr->set_limit_fps(false);
+		ui->CBfpsCount->setEnabled(false);
+	}
 }
 
 void MainWindow::on_lETimeStep_returnPressed() {
