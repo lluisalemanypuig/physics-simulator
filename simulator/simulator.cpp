@@ -56,8 +56,8 @@ simulator::~simulator() {
 
 const particle *simulator::add_particle() {
 	particle *p = new particle();
-	init_particle(p);
 	p->set_index(ps.size());
+	init_particle(p);
 	ps.push_back(p);
 	return p;
 }
