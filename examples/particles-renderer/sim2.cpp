@@ -45,6 +45,7 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	ball->c = vec3(0.0f,2.0f,0.0f);
 	ball->r = 1.0f;
 	ball->s = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
+	ball->set_color(QVector4D(0.0f,0.0f,1.0f,1.0f));
 	sr->add_rgeom(ball);
 
 	rrectangle *ramp = new rrectangle();

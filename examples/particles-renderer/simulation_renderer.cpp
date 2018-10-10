@@ -23,8 +23,6 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	scene_cleared = true;
 	dt = 0.01f;
 	tt = 10.0f;
-
-	fbo = new QGLFramebufferObject( this->width(), this->height() );
 }
 
 SimulationRenderer::~SimulationRenderer() {
@@ -66,7 +64,7 @@ void SimulationRenderer::run_simulation() {
 			// a second has passed since the last
 			// recording of 'second'
 			double sec = timing::elapsed_seconds(second, end);
-			if (sec >= 1.0f) {
+			if (sec >= 1.0) {
 				second = timing::now();
 				showFPS->setText(QString::fromStdString(std::to_string(fps_count)));
 				fps_count = 0;
@@ -159,7 +157,7 @@ void SimulationRenderer::set_scene_made() {
 	scene_cleared = false;
 }
 
-void SimulationRenderer::set_fps(float fps) {
+void SimulationRenderer::set_fps(double fps) {
 	FPS = fps;
 }
 

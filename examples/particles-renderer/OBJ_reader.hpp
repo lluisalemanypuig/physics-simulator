@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include <GL/glu.h>
 #include <GL/gl.h>
 
@@ -74,8 +76,10 @@ class OBJ_reader {
 		void loadMTL(const char* fileMTL);
 		void smoothNormalsFaceByFace(int fN, int fS, int fE);
 		int getVertexsFacesNormals(int A, int B);
-		int getObject(int C, int D);
+		GLuint getObject(int C, int D);
 		
+		void scale_to_unit();
+
 	public:
 		OBJ_reader();
 		~OBJ_reader();
@@ -83,7 +87,7 @@ class OBJ_reader {
 		// Pre: filename és el path del fitxer *.obj que conté UN ÚNIC OBJECTE
 		// Post: retorna un enter més gran o igual a 1 que representa l'objecte
 		//		retorna -1 en cas que no es trobessin els fitxers *.obj, *.mtl o les textures.
-		int loadObject(const char* filename);
+		GLuint loadObject(const char* filename);
 		
 		// Pre: filename és el path del fitxer que conté un o més objectes
 		// Post: retorna una llista de identificadors que representen els diferents objectes

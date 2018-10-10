@@ -16,6 +16,8 @@ CONFIG(debug, debug|release) {
 	LIBS += -L../../simulator-debug/ -lsimulator
 }
 
+LIBS += -lGL -lGLU
+
 FORMS += mainwindow.ui
 
 SOURCES +=					\

@@ -343,9 +343,10 @@ int OBJ_reader::getVertexsFacesNormals(int A, int B) {
 	return S;
 }
 
-int OBJ_reader::getObject(int C, int D) {
-	int num = glGenLists(INICI);
+GLuint OBJ_reader::getObject(int C, int D) {
+	GLuint num = glGenLists(INICI);
 	glNewList(num, GL_COMPILE);
+	glPushMatrix();
 	
 	for (int i = C; i < D; ++i) {
 		/*   SET THE MATERIAL TO THE FACE   */
@@ -502,18 +503,42 @@ int OBJ_reader::getObject(int C, int D) {
 			glEnd();
 		}
 	}
+	glPopMatrix();
 	glEndList();
 	return num;
 }
 
-int OBJ_reader::loadObject(const char* fileOBJ) {
+void OBJ_reader::scale_to_unit() {
+	glm::vec3 center(0.0f, 0.0f, 0.0f);
+
+	glm::vec3 m(1e10, 1e10, 1e10);
+	glm::vec3 M(-1e10, -1e10, -1e10);
+
+	for (unsigned int i = 0; i < vertex.size(); ++i) {
+		center += glm::vec3(vertex[i]->x, vertex[i]->y, vertex[i]->z);
+
+		m = glm::min(m, glm::vec3(vertex[i]->x, vertex[i]->y, vertex[i]->z));
+		M = glm::max(M, glm::vec3(vertex[i]->x, vertex[i]->y, vertex[i]->z));
+	}
+	center /= vertex.size();
+
+	float largestSize = max(M.x - m.x, max(M.y - m.y, M.z - m.z));
+
+	for (unsigned int i = 0; i < vertex.size(); ++i) {
+		vertex[i]->x = (vertex[i]->x - center.x)/largestSize;
+		vertex[i]->y = (vertex[i]->y - center.y)/largestSize;
+		vertex[i]->z = (vertex[i]->z - center.z)/largestSize;
+	}
+}
+
+GLuint OBJ_reader::loadObject(const char* fileOBJ) {
 	#ifdef DEBUG
 	cout << "Loading file '" << fileOBJ << "'" << endl;
 	#endif
 
 	if (not loadFile(fileOBJ)) {
 		cout << "File '" << fileOBJ << "' could not be loaded" << endl;
-		return -1;
+		return 0;
 	}
 	int aux = 0;
 	while ((*coord[aux])[0] != 'm' and (*coord[aux])[1] != 't' and (*coord[aux])[2] != 'l') ++aux;
@@ -554,7 +579,9 @@ int OBJ_reader::loadObject(const char* fileOBJ) {
 	cout << "Object '" << objectname << "' from file '" << fileOBJ << "' was loaded successfully" << endl;
 	#endif
 
-	int K = getObject(0, faces.size());
+	scale_to_unit();
+
+	GLuint K = getObject(0, faces.size());
 	clean();
 	list_indexes.push_back(K);
 	return K;

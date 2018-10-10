@@ -282,7 +282,7 @@ void MainWindow::on_lELifeTime_returnPressed() {
 
 void MainWindow::on_lEfps_returnPressed() {
 	bool ok;
-	float fps = ui->lEfps->text().toFloat(&ok);
+	double fps = ui->lEfps->text().toDouble(&ok);
 	if (not ok) {
 		cerr << "Error: invalid text in 'fps' text box." << endl;
 		return;

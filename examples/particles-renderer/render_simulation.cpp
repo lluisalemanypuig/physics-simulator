@@ -44,9 +44,9 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 
 	switch (gt) {
 		case geom_type::Plane:
+
 			program->bind();
 			program->setUniformValue("color", rg->get_color());
-
 			rp = static_cast<rplane *>(rg);
 			glBegin(GL_QUADS);
 				glVertex3f(rp->p1.x, rp->p1.y, rp->p1.z);
@@ -58,9 +58,9 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 			break;
 
 		case geom_type::Rectangle:
+
 			program->bind();
 			program->setUniformValue("color", rg->get_color());
-
 			rc = static_cast<rrectangle *>(rg);
 			glBegin(GL_QUADS);
 				glVertex3f(rc->p1.x, rc->p1.y, rc->p1.z);
@@ -72,9 +72,9 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 			break;
 
 		case geom_type::Triangle:
+
 			program->bind();
 			program->setUniformValue("color", rg->get_color());
-
 			rt = static_cast<rtriangle *>(rg);
 			glBegin(GL_TRIANGLES);
 				glVertex3f(rt->p1.x, rt->p1.y, rt->p1.z);
@@ -82,19 +82,22 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 				glVertex3f(rt->p3.x, rt->p3.y, rt->p3.z);
 			glEnd();
 			program->release();
+
 			break;
 
 		case geom_type::Sphere:
 
 			rs = static_cast<rsphere *>(rg);
-			cout << "Draw sphere" << endl;
 
-			fbo->bind();
-			glCallList(sphere_idx);
-			fbo->release();
+			program->bind();
+			program->setUniformValue("color", rg->get_color());
+
+				glCallList( sphere_idx );
+
+			program->release();
+
 			break;
 
-		case geom_type::none:
 		default:
 			cerr << "No type for geometry" << endl;
 	}
@@ -107,7 +110,6 @@ void SimulationRenderer::draw_particles() {
 	glBegin(GL_POINTS);
 	for (size_t i = 0; i < S.n_particles(); ++i) {
 		const vec3& pos = S.get_particle(i).get_position();
-
 		glVertex3f(pos.x, pos.y, pos.z);
 	}
 	glEnd();

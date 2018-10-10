@@ -7,7 +7,6 @@ using namespace std;
 
 // Qt includes
 #include <QOpenGLShaderProgram>
-#include <QGLFramebufferObject>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QApplication>
@@ -38,11 +37,10 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		// shader for rendering objects
 		QOpenGLShaderProgram *program;
-		QGLFramebufferObject *fbo;
 
 		bool limit_fps;	// limit or not the frames per second
 		int fps_count;	// measured amount of fps
-		float FPS;		// fps of the simulations
+		double FPS;		// fps of the simulations
 		bool exe_sim;	// when false, stop the running simulation
 
 		vector<rgeom *> G;	// wrapped geometrical objects of the scene
@@ -53,8 +51,9 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
+		GLUquadricObj *sphere;
+		GLuint sphere_idx;
 		OBJ_reader obj;
-		int sphere_idx;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
 		QLabel *showFPS;
@@ -111,7 +110,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// we can run the application
 		void set_scene_made();
 
-		void set_fps(float fps);
+		void set_fps(double fps);
 		void set_time_step(float dt);
 		void set_total_time(float T);
 
