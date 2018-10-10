@@ -27,18 +27,18 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="tab_scene0">
+      <widget class="QWidget" name="tab_sim0">
        <attribute name="title">
         <string>Sim 1</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="SimulationRenderer" name="GL_scene0">
+         <widget class="SimulationRenderer" name="GL_sim0">
           <property name="minimumSize">
            <size>
             <width>256</width>
@@ -48,7 +48,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="PBar_scene0">
+         <widget class="QProgressBar" name="PBar_sim0">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -68,13 +68,13 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_scene1">
+      <widget class="QWidget" name="tab_sim1">
        <attribute name="title">
         <string>Sim 2</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="SimulationRenderer" name="GL_scene1">
+         <widget class="SimulationRenderer" name="GL_sim1">
           <property name="minimumSize">
            <size>
             <width>256</width>
@@ -84,7 +84,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="PBar_scene1">
+         <widget class="QProgressBar" name="PBar_sim1">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -104,13 +104,13 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="lab_tab">
+      <widget class="QWidget" name="tab_sim2">
        <attribute name="title">
-        <string>LAB</string>
+        <string>Sim 3</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="SimulationRenderer" name="GL_labScene">
+         <widget class="SimulationRenderer" name="GL_sim2">
           <property name="minimumSize">
            <size>
             <width>217</width>
@@ -120,7 +120,40 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="PBar_labScene">
+         <widget class="QProgressBar" name="PBar_sim2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_sim3">
+       <attribute name="title">
+        <string>Sim 4</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="SimulationRenderer" name="GL_sim3">
+          <property name="minimumSize">
+           <size>
+            <width>217</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="PBar_sim3">
           <property name="maximumSize">
            <size>
             <width>16777215</width>

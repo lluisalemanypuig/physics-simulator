@@ -7,6 +7,7 @@ using namespace std;
 
 // Qt includes
 #include <QOpenGLShaderProgram>
+#include <QGLFramebufferObject>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QApplication>
@@ -24,6 +25,7 @@ using namespace init;
 
 // Custom includes
 #include "render_geometry.hpp"
+#include "OBJ_reader.hpp"
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -36,6 +38,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		// shader for rendering objects
 		QOpenGLShaderProgram *program;
+		QGLFramebufferObject *fbo;
 
 		bool limit_fps;	// limit or not the frames per second
 		int fps_count;	// measured amount of fps
@@ -49,6 +52,9 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float dt;			// time step
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
+
+		OBJ_reader obj;
+		int sphere_idx;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
 		QLabel *showFPS;

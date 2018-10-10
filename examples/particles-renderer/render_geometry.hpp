@@ -103,6 +103,7 @@ class rsphere : public rgeom {
 	private:
 	public:
 		glm::vec3 c;
+		float r;
 		physim::geom::sphere *s;
 	public:
 		rsphere() : rgeom() {

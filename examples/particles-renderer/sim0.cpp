@@ -2,7 +2,7 @@
 
 // PRIVATE
 
-void MainWindow::make_scene_0(SimulationRenderer *sr) {
+void MainWindow::make_sim0(SimulationRenderer *sr) {
 	// these parts of the initialiser are scene-dependent
 
 	rect_shower w;

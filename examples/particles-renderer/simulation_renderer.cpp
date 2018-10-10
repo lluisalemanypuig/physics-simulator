@@ -23,6 +23,8 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	scene_cleared = true;
 	dt = 0.01f;
 	tt = 10.0f;
+
+	fbo = new QGLFramebufferObject( this->width(), this->height() );
 }
 
 SimulationRenderer::~SimulationRenderer() {

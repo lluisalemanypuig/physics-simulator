@@ -8,6 +8,7 @@ using namespace std;
 
 // Qt includes
 #include <QMainWindow>
+#include <QFileInfo>
 
 // glm includes
 #include <glm/glm.hpp>
@@ -43,18 +44,19 @@ class MainWindow : public QMainWindow {
 	private:
 		SimulationRenderer *get_SimRend(int t);
 		SimulationRenderer *get_SimRend();
-		QProgressBar *get_scene_bar(int t);
-		QProgressBar *get_scene_bar();
+		QProgressBar *get_sim_bar(int t);
+		QProgressBar *get_sim_bar();
 
 		void get_init_bounce(partinit& p);
 		void get_init_friction(partinit& p);
 		void get_init_lifetime(partinit& p);
 
 		// 'make scene' functions
-		void make_scene_0(SimulationRenderer *sr);
-		void make_scene_1(SimulationRenderer *sr);
-		void make_scene_lab(SimulationRenderer *sr);
-		void make_scene(SimulationRenderer *sr);
+		void make_sim0(SimulationRenderer *sr);
+		void make_sim1(SimulationRenderer *sr);
+		void make_sim2(SimulationRenderer *sr);
+		void make_sim3(SimulationRenderer *sr);
+		void make_sim(SimulationRenderer *sr);
 
 		void make_init_with_params(initialiser& i);
 

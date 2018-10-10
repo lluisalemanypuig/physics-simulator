@@ -23,16 +23,19 @@ SOURCES +=					\
 	mainwindow.cpp			\
 	simulation_renderer.cpp	\
 	utils.cpp				\
-	scene_0.cpp				\
-	scene_lab.cpp			\
     render_simulation.cpp \
-    scene_1.cpp
+    OBJ_reader.cpp \
+    sim0.cpp \
+    sim1.cpp \
+    sim2.cpp \
+    sim3.cpp
 
 HEADERS +=					\
     simulation_renderer.hpp \
 	utils.hpp				\
 	mainwindow.hpp			\
-    render_geometry.hpp
+    render_geometry.hpp \
+    OBJ_reader.hpp
 
 DISTFILES +=					\
 	shaders/simpleshader.vert	\

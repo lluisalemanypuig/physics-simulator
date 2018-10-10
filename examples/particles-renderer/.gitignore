@@ -7,7 +7,9 @@
 *.core
 *.moc
 *.o
-*.obj
+# I need this extension
+# for the sphere object
+#*.obj
 *.orig
 *.rej
 *.so

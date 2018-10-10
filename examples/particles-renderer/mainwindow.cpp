@@ -7,17 +7,12 @@ SimulationRenderer *MainWindow::get_SimRend(int t) {
 	SimulationRenderer *sr = nullptr;
 
 	switch (t) {
-		case 0:
-			sr = ui->GL_scene0;
-			break;
-
-		case 1:
-			sr = ui->GL_scene1;
-			break;
-
+		case 0:	sr = ui->GL_sim0; break;
+		case 1:	sr = ui->GL_sim1; break;
+		case 2:	sr = ui->GL_sim2; break;
+		case 3:	sr = ui->GL_sim3; break;
 		default:
-			sr = ui->GL_labScene;
-			break;
+			cerr << "MainWindow::get_SimRend: Error: Unhandled value '" << t << "'" << endl;
 	}
 
 	return sr;
@@ -27,28 +22,24 @@ SimulationRenderer *MainWindow::get_SimRend() {
 	return get_SimRend(current_tab);
 }
 
-QProgressBar *MainWindow::get_scene_bar(int t) {
+QProgressBar *MainWindow::get_sim_bar(int t) {
 	QProgressBar *pb = nullptr;
 
 	switch (t) {
-		case 0:
-			pb = ui->PBar_scene0;
-			break;
-
-		case 1:
-			pb = ui->PBar_scene1;
-			break;
-
+		case 0:	pb = ui->PBar_sim0; break;
+		case 1:	pb = ui->PBar_sim1; break;
+		case 2:	pb = ui->PBar_sim2; break;
+		case 3:	pb = ui->PBar_sim3; break;
 		default:
-			pb = ui->PBar_labScene;
+			cerr << "MainWindow::get_scene_bar: Error: Unhandled value '" << t << "'" << endl;
 			break;
 	}
 
 	return pb;
 }
 
-QProgressBar *MainWindow::get_scene_bar() {
-	return get_scene_bar(current_tab);
+QProgressBar *MainWindow::get_sim_bar() {
+	return get_sim_bar(current_tab);
 }
 
 void MainWindow::get_init_bounce(partinit& bounce) {
@@ -111,7 +102,7 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	return;
 }
 
-void MainWindow::make_scene(SimulationRenderer *sr) {
+void MainWindow::make_sim(SimulationRenderer *sr) {
 	if (not sr->is_scene_cleared()) {
 		return;
 	}
@@ -127,15 +118,15 @@ void MainWindow::make_scene(SimulationRenderer *sr) {
 
 	switch (current_tab) {
 		case 0:
-			make_scene_0(sr);
+			make_sim0(sr);
 			break;
 
 		case 1:
-			make_scene_1(sr);
+			make_sim1(sr);
 			break;
 
 		default:
-			make_scene_lab(sr);
+			make_sim2(sr);
 			break;
 	}
 
@@ -169,9 +160,9 @@ void MainWindow::on_PBrun_clicked() {
 
 	// make scene if necessary
 	if (sr->is_scene_cleared()) {
-		make_scene(sr);
+		make_sim(sr);
 
-		QProgressBar *s_bar = get_scene_bar();
+		QProgressBar *s_bar = get_sim_bar();
 		float dt = sr->get_time_step();
 		float tt = sr->get_total_time();
 
@@ -212,14 +203,14 @@ void MainWindow::on_PBreset_clicked() {
 	SimulationRenderer *sr = get_SimRend();
 	sr->reset_simulation();
 
-	get_scene_bar()->setValue(0);
+	get_sim_bar()->setValue(0);
 }
 
 void MainWindow::on_PBclear_clicked() {
 	SimulationRenderer *sr = get_SimRend();
 	sr->clear_simulation();
 
-	get_scene_bar()->setValue(0);
+	get_sim_bar()->setValue(0);
 }
 
 void MainWindow::on_TWscenes_currentChanged(int index) {
@@ -231,7 +222,7 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 
 	// make appropriate scene for the new renderer
 	// only if the simulation was not cleared
-	make_scene( get_SimRend() );
+	make_sim( get_SimRend() );
 
 	// enable all buttons
 	ui->PBreset->setEnabled(true);
@@ -322,7 +313,7 @@ void MainWindow::on_lETimeStep_returnPressed() {
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_time_step( dt );
 
-	get_scene_bar()->setMaximum( sr->get_total_time()/dt );
+	get_sim_bar()->setMaximum( sr->get_total_time()/dt );
 }
 
 void MainWindow::on_lETotalTime_returnPressed() {
@@ -338,7 +329,7 @@ void MainWindow::on_lETotalTime_returnPressed() {
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_total_time(tt);
 
-	get_scene_bar()->setMaximum( tt/sr->get_time_step() );
+	get_sim_bar()->setMaximum( tt/sr->get_time_step() );
 }
 
 void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
@@ -383,14 +374,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 	for (int i = 0; i < ui->TWscenes->count(); ++i) {
 		SimulationRenderer *sr = get_SimRend(i);
-		sr->set_progress_bar( get_scene_bar(i) );
+		sr->set_progress_bar( get_sim_bar(i) );
 		sr->set_label_show_fps( ui->lShowFPS );
 	}
 
 	// make scene if necessary
 	SimulationRenderer *sr = get_SimRend();
 	if (sr->is_scene_cleared()) {
-		make_scene(sr);
+		make_sim(sr);
 	}
 }
 

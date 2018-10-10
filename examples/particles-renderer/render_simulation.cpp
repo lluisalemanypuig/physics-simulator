@@ -40,6 +40,7 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 	rplane *rp = nullptr;
 	rrectangle *rc = nullptr;
 	rtriangle *rt = nullptr;
+	rsphere *rs = nullptr;
 
 	switch (gt) {
 		case geom_type::Plane:
@@ -84,7 +85,13 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 			break;
 
 		case geom_type::Sphere:
-			cerr << "render of sphere not implemented" << endl;
+
+			rs = static_cast<rsphere *>(rg);
+			cout << "Draw sphere" << endl;
+
+			fbo->bind();
+			glCallList(sphere_idx);
+			fbo->release();
 			break;
 
 		case geom_type::none:
@@ -127,6 +134,9 @@ void SimulationRenderer::initializeGL() {
 	program->bind();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	// load a sphere
+	sphere_idx = obj.loadObject("../particles-renderer/models/SPH_FullSmooth_Mat.obj");
 }
 
 void SimulationRenderer::resizeGL(int w, int h) {
@@ -142,10 +152,9 @@ void SimulationRenderer::paintGL() {
 	// update screen with the geometry
 	for (rgeom *rg : G) {
 		// draw geometry only if told so
-		if (not rg->should_render()) {
-			continue;
+		if (rg->should_render()) {
+			draw_geom(rg);
 		}
-		draw_geom(rg);
 	}
 
 	// update screen with the particles
