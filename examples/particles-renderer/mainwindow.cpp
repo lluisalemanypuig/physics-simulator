@@ -55,6 +55,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
 		bounce = [&](particle *p) { p->set_bouncing( this->U01(this->eng) ); };
+		cout << "Use random bouncing coefficient" << endl;
 		return;
 	}
 
@@ -62,6 +63,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	float b = text.toFloat(&ok);
 	if (ok) {
 		bounce = [b](particle *p) { p->set_bouncing(b); };
+		cout << "Set bouncing coefficient to " << b << endl;
 		return;
 	}
 
@@ -73,6 +75,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
 		fric = [&](particle *p) { p->set_friction( this->U01(this->eng) ); };
+		cout << "Use random friction coefficient" << endl;
 		return;
 	}
 
@@ -80,6 +83,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 	float f = text.toFloat(&ok);
 	if (ok) {
 		fric = [f](particle *p) { p->set_friction(f); };
+		cout << "Set friction coefficient to " << f << endl;
 		return;
 	}
 
@@ -91,6 +95,7 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
 		lifetime = [&](particle *p) { p->set_lifetime( this->U010(this->eng) ); };
+		cout << "Use random particle's lifetime" << endl;
 		return;
 	}
 
@@ -98,6 +103,7 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	float l = text.toFloat(&ok);
 	if (ok) {
 		lifetime = [l](particle *p) { p->set_lifetime(l); };
+		cout << "Set particle's lifetime to " << l << endl;
 		return;
 	}
 
@@ -153,6 +159,9 @@ void MainWindow::make_init_with_params(initialiser& i) {
 // PRIVATE SLOTS
 
 void MainWindow::on_PBrun_clicked() {
+	cout << "------------------------" << endl;
+	cout << "Run!" << endl;
+
 	ui->PBreset->setEnabled(false);
 	ui->PBclear->setEnabled(false);
 
@@ -181,6 +190,8 @@ void MainWindow::on_PBrun_clicked() {
 	on_lEfps_returnPressed();
 	on_lETimeStep_returnPressed();
 	on_lETotalTime_returnPressed();
+
+	on_CoBsolver_currentIndexChanged(QString());
 
 	// run the simulation
 	sr->run_simulation();
@@ -288,6 +299,7 @@ void MainWindow::on_lEfps_returnPressed() {
 
 	SimulationRenderer *sr = get_SimRend();
 	if (fps > 0) {
+		cout << "Set FPS limit to " << fps << endl;
 		sr->set_limit_fps(true);
 		sr->set_fps( fps );
 	}
@@ -305,6 +317,8 @@ void MainWindow::on_lETimeStep_returnPressed() {
 		return;
 	}
 
+	cout << "Set time step to " << dt << endl;
+
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_time_step( dt );
 
@@ -319,23 +333,32 @@ void MainWindow::on_lETotalTime_returnPressed() {
 		return;
 	}
 
+	cout << "Set total time to " << tt << endl;
+
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_total_time(tt);
 
 	get_scene_bar()->setMaximum( tt/sr->get_time_step() );
 }
 
-void MainWindow::on_CoBsolver_currentIndexChanged(const QString& arg1) {
-	cout << arg1.toStdString() << endl;
+void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
+	// this slot has its parameter removed (the text
+	// is retrieved to 'text') so that it can be called
+	// from other parts of the code.
+
+	QString text = ui->CoBsolver->currentText();
 
 	SimulationRenderer *sr = get_SimRend();
-	if (arg1 == "Euler Semi-Imp") {
-		sr->get_simulator().set_solver( solver_type::EulerSemi );
-	}
-	else if (arg1 == "Euler Explicit") {
+	if (text == "Euler Explicit") {
+		cout << "Use Euler Explicit" << endl;
 		sr->get_simulator().set_solver( solver_type::EulerOrig );
 	}
-	else if (arg1 == "Verlet") {
+	else if (text == "Euler Semi-Imp") {
+		cout << "Use Semi-Implicit Euler" << endl;
+		sr->get_simulator().set_solver( solver_type::EulerSemi );
+	}
+	else if (text == "Verlet") {
+		cout << "Use Verlet" << endl;
 		sr->get_simulator().set_solver( solver_type::Verlet );
 	}
 	else {
