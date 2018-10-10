@@ -138,9 +138,7 @@ void sphere::update_upon_collision(particle *p) const {
 }
 
 void sphere::display(ostream& os) const {
-	os << "I am a sphere" << endl;
-	os << "    with centre: (" << C.x << "," << C.y << "," << C.z << ")" << endl;
-	os << "    and radius: " << R << endl;
+	os << *this;
 }
 
 } // -- namespace geom

@@ -58,6 +58,23 @@ class triangle : public geometry {
 		/// Destructor.
 		~triangle();
 
+		// OPERATORS
+
+		inline friend
+		ostream& operator<< (ostream& os, const triangle& t) {
+			os << "I am a triangle" << endl;
+			os << "    with vertices:" << endl;
+			os << "        - Point({" << t.v1.x << "," << t.v1.y << "," << t.v1.z << "})" << endl;
+			os << "        - Point({" << t.v2.x << "," << t.v2.y << "," << t.v2.z << "})" << endl;
+			os << "        - Point({" << t.v3.x << "," << t.v3.y << "," << t.v3.z << "})" << endl;
+			os << "    and plane equation:" << endl;
+			const vec3& n = t.pl.get_normal();
+			os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
+			   << t.pl.get_constant() << " = 0" << endl;
+
+			return os;
+		}
+
 		// SETTERS
 
 		/**

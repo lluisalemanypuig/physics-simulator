@@ -73,6 +73,19 @@ class plane : public geometry {
 		/// Destructor.
 		~plane();
 
+		// OPERATORS
+
+		inline friend
+		ostream& operator<< (ostream& os, const plane& p) {
+			os << "I am a plane" << endl;
+			os << "    with plane equation:" << endl;
+			os << "        " << p.normal.x << "*x + "
+							 << p.normal.y << "*y + "
+							 << p.normal.z << "*z + "
+							 << p.dconst << " = 0" << endl;
+			return os;
+		}
+
 		// SETTERS
 
 		/**

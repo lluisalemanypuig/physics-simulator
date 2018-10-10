@@ -69,6 +69,24 @@ class rectangle : public geometry {
 		/// Destructor.
 		~rectangle();
 
+		// OPERATORS
+
+		inline friend
+		ostream& operator<< (ostream& os, const rectangle& r) {
+			os << "I am a rectangle" << endl;
+			os << "    with vertices:" << endl;
+			os << "        - Point({" << r.v1.x << "," << r.v1.y << "," << r.v1.z << "})" << endl;
+			os << "        - Point({" << r.v2.x << "," << r.v2.y << "," << r.v2.z << "})" << endl;
+			os << "        - Point({" << r.v3.x << "," << r.v3.y << "," << r.v3.z << "})" << endl;
+			os << "        - Point({" << r.v4.x << "," << r.v4.y << "," << r.v4.z << "})" << endl;
+			os << "    and plane equation:" << endl;
+			const vec3& n = r.pl.get_normal();
+			os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
+			   << r.pl.get_constant() << " = 0" << endl;
+
+			return os;
+		}
+
 		// SETTERS
 
 		/**

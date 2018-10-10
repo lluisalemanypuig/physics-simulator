@@ -117,11 +117,7 @@ void plane::update_upon_collision(particle *p) const {
 }
 
 void plane::display(ostream& os) const {
-	os << "I am a plane" << endl;
-	os << "    with plane equation:" << endl;
-	const vec3& n = get_normal();
-	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-	   << get_constant() << " = 0" << endl;
+	os << *this;
 }
 
 } // -- namespace geom

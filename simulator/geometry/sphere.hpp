@@ -32,6 +32,16 @@ class sphere : public geometry {
 		/// Destructor.
 		~sphere();
 
+		// OPERATORS
+
+		inline friend
+		ostream& operator<< (ostream& os, const sphere& s) {
+			os << "I am a sphere" << endl;
+			os << "    with centre: (" << s.C.x << "," << s.C.y << "," << s.C.z << ")" << endl;
+			os << "    and radius: " << s.R << endl;
+			return os;
+		}
+
 		// SETTERS
 
 		/**

@@ -100,15 +100,7 @@ void triangle::update_upon_collision(particle *p) const {
 }
 
 void triangle::display(ostream& os) const {
-	os << "I am a triangle" << endl;
-	os << "    with vertices:" << endl;
-	os << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << endl;
-	os << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << endl;
-	os << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << endl;
-	os << "    and plane equation:" << endl;
-	const vec3& n = pl.get_normal();
-	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-	   << pl.get_constant() << " = 0" << endl;
+	os << *this;
 }
 
 } // -- namespace geom

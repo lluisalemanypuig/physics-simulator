@@ -1,8 +1,5 @@
 #include <simulator/geometry/rectangle.hpp>
 
-namespace physim {
-namespace geom {
-
 // LOCAL-DEFINED
 
 /* The 'glm::min/2' and 'glm::max/2' functions take the
@@ -25,6 +22,9 @@ template<typename T>
 inline T max4(const T& a, const T& b, const T& c, const T& d) {
 	return glm::max(glm::max(glm::max(a,b),c),d);
 }
+
+namespace physim {
+namespace geom {
 
 // PRIVATE
 
@@ -138,16 +138,7 @@ void rectangle::update_upon_collision(particle *p) const {
 }
 
 void rectangle::display(ostream& os) const {
-	os << "I am a rectangle" << endl;
-	os << "    with vertices:" << endl;
-	os << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << endl;
-	os << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << endl;
-	os << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << endl;
-	os << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << endl;
-	os << "    and plane equation:" << endl;
-	const vec3& n = pl.get_normal();
-	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-	   << pl.get_constant() << " = 0" << endl;
+	os << *this;
 }
 
 } // -- namespace geom
