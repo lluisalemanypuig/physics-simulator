@@ -163,9 +163,12 @@ void MainWindow::on_PBrun_clicked() {
 		make_scene(sr);
 
 		QProgressBar *s_bar = get_scene_bar();
-		s_bar->setMinimum(0);
-		s_bar->setMaximum(0);
+		float dt = sr->get_time_step();
+		float tt = sr->get_total_time();
+
 		s_bar->setValue(0);
+		s_bar->setMinimum(0);
+		s_bar->setMaximum(tt/dt);
 	}
 
 	// set all attributes (initialiser, fps,
@@ -329,7 +332,7 @@ void MainWindow::on_CoBsolver_currentIndexChanged(const QString& arg1) {
 	if (arg1 == "Euler Semi-Imp") {
 		sr->get_simulator().set_solver( solver_type::EulerSemi );
 	}
-	else if (arg1 == "Euler Implicit") {
+	else if (arg1 == "Euler Explicit") {
 		sr->get_simulator().set_solver( solver_type::EulerOrig );
 	}
 	else if (arg1 == "Verlet") {

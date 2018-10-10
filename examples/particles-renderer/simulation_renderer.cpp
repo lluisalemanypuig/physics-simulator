@@ -17,7 +17,6 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	fps_count = 0;
 	FPS = 60.0f;
 	exe_sim = true;
-	running = false;
 
 	// scene_cleared: set to true so that it can
 	// be built when launching the application
@@ -40,7 +39,6 @@ SimulationRenderer::~SimulationRenderer() {
 void SimulationRenderer::run_simulation() {
 	assert(not scene_cleared);
 
-	running = true;
 	timing::time_point begin, end, second;
 	second = timing::now();
 
@@ -77,7 +75,6 @@ void SimulationRenderer::run_simulation() {
 		}
 	}
 
-	running = false;
 	exe_sim = true;
 }
 

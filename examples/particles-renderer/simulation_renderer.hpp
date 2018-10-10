@@ -41,7 +41,6 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		int fps_count;	// measured amount of fps
 		float FPS;		// fps of the simulations
 		bool exe_sim;	// when false, stop the running simulation
-		bool running;	// is true iff the simulation is running
 
 		vector<rgeom *> G;	// wrapped geometrical objects of the scene
 		simulator S;		// simulator object
