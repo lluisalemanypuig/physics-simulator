@@ -33,10 +33,10 @@ class particle {
 
 		/// Mass of the particle [Kg].
 		float mass;
-		/// Friction coefficient of the particle.
-		float friction;
 		/// Bouncing coefficient of the particle.
 		float bouncing;
+		/// Friction coefficient of the particle.
+		float friction;
 		/**
 		 * @brief Lifetime of the particle [s].
 		 *
@@ -88,8 +88,8 @@ class particle {
 		 * - @ref prev_velocity : vec3(0,0,0)
 		 * - @ref cur_velocity : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
-		 * - @ref friction : 0
 		 * - @ref bouncing : 1
+		 * - @ref friction : 0
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
 		 * - @ref mass : 1
@@ -195,10 +195,10 @@ class particle {
 
 		/// Sets the mass of the particle. See @ref mass.
 		void set_mass(float m);
-		/// Sets the friction coefficient of the particle. See @ref friction.
-		void set_friction(float f);
 		/// Sets the bouncing coefficient of the particle. See @ref bouncing.
 		void set_bouncing(float b);
+		/// Sets the friction coefficient of the particle. See @ref friction.
+		void set_friction(float f);
 		/// Sets the lifetime of the particle. See @ref lifetime.
 		void set_lifetime(float lT);
 		/// Sets the starttime of the particle. See @ref starttime.
@@ -223,10 +223,10 @@ class particle {
 		const vec3& get_force() const;
 		/// Returns the mass of the particle. See @ref mass.
 		float get_mass() const;
-		/// Returns the friction coefficient of the particle. See @ref friction.
-		float get_friction() const;
 		/// Returns the bouncing coefficient of the particle. See @ref bouncing.
 		float get_bouncing() const;
+		/// Returns the friction coefficient of the particle. See @ref friction.
+		float get_friction() const;
 		/// Returns the lifetime of the particle. See @ref lifetime.
 		float get_lifetime() const;
 		/// Returns the starttime of the particle. See @ref starttime.

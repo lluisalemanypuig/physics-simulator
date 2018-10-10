@@ -11,6 +11,7 @@ initialiser::initialiser() {
 	pos			= [](particle *) {};
 	vel			= [](particle *) {};
 	force		= [](particle *) {};
+	mass		= [](particle *) {};
 	bounce		= [](particle *) {};
 	friction	= [](particle *) {};
 	lifetime	= [](particle *) {};
@@ -22,6 +23,7 @@ initialiser::initialiser(const initialiser& i) {
 	pos = i.pos;
 	vel = i.vel;
 	force = i.force;
+	mass = i.mass;
 	bounce = i.bounce;
 	friction = i.friction;
 	lifetime = i.lifetime;
@@ -30,12 +32,6 @@ initialiser::initialiser(const initialiser& i) {
 }
 
 initialiser::~initialiser() { }
-
-// OPERATORS
-
-void initialiser::operator()(particle *p) const {
-	initialise_particle(p);
-}
 
 // SETTERS
 
@@ -49,6 +45,10 @@ void initialiser::set_vel_initialiser(const partinit& f) {
 
 void initialiser::set_force_initialiser(const partinit& f) {
 	force = f;
+}
+
+void initialiser::set_mass_initialiser(const partinit& f) {
+	mass = f;
 }
 
 void initialiser::set_bounce_initialiser(const partinit& f) {
@@ -89,6 +89,10 @@ const partinit& initialiser::get_force_initialiser() const {
 	return force;
 }
 
+const partinit& initialiser::get_mass_initialiser() const {
+	return mass;
+}
+
 const partinit& initialiser::get_bounce_initialiser() const {
 	return bounce;
 }
@@ -115,6 +119,7 @@ void initialiser::initialise_particle(particle *p) const {
 	pos(p);
 	vel(p);
 	force(p);
+	mass(p);
 	bounce(p);
 	friction(p);
 	lifetime(p);

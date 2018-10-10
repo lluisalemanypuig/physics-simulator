@@ -25,8 +25,9 @@ typedef function<void (particle *)> partinit;
  * - @ref pos : function used to initialise the position of a particle.
  * - @ref vel : function used to initialise the velocity of a particle.
  * - @ref force : function used to initialise the force of a particle.
- * - @ref bounce : function used to initialise the bouncing coefficient of a particle.
+ * - @ref mass : function to initialise the mass of the particle.
  * - @ref friction : function used to initialise the friction coefficient of a particle.
+ * - @ref bounce : function used to initialise the bouncing coefficient of a particle.
  * - @ref lifetime : function used to initialise the lifetime of a particle.
  * - @ref starttime : function used to initialise the starting time of a particle.
  * - @ref fixed : function used to initialise the fixed attribute of a particle.
@@ -35,9 +36,11 @@ typedef function<void (particle *)> partinit;
  *
  * Also, they are applied in the same order as they appear listed.
  * Therefore, for example, the position attributes can be used to initialise
- * the velocity.
+ * the velocity. Finally, it is guaranteed that all these functions
+ * will be called after the @ref simulator has assigned an index to
+ * the particle being initialised.
  *
- * In order to initialise a particle, use method
+ * The initialisation of the particle takes place in the method
  * @ref initialise_particle(particle *)const .
  */
 class initialiser {
@@ -48,10 +51,12 @@ class initialiser {
 		partinit vel;
 		/// Initialiser of force.
 		partinit force;
-		/// Initialiser of the bouncing coefficient.
-		partinit bounce;
+		/// Initialiser of the mass.
+		partinit mass;
 		/// Initialiser of the friction coefficient.
 		partinit friction;
+		/// Initialiser of the bouncing coefficient.
+		partinit bounce;
 		/// Initialiser of the lifetime.
 		partinit lifetime;
 		/// Initialiser of the starttime.
@@ -67,34 +72,25 @@ class initialiser {
 		/// Destructor.
 		virtual ~initialiser();
 
-		// OPERATORS
-
-		/**
-		 * @brief Updates particle @e p.
-		 *
-		 * Does the same as function @ref initialise_particle.
-		 * Calls every function of this object on the particle @e p.
-		 * @param p The particle to be updated. Must be non-null.
-		 */
-		void operator()(particle *p) const;
-
 		// SETTERS
 
-		/// Sets position initialiser. See @ref pos.
+		/// Sets the position initialiser. See @ref pos.
 		void set_pos_initialiser(const partinit& f);
-		/// Sets velocity initialiser. See @ref vel.
+		/// Sets the velocity initialiser. See @ref vel.
 		void set_vel_initialiser(const partinit& f);
-		/// Sets force initialiser. See @ref force.
+		/// Sets the force initialiser. See @ref force.
 		void set_force_initialiser(const partinit& f);
-		/// Sets bouncing coefficient initialiser. See @ref bounce.
+		/// Sets the mass initialiser. See @ref mass.
+		void set_mass_initialiser(const partinit& f);
+		/// Sets the bouncing coefficient initialiser. See @ref bounce.
 		void set_bounce_initialiser(const partinit& f);
-		/// Sets friction coefficient initialiser. See @ref friction.
+		/// Sets the friction coefficient initialiser. See @ref friction.
 		void set_friction_initialiser(const partinit& f);
-		/// Sets lifetime initialiser. See @ref lifetime.
+		/// Sets the lifetime initialiser. See @ref lifetime.
 		void set_lifetime_initialiser(const partinit& f);
-		/// Sets starttime initialiser. See @ref starttime.
+		/// Sets the starttime initialiser. See @ref starttime.
 		void set_starttime_initialiser(const partinit& f);
-		/// Sets fixed initialiser. See @ref fixed.
+		/// Sets the fixed initialiser. See @ref fixed.
 		void set_fixed_initialiser(const partinit& f);
 
 		// GETTERS
@@ -102,21 +98,23 @@ class initialiser {
 		/// Returns a reference to a copy of this initialiser.
 		virtual initialiser *clone() const;
 
-		/// Returns position initialiser. See @ref pos.
+		/// Returns the position initialiser. See @ref pos.
 		const partinit& get_pos_initialiser() const;
-		/// Returns velocity initialiser. See @ref vel.
+		/// Returns the velocity initialiser. See @ref vel.
 		const partinit& get_vel_initialiser() const;
-		/// Returns force initialiser. See @ref force.
+		/// Returns the force initialiser. See @ref force.
 		const partinit& get_force_initialiser() const;
-		/// Returns bouncing coefficient initialiser. See @ref bounce.
+		/// Returns the mass initialiser. See @ref mass.
+		const partinit& get_mass_initialiser() const;
+		/// Returns the bouncing coefficient initialiser. See @ref bounce.
 		const partinit& get_bounce_initialiser() const;
-		/// Returns friction coefficient initialiser. See @ref friction.
+		/// Returns the friction coefficient initialiser. See @ref friction.
 		const partinit& get_friction_initialiser() const;
-		/// Returns lifetime initialiser. See @ref lifetime.
+		/// Returns the lifetime initialiser. See @ref lifetime.
 		const partinit& get_lifetime_initialiser() const;
-		/// Returns starttime initialiser. See @ref starttime.
+		/// Returns the starttime initialiser. See @ref starttime.
 		const partinit& get_starttime_initialiser() const;
-		/// Returns fixed initialiser. See @ref fixed.
+		/// Returns the fixed initialiser. See @ref fixed.
 		const partinit& get_fixed_initialiser() const;
 
 		// INITIALISE A PARTICLE

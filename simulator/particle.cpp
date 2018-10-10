@@ -128,12 +128,12 @@ void particle::set_mass(float m) {
 	mass = m;
 }
 
-void particle::set_friction(float f) {
-	friction = f;
-}
-
 void particle::set_bouncing(float b) {
 	bouncing = b;
+}
+
+void particle::set_friction(float f) {
+	friction = f;
 }
 
 void particle::set_lifetime(float lT) {
@@ -178,12 +178,12 @@ float particle::get_mass() const {
 	return mass;
 }
 
-float particle::get_friction() const {
-	return friction;
-}
-
 float particle::get_bouncing() const {
 	return bouncing;
+}
+
+float particle::get_friction() const {
+	return friction;
 }
 
 float particle::get_lifetime() const {
