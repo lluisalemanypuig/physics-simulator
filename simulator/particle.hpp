@@ -20,30 +20,32 @@ namespace physim {
  */
 class particle {
 	private:
-		/// Previous position of the particle.
+		/// Previous position of the particle [m].
 		vec3 prev_pos;
-		/// Current position of the particle.
+		/// Current position of the particle [m].
 		vec3 cur_pos;
-		/// Prevous velocity of the particle.
+		/// Prevous velocity of the particle [m/s].
 		vec3 prev_velocity;
-		/// Current velocity of the particle.
+		/// Current velocity of the particle [m/s].
 		vec3 cur_velocity;
-		/// Force currently applied to the particle.
+		/// Force currently applied to the particle [N].
 		vec3 force;
 
+		/// Mass of the particle [Kg].
+		float mass;
 		/// Friction coefficient of the particle.
 		float friction;
 		/// Bouncing coefficient of the particle.
 		float bouncing;
 		/**
-		 * @brief Lifetime of the particle.
+		 * @brief Lifetime of the particle [s].
 		 *
 		 * Once the simulation has run for a time larger than
 		 * @ref lifetime the particle must be reset.
 		 */
 		float lifetime;
 		/**
-		 * @brief Starting time of a particle.
+		 * @brief Starting time of a particle [s].
 		 *
 		 * The amount of time that has to pass for this particle
 		 * to start 'living'. In the simulation, this particle
@@ -90,6 +92,7 @@ class particle {
 		 * - @ref bouncing : 1
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
+		 * - @ref mass : 1
 		 * - @ref fixed : false
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
@@ -190,6 +193,8 @@ class particle {
 		/// Sets the force of the particle. See @ref force.
 		void set_force(const vec3& f);
 
+		/// Sets the mass of the particle. See @ref mass.
+		void set_mass(float m);
 		/// Sets the friction coefficient of the particle. See @ref friction.
 		void set_friction(float f);
 		/// Sets the bouncing coefficient of the particle. See @ref bouncing.
@@ -216,6 +221,8 @@ class particle {
 		const vec3& get_velocity() const;
 		/// Returns the force applied to the particle. See @ref force.
 		const vec3& get_force() const;
+		/// Returns the mass of the particle. See @ref mass.
+		float get_mass() const;
 		/// Returns the friction coefficient of the particle. See @ref friction.
 		float get_friction() const;
 		/// Returns the bouncing coefficient of the particle. See @ref bouncing.

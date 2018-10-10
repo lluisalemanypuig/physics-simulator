@@ -41,11 +41,13 @@ particle::particle(const particle& p) {
 	cur_velocity = p.cur_velocity;
 	force = p.force;
 
+	mass = p.mass;
 	friction = p.friction;
 	bouncing = p.bouncing;
 	lifetime = p.lifetime;
 	starttime = p.starttime;
 	fixed = p.fixed;
+	index = p.index;
 }
 
 particle::~particle() { }
@@ -122,6 +124,10 @@ void particle::set_force(const vec3& f) {
 	force = f;
 }
 
+void particle::set_mass(float m) {
+	mass = m;
+}
+
 void particle::set_friction(float f) {
 	friction = f;
 }
@@ -166,6 +172,10 @@ const vec3& particle::get_velocity() const {
 
 const vec3& particle::get_force() const {
 	return force;
+}
+
+float particle::get_mass() const {
+	return mass;
 }
 
 float particle::get_friction() const {
