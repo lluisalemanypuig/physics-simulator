@@ -93,25 +93,33 @@ class geometry {
 		// OTHERS
 
 		/**
-		 * @brief Update a particle collision in a collision with geometry.
+		 * @brief Update a particle in a collision with geometry.
 		 *
-		 * Assumig that particle @e p collided with this geometry, update its
-		 * position accordingly.
+		 * Assumig that particle @e pred collided with this geometry, update
+		 * its position, velocity, ... accordingly.
 		 *
-		 * For example, some geometry may be 'bouncy', the may give the particle
+		 * For example, some geometry may be 'bouncy', it may give the particle
 		 * some extra speed. This needs to be updated in this method.
 		 *
-		 * The particle is given in a state modified by a solver. That is,
-		 * the particle's position, velocity, force, ... have the value
-		 * calculated by a solver after applying the current time step.
+		 * The particle @e pred is given in a state that is not modified by any
+		 * solver. That is, the particle's position, velocity, force, ... have the
+		 * value at time step @e T. The predicted position and velocity are given in
+		 * @e pred_pos and @e pred_vel. These are predictions of the position and
+		 * velocity for time @e T + @e dt (where dt is some time step). The modified
+		 * particle due to the collision must be stored in @e pred.
 		 *
-		 * This method is called only when it is sure that there has
-		 * been a collision: the segment joining the particle's previous
-		 * position and the current position intersects the geometry.
+		 * This method is called only when it is sure that there has been a
+		 * collision: the segment joining the particle's current position and
+		 * the predicted position intersects the geometry.
 		 *
-		 * @param p The particle to be updated.
+		 * @param[in] pred_pos The predicted position of the particle.
+		 * @param[in] pred_vel The predicted velocity of the particle.
+		 * @param[out] pred The particle with the result of the collision.
 		 */
-		virtual void update_upon_collision(particle *p) const = 0;
+		virtual void update_upon_collision(
+			const vec3& pred_pos, const vec3& pred_vel,
+			particle *pred
+		) const = 0;
 
 		/// Output on stream @e os information about this geometry.
 		virtual void display(ostream& os = cout) const = 0;

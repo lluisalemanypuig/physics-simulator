@@ -115,16 +115,15 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 
 // OTHERS
 
-void sphere::update_upon_collision(particle *p) const {
+void sphere::update_upon_collision(const vec3& pred_pos, const vec3& pred_vel, particle *p) const {
 	// define a plane tangent to the sphere
 	// that goes through the intersection point
 
 	// compute intersection point
-	const vec3& prev_pos = p->get_previous_position();
-	const vec3& next_pos = p->get_position();
+	const vec3& pos = p->get_position();
 
 	vec3 I;
-	bool r = intersec_segment(prev_pos, next_pos, I);
+	bool r = intersec_segment(pos, pred_pos, I);
 	if (not r) {
 		return;
 	}
@@ -134,7 +133,7 @@ void sphere::update_upon_collision(particle *p) const {
 	plane tan_plane(normal,I);
 
 	// tell the plane to update the particle
-	tan_plane.update_upon_collision(p);
+	tan_plane.update_upon_collision(pred_pos, pred_vel, p);
 }
 
 void sphere::display(ostream& os) const {

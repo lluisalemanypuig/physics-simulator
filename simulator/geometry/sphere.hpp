@@ -70,7 +70,7 @@ class sphere : public geometry {
 
 		// OTHERS
 
-		void update_upon_collision(particle *p) const;
+		void update_upon_collision(const vec3& pred_pos, const vec3& pred_vel, particle *p) const;
 		void display(ostream& os = cout) const;
 };
 

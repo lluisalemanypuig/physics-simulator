@@ -148,7 +148,7 @@ class plane : public geometry {
 
 		// OTHERS
 
-		void update_upon_collision(particle *p) const;
+		void update_upon_collision(const vec3& pp, const vec3& pv, particle *p) const;
 		void display(ostream& os = cout) const;
 };
 

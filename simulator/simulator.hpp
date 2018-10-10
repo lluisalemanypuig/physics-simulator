@@ -128,15 +128,17 @@ class simulator {
 		void init_particle(particle *p);
 
 		/**
-		 * @brief Update a particle's position.
-		 * @param p Particle to be updated.
+		 * @brief Predicts a particle's next position and velocity.
 		 * @param dt Time step applied.
+		 * @param p Particle to apply the solver on.
+		 * @param[out] pos The predicted position.
+		 * @param[out] vel The predicted velocity.
 		 */
-		void update_particle(float dt, particle *p);
+		void apply_solver(float dt, const particle *p, vec3& pos, vec3& vel);
 
 	public:
 		/// Default constructor
-		simulator(const solver_type& s = solver_type::EulerOrig);
+		simulator(const solver_type& s = solver_type::EulerSemi);
 		/// Destructor
 		~simulator();
 

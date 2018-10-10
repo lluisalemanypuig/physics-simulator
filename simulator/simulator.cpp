@@ -5,35 +5,32 @@ namespace physim {
 // PRIVATE
 
 void simulator::init_particle(particle *p) {
-	p->set_force(gravity);
+	p->set_force(p->get_mass()*gravity);
 	global_init->initialise_particle(p);
 }
 
-void simulator::update_particle(float dt, particle *p) {
-	p->save_position();
-	p->save_velocity();
-
+void simulator::apply_solver(float dt, const particle *p, vec3& pred_pos, vec3& pred_vel) {
+	float mass = p->get_mass();
 	const vec3& force = p->get_force();
-	const vec3& cur_vel = p->get_velocity();
-	vec3 pre_pos = p->get_previous_position();
-	vec3 cur_pos = p->get_position();
-	vec3 next_pos;
+	vec3 prev_pos, cur_pos;
 
 	switch (solver) {
 		case solver_type::EulerOrig:
-			p->translate( cur_vel*dt );
-			p->acceleterate( force*dt );
+			pred_pos = p->get_position() + p->get_velocity()*dt;
+			pred_vel = p->get_velocity() + (force/mass)*dt;
 			break;
 
 		case solver_type::EulerSemi:
-			p->acceleterate( force*dt );
-			p->translate( cur_vel*dt );
+			pred_vel = p->get_velocity() + (force/mass)*dt;
+			pred_pos = p->get_position() + pred_vel*dt;
 			break;
 
 		case solver_type::Verlet:
-			next_pos = cur_pos + (cur_pos - pre_pos) + force*dt*dt;
-			p->set_position( next_pos );
-			p->set_velocity( (next_pos - cur_pos)/dt );
+			prev_pos = p->get_previous_position();
+			cur_pos = p->get_position();
+
+			pred_pos = cur_pos + 0.975f*(cur_pos - prev_pos) + 0.5f*(force/mass)*dt*dt;
+			pred_vel = (cur_pos - prev_pos)/dt;
 			break;
 
 		default:
@@ -172,17 +169,8 @@ void simulator::apply_time_step(float dt) {
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		update_particle(dt, p);
-
-		/* The following two lines are equivalent to:
-		 *
-		 *	vec3 prev_pos = p->get_position()
-		 *	update_particle(dt, p);
-		 *	vec3 pred_pos = p->get_position();
-		 */
-
-		const vec3& prev_pos = p->get_previous_position();
-		vec3 pred_pos = p->get_position();
+		vec3 pred_pos, pred_vel;
+		apply_solver(dt, p, pred_pos, pred_vel);
 
 		/* The main idea implemented in the following loop
 		 * is the following:
@@ -228,17 +216,16 @@ void simulator::apply_time_step(float dt) {
 		 *
 		 */
 
-		// copy the particle at its current state
-		// and use it to predict the update
-		particle pred_particle;
+		// collision prediction
+		// copy the particle at its current state and use it
+		// to predict the update upon collision with geometry
+		particle coll_pred(*p);
+
+		// has there been any collision?
+		bool collision = false;
 
 		// Check collision between the particle and
 		// every fixed geometrical object in the scene.
-		// Set boolean to true if any collision took place.
-		bool collide = false;
-
-		//cout << "----------------------" << endl;
-		//cout << "At (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
 
 		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
 			const geometry *g = scene_fixed[i];
@@ -247,34 +234,29 @@ void simulator::apply_time_step(float dt) {
 			// then the geometry is in charge of updating
 			// this particle's position, velocity, ...
 
-			//cout << "Detect collision of segment:" << endl;
-			//cout << "    (" << prev_pos.x << "," << prev_pos.y << "," << prev_pos.z << ")" << endl;
-			//cout << "    (" << pred_pos.x << "," << pred_pos.y << "," << pred_pos.z << ")" << endl;
-			//cout << "against geometry:" << endl;
-			//g->display();
+			if (g->intersec_segment(p->get_position(), pred_pos)) {
+				collision = true;
 
-			if (g->intersec_segment(prev_pos, pred_pos)) {
-				//cout << "Collision!" << endl;
+				coll_pred = *p;
 
-				collide = true;
-
-				// recover original particle's state
-				pred_particle = *p;
-
-				// geometry updates the predicted particle
-				g->update_upon_collision(&pred_particle);
+				// the geometry updates the predicted particle
+				g->update_upon_collision(pred_pos, pred_vel, &coll_pred);
 
 				// keep track of the predicted particle's position
-				pred_pos = pred_particle.get_position();
-			}
-			else {
-				//cout << "No collision!" << endl;
+				pred_pos = coll_pred.get_position();
+				pred_vel = coll_pred.get_velocity();
 			}
 		}
 
 		// give the particle the proper final state
-		if (collide) {
-			*p = pred_particle;
+		if (collision) {
+			*p = coll_pred;
+		}
+		else {
+			p->save_position();
+			p->save_velocity();
+			p->set_position(pred_pos);
+			p->set_velocity(pred_vel);
 		}
 	}
 
