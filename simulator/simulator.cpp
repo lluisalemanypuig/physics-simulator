@@ -29,8 +29,8 @@ void simulator::apply_solver(float dt, const particle *p, vec3& pred_pos, vec3& 
 			prev_pos = p->get_previous_position();
 			cur_pos = p->get_position();
 
-			pred_pos = cur_pos + 0.975f*(cur_pos - prev_pos) + 0.5f*(force/mass)*dt*dt;
-			pred_vel = (cur_pos - prev_pos)/dt;
+			pred_vel = force*dt;
+			pred_pos = cur_pos + 0.975f*( pred_vel*dt ) + 0.5f*(force/mass)*dt*dt;
 			break;
 
 		default:
