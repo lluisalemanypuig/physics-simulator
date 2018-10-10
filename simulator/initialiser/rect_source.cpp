@@ -9,12 +9,14 @@ void rect_source::make_pos_init() {
 	pos = [this](particle *p) {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
-		p->set_previous_position(vec3(0.0f,0.0f,0.0f));
 		p->set_position(
 			this->S +
 			l*this->w*this->u +	// span towards width
 			m*this->h*this->v	// span towards height
 		);
+		// copy the current position to the previous
+		// position so that Verlet's solver works properly.
+		p->save_position();
 	};
 }
 
