@@ -219,7 +219,7 @@ void simulator::apply_time_step(float dt) {
 		// collision prediction
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		particle coll_pred(*p);
+		particle coll_pred;
 
 		// has there been any collision?
 		bool collision = false;
