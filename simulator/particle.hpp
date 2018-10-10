@@ -83,8 +83,7 @@ class particle {
 		 *
 		 * The attributes of the class take the following values:
 		 * - @ref prev_pos : vec3(0,0,0)
-		 * - @ref cur_pos : no value assigned to it, since it will
-		 * be overwritten later.
+		 * - @ref cur_pos : vec3(0,0,0)
 		 * - @ref prev_velocity : vec3(0,0,0)
 		 * - @ref cur_velocity : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
@@ -127,7 +126,7 @@ class particle {
 		 * by @e v.
 		 * @param v The direction of the acceleration.
 		 */
-		void acceleterate(const vec3& v);
+		void accelerate(const vec3& v);
 
 		/**
 		 * @brief Adds @e (x,y,z) to the particle's @ref force.

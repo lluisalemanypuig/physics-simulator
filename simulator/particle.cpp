@@ -6,12 +6,13 @@ namespace physim {
 
 void particle::init() {
 	prev_pos = vec3(0.0f,0.0f,0.0f);
-	//cur_pos = vec3(0.0f,0.0f,0.0f);
+	cur_pos = vec3(0.0f,0.0f,0.0f);
 	prev_velocity = vec3(0.0f,0.0f,0.0f);
 	cur_velocity = vec3(0.0f,0.0f,0.0f);
 	force = vec3(0.0f,0.0f,0.0f);
-	friction = 0.0f;
+	mass = 1.0f;
 	bouncing = 1.0f;
+	friction = 0.0f;
 	lifetime = 10.0f;
 	starttime = 0.0f;
 	fixed = false;
@@ -58,7 +59,7 @@ void particle::translate(const vec3& v) {
 	cur_pos += v;
 }
 
-void particle::acceleterate(const vec3& v) {
+void particle::accelerate(const vec3& v) {
 	cur_velocity += v;
 }
 
