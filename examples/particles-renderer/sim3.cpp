@@ -88,9 +88,6 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	sr->add_rgeom(ball1);
 	sr->add_rgeom(ball2);
 
-	ball1->set_render(false);
-	ball2->set_render(false);
-
 	rtriangle *tri = new rtriangle();
 	tri->p1 = S;
 	tri->p2 = O;

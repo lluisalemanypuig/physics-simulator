@@ -42,11 +42,13 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 	rtriangle *rt = nullptr;
 	rsphere *rs = nullptr;
 
+	QMatrix4x4 modelviewMatrix;
+
+	program->bind();
+	program->setUniformValue("color", rg->get_color());
+
 	switch (gt) {
 		case geom_type::Plane:
-
-			program->bind();
-			program->setUniformValue("color", rg->get_color());
 			rp = static_cast<rplane *>(rg);
 			glBegin(GL_QUADS);
 				glVertex3f(rp->p1.x, rp->p1.y, rp->p1.z);
@@ -54,13 +56,9 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 				glVertex3f(rp->p3.x, rp->p3.y, rp->p3.z);
 				glVertex3f(rp->p4.x, rp->p4.y, rp->p4.z);
 			glEnd();
-			program->release();
 			break;
 
 		case geom_type::Rectangle:
-
-			program->bind();
-			program->setUniformValue("color", rg->get_color());
 			rc = static_cast<rrectangle *>(rg);
 			glBegin(GL_QUADS);
 				glVertex3f(rc->p1.x, rc->p1.y, rc->p1.z);
@@ -68,39 +66,50 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 				glVertex3f(rc->p3.x, rc->p3.y, rc->p3.z);
 				glVertex3f(rc->p4.x, rc->p4.y, rc->p4.z);
 			glEnd();
-			program->release();
 			break;
 
 		case geom_type::Triangle:
-
-			program->bind();
-			program->setUniformValue("color", rg->get_color());
 			rt = static_cast<rtriangle *>(rg);
 			glBegin(GL_TRIANGLES);
 				glVertex3f(rt->p1.x, rt->p1.y, rt->p1.z);
 				glVertex3f(rt->p2.x, rt->p2.y, rt->p2.z);
 				glVertex3f(rt->p3.x, rt->p3.y, rt->p3.z);
 			glEnd();
-			program->release();
-
 			break;
 
 		case geom_type::Sphere:
 
 			rs = static_cast<rsphere *>(rg);
 
-			program->bind();
-			program->setUniformValue("color", rg->get_color());
+			program->setUniformValue("color", rs->get_color());
 
-				glCallList( sphere_idx );
+			// the -5.0f and -15.0f were added manually in order
+			// to have the whole scene visible from a distance
+			modelviewMatrix.translate(0.0f, -5.0f, -15.0f);
+			modelviewMatrix.translate(0.0f, 0.0f, -distance);
+			modelviewMatrix.rotate(angleX, 1.0f, 0.0f, 0.0f);
+			modelviewMatrix.rotate(angleY, 0.0f, 1.0f, 0.0f);
 
-			program->release();
+			modelviewMatrix.translate(rs->c.x, rs->c.y, rs->c.z);
+			modelviewMatrix.scale(2.0f*rs->r);
 
+			program->setUniformValue("modelview", modelviewMatrix);
+			program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
+
+			glCallList( sphere_idx );
+
+			modelviewMatrix.scale(1.0f/(2.0f*rs->r));
+			modelviewMatrix.translate(-rs->c.x, -rs->c.y, -rs->c.z);
+
+			program->setUniformValue("modelview", modelviewMatrix);
+			program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
 			break;
 
 		default:
 			cerr << "No type for geometry" << endl;
 	}
+
+	program->release();
 }
 
 void SimulationRenderer::draw_particles() {
@@ -136,6 +145,8 @@ void SimulationRenderer::initializeGL() {
 	program->bind();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	glPointSize(4.0f);
 
 	// load a sphere
 	sphere_idx = obj.loadObject("../particles-renderer/models/SPH_FullSmooth_Mat.obj");
