@@ -28,7 +28,7 @@ void hose::make_vel_init() {
 			x*std::cos(phi)*this->v +
 			y*std::sin(phi)*this->w;
 
-		p->set_velocity(this->source - base_point);
+		p->set_velocity(base_point - this->source);
 
 		// copy the current position to the previous
 		// position so that Verlet's solver works properly.
