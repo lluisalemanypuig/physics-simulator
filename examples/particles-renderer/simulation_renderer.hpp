@@ -38,10 +38,12 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// shader for rendering objects
 		QOpenGLShaderProgram *program;
 
-		bool limit_fps;	// limit or not the frames per second
-		int fps_count;	// measured amount of fps
-		double FPS;		// fps of the simulations
-		bool exe_sim;	// when false, stop the running simulation
+		float particle_size;// size of the particle
+
+		bool limit_fps;		// limit or not the frames per second
+		int fps_count;		// measured amount of fps
+		double FPS;			// fps of the simulations
+		bool exe_sim;		// when false, stop the running simulation
 
 		vector<rgeom *> G;	// wrapped geometrical objects of the scene
 		simulator S;		// simulator object
@@ -100,6 +102,8 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float get_total_time() const;
 
 		// -- SETTERS
+
+		void set_particle_size(float s);
 
 		void set_progress_bar(QProgressBar *pbar);
 		void set_label_show_fps(QLabel *show_fps);

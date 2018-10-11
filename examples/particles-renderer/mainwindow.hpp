@@ -78,8 +78,9 @@ class MainWindow : public QMainWindow {
 		void on_lETotalTime_returnPressed();
 
 		void on_CoBsolver_currentIndexChanged(const QString &arg1);
+		void on_Slider_PointSize_sliderReleased();
 
-	public:
+public:
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 };

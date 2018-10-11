@@ -353,6 +353,15 @@ void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
 	}
 }
 
+void MainWindow::on_Slider_PointSize_sliderReleased() {
+	int value = ui->Slider_PointSize->value();
+
+	for (int i = 0; i < ui->TWscenes->count(); ++i) {
+		SimulationRenderer *sr = get_SimRend(i);
+		sr->set_particle_size( value/2.0f );
+	}
+}
+
 // PUBLIC
 
 MainWindow::MainWindow(QWidget *parent)
@@ -367,6 +376,16 @@ MainWindow::MainWindow(QWidget *parent)
 	U010 = uniform_real_distribution<float>(0.0f,10.0f);
 
 	current_tab = ui->TWscenes->currentIndex();
+
+	on_lEBounce_returnPressed();
+	on_lEFriction_returnPressed();
+	on_lELifeTime_returnPressed();
+
+	on_lEfps_returnPressed();
+	on_lETimeStep_returnPressed();
+	on_lETotalTime_returnPressed();
+
+	on_CoBsolver_currentIndexChanged(QString());
 
 	for (int i = 0; i < ui->TWscenes->count(); ++i) {
 		SimulationRenderer *sr = get_SimRend(i);

@@ -146,8 +146,6 @@ void SimulationRenderer::initializeGL() {
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glPointSize(4.0f);
-
 	// load a sphere
 	sphere_idx = obj.loadObject("../particles-renderer/models/SPH_FullSmooth_Mat.obj");
 }
@@ -161,6 +159,8 @@ void SimulationRenderer::resizeGL(int w, int h) {
 void SimulationRenderer::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+
+	glPointSize(particle_size);
 
 	// update screen with the geometry
 	for (rgeom *rg : G) {

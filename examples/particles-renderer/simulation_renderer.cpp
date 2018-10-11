@@ -11,6 +11,8 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	angleY = 0.0f;
 	distance = 2.0f;
 
+	particle_size = 2.0f;
+
 	program = nullptr;
 
 	limit_fps = false;
@@ -140,6 +142,12 @@ float SimulationRenderer::get_total_time() const {
 }
 
 // SETTERS
+
+void SimulationRenderer::set_particle_size(float s) {
+	particle_size = s;
+
+	cout << particle_size << endl;
+}
 
 void SimulationRenderer::set_progress_bar(QProgressBar *pbar) {
 	p_bar = pbar;
