@@ -20,7 +20,8 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	const glm::vec3 P(-1.0f, 3.0f, 0.5f);
 	const glm::vec3 S(-1.5f, 5.0f,-1.5f);
 
-	const glm::vec3 hK = K + vec3(0.0f,0.5f,0.0f);
+	const glm::vec3 hose_direction = glm::normalize(L - K);
+	const glm::vec3 hK = K + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
 	const glm::vec3 hL = L + vec3(0.0f,0.5f,0.0f);
 
 	hose h;
@@ -34,41 +35,41 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	make_init_with_params(h);
 	sr->get_simulator().set_initialiser(&h);
 
-	rrectangle *floor = new rrectangle();
+	rplane *floor = new rplane();
 	floor->p1 = E;
 	floor->p2 = G;
 	floor->p3 = F;
 	floor->p4 = D;
-	floor->rl = new rectangle(floor->p1,floor->p2,floor->p3, D);
+	floor->pl = new plane(vec3(0.0f,1.0f,0.0f), floor->p1);
 	sr->add_rgeom(floor);
 
-	rrectangle *wall1 = new rrectangle();
+	rplane *wall1 = new rplane();
 	wall1->p1 = K;
 	wall1->p2 = I;
 	wall1->p3 = E;
 	wall1->p4 = G;
-	wall1->rl = new rectangle(wall1->p1,wall1->p2,wall1->p3,wall1->p4);
+	wall1->pl = new plane(vec3(0.0f,0.0f,-1.0f), wall1->p1);
 	wall1->set_color(QVector4D(1.0f,1.0f,0.0f,1.0f));
-	rrectangle *wall2 = new rrectangle();
+	rplane *wall2 = new rplane();
 	wall2->p1 = K;
 	wall2->p2 = J;
 	wall2->p3 = F;
 	wall2->p4 = G;
-	wall2->rl = new rectangle(wall2->p1,wall2->p2,wall2->p3,wall2->p4);
+	wall2->pl = new plane(vec3(-1.0f,0.0f,0.0f), wall2->p1);
 	wall2->set_color(QVector4D(1.0f,0.0f,1.0f,1.0f));
-	rrectangle *wall3 = new rrectangle();
+	rplane *wall3 = new rplane();
 	wall3->p1 = J;
 	wall3->p2 = H;
 	wall3->p3 = D;
 	wall3->p4 = F;
-	wall3->rl = new rectangle(wall3->p1,wall3->p2,wall3->p3,wall3->p4);
+	wall3->pl = new plane(vec3(0.0f,0.0f,1.0f), wall3->p1);
 	wall3->set_color(QVector4D(0.0f,1.0f,1.0f,1.0f));
-	rrectangle *wall4 = new rrectangle();
+	rplane *wall4 = new rplane();
 	wall4->p1 = H;
 	wall4->p2 = I;
 	wall4->p3 = E;
 	wall4->p4 = D;
-	wall4->rl = new rectangle(wall4->p1,wall4->p2,wall4->p3,wall4->p4);
+	wall4->pl = new plane(vec3(1.0f,0.0f,0.0f), wall4->p1);
 	wall4->set_color(QVector4D(0.0f,0.0f,1.0f,1.0f));
 	sr->add_rgeom(wall1);
 	sr->add_rgeom(wall2);
