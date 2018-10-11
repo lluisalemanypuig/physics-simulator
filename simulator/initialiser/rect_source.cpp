@@ -70,7 +70,7 @@ void rect_source::set_rectangular_source(const vec3& _S, const vec3& _u,const ve
 	make_vel_init();
 }
 
-void rect_source::set_flat_source(const vec3& _S, float _w,float _h) {
+void rect_source::set_straight_source(const vec3& _S, float _w,float _h) {
 	u = vec3(1.0f, 0.0f, 0.0f);
 	v = vec3(0.0f, 0.0f, 1.0f);
 	n = vec3(0.0f, 1.0f, 0.0f);

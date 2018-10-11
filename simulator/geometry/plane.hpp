@@ -18,7 +18,7 @@ namespace geom {
 /**
  * @brief Class that implements a plane.
  *
- * A plane is defined with a normal, unitary vector
+ * A plane is defined with a normal, unit vector
  * (see @ref normal) and a constant term (see @ref dconst).
  *
  * A plane can be defined only with these two parameters

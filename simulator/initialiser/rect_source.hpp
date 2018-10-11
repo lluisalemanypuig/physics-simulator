@@ -13,23 +13,26 @@ namespace init {
 /**
  * @brief A rectangular source class initialiser.
  *
- * Provides a position initialiser function so that they
- * are generated within a rectangle of specific size.
+ * Provides a position initialiser function so that particles
+ * are generated within a rectangle of specific dimensions.
  *
  * Need to set the source size through @ref set_rectangular_source
  * so that the initialser's source is defined. In this method
- * is specified the coordinates of one of its corners, the
- * two unitary vectors spanning the plane it belongs to, and
- * the lengths of the sides, width and length.
+ * is specified the coordinates of one of its corners (the source
+ * @ref S), the two unit vectors spanning the plane it belongs to
+ * (see @ref u and @ref v), and the lengths of the sides, width and
+ * length (see @ref h and @ref w).
  *
- * The points in this rectangle, then, are parametrised by:
+ * The points in this rectangle are, then, parametrised by:
  *
  * \f$R(\lambda, \mu) = S + \lambda\cdot w\cdot \vec{u} + \mu\cdot h\cdot \vec{u}\f$
  *
- * where @e w,@e h are, resepectively the width and the length (see
- * @ref w and @ref h), \f$\vec{u}\f$ and \f$\vec{u}\f$ are the spanning
- * unitary vectors (see @ref u and @ref v), and @e S is the source point
- * (see @ref S), for \f$\lambda,\mu \in [0,1]\subset \mathbb{R}\f$.
+ * for \f$\lambda,\mu \in [0,1]\subset \mathbb{R}\f$.
+ *
+ * Needless to say that if the vectors @ref u and @ref are not
+ * perpendicular the result will be a parallelogram, not a rectangle.
+ * However, the word 'rectangle' will be used regardless of how
+ * misleading it might be.
  */
 class rect_source : public initialiser {
 	protected:
@@ -121,7 +124,7 @@ class rect_source : public initialiser {
 		 * @param _w See @ref w.
 		 * @param _h See @ref h.
 		 */
-		void set_flat_source(const vec3& _S, float _w,float _h);
+		void set_straight_source(const vec3& _S, float _w,float _h);
 
 		// GETTERS
 
