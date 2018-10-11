@@ -105,8 +105,15 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 		L = (-b - sqrt(discr))/(2.0f*a);
 	}
 
-	// make sure that L has the right value
-	assert(0.0f <= L and L <= 1.0f);
+	#if defined (DEBUG)
+	// make sure that L has the right value (with some tolerance)
+	if (not (-0.00009f <= L and L <= 1.00009f)) {
+		cerr << "sphere::intersec_segment: Error:" << endl;
+		cerr << "    Value of L to determine intersection point is not valid." << endl;
+		cerr << "    L= " << L << endl;
+		assert( false );
+	}
+	#endif
 
 	// compute intersection point
 	p_inter = (1 - L)*p + L*q;
