@@ -20,7 +20,8 @@ HEADERS +=							\
 	initialiser/initialiser.hpp		\
 	initialiser/rect_fountain.hpp	\
 	initialiser/rect_source.hpp		\
-	initialiser/rect_shower.hpp
+	initialiser/rect_shower.hpp \
+    initialiser/hose.hpp
 
 
 SOURCES +=							\
@@ -34,6 +35,7 @@ SOURCES +=							\
 	initialiser/initialiser.cpp		\
 	initialiser/rect_fountain.cpp	\
 	initialiser/rect_source.cpp		\
-	initialiser/rect_shower.cpp
+	initialiser/rect_shower.cpp \
+    initialiser/hose.cpp
 
 
