@@ -117,16 +117,12 @@ void MainWindow::make_sim(SimulationRenderer *sr) {
 	sr->set_total_time(tt);
 
 	switch (current_tab) {
-		case 0:
-			make_sim0(sr);
-			break;
-
-		case 1:
-			make_sim1(sr);
-			break;
-
+		case 0: make_sim0(sr); break;
+		case 1: make_sim1(sr); break;
+		case 2: make_sim2(sr); break;
+		case 3: make_sim3(sr); break;
 		default:
-			make_sim2(sr);
+			cerr << "MainWindow::make_sim: Error: can't make simulation for tab '" << current_tab << "'" << endl;
 			break;
 	}
 

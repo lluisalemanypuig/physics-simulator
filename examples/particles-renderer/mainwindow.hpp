@@ -17,6 +17,7 @@ using namespace std;
 #include <simulator/initialiser/initialiser.hpp>
 #include <simulator/initialiser/rect_shower.hpp>
 #include <simulator/initialiser/rect_fountain.hpp>
+#include <simulator/initialiser/hose.hpp>
 #include <simulator/simulator.hpp>
 using namespace physim;
 using namespace init;

@@ -27,7 +27,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -482,7 +482,7 @@
      <x>0</x>
      <y>0</y>
      <width>603</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
