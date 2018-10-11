@@ -6,7 +6,7 @@ void MainWindow::make_sim1(SimulationRenderer *sr) {
 	// these parts of the initialiser are scene-dependent
 
 	rect_shower w;
-	w.set_flat_source(vec3(-4.5f,10.0f,-1.5f), 3.0f,3.0f);
+	w.set_straight_source(vec3(-4.5f,10.0f,-1.5f), 3.0f,3.0f);
 	w.set_starttime_initialiser(
 		[](particle *p) {
 			p->set_starttime( p->get_index()/300.0 );
