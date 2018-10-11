@@ -146,7 +146,10 @@ float SimulationRenderer::get_total_time() const {
 void SimulationRenderer::set_particle_size(float s) {
 	particle_size = s;
 
-	cout << particle_size << endl;
+	makeCurrent();
+	set_modelview();
+	doneCurrent();
+	update();
 }
 
 void SimulationRenderer::set_progress_bar(QProgressBar *pbar) {

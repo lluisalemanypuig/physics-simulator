@@ -220,6 +220,8 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 	// only if the simulation was not cleared
 	make_sim( get_SimRend() );
 
+	on_Slider_PointSize_sliderMoved(0);
+
 	// enable all buttons
 	ui->PBreset->setEnabled(true);
 	ui->PBclear->setEnabled(true);
@@ -353,13 +355,14 @@ void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
 	}
 }
 
-void MainWindow::on_Slider_PointSize_sliderReleased() {
-	int value = ui->Slider_PointSize->value();
+void MainWindow::on_Slider_PointSize_sliderMoved(int ) {
+	// this slot has its parameter removed (the text
+	// is retrieved to 'text') so that it can be called
+	// from other parts of the code.
 
-	for (int i = 0; i < ui->TWscenes->count(); ++i) {
-		SimulationRenderer *sr = get_SimRend(i);
-		sr->set_particle_size( value/2.0f );
-	}
+	int value = ui->Slider_PointSize->value();
+	SimulationRenderer *sr = get_SimRend();
+	sr->set_particle_size( value/2.0f );
 }
 
 // PUBLIC
