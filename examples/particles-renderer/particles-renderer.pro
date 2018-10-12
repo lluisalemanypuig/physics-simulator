@@ -31,7 +31,12 @@ SOURCES +=					\
     sim2.cpp \
     sim3.cpp \
     obj_reader.cpp \
-    mesh.cpp
+    mesh.cpp \
+    rgeom.cpp \
+    rplane.cpp \
+    rtriangle.cpp \
+    rrectangle.cpp \
+    rsphere.cpp
 
 HEADERS +=					\
     simulation_renderer.hpp \

@@ -55,7 +55,7 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	ramp->p4 = vec3(-3.0f, 5.0f,  1.0f);
 	ramp->rl = new rectangle(ramp->p1,ramp->p2,ramp->p3,ramp->p4);
 	ramp->rl->set_position( ramp->rl->get_plane().get_normal()*0.02f );
-	ramp->set_color(QVector4D(0.0f,0.3f,0.0f,1.0f));
+	ramp->set_color(vec4(0.0f,0.3f,0.0f,1.0f));
 	sr->add_rgeom(ramp);
 
 	sr->add_particles(9);

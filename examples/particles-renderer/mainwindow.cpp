@@ -218,13 +218,22 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 
 	// make appropriate scene for the new renderer
 	// only if the simulation was not cleared
-	make_sim( get_SimRend() );
+	SimulationRenderer *sr = get_SimRend();
+	make_sim( sr );
 
 	on_Slider_PointSize_sliderMoved(0);
 
 	// enable all buttons
 	ui->PBreset->setEnabled(true);
 	ui->PBclear->setEnabled(true);
+
+	// initialis progress bar
+	QProgressBar *s_bar = get_sim_bar();
+	float dt = sr->get_time_step();
+	float tt = sr->get_total_time();
+
+	s_bar->setMinimum(0);
+	s_bar->setMaximum(tt/dt);
 }
 
 void MainWindow::on_lEBounce_returnPressed() {

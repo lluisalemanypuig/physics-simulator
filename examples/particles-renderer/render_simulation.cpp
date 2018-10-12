@@ -16,8 +16,8 @@ void SimulationRenderer::draw_hard_geom(rgeom *rg) {
 
 	glDisable(GL_LIGHTING);
 
-	QVector4D col = rg->get_color();
-	glColor4f(col.x(),col.y(),col.z(),col.w());
+	const vec4& col = rg->get_color();
+	glColor4f(col[0],col[1],col[2],col[3]);
 
 	switch (g->get_geom_type()) {
 		case geom_type::Plane:
@@ -139,7 +139,7 @@ void SimulationRenderer::resizeGL(int w, int h) {
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, (1.0f*w)/(1.0f*h), 0.01f, 100.0f);
+	gluPerspective(60.0, (1.0*w)/(1.0*h), 0.01, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -156,11 +156,11 @@ void SimulationRenderer::initializeGL() {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	float col[] = {1.0, 1.0, 1.0, 1.0};
+	float col[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, col);
-	float pos[] = {0.0, 0.0, 0.0, 1.0};
+	float pos[] = {0.0f, 0.0f, 0.0f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
-	float amb[] = {0.2, 0.2, 0.2, 1.0};
+	float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 }
 

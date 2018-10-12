@@ -9,7 +9,7 @@ void MainWindow::make_sim1(SimulationRenderer *sr) {
 	w.set_straight_source(vec3(-4.5f,10.0f,-1.5f), 3.0f,3.0f);
 	w.set_starttime_initialiser(
 		[](particle *p) {
-			p->set_starttime( p->get_index()/300.0 );
+			p->set_starttime( p->get_index()/300.0f );
 		}
 	);
 
@@ -26,7 +26,7 @@ void MainWindow::make_sim1(SimulationRenderer *sr) {
 	ramp->p4 = vec3(-4.0f, 4.0f,  1.0f);
 	ramp->rl = new rectangle(ramp->p1,ramp->p2,ramp->p3,ramp->p4);
 	ramp->rl->set_position( ramp->rl->get_plane().get_normal()*0.02f );
-	ramp->set_color(QVector4D(1.0f, 1.0f, 0.0f, 1.0f));
+	ramp->set_color(vec4(1.0f, 1.0f, 0.0f, 1.0f));
 
 	rtriangle *bouncer = new rtriangle();
 	bouncer->p1 = vec3( 0.0f, 2.0f,  1.0f);
@@ -34,7 +34,7 @@ void MainWindow::make_sim1(SimulationRenderer *sr) {
 	bouncer->p3 = vec3( 2.0f, 4.0f,  0.0f);
 	bouncer->tl = new triangle(bouncer->p1,bouncer->p2,bouncer->p3);
 	bouncer->tl->set_position( bouncer->tl->get_plane().get_normal()*0.02f );
-	bouncer->set_color(QVector4D(1.0f, 0.0f, 1.0f, 1.0f));
+	bouncer->set_color(vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
 	rplane *floor = new rplane();
 	floor->p1 = vec3(-5.0f, -0.05f, -5.0f);

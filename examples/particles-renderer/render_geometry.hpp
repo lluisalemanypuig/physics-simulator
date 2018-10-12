@@ -1,5 +1,8 @@
 #pragma once
 
+// Qt includes
+#include <QVector4D>
+
 // simulator includes
 #include <simulator/geometry/geometry.hpp>
 #include <simulator/geometry/rectangle.hpp>
@@ -7,11 +10,9 @@
 #include <simulator/geometry/sphere.hpp>
 #include <simulator/geometry/plane.hpp>
 
-// Qt includes
-#include <QVector4D>
-
 // glm includes
 #include <glm/vec3.hpp>
+using namespace glm;
 
 /*
  * Simple wrapper on the geometry of the
@@ -22,24 +23,21 @@
 class rgeom {
 	protected:
 		bool render;
-		QVector4D color;
+		vec4 color;
 
 	public:
-		rgeom() {
-			render = true;
-			color = QVector4D(1.0f, 0.0f, 0.0f, 1.0f);
-		}
-		virtual ~rgeom() {}
+		rgeom();
+		virtual ~rgeom();
 
 		// SETTERS
 
-		void set_render(bool r) { render = r; }
-		void set_color(const QVector4D& c) { color = c; }
+		void set_render(bool r);
+		void set_color(const vec4& c);
 
 		// GETTERS
 
-		bool should_render() const { return render; }
-		const QVector4D& get_color() const { return color; }
+		bool should_render() const;
+		const vec4& get_color() const;
 		virtual physim::geom::geometry *get_underlying() = 0;
 };
 
@@ -51,14 +49,9 @@ class rplane : public rgeom {
 		glm::vec3 p1,p2,p3,p4;
 		physim::geom::plane *pl;
 	public:
-		rplane() : rgeom() {
-			pl = nullptr;
-		}
-		~rplane() {}
-
-		physim::geom::geometry *get_underlying() {
-			return pl;
-		}
+		rplane();
+		~rplane();
+		physim::geom::geometry *get_underlying();
 };
 
 // use the three points (they should be
@@ -69,14 +62,10 @@ class rtriangle : public rgeom {
 		glm::vec3 p1,p2,p3;
 		physim::geom::triangle *tl;
 	public:
-		rtriangle() : rgeom() {
-			tl = nullptr;
-		}
-		~rtriangle() {}
+		rtriangle();
+		~rtriangle();
 
-		physim::geom::geometry *get_underlying() {
-			return tl;
-		}
+		physim::geom::geometry *get_underlying();
 };
 
 // use the four points (they should be
@@ -87,14 +76,10 @@ class rrectangle : public rgeom {
 		glm::vec3 p1,p2,p3,p4;
 		physim::geom::rectangle *rl;
 	public:
-		rrectangle() : rgeom() {
-			rl = nullptr;
-		}
-		~rrectangle() {}
+		rrectangle();
+		~rrectangle();
 
-		physim::geom::geometry *get_underlying() {
-			return rl;
-		}
+		physim::geom::geometry *get_underlying();
 };
 
 // use the center to translate a model
@@ -106,12 +91,8 @@ class rsphere : public rgeom {
 		float r;
 		physim::geom::sphere *s;
 	public:
-		rsphere() : rgeom() {
-			s = nullptr;
-		}
-		~rsphere() {}
+		rsphere();
+		~rsphere();
 
-		physim::geom::geometry *get_underlying() {
-			return s;
-		}
+		physim::geom::geometry *get_underlying();
 };
