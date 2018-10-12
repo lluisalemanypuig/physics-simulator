@@ -4,25 +4,25 @@
 
 void MainWindow::make_sim3(SimulationRenderer *sr) {
 
-	const glm::vec3 A(-3.0f, 0.0f,-3.0f);
-	const glm::vec3 D(-5.0f,-0.5f,-5.0f);
-	const glm::vec3 E(-5.0f,-0.5f, 5.0f);
-	const glm::vec3 F( 5.0f,-0.5f,-5.0f);
-	const glm::vec3 G( 5.0f,-0.5f, 5.0f);
-	const glm::vec3 H(-5.0f, 5.0f,-5.0f);
-	const glm::vec3 I(-5.0f, 5.0f, 5.0f);
-	const glm::vec3 J( 5.0f, 5.0f,-5.0f);
-	const glm::vec3 K( 5.0f, 5.0f, 5.0f);
-	const glm::vec3 L( 3.0f, 5.0f, 3.0f);
-	const glm::vec3 M( 0.0f, 2.0f, 0.0f);
-	//const glm::vec3 N( 0.0f, 3.0f, 0.0f);
-	const glm::vec3 O( 0.5f, 3.0f,-1.0f);
-	const glm::vec3 P(-1.0f, 3.0f, 0.5f);
-	const glm::vec3 S(-1.5f, 5.0f,-1.5f);
+	const vec3 A(-3.0f, 0.0f,-3.0f);
+	const vec3 D(-5.0f,-0.5f,-5.0f);
+	const vec3 E(-5.0f,-0.5f, 5.0f);
+	const vec3 F( 5.0f,-0.5f,-5.0f);
+	const vec3 G( 5.0f,-0.5f, 5.0f);
+	const vec3 H(-5.0f, 5.0f,-5.0f);
+	const vec3 I(-5.0f, 5.0f, 5.0f);
+	const vec3 J( 5.0f, 5.0f,-5.0f);
+	const vec3 K( 5.0f, 5.0f, 5.0f);
+	const vec3 L( 3.0f, 5.0f, 3.0f);
+	const vec3 M( 0.0f, 2.0f, 0.0f);
+	//const vec3 N( 0.0f, 3.0f, 0.0f);
+	const vec3 O( 0.5f, 3.0f,-1.0f);
+	const vec3 P(-1.0f, 3.0f, 0.5f);
+	const vec3 S(-1.5f, 5.0f,-1.5f);
 
-	const glm::vec3 hose_direction = glm::normalize(L - K);
-	const glm::vec3 hK = K + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
-	const glm::vec3 hL = L + vec3(0.0f,0.5f,0.0f);
+	const vec3 hose_direction = glm::normalize(L - K);
+	const vec3 hK = K + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
+	const vec3 hL = L + vec3(0.0f,0.5f,0.0f);
 
 	hose h;
 	h.set_hose_source(hK, glm::normalize(hL-hK), 0.5f, glm::length(hL-hK));

@@ -12,6 +12,7 @@ using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
+using namespace glm;
 
 // simulator includes
 #include <simulator/initialiser/initialiser.hpp>
@@ -24,6 +25,7 @@ using namespace init;
 
 // Custom includes
 #include "simulation_renderer.hpp"
+#include "mesh.hpp"
 
 namespace Ui {
 	class MainWindow;
@@ -35,6 +37,8 @@ class MainWindow : public QMainWindow {
 	private:
 		Ui::MainWindow *ui;
 		int current_tab;
+
+		mesh *sim_ball;
 
 		default_random_engine eng;
 		// generator for random numbers between 0 and 1

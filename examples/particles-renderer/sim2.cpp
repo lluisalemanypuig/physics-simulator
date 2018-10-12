@@ -34,10 +34,10 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	sr->get_simulator().set_initialiser(&i);
 
 	rplane *floor = new rplane();
-	floor->p1 = glm::vec3(-5.0f, -0.05f, -5.0f);
-	floor->p2 = glm::vec3(-5.0f, -0.05f,  5.0f);
-	floor->p3 = glm::vec3( 5.0f, -0.05f,  5.0f);
-	floor->p4 = glm::vec3( 5.0f, -0.05f, -5.0f);
+	floor->p1 = vec3(-5.0f, -0.05f, -5.0f);
+	floor->p2 = vec3(-5.0f, -0.05f,  5.0f);
+	floor->p3 = vec3( 5.0f, -0.05f,  5.0f);
+	floor->p4 = vec3( 5.0f, -0.05f, -5.0f);
 	floor->pl = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 	sr->add_rgeom(floor);
 
@@ -45,14 +45,14 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	ball->c = vec3(0.0f,2.0f,0.0f);
 	ball->r = 1.0f;
 	ball->s = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
-	ball->set_color(QVector4D(0.0f,0.0f,1.0f,1.0f));
+	//ball->set_color(QVector4D(0.0f,0.0f,1.0f,1.0f));
 	sr->add_rgeom(ball);
 
 	rrectangle *ramp = new rrectangle();
-	ramp->p1 = glm::vec3( 0.0f, 2.0f,  1.0f);
-	ramp->p2 = glm::vec3( 0.0f, 2.0f, -1.0f);
-	ramp->p3 = glm::vec3(-3.0f, 5.0f, -1.0f);
-	ramp->p4 = glm::vec3(-3.0f, 5.0f,  1.0f);
+	ramp->p1 = vec3( 0.0f, 2.0f,  1.0f);
+	ramp->p2 = vec3( 0.0f, 2.0f, -1.0f);
+	ramp->p3 = vec3(-3.0f, 5.0f, -1.0f);
+	ramp->p4 = vec3(-3.0f, 5.0f,  1.0f);
 	ramp->rl = new rectangle(ramp->p1,ramp->p2,ramp->p3,ramp->p4);
 	ramp->rl->set_position( ramp->rl->get_plane().get_normal()*0.02f );
 	ramp->set_color(QVector4D(0.0f,0.3f,0.0f,1.0f));

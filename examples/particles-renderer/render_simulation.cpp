@@ -3,51 +3,23 @@
 const float rotationFactor = 0.5f;
 const float maxRotationCamera = 75.0f;
 const float minDistanceCamera = 1.0f;
-const float maxDistanceCamera = 3.0f;
+const float maxDistanceCamera = 20.0f;
 
 // PRIVATE
 
-void SimulationRenderer::set_projection(float aspect) {
-	QMatrix4x4 projectionMatrix;
-
-	projectionMatrix.perspective(60, aspect, 0.01, 100.0);
-
-	program->bind();
-	program->setUniformValue("projection", projectionMatrix);
-	program->release();
-}
-
-void SimulationRenderer::set_modelview() {
-	QMatrix4x4 modelviewMatrix;
-
-	// the -5.0f and -15.0f were added manually in order
-	// to have the whole scene visible from a distance
-	modelviewMatrix.translate(0.0f, -5.0f, -15.0f);
-	modelviewMatrix.translate(0.0f, 0.0f, -distance);
-	modelviewMatrix.rotate(angleX, 1.0f, 0.0f, 0.0f);
-	modelviewMatrix.rotate(angleY, 0.0f, 1.0f, 0.0f);
-
-	program->bind();
-	program->setUniformValue("modelview", modelviewMatrix);
-	program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
-	program->release();
-}
-
-void SimulationRenderer::draw_geom(rgeom *rg) {
+void SimulationRenderer::draw_hard_geom(rgeom *rg) {
 	geom::geometry *g = rg->get_underlying();
-	geom_type gt = g->get_geom_type();
 
 	rplane *rp = nullptr;
 	rrectangle *rc = nullptr;
 	rtriangle *rt = nullptr;
-	rsphere *rs = nullptr;
 
-	QMatrix4x4 modelviewMatrix;
+	glDisable(GL_LIGHTING);
 
-	program->bind();
-	program->setUniformValue("color", rg->get_color());
+	QVector4D col = rg->get_color();
+	glColor4f(col.x(),col.y(),col.z(),col.w());
 
-	switch (gt) {
+	switch (g->get_geom_type()) {
 		case geom_type::Plane:
 			rp = static_cast<rplane *>(rg);
 			glBegin(GL_QUADS);
@@ -77,45 +49,56 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 			glEnd();
 			break;
 
+		default:
+			cerr << "This is not hard geometry" << endl;
+			rg->get_underlying()->display();
+	}
+	glEnable(GL_LIGHTING);
+}
+
+void SimulationRenderer::draw_soft_geom(rgeom *rg) {
+	geom::geometry *g = rg->get_underlying();
+	geom_type gt = g->get_geom_type();
+
+	rsphere *rs = nullptr;
+
+	switch (gt) {
 		case geom_type::Sphere:
-
 			rs = static_cast<rsphere *>(rg);
+			glTranslatef(rs->c.x, rs->c.y, rs->c.z);
+			glScalef(rs->r,rs->r,rs->r);
+			sphere->render();
+			break;
 
-			program->setUniformValue("color", rs->get_color());
+		default:
+			cerr << "This is not soft geometry" << endl;
+			rg->get_underlying()->display();
+	}
+}
 
-			// the -5.0f and -15.0f were added manually in order
-			// to have the whole scene visible from a distance
-			modelviewMatrix.translate(0.0f, -5.0f, -15.0f);
-			modelviewMatrix.translate(0.0f, 0.0f, -distance);
-			modelviewMatrix.rotate(angleX, 1.0f, 0.0f, 0.0f);
-			modelviewMatrix.rotate(angleY, 0.0f, 1.0f, 0.0f);
+void SimulationRenderer::draw_geom(rgeom *rg) {
+	const geom::geometry *g = rg->get_underlying();
 
-			modelviewMatrix.translate(rs->c.x, rs->c.y, rs->c.z);
-			modelviewMatrix.scale(2.0f*rs->r);
+	switch (g->get_geom_type()) {
+		case geom_type::Plane:
+		case geom_type::Rectangle:
+		case geom_type::Triangle:
+			draw_hard_geom(rg);
+			break;
 
-			program->setUniformValue("modelview", modelviewMatrix);
-			program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
-
-			glCallList( sphere_idx );
-
-			modelviewMatrix.scale(1.0f/(2.0f*rs->r));
-			modelviewMatrix.translate(-rs->c.x, -rs->c.y, -rs->c.z);
-
-			program->setUniformValue("modelview", modelviewMatrix);
-			program->setUniformValue("normalMatrix", modelviewMatrix.normalMatrix());
+		case geom_type::Sphere:
+			draw_soft_geom(rg);
 			break;
 
 		default:
 			cerr << "No type for geometry" << endl;
 	}
-
-	program->release();
 }
 
 void SimulationRenderer::draw_particles() {
-	program->bind();
-	program->setUniformValue("color", QVector4D(1.0f, 1.0f, 1.0f, 1.0));
+	glDisable(GL_LIGHTING);
 
+	glColor3f(1.0f,1.0f,1.0f);
 	glBegin(GL_POINTS);
 	for (size_t i = 0; i < S.n_particles(); ++i) {
 		const vec3& pos = S.get_particle(i).get_position();
@@ -123,55 +106,62 @@ void SimulationRenderer::draw_particles() {
 	}
 	glEnd();
 
-	program->release();
-}
-
-void SimulationRenderer::initializeGL() {
-	initializeOpenGLFunctions();
-
-	program = new QOpenGLShaderProgram();
-	program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/simpleshader.vert");
-	program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/simpleshader.frag");
-	program->link();
-	if (!program->isLinked()) {
-		cerr << "SimulationRenderer::initializeGL - Error:" << endl;
-		cerr << "Shader program has not linked" << endl;
-		cerr << endl;
-		cerr << "Log: " << endl;
-		cerr << endl;
-		cerr << program->log().toStdString();
-		QApplication::quit();
-	}
-	program->bind();
-
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	// load a sphere
-	sphere_idx = obj.loadObject("../particles-renderer/models/SPH_FullSmooth_Mat.obj");
-}
-
-void SimulationRenderer::resizeGL(int w, int h) {
-	glViewport(0, 0, w, h);
-	set_projection((float)w/h);
-	set_modelview();
+	glEnable(GL_LIGHTING);
 }
 
 void SimulationRenderer::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	glPointSize(particle_size);
+	glLoadIdentity();
+
+	glTranslatef(0.0f, -5.0f, -15.0f);
+	glTranslatef(0.0f, 0.0f, -distance);
+	glRotatef(angleX, 1.0f, 0.0f, 0.0f);
+	glRotatef(angleY, 0.0f, 1.0f, 0.0f);
 
 	// update screen with the geometry
 	for (rgeom *rg : G) {
-		// draw geometry only if told so
-		if (rg->should_render()) {
-			draw_geom(rg);
+		if (not rg->should_render()) {
+			continue;
 		}
+		glPushMatrix();
+		draw_geom(rg);
+		glPopMatrix();
 	}
 
 	// update screen with the particles
+	glPointSize(particle_size);
 	draw_particles();
+}
+
+void SimulationRenderer::resizeGL(int w, int h) {
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0f, (1.0f*w)/(1.0f*h), 0.01f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void SimulationRenderer::initializeGL() {
+	initializeOpenGLFunctions();
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45, width()/height(), 0.01, 100.0);
+	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	float col[] = {1.0, 1.0, 1.0, 1.0};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, col);
+	float pos[] = {0.0, 0.0, 0.0, 1.0};
+	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	float amb[] = {0.2, 0.2, 0.2, 1.0};
+	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 }
 
 void SimulationRenderer::mousePressEvent(QMouseEvent *event) {
@@ -194,7 +184,7 @@ void SimulationRenderer::mouseMoveEvent(QMouseEvent *event) {
 	mouse_last_pos = event->pos();
 
 	makeCurrent();
-	set_modelview();
+	//set_modelview();
 	doneCurrent();
 	update();
 }

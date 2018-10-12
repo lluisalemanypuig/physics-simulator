@@ -401,6 +401,13 @@ MainWindow::MainWindow(QWidget *parent)
 	if (sr->is_scene_cleared()) {
 		make_sim(sr);
 	}
+
+	// load sphere for rendering
+	sim_ball = new mesh();
+	OBJ_reader obj;
+	obj.load_object("../particles-renderer/models", "SPH_HalfSmooth_Mat.obj", *sim_ball);
+	get_SimRend(2)->set_sphere(sim_ball);
+	get_SimRend(3)->set_sphere(sim_ball);
 }
 
 MainWindow::~MainWindow() {

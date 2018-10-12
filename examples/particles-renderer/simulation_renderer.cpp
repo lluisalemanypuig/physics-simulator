@@ -11,9 +11,8 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	angleY = 0.0f;
 	distance = 2.0f;
 
+	sphere = nullptr;
 	particle_size = 2.0f;
-
-	program = nullptr;
 
 	limit_fps = false;
 	fps_count = 0;
@@ -28,9 +27,6 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 }
 
 SimulationRenderer::~SimulationRenderer() {
-	if (program != nullptr) {
-		delete program;
-	}
 	S.clear_simulation();
 	for (rgeom *g : G) {
 		delete g;
@@ -50,7 +46,7 @@ void SimulationRenderer::run_simulation() {
 		S.apply_time_step(dt);
 
 		makeCurrent();
-		set_modelview();
+		//set_modelview();
 		doneCurrent();
 		update();
 
@@ -90,7 +86,7 @@ void SimulationRenderer::reset_simulation() {
 	fps_count = 0;
 
 	makeCurrent();
-	set_modelview();
+	//set_modelview();
 	doneCurrent();
 	update();
 }
@@ -105,7 +101,7 @@ void SimulationRenderer::clear_simulation() {
 	sim_steps = 0;
 
 	makeCurrent();
-	set_modelview();
+	//set_modelview();
 	doneCurrent();
 	update();
 }
@@ -147,7 +143,7 @@ void SimulationRenderer::set_particle_size(float s) {
 	particle_size = s;
 
 	makeCurrent();
-	set_modelview();
+	//set_modelview();
 	doneCurrent();
 	update();
 }
@@ -162,6 +158,10 @@ void SimulationRenderer::set_label_show_fps(QLabel *show_fps) {
 
 void SimulationRenderer::set_limit_fps(bool l) {
 	limit_fps = l;
+}
+
+void SimulationRenderer::set_sphere(mesh *s) {
+	sphere = s;
 }
 
 void SimulationRenderer::set_scene_made() {

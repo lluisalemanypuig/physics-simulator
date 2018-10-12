@@ -15,7 +15,11 @@ using namespace std;
 #include <QMatrix4x4>
 #include <QLabel>
 
-// Simulator includes
+// OpenGL includes
+#include <GL/glu.h>
+#include <GL/gl.h>
+
+// simulator includes
 #include <simulator/simulator.hpp>
 #include <simulator/initialiser/initialiser.hpp>
 using namespace physim;
@@ -24,7 +28,7 @@ using namespace init;
 
 // Custom includes
 #include "render_geometry.hpp"
-#include "OBJ_reader.hpp"
+#include "obj_reader.hpp"
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -34,9 +38,6 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float angleX, angleY, distance;
 		// track mouse last position
 		QPoint mouse_last_pos;
-
-		// shader for rendering objects
-		QOpenGLShaderProgram *program;
 
 		float particle_size;// size of the particle
 
@@ -53,23 +54,25 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
-		GLUquadricObj *sphere;
-		GLuint sphere_idx;
-		OBJ_reader obj;
+		mesh *sphere;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
 		QLabel *showFPS;
 
 	private:
-		// scene-rendering functions
-		void set_projection(float aspect);
-		void set_modelview();
+		// hard geometry are those geometrical objects
+		// with no material/textures. Soft geometry has
+		// materials and textures, so lighting has to be
+		// enabled.
+		void draw_hard_geom(rgeom *rg);
+		void draw_soft_geom(rgeom *rg);
 		void draw_geom(rgeom *rg);
 		void draw_particles();
 
-		void initializeGL();
-		void resizeGL(int w, int h);
+		// scene-rendering functions
 		void paintGL();
+		void resizeGL(int w, int h);
+		void initializeGL();
 
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
@@ -109,6 +112,8 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		void set_label_show_fps(QLabel *show_fps);
 
 		void set_limit_fps(bool l);
+
+		void set_sphere(mesh *s);
 
 		// sets 'scene_cleared' to false, so that
 		// we can run the application
