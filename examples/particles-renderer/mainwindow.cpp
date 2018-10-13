@@ -114,6 +114,8 @@ void MainWindow::make_sim(SimulationRenderer *sr) {
 	}
 
 	sr->set_scene_made();
+	// used to set to 0 the renderer's progress bar
+	sr->reset_simulation();
 }
 
 void MainWindow::make_init_with_params(initialiser& i) {
@@ -130,7 +132,7 @@ void MainWindow::make_init_with_params(initialiser& i) {
 	i.set_lifetime_initialiser(lifetime);
 }
 
-void MainWindow::init_environment() {
+void MainWindow::set_params() {
 	on_lEBounce_returnPressed();
 	on_lEFriction_returnPressed();
 	on_lELifeTime_returnPressed();
@@ -140,19 +142,13 @@ void MainWindow::init_environment() {
 	on_lETotalTime_returnPressed();
 
 	on_CoBsolver_currentIndexChanged(QString());
+	on_Slider_PointSize_sliderMoved(0);
+}
 
-	// make scene if necessary
-	SimulationRenderer *sr = get_SimRend();
-	if (sr->is_scene_cleared()) {
-		make_sim(sr);
-	}
-
-	float dt = sr->get_time_step();
-	float tt = sr->get_total_time();
-	QProgressBar *s_bar = get_sim_bar();
-	s_bar->setMinimum(0);
-	s_bar->setMaximum(static_cast<int>(tt/dt));
-	s_bar->setValue(0);
+void MainWindow::init_environment() {
+	set_params();
+	make_sim( get_SimRend() );
+	get_SimRend()->allow_to_run();
 }
 
 // PRIVATE SLOTS
@@ -164,19 +160,11 @@ void MainWindow::on_PBrun_clicked() {
 	ui->PBreset->setEnabled(false);
 	ui->PBclear->setEnabled(false);
 
-	SimulationRenderer *sr = get_SimRend();
-
 	// make scene if necessary
-	if (sr->is_scene_cleared()) {
-		make_sim(sr);
-	}
-
-	// set all attributes (initialiser, fps,
-	// total time, time step, show fps, ...)
-	init_environment();
+	make_sim( get_SimRend() );
 
 	// run the simulation
-	sr->run_simulation();
+	get_SimRend()->run_simulation();
 }
 
 void MainWindow::on_PBpause_clicked() {
@@ -196,19 +184,6 @@ void MainWindow::on_PBreset_clicked() {
 
 	SimulationRenderer *sr = get_SimRend();
 	sr->reset_simulation();
-
-	while (sr->is_running()) {
-		timing::sleep_seconds(0.01);
-	}
-
-	sr->allow_to_run();
-
-	float dt = sr->get_time_step();
-	float tt = sr->get_total_time();
-	QProgressBar *s_bar = get_sim_bar();
-	s_bar->setMinimum(0);
-	s_bar->setMaximum(static_cast<int>(tt/dt));
-	s_bar->setValue(0);
 }
 
 void MainWindow::on_PBclear_clicked() {
@@ -220,25 +195,10 @@ void MainWindow::on_PBclear_clicked() {
 }
 
 void MainWindow::on_TWscenes_currentChanged(int index) {
-	// old renderer: pause simulation
-	SimulationRenderer *old_sr = get_SimRend();
-	old_sr->pause_simulation();
+	// pause simulation of current renderer
+	on_PBpause_clicked();
 
 	current_tab = index;
-
-	// make appropriate scene for the new renderer
-	// only if the simulation was not cleared
-	SimulationRenderer *sr = get_SimRend();
-	// make scene if necessary
-	if (sr->is_scene_cleared()) {
-		make_sim(sr);
-	}
-
-	on_Slider_PointSize_sliderMoved(0);
-
-	// enable all buttons
-	ui->PBreset->setEnabled(true);
-	ui->PBclear->setEnabled(true);
 
 	init_environment();
 }

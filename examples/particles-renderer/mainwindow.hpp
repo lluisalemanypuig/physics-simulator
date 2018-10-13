@@ -67,6 +67,8 @@ class MainWindow : public QMainWindow {
 		void make_init_with_params(initialiser& i);
 
 		// assigns to current renderer parameters of simulation
+		void set_params();
+		// sets parameters and initialises scene and progress bar
 		void init_environment();
 
 	private slots:

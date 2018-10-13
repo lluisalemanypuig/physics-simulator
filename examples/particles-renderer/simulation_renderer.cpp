@@ -10,21 +10,23 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	angleX = 0.0f;
 	angleY = 0.0f;
 	distance = 2.0f;
-
-	sphere = nullptr;
 	particle_size = 2.0f;
 
 	limit_fps = false;
 	fps_count = 0;
 	FPS = 60.0;
-	allow_run = true;
-	running = false;
 
 	// scene_cleared: set to true so that it can
 	// be built when launching the application
 	scene_cleared = true;
+	allow_run = true;
+
 	dt = 0.01f;
 	tt = 10.0f;
+
+	sphere = nullptr;
+	p_bar = nullptr;
+	label_fps = nullptr;
 }
 
 SimulationRenderer::~SimulationRenderer() {
@@ -42,8 +44,6 @@ void SimulationRenderer::run_simulation() {
 	second = timing::now();
 
 	while (S.get_current_time() <= tt and allow_run) {
-		running = true;
-
 		begin = timing::now();
 		S.apply_time_step(dt);
 		update();
@@ -61,7 +61,7 @@ void SimulationRenderer::run_simulation() {
 			double sec = timing::elapsed_seconds(second, end);
 			if (sec >= 1.0) {
 				second = timing::now();
-				showFPS->setText(QString::fromStdString(std::to_string(fps_count)));
+				label_fps->setText(QString::fromStdString(std::to_string(fps_count)));
 				fps_count = 0;
 			}
 
@@ -70,7 +70,6 @@ void SimulationRenderer::run_simulation() {
 		}
 	}
 
-	running = false;
 	allow_run = true;
 }
 
@@ -79,11 +78,11 @@ void SimulationRenderer::pause_simulation() {
 }
 
 void SimulationRenderer::reset_simulation() {
-	pause_simulation();
-
 	S.reset_simulation();
 	sim_steps = 0;
 	fps_count = 0;
+	label_fps->setText(QString::fromStdString(""));
+
 	p_bar->setValue(0);
 
 	update();
@@ -100,6 +99,7 @@ void SimulationRenderer::clear_simulation() {
 	sim_steps = 0;
 	fps_count = 0;
 	p_bar->setValue(0);
+	label_fps->setText(QString::fromStdString(""));
 
 	update();
 }
@@ -135,14 +135,6 @@ float SimulationRenderer::get_total_time() const {
 	return tt;
 }
 
-bool SimulationRenderer::is_allowed_to_run() const {
-	return allow_run;
-}
-
-bool SimulationRenderer::is_running() const {
-	return running;
-}
-
 // SETTERS
 
 void SimulationRenderer::allow_to_run() {
@@ -160,7 +152,7 @@ void SimulationRenderer::set_progress_bar(QProgressBar *pbar) {
 }
 
 void SimulationRenderer::set_label_show_fps(QLabel *show_fps) {
-	showFPS = show_fps;
+	label_fps = show_fps;
 }
 
 void SimulationRenderer::set_limit_fps(bool l) {

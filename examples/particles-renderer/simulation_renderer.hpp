@@ -54,11 +54,10 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
-		bool running;
 		mesh *sphere;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
-		QLabel *showFPS;
+		QLabel *label_fps;
 
 	private:
 		// hard geometry are those geometrical objects
@@ -104,9 +103,6 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		float get_time_step() const;
 		float get_total_time() const;
-
-		bool is_allowed_to_run() const;
-		bool is_running() const;
 
 		// -- SETTERS
 
