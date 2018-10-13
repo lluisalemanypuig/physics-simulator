@@ -87,23 +87,38 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 	 */
 
 	// coefficients of quadratic equation
-	const vec3 v = q - p;
-	const float a = glm::dot(v,v);
-	const float b = 2.0f*glm::dot(p - C,v);
-	const float c = glm::dot(C,C) + glm::dot(p,p) - 2.0f*glm::dot(p,C) - R*R;
+	vec3 v = q - p;
+	float a = glm::dot(v,v);
+	float b = 2.0f*glm::dot(p - C,v);
+	float c = glm::dot(C,C) + glm::dot(p,p) - 2.0f*glm::dot(p,C) - R*R;
 
 	// discriminant of the quadratic equation
-	const float discr = b*b - 4.0f*a*c;
+	float discr = b*b - 4.0f*a*c;
 
 	// make sure the discriminant is positive
 	// to be safe that we can compute the square root
 	assert(discr >= 0.0f);
 
-	float L = (-b + sqrt(discr))/(2.0f*a);
+	// compute both solutions of the equation and
+	// take the one that is closest to the interval [0,1]
+	float Lp = (-b + sqrt(discr))/(2.0f*a);
+	float Lm = (-b - sqrt(discr))/(2.0f*a);
 
-	if (L < 0.0f or 1.0f < L) {
-		L = (-b - sqrt(discr))/(2.0f*a);
+	float dp = 0.0f;
+	if (Lp < 0.0f) {
+		dp = abs(Lp);
 	}
+	else if (Lp > 1.0f) {
+		dp = Lp - 1.0f;
+	}
+	float dm = 0.0f;
+	if (Lm < 0.0f) {
+		dm = abs(Lm);
+	}
+	else if (Lm > 1.0f) {
+		dm = Lm - 1.0f;
+	}
+	float L = (dp < dm ? Lp : Lm);
 
 	#if defined (DEBUG)
 	// make sure that L has the right value (with some tolerance)
@@ -111,6 +126,9 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 		cerr << "sphere::intersec_segment: Error:" << endl;
 		cerr << "    Value of L to determine intersection point is not valid." << endl;
 		cerr << "    L= " << L << endl;
+		cerr << "    Between the two solutions:" << endl;
+		cerr << "        Lp= " << Lp << ", dp= " << dp << endl;
+		cerr << "        Lm= " << Lm << ", dm= " << dm << endl;
 		assert( false );
 	}
 	#endif
