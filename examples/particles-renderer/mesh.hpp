@@ -88,7 +88,7 @@ class mesh {
 
 		// MODIFIERS
 
-		void make_vertex_normals();
+		void smooth();
 		void scale_to_unit();
 
 		// OTHERS

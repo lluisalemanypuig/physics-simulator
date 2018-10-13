@@ -117,7 +117,7 @@ bool mesh::is_valid() const {
 	return true;
 }
 
-void mesh::make_vertex_normals() {
+void mesh::smooth() {
 
 	// compute to what faces each
 	// vertex is adjacent to
@@ -194,24 +194,10 @@ void mesh::display_mesh_info() {
 	cout << "Mesh '" << mesh_name << "' information: " << endl;
 	cout << "    # Verteices= " << vertices.size() << endl;
 	cout << "    # Faces= " << faces.size() << endl;
-	//cout << "    # Normals= " << face_normals.size() << endl;
+	cout << "    # Normals= " << normals.size() << endl;
 	cout << "    # Materials= " << materials.size() << endl;
 	cout << "    # Texture coordinates= " << textures_coords.size() << endl;
 	cout << "    # Textures= " << textures_indexes.size() << endl;
-
-	/*
-	size_t s = 0;
-	for (size_t i = 0; i < faces.size(); ++i) {
-		if (faces[i].smooth) {
-			++s;
-		}
-	}
-	cout << "    # Smoothed faces= " << s << endl;
-	cout << "    # Normals per vertex= " << normals.size() << endl;
-	if (normals.size() != vertices.size()) {
-		cout << "        (Probably you need to call make_vertex_normals)" << endl;
-	}
-	*/
 
 	cout << "    Materials: " << endl;
 	for (size_t i = 0; i < materials.size(); ++i) {
@@ -271,13 +257,6 @@ void mesh::render() const {
 		// build the face
 		if (faces[i].is_quad) {
 			glBegin(GL_QUADS);
-			/*
-			if (face_normals.size() > 0) {
-				const vec3& v = face_normals[faces[i].normal_index];
-				glNormal3f(v.x, v.y, v.z);
-			}
-			*/
-
 			for (int j = 0; j < 4; ++j) {
 				if (textenable) {
 					const vec2& uv = textures_coords[faces[i].text_coord[j]];
@@ -296,13 +275,6 @@ void mesh::render() const {
 		}
 		else {
 			glBegin(GL_TRIANGLES);
-			/*
-			if (face_normals.size() > 0) {
-				const vec3& v = face_normals[faces[i].normal_index];
-				glNormal3f(v.x, v.y, v.z);
-			}
-			*/
-
 			for (int j = 0; j < 3; ++j) {
 				if (textenable) {
 					const vec2& uv = textures_coords[faces[i].text_coord[j]];

@@ -32,6 +32,8 @@ using namespace init;
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
+	Q_OBJECT
+
 	private:
 		// camera pitch and yaw, and object's
 		// distance from the camera
@@ -60,10 +62,9 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		QLabel *label_fps;
 
 	private:
-		// hard geometry are those geometrical objects
-		// with no material/textures. Soft geometry has
-		// materials and textures, so lighting has to be
-		// enabled.
+		// hard geometry are those geometrical objects with
+		// no material/textures. Soft geometry has materials
+		// and textures, so lighting has to be enabled.
 		void draw_hard_geom(rgeom *rg);
 		void draw_soft_geom(rgeom *rg);
 		void draw_geom(rgeom *rg);
@@ -76,6 +77,9 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
+
+	signals:
+		void simulation_completed();
 
 	public:
 		SimulationRenderer(QWidget *parent);

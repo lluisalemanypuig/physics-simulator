@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	 * If done BEFORE, x will contain the value '0.987'.
 	 * If done AFTER, x will contain the value '0', because
 	 * sscanf will try to parse a floating point number
-	 * assuming it is written with a comme: '0,987'.
+	 * assuming it is written with a comma: '0,987'.
 	 */
 
 	char *curr_locale1 = setlocale(LC_ALL, NULL);

@@ -165,7 +165,7 @@ void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
 			else if (file_lines[i][1] == 'n') {
 				// vertex normal vector
 				sscanf(file_lines[i].c_str(), "vn %f %f %f", &x, &y, &z);
-				normals.push_back(vec3(x, y, z));
+				normals.push_back(glm::normalize(vec3(x, y, z)));
 			}
 			else if (file_lines[i][1] == 't') {
 				// vertex texture coordinate

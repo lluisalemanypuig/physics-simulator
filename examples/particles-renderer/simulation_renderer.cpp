@@ -71,6 +71,10 @@ void SimulationRenderer::run_simulation() {
 	}
 
 	allow_run = true;
+
+	if (S.get_current_time() > tt) {
+		emit simulation_completed();
+	}
 }
 
 void SimulationRenderer::pause_simulation() {

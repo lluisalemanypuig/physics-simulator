@@ -151,6 +151,13 @@ void MainWindow::init_environment() {
 	get_SimRend()->allow_to_run();
 }
 
+// PUBLIC SLOTS
+
+void MainWindow::simulation_done() {
+	ui->PBreset->setEnabled(true);
+	ui->PBclear->setEnabled(true);
+}
+
 // PRIVATE SLOTS
 
 void MainWindow::on_PBrun_clicked() {
@@ -359,24 +366,34 @@ MainWindow::MainWindow(QWidget *parent)
 	U01 = uniform_real_distribution<float>(0.0f,1.0f);
 	U010 = uniform_real_distribution<float>(0.0f,10.0f);
 
-	cout << "    Assigning label and progress bars to renderers..." << endl;
+	cout << "    Several things:" << endl;
+	cout << "        -> Assigning label and progress bars" << endl;
+	cout << "           to renderers..." << endl;
+	cout << "        -> Connecting signals and slots..." << endl;
 	for (int i = 0; i < ui->TWscenes->count(); ++i) {
 		SimulationRenderer *sr = get_SimRend(i);
 		sr->set_progress_bar( get_sim_bar(i) );
 		sr->set_label_show_fps( ui->lShowFPS );
+		connect(
+			sr,   &SimulationRenderer::simulation_completed,
+			this, &MainWindow::simulation_done
+		);
 	}
 
 	init_environment();
 
 	cout << "    Loading models for renderisation..." << endl;
-	// load sphere for rendering
 	sim_ball = new mesh();
 	OBJ_reader obj;
 	obj.load_object("../particles-renderer/models", "SPH_HalfSmooth_Mat.obj", *sim_ball);
+	sim_ball->scale_to_unit();
 	get_SimRend(2)->set_sphere(sim_ball);
 	get_SimRend(3)->set_sphere(sim_ball);
 }
 
 MainWindow::~MainWindow() {
 	delete ui;
+	if (sim_ball != nullptr) {
+		delete sim_ball;
+	}
 }

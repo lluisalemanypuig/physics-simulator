@@ -71,6 +71,9 @@ class MainWindow : public QMainWindow {
 		// sets parameters and initialises scene and progress bar
 		void init_environment();
 
+	public slots:
+		void simulation_done();
+
 	private slots:
 		void on_PBrun_clicked();
 		void on_PBpause_clicked();

@@ -66,7 +66,7 @@ void SimulationRenderer::draw_soft_geom(rgeom *rg) {
 		case geom_type::Sphere:
 			rs = static_cast<rsphere *>(rg);
 			glTranslatef(rs->c.x, rs->c.y, rs->c.z);
-			glScalef(rs->r,rs->r,rs->r);
+			glScalef(2.0f*rs->r,2.0f*rs->r,2.0f*rs->r);
 			sphere->render();
 			break;
 
@@ -112,6 +112,8 @@ void SimulationRenderer::draw_particles() {
 void SimulationRenderer::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+	// without this, scaling will affect the normals!
+	glEnable(GL_NORMALIZE);
 
 	glLoadIdentity();
 
@@ -183,9 +185,6 @@ void SimulationRenderer::mouseMoveEvent(QMouseEvent *event) {
 
 	mouse_last_pos = event->pos();
 
-	makeCurrent();
-	//set_modelview();
-	doneCurrent();
 	update();
 }
 
