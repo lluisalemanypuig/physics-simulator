@@ -83,12 +83,6 @@ void hose::set_hose_source(const vec3& _S, const vec3& _u, float _r,float _h) {
 
 	cc = source + h*u;
 
-	cout << "source: " << source.x << "," << source.y << "," << source.z << endl;
-	cout << "Centre circle: " << cc.x << "," << cc.y << "," << cc.z << endl;
-	cout << "Hose direction: " << u.x << "," << u.y << "," << u.z << endl;
-	cout << "Base: " << v.x << "," << v.y << "," << v.z << endl;
-	cout << "      " << w.x << "," << w.y << "," << w.z << endl;
-
 	make_pos_init();
 	make_vel_init();
 }
