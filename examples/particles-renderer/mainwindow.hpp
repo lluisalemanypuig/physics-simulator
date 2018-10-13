@@ -25,6 +25,7 @@ using namespace init;
 
 // Custom includes
 #include "simulation_renderer.hpp"
+#include "utils.hpp"
 #include "mesh.hpp"
 
 namespace Ui {
@@ -65,6 +66,9 @@ class MainWindow : public QMainWindow {
 
 		void make_init_with_params(initialiser& i);
 
+		// assigns to current renderer parameters of simulation
+		void init_environment();
+
 	private slots:
 		void on_PBrun_clicked();
 		void on_PBpause_clicked();
@@ -85,6 +89,6 @@ class MainWindow : public QMainWindow {
 		void on_Slider_PointSize_sliderMoved(int pos);
 
 	public:
-		explicit MainWindow(QWidget *parent = 0);
+		explicit MainWindow(QWidget *parent = nullptr);
 		~MainWindow();
 };

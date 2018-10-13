@@ -16,8 +16,9 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 
 	limit_fps = false;
 	fps_count = 0;
-	FPS = 60.0f;
-	exe_sim = true;
+	FPS = 60.0;
+	allow_run = true;
+	running = false;
 
 	// scene_cleared: set to true so that it can
 	// be built when launching the application
@@ -40,16 +41,12 @@ void SimulationRenderer::run_simulation() {
 	timing::time_point begin, end, second;
 	second = timing::now();
 
-	while (S.get_current_time() <= tt and exe_sim) {
+	while (S.get_current_time() <= tt and allow_run) {
+		running = true;
+
 		begin = timing::now();
-
 		S.apply_time_step(dt);
-
-		makeCurrent();
-		//set_modelview();
-		doneCurrent();
 		update();
-
 		end = timing::now();
 
 		++fps_count;
@@ -73,21 +70,22 @@ void SimulationRenderer::run_simulation() {
 		}
 	}
 
-	exe_sim = true;
+	running = false;
+	allow_run = true;
 }
 
 void SimulationRenderer::pause_simulation() {
-	exe_sim = false;
+	allow_run = false;
 }
 
 void SimulationRenderer::reset_simulation() {
+	pause_simulation();
+
 	S.reset_simulation();
 	sim_steps = 0;
 	fps_count = 0;
+	p_bar->setValue(0);
 
-	makeCurrent();
-	//set_modelview();
-	doneCurrent();
 	update();
 }
 
@@ -97,12 +95,12 @@ void SimulationRenderer::clear_simulation() {
 		delete rg;
 	}
 	G.clear();
+
 	scene_cleared = true;
 	sim_steps = 0;
+	fps_count = 0;
+	p_bar->setValue(0);
 
-	makeCurrent();
-	//set_modelview();
-	doneCurrent();
 	update();
 }
 
@@ -137,14 +135,23 @@ float SimulationRenderer::get_total_time() const {
 	return tt;
 }
 
+bool SimulationRenderer::is_allowed_to_run() const {
+	return allow_run;
+}
+
+bool SimulationRenderer::is_running() const {
+	return running;
+}
+
 // SETTERS
+
+void SimulationRenderer::allow_to_run() {
+	allow_run = true;
+}
 
 void SimulationRenderer::set_particle_size(float s) {
 	particle_size = s;
 
-	makeCurrent();
-	//set_modelview();
-	doneCurrent();
 	update();
 }
 

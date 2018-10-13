@@ -44,7 +44,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		bool limit_fps;		// limit or not the frames per second
 		int fps_count;		// measured amount of fps
 		double FPS;			// fps of the simulations
-		bool exe_sim;		// when false, stop the running simulation
+		bool allow_run;		// when false, stop the running simulation
 
 		vector<rgeom *> G;	// wrapped geometrical objects of the scene
 		simulator S;		// simulator object
@@ -54,6 +54,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
+		bool running;
 		mesh *sphere;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
@@ -104,7 +105,12 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float get_time_step() const;
 		float get_total_time() const;
 
+		bool is_allowed_to_run() const;
+		bool is_running() const;
+
 		// -- SETTERS
+
+		void allow_to_run();
 
 		void set_particle_size(float s);
 

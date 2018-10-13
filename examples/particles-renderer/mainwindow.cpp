@@ -5,16 +5,15 @@
 
 SimulationRenderer *MainWindow::get_SimRend(int t) {
 	SimulationRenderer *sr = nullptr;
-
 	switch (t) {
 		case 0:	sr = ui->GL_sim0; break;
 		case 1:	sr = ui->GL_sim1; break;
 		case 2:	sr = ui->GL_sim2; break;
 		case 3:	sr = ui->GL_sim3; break;
 		default:
-			cerr << "MainWindow::get_SimRend: Error: Unhandled value '" << t << "'" << endl;
+			cerr << "        MainWindow::get_SimRend: Error: Unhandled value '"
+				 << t << "'" << endl;
 	}
-
 	return sr;
 }
 
@@ -24,17 +23,16 @@ SimulationRenderer *MainWindow::get_SimRend() {
 
 QProgressBar *MainWindow::get_sim_bar(int t) {
 	QProgressBar *pb = nullptr;
-
 	switch (t) {
 		case 0:	pb = ui->PBar_sim0; break;
 		case 1:	pb = ui->PBar_sim1; break;
 		case 2:	pb = ui->PBar_sim2; break;
 		case 3:	pb = ui->PBar_sim3; break;
 		default:
-			cerr << "MainWindow::get_scene_bar: Error: Unhandled value '" << t << "'" << endl;
+			cerr << "        MainWindow::get_scene_bar: Error: Unhandled value '"
+				 << t << "'" << endl;
 			break;
 	}
-
 	return pb;
 }
 
@@ -46,7 +44,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
 		bounce = [&](particle *p) { p->set_bouncing( this->U01(this->eng) ); };
-		cout << "Use random bouncing coefficient" << endl;
+		cout << "        Use random bouncing coefficient" << endl;
 		return;
 	}
 
@@ -54,19 +52,18 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	float b = text.toFloat(&ok);
 	if (ok) {
 		bounce = [b](particle *p) { p->set_bouncing(b); };
-		cout << "Set bouncing coefficient to " << b << endl;
+		cout << "        Set bouncing coefficient to " << b << endl;
 		return;
 	}
 
-	cerr << "Error: invalid text in 'friction' text box." << endl;
-	return;
+	cerr << "        Error: invalid text in 'friction' text box." << endl;
 }
 
 void MainWindow::get_init_friction(partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
 		fric = [&](particle *p) { p->set_friction( this->U01(this->eng) ); };
-		cout << "Use random friction coefficient" << endl;
+		cout << "        Use random friction coefficient" << endl;
 		return;
 	}
 
@@ -74,19 +71,18 @@ void MainWindow::get_init_friction(partinit& fric) {
 	float f = text.toFloat(&ok);
 	if (ok) {
 		fric = [f](particle *p) { p->set_friction(f); };
-		cout << "Set friction coefficient to " << f << endl;
+		cout << "        Set friction coefficient to " << f << endl;
 		return;
 	}
 
-	cerr << "Error: invalid text in 'friction' text box." << endl;
-	return;
+	cerr << "        Error: invalid text in 'friction' text box." << endl;
 }
 
 void MainWindow::get_init_lifetime(partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
 		lifetime = [&](particle *p) { p->set_lifetime( this->U010(this->eng) ); };
-		cout << "Use random particle's lifetime" << endl;
+		cout << "        Use random particle's lifetime" << endl;
 		return;
 	}
 
@@ -94,12 +90,11 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	float l = text.toFloat(&ok);
 	if (ok) {
 		lifetime = [l](particle *p) { p->set_lifetime(l); };
-		cout << "Set particle's lifetime to " << l << endl;
+		cout << "        Set particle's lifetime to " << l << endl;
 		return;
 	}
 
-	cerr << "Error: invalid text in 'lifetime' text box." << endl;
-	return;
+	cerr << "        Error: invalid text in 'lifetime' text box." << endl;
 }
 
 void MainWindow::make_sim(SimulationRenderer *sr) {
@@ -107,22 +102,14 @@ void MainWindow::make_sim(SimulationRenderer *sr) {
 		return;
 	}
 
-	bool ok;
-	float tt = ui->lETotalTime->text().toFloat(&ok);
-	if (not ok) {
-		cerr << "Error: invalid text in 'total time' text box." << endl;
-		return;
-	}
-
-	sr->set_total_time(tt);
-
 	switch (current_tab) {
 		case 0: make_sim0(sr); break;
 		case 1: make_sim1(sr); break;
 		case 2: make_sim2(sr); break;
 		case 3: make_sim3(sr); break;
 		default:
-			cerr << "MainWindow::make_sim: Error: can't make simulation for tab '" << current_tab << "'" << endl;
+			cerr << "        MainWindow::make_sim: Error: can't make simulation for tab '"
+				 << current_tab << "'" << endl;
 			break;
 	}
 
@@ -143,6 +130,31 @@ void MainWindow::make_init_with_params(initialiser& i) {
 	i.set_lifetime_initialiser(lifetime);
 }
 
+void MainWindow::init_environment() {
+	on_lEBounce_returnPressed();
+	on_lEFriction_returnPressed();
+	on_lELifeTime_returnPressed();
+
+	on_lEfps_returnPressed();
+	on_lETimeStep_returnPressed();
+	on_lETotalTime_returnPressed();
+
+	on_CoBsolver_currentIndexChanged(QString());
+
+	// make scene if necessary
+	SimulationRenderer *sr = get_SimRend();
+	if (sr->is_scene_cleared()) {
+		make_sim(sr);
+	}
+
+	float dt = sr->get_time_step();
+	float tt = sr->get_total_time();
+	QProgressBar *s_bar = get_sim_bar();
+	s_bar->setMinimum(0);
+	s_bar->setMaximum(static_cast<int>(tt/dt));
+	s_bar->setValue(0);
+}
+
 // PRIVATE SLOTS
 
 void MainWindow::on_PBrun_clicked() {
@@ -157,37 +169,20 @@ void MainWindow::on_PBrun_clicked() {
 	// make scene if necessary
 	if (sr->is_scene_cleared()) {
 		make_sim(sr);
-
-		QProgressBar *s_bar = get_sim_bar();
-		float dt = sr->get_time_step();
-		float tt = sr->get_total_time();
-
-		s_bar->setValue(0);
-		s_bar->setMinimum(0);
-		s_bar->setMaximum(tt/dt);
 	}
 
 	// set all attributes (initialiser, fps,
 	// total time, time step, show fps, ...)
-
-	on_lEBounce_returnPressed();
-	on_lEFriction_returnPressed();
-	on_lELifeTime_returnPressed();
-
-	on_lEfps_returnPressed();
-	on_lETimeStep_returnPressed();
-	on_lETotalTime_returnPressed();
-
-	on_CoBsolver_currentIndexChanged(QString());
+	init_environment();
 
 	// run the simulation
 	sr->run_simulation();
-
-	ui->PBreset->setEnabled(true);
-	ui->PBclear->setEnabled(true);
 }
 
 void MainWindow::on_PBpause_clicked() {
+	cout << "------------------------" << endl;
+	cout << "Pause simulation" << endl;
+
 	ui->PBreset->setEnabled(true);
 	ui->PBclear->setEnabled(true);
 
@@ -196,17 +191,32 @@ void MainWindow::on_PBpause_clicked() {
 }
 
 void MainWindow::on_PBreset_clicked() {
+	cout << "------------------------" << endl;
+	cout << "Reset simulation" << endl;
+
 	SimulationRenderer *sr = get_SimRend();
 	sr->reset_simulation();
 
-	get_sim_bar()->setValue(0);
+	while (sr->is_running()) {
+		timing::sleep_seconds(0.01);
+	}
+
+	sr->allow_to_run();
+
+	float dt = sr->get_time_step();
+	float tt = sr->get_total_time();
+	QProgressBar *s_bar = get_sim_bar();
+	s_bar->setMinimum(0);
+	s_bar->setMaximum(static_cast<int>(tt/dt));
+	s_bar->setValue(0);
 }
 
 void MainWindow::on_PBclear_clicked() {
+	cout << "------------------------" << endl;
+	cout << "Clear simulation" << endl;
+
 	SimulationRenderer *sr = get_SimRend();
 	sr->clear_simulation();
-
-	get_sim_bar()->setValue(0);
 }
 
 void MainWindow::on_TWscenes_currentChanged(int index) {
@@ -219,7 +229,10 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 	// make appropriate scene for the new renderer
 	// only if the simulation was not cleared
 	SimulationRenderer *sr = get_SimRend();
-	make_sim( sr );
+	// make scene if necessary
+	if (sr->is_scene_cleared()) {
+		make_sim(sr);
+	}
 
 	on_Slider_PointSize_sliderMoved(0);
 
@@ -227,13 +240,7 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 	ui->PBreset->setEnabled(true);
 	ui->PBclear->setEnabled(true);
 
-	// initialis progress bar
-	QProgressBar *s_bar = get_sim_bar();
-	float dt = sr->get_time_step();
-	float tt = sr->get_total_time();
-
-	s_bar->setMinimum(0);
-	s_bar->setMaximum(tt/dt);
+	init_environment();
 }
 
 void MainWindow::on_lEBounce_returnPressed() {
@@ -291,13 +298,13 @@ void MainWindow::on_lEfps_returnPressed() {
 	bool ok;
 	double fps = ui->lEfps->text().toDouble(&ok);
 	if (not ok) {
-		cerr << "Error: invalid text in 'fps' text box." << endl;
+		cerr << "        Error: invalid text in 'fps' text box." << endl;
 		return;
 	}
 
 	SimulationRenderer *sr = get_SimRend();
 	if (fps > 0) {
-		cout << "Set FPS limit to " << fps << endl;
+		cout << "        Set FPS limit to " << fps << endl;
 		sr->set_limit_fps(true);
 		sr->set_fps( fps );
 	}
@@ -311,32 +318,33 @@ void MainWindow::on_lETimeStep_returnPressed() {
 	bool ok;
 	float dt = ui->lETimeStep->text().toFloat(&ok);
 	if (not ok) {
-		cerr << "Error: invalid text in 'time step' text box." << endl;
+		cerr << "        Error: invalid text in 'time step' text box." << endl;
 		return;
 	}
 
-	cout << "Set time step to " << dt << endl;
+	cout << "        Set time step to " << dt << endl;
 
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_time_step( dt );
 
-	get_sim_bar()->setMaximum( sr->get_total_time()/dt );
+	get_sim_bar()->setMaximum( static_cast<int>(sr->get_total_time()/dt) );
 }
 
 void MainWindow::on_lETotalTime_returnPressed() {
 	bool ok;
 	float tt = ui->lETotalTime->text().toFloat(&ok);
 	if (not ok) {
-		cerr << "Error: invalid text in 'total time' text box." << endl;
+		cerr << "        Error: invalid text in 'total time' text box." << endl;
 		return;
 	}
 
-	cout << "Set total time to " << tt << endl;
+	cout << "        Set total time to " << tt << endl;
 
 	SimulationRenderer *sr = get_SimRend();
 	sr->set_total_time(tt);
+	float dt = ui->lETimeStep->text().toFloat(&ok);
 
-	get_sim_bar()->setMaximum( tt/sr->get_time_step() );
+	get_sim_bar()->setMaximum( static_cast<int>(tt/dt) );
 }
 
 void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
@@ -348,19 +356,19 @@ void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
 
 	SimulationRenderer *sr = get_SimRend();
 	if (text == "Euler Explicit") {
-		cout << "Use Euler Explicit" << endl;
+		cout << "        Use Euler Explicit" << endl;
 		sr->get_simulator().set_solver( solver_type::EulerOrig );
 	}
 	else if (text == "Euler Semi-Imp") {
-		cout << "Use Semi-Implicit Euler" << endl;
+		cout << "        Use Semi-Implicit Euler" << endl;
 		sr->get_simulator().set_solver( solver_type::EulerSemi );
 	}
 	else if (text == "Verlet") {
-		cout << "Use Verlet" << endl;
+		cout << "        Use Verlet" << endl;
 		sr->get_simulator().set_solver( solver_type::Verlet );
 	}
 	else {
-		cerr << "Invalid value for solver type" << endl;
+		cerr << "        Invalid value for solver type" << endl;
 	}
 }
 
@@ -380,37 +388,27 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
 	  ui(new Ui::MainWindow)
 {
+	cout << "Initialising main window..." << endl;
 	ui->setupUi(this);
+	current_tab = ui->TWscenes->currentIndex();
+	cout << "    Current tab: " << current_tab << endl;
 
+	cout << "    Initialising random generators..." << endl;
 	random_device r;
 	eng = default_random_engine(r());
 	U01 = uniform_real_distribution<float>(0.0f,1.0f);
 	U010 = uniform_real_distribution<float>(0.0f,10.0f);
 
-	current_tab = ui->TWscenes->currentIndex();
-
-	on_lEBounce_returnPressed();
-	on_lEFriction_returnPressed();
-	on_lELifeTime_returnPressed();
-
-	on_lEfps_returnPressed();
-	on_lETimeStep_returnPressed();
-	on_lETotalTime_returnPressed();
-
-	on_CoBsolver_currentIndexChanged(QString());
-
+	cout << "    Assigning label and progress bars to renderers..." << endl;
 	for (int i = 0; i < ui->TWscenes->count(); ++i) {
 		SimulationRenderer *sr = get_SimRend(i);
 		sr->set_progress_bar( get_sim_bar(i) );
 		sr->set_label_show_fps( ui->lShowFPS );
 	}
 
-	// make scene if necessary
-	SimulationRenderer *sr = get_SimRend();
-	if (sr->is_scene_cleared()) {
-		make_sim(sr);
-	}
+	init_environment();
 
+	cout << "    Loading models for renderisation..." << endl;
 	// load sphere for rendering
 	sim_ball = new mesh();
 	OBJ_reader obj;
