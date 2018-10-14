@@ -14,7 +14,8 @@ The simulation of rigid bodies is done using position-based simulation.
 
 Building the library can be done using standard tools, like the Makefile
 system. However, a .pro file is provided. In order to generate the Makefile
-the _qmake_ tool is required (developed and tested under version 3.0).
+the _qmake_ tool is required (developed and tested under version 3.0). Also,
+a compiler that supports C++11 is needed.
 
 This library also has dependencies on other libraries:
 - [glm](https://glm.g-truc.net/0.9.9/index.html) (developed and tested under
