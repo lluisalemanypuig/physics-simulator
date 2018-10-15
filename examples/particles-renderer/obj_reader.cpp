@@ -310,6 +310,10 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, mesh& M) {
 	// parse the vertices and faces information
 	get_vertices_faces_normals(4, file_lines.size() - 1);
 
+	// clear file contents now to avoid potential
+	// excessive memory consumption
+	file_lines.clear();
+
 	M.set_name(object_name);
 
 	// Vertices are denoted as indices greater than 0

@@ -101,18 +101,44 @@ void mesh::set_texture_indexes(const vector<unsigned int>& text_idxs) {
 
 bool mesh::is_valid() const {
 	if (vertices.size() == 0) {
-		cerr << "mesh::load_object: Error" << endl;
+		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    Vertices not found in mesh '" << mesh_name << "'" << endl;
 		return false;
 	}
 	if (faces.size() == 0) {
-		cerr << "mesh::load_object: Error" << endl;
+		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    Faces not found in mesh '" << mesh_name << "'" << endl;
 		return false;
 	}
 
-	/* TODO: check that all indexes are correct
-	 */
+	// check that indexes are correct.
+	for (size_t f = 0; f < faces.size(); ++f) {
+		const face& F = faces[f];
+		size_t lim = (F.is_quad ? 4 : 3);
+		for (size_t i = 0; i < lim; ++i) {
+			if (F.normal_index[i] != -1 and F.normal_index[i] > normals.size()) {
+				cerr << "mesh::is_valid: Error:" << endl;
+				cerr << "    Face " << f << " has " << i << "-th "
+					 << "normal index " << F.normal_index[i]
+					 << " out of bounds." << endl;
+				return false;
+			}
+			if (F.vertex_index[i] != -1 and F.vertex_index[i] > vertices.size()) {
+				cerr << "mesh::is_valid: Error:" << endl;
+				cerr << "    Face " << f << " has " << i << "-th "
+					 << "vertex index " << F.vertex_index[i]
+					 << " out of bounds." << endl;
+				return false;
+			}
+			if (F.text_coord[i] != -1 and F.text_coord[i] > textures_coords.size()) {
+				cerr << "mesh::is_valid: Error:" << endl;
+				cerr << "    Face " << f << " has " << i << "-th "
+					 << "texture coordinate index " << F.text_coord[i]
+					 << " out of bounds." << endl;
+				return false;
+			}
+		}
+	}
 
 	return true;
 }
@@ -192,7 +218,7 @@ void mesh::scale_to_unit() {
 
 void mesh::display_mesh_info() {
 	cout << "Mesh '" << mesh_name << "' information: " << endl;
-	cout << "    # Verteices= " << vertices.size() << endl;
+	cout << "    # Vertices= " << vertices.size() << endl;
 	cout << "    # Faces= " << faces.size() << endl;
 	cout << "    # Normals= " << normals.size() << endl;
 	cout << "    # Materials= " << materials.size() << endl;
