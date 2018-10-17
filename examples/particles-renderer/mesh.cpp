@@ -54,6 +54,20 @@ material::material(const material& m) {
 	Ks = m.Ks;
 }
 
+// PRIVATE
+
+vec3 mesh::face_normal(const face& F) const {
+	const vec3& v1 = vertices[F.vertex_index[0]];
+	const vec3& v2 = vertices[F.vertex_index[1]];
+	const vec3& v3 = vertices[F.vertex_index[2]];
+
+	vec3 u = v2 - v1;
+	vec3 v = v3 - v1;
+	vec3 w = glm::normalize(glm::cross(u,v));
+
+	return w;
+}
+
 // PUBLIC
 
 mesh::mesh() {
@@ -61,10 +75,7 @@ mesh::mesh() {
 }
 
 mesh::~mesh() {
-	vector<unsigned int>::iterator it;
-	for (it = textures_indexes.begin(); it != textures_indexes.end(); ++it) {
-		glDeleteTextures(TEXTURE_START, &(*it));
-	}
+	clear();
 }
 
 // SETTERS
@@ -99,16 +110,16 @@ void mesh::set_texture_indexes(const vector<unsigned int>& text_idxs) {
 
 // MODIFIERS
 
-bool mesh::is_valid() const {
+mesh_state mesh::state() const {
 	if (vertices.size() == 0) {
 		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    Vertices not found in mesh '" << mesh_name << "'" << endl;
-		return false;
+		return mesh_state::no_vertices;
 	}
 	if (faces.size() == 0) {
 		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    Faces not found in mesh '" << mesh_name << "'" << endl;
-		return false;
+		return mesh_state::no_faces;
 	}
 
 	// check that indexes are correct.
@@ -119,32 +130,52 @@ bool mesh::is_valid() const {
 			if (F.normal_index[i] != -1 and F.normal_index[i] > normals.size()) {
 				cerr << "mesh::is_valid: Error:" << endl;
 				cerr << "    Face " << f << " has " << i << "-th "
-					 << "normal index " << F.normal_index[i]
-					 << " out of bounds." << endl;
-				return false;
+					 << "normal index (" << F.normal_index[i]
+					 << ") out of bounds." << endl;
+				return mesh_state::normal_idx_ob;
 			}
 			if (F.vertex_index[i] != -1 and F.vertex_index[i] > vertices.size()) {
 				cerr << "mesh::is_valid: Error:" << endl;
 				cerr << "    Face " << f << " has " << i << "-th "
-					 << "vertex index " << F.vertex_index[i]
-					 << " out of bounds." << endl;
-				return false;
+					 << "vertex index (" << F.vertex_index[i]
+					 << ") out of bounds." << endl;
+				return mesh_state::vertex_idx_ob;
 			}
 			if (F.text_coord[i] != -1 and F.text_coord[i] > textures_coords.size()) {
 				cerr << "mesh::is_valid: Error:" << endl;
 				cerr << "    Face " << f << " has " << i << "-th "
-					 << "texture coordinate index " << F.text_coord[i]
-					 << " out of bounds." << endl;
-				return false;
+					 << "texture coordinate index (" << F.text_coord[i]
+					 << ") out of bounds." << endl;
+				return mesh_state::texture_coord_idx_ob;
 			}
 		}
 	}
 
-	return true;
+	return mesh_state::correct;
 }
 
-void mesh::smooth() {
+void mesh::make_normals_flat() {
+	normals.clear();
 
+	for (size_t f = 0; f < faces.size(); ++f) {
+		face& F = faces[f];
+		vec3 w = face_normal(F);
+
+		int idx = normals.size();
+		normals.push_back(w);
+		normals.push_back(w);
+		normals.push_back(w);
+		F.normal_index[0] = idx;
+		F.normal_index[1] = idx + 1;
+		F.normal_index[2] = idx + 2;
+		if (F.is_quad) {
+			normals.push_back(w);
+			F.normal_index[3] = idx + 3;
+		}
+	}
+}
+
+void mesh::make_normals_smooth() {
 	// compute to what faces each
 	// vertex is adjacent to
 	vector<vector<int> > faces_per_vertex(vertices.size());
@@ -155,6 +186,9 @@ void mesh::smooth() {
 			faces_per_vertex[v].push_back(f);
 		}
 	}
+
+	normals.resize(faces.size());
+	vector<bool> normal_computed(faces.size(), false);
 
 	// Firstly, compute the smoothed normals for each vertex,
 	// and store them in a separate vector.
@@ -170,7 +204,12 @@ void mesh::smooth() {
 		for (int afi : faces_per_vertex[v]) {
 			// when smoothing, it is assumed that each
 			// face has the SAME normal index
-			normal += normals[faces[afi].normal_index[0]];
+
+			if (not normal_computed[afi]) {
+				normals[afi] = face_normal(faces[afi]);
+				normal_computed[afi] = true;
+			}
+			normal += normals[afi];
 		}
 
 		// average the normal
@@ -212,6 +251,23 @@ void mesh::scale_to_unit() {
 	for (unsigned int i = 0; i < vertices.size(); ++i) {
 		vertices[i] = (vertices[i] - center)/largestSize;
 	}
+}
+
+void mesh::clear() {
+	if (textures_indexes.size() > 0) {
+		vector<unsigned int>::iterator it;
+		for (it = textures_indexes.begin(); it != textures_indexes.end(); ++it) {
+			glDeleteTextures(TEXTURE_START, &(*it));
+		}
+	}
+
+	vertices.clear();
+	normals.clear();
+	faces.clear();
+
+	materials.clear();
+	textures_coords.clear();
+	textures_indexes.clear();
 }
 
 // OTHERS

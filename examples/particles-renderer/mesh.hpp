@@ -117,6 +117,42 @@ struct material {
 };
 
 /**
+ * @brief Types of states in which the mesh can be in.
+ *
+ * These are used to inform the user of the type of errors
+ * that are in the structure of the mesh.
+ */
+enum class mesh_state : int8_t {
+	/// No errors in the mesh.
+	correct = 0,
+	/// The mesh has no vertices.
+	no_vertices,
+	/// The mesh has no faces.
+	no_faces,
+	/**
+	 * @brief There is a face that has a vertex index out of bounds.
+	 *
+	 * That index has a value greater or equal than the amount
+	 * of vertices.
+	 */
+	vertex_idx_ob,
+	/**
+	 * @brief There is a face that has a normal index out of bounds.
+	 *
+	 * That index has a value greater or equal than the amount
+	 * of normal vectors.
+	 */
+	normal_idx_ob,
+	/**
+	 * @brief There is a face that has a texture coordinate index out of bounds.
+	 *
+	 * That index has a value greater or equal than the amount
+	 * of texture coordinates.
+	 */
+	texture_coord_idx_ob
+};
+
+/**
  * @brief Implements a mesh that need not be triangular.
  */
 class mesh {
@@ -139,6 +175,11 @@ class mesh {
 		vector<vec2> textures_coords;
 		/// OpenGL indexes of the textures.
 		vector<unsigned int> textures_indexes;
+
+	private:
+		/// Computes the normal of the plane containing
+		/// face @e f.
+		vec3 face_normal(const face& F) const;
 
 	public:
 		/// Default constructor.
@@ -166,38 +207,60 @@ class mesh {
 		// GETTERS
 
 		/**
-		 * @brief Returns true if there are no errors in the
-		 * mesh's structure.
+		 * @brief Returns the state of the mesh.
 		 *
-		 * The mesh's structure is not valid in the following
-		 * scenarios:
-		 * - the mesh has no vertices.
-		 * - the mesh has no faces.
-		 * - any of the indexes in arrays @ref face::normal_index,
-		 *   @ref face::vertex_index, @ref text_coord is out
-		 *   of bounds.
+		 * See @ref mesh_state for details.
 		 */
-		bool is_valid() const;
+		mesh_state state() const;
 
 		// MODIFIERS
 
 		/**
-		 * @brief Computes smoothing normals.
+		 * @brief Computes normals for the faces.
 		 *
-		 * Assuming that the normals in @ref normals
-		 * are face normals, compute a normal for each
-		 * vertex that is equal to the average of the
-		 * normals of the faces adjacent to that vertex.
+		 * Compute the normals of the faces. Replaces any
+		 * existent normals in the mesh with the new ones.
 		 *
-		 * The normals computed are normalised.
+		 * Since the faces' vertices are sorted in counterclockwise
+		 * order, it is easy to compute normals using the
+		 * cross product so that the normal points 'outside'
+		 * the mesh.
+		 *
+		 * The normals are normalised.
 		 */
-		void smooth();
+		void make_normals_flat();
+		/**
+		 * @brief Computes normals for the vertices.
+		 *
+		 * Compute the normals of the vertices. Replaces any
+		 * existent normals in the mesh with the new ones.
+		 *
+		 * The normal for a vertex is computed as the
+		 * average of the normals of the neighbouring faces.
+		 * A face's normal is the normal of the plane that
+		 * contains a face.
+		 *
+		 * The normals are normalised.
+		 */
+		void make_normals_smooth();
 		/**
 		 * @brief Scales this mesh so that it fits in a unit length box.
 		 *
 		 * The mesh need not be centered at the (0,0,0).
 		 */
 		void scale_to_unit();
+
+		/**
+		 * @brief Clears the memory occupied by this mesh.
+		 *
+		 * Clears the contents of @ref vertices, @ref normals,
+		 * @ref faces, @ref materials, @ref textures_coords,
+		 * @ref textures_indexes.
+		 *
+		 * It also clears the memory occupied by the loaded
+		 * textures, identified with the indexes in @ref texture_indexes.
+		 */
+		void clear();
 
 		// OTHERS
 

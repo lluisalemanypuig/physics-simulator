@@ -320,11 +320,18 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, mesh& M) {
 	// we want them greater than or EQUAL TO 0.
 	// Same for normal indices and txeture coordinates
 	for (size_t i = 0; i < faces.size(); ++i) {
-		int lim = (faces[i].is_quad ? 4 : 3);
+		const face& Fi = faces[i];
+		int lim = (Fi.is_quad ? 4 : 3);
 		for (int j = 0; j < lim; ++j) {
-			--faces[i].vertex_index[j];
-			--faces[i].normal_index[j];
-			--faces[i].text_coord[j];
+			if (Fi.vertex_index[j] != -1) {
+				--faces[i].vertex_index[j];
+			}
+			if (Fi.normal_index[j] != -1) {
+				--faces[i].normal_index[j];
+			}
+			if (Fi.text_coord[j] != -1) {
+				--faces[i].text_coord[j];
+			}
 		}
 	}
 
@@ -341,8 +348,8 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, mesh& M) {
 	cout << "    from file '" << filename << "'" << endl;
 	cout << "    was loaded successfully" << endl;
 
-	bool valid = M.is_valid();
-	if (not valid) {
+	mesh_state state = M.state();
+	if (state != mesh_state::correct) {
 		return false;
 	}
 	#endif
