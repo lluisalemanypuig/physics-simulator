@@ -104,7 +104,7 @@ class particle {
 		/// Construct particle with position as 3 float values.
 		particle(const float& x, const float& y, const float& z);
 		/// Construct particle with position as a vec3.
-		particle(const vec3& cur_pos);
+		particle(const vec3& pos);
 		/// Copy constructor.
 		particle(const particle& p);
 		/// Destructor.
@@ -170,12 +170,12 @@ class particle {
 		/// Sets the previous position of the particle. See @ref prev_pos.
 		void set_previous_position(const float& x, const float& y, const float& z);
 		/// Sets the previous position of the particle. See @ref prev_pos.
-		void set_previous_position(const vec3& cur_pos);
+		void set_previous_position(const vec3& pos);
 
 		/// Sets the current position of the particle. See @ref cur_pos.
 		void set_position(const float& x, const float& y, const float& z);
 		/// Sets the current position of the particle. See @ref cur_pos.
-		void set_position(const vec3& cur_pos);
+		void set_position(const vec3& pos);
 
 		/// Sets the previous velocity of the particle. See @ref prev_velocity.
 		void set_previous_velocity(const float& x, const float& y, const float& z);

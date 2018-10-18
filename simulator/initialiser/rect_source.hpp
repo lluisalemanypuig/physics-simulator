@@ -27,9 +27,9 @@ namespace init {
  *
  * \f$R(\lambda, \mu) = S + \lambda\cdot w\cdot \vec{u} + \mu\cdot h\cdot \vec{u}\f$
  *
- * for \f$\lambda,\mu \in [0,1]\subset \mathbb{R}\f$.
+ * for \f$\lambda,\mu \in [0,1]\subset R\f$.
  *
- * Needless to say that if the vectors @ref u and @ref are not
+ * Needless to say that if the vectors @ref u and @ref v are not
  * perpendicular the result will be a parallelogram, not a rectangle.
  * However, the word 'rectangle' will be used regardless of how
  * misleading it might be.

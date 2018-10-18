@@ -103,17 +103,25 @@ const
 	// (this point is not needed to calculate Wn)
 	vec3 Wn = (glm::dot(pred_pos, normal) + dconst)*normal;
 
-	// update position (with bouncing coefficient)
+	// --- update position --- (with bouncing coefficient)
+
 	float bounce = p->get_bouncing();
 	p->set_position( pred_pos - (1 + bounce)*Wn );
 
-	// update velocity
-	float nv_dot = glm::dot(normal, pred_vel);
-	p->set_velocity( pred_vel - (1 + bounce)*(nv_dot*normal) );
+	// --- update velocity (1) --- (with bouncing coefficient)
 
-	// update velocity (2 -> with friction coefficient)
-	const vec3& vt = p->get_previous_velocity();
-	//vec3 vN = glm::dot(normal,vt)*normal;
+	// We need the velocity at time T, not the previous velocity.
+	// A constant reference is not used because
+	// we need to keep this value after update.
+	vec3 vt = p->get_velocity();
+
+	// first update of the velociy (with bouncing)
+	float nv_dot = glm::dot(normal, pred_vel);
+	p->set_velocity( pred_vel - (1.0f + bounce)*(nv_dot*normal) );
+
+	// --- update velocity (2) --- (with friction coefficient)
+
+	// Use 'vt', the velocity at time t
 	vec3 vT = vt - glm::dot(normal,vt)*normal;
 	p->set_velocity( p->get_velocity() - p->get_friction()*vT );
 }

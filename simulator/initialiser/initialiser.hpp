@@ -40,6 +40,10 @@ typedef function<void (particle *)> partinit;
  * will be called after the @ref simulator has assigned an index to
  * the particle being initialised.
  *
+ * The previous position of a particle is updated automatically after
+ * initialising all attributes using the functions, but on the simulator.
+ * Therefore, there is no need to initialise it.
+ *
  * The initialisation of the particle takes place in the method
  * @ref initialise_particle(particle *)const .
  */
@@ -123,7 +127,8 @@ class initialiser {
 		 * @brief Initialise a particle.
 		 *
 		 * Each of the functions @ref pos, @ref vel, @ref force,
-		 * @ref bounce, @ref friction, @ref lifetime, @ref fixed.
+		 * @ref mass, @ref bounce, @ref friction, @ref lifetime,
+		 * @ref starttime and @ref fixed are called on the particle.
 		 * @param p The particle to be initialised.
 		 */
 		void initialise_particle(particle *p) const;

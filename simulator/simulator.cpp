@@ -7,10 +7,21 @@ namespace physim {
 void simulator::init_particle(particle *p) {
 	p->set_force(p->get_mass()*gravity);
 	global_init->initialise_particle(p);
+
+	// Update the previous position so that Verlet
+	// solver can use it correcly. The other solvers
+	// do not need it, however.
+	const float mass = p->get_mass();
+	const vec3& force = p->get_force();
+
+	// predict velocity after one step.
+	vec3 v0 = p->get_velocity() + (force/mass)*dt;
+	// use this velocity to compute a previous position
+	p->set_previous_position(p->get_position() - v0*dt);
 }
 
-void simulator::apply_solver(float dt, const particle *p, vec3& pred_pos, vec3& pred_vel) {
-	float mass = p->get_mass();
+void simulator::apply_solver(const particle *p, vec3& pred_pos, vec3& pred_vel) {
+	const float mass = p->get_mass();
 	const vec3& force = p->get_force();
 	vec3 prev_pos, cur_pos;
 
@@ -29,22 +40,22 @@ void simulator::apply_solver(float dt, const particle *p, vec3& pred_pos, vec3& 
 			prev_pos = p->get_previous_position();
 			cur_pos = p->get_position();
 
-			pred_vel = force*dt;
-			pred_pos = cur_pos + 0.975f*( pred_vel*dt ) + 0.5f*(force/mass)*dt*dt;
+			pred_pos = cur_pos + 0.99f*(cur_pos - prev_pos) + (force/mass)*dt*dt;
+			pred_vel = (pred_pos - cur_pos)/dt;
 			break;
 
 		default:
-			cerr << "Error: no solver assigned" << endl;
+			cerr << "Warning: solver not implemented" << endl;
 	}
 }
 
 // PUBLIC
 
-simulator::simulator(const solver_type& s) {
+simulator::simulator(const solver_type& s, float t) {
 	gravity = vec3(0.0f, -9.81f, 0.0f);
 	stime = 0.0f;
+	dt = t;
 	solver = s;
-
 	global_init = new initialiser();
 }
 
@@ -136,14 +147,13 @@ void simulator::reset_simulation() {
 	int i = 0;
 	for (particle *p : ps) {
 		if (not p->is_fixed()) {
-			global_init->initialise_particle(p);
+			init_particle(p);
 		}
 		++i;
 	}
 }
 
-void simulator::apply_time_step(float dt) {
-	assert(dt > 0.0f);
+void simulator::apply_time_step() {
 
 	for (particle *p : ps) {
 		// ignore fixed particles
@@ -170,7 +180,7 @@ void simulator::apply_time_step(float dt) {
 		// apply solver to predict next position and
 		// velocity of the particle
 		vec3 pred_pos, pred_vel;
-		apply_solver(dt, p, pred_pos, pred_vel);
+		apply_solver(p, pred_pos, pred_vel);
 
 		/* The main idea implemented in the following loop
 		 * is the following:
@@ -242,6 +252,15 @@ void simulator::apply_time_step(float dt) {
 				// the geometry updates the predicted particle
 				g->update_upon_collision(pred_pos, pred_vel, &coll_pred);
 
+				if (solver == solver_type::Verlet) {
+					// this solver needs a correct position
+					// for the 'previous' position of the
+					// particle after a collision
+					coll_pred.set_previous_position(
+						coll_pred.get_position() - coll_pred.get_velocity()*dt
+					);
+				}
+
 				// keep track of the predicted particle's position
 				pred_pos = coll_pred.get_position();
 				pred_vel = coll_pred.get_velocity();
@@ -267,6 +286,10 @@ void simulator::apply_time_step(float dt) {
 
 void simulator::set_gravity(const vec3& g) {
 	gravity = g;
+}
+
+void simulator::set_time_step(float t) {
+	dt = t;
 }
 
 void simulator::set_initialiser(const initialiser *f) {

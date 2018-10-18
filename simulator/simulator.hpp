@@ -25,31 +25,45 @@ using namespace init;
 /**
  * @brief The different types of solvers.
  *
- * - EulerOrig: implements the usual version of the Euler solver.
- * Position and velocity are updated with the usual formulas, and
- * in this order.
- \verbatim
- xc := current position
- new position = xc + time step * current velocity
- new volcity = xc + time step * force / particle mass
- \endverbatim
- *
- * - EulerSemi: implements a slightly different version from the
- * @e EulerOrig solver. Although it uses the same formulas,
- * the velocity is updated first, and then the position is updated.
- *
- * - Verlet: this solver does not use the particle's velocity to update
- * its position. However, the velocity is still updated.
- \verbatim
- xc := current position
- xp := previous position
- new position = xc + k*(xc - xp) + force * time step * force / particle mass
- new velocity = (xn - xc)/time step
- \endverbatim
+ * Each solver updates the position and velocity
+ * of a particle differently:
+ * - EulerOrig: see @ref solver_type::EulerOrig.
+ * - EulerSemi: see @ref solver_type::EulerSemi.
+ * - Verlet: see @ref solver_type::Verlet.
  */
 enum class solver_type : int8_t {
 	none = -1,
-	EulerOrig, EulerSemi, Verlet
+
+	/**
+	 * Implements the usual version of the Euler solver.
+	 * Position and velocity are updated with the usual formulas, and
+	 * in this order.
+	 \verbatim
+	 xc := current position
+	 new position = xc + time step * current velocity
+	 new volcity = xc + time step * force / particle mass
+	 \endverbatim
+	 */
+	EulerOrig,
+
+	/**
+	 * implements a slightly different version from the
+	 * @e EulerOrig solver. Although it uses the same formulas,
+	 * the velocity is updated first, and then the position is updated.
+	 */
+	EulerSemi,
+
+	/**
+	 * This solver does not use the particle's velocity to update
+	 * its position. However, the velocity is still updated.
+	 \verbatim
+	 xc := current position
+	 xp := previous position
+	 new position = xc + k*(xc - xp) + force * time step * force / particle mass
+	 new velocity = (new position - xc)/time step
+	 \endverbatim
+	 */
+	Verlet
 };
 
 /**
@@ -80,10 +94,14 @@ class simulator {
 		/// The set of particles in the simulation
 		vector<particle *> ps;
 
-		/// Gravity of the simulation.
+		/// Gravity of the simulation. [m/s^2].
 		vec3 gravity;
+
 		/// Current time of the simulation.
 		float stime;
+		/// Time step of the simulation.
+		float dt;
+
 		/// Solver used to update each particle's position.
 		solver_type solver;
 
@@ -122,23 +140,27 @@ class simulator {
 		 * First, it sets the force applied to the particle to be
 		 * the simulator's gravity (see @ref gravity). Then,
 		 * calls @ref global_init to initialise the rest of its
-		 * attributes.
+		 * attributes. Finally, updates its previous position
+		 * so that the Verlet solver works corectly (see @ref solver_type).
 		 * @param p The particle to be initialsed.
 		 */
 		void init_particle(particle *p);
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
-		 * @param dt Time step applied.
 		 * @param p Particle to apply the solver on.
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
 		 */
-		void apply_solver(float dt, const particle *p, vec3& pos, vec3& vel);
+		void apply_solver(const particle *p, vec3& pos, vec3& vel);
 
 	public:
-		/// Default constructor
-		simulator(const solver_type& s = solver_type::EulerSemi);
+		/**
+		 * @brief Default constructor.
+		 * @param s Numerical solver to move the particles.
+		 * @param t Time step of the simulation.
+		 */
+		simulator(const solver_type& s = solver_type::EulerSemi, float t = 0.01f);
 		/// Destructor
 		~simulator();
 
@@ -150,6 +172,8 @@ class simulator {
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialser function (see @ref global_init) is not called.
+		 * For this initialisation to be completely correct, the step time
+		 * (see @ref dt) needs to be set.
 		 *
 		 * The caller should not free the object, since the simulator
 		 * will take care of that.
@@ -230,11 +254,8 @@ class simulator {
 		 *
 		 * Whenever a particle's lifetime has reached 0, method
 		 * @ref init_particle(particle*) is called.
-		 *
-		 * @param dt Strictly positive value representing how much the
-		 * time must be incremented.
 		 */
-		void apply_time_step(float dt);
+		void apply_time_step();
 
 		// SETTERS
 
@@ -245,6 +266,12 @@ class simulator {
 		 * that are fixed.
 		 */
 		void set_gravity(const vec3& g);
+
+		/**
+		 * @brief Sets the time step of the simulation.
+		 * @param t Time step of the simulation.
+		 */
+		void set_time_step(float t);
 
 		/**
 		 * @brief Sets the particle initialiser function.
