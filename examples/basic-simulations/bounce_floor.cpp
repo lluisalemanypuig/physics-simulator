@@ -15,6 +15,10 @@ namespace study_cases {
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
+		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
+		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
+		cout << "        semi-euler: Euler semi-implicit integration method. Numerically stable." << endl;
+		cout << "        verlet:     Verlet integration method. Numerically even more stable." << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
@@ -27,6 +31,7 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 1.0f;
 		float friction = 0.0f;
+		solver_type solv = solver_type::EulerSemi;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
@@ -53,25 +58,41 @@ namespace study_cases {
 				friction = atof(argv[i + 1]);
 				++i;
 			}
+			else if (strcmp(argv[i], "--solver") == 0) {
+				string solv_name = string(argv[i + 1]);
+				if (solv_name == "euler") {
+					solv = solver_type::EulerOrig;
+				}
+				else if (solv_name == "semi-euler") {
+					solv = solver_type::EulerSemi;
+				}
+				else if (solv_name == "verlet") {
+					solv = solver_type::Verlet;
+				}
+				else {
+					cerr << "Error: invalid value for solver." << endl;
+					return;
+				}
+				++i;
+			}
 			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
 				output = string(argv[i + 1]);
 				++i;
 			}
 			else {
-				cerr << "Unknown option '" << string(argv[i]) << "'" << endl;
+				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
+				return;
 			}
 		}
 
 		initialiser init;
 		init.set_pos_initialiser(
 			[](particle *p) {
-				p->set_previous_position(vec3(0.0f,0.0f,0.0f));
 				p->set_position(vec3(0.0f,10.0f,0.0f));
 			}
 		);
 		init.set_vel_initialiser(
 			[](particle *p) {
-				p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
 				p->set_velocity(vec3(0.0f,0.0f,0.0f));
 			}
 		);
@@ -85,7 +106,7 @@ namespace study_cases {
 			[&](particle *p) { p->set_friction(friction); }
 		);
 
-		simulator S(solver_type::EulerSemi);
+		simulator S(solv, dt);
 
 		// -----------------------------------------
 		// -- initialise simulator
@@ -106,7 +127,7 @@ namespace study_cases {
 		while (S.get_current_time() <= total_time) {
 			vec3 cur_pos = p->get_position();
 			trajectory.push_back(cur_pos);
-			S.apply_time_step(dt);
+			S.apply_time_step();
 		}
 
 		timing::time_point end = timing::now();

@@ -72,13 +72,11 @@ namespace study_cases {
 		initialiser init;
 		init.set_pos_initialiser(
 			[&](particle *p) {
-				p->set_previous_position(vec3(0.0f,0.0f,0.0f));
 				p->set_position(vec3(-2.0f,4.5f,iz));
 			}
 		);
 		init.set_vel_initialiser(
 			[](particle *p) {
-				p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
 				p->set_velocity(vec3(0.0f,0.0f,0.0f));
 			}
 		);
@@ -92,7 +90,7 @@ namespace study_cases {
 			[&](particle *p) { p->set_friction(friction); }
 		);
 
-		simulator S(solver_type::EulerSemi);
+		simulator S(solver_type::EulerSemi, dt);
 
 		// -----------------------------------------
 		// -- initialise simulator
@@ -121,7 +119,7 @@ namespace study_cases {
 		while (S.get_current_time() <= total_time) {
 			vec3 cur_pos = p->get_position();
 			trajectory.push_back(cur_pos);
-			S.apply_time_step(dt);
+			S.apply_time_step();
 		}
 
 		timing::time_point end = timing::now();
