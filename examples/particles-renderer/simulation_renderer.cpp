@@ -45,7 +45,7 @@ void SimulationRenderer::run_simulation() {
 
 	while (S.get_current_time() <= tt and allow_run) {
 		begin = timing::now();
-		S.apply_time_step(dt);
+		S.apply_time_step();
 		update();
 		end = timing::now();
 
