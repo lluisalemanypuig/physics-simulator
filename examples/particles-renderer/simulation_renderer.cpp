@@ -60,9 +60,9 @@ void SimulationRenderer::run_simulation() {
 			// recording of 'second'
 			double sec = timing::elapsed_seconds(second, end);
 			if (sec >= 1.0) {
-				second = timing::now();
 				label_fps->setText(QString::fromStdString(std::to_string(fps_count)));
 				fps_count = 0;
+				second = timing::now();
 			}
 
 			QCoreApplication::processEvents();

@@ -24,27 +24,28 @@ SOURCES +=					\
 	main.cpp				\
 	mainwindow.cpp			\
 	simulation_renderer.cpp	\
-	utils.cpp				\
-    render_simulation.cpp \
-    sim0.cpp \
-    sim1.cpp \
-    sim2.cpp \
-    sim3.cpp \
-    obj_reader.cpp \
-    mesh.cpp \
-    rgeom.cpp \
-    rplane.cpp \
-    rtriangle.cpp \
-    rrectangle.cpp \
-    rsphere.cpp
+    render_simulation.cpp	\
+    sim0.cpp				\
+    sim1.cpp				\
+    sim2.cpp				\
+    sim3.cpp				\
+    sim4.cpp				\
+    obj_reader.cpp			\
+    mesh.cpp				\
+    rgeom.cpp				\
+    rplane.cpp				\
+    rtriangle.cpp			\
+    rrectangle.cpp			\
+    rsphere.cpp				\
+    utils.cpp
 
 HEADERS +=					\
+    mainwindow.hpp			\
     simulation_renderer.hpp \
-	utils.hpp				\
-	mainwindow.hpp			\
-    render_geometry.hpp \
-    obj_reader.hpp \
-    mesh.hpp
+    obj_reader.hpp			\
+    mesh.hpp				\
+    render_geometry.hpp		\
+    utils.hpp
 
 DISTFILES +=					\
 	shaders/simpleshader.vert	\

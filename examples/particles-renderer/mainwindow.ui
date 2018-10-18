@@ -27,7 +27,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -165,6 +165,30 @@
           </property>
           <property name="textVisible">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_sim4">
+       <attribute name="title">
+        <string>Sim 5</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="SimulationRenderer" name="GL_sim4">
+          <property name="minimumSize">
+           <size>
+            <width>217</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="PBar_sim4">
+          <property name="value">
+           <number>0</number>
           </property>
          </widget>
         </item>
@@ -501,7 +525,7 @@
      <x>0</x>
      <y>0</y>
      <width>670</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
