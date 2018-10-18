@@ -27,7 +27,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -189,6 +189,70 @@
          <widget class="QProgressBar" name="PBar_sim4">
           <property name="value">
            <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="textEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Effects of the friction coefficient. Bouncing coefficient fixed to 1.0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_sim5">
+       <attribute name="title">
+        <string>Sim 6</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="SimulationRenderer" name="GL_sim5">
+          <property name="minimumSize">
+           <size>
+            <width>217</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="PBar_sim5">
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="textEdit_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Effects of the bouncing coefficient. Friction coefficient fixed to 0.0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>

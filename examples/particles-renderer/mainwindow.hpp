@@ -63,6 +63,7 @@ class MainWindow : public QMainWindow {
 		void make_sim2(SimulationRenderer *sr);
 		void make_sim3(SimulationRenderer *sr);
 		void make_sim4(SimulationRenderer *sr);
+		void make_sim5(SimulationRenderer *sr);
 		void make_sim(SimulationRenderer *sr);
 
 		void make_init_with_params(initialiser& i);

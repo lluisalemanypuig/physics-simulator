@@ -2,7 +2,7 @@
 
 // PRIVATE
 
-void MainWindow::make_sim4(SimulationRenderer *sr) {
+void MainWindow::make_sim5(SimulationRenderer *sr) {
 
 	initialiser *I = sr->get_simulator().get_initialiser();
 	I->set_pos_initialiser(
@@ -17,9 +17,9 @@ void MainWindow::make_sim4(SimulationRenderer *sr) {
 			p->set_previous_velocity(p->get_velocity());
 		}
 	);
-	I->set_friction_initialiser(
+	I->set_bounce_initialiser(
 		[](particle *p) {
-			p->set_friction( p->get_index()/10.0f );
+			p->set_bouncing( p->get_index()/10.0f );
 		}
 	);
 

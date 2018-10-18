@@ -11,6 +11,7 @@ SimulationRenderer *MainWindow::get_SimRend(int t) {
 		case 2:	sr = ui->GL_sim2; break;
 		case 3:	sr = ui->GL_sim3; break;
 		case 4:	sr = ui->GL_sim4; break;
+		case 5:	sr = ui->GL_sim5; break;
 		default:
 			cerr << "        MainWindow::get_SimRend: Error: Unhandled value '"
 				 << t << "'" << endl;
@@ -30,6 +31,7 @@ QProgressBar *MainWindow::get_sim_bar(int t) {
 		case 2:	pb = ui->PBar_sim2; break;
 		case 3:	pb = ui->PBar_sim3; break;
 		case 4:	pb = ui->PBar_sim4; break;
+		case 5:	pb = ui->PBar_sim5; break;
 		default:
 			cerr << "        MainWindow::get_scene_bar: Error: Unhandled value '"
 				 << t << "'" << endl;
@@ -110,6 +112,7 @@ void MainWindow::make_sim(SimulationRenderer *sr) {
 		case 2: make_sim2(sr); break;
 		case 3: make_sim3(sr); break;
 		case 4: make_sim4(sr); break;
+		case 5: make_sim5(sr); break;
 		default:
 			cerr << "        MainWindow::make_sim: Error: can't make simulation for tab '"
 				 << current_tab << "'" << endl;
@@ -136,7 +139,7 @@ void MainWindow::make_init_with_params(initialiser& i) {
 }
 
 void MainWindow::set_params() {
-	if (current_tab != 4) {
+	if (current_tab != 4 and current_tab != 5) {
 		on_lEBounce_returnPressed();
 		on_lEFriction_returnPressed();
 	}
@@ -152,7 +155,7 @@ void MainWindow::set_params() {
 
 void MainWindow::init_environment() {
 
-	if (current_tab == 4) {
+	if (current_tab == 4 or current_tab == 5) {
 		ui->lEBounce->setEnabled(false);
 		ui->lEFriction->setEnabled(false);
 	}

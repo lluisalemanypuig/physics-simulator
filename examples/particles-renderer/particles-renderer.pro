@@ -37,7 +37,8 @@ SOURCES +=					\
     rtriangle.cpp			\
     rrectangle.cpp			\
     rsphere.cpp				\
-    utils.cpp
+    utils.cpp \
+    sim5.cpp
 
 HEADERS +=					\
     mainwindow.hpp			\
