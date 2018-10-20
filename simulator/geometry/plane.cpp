@@ -106,13 +106,13 @@ const
 	// --- update position --- (with bouncing coefficient)
 
 	float bounce = p->get_bouncing();
-	p->set_position( pred_pos - (1 + bounce)*Wn );
+	p->set_position( pred_pos - (1.0f + bounce)*Wn );
 
 	// --- update velocity (1) --- (with bouncing coefficient)
 
-	// We need the velocity at time T, not the previous velocity.
-	// A constant reference is not used because
-	// we need to keep this value after update.
+	// We need the velocity at time T, not the previous
+	// velocity (time T - dt). A constant reference is
+	// not used because we need to keep this value after update.
 	vec3 vt = p->get_velocity();
 
 	// first update of the velociy (with bouncing)
