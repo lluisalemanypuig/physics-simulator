@@ -24,8 +24,6 @@ class particle {
 		vec3 prev_pos;
 		/// Current position of the particle [m].
 		vec3 cur_pos;
-		/// Prevous velocity of the particle [m/s].
-		vec3 prev_velocity;
 		/// Current velocity of the particle [m/s].
 		vec3 cur_velocity;
 		/// Force currently applied to the particle [N].
@@ -84,7 +82,6 @@ class particle {
 		 * The attributes of the class take the following values:
 		 * - @ref prev_pos : vec3(0,0,0)
 		 * - @ref cur_pos : vec3(0,0,0)
-		 * - @ref prev_velocity : vec3(0,0,0)
 		 * - @ref cur_velocity : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
 		 * - @ref bouncing : 1
@@ -158,12 +155,6 @@ class particle {
 		 * Copies @ref cur_pos into @ref prev_pos.
 		 */
 		void save_position();
-		/**
-		 * @brief Saves the current velocity in the particle's state.
-		 *
-		 * Copies @ref cur_velocity into @ref prev_velocity.
-		 */
-		void save_velocity();
 
 		// SETTERS
 
@@ -176,11 +167,6 @@ class particle {
 		void set_position(const float& x, const float& y, const float& z);
 		/// Sets the current position of the particle. See @ref cur_pos.
 		void set_position(const vec3& pos);
-
-		/// Sets the previous velocity of the particle. See @ref prev_velocity.
-		void set_previous_velocity(const float& x, const float& y, const float& z);
-		/// Sets the previous velocity of the particle. See @ref prev_velocity.
-		void set_previous_velocity(const vec3& vel);
 
 		/// Sets the current velocity of the particle. See @ref cur_velocity.
 		void set_velocity(const float& x, const float& y, const float& z);
@@ -214,8 +200,6 @@ class particle {
 		const vec3& get_previous_position() const;
 		/// Returns the current position. See @ref cur_pos.
 		const vec3& get_position() const;
-		/// Returns the previous velocity of the particle. See @ref prev_velocity.
-		const vec3& get_previous_velocity() const;
 		/// Returns the current velocity of the particle. See @ref cur_velocity.
 		const vec3& get_velocity() const;
 		/// Returns the force applied to the particle. See @ref force.

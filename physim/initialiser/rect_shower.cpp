@@ -7,7 +7,6 @@ namespace init {
 
 void rect_shower::make_vel_init() {
 	vel = [](particle *p) {
-		p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
 		p->set_velocity(vec3(0.0f, 0.0f, 0.0f));
 	};
 }

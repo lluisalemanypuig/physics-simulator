@@ -7,7 +7,6 @@ namespace physim {
 void particle::init() {
 	prev_pos = vec3(0.0f,0.0f,0.0f);
 	cur_pos = vec3(0.0f,0.0f,0.0f);
-	prev_velocity = vec3(0.0f,0.0f,0.0f);
 	cur_velocity = vec3(0.0f,0.0f,0.0f);
 	force = vec3(0.0f,0.0f,0.0f);
 	mass = 1.0f;
@@ -38,7 +37,6 @@ particle::particle(const vec3& p) {
 particle::particle(const particle& p) {
 	prev_pos = p.prev_pos;
 	cur_pos = p.cur_pos;
-	prev_velocity = p.prev_velocity;
 	cur_velocity = p.cur_velocity;
 	force = p.force;
 
@@ -84,10 +82,6 @@ void particle::save_position() {
 	prev_pos = cur_pos;
 }
 
-void particle::save_velocity() {
-	prev_velocity = cur_velocity;
-}
-
 // SETTERS
 
 void particle::set_previous_position(const float& x, const float& y, const float& z) {
@@ -102,13 +96,6 @@ void particle::set_position(const float& x, const float& y, const float& z) {
 }
 void particle::set_position(const vec3& p) {
 	cur_pos = p;
-}
-
-void particle::set_previous_velocity(const float& x, const float& y, const float& z) {
-	prev_velocity = vec3(x,y,z);
-}
-void particle::set_previous_velocity(const vec3& vel) {
-	prev_velocity = vel;
 }
 
 void particle::set_velocity(const float& x, const float& y, const float& z) {
@@ -161,10 +148,6 @@ const vec3& particle::get_previous_position() const {
 
 const vec3& particle::get_position() const {
 	return cur_pos;
-}
-
-const vec3& particle::get_previous_velocity() const {
-	return prev_velocity;
 }
 
 const vec3& particle::get_velocity() const {

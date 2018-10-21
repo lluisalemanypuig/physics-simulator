@@ -16,7 +16,6 @@ void rect_fountain::make_vel_init() {
 		vec3 CV = (D2/d2)*glm::normalize(V - this->C);
 
 		p->set_velocity( CV );
-		p->set_previous_velocity(vec3(0.0f,0.0f,0.0f));
 	};
 }
 

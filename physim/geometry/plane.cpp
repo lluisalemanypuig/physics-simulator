@@ -96,7 +96,6 @@ void plane::update_upon_collision
 const
 {
 	p->save_position();
-	p->save_velocity();
 
 	// Wn is a vector normal to the plane with
 	// direction towards the intersection point

@@ -273,7 +273,6 @@ void simulator::apply_time_step() {
 		}
 		else {
 			p->save_position();
-			p->save_velocity();
 			p->set_position(pred_pos);
 			p->set_velocity(pred_vel);
 		}
