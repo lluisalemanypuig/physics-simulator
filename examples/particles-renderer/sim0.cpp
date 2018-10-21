@@ -9,7 +9,7 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 	w.set_straight_source(vec3(-4.5f,10.0f,-4.5f), 9.5f,9.5f);
 	w.set_starttime_initialiser(
 		[](particle *p) {
-			p->set_starttime( p->get_index()/300.0f );
+			p->set_starttime( 0.0f );
 		}
 	);
 
@@ -28,5 +28,5 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 
 	sr->add_rgeom(floor);
 
-	sr->add_particles(300);
+	sr->add_particles(1000);
 }
