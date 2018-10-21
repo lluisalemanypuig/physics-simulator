@@ -23,7 +23,6 @@ void simulator::init_particle(particle *p) {
 void simulator::apply_solver(const particle *p, vec3& pred_pos, vec3& pred_vel) {
 	const float mass = p->get_mass();
 	const vec3& force = p->get_force();
-	vec3 prev_pos, cur_pos;
 
 	switch (solver) {
 		case solver_type::EulerOrig:
@@ -37,9 +36,6 @@ void simulator::apply_solver(const particle *p, vec3& pred_pos, vec3& pred_vel) 
 			break;
 
 		case solver_type::Verlet:
-			prev_pos = p->get_previous_position();
-			cur_pos = p->get_position();
-
 			pred_pos =
 				p->get_position() +
 				1.00000f*(p->get_position() - p->get_previous_position()) +
@@ -259,7 +255,7 @@ void simulator::apply_time_step() {
 				if (solver == solver_type::Verlet) {
 					// this solver needs a correct position
 					// for the 'previous' position of the
-					// particle after a collision
+					// particle after a collision with geometry
 					coll_pred.set_previous_position(
 						coll_pred.get_position() - coll_pred.get_velocity()*dt
 					);
