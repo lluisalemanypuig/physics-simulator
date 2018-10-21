@@ -11,23 +11,23 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 INCLUDEPATH += ../..
 
 CONFIG(release, debug|release) {
-    LIBS += -L../../simulator-release/ -lsimulator
+	LIBS += -L../../physim-release/ -lphysim
 }
 CONFIG(debug, debug|release) {
-    LIBS += -L../../simulator-debug/ -lsimulator
+	LIBS += -L../../physim-debug/ -lphysim
 }
 
-SOURCES += \
-    main.cpp \
-    utils.cpp \
-    study_cases.cpp \
-    tri_tri_plane.cpp \
-    bounce_floor.cpp \
-    bounce_sphere.cpp \
-    roll_floor.cpp \
+SOURCES +=					\
+	main.cpp				\
+	utils.cpp				\
+	study_cases.cpp			\
+	tri_tri_plane.cpp		\
+	bounce_floor.cpp		\
+	bounce_sphere.cpp		\
+	roll_floor.cpp			\
     roll_plane_sphere.cpp
 
-HEADERS += \
-    utils.hpp \
+HEADERS +=					\
+	utils.hpp				\
     study_cases.hpp
 

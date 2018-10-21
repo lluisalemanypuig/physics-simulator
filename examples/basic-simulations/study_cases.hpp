@@ -13,9 +13,9 @@ using namespace std;
 using namespace glm;
 
 // simulator includes
-#include <simulator/initialiser/initialiser.hpp>
-#include <simulator/simulator.hpp>
-#include <simulator/particle.hpp>
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/simulator.hpp>
+#include <physim/particle.hpp>
 using namespace physim;
 using namespace init;
 

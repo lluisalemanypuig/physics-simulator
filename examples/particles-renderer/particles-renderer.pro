@@ -10,10 +10,10 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 INCLUDEPATH += . ../..
 
 CONFIG(release, debug|release) {
-	LIBS += -L../../simulator-release/ -lsimulator
+	LIBS += -L../../physim-release/ -lphysim
 }
 CONFIG(debug, debug|release) {
-	LIBS += -L../../simulator-debug/ -lsimulator
+	LIBS += -L../../physim-debug/ -lphysim
 }
 
 LIBS += -lGL -lGLU
@@ -30,6 +30,7 @@ SOURCES +=					\
     sim2.cpp				\
     sim3.cpp				\
     sim4.cpp				\
+	sim5.cpp				\
     obj_reader.cpp			\
     mesh.cpp				\
     rgeom.cpp				\
@@ -37,8 +38,7 @@ SOURCES +=					\
     rtriangle.cpp			\
     rrectangle.cpp			\
     rsphere.cpp				\
-    utils.cpp \
-    sim5.cpp
+	utils.cpp
 
 HEADERS +=					\
     mainwindow.hpp			\

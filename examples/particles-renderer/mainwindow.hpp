@@ -15,11 +15,11 @@ using namespace std;
 using namespace glm;
 
 // simulator includes
-#include <simulator/initialiser/initialiser.hpp>
-#include <simulator/initialiser/rect_shower.hpp>
-#include <simulator/initialiser/rect_fountain.hpp>
-#include <simulator/initialiser/hose.hpp>
-#include <simulator/simulator.hpp>
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/rect_shower.hpp>
+#include <physim/initialiser/rect_fountain.hpp>
+#include <physim/initialiser/hose.hpp>
+#include <physim/simulator.hpp>
 using namespace physim;
 using namespace init;
 

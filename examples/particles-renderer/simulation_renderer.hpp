@@ -20,8 +20,8 @@ using namespace std;
 #include <GL/gl.h>
 
 // simulator includes
-#include <simulator/simulator.hpp>
-#include <simulator/initialiser/initialiser.hpp>
+#include <physim/simulator.hpp>
+#include <physim/initialiser/initialiser.hpp>
 using namespace physim;
 using namespace geom;
 using namespace init;

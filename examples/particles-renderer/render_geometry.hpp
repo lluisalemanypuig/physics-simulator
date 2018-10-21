@@ -4,11 +4,11 @@
 #include <QVector4D>
 
 // simulator includes
-#include <simulator/geometry/geometry.hpp>
-#include <simulator/geometry/rectangle.hpp>
-#include <simulator/geometry/triangle.hpp>
-#include <simulator/geometry/sphere.hpp>
-#include <simulator/geometry/plane.hpp>
+#include <physim/geometry/geometry.hpp>
+#include <physim/geometry/rectangle.hpp>
+#include <physim/geometry/triangle.hpp>
+#include <physim/geometry/sphere.hpp>
+#include <physim/geometry/plane.hpp>
 
 // glm includes
 #include <glm/vec3.hpp>
