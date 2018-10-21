@@ -77,6 +77,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
+		void wheelEvent(QWheelEvent *event);
 
 	signals:
 		void simulation_completed();

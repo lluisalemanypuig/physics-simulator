@@ -2,8 +2,8 @@
 
 const float rotationFactor = 0.5f;
 const float maxRotationCamera = 75.0f;
-const float minDistanceCamera = 1.0f;
-const float maxDistanceCamera = 20.0f;
+const float minDistanceCamera = 0.5f;
+const float maxDistanceCamera = 50.0f;
 
 // PRIVATE
 
@@ -117,8 +117,7 @@ void SimulationRenderer::paintGL() {
 
 	glLoadIdentity();
 
-	glTranslatef(0.0f, -5.0f, -15.0f);
-	glTranslatef(0.0f, 0.0f, -distance);
+	glTranslatef(0.0f, -5.0f, -15.0f - distance);
 	glRotatef(angleX, 1.0f, 0.0f, 0.0f);
 	glRotatef(angleY, 0.0f, 1.0f, 0.0f);
 
@@ -177,13 +176,21 @@ void SimulationRenderer::mouseMoveEvent(QMouseEvent *event) {
 		angleX = std::max(-maxRotationCamera, std::min(angleX, maxRotationCamera));
 		angleY += rotationFactor*(event->x() - mouse_last_pos.x());
 	}
-	// Zoom
-	if (event->buttons() & Qt::RightButton) {
-		distance += 0.01f*(event->y() - mouse_last_pos.y());
-		distance = std::max(minDistanceCamera, std::min(distance, maxDistanceCamera));
-	}
 
 	mouse_last_pos = event->pos();
+
+	update();
+}
+
+void SimulationRenderer::wheelEvent(QWheelEvent *event) {
+	// Zoom
+	float angle = event->angleDelta().y();
+
+	// negative values mean 'zoom in'
+	// positive values mean 'zoom out'
+
+	distance -= 0.01f*angle;
+	distance = std::max(minDistanceCamera, std::min(distance, maxDistanceCamera));
 
 	update();
 }
