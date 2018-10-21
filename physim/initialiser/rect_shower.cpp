@@ -1,4 +1,4 @@
-#include <simulator/initialiser/rect_shower.hpp>
+#include <physim/initialiser/rect_shower.hpp>
 
 namespace physim {
 namespace init {

@@ -1,4 +1,4 @@
-#include <simulator/geometry/triangle.hpp>
+#include <physim/geometry/triangle.hpp>
 
 inline
 float triangle_area(const vec3& p1, const vec3& p2, const vec3& p3) {

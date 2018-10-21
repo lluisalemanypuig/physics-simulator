@@ -1,4 +1,4 @@
-#include <simulator/initialiser/rect_fountain.hpp>
+#include <physim/initialiser/rect_fountain.hpp>
 
 namespace physim {
 namespace init {

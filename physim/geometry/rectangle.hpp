@@ -9,9 +9,9 @@ using namespace std;
 using namespace glm;
 
 // Custom includes
-#include <simulator/geometry/geometry.hpp>
-#include <simulator/geometry/plane.hpp>
-#include <simulator/particle.hpp>
+#include <physim/geometry/geometry.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/particle.hpp>
 
 namespace physim {
 namespace geom {

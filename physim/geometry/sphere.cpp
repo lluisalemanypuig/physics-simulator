@@ -1,4 +1,4 @@
-#include <simulator/geometry/sphere.hpp>
+#include <physim/geometry/sphere.hpp>
 
 namespace physim {
 namespace geom {

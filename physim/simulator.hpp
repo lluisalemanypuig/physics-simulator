@@ -11,12 +11,12 @@
 using namespace std;
 
 // Custom includes
-#include <simulator/initialiser/initialiser.hpp>
-#include <simulator/geometry/geometry.hpp>
-#include <simulator/geometry/triangle.hpp>
-#include <simulator/geometry/sphere.hpp>
-#include <simulator/geometry/plane.hpp>
-#include <simulator/particle.hpp>
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/geometry/geometry.hpp>
+#include <physim/geometry/triangle.hpp>
+#include <physim/geometry/sphere.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/particle.hpp>
 
 namespace physim {
 using namespace geom;

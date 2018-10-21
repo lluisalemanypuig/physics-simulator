@@ -1,4 +1,4 @@
-#include "initialiser.hpp"
+#include <physim/initialiser/initialiser.hpp>
 
 namespace physim {
 namespace init {

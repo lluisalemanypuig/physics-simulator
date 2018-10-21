@@ -1,4 +1,4 @@
-#include <simulator/initialiser/rect_source.hpp>
+#include <physim/initialiser/rect_source.hpp>
 
 namespace physim {
 namespace init {

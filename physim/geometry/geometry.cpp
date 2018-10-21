@@ -1,4 +1,4 @@
-#include <simulator/geometry/geometry.hpp>
+#include <physim/geometry/geometry.hpp>
 
 namespace physim {
 namespace geom {

@@ -1,4 +1,4 @@
-#include <simulator/simulator.hpp>
+#include <physim/simulator.hpp>
 
 namespace physim {
 

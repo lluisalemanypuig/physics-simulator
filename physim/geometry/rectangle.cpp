@@ -1,4 +1,4 @@
-#include <simulator/geometry/rectangle.hpp>
+#include <physim/geometry/rectangle.hpp>
 
 // LOCAL-DEFINED
 

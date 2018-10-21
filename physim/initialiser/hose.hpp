@@ -9,7 +9,7 @@ using namespace std;
 using namespace glm;
 
 // Custom includes
-#include <simulator/initialiser/initialiser.hpp>
+#include <physim/initialiser/initialiser.hpp>
 
 namespace physim {
 namespace init {
