@@ -2,11 +2,11 @@
 
 namespace study_cases {
 
-	void roll_floor_usage() {
-		cout << "roll on floor study case:" << endl;
+	void bounce_sphere_usage() {
+		cout << "bounce on sphere study case:" << endl;
 		cout << endl;
-		cout << "This study case is merely a particle rolling on" << endl;
-		cout << "a flat plane, a.k.a. the floor." << endl;
+		cout << "This study case is merely a particle that falls on" << endl;
+		cout << "a sphere, then bounces away from it." << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
@@ -15,12 +15,13 @@ namespace study_cases {
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
-		cout << "    --vel v:        initial value of velocity along x.    Default: -10.0" << endl;
+		cout << "    --Iial-x x:  the Iial value of the x position of the particle." << endl;
+		cout << "                                                          Default: 0.0" << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void roll_on_floor(int argc, char *argv[]) {
+	void bounce_on_sphere(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
@@ -28,11 +29,11 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 1.0f;
 		float friction = 0.0f;
-		float vx = -10.0f;
+		float ix = 0.0f;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				roll_floor_usage();
+				bounce_sphere_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {
@@ -55,8 +56,8 @@ namespace study_cases {
 				friction = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--vel") == 0) {
-				vx = atof(argv[i + 1]);
+			else if (strcmp(argv[i], "--Iial-x") == 0) {
+				ix = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
@@ -68,39 +69,42 @@ namespace study_cases {
 			}
 		}
 
-		initialiser init;
-		init.set_pos_initialiser(
-			[](particle *p) {
-				p->set_position(vec3(10.0f,0.0f,0.0f));
-			}
-		);
-		init.set_vel_initialiser(
+		initialiser I;
+		I.set_pos_initialiser(
 			[&](particle *p) {
-				p->set_velocity(vec3(vx,0.0f,0.0f));
+				p->set_position(vec3(ix,5.0f,0.0f));
 			}
 		);
-		init.set_lifetime_initialiser(
+		I.set_vel_initialiser(
+			[](particle *p) {
+				p->set_velocity(vec3(0.0f,0.0f,0.0f));
+			}
+		);
+		I.set_lifetime_initialiser(
 			[&](particle *p) { p->set_lifetime(lifetime); }
 		);
-		init.set_bounce_initialiser(
+		I.set_bounce_initialiser(
 			[&](particle *p) { p->set_bouncing(bounce); }
 		);
-		init.set_friction_initialiser(
+		I.set_friction_initialiser(
 			[&](particle *p) { p->set_friction(friction); }
 		);
 
 		simulator S(solver_type::EulerSemi, dt);
 
 		// -----------------------------------------
-		// -- initialise simulator
+		// -- Iialise simulator
 
-		S.set_initialiser(&init);
+		S.set_initialiser(&I);
 
 		// the only particle bouncing up and down,
-		// initialised using the function.
+		// Iialised using the function.
 		const particle *p = S.add_particle();
 
-		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
+		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
+		S.add_geometry(ball);
+
+		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 		S.add_geometry(floor);
 		// -----------------------------------------
 
@@ -156,7 +160,7 @@ namespace study_cases {
 				fout << "lifetime: " << lifetime << endl;
 				fout << "bounce: " << bounce << endl;
 				fout << "friction: " << friction << endl;
-				fout << "initial-vx: " << vx << endl;
+				fout << "Iial-x: " << ix << endl;
 
 				// first in Geogebra format
 				fout << "{";
@@ -182,4 +186,3 @@ namespace study_cases {
 	}
 
 } // -- namespace study_cases
-

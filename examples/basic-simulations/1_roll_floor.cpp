@@ -2,10 +2,10 @@
 
 namespace study_cases {
 
-	void bounce_floor_usage() {
-		cout << "bounce on floor study case:" << endl;
+	void roll_floor_usage() {
+		cout << "roll on floor study case:" << endl;
 		cout << endl;
-		cout << "This study case is merely a particle bouncing on" << endl;
+		cout << "This study case is merely a particle rolling on" << endl;
 		cout << "a flat plane, a.k.a. the floor." << endl;
 		cout << endl;
 		cout << "Options:" << endl;
@@ -15,15 +15,12 @@ namespace study_cases {
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
-		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
-		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
-		cout << "        semi-euler: Euler semi-implicit integration method. Numerically stable." << endl;
-		cout << "        verlet:     Verlet integration method. Numerically even more stable." << endl;
+		cout << "    --vel v:        initial value of velocity along x.    Default: -10.0" << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void bounce_on_floor(int argc, char *argv[]) {
+	void roll_on_floor(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
@@ -31,11 +28,11 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 1.0f;
 		float friction = 0.0f;
-		solver_type solv = solver_type::EulerSemi;
+		float vx = -10.0f;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				bounce_floor_usage();
+				roll_floor_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {
@@ -58,21 +55,8 @@ namespace study_cases {
 				friction = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--solver") == 0) {
-				string solv_name = string(argv[i + 1]);
-				if (solv_name == "euler") {
-					solv = solver_type::EulerOrig;
-				}
-				else if (solv_name == "semi-euler") {
-					solv = solver_type::EulerSemi;
-				}
-				else if (solv_name == "verlet") {
-					solv = solver_type::Verlet;
-				}
-				else {
-					cerr << "Error: invalid value for solver." << endl;
-					return;
-				}
+			else if (strcmp(argv[i], "--vel") == 0) {
+				vx = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
@@ -80,37 +64,37 @@ namespace study_cases {
 				++i;
 			}
 			else {
-				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
-				return;
+				cerr << "Unknown option '" << string(argv[i]) << "'" << endl;
 			}
 		}
 
-		initialiser init;
-		init.set_pos_initialiser(
+		initialiser I;
+		I.set_pos_initialiser(
 			[](particle *p) {
-				p->set_position(vec3(0.0f,10.0f,0.0f));
+				p->set_position(vec3(10.0f,0.0f,0.0f));
 			}
 		);
-		init.set_vel_initialiser(
-			[](particle *p) {
-				p->set_velocity(vec3(0.0f,0.0f,0.0f));
+		I.set_vel_initialiser(
+			[&](particle *p) {
+				p->set_velocity(vec3(vx,0.0f,0.0f));
 			}
 		);
-		init.set_lifetime_initialiser(
+		I.set_lifetime_initialiser(
 			[&](particle *p) { p->set_lifetime(lifetime); }
 		);
-		init.set_bounce_initialiser(
+		I.set_bounce_initialiser(
 			[&](particle *p) { p->set_bouncing(bounce); }
 		);
-		init.set_friction_initialiser(
+		I.set_friction_initialiser(
 			[&](particle *p) { p->set_friction(friction); }
 		);
 
-		simulator S(solv, dt);
+		simulator S(solver_type::EulerSemi, dt);
 
 		// -----------------------------------------
 		// -- initialise simulator
-		S.set_initialiser(&init);
+
+		S.set_initialiser(&I);
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
@@ -172,6 +156,7 @@ namespace study_cases {
 				fout << "lifetime: " << lifetime << endl;
 				fout << "bounce: " << bounce << endl;
 				fout << "friction: " << friction << endl;
+				fout << "initial-vx: " << vx << endl;
 
 				// first in Geogebra format
 				fout << "{";
@@ -197,3 +182,4 @@ namespace study_cases {
 	}
 
 } // -- namespace study_cases
+

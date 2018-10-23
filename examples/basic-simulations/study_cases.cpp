@@ -19,6 +19,9 @@ namespace study_cases {
 		else if (strcmp(argv[1], "roll-plane-sphere") == 0) {
 			roll_plane_sphere(argc, argv);
 		}
+		else if (strcmp(argv[1], "hose") == 0) {
+			hose_case(argc, argv);
+		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './basic_simulations --list' to see all cases" << endl;

@@ -13,6 +13,8 @@ void list_all_cases() {
 	cout << "                    falls directly on a triangle and bounces." << endl;
 	cout << "roll-plane-sphere : a particle that rolls on a plane then collides" << endl;
 	cout << "                    with a sphere at the bottom of the plane." << endl;
+	cout << "hose              : several geometrical objects. Intended for" << endl;
+	cout << "                    efficiency measuring." << endl;
 }
 
 int main(int argc, char *argv[]) {

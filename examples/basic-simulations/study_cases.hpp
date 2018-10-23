@@ -14,6 +14,9 @@ using namespace glm;
 
 // simulator includes
 #include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/rect_shower.hpp>
+#include <physim/initialiser/rect_fountain.hpp>
+#include <physim/initialiser/hose.hpp>
 #include <physim/simulator.hpp>
 #include <physim/particle.hpp>
 using namespace physim;
@@ -58,5 +61,12 @@ namespace study_cases {
 	 * the plane.
 	 */
 	void roll_plane_sphere(int argc, char *argv[]);
+
+	/* -- Hose case --
+	 * This scene contains several geometrical objects
+	 * (planes, triangles, spheres). This test is meant
+	 * for efficiency measuring only.
+	 */
+	void hose_case(int argc, char *argv[]);
 
 } // -- namespace study_cases

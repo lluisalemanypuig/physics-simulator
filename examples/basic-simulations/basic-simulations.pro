@@ -21,11 +21,12 @@ SOURCES +=					\
 	main.cpp				\
 	utils.cpp				\
 	study_cases.cpp			\
-	tri_tri_plane.cpp		\
-	bounce_floor.cpp		\
-	bounce_sphere.cpp		\
-	roll_floor.cpp			\
-    roll_plane_sphere.cpp
+    0_bounce_floor.cpp \
+    1_roll_floor.cpp \
+    2_bounce_sphere.cpp \
+    3_tri_tri_plane.cpp \
+    4_roll_plane_sphere.cpp \
+    5_hose.cpp
 
 HEADERS +=					\
 	utils.hpp				\
