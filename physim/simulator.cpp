@@ -11,13 +11,7 @@ void simulator::init_particle(particle *p) {
 	// Update the previous position so that Verlet
 	// solver can use it correcly. The other solvers
 	// do not need it, however.
-	const float mass = p->get_mass();
-	const vec3& force = p->get_force();
-
-	// predict velocity after one step.
-	vec3 v0 = p->get_velocity() + (force/mass)*dt;
-	// use this velocity to compute a previous position
-	p->set_previous_position(p->get_position() - v0*dt);
+	p->set_previous_position(p->get_position() - p->get_velocity()*dt);
 }
 
 void simulator::apply_solver(const particle *p, vec3& pred_pos, vec3& pred_vel) {
