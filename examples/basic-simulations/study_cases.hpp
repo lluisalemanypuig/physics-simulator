@@ -12,13 +12,13 @@ using namespace std;
 #include <glm/glm.hpp>
 using namespace glm;
 
-// simulator includes
+// physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/rect_shower.hpp>
 #include <physim/initialiser/rect_fountain.hpp>
 #include <physim/initialiser/hose.hpp>
+#include <physim/particles/particle.hpp>
 #include <physim/simulator.hpp>
-#include <physim/particle.hpp>
 using namespace physim;
 using namespace init;
 

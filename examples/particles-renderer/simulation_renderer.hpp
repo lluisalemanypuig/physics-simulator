@@ -19,7 +19,7 @@ using namespace std;
 #include <GL/glu.h>
 #include <GL/gl.h>
 
-// simulator includes
+// physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;

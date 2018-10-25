@@ -3,7 +3,7 @@
 // Qt includes
 #include <QVector4D>
 
-// simulator includes
+// physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/rectangle.hpp>
 #include <physim/geometry/triangle.hpp>

@@ -14,7 +14,7 @@ using namespace std;
 #include <glm/glm.hpp>
 using namespace glm;
 
-// simulator includes
+// physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/rect_shower.hpp>
 #include <physim/initialiser/rect_fountain.hpp>
