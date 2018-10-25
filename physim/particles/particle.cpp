@@ -1,4 +1,4 @@
-#include <physim/particle.hpp>
+#include <physim/particles/particle.hpp>
 
 namespace physim {
 
