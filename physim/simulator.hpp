@@ -16,7 +16,7 @@ using namespace std;
 #include <physim/geometry/triangle.hpp>
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/plane.hpp>
-#include <physim/particle.hpp>
+#include <physim/particles/particle.hpp>
 
 namespace physim {
 using namespace geom;

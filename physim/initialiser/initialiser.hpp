@@ -4,8 +4,8 @@
 #include <functional>
 using namespace std;
 
-// Custom includes
-#include <physim/particle.hpp>
+// physim includes
+#include <physim/particles/particle.hpp>
 
 namespace physim {
 namespace init {

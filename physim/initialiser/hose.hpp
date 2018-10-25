@@ -8,8 +8,9 @@ using namespace std;
 #include <glm/glm.hpp>
 using namespace glm;
 
-// Custom includes
+// physim includes
 #include <physim/initialiser/initialiser.hpp>
+#include <physim/particles/particle.hpp>
 
 namespace physim {
 namespace init {

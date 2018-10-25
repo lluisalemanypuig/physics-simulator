@@ -4,8 +4,9 @@
 #include <random>
 using namespace std;
 
-// Custom includes
+// physim includes
 #include <physim/initialiser/rect_source.hpp>
+#include <physim/particles/particle.hpp>
 
 namespace physim {
 namespace init {

@@ -8,8 +8,8 @@ using namespace std;
 #include <glm/vec3.hpp>
 using namespace glm;
 
-// simulator includes
-#include <physim/particle.hpp>
+// physim includes
+#include <physim/particles/particle.hpp>
 
 namespace physim {
 namespace geom {
