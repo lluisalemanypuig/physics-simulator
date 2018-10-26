@@ -110,7 +110,6 @@ void SimulationRenderer::clear_simulation() {
 
 void SimulationRenderer::add_rgeom(rgeom *rg) {
 	G.push_back(rg);
-	S.add_geometry( rg->get_underlying() );
 }
 
 void SimulationRenderer::add_particles(size_t n) {

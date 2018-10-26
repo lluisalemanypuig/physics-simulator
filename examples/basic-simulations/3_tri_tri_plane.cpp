@@ -33,33 +33,33 @@ namespace study_cases {
 	}
 
 	void make_ramp_plane(simulator& S) {
-		vec3 B(-2.0f, 0.0f,  2.0f);
-		vec3 C(-2.0f, 0.0f, -2.0f);
-		vec3 D( 2.0f, 4.0f,  0.0f);
+		math::vec3 B(-2.0f, 0.0f,  2.0f);
+		math::vec3 C(-2.0f, 0.0f, -2.0f);
+		math::vec3 D( 2.0f, 4.0f,  0.0f);
 		plane *ramp = new plane(B, D, C);
 		S.add_geometry(ramp);
 	}
 
 	void make_ramp_triangle(simulator& S) {
-		vec3 B(-2.0f, 0.0f,  2.0f);
-		vec3 C(-2.0f, 0.0f, -2.0f);
-		vec3 D( 2.0f, 4.0f,  0.0f);
+		math::vec3 B(-2.0f, 0.0f,  2.0f);
+		math::vec3 C(-2.0f, 0.0f, -2.0f);
+		math::vec3 D( 2.0f, 4.0f,  0.0f);
 		triangle *ramp = new triangle(B, D, C);
 		S.add_geometry(ramp);
 	}
 
 	void make_bouncer_plane(simulator& S) {
-		vec3 E(-5.0f, 0.0f, -1.5f);
-		vec3 F(-5.1f, 0.0f,  1.0f);
-		vec3 G(-9.0f, 4.0f, -1.0f);
+		math::vec3 E(-5.0f, 0.0f, -1.5f);
+		math::vec3 F(-5.1f, 0.0f,  1.0f);
+		math::vec3 G(-9.0f, 4.0f, -1.0f);
 		plane *bouncer = new plane(E, G, F);
 		S.add_geometry(bouncer);
 	}
 
 	void make_bouncer_triangle(simulator& S) {
-		vec3 E(-5.0f, 0.0f, -1.5f);
-		vec3 F(-5.1f, 0.0f,  1.0f);
-		vec3 G(-9.0f, 4.0f, -1.0f);
+		math::vec3 E(-5.0f, 0.0f, -1.5f);
+		math::vec3 F(-5.1f, 0.0f,  1.0f);
+		math::vec3 G(-9.0f, 4.0f, -1.0f);
 		triangle *bouncer = new triangle(E, G, F);
 		S.add_geometry(bouncer);
 	}
@@ -125,12 +125,12 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[](particle *p) {
-				p->set_position(vec3(0.0f,10.0f,0.0f));
+				p->set_position(math::vec3(0.0f,10.0f,0.0f));
 			}
 		);
 		I.set_vel_initialiser(
 			[](particle *p) {
-				p->set_velocity(vec3(0.0f,0.0f,0.0f));
+				p->set_velocity(math::vec3(0.0f,0.0f,0.0f));
 			}
 		);
 		I.set_lifetime_initialiser(
@@ -166,16 +166,16 @@ namespace study_cases {
 			make_bouncer_triangle(S);
 		}
 
-		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
+		plane *floor = new plane(math::vec3(0.0f, 1.0f, 0.0f), math::vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
 		// -----------------------------------------
 
 		// execute simulation
 		timing::time_point begin = timing::now();
-		vector<vec3> trajectory;
+		vector<math::vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			vec3 cur_pos = p->get_position();
+			math::vec3 cur_pos = p->get_position();
 			trajectory.push_back(cur_pos);
 			S.apply_time_step();
 		}
@@ -195,9 +195,9 @@ namespace study_cases {
 			// only in GeoGebra format
 			cout << "{";
 			for (size_t i = 0; i < trajectory.size(); ++i) {
-				const vec3& v = trajectory[i];
+				const math::vec3& v = trajectory[i];
 				cout << "Point({"
-					 << v.x << "," << v.y << "," << v.z
+					 << v.x() << "," << v.y() << "," << v.z()
 					 << "})";
 				if (i < trajectory.size() - 1) {
 					cout << ",";
@@ -228,9 +228,9 @@ namespace study_cases {
 				// first in Geogebra format
 				fout << "{";
 				for (size_t i = 0; i < trajectory.size(); ++i) {
-					const vec3& v = trajectory[i];
+					const math::vec3& v = trajectory[i];
 					fout << "Point({"
-						 << v.x << "," << v.y << "," << v.z
+						 << v.x() << "," << v.y() << "," << v.z()
 						 << "})";
 					if (i < trajectory.size() - 1) {
 						fout << ",";
@@ -240,8 +240,8 @@ namespace study_cases {
 
 				// then in plain text
 				for (size_t i = 0; i < trajectory.size(); ++i) {
-					const vec3& v = trajectory[i];
-					fout << v.x << "," << v.y << "," << v.z << endl;
+					const math::vec3& v = trajectory[i];
+					fout << v.x() << "," << v.y() << "," << v.z() << endl;
 				}
 				fout.close();
 			}

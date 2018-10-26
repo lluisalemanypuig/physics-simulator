@@ -20,33 +20,33 @@ LIBS += -lGL -lGLU
 
 FORMS += mainwindow.ui
 
-SOURCES +=					\
-	main.cpp				\
-	mainwindow.cpp			\
-	simulation_renderer.cpp	\
-    render_simulation.cpp	\
-    sim0.cpp				\
-    sim1.cpp				\
-    sim2.cpp				\
-    sim3.cpp				\
-    sim4.cpp				\
-	sim5.cpp				\
-    obj_reader.cpp			\
-    mesh.cpp				\
-    rgeom.cpp				\
-    rplane.cpp				\
-    rtriangle.cpp			\
-    rrectangle.cpp			\
-    rsphere.cpp				\
-	utils.cpp
+SOURCES +=						\
+    main.cpp					\
+    mainwindow.cpp				\
+    simulation_renderer.cpp		\
+    render_simulation.cpp		\
+    utils.cpp					\
+    mesh/obj_reader.cpp			\
+    mesh/mesh.cpp				\
+    rgeom/rgeom.cpp				\
+    rgeom/rplane.cpp			\
+    rgeom/rtriangle.cpp			\
+    rgeom/rrectangle.cpp		\
+    rgeom/rsphere.cpp \
+    sim6.cpp \
+    sim5.cpp \
+    sim4.cpp \
+    sim3.cpp \
+    sim2.cpp \
+    sim1.cpp
 
-HEADERS +=					\
-    mainwindow.hpp			\
-    simulation_renderer.hpp \
-    obj_reader.hpp			\
-    mesh.hpp				\
-    render_geometry.hpp		\
-    utils.hpp
+HEADERS +=						\
+    mainwindow.hpp				\
+    simulation_renderer.hpp		\
+    utils.hpp					\
+    mesh/obj_reader.hpp			\
+    mesh/mesh.hpp \
+    rgeom/rendered_geometry.hpp
 
 DISTFILES +=					\
 	shaders/simpleshader.vert	\

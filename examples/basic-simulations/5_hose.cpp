@@ -88,28 +88,43 @@ namespace study_cases {
 
 		// -----------------------------------------
 		// -- initialise simulator
-		const vec3 A(-3.0f, 0.0f,-3.0f);
-		const vec3 D(-5.0f,-0.5f,-5.0f);
-		const vec3 E(-5.0f,-0.5f, 5.0f);
-		const vec3 F( 5.0f,-0.5f,-5.0f);
-		const vec3 G( 5.0f,-0.5f, 5.0f);
-		const vec3 H(-5.0f, 5.0f,-5.0f);
-		const vec3 I(-5.0f, 5.0f, 5.0f);
-		const vec3 J( 5.0f, 5.0f,-5.0f);
-		const vec3 K( 5.0f, 5.0f, 5.0f);
-		const vec3 L( 3.0f, 5.0f, 3.0f);
-		const vec3 M( 0.0f, 2.0f, 0.0f);
-		//const vec3 N( 0.0f, 3.0f, 0.0f);
-		const vec3 O( 0.5f, 3.0f,-1.0f);
-		const vec3 P(-1.0f, 3.0f, 0.5f);
-		const vec3 S(-1.5f, 5.0f,-1.5f);
+		math::vec3 A(-3.0f, 0.0f,-3.0f);
+		math::vec3 D(-5.0f,-0.5f,-5.0f);
+		math::vec3 E(-5.0f,-0.5f, 5.0f);
+		math::vec3 F( 5.0f,-0.5f,-5.0f);
+		math::vec3 G( 5.0f,-0.5f, 5.0f);
+		math::vec3 H(-5.0f, 5.0f,-5.0f);
+		math::vec3 I(-5.0f, 5.0f, 5.0f);
+		math::vec3 J( 5.0f, 5.0f,-5.0f);
+		math::vec3 K( 5.0f, 5.0f, 5.0f);
+		math::vec3 L( 3.0f, 5.0f, 3.0f);
+		math::vec3 M( 0.0f, 2.0f, 0.0f);
+		//math::vec3 N( 0.0f, 3.0f, 0.0f);
+		math::vec3 O( 0.5f, 3.0f,-1.0f);
+		math::vec3 P(-1.0f, 3.0f, 0.5f);
+		math::vec3 S(-1.5f, 5.0f,-1.5f);
 
-		const vec3 hose_direction = glm::normalize(L - K);
-		const vec3 hK = K + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
-		const vec3 hL = L + vec3(0.0f,0.5f,0.0f);
+		//math::vec3 hose_direction = glm::normalize(L - K);
+		math::vec3 hose_direction;
+		__pm_sub_v_v(hose_direction, L, K);
+		__pm_normalise(hose_direction, hose_direction);
+
+		//math::vec3 hK = K + hose_direction*0.1f + math::vec3(0.0f,0.5f,0.0f);
+		//math::vec3 hL = L + hose_direction*0.1f + math::vec3(0.0f,0.5f,0.0f);
+		math::vec3 hK, hL;
+		__pm_add_v_vs(hK, K, hose_direction,0.1f);
+		__pm_add_acc_v(hK, math::vec3(0.0f,0.5f,0.0f));
+		__pm_add_v_vs(hL, L, hose_direction,0.1f);
+		__pm_add_acc_v(hL, math::vec3(0.0f,0.5f,0.0f));
+
+		// displaced hose direction
+		math::vec3 diff;
+		__pm_sub_v_v(diff, hL, hK);
+		math::vec3 dhose_direction;
+		__pm_normalise(dhose_direction, diff);
 
 		hose h;
-		h.set_hose_source(hK, glm::normalize(hL-hK), 0.5f, glm::length(hL-hK));
+		h.set_hose_source(hK, dhose_direction, 0.5f, __pm_norm(diff));
 		h.set_starttime_initialiser(
 			[n_particles](particle *p) {
 				p->set_starttime( p->get_index()/(float(n_particles)) );
@@ -127,11 +142,11 @@ namespace study_cases {
 
 		SIM.set_initialiser(&h);
 
-		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), E);
-		plane *pl1 = new plane(vec3(0.0f,0.0f,-1.0f), K);
-		plane *pl2 = new plane(vec3(-1.0f,0.0f,0.0f), K);
-		plane *pl3 = new plane(vec3(0.0f,0.0f,1.0f), J);
-		plane *pl4 = new plane(vec3(1.0f,0.0f,0.0f), H);
+		plane *floor = new plane(math::vec3(0.0f,1.0f,0.0f), E);
+		plane *pl1 = new plane(math::vec3(0.0f,0.0f,-1.0f), K);
+		plane *pl2 = new plane(math::vec3(-1.0f,0.0f,0.0f), K);
+		plane *pl3 = new plane(math::vec3(0.0f,0.0f,1.0f), J);
+		plane *pl4 = new plane(math::vec3(1.0f,0.0f,0.0f), H);
 		SIM.add_geometry(floor);
 		SIM.add_geometry(pl1);
 		SIM.add_geometry(pl2);

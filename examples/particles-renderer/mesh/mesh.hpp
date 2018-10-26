@@ -7,7 +7,6 @@ using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
-using namespace glm;
 
 // Qt includes
 #include <QOpenGLFunctions>
@@ -85,11 +84,11 @@ struct material {
 	/// Transparency.
 	float d;
 	/// Ambient colour, with transparency.
-	vec4 Ka;
+	glm::vec4 Ka;
 	/// Diffuse colour, with transparency.
-	vec4 Kd;
+	glm::vec4 Kd;
 	/// Specular colour, with transparency.
-	vec4 Ks;
+	glm::vec4 Ks;
 
 	/**
 	 * @brief Constructor.
@@ -105,9 +104,9 @@ struct material {
 	 */
 	material
 	(
-		const vec3& amb,
-		const vec3& dif,
-		const vec3& spec,
+		const glm::vec3& amb,
+		const glm::vec3& dif,
+		const glm::vec3& spec,
 		float ns, float ni,float D,
 		int ill, int textID, const string& id
 	);
@@ -162,9 +161,9 @@ class mesh {
 
 		// mesh data
 		/// Vertices of the mesh.
-		vector<vec3> vertices;
+		vector<glm::vec3> vertices;
 		/// Normals of the mesh.
-		vector<vec3> normals;
+		vector<glm::vec3> normals;
 		/// Faces of the mesh. See @ref face.
 		vector<face> faces;
 
@@ -172,14 +171,14 @@ class mesh {
 		/// Materials used in the mesh. See @ref material.
 		vector<material> materials;
 		/// Texture coordinates.
-		vector<vec2> textures_coords;
+		vector<glm::vec2> textures_coords;
 		/// OpenGL indexes of the textures.
 		vector<unsigned int> textures_indexes;
 
 	private:
 		/// Computes the normal of the plane containing
 		/// face @e f.
-		vec3 face_normal(const face& F) const;
+		glm::vec3 face_normal(const face& F) const;
 
 	public:
 		/// Default constructor.
@@ -192,15 +191,15 @@ class mesh {
 		/// Sets the name of the mesh.
 		void set_name(const string& name);
 		/// Sets the vertices of the mesh.
-		void set_vertices(const vector<vec3>& verts);
+		void set_vertices(const vector<glm::vec3>& verts);
 		/// Sets the faces of the mesh.
 		void set_faces(const vector<face>& faces);
 		/// Sets the normals of the mesh.
-		void set_normals(const vector<vec3>& normals);
+		void set_normals(const vector<glm::vec3>& normals);
 		/// Sets the materials used in this mesh.
 		void set_materials(const vector<material>& mats);
 		/// Sets the texture coordinates.
-		void set_texture_coords(const vector<vec2>& texts);
+		void set_texture_coords(const vector<glm::vec2>& texts);
 		/// Sets the texture coordinates.
 		void set_texture_indexes(const vector<unsigned int>& text_idxs);
 

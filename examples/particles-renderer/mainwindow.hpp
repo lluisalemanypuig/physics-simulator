@@ -10,23 +10,21 @@ using namespace std;
 #include <QMainWindow>
 #include <QFileInfo>
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/rect_shower.hpp>
 #include <physim/initialiser/rect_fountain.hpp>
 #include <physim/initialiser/hose.hpp>
+#include <physim/math/math.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
 using namespace init;
 
 // Custom includes
+#include "rgeom/rendered_geometry.hpp"
+#include "mesh/mesh.hpp"
 #include "simulation_renderer.hpp"
 #include "utils.hpp"
-#include "mesh.hpp"
 
 namespace Ui {
 	class MainWindow;

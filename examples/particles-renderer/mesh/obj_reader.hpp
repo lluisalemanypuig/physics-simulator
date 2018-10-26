@@ -17,7 +17,6 @@ using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
-using namespace glm;
 
 // Qt includes
 #include <QOpenGLFunctions>
@@ -62,9 +61,9 @@ class OBJ_reader {
 
 		// mesh data
 		/// Vertices of the mesh.
-		vector<vec3> vertices;
+		vector<glm::vec3> vertices;
 		/// Normals per vertex.
-		vector<vec3> normals;
+		vector<glm::vec3> normals;
 		/**
 		 * @brief Faces of the mesh.
 		 *
@@ -78,7 +77,7 @@ class OBJ_reader {
 		/// Set of materials found in the file.
 		vector<material> materials;
 		/// Texture coordinates.
-		vector<vec2> textures_coords;
+		vector<glm::vec2> textures_coords;
 		/**
 		 * @brief Indexes of textures.
 		 *

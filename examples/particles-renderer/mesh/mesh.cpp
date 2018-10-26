@@ -24,9 +24,9 @@ face::face(const face& f) {
 
 material::material
 (
-	const vec3& amb,
-	const vec3& dif,
-	const vec3& spec,
+	const glm::vec3& amb,
+	const glm::vec3& dif,
+	const glm::vec3& spec,
 	float ns, float ni,float D,
 	int ill, int textID, const string& id
 )
@@ -37,9 +37,9 @@ material::material
 	d =  D;
 	illum = ill;
 	textureID = textID;
-	Ka = vec4(amb[0], amb[1], amb[2], D);
-	Kd = vec4(dif[0], dif[1], dif[2], D);
-	Ks = vec4(spec[0], spec[1], spec[2], D);
+	Ka = glm::vec4(amb[0], amb[1], amb[2], D);
+	Kd = glm::vec4(dif[0], dif[1], dif[2], D);
+	Ks = glm::vec4(spec[0], spec[1], spec[2], D);
 }
 
 material::material(const material& m) {
@@ -56,14 +56,14 @@ material::material(const material& m) {
 
 // PRIVATE
 
-vec3 mesh::face_normal(const face& F) const {
-	const vec3& v1 = vertices[F.vertex_index[0]];
-	const vec3& v2 = vertices[F.vertex_index[1]];
-	const vec3& v3 = vertices[F.vertex_index[2]];
+glm::vec3 mesh::face_normal(const face& F) const {
+	const glm::vec3& v1 = vertices[F.vertex_index[0]];
+	const glm::vec3& v2 = vertices[F.vertex_index[1]];
+	const glm::vec3& v3 = vertices[F.vertex_index[2]];
 
-	vec3 u = v2 - v1;
-	vec3 v = v3 - v1;
-	vec3 w = glm::normalize(glm::cross(u,v));
+	glm::vec3 u = v2 - v1;
+	glm::vec3 v = v3 - v1;
+	glm::vec3 w = glm::normalize(glm::cross(u,v));
 
 	return w;
 }
@@ -84,7 +84,7 @@ void mesh::set_name(const string& name) {
 	mesh_name = name;
 }
 
-void mesh::set_vertices(const vector<vec3>& verts) {
+void mesh::set_vertices(const vector<glm::vec3>& verts) {
 	vertices = verts;
 }
 
@@ -92,7 +92,7 @@ void mesh::set_faces(const vector<face>& facs) {
 	faces = facs;
 }
 
-void mesh::set_normals(const vector<vec3>& nrmls) {
+void mesh::set_normals(const vector<glm::vec3>& nrmls) {
 	normals = nrmls;
 }
 
@@ -100,7 +100,7 @@ void mesh::set_materials(const vector<material>& mats) {
 	materials = mats;
 }
 
-void mesh::set_texture_coords(const vector<vec2>& texts) {
+void mesh::set_texture_coords(const vector<glm::vec2>& texts) {
 	textures_coords = texts;
 }
 
@@ -159,7 +159,7 @@ void mesh::make_normals_flat() {
 
 	for (size_t f = 0; f < faces.size(); ++f) {
 		face& F = faces[f];
-		vec3 w = face_normal(F);
+		glm::vec3 w = face_normal(F);
 
 		int idx = normals.size();
 		normals.push_back(w);
@@ -192,12 +192,12 @@ void mesh::make_normals_smooth() {
 
 	// Firstly, compute the smoothed normals for each vertex,
 	// and store them in a separate vector.
-	vector<vec3> smoothed_normals(vertices.size(), vec3(0.0f,0.0f,0.0f));
+	vector<glm::vec3> smoothed_normals(vertices.size(), glm::vec3(0.0f,0.0f,0.0f));
 
 	// compute normals for the vertices that make
 	// up the faces marked with 'smooth = true'
 	for (size_t v = 0; v < vertices.size(); ++v) {
-		vec3& normal = smoothed_normals[v];
+		glm::vec3& normal = smoothed_normals[v];
 
 		// add to 'normal' the normal of those faces that share vertex V
 		// afi: adjacent face index
@@ -341,16 +341,16 @@ void mesh::render() const {
 			glBegin(GL_QUADS);
 			for (int j = 0; j < 4; ++j) {
 				if (textenable) {
-					const vec2& uv = textures_coords[faces[i].text_coord[j]];
+					const glm::vec2& uv = textures_coords[faces[i].text_coord[j]];
 					glTexCoord2f(uv.x, 1.0 - uv.y);
 				}
 
 				int vrtx_idx = faces[i].vertex_index[j];
 
-				const vec3& n = normals[ faces[i].normal_index[j] ];
+				const glm::vec3& n = normals[ faces[i].normal_index[j] ];
 				glNormal3f(n.x, n.y, n.z);
 
-				const vec3& v = vertices[vrtx_idx];
+				const glm::vec3& v = vertices[vrtx_idx];
 				glVertex3f(v.x, v.y, v.z);
 			}
 			glEnd();
@@ -359,16 +359,16 @@ void mesh::render() const {
 			glBegin(GL_TRIANGLES);
 			for (int j = 0; j < 3; ++j) {
 				if (textenable) {
-					const vec2& uv = textures_coords[faces[i].text_coord[j]];
+					const glm::vec2& uv = textures_coords[faces[i].text_coord[j]];
 					glTexCoord2f(uv.x, 1.0 - uv.y);
 				}
 
 				int vrtx_idx = faces[i].vertex_index[j];
 
-				const vec3& n = normals[ faces[i].normal_index[j] ];
+				const glm::vec3& n = normals[ faces[i].normal_index[j] ];
 				glNormal3f(n.x, n.y, n.z);
 
-				const vec3& v = vertices[vrtx_idx];
+				const glm::vec3& v = vertices[vrtx_idx];
 				glVertex3f(v.x, v.y, v.z);
 			}
 			glEnd();
