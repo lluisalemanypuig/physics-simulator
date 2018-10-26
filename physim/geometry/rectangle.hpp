@@ -52,7 +52,8 @@ class rectangle : public geometry {
 		 * is built using the first three vertices in the same
 		 * order they are given in this method.
 		 *
-		 * See @ref plane::plane(const math::vec3,const math::vec3,const math::vec3)
+		 * See
+		 * @ref plane::plane(const math::vec3&,const math::vec3&,const math::vec3&)
 		 * to see how the normal is determined.
 		 *
 		 * The four points must lie on the same plane, that is,

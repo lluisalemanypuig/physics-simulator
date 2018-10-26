@@ -18,8 +18,8 @@ namespace geom {
  * (see @ref normal) and a constant term (see @ref dconst).
  *
  * A plane can be defined only with these two parameters
- * (see @ref plane(const vec3&, const vec3&) or with three
- * points (see @ref plane(const vec3&, const vec3&, const vec3&)).
+ * (see @ref plane(const math::vec3&, const math::vec3&) or with three
+ * points (see @ref plane(const math::vec3&, const math::vec3&, const math::vec3&)).
  */
 class plane : public geometry {
 	private:

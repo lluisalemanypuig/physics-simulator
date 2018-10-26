@@ -27,5 +27,20 @@ namespace physim {
      * 'main' class attributes to offer nice-looking particle systems.
      */
     namespace init { }
+    
+    /**
+     * @brief Mathematical operations namespace.
+     * 
+     * Contains the definition of the type @ref vec3.
+     * 
+     * Also, it contains several macros for the efficient compilation
+     * of typical operations between vecors. These are not meant to be
+     * used outside the library, since they are cumbersome to use.
+     * 
+     * However, in the files @ref math_ops.hpp, @ref math_misc.hpp,
+     * and @ref vec3.hpp, all the macros have been documented (though
+     * not appearing in the html documentation).
+     */
+    namespace math { }
 
 } // -- namespace sim

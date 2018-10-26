@@ -45,7 +45,8 @@ class triangle : public geometry {
 		 * is built using these vertices in the same order they
 		 * are given in this method.
 		 *
-		 * See @ref plane::plane(const math::vec3,const math::vec3,const math::vec3)
+		 * See
+		 * @ref plane::plane(const math::vec3&,const math::vec3&,const math::vec3&)
 		 * to see how the normal is determined.
 		 */
 		triangle(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3);
