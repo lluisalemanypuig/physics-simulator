@@ -19,8 +19,6 @@
 #include <physim/math/math.hpp>
 
 namespace physim {
-using namespace geom;
-using namespace init;
 
 /**
  * @brief The different types of solvers.
@@ -90,7 +88,7 @@ class simulator {
 		 * @brief The collection of objects whose position
 		 * does not depend on the interaction with other objects.
 		 */
-		std::vector<geometry *> scene_fixed;
+		std::vector<geom::geometry *> scene_fixed;
 		/// The set of particles in the simulation
 		std::vector<particle *> ps;
 
@@ -130,7 +128,7 @@ class simulator {
 		 * It is recommended to set the particle's 'previous' state
 		 * to null values.
 		 */
-		initialiser *global_init;
+		init::initialiser *global_init;
 
 	private:
 
@@ -209,7 +207,7 @@ class simulator {
 		 * will take care of that.
 		 * @param g A non-null pointer to the object.
 		 */
-		void add_geometry(geometry *g);
+		void add_geometry(geom::geometry *g);
 
 		/**
 		 * @brief Removes the @e i-th fixed geometrical object.
@@ -289,7 +287,7 @@ class simulator {
 		 * than 0.\n
 		 * The parameter cannot be null.
 		 */
-		void set_initialiser(const initialiser *f);
+		void set_initialiser(const init::initialiser *f);
 
 		/**
 		 * @brief Sets the type of solver.
@@ -318,7 +316,7 @@ class simulator {
 		/// Return constant reference to i-th particle.
 		const particle& get_particle(size_t i) const;
 		/// Returns all fixed objects of the scene.
-		const std::vector<geometry *>& get_fixed_objects() const;
+		const std::vector<geom::geometry *>& get_fixed_objects() const;
 		/// Returns the current simulation time.
 		float get_current_time() const;
 		/// Returns the gravity of the scene.
@@ -328,9 +326,9 @@ class simulator {
 		/// Returns the number of fixed geometrical objects.
 		size_t n_geometry() const;
 		/// Returns the initialiser functions.
-		initialiser *get_initialiser();
+		init::initialiser *get_initialiser();
 		/// Returns a constant reference to the initialiser functions.
-		const initialiser *get_initialiser() const;
+		const init::initialiser *get_initialiser() const;
 };
 
 } // -- namespace sim

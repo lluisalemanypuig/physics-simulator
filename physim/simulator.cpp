@@ -93,7 +93,7 @@ simulator::simulator(const solver_type& s, float t) {
 	stime = 0.0f;
 	dt = t;
 	solver = s;
-	global_init = new initialiser();
+	global_init = new init::initialiser();
 }
 
 simulator::~simulator() {
@@ -146,7 +146,7 @@ void simulator::clear_particles() {
 	ps.clear();
 }
 
-void simulator::add_geometry(geometry *g) {
+void simulator::add_geometry(geom::geometry *g) {
 	assert(g != nullptr);
 	scene_fixed.push_back(g);
 }
@@ -167,7 +167,7 @@ void simulator::remove_geometry(size_t i) {
 }
 
 void simulator::clear_geometry() {
-	for (geometry *g : scene_fixed) {
+	for (geom::geometry *g : scene_fixed) {
 		delete g;
 	}
 	scene_fixed.clear();
@@ -275,7 +275,7 @@ void simulator::apply_time_step() {
 		// every fixed geometrical object in the scene.
 
 		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
-			const geometry *g = scene_fixed[i];
+			const geom::geometry *g = scene_fixed[i];
 
 			// if the particle collides with some geometry
 			// then the geometry is in charge of updating
@@ -336,7 +336,7 @@ void simulator::set_time_step(float t) {
 	dt = t;
 }
 
-void simulator::set_initialiser(const initialiser *f) {
+void simulator::set_initialiser(const init::initialiser *f) {
 	assert(f != nullptr);
 
 	delete global_init;
@@ -357,7 +357,7 @@ const particle& simulator::get_particle(size_t i) const {
 	return *ps[i];
 }
 
-const std::vector<geometry *>& simulator::get_fixed_objects() const {
+const std::vector<geom::geometry *>& simulator::get_fixed_objects() const {
 	return scene_fixed;
 }
 
@@ -377,11 +377,11 @@ size_t simulator::n_geometry() const {
 	return scene_fixed.size();
 }
 
-initialiser *simulator::get_initialiser() {
+init::initialiser *simulator::get_initialiser() {
 	return global_init;
 }
 
-const initialiser *simulator::get_initialiser() const {
+const init::initialiser *simulator::get_initialiser() const {
 	return global_init;
 }
 
