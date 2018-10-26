@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <functional>
-using namespace std;
 
 // physim includes
 #include <physim/particles/particle.hpp>
@@ -11,7 +10,7 @@ namespace physim {
 namespace init {
 
 /// Shortcut for the initialiser function type.
-typedef function<void (particle *)> partinit;
+typedef std::function<void (particle *)> partinit;
 
 /**
  * @brief The particle initialiser class.

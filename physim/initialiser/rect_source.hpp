@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <random>
-using namespace std;
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
@@ -39,9 +38,9 @@ namespace init {
 class rect_source : public initialiser {
 	protected:
 		/// Engine used in the uniform distribution @ref U01.
-		default_random_engine E;
+		std::default_random_engine E;
 		/// Random number generator for uniform values between 0 and 1.
-		uniform_real_distribution<float> U01;
+		std::uniform_real_distribution<float> U01;
 
 		/// The source point of the rectangle.
 		math::vec3 S;
@@ -114,7 +113,9 @@ class rect_source : public initialiser {
 		 * @param _w See @ref w.
 		 * @param _h See @ref h.
 		 */
-		void set_rectangular_source(const math::vec3& _S, const math::vec3& _u,const math::vec3& _v, float _w,float _h);
+		void set_rectangular_source
+		(const math::vec3& _S, const math::vec3& _u,const math::vec3& _v,
+		 float _w,float _h);
 
 		/**
 		 * @brief Patricular case of flat rectangular source.

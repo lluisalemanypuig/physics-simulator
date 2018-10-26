@@ -25,7 +25,9 @@ namespace geom {
 
 triangle::triangle() : geometry() { }
 
-triangle::triangle(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3) : geometry() {
+triangle::triangle
+(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3) : geometry()
+{
 	/*v1 = p1;
 	v2 = p2;
 	v3 = p3;
@@ -125,16 +127,16 @@ void triangle::update_upon_collision
 	pl.update_upon_collision(pred_pos, pred_vel, p);
 }
 
-void triangle::display(ostream& os) const {
-	os << "I am a triangle" << endl;
-	os << "    with vertices:" << endl;
-	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << endl;
-	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << endl;
-	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << endl;
-	os << "    and plane equation:" << endl;
+void triangle::display(std::ostream& os) const {
+	os << "I am a triangle" << std::endl;
+	os << "    with vertices:" << std::endl;
+	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << std::endl;
+	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << std::endl;
+	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << std::endl;
+	os << "    and plane equation:" << std::endl;
 	const math::vec3& n = pl.get_normal();
 	os << "        " << n.x() << "*x + " << n.y() << "*y + " << n.z() << "*z + "
-	   << pl.get_constant() << " = 0" << endl;
+	   << pl.get_constant() << " = 0" << std::endl;
 }
 
 } // -- namespace geom

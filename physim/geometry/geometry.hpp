@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <iostream>
-using namespace std;
 
 // physim includes
 #include <physim/particles/particle.hpp>
@@ -120,7 +119,7 @@ class geometry {
 		) const = 0;
 
 		/// Output on stream @e os information about this geometry.
-		virtual void display(ostream& os = cout) const = 0;
+		virtual void display(std::ostream& os = std::cout) const = 0;
 };
 
 } // -- namespace geom

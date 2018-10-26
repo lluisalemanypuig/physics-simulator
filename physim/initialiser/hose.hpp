@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <random>
-using namespace std;
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
@@ -45,9 +44,9 @@ namespace init {
 class hose : public initialiser {
 	protected:
 		/// Engine used in the uniform distribution @ref U01.
-		default_random_engine E;
+		std::default_random_engine E;
 		/// Random number generator for uniform values between 0 and 1.
-		uniform_real_distribution<float> U01;
+		std::uniform_real_distribution<float> U01;
 
 		/// The vertex of the cone.
 		math::vec3 source;

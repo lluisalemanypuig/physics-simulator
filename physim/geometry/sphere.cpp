@@ -187,12 +187,12 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	#if defined (DEBUG)
 	// make sure that L has the right value (with some tolerance)
 	if (not (-0.00009f <= L and L <= 1.00009f)) {
-		cerr << "sphere::intersec_segment: Error:" << endl;
-		cerr << "    Value of L to determine intersection point is not valid." << endl;
-		cerr << "    L= " << L << endl;
-		cerr << "    Between the two solutions:" << endl;
-		cerr << "        Lp= " << Lp << ", dp= " << dp << endl;
-		cerr << "        Lm= " << Lm << ", dm= " << dm << endl;
+		std::cerr << "sphere::intersec_segment: Error:" << std::endl;
+		std::cerr << "    Value of L to determine intersection point is not valid." << std::endl;
+		std::cerr << "    L= " << L << std::endl;
+		std::cerr << "    Between the two solutions:" << std::endl;
+		std::cerr << "        Lp= " << Lp << ", dp= " << dp << std::endl;
+		std::cerr << "        Lm= " << Lm << ", dm= " << dm << std::endl;
 		assert( false );
 	}
 	#endif
@@ -205,7 +205,9 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 
 // OTHERS
 
-void sphere::update_upon_collision(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const {
+void sphere::update_upon_collision
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const
+{
 	// define a plane tangent to the sphere
 	// that goes through the intersection point
 
@@ -244,10 +246,10 @@ void sphere::update_upon_collision(const math::vec3& pred_pos, const math::vec3&
 	tan_plane.update_upon_collision(pred_pos, pred_vel, p);
 }
 
-void sphere::display(ostream& os) const {
-	os << "I am a sphere" << endl;
-	os << "    with centre: (" << C.x() << "," << C.y() << "," << C.z() << ")" << endl;
-	os << "    and radius: " << R << endl;
+void sphere::display(std::ostream& os) const {
+	os << "I am a sphere" << std::endl;
+	os << "    with centre: (" << C.x() << "," << C.y() << "," << C.z() << ")" << std::endl;
+	os << "    and radius: " << R << std::endl;
 }
 
 } // -- namespace geom

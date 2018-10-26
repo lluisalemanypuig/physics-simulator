@@ -8,7 +8,6 @@
 #include <iostream>
 #include <cstdint>
 #include <vector>
-using namespace std;
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
@@ -91,9 +90,9 @@ class simulator {
 		 * @brief The collection of objects whose position
 		 * does not depend on the interaction with other objects.
 		 */
-		vector<geometry *> scene_fixed;
+		std::vector<geometry *> scene_fixed;
 		/// The set of particles in the simulation
-		vector<particle *> ps;
+		std::vector<particle *> ps;
 
 		/// Gravity of the simulation. [m/s^2].
 		math::vec3 gravity;
@@ -315,11 +314,11 @@ class simulator {
 		 * @return Returns a constant reference to the structure
 		 * containing all particles.
 		 */
-		const vector<particle *>& get_particles() const;
+		const std::vector<particle *>& get_particles() const;
 		/// Return constant reference to i-th particle.
 		const particle& get_particle(size_t i) const;
 		/// Returns all fixed objects of the scene.
-		const vector<geometry *>& get_fixed_objects() const;
+		const std::vector<geometry *>& get_fixed_objects() const;
 		/// Returns the current simulation time.
 		float get_current_time() const;
 		/// Returns the gravity of the scene.

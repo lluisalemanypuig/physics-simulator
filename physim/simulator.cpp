@@ -82,7 +82,7 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 			break;
 
 		default:
-			cerr << "Warning: solver not implemented" << endl;
+			std::cerr << "Warning: solver not implemented" << std::endl;
 	}
 }
 
@@ -349,7 +349,7 @@ void simulator::set_solver(const solver_type& s) {
 
 // GETTERS
 
-const vector<particle *>& simulator::get_particles() const {
+const std::vector<particle *>& simulator::get_particles() const {
 	return ps;
 }
 
@@ -357,7 +357,7 @@ const particle& simulator::get_particle(size_t i) const {
 	return *ps[i];
 }
 
-const vector<geometry *>& simulator::get_fixed_objects() const {
+const std::vector<geometry *>& simulator::get_fixed_objects() const {
 	return scene_fixed;
 }
 

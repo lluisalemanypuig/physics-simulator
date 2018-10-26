@@ -1,5 +1,8 @@
 #pragma once
 
+// C++ includes
+#include <iostream>
+
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
@@ -63,7 +66,7 @@ class sphere : public geometry {
 		void update_upon_collision
 		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
 
-		void display(ostream& os = cout) const;
+		void display(std::ostream& os = std::cout) const;
 };
 
 } // -- namespace geom

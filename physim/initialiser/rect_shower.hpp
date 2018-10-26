@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <random>
-using namespace std;
 
 // physim includes
 #include <physim/initialiser/rect_source.hpp>

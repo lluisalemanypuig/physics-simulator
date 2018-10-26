@@ -28,9 +28,9 @@ void rect_source::make_pos_init() {
 // PUBLIC
 
 rect_source::rect_source() : initialiser() {
-	random_device r;
-	E = default_random_engine(r());
-	U01 = uniform_real_distribution<float>(0.0f, 1.0f);
+	std::random_device r;
+	E = std::default_random_engine(r());
+	U01 = std::uniform_real_distribution<float>(0.0f, 1.0f);
 }
 
 rect_source::rect_source(const rect_source& rs) : initialiser(rs) {

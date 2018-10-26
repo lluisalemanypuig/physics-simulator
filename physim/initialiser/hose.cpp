@@ -1,8 +1,5 @@
 #include <physim/initialiser/hose.hpp>
 
-#include <iostream>
-using namespace std;
-
 namespace physim {
 namespace init {
 
@@ -42,9 +39,9 @@ void hose::make_vel_init() {
 // PUBLIC
 
 hose::hose() : initialiser() {
-	random_device r;
-	E = default_random_engine(r());
-	U01 = uniform_real_distribution<float>(0.0f, 1.0f);
+	std::random_device r;
+	E = std::default_random_engine(r());
+	U01 = std::uniform_real_distribution<float>(0.0f, 1.0f);
 }
 
 hose::hose(const hose& H) : initialiser(H) {

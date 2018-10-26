@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <iostream>
-using namespace std;
 
 // physim includes
 #include <physim/geometry/geometry.hpp>
@@ -138,7 +137,7 @@ class plane : public geometry {
 		void update_upon_collision
 		(const math::vec3& pp, const math::vec3& pv, particle *p) const;
 
-		void display(ostream& os = cout) const;
+		void display(std::ostream& os = std::cout) const;
 };
 
 } // -- namespace geom

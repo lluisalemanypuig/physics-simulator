@@ -2,7 +2,6 @@
 
 // C++ includes
 #include <iostream>
-using namespace std;
 
 // physim includes
 #include <physim/geometry/geometry.hpp>
@@ -102,7 +101,7 @@ class rectangle : public geometry {
 		void update_upon_collision
 		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
 
-		void display(ostream& os = cout) const;
+		void display(std::ostream& os = std::cout) const;
 };
 
 } // -- namespace geom

@@ -163,16 +163,16 @@ void rectangle::update_upon_collision
 }
 
 void rectangle::display(std::ostream& os) const {
-	os << "I am a rectangle" << endl;
-	os << "    with vertices:" << endl;
-	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << endl;
-	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << endl;
-	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << endl;
-	os << "        - Point({" << v4.x() << "," << v4.y() << "," << v4.z() << "})" << endl;
-	os << "    and plane equation:" << endl;
+	os << "I am a rectangle" << std::endl;
+	os << "    with vertices:" << std::endl;
+	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << std::endl;
+	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << std::endl;
+	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << std::endl;
+	os << "        - Point({" << v4.x() << "," << v4.y() << "," << v4.z() << "})" << std::endl;
+	os << "    and plane equation:" << std::endl;
 	const math::vec3& n = pl.get_normal();
 	os << "        " << n.x() << "*x + " << n.y() << "*y + " << n.z() << "*z + "
-	   << pl.get_constant() << " = 0" << endl;
+	   << pl.get_constant() << " = 0" << std::endl;
 }
 
 } // -- namespace geom

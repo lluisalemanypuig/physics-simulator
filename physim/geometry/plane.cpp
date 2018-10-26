@@ -194,13 +194,13 @@ const
 	__pm_sub_v_v(p->get_velocity(), p->get_velocity(), vT);
 }
 
-void plane::display(ostream& os) const {
-	os << "I am a plane" << endl;
-	os << "    with plane equation:" << endl;
+void plane::display(std::ostream& os) const {
+	os << "I am a plane" << std::endl;
+	os << "    with plane equation:" << std::endl;
 	os << "        " << normal.x() << "*x + "
 					 << normal.y() << "*y + "
 					 << normal.z() << "*z + "
-					 << dconst << " = 0" << endl;
+					 << dconst << " = 0" << std::endl;
 }
 
 } // -- namespace geom
