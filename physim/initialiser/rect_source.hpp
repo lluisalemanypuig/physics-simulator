@@ -7,6 +7,7 @@ using namespace std;
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/particle.hpp>
+#include <physim/math/math.hpp>
 
 namespace physim {
 namespace init {
@@ -43,20 +44,20 @@ class rect_source : public initialiser {
 		uniform_real_distribution<float> U01;
 
 		/// The source point of the rectangle.
-		vec3 S;
+		math::vec3 S;
 		/// The center of the rectangle.
-		vec3 C;
+		math::vec3 C;
 
 		/// Unitary vector along the width.
-		vec3 u;
+		math::vec3 u;
 		/// Unitary vector along the height.
-		vec3 v;
+		math::vec3 v;
 		/**
 		 * @brief Normal to the rectangle.
 		 *
 		 * Unitary vector. Cross-product of @ref u and @ref v.
 		 */
-		vec3 n;
+		math::vec3 n;
 
 		/// The distance between @ref S and the farthest point in \f$R(\lambda,0)\f$
 		float w;
@@ -113,7 +114,7 @@ class rect_source : public initialiser {
 		 * @param _w See @ref w.
 		 * @param _h See @ref h.
 		 */
-		void set_rectangular_source(const vec3& _S, const vec3& _u,const vec3& _v, float _w,float _h);
+		void set_rectangular_source(const math::vec3& _S, const math::vec3& _u,const math::vec3& _v, float _w,float _h);
 
 		/**
 		 * @brief Patricular case of flat rectangular source.
@@ -125,7 +126,7 @@ class rect_source : public initialiser {
 		 * @param _w See @ref w.
 		 * @param _h See @ref h.
 		 */
-		void set_straight_source(const vec3& _S, float _w,float _h);
+		void set_straight_source(const math::vec3& _S, float _w,float _h);
 
 		// GETTERS
 

@@ -4,10 +4,6 @@
 #include <iostream>
 using namespace std;
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
@@ -30,18 +26,18 @@ namespace geom {
 class rectangle : public geometry {
 	private:
 		/// The first vertex of the rectangle.
-		vec3 v1;
+		math::vec3 v1;
 		/// The second vertex of the rectangle.
-		vec3 v2;
+		math::vec3 v2;
 		/// The third vertex of the rectangle.
-		vec3 v3;
+		math::vec3 v3;
 		/// The fourth vertex of the rectangle.
-		vec3 v4;
+		math::vec3 v4;
 
 		/// Minimum x,y,z-coordinates.
-		vec3 min;
+		math::vec3 min;
 		/// Maximum x,y,z-coordinates.
-		vec3 max;
+		math::vec3 max;
 
 		/// Plane associated to the rectangle.
 		plane pl;
@@ -56,36 +52,23 @@ class rectangle : public geometry {
 		 * is built using the first three vertices in the same
 		 * order they are given in this method.
 		 *
-		 * See @ref plane::plane(const vec3&,const vec3&,const vec3&)
+		 * See @ref plane::plane(const math::vec3,const math::vec3,const math::vec3)
 		 * to see how the normal is determined.
 		 *
 		 * The four points must lie on the same plane, that is,
 		 * the fourth point must lie on the plane made with the
 		 * first three vertices.
 		 */
-		rectangle(const vec3& p1,const vec3& p2,const vec3& p3,const vec3& p4);
+		rectangle(
+			const math::vec3& p1,const math::vec3& p2,
+			const math::vec3& p3,const math::vec3& p4
+		);
 		/// Copy constructor.
 		rectangle(const rectangle& t);
 		/// Destructor.
 		~rectangle();
 
 		// OPERATORS
-
-		inline friend
-		ostream& operator<< (ostream& os, const rectangle& r) {
-			os << "I am a rectangle" << endl;
-			os << "    with vertices:" << endl;
-			os << "        - Point({" << r.v1.x << "," << r.v1.y << "," << r.v1.z << "})" << endl;
-			os << "        - Point({" << r.v2.x << "," << r.v2.y << "," << r.v2.z << "})" << endl;
-			os << "        - Point({" << r.v3.x << "," << r.v3.y << "," << r.v3.z << "})" << endl;
-			os << "        - Point({" << r.v4.x << "," << r.v4.y << "," << r.v4.z << "})" << endl;
-			os << "    and plane equation:" << endl;
-			const vec3& n = r.pl.get_normal();
-			os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-			   << r.pl.get_constant() << " = 0" << endl;
-
-			return os;
-		}
 
 		// SETTERS
 
@@ -97,23 +80,27 @@ class rectangle : public geometry {
 		 * @param v Vector representing the direction in which
 		 * every vertex moves.
 		 */
-		void set_position(const vec3& v);
+		void set_position(const math::vec3& v);
 
 		// GETTERS
 
 		/// Returns a constant reference to the assiociated plane (@ref pl).
 		const plane& get_plane() const;
 
-		bool is_inside(const vec3& p, float tol = 1.e-6f) const;
+		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 
 		geom_type get_geom_type() const;
 
-		bool intersec_segment(const vec3& p1, const vec3& p2) const;
-		bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
 
 		// OTHERS
 
-		void update_upon_collision(const vec3& pred_pos, const vec3& pred_vel, particle *p) const;
+		void update_upon_collision
+		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
+
 		void display(ostream& os = cout) const;
 };
 

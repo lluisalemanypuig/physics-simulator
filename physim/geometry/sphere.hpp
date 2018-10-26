@@ -1,9 +1,5 @@
 #pragma once
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
@@ -18,7 +14,7 @@ namespace geom {
 class sphere : public geometry {
 	private:
 		/// Centre of the sphere.
-		vec3 C;
+		math::vec3 C;
 		/// Radius of the sphere.
 		float R;
 
@@ -26,21 +22,13 @@ class sphere : public geometry {
 		/// Default constructor.
 		sphere();
 		/// Constructor with centre and radius.
-		sphere(const vec3& c, float r);
+		sphere(const math::vec3& c, float r);
 		/// Copy constructor.
 		sphere(const sphere& s);
 		/// Destructor.
 		~sphere();
 
 		// OPERATORS
-
-		inline friend
-		ostream& operator<< (ostream& os, const sphere& s) {
-			os << "I am a sphere" << endl;
-			os << "    with centre: (" << s.C.x << "," << s.C.y << "," << s.C.z << ")" << endl;
-			os << "    and radius: " << s.R << endl;
-			return os;
-		}
 
 		// SETTERS
 
@@ -50,7 +38,7 @@ class sphere : public geometry {
 		 * Its center is set to @e c.
 		 * @param c New center of the sphere.
 		 */
-		void set_position(const vec3& c);
+		void set_position(const math::vec3& c);
 
 		/// Sets the radius of the sphere.
 		void set_radius(float r);
@@ -58,19 +46,23 @@ class sphere : public geometry {
 		// GETTERS
 
 		/// Returns the centre of the shere.
-		const vec3& get_centre() const;
+		const math::vec3& get_centre() const;
 		/// Returns the radius of the sphere.
 		float get_radius() const;
 
-		bool is_inside(const vec3& p, float tol = 1.e-6f) const;
+		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 		geom_type get_geom_type() const;
 
-		bool intersec_segment(const vec3& p1, const vec3& p2) const;
-		bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
 
 		// OTHERS
 
-		void update_upon_collision(const vec3& pred_pos, const vec3& pred_vel, particle *p) const;
+		void update_upon_collision
+		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
+
 		void display(ostream& os = cout) const;
 };
 

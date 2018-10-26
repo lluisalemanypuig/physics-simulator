@@ -4,10 +4,6 @@
 #include <iostream>
 using namespace std;
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/particles/particle.hpp>
@@ -32,7 +28,7 @@ class plane : public geometry {
 		 *
 		 * This is a unit vector.
 		 */
-		vec3 normal;
+		math::vec3 normal;
 		/// Constant, independent term of the plane equation.
 		float dconst;
 
@@ -45,7 +41,7 @@ class plane : public geometry {
 		 * @param p Point.
 		 * @post @ref normal takes the normalisation of the vector @e n.
 		 */
-		plane(const vec3& n, const vec3& p);
+		plane(const math::vec3& n, const math::vec3& p);
 		/**
 		 * @brief Construct a plane with a normal and the equation's independent term.
 		 *
@@ -57,7 +53,7 @@ class plane : public geometry {
 		 * @param d Independent term of the plane's equation.
 		 * @post @ref normal takes the normalisation of the vector @e n.
 		 */
-		plane(const vec3& n, float d);
+		plane(const math::vec3& n, float d);
 		/**
 		 * @brief Construct plane with three points.
 		 *
@@ -67,24 +63,13 @@ class plane : public geometry {
 		 n = normalise( (p1 - p0) x (p2 - p0) )
 		 \endverbatim
 		 */
-		plane(const vec3& p0, const vec3& p1, const vec3& p2);
+		plane(const math::vec3& p0, const math::vec3& p1, const math::vec3& p2);
 		/// Copy constructor.
 		plane(const plane& p);
 		/// Destructor.
 		~plane();
 
 		// OPERATORS
-
-		inline friend
-		ostream& operator<< (ostream& os, const plane& p) {
-			os << "I am a plane" << endl;
-			os << "    with plane equation:" << endl;
-			os << "        " << p.normal.x << "*x + "
-							 << p.normal.y << "*y + "
-							 << p.normal.z << "*z + "
-							 << p.dconst << " = 0" << endl;
-			return os;
-		}
 
 		// SETTERS
 
@@ -95,18 +80,18 @@ class plane : public geometry {
 		 * satisifed by point @e p.
 		 * @param p Force the plane to go through this point.
 		 */
-		void set_position(const vec3& p);
+		void set_position(const math::vec3& p);
 
 		// GETTERS
 
 		geom_type get_geom_type() const;
 
 		/// Returns the distance between point @e p and this plane.
-		float dist_point_plane(const vec3& p) const;
+		float dist_point_plane(const math::vec3& p) const;
 		/// Returns the project of point @e p onto the plane.
-		vec3 closest_point_plane(const vec3& p) const;
+		void closest_point_plane(const math::vec3& p, math::vec3& c) const;
 		/// Returns the normal of this plane.
-		const vec3& get_normal() const;
+		const math::vec3& get_normal() const;
 		/// Returns the independent term of this plane's equation.
 		float get_constant() const;
 
@@ -124,7 +109,7 @@ class plane : public geometry {
 		 * handside of the equation is smaller or equal than
 		 * @e tol.
 		 */
-		bool is_inside(const vec3& p, float tol = 1.e-6f) const;
+		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 
 		/**
 		 * @brief Returns if the segment defined by the points @e p1 and @e p2 intersects
@@ -133,7 +118,8 @@ class plane : public geometry {
 		 * @param[in] p2 Second endpoint of the segment.
 		 * @return Returns true if there is intersection.
 		 */
-		bool intersec_segment(const vec3& p1, const vec3& p2) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2) const;
 		/**
 		 * @brief Returns the intersection between this plane and the segment
 		 * defined by the points @e p1 and @e p2.
@@ -144,11 +130,14 @@ class plane : public geometry {
 		 * @return Returns true if there is intersection. In this case, the value
 		 * of @e p_inter is valid at the end of the method.
 		 */
-		bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
 
 		// OTHERS
 
-		void update_upon_collision(const vec3& pp, const vec3& pv, particle *p) const;
+		void update_upon_collision
+		(const math::vec3& pp, const math::vec3& pv, particle *p) const;
+
 		void display(ostream& os = cout) const;
 };
 

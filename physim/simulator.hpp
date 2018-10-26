@@ -10,13 +10,14 @@
 #include <vector>
 using namespace std;
 
-// Custom includes
+// physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/triangle.hpp>
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/particles/particle.hpp>
+#include <physim/math/math.hpp>
 
 namespace physim {
 using namespace geom;
@@ -95,7 +96,7 @@ class simulator {
 		vector<particle *> ps;
 
 		/// Gravity of the simulation. [m/s^2].
-		vec3 gravity;
+		math::vec3 gravity;
 
 		/// Current time of the simulation.
 		float stime;
@@ -152,7 +153,7 @@ class simulator {
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
 		 */
-		void apply_solver(const particle *p, vec3& pos, vec3& vel);
+		void apply_solver(const particle *p, math::vec3& pos, math::vec3& vel);
 
 	public:
 		/**
@@ -265,7 +266,7 @@ class simulator {
 		 * Gravity is always applied to all particles, except those
 		 * that are fixed.
 		 */
-		void set_gravity(const vec3& g);
+		void set_gravity(const math::vec3& g);
 
 		/**
 		 * @brief Sets the time step of the simulation.
@@ -322,7 +323,7 @@ class simulator {
 		/// Returns the current simulation time.
 		float get_current_time() const;
 		/// Returns the gravity of the scene.
-		const vec3& get_gravity() const;
+		const math::vec3& get_gravity() const;
 		/// Returns the number of particles.
 		size_t n_particles() const;
 		/// Returns the number of fixed geometrical objects.

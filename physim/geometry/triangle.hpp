@@ -4,10 +4,6 @@
 #include <iostream>
 using namespace std;
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
@@ -30,11 +26,11 @@ namespace geom {
 class triangle : public geometry {
 	private:
 		/// The first vertex of the triangle.
-		vec3 v1;
+		math::vec3 v1;
 		/// The second vertex of the triangle.
-		vec3 v2;
+		math::vec3 v2;
 		/// The third vertex of the triangle.
-		vec3 v3;
+		math::vec3 v3;
 
 		/// Plane associated to the triangle.
 		plane pl;
@@ -49,31 +45,16 @@ class triangle : public geometry {
 		 * is built using these vertices in the same order they
 		 * are given in this method.
 		 *
-		 * See @ref plane::plane(const vec3&,const vec3&,const vec3&)
+		 * See @ref plane::plane(const math::vec3,const math::vec3,const math::vec3)
 		 * to see how the normal is determined.
 		 */
-		triangle(const vec3& p1,const vec3& p2,const vec3& p3);
+		triangle(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3);
 		/// Copy constructor.
 		triangle(const triangle& t);
 		/// Destructor.
 		~triangle();
 
 		// OPERATORS
-
-		inline friend
-		ostream& operator<< (ostream& os, const triangle& t) {
-			os << "I am a triangle" << endl;
-			os << "    with vertices:" << endl;
-			os << "        - Point({" << t.v1.x << "," << t.v1.y << "," << t.v1.z << "})" << endl;
-			os << "        - Point({" << t.v2.x << "," << t.v2.y << "," << t.v2.z << "})" << endl;
-			os << "        - Point({" << t.v3.x << "," << t.v3.y << "," << t.v3.z << "})" << endl;
-			os << "    and plane equation:" << endl;
-			const vec3& n = t.pl.get_normal();
-			os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-			   << t.pl.get_constant() << " = 0" << endl;
-
-			return os;
-		}
 
 		// SETTERS
 
@@ -85,23 +66,27 @@ class triangle : public geometry {
 		 * @param v Vector representing the direction in which
 		 * every vertex moves.
 		 */
-		void set_position(const vec3& v);
+		void set_position(const math::vec3& v);
 
 		// GETTERS
 
 		/// Returns a constant reference to the assiociated plane (@ref pl).
 		const plane& get_plane() const;
 
-		bool is_inside(const vec3& p, float tol = 1.e-6f) const;
+		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 
 		geom_type get_geom_type() const;
 
-		bool intersec_segment(const vec3& p1, const vec3& p2) const;
-		bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2) const;
+		bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
 
 		// OTHERS
 
-		void update_upon_collision(const vec3& pred_pos, const vec3& pred_vel, particle *p) const;
+		void update_upon_collision
+		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
+
 		void display(ostream& os = cout) const;
 };
 

@@ -4,12 +4,9 @@
 #include <iostream>
 using namespace std;
 
-// glm includes
-#include <glm/vec3.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/particles/particle.hpp>
+#include <physim/math/math.hpp>
 
 namespace physim {
 namespace geom {
@@ -52,7 +49,7 @@ class geometry {
 		 * interpretation.
 		 * @param p The "new position" of the object.
 		 */
-		virtual void set_position(const vec3& p) = 0;
+		virtual void set_position(const math::vec3& p) = 0;
 
 		// GETTERS
 
@@ -67,7 +64,7 @@ class geometry {
 		 * false if otherwise. Depending on the type of geometry this
 		 * method has a different geometrical interpretation.
 		 */
-		virtual bool is_inside(const vec3& p, float tol = 1.e-6f) const = 0;
+		virtual bool is_inside(const math::vec3& p, float tol = 1.e-6f) const = 0;
 
 		/**
 		 * @brief Returns if the segment defined by the points @e p1
@@ -76,7 +73,7 @@ class geometry {
 		 * @param[in] p2 Second endpoint of the segment.
 		 * @return Returns true if there is intersection.
 		 */
-		virtual bool intersec_segment(const vec3& p1, const vec3& p2) const = 0;
+		virtual bool intersec_segment(const math::vec3& p1, const math::vec3& p2) const = 0;
 
 		/**
 		 * @brief Returns true if the segment [@e p1, @e p2 ] intersects with
@@ -88,7 +85,8 @@ class geometry {
 		 * @return Returns true if the segment and the geometry intersect.
 		 * In this case, the value in @e p_inter will be the intersection point.
 		 */
-		virtual bool intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const = 0;
+		virtual bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const = 0;
 
 		// OTHERS
 
@@ -117,7 +115,7 @@ class geometry {
 		 * @param[out] pred The particle with the result of the collision.
 		 */
 		virtual void update_upon_collision(
-			const vec3& pred_pos, const vec3& pred_vel,
+			const math::vec3& pred_pos, const math::vec3& pred_vel,
 			particle *pred
 		) const = 0;
 

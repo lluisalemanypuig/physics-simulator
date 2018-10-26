@@ -1,10 +1,17 @@
 #include <physim/geometry/triangle.hpp>
 
-inline
-float triangle_area(const vec3& p1, const vec3& p2, const vec3& p3) {
-	vec3 vivj = p2 - p1;
+inline float triangle_area
+(const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)
+{
+	/*vec3 vivj = p2 - p1;
 	vec3 vivk = p3 - p1;
-	return glm::length(glm::cross(vivj, vivk))/2.0f;
+	return glm::length(glm::cross(vivj, vivk))/2.0f;*/
+
+	physim::math::vec3 vivj, vivk, C;
+	__pm_sub_v_v(vivj, p2, p1);
+	__pm_sub_v_v(vivk, p3, p1);
+	__pm_cross(C, vivj, vivk);
+	return (__pm_norm(C))/2.0;
 }
 
 namespace physim {
@@ -18,17 +25,27 @@ namespace geom {
 
 triangle::triangle() : geometry() { }
 
-triangle::triangle(const vec3& p1,const vec3& p2,const vec3& p3) : geometry() {
-	v1 = p1;
+triangle::triangle(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3) : geometry() {
+	/*v1 = p1;
 	v2 = p2;
 	v3 = p3;
+	pl = plane(v1, v2, v3);*/
+
+	__pm_assign_v(v1, p1);
+	__pm_assign_v(v2, p2);
+	__pm_assign_v(v3, p3);
 	pl = plane(v1, v2, v3);
 }
 
 triangle::triangle(const triangle& t) : geometry(t) {
-	v1 = t.v1;
+	/*v1 = t.v1;
 	v2 = t.v2;
 	v3 = t.v3;
+	pl = t.pl;*/
+
+	__pm_assign_v(v1, t.v1);
+	__pm_assign_v(v2, t.v2);
+	__pm_assign_v(v3, t.v3);
 	pl = t.pl;
 }
 
@@ -36,10 +53,15 @@ triangle::~triangle() { }
 
 // SETTERS
 
-void triangle::set_position(const vec3& v) {
-	v1 += v;
+void triangle::set_position(const math::vec3& v) {
+	/*v1 += v;
 	v2 += v;
 	v3 += v;
+	pl.set_position(v1);*/
+
+	__pm_add_acc_v(v1, v);
+	__pm_add_acc_v(v2, v);
+	__pm_add_acc_v(v3, v);
 	pl.set_position(v1);
 }
 
@@ -49,7 +71,7 @@ const plane& triangle::get_plane() const {
 	return pl;
 }
 
-bool triangle::is_inside(const vec3& p, float tol) const {
+bool triangle::is_inside(const math::vec3& p, float tol) const {
 	// if the point is not inside the plane,
 	// for sure it is not inside the triangle
 	if (not pl.is_inside(p, tol)) {
@@ -73,12 +95,14 @@ geom_type triangle::get_geom_type() const {
 	return geom_type::Triangle;
 }
 
-bool triangle::intersec_segment(const vec3& p1, const vec3& p2) const {
-	vec3 intersection;
+bool triangle::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {
+	math::vec3 intersection;
 	return intersec_segment(p1, p2, intersection);
 }
 
-bool triangle::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
+bool triangle::intersec_segment
+(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const
+{
 	// if the segment does not intersect the plane
 	// surely it does not intersect the triangle
 	if (not pl.intersec_segment(p1,p2, p_inter)) {
@@ -95,12 +119,22 @@ bool triangle::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) c
 
 // OTHERS
 
-void triangle::update_upon_collision(const vec3& pred_pos, const vec3& pred_vel, particle *p) const {
+void triangle::update_upon_collision
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const
+{
 	pl.update_upon_collision(pred_pos, pred_vel, p);
 }
 
 void triangle::display(ostream& os) const {
-	os << *this;
+	os << "I am a triangle" << endl;
+	os << "    with vertices:" << endl;
+	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << endl;
+	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << endl;
+	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << endl;
+	os << "    and plane equation:" << endl;
+	const math::vec3& n = pl.get_normal();
+	os << "        " << n.x() << "*x + " << n.y() << "*y + " << n.z() << "*z + "
+	   << pl.get_constant() << " = 0" << endl;
 }
 
 } // -- namespace geom

@@ -4,10 +4,6 @@
 #include <random>
 using namespace std;
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
-
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/particle.hpp>
@@ -54,24 +50,24 @@ class hose : public initialiser {
 		uniform_real_distribution<float> U01;
 
 		/// The vertex of the cone.
-		vec3 source;
+		math::vec3 source;
 		/// The center of the cone's base.
-		vec3 cc;
+		math::vec3 cc;
 		/// Unit vector along the height.
-		vec3 u;
+		math::vec3 u;
 
 		/**
 		 * @brief Unit vector on the circle.
 		 *
 		 * It is perpendicular to @ref w.
 		 */
-		vec3 v;
+		math::vec3 v;
 		/**
 		 * @brief Unit vector on the circle.
 		 *
 		 * It is perpendicular to @ref v.
 		 */
-		vec3 w;
+		math::vec3 w;
 
 		/// Radius of the cone.
 		float r;
@@ -120,7 +116,7 @@ class hose : public initialiser {
 		 * @param _r See @ref r.
 		 * @param _h See @ref h.
 		 */
-		void set_hose_source(const vec3& _S, const vec3& _u, float _r,float _h);
+		void set_hose_source(const math::vec3& _S, const math::vec3& _u, float _r,float _h);
 
 		// GETTERS
 

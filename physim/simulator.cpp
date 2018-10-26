@@ -5,37 +5,80 @@ namespace physim {
 // PRIVATE
 
 void simulator::init_particle(particle *p) {
-	p->set_force(p->get_mass()*gravity);
+
+	//p->set_force(p->get_mass()*gravity);
+	__pm_mul_v_s(p->get_force(), gravity, p->get_mass());
+
 	global_init->initialise_particle(p);
 
 	// Update the previous position so that Verlet
 	// solver can use it correcly. The other solvers
 	// do not need it, however.
-	p->set_previous_position(p->get_position() - p->get_velocity()*dt);
+
+	// p->set_previous_position(p->get_position() - p->get_velocity()*dt);
+
+	__pm_mul_v_s(p->get_previous_position(), p->get_velocity(), dt);
+	__pm_sub_v_v(p->get_previous_position(), p->get_position(), p->get_previous_position());
 }
 
-void simulator::apply_solver(const particle *p, vec3& pred_pos, vec3& pred_vel) {
+void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3& pred_vel) {
 	const float mass = p->get_mass();
-	const vec3& force = p->get_force();
+	math::vec3 temp;
 
 	switch (solver) {
 		case solver_type::EulerOrig:
+			/*
 			pred_pos = p->get_position() + p->get_velocity()*dt;
 			pred_vel = p->get_velocity() + (force/mass)*dt;
+			*/
+
+			__pm_mul_v_s(pred_pos, p->get_velocity(), dt);	// pred_pos <- velocity*dt
+			__pm_add_acc_v(pred_pos, p->get_position());	// pred_pos <- position + pred_pos
+															//			<- position + velocity*dt
+
+			__pm_mul_v_s(pred_vel, p->get_force(), dt/mass);	// pred_vel <- force*(dt/mass)
+			__pm_add_acc_v(pred_vel, p->get_velocity());	// pred_vel <- velocity + pred_vel
+															//			<- velocity + force*(dt/mass)
 			break;
 
 		case solver_type::EulerSemi:
+			/*
 			pred_vel = p->get_velocity() + (force/mass)*dt;
 			pred_pos = p->get_position() + pred_vel*dt;
+			*/
+
+			__pm_mul_v_s(pred_vel, p->get_force(), dt/mass);	// pred_vel <- force*(dt/mass)
+			__pm_add_acc_v(pred_vel, p->get_velocity());	// pred_vel <- velocity + pred_vel
+															//			<- velocity + force*(dt/mass)
+
+			__pm_mul_v_s(pred_pos, pred_vel, dt);			// pred_pos <- velocity*dt
+			__pm_add_acc_v(pred_pos, p->get_position());	// pred_pos <- position + pred_pos
+															//			<- position + velocity*dt
 			break;
 
 		case solver_type::Verlet:
+			/*
 			pred_pos =
 				p->get_position() +
 				1.00000f*(p->get_position() - p->get_previous_position()) +
 				(force/mass)*dt*dt;
-
 			pred_vel = (pred_pos - p->get_position())/dt;
+			*/
+
+			// temp <- force*((dt*dt)/mass)
+			__pm_mul_v_s(temp, p->get_force(), (dt*dt)/mass);
+			// temp <- cur_pos + force*((dt*dt)/mass)
+			__pm_add_v_v(temp, p->get_position(), temp);
+			// temp <- cur_pos + force*((dt*dt)/mass) - prev_pos
+			//      <- cur_pos - prev_pos + force*((dt*dt)/mass)
+			__pm_sub_v_v(temp, temp, p->get_previous_position());
+			// pred_pos <- cur_position + temp
+			//			<- cur_position + 1.0f*(cur_pos - prev_pos)
+			//			   + force*((dt*dt)/mass)
+			__pm_add_v_v(pred_pos, p->get_position(), temp);
+
+			__pm_sub_v_v(pred_vel, pred_pos, p->get_position());
+			__pm_div_v_s(pred_vel, pred_vel, dt);
 			break;
 
 		default:
@@ -46,7 +89,7 @@ void simulator::apply_solver(const particle *p, vec3& pred_pos, vec3& pred_vel) 
 // PUBLIC
 
 simulator::simulator(const solver_type& s, float t) {
-	gravity = vec3(0.0f, -9.81f, 0.0f);
+	__pm_assign_c(gravity, 0.0f, -9.81f, 0.0f);
 	stime = 0.0f;
 	dt = t;
 	solver = s;
@@ -173,7 +216,7 @@ void simulator::apply_time_step() {
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		vec3 pred_pos, pred_vel;
+		math::vec3 pred_pos, pred_vel;
 		apply_solver(p, pred_pos, pred_vel);
 
 		/* The main idea implemented in the following loop
@@ -250,14 +293,21 @@ void simulator::apply_time_step() {
 					// this solver needs a correct position
 					// for the 'previous' position of the
 					// particle after a collision with geometry
-					coll_pred.set_previous_position(
+
+					/*coll_pred.set_previous_position(
 						coll_pred.get_position() - coll_pred.get_velocity()*dt
-					);
+					);*/
+
+					math::vec3& cp_prev_pos = coll_pred.get_previous_position();
+					__pm_mul_v_s(cp_prev_pos, coll_pred.get_velocity(), dt);
+					__pm_sub_v_v(cp_prev_pos, coll_pred.get_position(), cp_prev_pos);
 				}
 
 				// keep track of the predicted particle's position
-				pred_pos = coll_pred.get_position();
-				pred_vel = coll_pred.get_velocity();
+				/*pred_pos = coll_pred.get_position();
+				pred_vel = coll_pred.get_velocity();*/
+				__pm_assign_v(pred_pos, coll_pred.get_position());
+				__pm_assign_v(pred_vel, coll_pred.get_velocity());
 			}
 		}
 
@@ -277,8 +327,9 @@ void simulator::apply_time_step() {
 
 // SETTERS
 
-void simulator::set_gravity(const vec3& g) {
-	gravity = g;
+void simulator::set_gravity(const math::vec3& g) {
+	//gravity = g;
+	__pm_assign_v(gravity, g);
 }
 
 void simulator::set_time_step(float t) {
@@ -314,7 +365,7 @@ float simulator::get_current_time() const {
 	return stime;
 }
 
-const vec3& simulator::get_gravity() const {
+const math::vec3& simulator::get_gravity() const {
 	return gravity;
 }
 

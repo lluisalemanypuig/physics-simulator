@@ -2,10 +2,10 @@
 
 // C inlcudes
 #include <assert.h>
+#include <stddef.h>
 
-// glm includes
-#include <glm/glm.hpp>
-using namespace glm;
+// physim includes
+#include <physim/math/math.hpp>
 
 namespace physim {
 
@@ -21,13 +21,13 @@ namespace physim {
 class particle {
 	private:
 		/// Previous position of the particle [m].
-		vec3 prev_pos;
+		math::vec3 prev_pos;
 		/// Current position of the particle [m].
-		vec3 cur_pos;
+		math::vec3 cur_pos;
 		/// Current velocity of the particle [m/s].
-		vec3 cur_velocity;
+		math::vec3 cur_velocity;
 		/// Force currently applied to the particle [N].
-		vec3 force;
+		math::vec3 force;
 
 		/// Mass of the particle [Kg].
 		float mass;
@@ -81,7 +81,6 @@ class particle {
 		 *
 		 * The attributes of the class take the following values:
 		 * - @ref prev_pos : vec3(0,0,0)
-		 * - @ref cur_pos : vec3(0,0,0)
 		 * - @ref cur_velocity : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
 		 * - @ref bouncing : 1
@@ -92,6 +91,10 @@ class particle {
 		 * - @ref fixed : false
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
+		 *
+		 * The current position (@ref cur_pos) is not initialised
+		 * since it will be overwritten later in the methods that
+		 * also call this one.
 		 */
 		void init();
 
@@ -101,7 +104,7 @@ class particle {
 		/// Construct particle with position as 3 float values.
 		particle(const float& x, const float& y, const float& z);
 		/// Construct particle with position as a vec3.
-		particle(const vec3& pos);
+		particle(const math::vec3& pos);
 		/// Copy constructor.
 		particle(const particle& p);
 		/// Destructor.
@@ -115,7 +118,7 @@ class particle {
 		 * Increment current position (see @ref cur_pos) by @e v.
 		 * @param v The direction of the translation.
 		 */
-		void translate(const vec3& v);
+		void translate(const math::vec3& v);
 		/**
 		 * @brief Increment the velocity of the particle.
 		 *
@@ -123,7 +126,7 @@ class particle {
 		 * by @e v.
 		 * @param v The direction of the acceleration.
 		 */
-		void accelerate(const vec3& v);
+		void accelerate(const math::vec3& v);
 
 		/**
 		 * @brief Adds @e (x,y,z) to the particle's @ref force.
@@ -134,7 +137,7 @@ class particle {
 		 * @brief Adds @e f to the particle's @ref force.
 		 * @post @ref force += @e f
 		 */
-		void add_force(const vec3& f);
+		void add_force(const math::vec3& f);
 
 		/**
 		 * @brief Decreases the lifetime by @e t.
@@ -161,22 +164,22 @@ class particle {
 		/// Sets the previous position of the particle. See @ref prev_pos.
 		void set_previous_position(const float& x, const float& y, const float& z);
 		/// Sets the previous position of the particle. See @ref prev_pos.
-		void set_previous_position(const vec3& pos);
+		void set_previous_position(const math::vec3& pos);
 
 		/// Sets the current position of the particle. See @ref cur_pos.
 		void set_position(const float& x, const float& y, const float& z);
 		/// Sets the current position of the particle. See @ref cur_pos.
-		void set_position(const vec3& pos);
+		void set_position(const math::vec3& pos);
 
 		/// Sets the current velocity of the particle. See @ref cur_velocity.
 		void set_velocity(const float& x, const float& y, const float& z);
 		/// Sets the current velocity of the particle. See @ref cur_velocity.
-		void set_velocity(const vec3& vel);
+		void set_velocity(const math::vec3& vel);
 
 		/// Sets the force of the particle. See @ref force.
 		void set_force(const float& x, const float& y, const float& z);
 		/// Sets the force of the particle. See @ref force.
-		void set_force(const vec3& f);
+		void set_force(const math::vec3& f);
 
 		/// Sets the mass of the particle. See @ref mass.
 		void set_mass(float m);
@@ -197,13 +200,21 @@ class particle {
 		// GETTERS
 
 		/// Returns the previous position. See @ref prev_pos.
-		const vec3& get_previous_position() const;
+		math::vec3& get_previous_position();
+		/// Returns the previous position. See @ref prev_pos.
+		const math::vec3& get_previous_position() const;
 		/// Returns the current position. See @ref cur_pos.
-		const vec3& get_position() const;
+		math::vec3& get_position();
+		/// Returns the current position. See @ref cur_pos.
+		const math::vec3& get_position() const;
 		/// Returns the current velocity of the particle. See @ref cur_velocity.
-		const vec3& get_velocity() const;
+		math::vec3& get_velocity();
+		/// Returns the current velocity of the particle. See @ref cur_velocity.
+		const math::vec3& get_velocity() const;
 		/// Returns the force applied to the particle. See @ref force.
-		const vec3& get_force() const;
+		math::vec3& get_force();
+		/// Returns the force applied to the particle. See @ref force.
+		const math::vec3& get_force() const;
 		/// Returns the mass of the particle. See @ref mass.
 		float get_mass() const;
 		/// Returns the bouncing coefficient of the particle. See @ref bouncing.

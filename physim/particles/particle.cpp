@@ -5,10 +5,9 @@ namespace physim {
 // PRIVATE
 
 void particle::init() {
-	prev_pos = vec3(0.0f,0.0f,0.0f);
-	cur_pos = vec3(0.0f,0.0f,0.0f);
-	cur_velocity = vec3(0.0f,0.0f,0.0f);
-	force = vec3(0.0f,0.0f,0.0f);
+	__pm_assign_c(prev_pos, 0.0f,0.0f,0.0f);
+	__pm_assign_c(cur_velocity, 0.0f,0.0f,0.0f);
+	__pm_assign_c(force, 0.0f,0.0f,0.0f);
 	mass = 1.0f;
 	bouncing = 1.0f;
 	friction = 0.0f;
@@ -21,24 +20,24 @@ void particle::init() {
 
 particle::particle() {
 	init();
-	cur_pos = vec3(0.0f,0.0f,0.0f);
+	__pm_assign_c(cur_pos, 0.0f,0.0f,0.0f);
 }
 
 particle::particle(const float& x, const float& y, const float& z) {
 	init();
-	cur_pos = vec3(x,y,z);
+	__pm_assign_c(cur_pos, x,y,z);
 }
 
-particle::particle(const vec3& p) {
+particle::particle(const math::vec3& p) {
 	init();
-	cur_pos = p;
+	__pm_assign_v(cur_pos, p);
 }
 
 particle::particle(const particle& p) {
-	prev_pos = p.prev_pos;
-	cur_pos = p.cur_pos;
-	cur_velocity = p.cur_velocity;
-	force = p.force;
+	__pm_assign_v(prev_pos, p.prev_pos);
+	__pm_assign_v(cur_pos, p.cur_pos);
+	__pm_assign_v(cur_velocity, p.cur_velocity);
+	__pm_assign_v(force, p.force);
 
 	mass = p.mass;
 	friction = p.friction;
@@ -53,19 +52,19 @@ particle::~particle() { }
 
 // MODIFIERS
 
-void particle::translate(const vec3& v) {
-	cur_pos += v;
+void particle::translate(const math::vec3& v) {
+	__pm_add_acc_v(cur_pos, v);
 }
 
-void particle::accelerate(const vec3& v) {
-	cur_velocity += v;
+void particle::accelerate(const math::vec3& v) {
+	__pm_add_acc_v(cur_velocity, v);
 }
 
 void particle::add_force(const float& x, const float& y, const float& z) {
-	force += vec3(x,y,z);
+	__pm_add_acc_c(force, x,y,z);
 }
-void particle::add_force(const vec3& f) {
-	force += f;
+void particle::add_force(const math::vec3& f) {
+	__pm_add_acc_v(force, f);
 }
 
 void particle::reduce_lifetime(float t) {
@@ -79,37 +78,37 @@ void particle::reduce_starttime(float t) {
 }
 
 void particle::save_position() {
-	prev_pos = cur_pos;
+	__pm_assign_v(prev_pos, cur_pos);
 }
 
 // SETTERS
 
 void particle::set_previous_position(const float& x, const float& y, const float& z) {
-	prev_pos = vec3(x,y,z);
+	__pm_assign_c(prev_pos, x,y,z);
 }
-void particle::set_previous_position(const vec3& p) {
-	prev_pos = p;
+void particle::set_previous_position(const math::vec3& p) {
+	__pm_assign_v(prev_pos, p);
 }
 
 void particle::set_position(const float& x, const float& y, const float& z) {
-	cur_pos = vec3(x,y,z);
+	__pm_assign_c(cur_pos, x,y,z);
 }
-void particle::set_position(const vec3& p) {
-	cur_pos = p;
+void particle::set_position(const math::vec3& p) {
+	__pm_assign_v(cur_pos, p);
 }
 
 void particle::set_velocity(const float& x, const float& y, const float& z) {
-	cur_velocity = vec3(x,y,z);
+	__pm_assign_c(cur_velocity, x,y,z);
 }
-void particle::set_velocity(const vec3& vel) {
-	cur_velocity = vel;
+void particle::set_velocity(const math::vec3& vel) {
+	__pm_assign_v(cur_velocity, vel);
 }
 
 void particle::set_force(const float& x, const float& y, const float& z) {
-	force = vec3(x,y,z);
+	__pm_assign_c(force, x,y,z);
 }
-void particle::set_force(const vec3& f) {
-	force = f;
+void particle::set_force(const math::vec3& f) {
+	__pm_assign_v(force, f);
 }
 
 void particle::set_mass(float m) {
@@ -142,19 +141,31 @@ void particle::set_index(size_t i) {
 
 // GETTERS
 
-const vec3& particle::get_previous_position() const {
+math::vec3& particle::get_previous_position() {
+	return prev_pos;
+}
+const math::vec3& particle::get_previous_position() const {
 	return prev_pos;
 }
 
-const vec3& particle::get_position() const {
+math::vec3& particle::get_position() {
+	return cur_pos;
+}
+const math::vec3& particle::get_position() const {
 	return cur_pos;
 }
 
-const vec3& particle::get_velocity() const {
+math::vec3& particle::get_velocity() {
+	return cur_velocity;
+}
+const math::vec3& particle::get_velocity() const {
 	return cur_velocity;
 }
 
-const vec3& particle::get_force() const {
+math::vec3& particle::get_force() {
+	return force;
+}
+const math::vec3& particle::get_force() const {
 	return force;
 }
 
