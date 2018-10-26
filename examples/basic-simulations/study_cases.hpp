@@ -16,6 +16,7 @@ using namespace std;
 #include <physim/particles/particle.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
+using namespace geom;
 using namespace init;
 
 // Custom includes
