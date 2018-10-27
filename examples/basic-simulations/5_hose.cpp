@@ -104,27 +104,16 @@ namespace study_cases {
 		math::vec3 P(-1.0f, 3.0f, 0.5f);
 		math::vec3 S(-1.5f, 5.0f,-1.5f);
 
-		//math::vec3 hose_direction = glm::normalize(L - K);
-		math::vec3 hose_direction;
-		__pm_sub_v_v(hose_direction, L, K);
-		__pm_normalise(hose_direction, hose_direction);
+		math::vec3 hdir = math::normalise(L - K);
 
-		//math::vec3 hK = K + hose_direction*0.1f + math::vec3(0.0f,0.5f,0.0f);
-		//math::vec3 hL = L + hose_direction*0.1f + math::vec3(0.0f,0.5f,0.0f);
-		math::vec3 hK, hL;
-		__pm_add_v_vs(hK, K, hose_direction,0.1f);
-		__pm_add_acc_v(hK, math::vec3(0.0f,0.5f,0.0f));
-		__pm_add_v_vs(hL, L, hose_direction,0.1f);
-		__pm_add_acc_v(hL, math::vec3(0.0f,0.5f,0.0f));
+		math::vec3 hK = K + hdir*0.1f + math::vec3(0.0f,0.5f,0.0f);
+		math::vec3 hL = L + hdir*0.1f + math::vec3(0.0f,0.5f,0.0f);
 
 		// displaced hose direction
-		math::vec3 diff;
-		__pm_sub_v_v(diff, hL, hK);
-		math::vec3 dhose_direction;
-		__pm_normalise(dhose_direction, diff);
+		math::vec3 dhdir = hL - hK;
 
 		hose h;
-		h.set_hose_source(hK, dhose_direction, 0.5f, __pm_norm(diff));
+		h.set_hose_source(hK, math::normalise(dhdir), 0.5f, math::norm(dhdir));
 		h.set_starttime_initialiser(
 			[n_particles](particle *p) {
 				p->set_starttime( p->get_index()/(float(n_particles)) );

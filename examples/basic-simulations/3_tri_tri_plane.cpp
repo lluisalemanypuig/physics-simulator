@@ -197,7 +197,7 @@ namespace study_cases {
 			for (size_t i = 0; i < trajectory.size(); ++i) {
 				const math::vec3& v = trajectory[i];
 				cout << "Point({"
-					 << v.x() << "," << v.y() << "," << v.z()
+					 << v.x << "," << v.y << "," << v.z
 					 << "})";
 				if (i < trajectory.size() - 1) {
 					cout << ",";
@@ -230,7 +230,7 @@ namespace study_cases {
 				for (size_t i = 0; i < trajectory.size(); ++i) {
 					const math::vec3& v = trajectory[i];
 					fout << "Point({"
-						 << v.x() << "," << v.y() << "," << v.z()
+						 << v.x << "," << v.y << "," << v.z
 						 << "})";
 					if (i < trajectory.size() - 1) {
 						fout << ",";
@@ -241,7 +241,7 @@ namespace study_cases {
 				// then in plain text
 				for (size_t i = 0; i < trajectory.size(); ++i) {
 					const math::vec3& v = trajectory[i];
-					fout << v.x() << "," << v.y() << "," << v.z() << endl;
+					fout << v.x << "," << v.y << "," << v.z << endl;
 				}
 				fout.close();
 			}
