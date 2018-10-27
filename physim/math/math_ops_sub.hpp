@@ -85,7 +85,7 @@
 	__pm_assign_c(i,(f).x*(s1) - (g).x*(s2) - (h).x,\
 					(f).y*(s1) - (g).y*(s2) - (h).y,\
 					(f).z*(s1) - (g).z*(s2) - (h).z)
-// h <- f*s1 - g*s2 - (x,y,x)
+// h <- f*s1 - g*s2 - (x,y,z)
 #define __pm_sub_vs_vs_c(h, f,s1, g,s2, x,y,z)		\
 	__pm_assign_c(h,(f).x*(s1) - (g).x*(s2) - (x),	\
 					(f).y*(s1) - (g).y*(s2) - (y),	\
@@ -100,12 +100,12 @@
 	(f).x -= (g).x;									\
 	(f).y -= (g).y;									\
 	(f).z -= (g).z
-// f <- f - g - (x,y,x)
+// f <- f - g - (x,y,z)
 #define __pm_sub_acc_v_c(f,g, x,y,z)				\
 	(f).x -= ((g).x + (x));							\
 	(f).y -= ((g).y + (y));							\
 	(f).z -= ((g).z + (z))
-// f <- f + g + (x,y,x) + (s,s,s)
+// f <- f + g + (x,y,z) + (s,s,s)
 #define __pm_sub_acc_v_c_s(f,g, x,y,z, s)			\
 	(f).x -= ((g).x + (x) + (s));					\
 	(f).y -= ((g).y + (y) + (s));					\
@@ -165,7 +165,7 @@
 	(i).x -= ((f).x*(s1) + (g).x*(s2) + (h).x);		\
 	(i).y -= ((f).y*(s1) + (g).y*(s2) + (h).y);		\
 	(i).z -= ((f).z*(s1) + (g).z*(s2) + (h).z)
-// h <- h - f*s1 - g*s2 - (x,y,x)
+// h <- h - f*s1 - g*s2 - (x,y,z)
 #define __pm_sub_acc_vs_vs_c(h, f,s1, g,s2, x,y,z)	\
 	(h).x -= ((f).x*(s1) + (g).x*(s2) + (x));		\
 	(h).y -= ((f).y*(s1) + (g).y*(s2) + (y));		\
