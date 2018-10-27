@@ -17,11 +17,6 @@ rectangle::rectangle
 (const math::vec3& p1,const math::vec3& p2,const math::vec3& p3,const math::vec3& p4)
 	: geometry()
 {
-	/*v1 = p1;
-	v2 = p2;
-	v3 = p3;
-	v4 = p4;
-	pl = plane(v1, v2, v3);*/
 	__pm_assign_v(v1, p1);
 	__pm_assign_v(v2, p2);
 	__pm_assign_v(v3, p3);
@@ -32,23 +27,11 @@ rectangle::rectangle
 	// make sure that last vertex is on plane...
 	assert(pl.is_inside(v4));
 
-	/*min = min4(v1,v2,v3,v4);
-	max = max4(v1,v2,v3,v4);*/
-
 	__pm_min_vec4(min, v1,v2,v3,v4);
 	__pm_max_vec4(max, v1,v2,v3,v4);
 }
 
 rectangle::rectangle(const rectangle& r) : geometry(r) {
-	/*v1 = v1;
-	v2 = v2;
-	v3 = v3;
-	v4 = v4;
-	pl = pl;
-
-	min = min;
-	max = max;*/
-
 	__pm_assign_v(v1, r.v1);
 	__pm_assign_v(v2, r.v2);
 	__pm_assign_v(v3, r.v3);
@@ -63,15 +46,6 @@ rectangle::~rectangle() { }
 // SETTERS
 
 void rectangle::set_position(const math::vec3& v) {
-	/*v1 += v;
-	v2 += v;
-	v3 += v;
-	v4 += v;
-	pl.set_position(v1);
-
-	min += v;
-	max += v;*/
-
 	__pm_add_acc_v(v1, v);
 	__pm_add_acc_v(v2, v);
 	__pm_add_acc_v(v3, v);
@@ -93,18 +67,6 @@ bool rectangle::is_inside(const math::vec3& p, float tol) const {
 	if (not pl.is_inside(p, tol)) {
 		return false;
 	}
-	/*if (not (min.x <= p.x and p.x <= max.x)) {
-		// outside x
-		return false;
-	}
-	if (not (min.y <= p.y and p.y <= max.y)) {
-		// outside y
-		return false;
-	}
-	if (not (min.z <= p.z and p.z <= max.z)) {
-		// outside z
-		return false;
-	}*/
 
 	// If the point is on the associated plane
 	// then it only remains to check that is is

@@ -23,14 +23,6 @@ void hose::make_vel_init() {
 		const float y = this->r*this->U01(this->E);
 		const float phi = 2.0f*3.1415926535f*this->U01(this->E);
 
-		/*
-		vec3 base_point =
-			this->cc +
-			x*std::cos(phi)*this->v +
-			y*std::sin(phi)*this->w;
-		p->set_velocity(base_point - this->source);
-		*/
-
 		math::vec3 base_point;
 		__pm_add_vs_vs(base_point, this->v,(x*std::cos(phi)), this->w,(y*std::cos(phi)));
 		__pm_add_acc_v(base_point, this->cc);
@@ -50,11 +42,6 @@ hose::hose(const hose& H) : initialiser(H) {
 	E = H.E;
 	U01 = H.U01;
 
-	/*source = H.source;
-	cc = H.cc;
-	u = H.u;
-	v = H.v;
-	w = H.w;*/
 	__pm_assign_v(source, H.source);
 	__pm_assign_v(cc, H.cc);
 	__pm_assign_v(u, H.u);
@@ -81,22 +68,16 @@ hose::~hose() { }
 void hose::set_hose_source(const math::vec3& _S, const math::vec3& _u, float _r,float _h) {
 	assert( std::abs(__pm_norm(_u) - 1.0f) <= 1e-06f );
 
-	//source = _S;
 	__pm_assign_v(source, _S);
 
 	r = _r;
 	h = _h;
-
-	/*u = _u;
-	v = normalize(vec3(u.y, -u.x, 0));
-	w = glm::cross(u, v);*/
 
 	__pm_assign_v(u, _u);
 	__pm_perp(v, u);
 	__pm_normalise(v,v);
 	__pm_cross(w, u,v);
 
-	//cc = source + h*u;
 	__pm_assign_v(cc, source);
 	__pm_add_v_s(cc, u, h);
 

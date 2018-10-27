@@ -12,15 +12,11 @@ namespace geom {
 sphere::sphere() : geometry() { }
 
 sphere::sphere(const math::vec3& c, float r) : geometry() {
-	//C = c;
-
 	__pm_assign_v(C, c);
 	R = r;
 }
 
 sphere::sphere(const sphere& s) : geometry(s) {
-	//C = s.C;
-
 	__pm_assign_v(C, s.C);
 	R = s.R;
 }
@@ -30,7 +26,6 @@ sphere::~sphere() { }
 // SETTERS
 
 void sphere::set_position(const math::vec3& p) {
-	//C = p;
 	__pm_assign_v(C, p);
 }
 
@@ -52,10 +47,6 @@ float sphere::get_radius() const {
 
 bool sphere::is_inside(const math::vec3& p, float tol) const {
 	// compute squared distance from centre to p
-	/*float dx = (C.x - p.x)*(C.x - p.x);
-	float dy = (C.y - p.y)*(C.y - p.y);
-	float dz = (C.z - p.z)*(C.z - p.z);
-	return (dx + dy + dz - R*R <= tol);*/
 	return ((__pm_dist2(C,p)) - R*R) <= tol;
 }
 
@@ -93,59 +84,6 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	 *	c = C**C + p**p - 2(p**C) - r*r
 	 *
 	 */
-
-	/*
-	// coefficients of quadratic equation
-	vec3 v = q - p;
-	float a = glm::dot(v,v);
-	float b = 2.0f*glm::dot(p - C,v);
-	float c = glm::dot(C,C) + glm::dot(p,p) - 2.0f*glm::dot(p,C) - R*R;
-
-	// discriminant of the quadratic equation
-	float discr = b*b - 4.0f*a*c;
-
-	// make sure the discriminant is positive
-	// to be safe that we can compute the square root
-	assert(discr >= 0.0f);
-
-	// compute both solutions of the equation and
-	// take the one that is closest to the interval [0,1]
-	float Lp = (-b + sqrt(discr))/(2.0f*a);
-	float Lm = (-b - sqrt(discr))/(2.0f*a);
-
-	float dp = 0.0f;
-	if (Lp < 0.0f) {
-		dp = abs(Lp);
-	}
-	else if (Lp > 1.0f) {
-		dp = Lp - 1.0f;
-	}
-	float dm = 0.0f;
-	if (Lm < 0.0f) {
-		dm = abs(Lm);
-	}
-	else if (Lm > 1.0f) {
-		dm = Lm - 1.0f;
-	}
-	float L = (dp < dm ? Lp : Lm);
-
-	#if defined (DEBUG)
-	// make sure that L has the right value (with some tolerance)
-	if (not (-0.00009f <= L and L <= 1.00009f)) {
-		cerr << "sphere::intersec_segment: Error:" << endl;
-		cerr << "    Value of L to determine intersection point is not valid." << endl;
-		cerr << "    L= " << L << endl;
-		cerr << "    Between the two solutions:" << endl;
-		cerr << "        Lp= " << Lp << ", dp= " << dp << endl;
-		cerr << "        Lm= " << Lm << ", dm= " << dm << endl;
-		assert( false );
-	}
-	#endif
-
-	// compute intersection point
-	p_inter = (1 - L)*p + L*q;
-	return true;
-	*/
 
 	// coefficients of quadratic equation
 	math::vec3 p_minus_C;
@@ -212,24 +150,6 @@ void sphere::update_upon_collision
 {
 	// define a plane tangent to the sphere
 	// that goes through the intersection point
-
-	/*
-	// compute intersection point
-	const math::vec3& pos = p->get_position();
-
-	vec3 I;
-	bool r = intersec_segment(pos, pred_pos, I);
-	if (not r) {
-		return;
-	}
-
-	// define the plane
-	vec3 normal = C - I;
-	plane tan_plane(normal,I);
-
-	// tell the plane to update the particle
-	tan_plane.update_upon_collision(pred_pos, pred_vel, p);
-	*/
 
 	// compute intersection point
 

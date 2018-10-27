@@ -9,16 +9,6 @@ namespace init {
 
 void rect_fountain::make_vel_init() {
 	vel = [this](particle *p) {
-		/*const vec3& pos = p->get_position();
-
-		float d2 = glm::dot(pos - this->C,pos - this->C);
-		const float D2 = (this->h*this->h + this->w*this->w)/4.0f;
-
-		vec3 V = pos + this->n;
-		vec3 CV = (D2/d2)*glm::normalize(V - this->C);
-
-		p->set_velocity( CV );*/
-
 		const float d2 = __pm_dist2(p->get_position(),this->C);
 		const float D2 = (this->h*this->h + this->w*this->w)/4.0f;
 
