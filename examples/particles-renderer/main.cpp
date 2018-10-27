@@ -2,7 +2,7 @@
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
-	/* You see, Qt (either the library or QtCreator
+	/* You see, Qt (either the library or QtCreator)
 	 * changes the C/C++'s default locale to the
 	 * system's locale. And queer things happen when
 	 * the locale changes (the system's locale may
