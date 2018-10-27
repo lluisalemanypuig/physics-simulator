@@ -3,18 +3,15 @@
 // C++ includes
 #include <iostream>
 #include <vector>
-using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
-using namespace glm;
 
 // Qt includes
 #include <QOpenGLFunctions>
 
 // Custom includes
 #include "mesh_utils.hpp"
-using namespace glm;
 
 /**
  * @brief Implements a mesh that need not be triangular.
@@ -22,29 +19,29 @@ using namespace glm;
 class mesh {
 	protected:
 		/// Mesh name. Used for debugging purposes.
-		string mesh_name;
+		std::string mesh_name;
 
 		// mesh data
 		/// Vertices of the mesh.
-		vector<vec3> vertices;
+		std::vector<glm::vec3> vertices;
 		/// Normals of the mesh.
-		vector<vec3> normals;
+		std::vector<glm::vec3> normals;
 		/**
 		 * @brief Vertices indices of each face.
 		 *
 		 * The number of triangles is, then: triangle.s.size()/3
 		 */
-		vector<int> triangles;
+		std::vector<int> triangles;
 		/**
 		 * @brief Normal indices of each face.
 		 *
 		 * There must be as many normal indices as triangle indices.
 		 */
-		vector<int> normal_idxs;
+		std::vector<int> normal_idxs;
 
 	protected:
 		/// Computes the normal of the plane containing triangle @e f.
-		vec3 triangle_normal(int F) const;
+		glm::vec3 triangle_normal(int F) const;
 
 	public:
 		/// Default constructor.
@@ -55,15 +52,15 @@ class mesh {
 		// SETTERS
 
 		/// Sets the name of the mesh.
-		void set_name(const string& name);
+		void set_name(const std::string& name);
 		/// Sets the vertices of the mesh.
-		void set_vertices(const vector<vec3>& verts);
+		void set_vertices(const std::vector<glm::vec3>& verts);
 		/// Sets the normals of the mesh.
-		void set_normals(const vector<vec3>& nrmls);
+		void set_normals(const std::vector<glm::vec3>& nrmls);
 		/// Sets the triangles of the mesh.
-		void set_triangles(const vector<int>& tris);
+		void set_triangles(const std::vector<int>& tris);
 		/// Sets the normals of the mesh.
-		void set_normal_idxs(const vector<int>& nrmls_idxs);
+		void set_normal_idxs(const std::vector<int>& nrmls_idxs);
 
 		// GETTERS
 

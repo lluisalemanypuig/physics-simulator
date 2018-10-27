@@ -4,23 +4,15 @@
 #include <assert.h>
 
 // C++ includes
-#include <algorithm>
-#include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <cstdio>
 #include <vector>
 #include <string>
 #include <cmath>
-#include <list>
-using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
-using namespace glm;
-
-// Qt includes
-#include <QOpenGLFunctions>
 
 // Custom includes
 #include "mesh/rendered_mesh.hpp"
@@ -48,44 +40,44 @@ class OBJ_reader {
 		 *
 		 * Only used for debugging purposes.
 		 */
-		string mesh_name;
+		std::string mesh_name;
 		/**
 		 * @brief Directory of the .obj file.
 		 *
 		 * This directory should also contain the
 		 * corresponding .mtl and texture files.
 		 */
-		string directory;
+		std::string directory;
 		/// Name of the .obj file to read.
-		string filename;
+		std::string filename;
 		/// Contents of the file, line by line.
-		vector<string> file_lines;
+		std::vector<std::string> file_lines;
 
 		// mesh data
 		/// Vertices of the mesh.
-		vector<vec3> vertices;
+		std::vector<glm::vec3> vertices;
 		/// Normals per vertex.
-		vector<vec3> normals;
+		std::vector<glm::vec3> normals;
 		/// Vertex indices.
-		vector<int> triangles;
+		std::vector<int> triangles;
 		/// Normal indices.
-		vector<int> normal_idxs;
+		std::vector<int> normal_idxs;
 		/// Material ids per face.
-		vector<string> mat_ids;
+		std::vector<std::string> mat_ids;
 
 		// materials and textures
 		/// Set of materials found in the file.
-		vector<material> materials;
+		std::vector<material> materials;
 		/// Texture coordinates.
-		vector<vec2> textures_coords;
+		std::vector<glm::vec2> textures_coords;
 		/// Texture indices per triangle.
-		vector<int> texture_idxs;
+		std::vector<int> texture_idxs;
 		/**
 		 * @brief Indexes of textures.
 		 *
 		 * These indices point to the textures loaded.
 		 */
-		vector<unsigned int> textures_indices;
+		std::vector<unsigned int> textures_indices;
 
 		/// Frees the memory occupied by the loader.
 		void clean();
@@ -125,7 +117,7 @@ class OBJ_reader {
 		 * @param[out] M The mesh constructed using the data in the file.
 		 * @return Returns true on success.
 		 */
-		bool load_object(const string& dir, const string& name, rendered_mesh& M);
+		bool load_object(const std::string& dir, const std::string& name, rendered_mesh& M);
 
 };
 

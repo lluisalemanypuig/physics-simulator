@@ -1,12 +1,13 @@
 #pragma once
 
+// C++ includes
 #include <string>
-using namespace std;
 
+// glm includes
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
-using namespace glm;
 
+// constant for texture indices
 #if !defined (TEXTURE_START)
 	#define TEXTURE_START 1
 #else
@@ -18,7 +19,7 @@ using namespace glm;
  */
 struct material {
 	/// Identifier of this material.
-	string ID;
+	std::string ID;
 	/// Texture used on this material.
 	int textureID;
 	/// Illumination model.
@@ -30,11 +31,11 @@ struct material {
 	/// Transparency.
 	float d;
 	/// Ambient colour, with transparency.
-	vec4 Ka;
+	glm::vec4 Ka;
 	/// Diffuse colour, with transparency.
-	vec4 Kd;
+	glm::vec4 Kd;
 	/// Specular colour, with transparency.
-	vec4 Ks;
+	glm::vec4 Ks;
 
 	/**
 	 * @brief Constructor.
@@ -50,11 +51,11 @@ struct material {
 	 */
 	material
 	(
-		const vec3& amb,
-		const vec3& dif,
-		const vec3& spec,
+		const glm::vec3& amb,
+		const glm::vec3& dif,
+		const glm::vec3& spec,
 		float ns, float ni,float D,
-		int ill, int textID, const string& id
+		int ill, int textID, const std::string& id
 	);
 
 	/// Copy constructor.

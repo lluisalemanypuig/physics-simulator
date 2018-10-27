@@ -1,20 +1,22 @@
 #include "mesh.hpp"
 
+using namespace std;
+
 // PRIVATE
 
 // PROTECTED
 
-vec3 mesh::triangle_normal(int t) const {
+glm::vec3 mesh::triangle_normal(int t) const {
 	assert(t != -1);
 
 	int T = 3*t;
-	const vec3& v1 = vertices[triangles[T    ]];
-	const vec3& v2 = vertices[triangles[T + 1]];
-	const vec3& v3 = vertices[triangles[T + 2]];
+	const glm::vec3& v1 = vertices[triangles[T    ]];
+	const glm::vec3& v2 = vertices[triangles[T + 1]];
+	const glm::vec3& v3 = vertices[triangles[T + 2]];
 
-	vec3 u = v2 - v1;
-	vec3 v = v3 - v1;
-	vec3 w = glm::normalize(glm::cross(u,v));
+	glm::vec3 u = v2 - v1;
+	glm::vec3 v = v3 - v1;
+	glm::vec3 w = glm::normalize(glm::cross(u,v));
 
 	return w;
 }
@@ -35,11 +37,11 @@ void mesh::set_name(const string& name) {
 	mesh_name = name;
 }
 
-void mesh::set_vertices(const vector<vec3>& verts) {
+void mesh::set_vertices(const vector<glm::vec3>& verts) {
 	vertices = verts;
 }
 
-void mesh::set_normals(const vector<vec3>& nrmls) {
+void mesh::set_normals(const vector<glm::vec3>& nrmls) {
 	normals = nrmls;
 }
 
@@ -91,7 +93,7 @@ void mesh::make_normals_flat() {
 	normal_idxs.clear();
 
 	for (size_t t = 0; t < triangles.size(); t += 3) {
-		vec3 n = triangle_normal(t/3);
+		glm::vec3 n = triangle_normal(t/3);
 
 		int idx = normals.size();
 		normals.push_back(n);
@@ -122,13 +124,13 @@ void mesh::make_normals_smooth() {
 
 	// Firstly, compute the smoothed normals for each vertex,
 	// and store them in a separate vector.
-	vector<vec3> smoothed_normals(vertices.size());
+	vector<glm::vec3> smoothed_normals(vertices.size());
 
 	// compute normals for the vertices that make
 	// up the faces marked with 'smooth = true'
 	for (size_t v = 0; v < vertices.size(); ++v) {
-		smoothed_normals[v] = vec3(0.0f,0.0f,0.0f);
-		vec3& normal = smoothed_normals[v];
+		smoothed_normals[v] = glm::vec3(0.0f,0.0f,0.0f);
+		glm::vec3& normal = smoothed_normals[v];
 
 		// add to 'normal' the normal of those triangles
 		// that share vertex V.

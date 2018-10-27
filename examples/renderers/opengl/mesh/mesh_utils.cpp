@@ -2,11 +2,11 @@
 
 material::material
 (
-	const vec3& amb,
-	const vec3& dif,
-	const vec3& spec,
+	const glm::vec3& amb,
+	const glm::vec3& dif,
+	const glm::vec3& spec,
 	float ns, float ni,float D,
-	int ill, int textID, const string& id
+	int ill, int textID, const std::string& id
 )
 {
 	ID = id;
@@ -15,9 +15,9 @@ material::material
 	d =  D;
 	illum = ill;
 	textureID = textID;
-	Ka = vec4(amb[0], amb[1], amb[2], D);
-	Kd = vec4(dif[0], dif[1], dif[2], D);
-	Ks = vec4(spec[0], spec[1], spec[2], D);
+	Ka = glm::vec4(amb[0], amb[1], amb[2], D);
+	Kd = glm::vec4(dif[0], dif[1], dif[2], D);
+	Ks = glm::vec4(spec[0], spec[1], spec[2], D);
 }
 
 material::material(const material& m) {

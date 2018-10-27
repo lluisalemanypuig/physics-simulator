@@ -3,9 +3,9 @@
 // C++ includes
 #include <vector>
 #include <string>
-using namespace std;
 
 // glm includes
+#include <glm/vec2.hpp>
 
 // Custom includes
 #include "mesh_utils.hpp"
@@ -18,16 +18,16 @@ class rendered_mesh : public mesh {
 		 *
 		 * Material per triangle, not per vertex.
 		 */
-		vector<material> materials;
+		std::vector<material> materials;
 
 		/// Material id per face.
-		vector<string> mat_ids;
+		std::vector<std::string> mat_ids;
 		/// Texture coordinates.
-		vector<vec2> texture_coords;
+		std::vector<glm::vec2> texture_coords;
 		/// Texture indices per vertex.
-		vector<int> texture_idxs;
+		std::vector<int> texture_idxs;
 		/// OpenGL indexes of the textures.
-		vector<unsigned int> textures_indexes;
+		std::vector<unsigned int> textures_indexes;
 
 	public:
 		/// Constructor.
@@ -38,15 +38,15 @@ class rendered_mesh : public mesh {
 		// SETTERS
 
 		/// Sets the material ids of each face.
-		void set_material_ids(const vector<string>& mat_ids);
+		void set_material_ids(const std::vector<std::string>& mat_ids);
 		/// Sets the materials used in this mesh.
-		void set_materials(const vector<material>& mats);
+		void set_materials(const std::vector<material>& mats);
 		/// Sets the texture coordinates.
-		void set_texture_coords(const vector<vec2>& texts);
+		void set_texture_coords(const std::vector<glm::vec2>& texts);
 		/// Sets the texture coordinates indices.
-		void set_texture_idxs(const vector<int>& text_idxs);
+		void set_texture_idxs(const std::vector<int>& text_idxs);
 		/// Sets the loaded texture indices.
-		void set_textures_indices(const vector<unsigned int>& text_idxs);
+		void set_textures_indices(const std::vector<unsigned int>& text_idxs);
 
 		// GETTERS
 

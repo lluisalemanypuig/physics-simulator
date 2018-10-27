@@ -1,5 +1,8 @@
 #include "rendered_mesh.hpp"
 
+#include <iostream>
+using namespace std;
+
 // PRIVATE
 
 // PUBLIC
@@ -20,7 +23,7 @@ void rendered_mesh::set_materials(const vector<material>& mats) {
 	materials = mats;
 }
 
-void rendered_mesh::set_texture_coords(const vector<vec2>& texts) {
+void rendered_mesh::set_texture_coords(const vector<glm::vec2>& texts) {
 	texture_coords = texts;
 }
 
@@ -154,16 +157,16 @@ void rendered_mesh::slow_render() const {
 		glBegin(GL_TRIANGLES);
 		for (int i = t; i < t + 3; ++i) {
 			if (textenable) {
-				const vec2& uv = texture_coords[ texture_idxs[i] ];
+				const glm::vec2& uv = texture_coords[ texture_idxs[i] ];
 				glTexCoord2f(uv.x, 1.0 - uv.y);
 			}
 
 			int vrtx_idx = triangles[i];
 
-			const vec3& n = normals[ normal_idxs[i] ];
+			const glm::vec3& n = normals[ normal_idxs[i] ];
 			glNormal3f(n.x, n.y, n.z);
 
-			const vec3& v = vertices[vrtx_idx];
+			const glm::vec3& v = vertices[vrtx_idx];
 			glVertex3f(v.x, v.y, v.z);
 		}
 		glEnd();
