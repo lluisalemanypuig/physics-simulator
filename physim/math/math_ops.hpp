@@ -9,9 +9,7 @@
 #include <physim/math/math_ops_sub.hpp>
 #include <physim/math/math_ops_mul.hpp>
 #include <physim/math/math_ops_div.hpp>
-
-namespace physim {
-namespace math {
+#include <physim/math/math_ops_mixed.hpp>
 
 /* The readability of the code resulting from using these
  * macros is not too good. However, each of them has a clear
@@ -67,5 +65,3 @@ namespace math {
  * Below follow the details on the defintion of each macro.
  */
 
-} // -- namespace math
-} // -- namespace physim

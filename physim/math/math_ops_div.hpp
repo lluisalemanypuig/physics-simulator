@@ -1,13 +1,7 @@
 #pragma once
 
-// C++ includes
-#include <cmath>
-
 // physim includes
 #include <physim/math/math_misc.hpp>
-
-namespace physim {
-namespace math {
 
 /* DIVISIONS */
 
@@ -31,6 +25,3 @@ namespace math {
 	(g).x *= (1.0f/(s));					\
 	(g).y *= (1.0f/(s));					\
 	(g).z *= (1.0f/(s))
-
-} // -- namespace math
-} // -- namespace physim

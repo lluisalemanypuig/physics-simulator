@@ -1,13 +1,7 @@
 #pragma once
 
-// C++ includes
-#include <cmath>
-
 // physim includes
 #include <physim/math/math_misc.hpp>
-
-namespace physim {
-namespace math {
 
 /* ADDITIONS */
 
@@ -88,7 +82,7 @@ namespace math {
 					(f).z*(s1) - (g).z*(s2))
 // i <- f*s1 - g*s2 - h
 #define __pm_sub_vs_vs_v(i, f,s1, g,s2, h)			\
-	__pm_assign_c(h,(f).x*(s1) - (g).x*(s2) - (h).x,\
+	__pm_assign_c(i,(f).x*(s1) - (g).x*(s2) - (h).x,\
 					(f).y*(s1) - (g).y*(s2) - (h).y,\
 					(f).z*(s1) - (g).z*(s2) - (h).z)
 // h <- f*s1 - g*s2 - (x,y,x)
@@ -177,10 +171,8 @@ namespace math {
 	(h).y -= ((f).y*(s1) + (g).y*(s2) + (y));		\
 	(h).z -= ((f).z*(s1) + (g).z*(s2) + (z))
 // h <- h - f*s1 - g*s2 - (s3,s3,s3)
-#define __pm_sub_acc__vs_vs_s(h, f,s1, g,s2, s3)			\
+#define __pm_sub_acc__vs_vs_s(h, f,s1, g,s2, s3)	\
 	(h).x -= ((f).x*(s1) + (g).x*(s2) + (s3));		\
 	(h).y -= ((f).y*(s1) + (g).y*(s2) + (s3));		\
 	(h).z -= ((f).z*(s1) + (g).z*(s2) + (s3))
 
-} // -- namespace math
-} // -- namespace physim

@@ -1,13 +1,7 @@
 #pragma once
 
-// C++ includes
-#include <cmath>
-
 // physim includes
 #include <physim/math/math_misc.hpp>
-
-namespace physim {
-namespace math {
 
 /* MULTIPLICATIONS */
 
@@ -31,6 +25,3 @@ namespace math {
 	(g).x *= (s);							\
 	(g).y *= (s);							\
 	(g).z *= (s)
-
-} // -- namespace math
-} // -- namespace physim

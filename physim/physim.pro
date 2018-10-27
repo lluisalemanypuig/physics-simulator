@@ -29,9 +29,9 @@ HEADERS +=							\
 	math/math_ops_sub.hpp			\
 	math/math_ops_mul.hpp			\
 	math/math_ops_div.hpp			\
+	math/math_ops_mixed.hpp			\
 	math/math_misc.hpp				\
 	math/math_geometry.hpp
-
 
 SOURCES +=							\
 	simulator.cpp					\
