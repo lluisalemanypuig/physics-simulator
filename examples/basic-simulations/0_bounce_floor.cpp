@@ -90,6 +90,11 @@ namespace study_cases {
 			[](particle *p) {
 				cout << "Initialise particle's position" << endl;
 				p->set_position(0.0f,10.0f,0.0f);
+				cout << "After assignment:" << endl;
+				cout << "    "
+					 << p->get_position().x << ","
+					 << p->get_position().y << ","
+					 << p->get_position().z << endl;
 			}
 		);
 		I.set_vel_initialiser(
@@ -123,7 +128,7 @@ namespace study_cases {
 
 		// execute simulation
 		timing::time_point begin = timing::now();
-		vector<math::vec3> trajectory(total_time/dt);
+		vector<math::vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
 			math::vec3 cur_pos = p->get_position();
@@ -143,18 +148,11 @@ namespace study_cases {
 			cout.setf(ios::fixed);
 			cout.precision(4);
 
-			// only in GeoGebra format
-			cout << "{";
+			// only in plain text
 			for (size_t i = 0; i < trajectory.size(); ++i) {
 				const math::vec3& v = trajectory[i];
-				cout << "Point({"
-					 << v.x << "," << v.y << "," << v.z
-					 << "})";
-				if (i < trajectory.size() - 1) {
-					cout << ",";
-				}
+				cout << v.x << "," << v.y << "," << v.z << endl;
 			}
-			cout << "}" << endl;
 		}
 		else {
 			// store trajectory in output file

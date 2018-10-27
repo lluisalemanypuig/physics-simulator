@@ -130,18 +130,11 @@ namespace study_cases {
 			cout.setf(ios::fixed);
 			cout.precision(4);
 
-			// only in GeoGebra format
-			cout << "{";
+			// only in plain text
 			for (size_t i = 0; i < trajectory.size(); ++i) {
 				const math::vec3& v = trajectory[i];
-				cout << "Point({"
-					 << v.x << "," << v.y << "," << v.z
-					 << "})";
-				if (i < trajectory.size() - 1) {
-					cout << ",";
-				}
+				cout << v.x << "," << v.y << "," << v.z << endl;
 			}
-			cout << "}" << endl;
 		}
 		else {
 			// store trajectory in output file
