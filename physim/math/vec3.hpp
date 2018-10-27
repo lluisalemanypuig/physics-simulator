@@ -1,12 +1,7 @@
 #pragma once
 
 // C++ includes
-#include <fstream>
 #include <cmath>
-
-// physim includes
-#include <physim/math/math_ops.hpp>
-#include <physim/math/math_misc.hpp>
 
 namespace physim {
 namespace math {
@@ -21,119 +16,157 @@ namespace math {
  */
 typedef struct vec3 {
 	/// First component of the vector.
-	float __x;
+	float x;
 	/// Second component of the vector.
-	float __y;
+	float y;
 	/// Third component of the vector.
-	float __z;
+	float z;
 
 	/// Default constructor.
-	vec3() { __pm_assign_c(*this, 0.0f,0.0f,0.0f); }
-	/// Constructor at point (@e p, @e p, @e p).
-	vec3(float p) {
-		__pm_assign_s(*this, p);
-	}
-	/// Construct a vector with coordinates (@e x, @e y, @e z).
-	vec3(float x,float y,float z) {
-		__pm_assign_c(*this, x,y,z);
-	}
+	vec3()								{ x = y = z = 0.0f; }
+	/// Constructor at point (@e s, @e s, @e s).
+	vec3(float s)						{ x = y = z = s; }
+	/// Construct a vector with coordinates (@e _x, @e _y, @e _z).
+	vec3(float _x,float _y,float _z)	{ x = _x; y = _y; z = _z; }
 	/// Copy constructor.
-	vec3(const vec3& vec) {
-		__pm_assign_v(*this, vec);
-	}
+	vec3(const vec3& v)					{ x = v.x; y = v.y; z = v.z; }
 	/// Move constructor.
-	vec3(const vec3&& vec) {
-		__pm_assign_v(*this, vec);
-	}
+	vec3(const vec3&& v)				{ x = v.x; y = v.y; z = v.z; }
 	/// Assignation operator.
-	vec3& operator= (const vec3& vec) {
-		__pm_assign_v(*this, vec); return *this;
-	}
+	vec3& operator= (const vec3& v)		{ x = v.x; y = v.y; z = v.z;	return *this; }
 	/// Scalar-vector addition.
-	inline vec3 operator+ (float k) const		{ vec3 r; __pm_add_v_s(r, *this, k);	return r; }
+	inline vec3 operator+ (float s) const
+	{ vec3 r;	r.x = x + s; r.y = y + s; r.z = z + s;			return r; }
 	/// Vector-vector addition.
-	inline vec3 operator+ (const vec3& k) const	{ vec3 r; __pm_add_v_v(r, *this, k);	return r; }
+	inline vec3 operator+ (const vec3& v) const
+	{ vec3 r;	r.x = x + v.x; r.y = y + v.y; r.z = z + v.z;	return r; }
 	/// Scalar-vector addition.
-	inline vec3& operator+= (float k)			{         __pm_add_acc_s( *this, k);	return *this; }
+	inline vec3& operator+= (float s)
+	{			x += s; y += s; z += s;							return *this; }
 	/// Vector-vector addition.
-	inline vec3& operator+= (const vec3& k)		{         __pm_add_acc_v( *this, k);	return *this; }
+	inline vec3& operator+= (const vec3& v)
+	{			x += v.x; y += v.y; z += v.z;					return *this; }
 	/// Unary '-' operator. Inverts direction of vector.
-	inline vec3 operator- () const				{ vec3 r; __pm_invert(r,*this);		return r; }
+	inline vec3 operator- () const
+	{ vec3 r;	r.x = -x; r.y = -y; r.z = -z;					return r; }
 	/// Scalar-vector substraction.
-	inline vec3 operator- (float k) const		{ vec3 r; __pm_sub_v_s(r, *this, k);	return r; }
+	inline vec3 operator- (float s) const
+	{ vec3 r;	r.x = x - s; r.y = y - s; r.z = z - s;			return r; }
 	/// Vector-vector substraction.
-	inline vec3 operator- (const vec3& k) const	{ vec3 r; __pm_sub_v_v(r, *this, k);	return r; }
+	inline vec3 operator- (const vec3& v) const
+	{ vec3 r;	r.x = x - v.x; r.y = y - v.y; r.z = z - v.z;	return r; }
 	/// Scalar-vector substraction.
-	inline vec3& operator-= (float k)			{         __pm_sub_acc_s( *this, k);	return *this; }
+	inline vec3& operator-= (float s)
+	{			x -= s; y -= s; z -= s;							return *this; }
 	/// Vector-vector substraction.
-	inline vec3& operator-= (const vec3& k)		{         __pm_sub_acc_v( *this, k);	return *this; }
+	inline vec3& operator-= (const vec3& v)
+	{			x -= v.x; y -= v.y; z -= v.z;					return *this; }
 	/// Scalar-vector multiplication.
-	inline vec3 operator* (float k) const		{ vec3 r; __pm_mul_v_s(r, *this, k);	return r; }
+	inline vec3 operator* (float k) const
+	{ vec3 r;	r.x = x*k; r.y = y*k; r.z = z*k;				return r; }
 	/// Vector-vector multiplication.
-	inline vec3 operator* (const vec3& k) const	{ vec3 r; __pm_mul_v_v(r, *this, k);	return r; }
+	inline vec3 operator* (const vec3& v) const
+	{ vec3 r;	r.x = x*v.x; r.y = y*v.y; r.z = z*v.z;			return r; }
 	/// Scalar-vector multiplication.
-	inline vec3& operator*= (float k)			{         __pm_mul_acc_s( *this, k);	return *this; }
+	inline vec3& operator*= (float s)
+	{			x *= s; y *= s; z *= s;							return *this; }
 	/// Vector-vector multiplication.
-	inline vec3& operator*= (const vec3& k)		{         __pm_mul_acc_v( *this, k);	return *this; }
-	/// X-coordinate value.
-	inline float x() const { return __x; }
-	/// Y-coordinate value.
-	inline float y() const { return __y; }
-	/// Z-coordinate value.
-	inline float z() const { return __z; }
+	inline vec3& operator*= (const vec3& v)
+	{			x *= v.x; y *= v.y; z *= v.z;					return *this; }
 } vec3;
 
 /* GEOMETRY */
 
-// The expression of the dot product between two vectors.
-#define __pm_dot(f,g)					\
-	((f).__x*(g).__x +					\
-	 (f).__y*(g).__y +					\
-	 (f).__z*(g).__z)
+/// The dot product between two vectors.
+inline float dot(const vec3& f, const vec3& g) { return f.x*g.x + f.y*g.y + f.z*g.z; }
 
-// The expression for the square of the norm of a vector.
-#define __pm_norm2(g)	(__pm_dot(g,g))
-// The expression for the norm of a vector.
-#define __pm_norm(g)	(std::sqrt((__pm_norm2(g))))
+/// The square of the norm of a vector.
+inline float norm2(const vec3& f) { return dot(f,f); }
+/// The norm of a vector.
+inline float norm(const vec3& f) { return std::sqrt(dot(f,f)); }
 
-// The expression for the squared distance between
-// two points, given their position vectors.
-#define __pm_dist2(u,v)							\
-	(((u).__x - (v).__x)*((u).__x - (v).__x) +	\
-	 ((u).__y - (v).__y)*((u).__y - (v).__y) +	\
-	 ((u).__z - (v).__z)*((u).__z - (v).__z))
-// The expression for the distance between
-// two points, given their position vectors.
-#define __pm_dist(u,v) (std::sqrt(__pm_dist2(u,v)))
+/// The squared distance between two points, given their positional vectors.
+inline float dist2(const vec3& f, const vec3& g) {
+	return (f.x - g.x)*(f.x - g.x) +
+		   (f.y - g.y)*(f.y - g.y) +
+		   (f.z - g.z)*(f.z - g.z);
+}
+/// The distance between two points, given their positional vectors.
+inline float dist(const vec3& f, const vec3& g) {
+	return std::sqrt(dist2(f,g));
+}
 
-// The computation of the cross product of vectors 'f' and 'g'.
-// Result is stored in 'h'. Do not use this macro as
-// '__pm_cross(f, f,g)' since the result will not be correct.
-#define __pm_cross(h, f,g)								\
-	__pm_assign_c(h, (f).__y*(g).__z - (f).__z*(g).__y,	\
-					 (f).__z*(g).__x - (f).__x*(g).__z,	\
-					 (f).__x*(g).__y - (f).__y*(g).__x)
+/**
+ * @brief The cross product of two vectors.
+ * @param[out] h The cross product of @e f and @e g.
+ * @param[in] f Input vector.
+ * @param[in] g Input vector.
+ */
+inline void cross(const vec3& f, const vec3& g, vec3& h) {
+	h.x = f.y*g.z - f.z*g.y;
+	h.y = f.z*g.x - f.x*g.z;
+	h.z = f.x*g.y - f.y*g.x;
+}
+/**
+ * @brief The cross product of two vectors.
+ * @param[in] f Input vector.
+ * @param[in] g Input vector.
+ * @returns Returns the cross product of @e f and @e g.
+ */
+inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); return h; }
 
-// Make a perpendicular vector to 'u'.
-#define __pm_perp(v, u)			\
-	__pm_assign_c(v,(u).__y,	\
-					-(u).__x,	\
-					0.0f)
+/**
+ * @brief Makes a perpendicular vector to @e f.
+ *
+ * Two vectors are perpendicular if, and only if, their
+ * dot product equals 0.
+ * @param[out] g A vector perpendicular to @e f.
+ * @param[in] f Input vector.
+ */
+inline void perpendicular(const vec3& f, vec3& g) {
+	g.x = f.y;
+	g.y = -f.x;
+	g.z = 0.0f;
+}
+/**
+ * @brief Makes a perpendicular vector to @e f.
+ *
+ * Two vectors are perpendicular if, and only if, their
+ * dot product equals 0.
+ * @param f Input vector.
+ * @returns Returns a vector perpendicular to @e f.
+ */
+inline vec3 perpendicular(const vec3& f) { vec3 g; perpendicular(f,g); return g; }
 
 /**
  * @brief Vector normalisation.
  *
- * Each component of vector @e in is divided by its norm. The result
- * is stored in @e out.
- * @param[in] in Vector to be normalised.
- * @param[out] out Where to store the normalised vector.
+ * Each component of vector @e f is divided by its norm.
+ * The result is stored in @e g.
+ * @param[in] f Vector to be normalised.
+ * @param[out] g Where to store the normalised vector.
  */
-inline void normalise_vec3(const vec3& in, vec3& out) {
-	float norm = __pm_norm(in);
-	__pm_div_v_s(out, in, norm);
+inline void normalise(const vec3& f, vec3& g) {
+	float n = norm(f);
+	g.x = f.x*(1.0f/n);
+	g.y = f.y*(1.0f/n);
+	g.z = f.z*(1.0f/n);
 }
-// Normalise vector 'g'.
-#define __pm_normalise(f,g)	normalise_vec3(g,f)
+/**
+ * @brief Vector normalisation.
+ *
+ * Each component of vector @e f is divided by its norm.
+ * @param f Vector to be normalised.
+ * @returns Returns the normalisation of vector @e f.
+ */
+inline vec3 normalise(const vec3& f) {
+	vec3 out;
+	float n = norm(f);
+	out.x = f.x*(1.0f/n);
+	out.y = f.y*(1.0f/n);
+	out.z = f.z*(1.0f/n);
+	return out;
+}
 
 } // -- namespace math
 } // -- namespace physim

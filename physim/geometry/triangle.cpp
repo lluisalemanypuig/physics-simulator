@@ -1,5 +1,7 @@
 #include <physim/geometry/triangle.hpp>
 
+#include <physim/math/math.hpp>
+
 inline float triangle_area
 (const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)
 {
@@ -130,12 +132,12 @@ void triangle::update_upon_collision
 void triangle::display(std::ostream& os) const {
 	os << "I am a triangle" << std::endl;
 	os << "    with vertices:" << std::endl;
-	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << std::endl;
-	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << std::endl;
-	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << std::endl;
+	os << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
+	os << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
+	os << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
 	os << "    and plane equation:" << std::endl;
 	const math::vec3& n = pl.get_normal();
-	os << "        " << n.x() << "*x + " << n.y() << "*y + " << n.z() << "*z + "
+	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
 	   << pl.get_constant() << " = 0" << std::endl;
 }
 

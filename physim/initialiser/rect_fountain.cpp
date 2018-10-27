@@ -1,5 +1,7 @@
 #include <physim/initialiser/rect_fountain.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 namespace init {
 

@@ -6,7 +6,6 @@
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/particle.hpp>
-#include <physim/math/math.hpp>
 
 namespace physim {
 namespace init {

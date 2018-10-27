@@ -1,5 +1,7 @@
 #include <physim/simulator.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 
 // PRIVATE

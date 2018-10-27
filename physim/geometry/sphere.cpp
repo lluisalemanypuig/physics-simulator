@@ -1,5 +1,7 @@
 #include <physim/geometry/sphere.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 namespace geom {
 
@@ -248,7 +250,7 @@ void sphere::update_upon_collision
 
 void sphere::display(std::ostream& os) const {
 	os << "I am a sphere" << std::endl;
-	os << "    with centre: (" << C.x() << "," << C.y() << "," << C.z() << ")" << std::endl;
+	os << "    with centre: (" << C.x << "," << C.y << "," << C.z << ")" << std::endl;
 	os << "    and radius: " << R << std::endl;
 }
 

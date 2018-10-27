@@ -5,7 +5,7 @@
 #include <stddef.h>
 
 // physim includes
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 
 namespace physim {
 

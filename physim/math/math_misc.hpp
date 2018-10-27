@@ -7,24 +7,24 @@ namespace math {
 
 // g <- f
 #define __pm_assign_v(g,f)		\
-	(g).__x = (f).__x;			\
-	(g).__y = (f).__y;			\
-	(g).__z = (f).__z
+	(g).x = (f).x;				\
+	(g).y = (f).y;				\
+	(g).z = (f).z
 // g <- (x,y,z)
-#define __pm_assign_c(g, x,y,z)	\
-	(g).__x = x;				\
-	(g).__y = y;				\
-	(g).__z = z
+#define __pm_assign_c(g, a,b,c)	\
+	(g).x = a;					\
+	(g).y = b;					\
+	(g).z = c
 // g <- (s,s,s)
 #define __pm_assign_s(g, s)		\
-	(g).__x = (g).__y = (g).__z = s
+	(g).x = (g).y = (g).z = s
 
 // m <- min(a,b)
 // (m.x,m.y,m.z) <- (min(a.x,b.x), min(a.y,b.y), min(a.z,b.z))
 #define __pm_min_vec2(m, a,b)					\
-	__pm_assign_c(m,std::min((a).__x,(b).__x),	\
-					std::min((a).__y,(b).__y),	\
-					std::min((a).__z,(b).__z))
+	__pm_assign_c(m,std::min((a).x,(b).x),		\
+					std::min((a).y,(b).y),		\
+					std::min((a).z,(b).z))
 // m <- min(a,b,c) = min(min(a,b),c)
 #define __pm_min_vec3(m, a,b,c)					\
 	__pm_min_vec2(m, a,b);						\
@@ -37,9 +37,9 @@ namespace math {
 // m <- max(a,b)
 // (m.x,m.y,m.z) <- (max(a.x,b.x), max(a.y,b.y), min(a.z,b.z))
 #define __pm_max_vec2(m, a,b)					\
-	__pm_assign_c(m,std::max((a).__x,(b).__x),	\
-					std::max((a).__y,(b).__y),	\
-					std::max((a).__z,(b).__z))
+	__pm_assign_c(m,std::max((a).x,(b).x),		\
+					std::max((a).y,(b).y),		\
+					std::max((a).z,(b).z))
 // m <- max(a,b,c) = max(max(a,b),c)
 #define __pm_max_vec3(m, a,b,c)					\
 	__pm_max_vec2(m, a,b);						\
@@ -52,16 +52,16 @@ namespace math {
 // the contents of 'u' and 'v' are
 // component-wise swapped
 #define __pm_swap_vec(u,v)						\
-	std::swap((u).__x,(v).__x);					\
-	std::swap((u).__y,(v).__y);					\
-	std::swap((u).__z,(v).__z)
+	std::swap((u).x,(v).x);						\
+	std::swap((u).y,(v).y);						\
+	std::swap((u).z,(v).z)
 
 // the expression for the equality
 // of two vectors
 #define __pm_vec_eq(u,v)						\
-	(((u).__x == (v).__x) &&					\
-	 ((u).__y == (v).__y) &&					\
-	 ((u).__z == (v).__z))
+	(((u).x == (v).x) &&						\
+	 ((u).y == (v).y) &&						\
+	 ((u).z == (v).z))
 
 } // -- namespace math
 } // -- namespace physim

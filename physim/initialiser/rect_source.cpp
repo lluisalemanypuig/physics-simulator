@@ -1,5 +1,7 @@
 #include <physim/initialiser/rect_source.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 namespace init {
 

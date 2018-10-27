@@ -1,5 +1,7 @@
 #include <physim/initialiser/rect_shower.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 namespace init {
 

@@ -21,11 +21,12 @@ HEADERS +=							\
 	initialiser/rect_source.hpp		\
 	initialiser/rect_shower.hpp		\
     initialiser/hose.hpp			\
-    particles/particle.hpp \
-    math/math.hpp \
-    math/vec3.hpp \
-    math/math_ops.hpp \
-    math/math_misc.hpp
+	particles/particle.hpp			\
+	math/vec3.hpp					\
+	math/math_ops.hpp				\
+	math/math_misc.hpp				\
+	math/math_geometry.hpp			\
+    math/math.hpp
 
 
 SOURCES +=							\

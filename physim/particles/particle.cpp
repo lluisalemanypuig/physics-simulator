@@ -1,5 +1,7 @@
 #include <physim/particles/particle.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 
 // PRIVATE

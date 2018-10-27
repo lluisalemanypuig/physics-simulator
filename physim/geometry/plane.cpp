@@ -1,5 +1,7 @@
 #include <physim/geometry/plane.hpp>
 
+#include <physim/math/math.hpp>
+
 namespace physim {
 namespace geom {
 
@@ -197,9 +199,9 @@ const
 void plane::display(std::ostream& os) const {
 	os << "I am a plane" << std::endl;
 	os << "    with plane equation:" << std::endl;
-	os << "        " << normal.x() << "*x + "
-					 << normal.y() << "*y + "
-					 << normal.z() << "*z + "
+	os << "        " << normal.x << "*x + "
+					 << normal.y << "*y + "
+					 << normal.z << "*z + "
 					 << dconst << " = 0" << std::endl;
 }
 

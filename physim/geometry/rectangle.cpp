@@ -1,5 +1,7 @@
 #include <physim/geometry/rectangle.hpp>
 
+#include <physim/math/math.hpp>
+
 // LOCAL-DEFINED
 
 namespace physim {
@@ -109,15 +111,15 @@ bool rectangle::is_inside(const math::vec3& p, float tol) const {
 	// inside the bounding box of the rectangle.
 	// If so then the point is 'inside' the rectangle.
 
-	if (not ((min.x() <= p.x()) and (p.x() <= max.x()))) {
+	if (not ((min.x <= p.x) and (p.x <= max.x))) {
 		// outside x
 		return false;
 	}
-	if (not ((min.y() <= p.y()) and (p.y() <= max.y()))) {
+	if (not ((min.y <= p.y) and (p.y <= max.y))) {
 		// outside y
 		return false;
 	}
-	if (not ((min.z() <= p.z()) and (p.z() <= max.z()))) {
+	if (not ((min.z <= p.z) and (p.z <= max.z))) {
 		// outside z
 		return false;
 	}
@@ -165,13 +167,13 @@ void rectangle::update_upon_collision
 void rectangle::display(std::ostream& os) const {
 	os << "I am a rectangle" << std::endl;
 	os << "    with vertices:" << std::endl;
-	os << "        - Point({" << v1.x() << "," << v1.y() << "," << v1.z() << "})" << std::endl;
-	os << "        - Point({" << v2.x() << "," << v2.y() << "," << v2.z() << "})" << std::endl;
-	os << "        - Point({" << v3.x() << "," << v3.y() << "," << v3.z() << "})" << std::endl;
-	os << "        - Point({" << v4.x() << "," << v4.y() << "," << v4.z() << "})" << std::endl;
+	os << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
+	os << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
+	os << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
+	os << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << std::endl;
 	os << "    and plane equation:" << std::endl;
 	const math::vec3& n = pl.get_normal();
-	os << "        " << n.x() << "*x + " << n.y() << "*y + " << n.z() << "*z + "
+	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
 	   << pl.get_constant() << " = 0" << std::endl;
 }
 

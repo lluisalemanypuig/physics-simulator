@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/particles/particle.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace geom {
