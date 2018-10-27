@@ -5,11 +5,9 @@
 inline float triangle_area
 (const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)
 {
-	physim::math::vec3 vivj, vivk, C;
-	__pm_sub_v_v(vivj, p2, p1);
-	__pm_sub_v_v(vivk, p3, p1);
-	__pm_cross(C, vivj, vivk);
-	return (__pm_norm(C))/2.0;
+	physim::math::vec3 C;
+	__pm_cross_diff(C, p1,p2,p3);
+	return __pm_norm(C)/2.0;
 }
 
 namespace physim {
@@ -24,19 +22,20 @@ namespace geom {
 triangle::triangle() : geometry() { }
 
 triangle::triangle
-(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3) : geometry()
+(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3)
+	: geometry(), pl(plane(p1,p2,p3))
 {
 	__pm_assign_v(v1, p1);
 	__pm_assign_v(v2, p2);
 	__pm_assign_v(v3, p3);
-	pl = plane(v1, v2, v3);
 }
 
-triangle::triangle(const triangle& t) : geometry(t) {
+triangle::triangle(const triangle& t)
+	: geometry(t), pl(t.pl)
+{
 	__pm_assign_v(v1, t.v1);
 	__pm_assign_v(v2, t.v2);
 	__pm_assign_v(v3, t.v3);
-	pl = t.pl;
 }
 
 triangle::~triangle() { }

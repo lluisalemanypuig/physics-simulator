@@ -55,9 +55,7 @@ float plane::dist_point_plane(const math::vec3& p) const {
 }
 
 void plane::closest_point_plane(const math::vec3& p, math::vec3& closest) const {
-	float r = -dconst - __pm_dot(p, normal);
-	__pm_mul_v_s(closest, normal, r);
-	__pm_add_v_v(closest, closest, p);
+	__pm_add_v_vs(closest, p, normal,-dconst - __pm_dot(p, normal));
 }
 
 const math::vec3& plane::get_normal() const {
@@ -71,9 +69,7 @@ float plane::get_constant() const {
 // GETTERS
 
 bool plane::is_inside(const math::vec3& p, float tol) const {
-	float dist = __pm_dot(p, normal) + dconst;
-
-	if (dist <= tol) {
+	if ((__pm_dot(p, normal) + dconst) <= tol) {
 		return true;
 	}
 	return false;
@@ -105,20 +101,18 @@ void plane::update_upon_collision
 const
 {
 	p->save_position();
-	math::vec3 temp;
 
 	// Wn is a vector normal to the plane with
 	// direction towards the intersection point
 	// (this point is not needed to calculate Wn)
 
 	math::vec3 Wn;
-	__pm_mul_v_s(Wn, normal, (__pm_dot(pred_pos,normal) + dconst));
+	__pm_mul_v_s(Wn, normal, __pm_dot(pred_pos,normal) + dconst);
 
 	// --- update position --- (with bouncing coefficient)
 
 	float bounce = p->get_bouncing();
-	__pm_mul_v_s(temp, Wn, (1.0f + bounce));
-	__pm_sub_v_v(p->get_position(), pred_pos, temp);
+	__pm_sub_v_vs(p->get_position(), pred_pos, Wn, 1.0f + bounce);
 
 	// --- update velocity (1) --- (with bouncing coefficient)
 
@@ -129,18 +123,14 @@ const
 	__pm_assign_v(vt, p->get_velocity());
 
 	// first update of the velociy (with bouncing)
-	float nv_dot = __pm_dot(normal, pred_vel);
-	__pm_mul_v_s(temp, normal, ((1.0f + bounce)*nv_dot));
-	__pm_sub_v_v(p->get_velocity(), pred_vel, temp);
+	__pm_sub_v_vs(p->get_velocity(), pred_vel, normal,(1.0f + bounce)*__pm_dot(normal, pred_vel));
 
 	// --- update velocity (2) --- (with friction coefficient)
 
 	// Use 'vt', the velocity at time t
 	math::vec3 vT;
-	__pm_mul_v_s(vT, normal, __pm_dot(normal,vt));
-	__pm_sub_v_v(vT, vt, vT);
-	__pm_mul_v_s(vT, vT, p->get_friction());
-	__pm_sub_v_v(p->get_velocity(), p->get_velocity(), vT);
+	__pm_sub_v_vs(vT, vt, normal,__pm_dot(normal,vt));
+	__pm_sub_acc_vs(p->get_velocity(), vT, p->get_friction());
 }
 
 void plane::display(std::ostream& os) const {

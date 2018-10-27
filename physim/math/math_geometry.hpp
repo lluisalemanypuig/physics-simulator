@@ -5,13 +5,19 @@
 
 // physim includes
 #include <physim/math/math_misc.hpp>
-#include <physim/math/math_ops.hpp>
+#include <physim/math/math_ops_add.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace math {
 
 /* GEOMETRICAL OPERATIONS */
+
+// Change direction of vector to its opposite
+#define __pm_invert(g, f)					\
+	__pm_assign_c(g,-(f).x,					\
+					-(f).y,					\
+					-(f).z)
 
 // The expression of the dot product between two vectors.
 #define __pm_dot(f,g)				\
@@ -41,6 +47,24 @@ namespace math {
 	__pm_assign_c(h, (f).y*(g).z - (f).z*(g).y,	\
 					 (f).z*(g).x - (f).x*(g).z,	\
 					 (f).x*(g).y - (f).y*(g).x)
+
+// The computation of the cross product of the difference of
+// two vectors with respect respect to a first vector.
+// That is, compute
+//     i <- (v1 - v0)x(v2 - v0)
+//          f = v1 - v0
+//              (v1).x - (v0).x
+//              (v1).y - (v0).y
+//              (v1).z - (v0).z
+//          g = v2 - v0
+//              (v2).x - (v0).x
+//              (v2).y - (v0).y
+//              (v2).z - (v0).z
+#define __pm_cross_diff(i, v0,v1,v2)													\
+	__pm_assign_c(																		\
+	i,	(((v1).y - (v0).y)*((v2).z - (v0).z)) - (((v1).z - (v0).z)*((v2).y - (v0).y)),	\
+		(((v1).z - (v0).z)*((v2).x - (v0).x)) - (((v1).x - (v0).x)*((v2).z - (v0).z)),	\
+		(((v1).x - (v0).x)*((v2).y - (v0).y)) - (((v1).y - (v0).y)*((v2).x - (v0).x)))
 
 // Make a perpendicular vector to 'u'.
 #define __pm_perp(v, u)		\

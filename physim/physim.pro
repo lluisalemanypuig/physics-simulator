@@ -23,10 +23,14 @@ HEADERS +=							\
     initialiser/hose.hpp			\
 	particles/particle.hpp			\
 	math/vec3.hpp					\
+	math/math.hpp					\
 	math/math_ops.hpp				\
+	math/math_ops_add.hpp			\
+	math/math_ops_sub.hpp			\
+	math/math_ops_mul.hpp			\
+	math/math_ops_div.hpp			\
 	math/math_misc.hpp				\
-	math/math_geometry.hpp			\
-    math/math.hpp
+	math/math_geometry.hpp
 
 
 SOURCES +=							\

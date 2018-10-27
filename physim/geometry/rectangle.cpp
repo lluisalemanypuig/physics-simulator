@@ -15,14 +15,12 @@ rectangle::rectangle() : geometry() { }
 
 rectangle::rectangle
 (const math::vec3& p1,const math::vec3& p2,const math::vec3& p3,const math::vec3& p4)
-	: geometry()
+	: geometry(), pl(plane(p1,p2,p3))
 {
 	__pm_assign_v(v1, p1);
 	__pm_assign_v(v2, p2);
 	__pm_assign_v(v3, p3);
 	__pm_assign_v(v4, p4);
-
-	pl = plane(v1, v2, v3);
 
 	// make sure that last vertex is on plane...
 	assert(pl.is_inside(v4));

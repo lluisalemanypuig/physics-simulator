@@ -82,7 +82,6 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	 *	a = v**v
 	 *	b = 2( v**(p - C) )
 	 *	c = C**C + p**p - 2(p**C) - r*r
-	 *
 	 */
 
 	// coefficients of quadratic equation
@@ -92,9 +91,9 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	math::vec3 v;
 	__pm_sub_v_v(v, q, p);
 
-	float a = (__pm_dot(v,v));
-	float b = 2.0f*(__pm_dot(p_minus_C,v));
-	float c = (__pm_dot(C,C)) + (__pm_dot(p,p)) - 2.0f*(__pm_dot(p,C)) - R*R;
+	float a = __pm_dot(v,v);
+	float b = 2.0f*__pm_dot(p_minus_C,v);
+	float c = __pm_dot(C,C) + __pm_dot(p,p) - 2.0f*__pm_dot(p,C) - R*R;
 
 	// discriminant of the quadratic equation
 	float discr = b*b - 4.0f*a*c;
@@ -139,7 +138,6 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 
 	// compute intersection point
 	__pm_add_vs_vs(p_inter, p,(1.0f - L), q,L);
-
 	return true;
 }
 
