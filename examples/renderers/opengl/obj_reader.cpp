@@ -3,13 +3,19 @@
 OBJ_reader::OBJ_reader() { }
 
 void OBJ_reader::clean() {
+	mesh_name = "";
+	directory = filename = "";
+
 	file_lines.clear();
 
 	vertices.clear();
-	faces.clear();
 	normals.clear();
-	textures_coords.clear();
+	triangles.clear();
+	normal_idxs.clear();
+	mat_ids.clear();
 	materials.clear();
+	textures_coords.clear();
+	textures_indices.clear();
 }
 
 OBJ_reader::~OBJ_reader() {
@@ -63,7 +69,7 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 
 	string material_name;
 	bool valid_material = false;
-	glm::vec3 amb, dif, spec;
+	vec3 amb, dif, spec;
 	float Ns, Ni, d;
 	int illum;
 	int textID = -1;
@@ -136,7 +142,7 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 	return true;
 }
 
-void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
+void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 	assert(A < B and B < file_lines.size());
 
 	// current material's name
@@ -160,17 +166,17 @@ void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
 			if (file_lines[i][1] == ' ') {
 				// vertex coordinate
 				sscanf(file_lines[i].c_str(), "v %f %f %f", &x, &y, &z);
-				vertices.push_back(glm::vec3(x, y, z));
+				vertices.push_back(vec3(x, y, z));
 			}
 			else if (file_lines[i][1] == 'n') {
 				// vertex normal vector
 				sscanf(file_lines[i].c_str(), "vn %f %f %f", &x, &y, &z);
-				normals.push_back(glm::normalize(glm::vec3(x, y, z)));
+				normals.push_back(glm::normalize(vec3(x, y, z)));
 			}
 			else if (file_lines[i][1] == 't') {
 				// vertex texture coordinate
 				sscanf(file_lines[i].c_str(), "vt %f %f", &u, &v);
-				textures_coords.push_back(glm::vec2(u, v));
+				textures_coords.push_back(vec2(u, v));
 			}
 		}
 		else if (file_lines[i][0] == 'u' and file_lines[i][1] == 's' and file_lines[i][2] == 'e') {
@@ -180,9 +186,9 @@ void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
 		}
 		else if (file_lines[i][0] == 'f' and file_lines[i][1] == ' ') {
 
-			TC[0] = TC[1] = TC[2] = TC[3] = -1;
-			VN[0] = VN[1] = VN[2] = VN[3] = -1;
 			NI[0] = NI[1] = NI[2] = NI[3] = -1;
+			VN[0] = VN[1] = VN[2] = VN[3] = -1;
+			TC[0] = TC[1] = TC[2] = TC[3] = -1;
 
 			// parse face information
 			int C = count(file_lines[i].begin(), file_lines[i].end(),' ');
@@ -205,7 +211,16 @@ void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
 				else {
 					sscanf(file_lines[i].c_str(),"f %d %d %d",&VN[0],&VN[1],&VN[2]);
 				}
-				faces.push_back(face(NI,VN,TC,current_material,false,smooth_face));
+
+				//faces.push_back(face(NI,VN,TC,current_material,true,smooth_face));
+
+				// make the face
+				for (int i = 0; i < 3; ++i) {
+					triangles.push_back(VN[i]);
+					normal_idxs.push_back(NI[i]);
+					texture_idxs.push_back(TC[i]);
+				}
+				mat_ids.push_back(current_material);
 			}
 			else if (C == 4) {
 				// quad
@@ -220,13 +235,37 @@ void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
 					sscanf(
 						file_lines[i].c_str(),
 						"f %d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d",
-						&VN[0],&TC[0],&NI[0], &VN[1],&TC[1],&NI[1], &VN[2],&TC[2],&NI[2], &VN[3],&TC[3],&NI[3]
+						&VN[0],&TC[0],&NI[0], &VN[1],&TC[1],&NI[1],
+						&VN[2],&TC[2],&NI[2], &VN[3],&TC[3],&NI[3]
 					);
 				}
 				else {
 					sscanf(file_lines[i].c_str(),"f %d %d %d %d",&VN[0],&VN[1],&VN[2],&VN[3]);
 				}
-				faces.push_back(face(NI,VN,TC,current_material,true,smooth_face));
+
+				//faces.push_back(face(NI,VN,TC,current_material,true,smooth_face));
+
+				// make two triangular faces
+				// use the first 3 vertices: 0,1,2
+				// gather info
+				for (int i = 0; i < 3; ++i) {
+					triangles.push_back(VN[i]);
+					normal_idxs.push_back(NI[i]);
+					texture_idxs.push_back(TC[i]);
+				}
+				mat_ids.push_back(current_material);
+
+				// use the other vertices
+				NI[1] = NI[2]; NI[2] = NI[3];
+				VN[1] = VN[2]; VN[2] = VN[3];
+				TC[1] = TC[2]; TC[2] = TC[3];
+				// gather info
+				for (int i = 0; i < 3; ++i) {
+					triangles.push_back(VN[i]);
+					normal_idxs.push_back(NI[i]);
+					texture_idxs.push_back(TC[i]);
+				}
+				mat_ids.push_back(current_material);
 			}
 			else {
 				cerr << "OBJ_reader::get_vertices_faces_normals: Error" << endl;
@@ -244,14 +283,14 @@ void OBJ_reader::get_vertices_faces_normals(size_t A, size_t B) {
 			if (file_lines[i][2] == '1') {
 				smooth_face = true;
 			}
-				else if (file_lines[i][2] == 'o') {
+			else if (file_lines[i][2] == 'o') {
 				smooth_face = false;
 			}
 		}
 	}
 }
 
-bool OBJ_reader::load_object(const string& dir, const string& fname, mesh& M) {
+bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mesh& M) {
 	directory = dir;
 	filename = fname;
 
@@ -291,7 +330,7 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, mesh& M) {
 	char buffer_object_name[128];
 	if (file_lines[aux][0] == 'o') {
 		sscanf(file_lines[aux].c_str(),"o %s", buffer_object_name);
-		object_name = buffer_object_name;
+		mesh_name = buffer_object_name;
 	}
 	else {
 		cerr << "OBJ_reader::load_object: Error" << endl;
@@ -302,55 +341,61 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, mesh& M) {
 	}
 
 	#if defined (DEBUG)
-	cout << "OBJ_reader::load_object: Parsing object '" << object_name << "'" << endl;
-	cout << "    Object '" << object_name << "' is described from line " << endl;
-	cout << "    " << aux << " to line " << file_lines.size() << endl;
+	cout << "OBJ_reader::load_object: Parsing object '" << mesh_name << "'" << endl;
+	cout << "    Object '" << mesh_name << "' is described from line "
+		 << aux << " to line " << file_lines.size() << endl;
 	#endif
 
 	// parse the vertices and faces information
-	get_vertices_faces_normals(4, file_lines.size() - 1);
+	parse_file_lines(4, file_lines.size() - 1);
+
+	#if defined (DEBUG)
+	cout << "OBJ_reader::load_object: file '" << filename << "' "
+		 << "completely parsed" << endl;
+	#endif
 
 	// clear file contents now to avoid potential
 	// excessive memory consumption
 	file_lines.clear();
 
-	M.set_name(object_name);
-
 	// Vertices are denoted as indices greater than 0
 	// we want them greater than or EQUAL TO 0.
 	// Same for normal indices and txeture coordinates
-	for (size_t i = 0; i < faces.size(); ++i) {
-		const face& Fi = faces[i];
-		int lim = (Fi.is_quad ? 4 : 3);
-		for (int j = 0; j < lim; ++j) {
-			if (Fi.vertex_index[j] != -1) {
-				--faces[i].vertex_index[j];
-			}
-			if (Fi.normal_index[j] != -1) {
-				--faces[i].normal_index[j];
-			}
-			if (Fi.text_coord[j] != -1) {
-				--faces[i].text_coord[j];
-			}
+	for (size_t i = 0; i < triangles.size(); ++i) {
+		if (triangles[i] != -1) {
+			--triangles[i];
+		}
+		if (normal_idxs[i] != -1) {
+			--normal_idxs[i];
+		}
+		if (texture_idxs[i] != -1) {
+			--texture_idxs[i];
 		}
 	}
 
-	M.set_vertices(vertices);
-	M.set_faces(faces);
-	M.set_normals(normals);
+	M.set_name(mesh_name);
 
+	M.set_vertices(vertices);
+	M.set_triangles(triangles);
+	M.set_normals(normals);
+	M.set_normal_idxs(normal_idxs);
+
+	M.set_material_ids(mat_ids);
 	M.set_materials(materials);
 	M.set_texture_coords(textures_coords);
-	M.set_texture_indexes(textures_indexes);
+	M.set_texture_idxs(texture_idxs);
+	M.set_textures_indices(textures_indices);
 
 	#if defined (DEBUG)
-	cout << "OBJ_reader::load_object: Object '" << object_name << "'" << endl;
-	cout << "    from file '" << filename << "'" << endl;
-	cout << "    was loaded successfully" << endl;
+	cout << "OBJ_reader::load_object: Object '" << mesh_name << "' ";
+	cout << "from file '" << filename << "' was loaded" << endl;
 
 	mesh_state state = M.state();
 	if (state != mesh_state::correct) {
 		return false;
+	}
+	else {
+		cout << "OBJ_reader::load_object: the mesh is in a correct state" << endl;
 	}
 	#endif
 

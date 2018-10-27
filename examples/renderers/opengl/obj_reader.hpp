@@ -17,12 +17,14 @@ using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
+using namespace glm;
 
 // Qt includes
 #include <QOpenGLFunctions>
 
 // Custom includes
-#include "mesh.hpp"
+#include "mesh/rendered_mesh.hpp"
+#include "mesh/mesh_utils.hpp"
 
 /**
  * @brief Wavefront format file reader class.
@@ -42,11 +44,11 @@ using namespace std;
 class OBJ_reader {
 	private:
 		/**
-		 * @brief Name of the object begin parsed.
+		 * @brief Name of the mesh begin parsed.
 		 *
 		 * Only used for debugging purposes.
 		 */
-		string object_name;
+		string mesh_name;
 		/**
 		 * @brief Directory of the .obj file.
 		 *
@@ -61,29 +63,29 @@ class OBJ_reader {
 
 		// mesh data
 		/// Vertices of the mesh.
-		vector<glm::vec3> vertices;
+		vector<vec3> vertices;
 		/// Normals per vertex.
-		vector<glm::vec3> normals;
-		/**
-		 * @brief Faces of the mesh.
-		 *
-		 * Following the wavefront format, they may have three
-		 * or four vertices, and can contain material and
-		 * texture information.
-		 */
-		vector<face> faces;
+		vector<vec3> normals;
+		/// Vertex indices.
+		vector<int> triangles;
+		/// Normal indices.
+		vector<int> normal_idxs;
+		/// Material ids per face.
+		vector<string> mat_ids;
 
 		// materials and textures
 		/// Set of materials found in the file.
 		vector<material> materials;
 		/// Texture coordinates.
-		vector<glm::vec2> textures_coords;
+		vector<vec2> textures_coords;
+		/// Texture indices per triangle.
+		vector<int> texture_idxs;
 		/**
 		 * @brief Indexes of textures.
 		 *
-		 * These indices point to the txextures loaded.
+		 * These indices point to the textures loaded.
 		 */
-		vector<unsigned int> textures_indexes;
+		vector<unsigned int> textures_indices;
 
 		/// Frees the memory occupied by the loader.
 		void clean();
@@ -108,7 +110,7 @@ class OBJ_reader {
 		 * @param B Start at line @e B.
 		 * @pre 0 <= @e A < @e B < @ref file_lines.size()
 		 */
-		void get_vertices_faces_normals(size_t A, size_t B);
+		void parse_file_lines(size_t A, size_t B);
 
 	public:
 		/// Default constructor.
@@ -123,7 +125,7 @@ class OBJ_reader {
 		 * @param[out] M The mesh constructed using the data in the file.
 		 * @return Returns true on success.
 		 */
-		bool load_object(const string& dir, const string& name, mesh& M);
+		bool load_object(const string& dir, const string& name, rendered_mesh& M);
 
 };
 

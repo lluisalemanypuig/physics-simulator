@@ -63,7 +63,7 @@ void SimulationRenderer::draw_soft_geom(rgeom *rg) {
 			rs = static_cast<rsphere *>(rg);
 			glTranslatef(rs->c.x, rs->c.y, rs->c.z);
 			glScalef(2.0f*rs->r,2.0f*rs->r,2.0f*rs->r);
-			sphere->render();
+			sphere->slow_render();
 			break;
 
 		default:

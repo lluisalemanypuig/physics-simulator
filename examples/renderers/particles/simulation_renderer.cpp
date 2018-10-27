@@ -162,7 +162,7 @@ void SimulationRenderer::set_limit_fps(bool l) {
 	limit_fps = l;
 }
 
-void SimulationRenderer::set_sphere(mesh *s) {
+void SimulationRenderer::set_sphere(rendered_mesh *s) {
 	sphere = s;
 }
 

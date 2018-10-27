@@ -4,16 +4,17 @@ TARGET = particles-renderer
 QT += core gui opengl
 CONFIG += c++11
 
-QMAKE_CXXFLAGS_DEBUG += -DDEBUG
+QMAKE_CXXFLAGS_DEBUG += -DDEBUG -g
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-INCLUDEPATH += . ../..
+# for the physim library
+INCLUDEPATH += . ../../../
 
 CONFIG(release, debug|release) {
-	LIBS += -L../../physim-release/ -lphysim
+	LIBS += -L../../../physim-release/ -lphysim
 }
 CONFIG(debug, debug|release) {
-	LIBS += -L../../physim-debug/ -lphysim
+	LIBS += -L../../../physim-debug/ -lphysim
 }
 
 LIBS += -lGL -lGLU
@@ -32,8 +33,6 @@ SOURCES +=						\
 	sim4.cpp					\
 	sim5.cpp					\
 	sim6.cpp					\
-	mesh/obj_reader.cpp			\
-	mesh/mesh.cpp				\
 	rgeom/rgeom.cpp				\
 	rgeom/rplane.cpp			\
 	rgeom/rtriangle.cpp			\
@@ -43,9 +42,7 @@ SOURCES +=						\
 HEADERS +=						\
     mainwindow.hpp				\
     simulation_renderer.hpp		\
-    utils.hpp					\
-    mesh/obj_reader.hpp			\
-	mesh/mesh.hpp				\
+	utils.hpp					\
     rgeom/rendered_geometry.hpp
 
 DISTFILES +=					\
@@ -54,3 +51,10 @@ DISTFILES +=					\
 
 RESOURCES += \
     resources.qrc
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../opengl/release/ -lopengl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../opengl/debug/ -lopengl
+else:unix: LIBS += -L$$OUT_PWD/../opengl/ -lopengl
+
+INCLUDEPATH += $$PWD/../opengl
+DEPENDPATH += $$PWD/../opengl

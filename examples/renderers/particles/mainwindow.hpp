@@ -37,7 +37,7 @@ class MainWindow : public QMainWindow {
 		Ui::MainWindow *ui;
 		int current_tab;
 
-		mesh *sim_ball;
+		rendered_mesh *sim_ball;
 
 		default_random_engine eng;
 		// generator for random numbers between 0 and 1

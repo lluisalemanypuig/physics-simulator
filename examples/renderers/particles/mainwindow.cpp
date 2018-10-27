@@ -401,7 +401,7 @@ MainWindow::MainWindow(QWidget *parent)
 	init_environment();
 
 	cout << "    Loading models for renderisation..." << endl;
-	sim_ball = new mesh();
+	sim_ball = new rendered_mesh();
 	OBJ_reader obj;
 	obj.load_object("../particles-renderer/models", "SPH_HalfSmooth_Mat.obj", *sim_ball);
 	sim_ball->scale_to_unit();
