@@ -21,31 +21,31 @@ LIBS += -lGL -lGLU
 FORMS += mainwindow.ui
 
 SOURCES +=						\
-    main.cpp					\
-    mainwindow.cpp				\
-    simulation_renderer.cpp		\
-    render_simulation.cpp		\
-    utils.cpp					\
-    mesh/obj_reader.cpp			\
-    mesh/mesh.cpp				\
-    rgeom/rgeom.cpp				\
-    rgeom/rplane.cpp			\
-    rgeom/rtriangle.cpp			\
-    rgeom/rrectangle.cpp		\
-    rgeom/rsphere.cpp \
-    sim6.cpp \
-    sim5.cpp \
-    sim4.cpp \
-    sim3.cpp \
-    sim2.cpp \
-    sim1.cpp
+	main.cpp					\
+	mainwindow.cpp				\
+	simulation_renderer.cpp		\
+	render_simulation.cpp		\
+	utils.cpp					\
+	sim1.cpp					\
+	sim2.cpp					\
+	sim3.cpp					\
+	sim4.cpp					\
+	sim5.cpp					\
+	sim6.cpp					\
+	mesh/obj_reader.cpp			\
+	mesh/mesh.cpp				\
+	rgeom/rgeom.cpp				\
+	rgeom/rplane.cpp			\
+	rgeom/rtriangle.cpp			\
+	rgeom/rrectangle.cpp		\
+	rgeom/rsphere.cpp
 
 HEADERS +=						\
     mainwindow.hpp				\
     simulation_renderer.hpp		\
     utils.hpp					\
     mesh/obj_reader.hpp			\
-    mesh/mesh.hpp \
+	mesh/mesh.hpp				\
     rgeom/rendered_geometry.hpp
 
 DISTFILES +=					\
