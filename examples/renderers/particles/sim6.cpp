@@ -3,6 +3,7 @@
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/rect_shower.hpp>
+#include <physim/geometry/plane.hpp>
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace math;
