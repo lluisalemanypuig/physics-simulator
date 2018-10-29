@@ -125,6 +125,8 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	sr->get_simulator().add_geometry(ball2_pl);
 	sr->get_simulator().add_geometry(tri_ramp);
 
+	sr->get_simulator().set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+
 	sr->add_particles(3000);
 }
 
