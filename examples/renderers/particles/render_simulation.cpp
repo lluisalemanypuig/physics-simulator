@@ -1,5 +1,12 @@
 #include "simulation_renderer.hpp"
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
+// OpenGL includes
+#include <GL/glu.h>
+
 const float rotationFactor = 0.5f;
 const float maxRotationCamera = 75.0f;
 const float minDistanceCamera = 0.5f;

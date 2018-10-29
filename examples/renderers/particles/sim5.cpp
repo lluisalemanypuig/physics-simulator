@@ -1,5 +1,14 @@
 #include "mainwindow.hpp"
 
+// physim includes
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/rect_shower.hpp>
+#include <physim/math/math.hpp>
+using namespace physim;
+using namespace math;
+using namespace init;
+using namespace geom;
+
 // PRIVATE
 
 void MainWindow::make_sim4(SimulationRenderer *sr) {
@@ -22,10 +31,10 @@ void MainWindow::make_sim4(SimulationRenderer *sr) {
 		}
 	);
 
-	physim::math::vec3 A( -5.0f, -0.25f,-5.0f);
-	physim::math::vec3 B( -5.0f, -0.25f, 5.0f);
-	physim::math::vec3 C( 20.0f, -0.25f, 5.0f);
-	physim::math::vec3 D( 20.0f, -0.25f,-5.0f);
+	vec3 A( -5.0f, -0.25f,-5.0f);
+	vec3 B( -5.0f, -0.25f, 5.0f);
+	vec3 C( 20.0f, -0.25f, 5.0f);
+	vec3 D( 20.0f, -0.25f,-5.0f);
 
 	rplane *floor = new rplane();
 	floor->p1 = A;
@@ -35,8 +44,8 @@ void MainWindow::make_sim4(SimulationRenderer *sr) {
 	sr->add_rgeom(floor);
 
 	plane *pl = new plane(
-		physim::math::vec3(0.0f,1.0f,0.0f),
-		physim::math::vec3(0.0f,0.0f,0.0f)
+		vec3(0.0f,1.0f,0.0f),
+		vec3(0.0f,0.0f,0.0f)
 	);
 	sr->get_simulator().add_geometry(pl);
 

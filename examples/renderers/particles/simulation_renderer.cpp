@@ -1,5 +1,8 @@
 #include "simulation_renderer.hpp"
 
+// Qt includes
+#include <QApplication>
+
 // PRIVATE
 
 // PROTECTED
@@ -116,13 +119,13 @@ void SimulationRenderer::add_particles(size_t n) {
 	S.add_particles(n);
 }
 
-void SimulationRenderer::set_solver(const solver_type& s) {
+void SimulationRenderer::set_solver(const physim::solver_type& s) {
 	S.set_solver(s);
 }
 
 // GETTERS
 
-simulator& SimulationRenderer::get_simulator() {
+physim::simulator& SimulationRenderer::get_simulator() {
 	return S;
 }
 
@@ -183,13 +186,13 @@ void SimulationRenderer::set_total_time(float T) {
 }
 
 void SimulationRenderer::set_bounce_all_particles(float b) {
-	for (particle *p : S.get_particles()) {
+	for (physim::particle *p : S.get_particles()) {
 		p->set_bouncing(b);
 	}
 }
 
 void SimulationRenderer::set_friction_all_particles(float f) {
-	for (particle *p : S.get_particles()) {
+	for (physim::particle *p : S.get_particles()) {
 		p->set_friction(f);
 	}
 }

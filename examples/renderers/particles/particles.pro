@@ -7,7 +7,7 @@ CONFIG += c++11
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG -g
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-LIBS += -lGL -lGLU
+LIBS += -lGLU
 
 FORMS += mainwindow.ui
 

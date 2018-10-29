@@ -1,5 +1,15 @@
 #include "mainwindow.hpp"
 
+// physim includes
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/rect_shower.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/math/math.hpp>
+using namespace physim;
+using namespace math;
+using namespace init;
+using namespace geom;
+
 // PRIVATE
 
 void MainWindow::make_sim0(SimulationRenderer *sr) {
@@ -26,7 +36,7 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 	floor->p4 = physim::math::vec3( 5.0f, -0.05f, -5.0f);
 	sr->add_rgeom(floor);
 
-	plane *pl = new plane(
+	physim::geom::plane *pl = new physim::geom::plane(
 		physim::math::vec3(0.0f,1.0f,0.0f),
 		physim::math::vec3(0.0f,0.0f,0.0f)
 	);

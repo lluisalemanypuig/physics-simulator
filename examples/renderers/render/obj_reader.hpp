@@ -4,12 +4,8 @@
 #include <assert.h>
 
 // C++ includes
-#include <fstream>
-#include <cstdlib>
-#include <cstdio>
 #include <vector>
 #include <string>
-#include <cmath>
 
 // glm includes
 #include <glm/glm.hpp>

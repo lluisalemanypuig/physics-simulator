@@ -1,11 +1,9 @@
 #pragma once
 
+// C++ includes
+#include <stdint.h>
+
 // physim includes
-#include <physim/geometry/geometry.hpp>
-#include <physim/geometry/rectangle.hpp>
-#include <physim/geometry/triangle.hpp>
-#include <physim/geometry/sphere.hpp>
-#include <physim/geometry/plane.hpp>
 #include <physim/math/vec3.hpp>
 
 /*

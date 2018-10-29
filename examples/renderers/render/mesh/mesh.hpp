@@ -1,7 +1,6 @@
 #pragma once
 
 // C++ includes
-#include <iostream>
 #include <vector>
 
 // glm includes

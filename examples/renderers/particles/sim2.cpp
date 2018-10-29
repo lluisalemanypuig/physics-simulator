@@ -1,5 +1,17 @@
 #include "mainwindow.hpp"
 
+// physim includes
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/rect_shower.hpp>
+#include <physim/geometry/triangle.hpp>
+#include <physim/geometry/rectangle.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/math/math.hpp>
+using namespace physim;
+using namespace math;
+using namespace init;
+using namespace geom;
+
 // PRIVATE
 
 void MainWindow::make_sim1(SimulationRenderer *sr) {
@@ -42,9 +54,9 @@ void MainWindow::make_sim1(SimulationRenderer *sr) {
 	sr->add_rgeom(bouncer);
 	sr->add_rgeom(floor);
 
-	rectangle *rl = new rectangle(ramp->p1,ramp->p2,ramp->p3,ramp->p4);
-	triangle *tl = new triangle(bouncer->p1,bouncer->p2,bouncer->p3);
-	plane *pl = new plane(
+	physim::geom::rectangle *rl = new physim::geom::rectangle(ramp->p1,ramp->p2,ramp->p3,ramp->p4);
+	physim::geom::triangle *tl = new physim::geom::triangle(bouncer->p1,bouncer->p2,bouncer->p3);
+	physim::geom::plane *pl = new physim::geom::plane(
 		physim::math::vec3(0.0f,1.0f,0.0f),
 		physim::math::vec3(0.0f,0.0f,0.0f)
 	);

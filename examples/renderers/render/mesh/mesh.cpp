@@ -1,5 +1,7 @@
 #include "mesh.hpp"
 
+// C++ includes
+#include <iostream>
 using namespace std;
 
 // PRIVATE

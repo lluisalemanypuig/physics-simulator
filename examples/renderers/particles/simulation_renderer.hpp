@@ -1,30 +1,19 @@
 #pragma once
 
 // C++ includes
-#include <functional>
-#include <iostream>
-using namespace std;
+#include <vector>
 
 // Qt includes
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
-#include <QApplication>
 #include <QProgressBar>
 #include <QMouseEvent>
 #include <QMatrix4x4>
 #include <QLabel>
 
-// OpenGL includes
-#include <GL/glu.h>
-#include <GL/gl.h>
-
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
 #include <physim/simulator.hpp>
-using namespace physim;
-using namespace geom;
-using namespace init;
 
 // Custom includes
 #include <render/rgeom/rendered_geometry.hpp>
@@ -49,8 +38,8 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		double FPS;			// fps of the simulations
 		bool allow_run;		// when false, stop the running simulation
 
-		vector<rgeom *> G;	// wrapped geometrical objects of the scene
-		simulator S;		// simulator object
+		std::vector<rgeom *> G;	// wrapped geometrical objects of the scene
+		physim::simulator S;// simulator object
 		bool scene_cleared;	// if true then the simulation was cleared
 							// the scene needs to be remade
 		float dt;			// time step
@@ -100,11 +89,11 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// Adds n particles to the simulator
 		void add_particles(size_t n = 1);
 		// Sets the solver
-		void set_solver(const solver_type& s = solver_type::EulerOrig);
+		void set_solver(const physim::solver_type& s);
 
 		// -- GETTERS
 
-		simulator& get_simulator();
+		physim::simulator& get_simulator();
 		bool is_scene_cleared() const;
 
 		float get_time_step() const;

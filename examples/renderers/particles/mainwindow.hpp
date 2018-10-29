@@ -2,9 +2,7 @@
 
 // C++ includes
 #include <functional>
-#include <iostream>
 #include <random>
-using namespace std;
 
 // Qt includes
 #include <QMainWindow>
@@ -12,13 +10,6 @@ using namespace std;
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
-#include <physim/initialiser/rect_shower.hpp>
-#include <physim/initialiser/rect_fountain.hpp>
-#include <physim/initialiser/hose.hpp>
-#include <physim/math/math.hpp>
-#include <physim/simulator.hpp>
-using namespace physim;
-using namespace init;
 
 // Custom includes
 #include <render/rgeom/rendered_geometry.hpp>
@@ -39,11 +30,11 @@ class MainWindow : public QMainWindow {
 
 		rendered_mesh *sim_ball;
 
-		default_random_engine eng;
+		std::default_random_engine eng;
 		// generator for random numbers between 0 and 1
-		uniform_real_distribution<float> U01;
+		std::uniform_real_distribution<float> U01;
 		// generator for random numbers between 0 and 10
-		uniform_real_distribution<float> U010;
+		std::uniform_real_distribution<float> U010;
 
 	private:
 		SimulationRenderer *get_SimRend(int t);
@@ -51,9 +42,9 @@ class MainWindow : public QMainWindow {
 		QProgressBar *get_sim_bar(int t);
 		QProgressBar *get_sim_bar();
 
-		void get_init_bounce(partinit& p);
-		void get_init_friction(partinit& p);
-		void get_init_lifetime(partinit& p);
+		void get_init_bounce(physim::init::partinit& p);
+		void get_init_friction(physim::init::partinit& p);
+		void get_init_lifetime(physim::init::partinit& p);
 
 		// 'make scene' functions
 		void make_sim0(SimulationRenderer *sr);
@@ -64,7 +55,7 @@ class MainWindow : public QMainWindow {
 		void make_sim5(SimulationRenderer *sr);
 		void make_sim(SimulationRenderer *sr);
 
-		void make_init_with_params(initialiser& i);
+		void make_init_with_params(physim::init::initialiser& i);
 
 		// assigns to current renderer parameters of simulation
 		void set_params();

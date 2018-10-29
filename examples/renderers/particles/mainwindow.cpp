@@ -1,6 +1,10 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // PRIVATE
 
 SimulationRenderer *MainWindow::get_SimRend(int t) {
@@ -44,10 +48,10 @@ QProgressBar *MainWindow::get_sim_bar() {
 	return get_sim_bar(current_tab);
 }
 
-void MainWindow::get_init_bounce(partinit& bounce) {
+void MainWindow::get_init_bounce(physim::init::partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
-		bounce = [&](particle *p) { p->set_bouncing( this->U01(this->eng) ); };
+		bounce = [&](physim::particle *p) { p->set_bouncing( this->U01(this->eng) ); };
 		cout << "        Use random bouncing coefficient" << endl;
 		return;
 	}
@@ -55,7 +59,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	bool ok;
 	float b = text.toFloat(&ok);
 	if (ok) {
-		bounce = [b](particle *p) { p->set_bouncing(b); };
+		bounce = [b](physim::particle *p) { p->set_bouncing(b); };
 		cout << "        Set bouncing coefficient to " << b << endl;
 		return;
 	}
@@ -63,10 +67,10 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	cerr << "        Error: invalid text in 'friction' text box." << endl;
 }
 
-void MainWindow::get_init_friction(partinit& fric) {
+void MainWindow::get_init_friction(physim::init::partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
-		fric = [&](particle *p) { p->set_friction( this->U01(this->eng) ); };
+		fric = [&](physim::particle *p) { p->set_friction( this->U01(this->eng) ); };
 		cout << "        Use random friction coefficient" << endl;
 		return;
 	}
@@ -74,7 +78,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 	bool ok;
 	float f = text.toFloat(&ok);
 	if (ok) {
-		fric = [f](particle *p) { p->set_friction(f); };
+		fric = [f](physim::particle *p) { p->set_friction(f); };
 		cout << "        Set friction coefficient to " << f << endl;
 		return;
 	}
@@ -82,19 +86,19 @@ void MainWindow::get_init_friction(partinit& fric) {
 	cerr << "        Error: invalid text in 'friction' text box." << endl;
 }
 
-void MainWindow::get_init_lifetime(partinit& lifetime) {
+void MainWindow::get_init_lifetime(physim::init::partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
-		lifetime = [&](particle *p) { p->set_lifetime( this->U010(this->eng) ); };
-		cout << "        Use random particle's lifetime" << endl;
+		lifetime = [&](physim::particle *p) { p->set_lifetime( this->U010(this->eng) ); };
+		cout << "        Use random physim::particle's lifetime" << endl;
 		return;
 	}
 
 	bool ok;
 	float l = text.toFloat(&ok);
 	if (ok) {
-		lifetime = [l](particle *p) { p->set_lifetime(l); };
-		cout << "        Set particle's lifetime to " << l << endl;
+		lifetime = [l](physim::particle *p) { p->set_lifetime(l); };
+		cout << "        Set physim::particle's lifetime to " << l << endl;
 		return;
 	}
 
@@ -124,8 +128,8 @@ void MainWindow::make_sim(SimulationRenderer *sr) {
 	sr->reset_simulation();
 }
 
-void MainWindow::make_init_with_params(initialiser& i) {
-	partinit bounce,fric,lifetime;
+void MainWindow::make_init_with_params(physim::init::initialiser& i) {
+	physim::init::partinit bounce,fric,lifetime;
 
 	// parse text boxes
 	get_init_bounce(bounce);
@@ -231,16 +235,16 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 void MainWindow::on_lEBounce_returnPressed() {
 	// obtain bouncing coefficient initialiser
 	// and set it to the appropriate simulator
-	partinit bounce;
+	physim::init::partinit bounce;
 	get_init_bounce(bounce);
 
 	SimulationRenderer *sr = get_SimRend();
-	initialiser *I = sr->get_simulator().get_initialiser();
+	physim::init::initialiser *I = sr->get_simulator().get_initialiser();
 	I->set_bounce_initialiser(bounce);
 
-	// change bouncing coefficient of all particles
-	const vector<particle *>& ps = sr->get_simulator().get_particles();
-	for (particle *p : ps) {
+	// change bouncing coefficient of all physim::particles
+	const vector<physim::particle *>& ps = sr->get_simulator().get_particles();
+	for (physim::particle *p : ps) {
 		bounce(p);
 	}
 }
@@ -248,16 +252,16 @@ void MainWindow::on_lEBounce_returnPressed() {
 void MainWindow::on_lEFriction_returnPressed() {
 	// obtain friction coefficient initialiser
 	// and set it to the appropriate simulator
-	partinit fric;
+	physim::init::partinit fric;
 	get_init_friction(fric);
 
 	SimulationRenderer *sr = get_SimRend();
-	initialiser *I = sr->get_simulator().get_initialiser();
+	physim::init::initialiser *I = sr->get_simulator().get_initialiser();
 	I->set_friction_initialiser(fric);
 
-	// change friction coefficient of all particles
-	const vector<particle *>& ps = sr->get_simulator().get_particles();
-	for (particle *p : ps) {
+	// change friction coefficient of all physim::particles
+	const vector<physim::particle *>& ps = sr->get_simulator().get_particles();
+	for (physim::particle *p : ps) {
 		fric(p);
 	}
 }
@@ -265,16 +269,16 @@ void MainWindow::on_lEFriction_returnPressed() {
 void MainWindow::on_lELifeTime_returnPressed() {
 	// obtain lifetime initialiser and set
 	// it to the appropriate simulator
-	partinit lifetime;
+	physim::init::partinit lifetime;
 	get_init_lifetime(lifetime);
 
 	SimulationRenderer *sr = get_SimRend();
-	initialiser *I = sr->get_simulator().get_initialiser();
+	physim::init::initialiser *I = sr->get_simulator().get_initialiser();
 	I->set_lifetime_initialiser(lifetime);
 
-	// change lifetime of all particles
-	const vector<particle *>& ps = sr->get_simulator().get_particles();
-	for (particle *p : ps) {
+	// change lifetime of all physim::particles
+	const vector<physim::particle *>& ps = sr->get_simulator().get_particles();
+	for (physim::particle *p : ps) {
 		lifetime(p);
 	}
 }
@@ -342,15 +346,15 @@ void MainWindow::on_CoBsolver_currentIndexChanged(const QString& ) {
 	SimulationRenderer *sr = get_SimRend();
 	if (text == "Euler Explicit") {
 		cout << "        Use Euler Explicit" << endl;
-		sr->get_simulator().set_solver( solver_type::EulerOrig );
+		sr->get_simulator().set_solver( physim::solver_type::EulerOrig );
 	}
 	else if (text == "Euler Semi-Imp") {
 		cout << "        Use Semi-Implicit Euler" << endl;
-		sr->get_simulator().set_solver( solver_type::EulerSemi );
+		sr->get_simulator().set_solver( physim::solver_type::EulerSemi );
 	}
 	else if (text == "Verlet") {
 		cout << "        Use Verlet" << endl;
-		sr->get_simulator().set_solver( solver_type::Verlet );
+		sr->get_simulator().set_solver( physim::solver_type::Verlet );
 	}
 	else {
 		cerr << "        Invalid value for solver type" << endl;

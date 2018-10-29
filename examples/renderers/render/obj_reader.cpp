@@ -1,6 +1,9 @@
 #include "obj_reader.hpp"
 
+// C++ includes
 #include <iostream>
+#include <fstream>
+#include <cmath>
 using namespace std;
 
 OBJ_reader::OBJ_reader() { }
