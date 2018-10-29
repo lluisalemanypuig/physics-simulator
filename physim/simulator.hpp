@@ -151,6 +151,18 @@ class simulator {
 		 */
 		void apply_solver(const particle *p, math::vec3& pos, math::vec3& vel);
 
+		/**
+		 * @brief Computes the forces acting in the simulation.
+		 *
+		 * These forces are defined in the different focuses added
+		 * to the simulator. Once calculated the total force coming
+		 * from these objects, gravity is added.
+		 *
+		 * The result is set to the force acting on particle @e p.
+		 * @param p The particle whose force attribute is to be modified.
+		 */
+		void compute_forces(particle *p);
+
 	public:
 		/**
 		 * @brief Default constructor.

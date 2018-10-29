@@ -9,7 +9,6 @@ namespace physim {
 // PRIVATE
 
 void simulator::init_particle(particle *p) {
-	__pm_mul_v_s(p->get_force(), gravity, p->get_mass());
 	global_init->initialise_particle(p);
 
 	// Update the previous position so that Verlet
@@ -44,12 +43,18 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 			__pm_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->get_force(),(dt*dt)*(1.0f/mass), p->get_position());
 
 			// pred_vel <- (pred_pos - pos)/dt
-			__pm_sub_div_v_v_s(pred_vel, pred_pos, p->get_position(), dt);
+			__pm_sub_v_v_div_s(pred_vel, pred_pos, p->get_position(), dt);
 			break;
 
 		default:
 			std::cerr << "Warning: solver not implemented" << std::endl;
 	}
+}
+
+void simulator::compute_forces(particle *p) {
+
+	// for now, add only the force.
+	__pm_mul_v_s(p->get_force(), gravity, p->get_mass());
 }
 
 // PUBLIC
@@ -176,6 +181,9 @@ void simulator::apply_time_step() {
 		if (p->get_starttime() > 0.0f) {
 			continue;
 		}
+
+		// compute forces for particle p
+		compute_forces(p);
 
 		// Particles age: reduce their lifetime.
 		p->reduce_lifetime(dt);
