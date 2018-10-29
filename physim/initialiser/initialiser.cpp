@@ -11,6 +11,7 @@ initialiser::initialiser() {
 	pos			= [](particle *) {};
 	vel			= [](particle *) {};
 	mass		= [](particle *) {};
+	charge		= [](particle *) {};
 	bounce		= [](particle *) {};
 	friction	= [](particle *) {};
 	lifetime	= [](particle *) {};
@@ -22,6 +23,7 @@ initialiser::initialiser(const initialiser& i) {
 	pos = i.pos;
 	vel = i.vel;
 	mass = i.mass;
+	charge = i.charge;
 	bounce = i.bounce;
 	friction = i.friction;
 	lifetime = i.lifetime;
@@ -117,6 +119,7 @@ void initialiser::initialise_particle(particle *p) const {
 	pos(p);
 	vel(p);
 	mass(p);
+	charge(p);
 	bounce(p);
 	friction(p);
 	lifetime(p);
