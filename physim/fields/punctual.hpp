@@ -7,7 +7,10 @@
 namespace physim {
 namespace fields {
 
-class punctual_field : public field {
+/**
+ * @brief Force field caused by a particle.
+ */
+class punctual : public field {
 	protected:
 		/// Center of the field vector. [m]
 		math::vec3 pos;
@@ -17,13 +20,13 @@ class punctual_field : public field {
 		 *
 		 * Position @ref pos is initialised at (0,0,0).
 		 */
-		punctual_field();
+		punctual();
 		/// Constructor with position.
-		punctual_field(const math::vec3& p);
+		punctual(const math::vec3& p);
 		/// Copy constructor.
-		punctual_field(const punctual_field& f);
+		punctual(const punctual& f);
 		/// Destructor
-		virtual ~punctual_field();
+		virtual ~punctual();
 
 		// SETTERS
 

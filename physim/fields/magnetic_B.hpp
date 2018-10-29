@@ -1,7 +1,7 @@
 #pragma once
 
 // physim includes
-#include <physim/fields/magnetic_field.hpp>
+#include <physim/fields/magnetic.hpp>
 
 namespace physim {
 namespace fields {
@@ -19,18 +19,18 @@ namespace fields {
  * \f$v_p\f$ is the particle's punctual velocity
  * (see @ref particle::cur_vel).
  */
-class magnetic_B_field : public magnetic_field {
+class magnetic_B : public magnetic {
 	protected:
 
 	public:
 		/// Default constructor
-		magnetic_B_field();
+		magnetic_B();
 		/// Constructor with position and magnetic field vector.
-		magnetic_B_field(const math::vec3& pos, const math::vec3& b);
+		magnetic_B(const math::vec3& pos, const math::vec3& b);
 		/// Copy constructor.
-		magnetic_B_field(const magnetic_B_field& f);
+		magnetic_B(const magnetic_B& f);
 		/// Destructor.
-		virtual ~magnetic_B_field();
+		virtual ~magnetic_B();
 
 		// OTHERS
 

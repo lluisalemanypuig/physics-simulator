@@ -1,8 +1,8 @@
 #include <physim/simulator.hpp>
 
+// physim includes
+#include <physim/fields/gravitational_planet.hpp>
 #include <physim/math/math.hpp>
-
-#include <iostream>
 
 namespace physim {
 
@@ -52,21 +52,26 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 }
 
 void simulator::compute_forces(particle *p) {
+	//std::cout << "--------------------" << std::endl;
+	//std::cout << "particle's charge: " << p->get_charge() << std::endl;
+
 	// clear the current force
 	__pm_assign_s(p->get_force(), 0.0f);
 
 	math::vec3 F;
 	for (fields::field *f : force_fields) {
 		f->compute_force(p, F);
+		/*
 		std::cout << "force from field: "
 			 << F.x << ","
 			 << F.y << ","
 			 << F.z << std::endl;
+		*/
 		p->add_force(F);
 	}
 
 	// finally, apply the acceleration of gravity
-	__pm_add_acc_vs(p->get_force(), gravity, p->get_mass());
+	//__pm_add_acc_vs(p->get_force(), gravity, p->get_mass());
 }
 
 // PUBLIC
@@ -339,8 +344,9 @@ void simulator::apply_time_step() {
 
 // SETTERS
 
-void simulator::set_gravity(const math::vec3& g) {
-	__pm_assign_v(gravity, g);
+void simulator::set_gravity_acceleration(const math::vec3& g) {
+	fields::gravitational_planet *f = new fields::gravitational_planet(g);
+	force_fields.push_back(f);
 }
 
 void simulator::set_time_step(float t) {

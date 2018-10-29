@@ -1,27 +1,27 @@
 #pragma once
 
 // physim includes
-#include <physim/fields/punctual_field.hpp>
+#include <physim/fields/punctual.hpp>
 #include <physim/particles/particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace fields {
 
-class electric_field : public punctual_field {
+class electric : public punctual {
 	protected:
 		/// Electric field charge. [C]
 		float Q;
 
 	public:
 		/// Default constructor.
-		electric_field();
+		electric();
 		/// Constructor with position and electric field charge.
-		electric_field(const math::vec3& pos, float Q);
+		electric(const math::vec3& pos, float Q);
 		/// Copy constructor.
-		electric_field(const electric_field& f);
+		electric(const electric& f);
 		/// Destructor.
-		virtual ~electric_field();
+		virtual ~electric();
 
 		// SETTERS
 

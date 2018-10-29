@@ -301,10 +301,10 @@ class simulator {
 		/**
 		 * @brief Sets the gravity vector.
 		 *
-		 * Gravity is always applied to all particles, except those
-		 * that are fixed.
+		 * Makes a force field of type @ref fields::gravitational_planet
+		 * using vector @e g.
 		 */
-		void set_gravity(const math::vec3& g);
+		void set_gravity_acceleration(const math::vec3& g);
 
 		/**
 		 * @brief Sets the time step of the simulation.

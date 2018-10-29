@@ -2,7 +2,7 @@
 
 // physim includes
 #include <physim/particles/particle.hpp>
-#include <physim/fields/punctual_field.hpp>
+#include <physim/fields/punctual.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -17,7 +17,7 @@ namespace fields {
  * There are several types of magnetic fields.
  * As an example, see @ref magnetic_B_field.
  */
-class magnetic_field : public punctual_field {
+class magnetic : public punctual {
 	protected:
 		/// Magnetic field vector [T].
 		math::vec3 B;
@@ -29,13 +29,13 @@ class magnetic_field : public punctual_field {
 		 * The magnetic field vector @ref B is initialised
 		 * to (0,0,0).
 		 */
-		magnetic_field();
+		magnetic();
 		/// Constructor with magnetic field vector.
-		magnetic_field(const math::vec3& pos, const math::vec3& b);
+		magnetic(const math::vec3& pos, const math::vec3& b);
 		/// Copy constructor.
-		magnetic_field(const magnetic_field& f);
+		magnetic(const magnetic& f);
 		/// Destructor.
-		virtual ~magnetic_field();
+		virtual ~magnetic();
 
 		// SETTERS
 
