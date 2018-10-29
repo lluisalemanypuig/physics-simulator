@@ -1,9 +1,10 @@
 TEMPLATE = lib
+TARGET = physim
 
 CONFIG += c++11
+CONFIG += staticlib
 CONFIG -= app_bundle
 CONFIG -= qt
-CONFIG += staticlib
 
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG -g
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
