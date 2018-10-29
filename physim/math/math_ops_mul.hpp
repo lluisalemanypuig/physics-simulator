@@ -10,6 +10,16 @@
 	__pm_assign_c(h,(f).x*(g).x,			\
 					(f).y*(g).y,			\
 					(f).z*(g).z)
+// h <- f*g*(x,y,z)
+#define __pm_mul_v_v_c(h, f,g, x,y,z)		\
+	__pm_assign_c(h,(f).x*(g).x*x,			\
+					(f).y*(g).y*y,			\
+					(f).z*(g).z*z)
+// h <- f*g*(s,s,s)
+#define __pm_mul_v_v_s(h, f,g, s)			\
+	__pm_assign_c(h,(f).x*(g).x*s,			\
+					(f).y*(g).y*s,			\
+					(f).z*(g).z*s)
 // h <- f*s
 #define __pm_mul_v_s(h, f,s)				\
 	__pm_assign_c(h,(f).x*(s),				\

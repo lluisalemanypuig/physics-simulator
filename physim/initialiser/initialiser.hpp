@@ -23,8 +23,8 @@ typedef std::function<void (particle *)> partinit;
  * These functions are:
  * - @ref pos : function used to initialise the position of a particle.
  * - @ref vel : function used to initialise the velocity of a particle.
- * - @ref force : function used to initialise the force of a particle.
  * - @ref mass : function to initialise the mass of the particle.
+ * - @ref charge : function used to initialise the charge of a particle.
  * - @ref friction : function used to initialise the friction coefficient of a particle.
  * - @ref bounce : function used to initialise the bouncing coefficient of a particle.
  * - @ref lifetime : function used to initialise the lifetime of a particle.
@@ -54,6 +54,8 @@ class initialiser {
 		partinit vel;
 		/// Initialiser of the mass.
 		partinit mass;
+		/// Initialiser of the charge.
+		partinit charge;
 		/// Initialiser of the friction coefficient.
 		partinit friction;
 		/// Initialiser of the bouncing coefficient.
@@ -81,6 +83,8 @@ class initialiser {
 		void set_vel_initialiser(const partinit& f);
 		/// Sets the mass initialiser. See @ref mass.
 		void set_mass_initialiser(const partinit& f);
+		/// Sets the charge initialiser. See @ref charge.
+		void set_charge_initialiser(const partinit& f);
 		/// Sets the bouncing coefficient initialiser. See @ref bounce.
 		void set_bounce_initialiser(const partinit& f);
 		/// Sets the friction coefficient initialiser. See @ref friction.
@@ -103,6 +107,8 @@ class initialiser {
 		const partinit& get_vel_initialiser() const;
 		/// Returns the mass initialiser. See @ref mass.
 		const partinit& get_mass_initialiser() const;
+		/// Returns the charge initialiser. See @ref charge.
+		const partinit& get_charge_initialiser() const;
 		/// Returns the bouncing coefficient initialiser. See @ref bounce.
 		const partinit& get_bounce_initialiser() const;
 		/// Returns the friction coefficient initialiser. See @ref friction.

@@ -12,9 +12,7 @@
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/geometry/geometry.hpp>
-#include <physim/geometry/triangle.hpp>
-#include <physim/geometry/sphere.hpp>
-#include <physim/geometry/plane.hpp>
+#include <physim/fields/field.hpp>
 #include <physim/particles/particle.hpp>
 
 namespace physim {
@@ -88,7 +86,9 @@ class simulator {
 		 * does not depend on the interaction with other objects.
 		 */
 		std::vector<geom::geometry *> scene_fixed;
-		/// The set of particles in the simulation
+		/// Collection of force fields.
+		std::vector<fields::field *> force_fields;
+		/// The set of particles in the simulation.
 		std::vector<particle *> ps;
 
 		/// Gravity of the simulation. [m/s^2].
@@ -210,20 +210,19 @@ class simulator {
 		void clear_particles();
 
 		/**
-		 * @brief Adds a geomtrical object to the scene.
+		 * @brief Adds a geometrical object to the scene.
 		 *
 		 * The geometrical object is added to @ref scene_fixed.
 		 *
-		 * The caller should not free the object, since the simulator
+		 * The caller should not free the object since the simulator
 		 * will take care of that.
 		 * @param g A non-null pointer to the object.
 		 */
 		void add_geometry(geom::geometry *g);
-
 		/**
 		 * @brief Removes the @e i-th fixed geometrical object.
 		 *
-		 * Frees the memory occupied by the geometrical object in the @e i-th
+		 * Frees the memory occupied by the object in the @e i-th
 		 * position. Therefore, any pointer to that object becomes
 		 * invalid.
 		 * @param i The index of the object in [0, number of geometrical objects).
@@ -236,12 +235,43 @@ class simulator {
 		 * the container.
 		 */
 		void clear_geometry();
+
+		/**
+		 * @brief Adds a force field to the scene.
+		 *
+		 * The force field is added to @ref force_fields.
+		 *
+		 * The caller should not free the object since the simulator
+		 * will take care of that.
+		 * @param f A non-null pointer to the object.
+		 */
+		void add_field(fields::field *f);
+		/**
+		 * @brief Removes the @e i-th force field object.
+		 *
+		 * Frees the memory occupied by the object in the @e i-th
+		 * position. Therefore, any pointer to that object becomes
+		 * invalid.
+		 * @param i The index of the object in [0, number of force fields).
+		 */
+		void remove_field(size_t i);
+		/**
+		 * @brief Deletes all force fields in this simulator.
+		 *
+		 * Deletes all the objects in @ref force_fields and clears
+		 * the container.
+		 */
+		void clear_fields();
+
 		/**
 		 * @brief Clears the simulation to an empty state;
 		 *
 		 * Deletes all particles, geometry and resets the simulation time.
 		 * 
-		 * That is, calls @ref clear_particles, @ref clear_geometry,
+		 * That is, calls:
+		 * - @ref clear_particles,
+		 * - @ref clear_geometry,
+		 * - @ref clear_fields,
 		 * and sets @ref stime to 0.
 		 */
 		void clear_simulation();

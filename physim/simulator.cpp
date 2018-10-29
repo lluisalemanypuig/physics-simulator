@@ -52,9 +52,21 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 }
 
 void simulator::compute_forces(particle *p) {
+	// clear the current force
+	__pm_assign_s(p->get_force(), 0.0f);
 
-	// for now, add only the force.
-	__pm_mul_v_s(p->get_force(), gravity, p->get_mass());
+	math::vec3 F;
+	for (fields::field *f : force_fields) {
+		f->compute_force(p, F);
+		std::cout << "force from field: "
+			 << F.x << ","
+			 << F.y << ","
+			 << F.z << std::endl;
+		p->add_force(F);
+	}
+
+	// finally, apply the acceleration of gravity
+	__pm_add_acc_vs(p->get_force(), gravity, p->get_mass());
 }
 
 // PUBLIC
@@ -117,6 +129,8 @@ void simulator::clear_particles() {
 	ps.clear();
 }
 
+/* GEOMETRY */
+
 void simulator::add_geometry(geom::geometry *g) {
 	assert(g != nullptr);
 	scene_fixed.push_back(g);
@@ -143,6 +157,37 @@ void simulator::clear_geometry() {
 	}
 	scene_fixed.clear();
 }
+
+/* FIELDS */
+
+void simulator::add_field(fields::field *f) {
+	assert(f != nullptr);
+	force_fields.push_back(f);
+}
+
+void simulator::remove_field(size_t i) {
+	assert(i < force_fields.size());
+
+	// in the position i:
+	// 1. free the memory,
+	// 2. put a valid pointer to another particle,
+	// to the vector: shrink it to delete the
+	// unused position at the end
+
+	delete force_fields[i];
+	size_t N = force_fields.size();
+	std::swap(force_fields[i], force_fields[N - 1]);
+	force_fields.pop_back();
+}
+
+void simulator::clear_fields() {
+	for (fields::field *f : force_fields) {
+		delete f;
+	}
+	force_fields.clear();
+}
+
+/* SIMULATION */
 
 void simulator::clear_simulation() {
 	clear_particles();

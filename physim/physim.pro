@@ -32,7 +32,12 @@ HEADERS +=							\
 	math/math_ops_div.hpp			\
 	math/math_ops_mixed.hpp			\
 	math/math_misc.hpp				\
-	math/math_geometry.hpp
+	math/math_geometry.hpp \
+    fields/field.hpp \
+    fields/magnetic_field.hpp \
+    fields/punctual_field.hpp \
+    fields/magnetic_b_field.hpp \
+    fields/electric_field.hpp
 
 SOURCES +=							\
 	simulator.cpp					\
@@ -46,6 +51,11 @@ SOURCES +=							\
 	initialiser/rect_source.cpp		\
 	initialiser/rect_shower.cpp		\
     initialiser/hose.cpp			\
-    particles/particle.cpp
+    particles/particle.cpp \
+    fields/field.cpp \
+    fields/magnetic_field.cpp \
+    fields/punctual_field.cpp \
+    fields/magnetic_b_field.cpp \
+    fields/electric_field.cpp
 
 

@@ -8,9 +8,6 @@
 #include <physim/math/math_ops_add.hpp>
 #include <physim/math/vec3.hpp>
 
-namespace physim {
-namespace math {
-
 /* GEOMETRICAL OPERATIONS */
 
 // Change direction of vector to its opposite
@@ -68,12 +65,17 @@ namespace math {
 
 // Make a perpendicular vector to 'u'.
 #define __pm_perp(v, u)		\
-	__pm_assign_c(v,(u).y,	\
+	__pm_assign_c(v, (u).y,	\
 					-(u).x,	\
 					0.0f)
 
 // Normalise vector 'g'.
-#define __pm_normalise(f,g)	normalise(g,f)
+#define __pm_normalise(f,g)	physim::math::normalise(g,f)
 
-} // -- namespace math
-} // -- namespace physim
+// Angle between two non-unit vectors
+#define __pm_angle(u,v)			\
+	std::acos(__pm_dot(u,v)/(__pm_norm(u)*__pm_norm(v)))
+
+// Angle between two unit vectors
+#define __pm_angle_unit(u,v)			\
+	std::acos(__pm_dot(u,v))

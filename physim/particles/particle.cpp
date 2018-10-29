@@ -11,12 +11,13 @@ namespace physim {
 // PRIVATE
 
 void particle::init() {
-	__pm_assign_c(prev_pos, 0.0f,0.0f,0.0f);
-	__pm_assign_c(cur_velocity, 0.0f,0.0f,0.0f);
-	__pm_assign_c(force, 0.0f,0.0f,0.0f);
+	__pm_assign_s(prev_pos, 0.0f);
+	__pm_assign_s(cur_velocity, 0.0f);
+	__pm_assign_s(force, 0.0f);
 	mass = 1.0f;
 	bouncing = 1.0f;
 	friction = 0.0f;
+	charge = 0.0f;
 	lifetime = 10.0f;
 	starttime = 0.0f;
 	fixed = false;
@@ -26,7 +27,7 @@ void particle::init() {
 
 particle::particle() {
 	init();
-	__pm_assign_c(cur_pos, 0.0f,0.0f,0.0f);
+	__pm_assign_s(cur_pos, 0.0f);
 }
 
 particle::particle(const float& x, const float& y, const float& z) {
@@ -48,6 +49,7 @@ particle::particle(const particle& p) {
 	mass = p.mass;
 	friction = p.friction;
 	bouncing = p.bouncing;
+	charge = p.charge;
 	lifetime = p.lifetime;
 	starttime = p.starttime;
 	fixed = p.fixed;
@@ -129,6 +131,10 @@ void particle::set_friction(float f) {
 	friction = f;
 }
 
+void particle::set_charge(float c) {
+	charge = c;
+}
+
 void particle::set_lifetime(float lT) {
 	lifetime = lT;
 }
@@ -185,6 +191,10 @@ float particle::get_bouncing() const {
 
 float particle::get_friction() const {
 	return friction;
+}
+
+float particle::get_charge() const {
+	return charge;
 }
 
 float particle::get_lifetime() const {

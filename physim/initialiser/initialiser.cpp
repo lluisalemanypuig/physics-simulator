@@ -45,6 +45,10 @@ void initialiser::set_mass_initialiser(const partinit& f) {
 	mass = f;
 }
 
+void initialiser::set_charge_initialiser(const partinit& f) {
+	charge = f;
+}
+
 void initialiser::set_bounce_initialiser(const partinit& f) {
 	bounce = f;
 }
@@ -81,6 +85,10 @@ const partinit& initialiser::get_vel_initialiser() const {
 
 const partinit& initialiser::get_mass_initialiser() const {
 	return mass;
+}
+
+const partinit& initialiser::get_charge_initialiser() const {
+	return charge;
 }
 
 const partinit& initialiser::get_bounce_initialiser() const {

@@ -16,6 +16,10 @@ namespace physim {
  * objects in the scene (geometrical objects, see
  * namespace @ref physim::geom) but not with other
  * particles.
+ *
+ * When specified in the simulator, the moving particle
+ * may create a variable electric field that acts on
+ * the other particles.
  */
 class particle {
 	private:
@@ -34,6 +38,8 @@ class particle {
 		float bouncing;
 		/// Friction coefficient of the particle.
 		float friction;
+		/// Electrical charge of the particle [C].
+		float charge;
 		/**
 		 * @brief Lifetime of the particle [s].
 		 *
@@ -82,11 +88,12 @@ class particle {
 		 * - @ref prev_pos : vec3(0,0,0)
 		 * - @ref cur_velocity : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
+		 * - @ref mass : 1
 		 * - @ref bouncing : 1
 		 * - @ref friction : 0
+		 * - @ref charge : 0
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
-		 * - @ref mass : 1
 		 * - @ref fixed : false
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
@@ -186,6 +193,8 @@ class particle {
 		void set_bouncing(float b);
 		/// Sets the friction coefficient of the particle. See @ref friction.
 		void set_friction(float f);
+		/// Sets the charge of this particle. See @ref charge.
+		void set_charge(float c);
 		/// Sets the lifetime of the particle. See @ref lifetime.
 		void set_lifetime(float lT);
 		/// Sets the starttime of the particle. See @ref starttime.
@@ -220,6 +229,8 @@ class particle {
 		float get_bouncing() const;
 		/// Returns the friction coefficient of the particle. See @ref friction.
 		float get_friction() const;
+		/// Returns the charge of the particle. See @ref charge.
+		float get_charge() const;
 		/// Returns the lifetime of the particle. See @ref lifetime.
 		float get_lifetime() const;
 		/// Returns the starttime of the particle. See @ref starttime.
