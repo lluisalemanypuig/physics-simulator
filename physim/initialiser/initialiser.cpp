@@ -10,7 +10,6 @@ namespace init {
 initialiser::initialiser() {
 	pos			= [](particle *) {};
 	vel			= [](particle *) {};
-	force		= [](particle *) {};
 	mass		= [](particle *) {};
 	bounce		= [](particle *) {};
 	friction	= [](particle *) {};
@@ -22,7 +21,6 @@ initialiser::initialiser() {
 initialiser::initialiser(const initialiser& i) {
 	pos = i.pos;
 	vel = i.vel;
-	force = i.force;
 	mass = i.mass;
 	bounce = i.bounce;
 	friction = i.friction;
@@ -41,10 +39,6 @@ void initialiser::set_pos_initialiser(const partinit& f) {
 
 void initialiser::set_vel_initialiser(const partinit& f) {
 	vel = f;
-}
-
-void initialiser::set_force_initialiser(const partinit& f) {
-	force = f;
 }
 
 void initialiser::set_mass_initialiser(const partinit& f) {
@@ -85,10 +79,6 @@ const partinit& initialiser::get_vel_initialiser() const {
 	return vel;
 }
 
-const partinit& initialiser::get_force_initialiser() const {
-	return force;
-}
-
 const partinit& initialiser::get_mass_initialiser() const {
 	return mass;
 }
@@ -118,7 +108,6 @@ const partinit& initialiser::get_fixed_initialiser() const {
 void initialiser::initialise_particle(particle *p) const {
 	pos(p);
 	vel(p);
-	force(p);
 	mass(p);
 	bounce(p);
 	friction(p);

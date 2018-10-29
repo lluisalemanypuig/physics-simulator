@@ -52,8 +52,6 @@ class initialiser {
 		partinit pos;
 		/// Initialiser of velocity.
 		partinit vel;
-		/// Initialiser of force.
-		partinit force;
 		/// Initialiser of the mass.
 		partinit mass;
 		/// Initialiser of the friction coefficient.
@@ -81,8 +79,6 @@ class initialiser {
 		void set_pos_initialiser(const partinit& f);
 		/// Sets the velocity initialiser. See @ref vel.
 		void set_vel_initialiser(const partinit& f);
-		/// Sets the force initialiser. See @ref force.
-		void set_force_initialiser(const partinit& f);
 		/// Sets the mass initialiser. See @ref mass.
 		void set_mass_initialiser(const partinit& f);
 		/// Sets the bouncing coefficient initialiser. See @ref bounce.
@@ -105,8 +101,6 @@ class initialiser {
 		const partinit& get_pos_initialiser() const;
 		/// Returns the velocity initialiser. See @ref vel.
 		const partinit& get_vel_initialiser() const;
-		/// Returns the force initialiser. See @ref force.
-		const partinit& get_force_initialiser() const;
 		/// Returns the mass initialiser. See @ref mass.
 		const partinit& get_mass_initialiser() const;
 		/// Returns the bouncing coefficient initialiser. See @ref bounce.
