@@ -27,9 +27,9 @@ using namespace geom;
 using namespace init;
 
 // Custom includes
-#include "rgeom/rendered_geometry.hpp"
-#include "obj_reader.hpp"
-#include "mesh/rendered_mesh.hpp"
+#include <render/rgeom/rendered_geometry.hpp>
+#include <render/mesh/rendered_mesh.hpp>
+#include <render/obj_reader.hpp>
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {

@@ -11,8 +11,8 @@ using namespace std;
 #include <GL/glu.h>
 #include <GL/gl.h>
 
-#include "obj_reader.hpp"
-#include "mesh/rendered_mesh.hpp"
+#include <render/obj_reader.hpp>
+#include <render/mesh/rendered_mesh.hpp>
 
 class ObjRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 	private:

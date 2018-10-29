@@ -37,20 +37,20 @@ RESOURCES += \
     resources.qrc
 
 # mesh and .obj reader
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../opengl/release/ -lopengl
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../opengl/debug/ -lopengl
-else:unix: LIBS += -L$$OUT_PWD/../opengl/ -lopengl
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../render/release/ -lrender
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../render/debug/ -lrender
+else:unix: LIBS += -L$$OUT_PWD/../render/ -lrender
 
-INCLUDEPATH += $$PWD/../opengl
-DEPENDPATH += $$PWD/../opengl
+INCLUDEPATH += $$PWD/../
+DEPENDPATH += $$PWD/../
 
 # physim library
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../physim-release/ -lphysim
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../physim-debug/ -lphysim
 else:unix: LIBS += -L$$PWD/../../../physim-debug/ -lphysim
 
-INCLUDEPATH += $$PWD/../../../physim
-DEPENDPATH += $$PWD/../../../physim
+INCLUDEPATH += $$PWD/../../../
+DEPENDPATH += $$PWD/../../../
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-release/libphysim.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-debug/libphysim.a

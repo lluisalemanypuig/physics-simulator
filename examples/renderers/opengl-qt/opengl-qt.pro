@@ -28,12 +28,12 @@ HEADERS +=			\
 FORMS    += mainwindow.ui
 
 # mesh and .obj reader
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../opengl/release/ -lopengl
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../opengl/debug/ -lopengl
-else:unix: LIBS += -L$$OUT_PWD/../opengl/ -lopengl
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../render/release/ -lrender
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../render/debug/ -lrender
+else:unix: LIBS += -L$$OUT_PWD/../render/ -lrender
 
-INCLUDEPATH += $$PWD/../opengl
-DEPENDPATH += $$PWD/../opengl
+INCLUDEPATH += $$PWD/../
+DEPENDPATH += $$PWD/../
 
 # physim library
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../physim-release/ -lphysim

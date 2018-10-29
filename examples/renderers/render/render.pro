@@ -3,7 +3,7 @@ QT -= core gui
 
 CONFIG += c++11
 
-TARGET = opengl
+TARGET = render
 TEMPLATE = lib
 
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG -g
@@ -36,8 +36,8 @@ win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../physim-release/ -
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../physim-debug/ -lphysim
 else:unix: LIBS += -L$$PWD/../../../physim-debug/ -lphysim
 
-INCLUDEPATH += $$PWD/../../../physim
-DEPENDPATH += $$PWD/../../../physim
+INCLUDEPATH += $$PWD/../../../
+DEPENDPATH += $$PWD/../../../
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-release/libphysim.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-debug/libphysim.a

@@ -21,8 +21,8 @@ using namespace physim;
 using namespace init;
 
 // Custom includes
-#include "rgeom/rendered_geometry.hpp"
-#include "mesh/mesh.hpp"
+#include <render/rgeom/rendered_geometry.hpp>
+#include <render/mesh/mesh.hpp>
 #include "simulation_renderer.hpp"
 #include "utils.hpp"
 
