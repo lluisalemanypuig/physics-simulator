@@ -88,32 +88,32 @@ namespace study_cases {
 
 		// -----------------------------------------
 		// -- initialise simulator
-		math::vec3 A(-3.0f, 0.0f,-3.0f);
-		math::vec3 D(-5.0f,-0.5f,-5.0f);
-		math::vec3 E(-5.0f,-0.5f, 5.0f);
-		math::vec3 F( 5.0f,-0.5f,-5.0f);
-		math::vec3 G( 5.0f,-0.5f, 5.0f);
-		math::vec3 H(-5.0f, 5.0f,-5.0f);
-		math::vec3 I(-5.0f, 5.0f, 5.0f);
-		math::vec3 J( 5.0f, 5.0f,-5.0f);
-		math::vec3 K( 5.0f, 5.0f, 5.0f);
-		math::vec3 L( 3.0f, 5.0f, 3.0f);
-		math::vec3 M( 0.0f, 2.0f, 0.0f);
-		//math::vec3 N( 0.0f, 3.0f, 0.0f);
-		math::vec3 O( 0.5f, 3.0f,-1.0f);
-		math::vec3 P(-1.0f, 3.0f, 0.5f);
-		math::vec3 S(-1.5f, 5.0f,-1.5f);
+		vec3 A(-3.0f, 0.0f,-3.0f);
+		vec3 D(-5.0f,-0.5f,-5.0f);
+		vec3 E(-5.0f,-0.5f, 5.0f);
+		vec3 F( 5.0f,-0.5f,-5.0f);
+		vec3 G( 5.0f,-0.5f, 5.0f);
+		vec3 H(-5.0f, 5.0f,-5.0f);
+		vec3 I(-5.0f, 5.0f, 5.0f);
+		vec3 J( 5.0f, 5.0f,-5.0f);
+		vec3 K( 5.0f, 5.0f, 5.0f);
+		vec3 L( 3.0f, 5.0f, 3.0f);
+		vec3 M( 0.0f, 2.0f, 0.0f);
+		//vec3 N( 0.0f, 3.0f, 0.0f);
+		vec3 O( 0.5f, 3.0f,-1.0f);
+		vec3 P(-1.0f, 3.0f, 0.5f);
+		vec3 S(-1.5f, 5.0f,-1.5f);
 
-		math::vec3 hdir = math::normalise(L - K);
+		vec3 hdir = normalise(L - K);
 
-		math::vec3 hK = K + hdir*0.1f + math::vec3(0.0f,0.5f,0.0f);
-		math::vec3 hL = L + hdir*0.1f + math::vec3(0.0f,0.5f,0.0f);
+		vec3 hK = K + hdir*0.1f + vec3(0.0f,0.5f,0.0f);
+		vec3 hL = L + hdir*0.1f + vec3(0.0f,0.5f,0.0f);
 
 		// displaced hose direction
-		math::vec3 dhdir = hL - hK;
+		vec3 dhdir = hL - hK;
 
 		hose h;
-		h.set_hose_source(hK, math::normalise(dhdir), 0.5f, math::norm(dhdir));
+		h.set_hose_source(hK, normalise(dhdir), 0.5f, norm(dhdir));
 		h.set_starttime_initialiser(
 			[n_particles](particle *p) {
 				p->set_starttime( p->get_index()/(float(n_particles)) );
@@ -131,11 +131,11 @@ namespace study_cases {
 
 		SIM.set_initialiser(&h);
 
-		plane *floor = new plane(math::vec3(0.0f,1.0f,0.0f), E);
-		plane *pl1 = new plane(math::vec3(0.0f,0.0f,-1.0f), K);
-		plane *pl2 = new plane(math::vec3(-1.0f,0.0f,0.0f), K);
-		plane *pl3 = new plane(math::vec3(0.0f,0.0f,1.0f), J);
-		plane *pl4 = new plane(math::vec3(1.0f,0.0f,0.0f), H);
+		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), E);
+		plane *pl1 = new plane(vec3(0.0f,0.0f,-1.0f), K);
+		plane *pl2 = new plane(vec3(-1.0f,0.0f,0.0f), K);
+		plane *pl3 = new plane(vec3(0.0f,0.0f,1.0f), J);
+		plane *pl4 = new plane(vec3(1.0f,0.0f,0.0f), H);
 		SIM.add_geometry(floor);
 		SIM.add_geometry(pl1);
 		SIM.add_geometry(pl2);
@@ -151,6 +151,8 @@ namespace study_cases {
 		SIM.add_geometry(tri);
 
 		SIM.add_particles(n_particles);
+
+		SIM.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		// execute simulation

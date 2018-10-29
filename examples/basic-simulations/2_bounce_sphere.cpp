@@ -72,12 +72,12 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[&](particle *p) {
-				p->set_position(math::vec3(ix,5.0f,0.0f));
+				p->set_position(vec3(ix,5.0f,0.0f));
 			}
 		);
 		I.set_vel_initialiser(
 			[](particle *p) {
-				p->set_velocity(math::vec3(0.0f,0.0f,0.0f));
+				p->set_velocity(vec3(0.0f,0.0f,0.0f));
 			}
 		);
 		I.set_lifetime_initialiser(
@@ -101,19 +101,21 @@ namespace study_cases {
 		// Iialised using the function.
 		const particle *p = S.add_particle();
 
-		sphere *ball = new sphere(math::vec3(0.0f,2.0f,0.0f), 1.0f);
+		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
 		S.add_geometry(ball);
 
-		plane *floor = new plane(math::vec3(0.0f,1.0f,0.0f), math::vec3(0.0f,0.0f,0.0f));
+		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 		S.add_geometry(floor);
+
+		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		// execute simulation
 		timing::time_point begin = timing::now();
-		vector<math::vec3> trajectory;
+		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			math::vec3 cur_pos = p->get_position();
+			vec3 cur_pos = p->get_position();
 			trajectory.push_back(cur_pos);
 			S.apply_time_step();
 		}
@@ -132,7 +134,7 @@ namespace study_cases {
 
 			// only in plain text
 			for (size_t i = 0; i < trajectory.size(); ++i) {
-				const math::vec3& v = trajectory[i];
+				const vec3& v = trajectory[i];
 				cout << v.x << "," << v.y << "," << v.z << endl;
 			}
 		}
@@ -158,7 +160,7 @@ namespace study_cases {
 				// first in Geogebra format
 				fout << "{";
 				for (size_t i = 0; i < trajectory.size(); ++i) {
-					const math::vec3& v = trajectory[i];
+					const vec3& v = trajectory[i];
 					fout << "Point({"
 						 << v.x << "," << v.y << "," << v.z
 						 << "})";
@@ -170,7 +172,7 @@ namespace study_cases {
 
 				// then in plain text
 				for (size_t i = 0; i < trajectory.size(); ++i) {
-					const math::vec3& v = trajectory[i];
+					const vec3& v = trajectory[i];
 					fout << v.x << "," << v.y << "," << v.z << endl;
 				}
 				fout.close();

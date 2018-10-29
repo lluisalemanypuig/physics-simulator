@@ -14,8 +14,13 @@ using namespace std;
 #include <physim/initialiser/rect_fountain.hpp>
 #include <physim/initialiser/hose.hpp>
 #include <physim/particles/particle.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/geometry/sphere.hpp>
+#include <physim/geometry/triangle.hpp>
+#include <physim/geometry/rectangle.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
+using namespace math;
 using namespace geom;
 using namespace init;
 
