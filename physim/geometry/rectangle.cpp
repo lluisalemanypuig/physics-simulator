@@ -1,5 +1,9 @@
 #include <physim/geometry/rectangle.hpp>
 
+// C includes
+#include <assert.h>
+
+// physim includes
 #include <physim/math/math.hpp>
 
 // LOCAL-DEFINED

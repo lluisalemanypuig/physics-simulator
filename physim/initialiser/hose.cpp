@@ -1,5 +1,9 @@
 #include <physim/initialiser/hose.hpp>
 
+// C includes
+#include <assert.h>
+
+// physim includes
 #include <physim/math/math.hpp>
 
 namespace physim {

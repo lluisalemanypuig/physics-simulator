@@ -3,7 +3,6 @@
 #include <physim/math/math.hpp>
 
 #include <iostream>
-using namespace std;
 
 namespace physim {
 

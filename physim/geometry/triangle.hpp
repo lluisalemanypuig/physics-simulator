@@ -7,6 +7,7 @@
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/particles/particle.hpp>
+#include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace geom {

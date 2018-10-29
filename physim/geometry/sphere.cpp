@@ -1,5 +1,10 @@
 #include <physim/geometry/sphere.hpp>
 
+// C includes
+#include <assert.h>
+
+// physim includes
+#include <physim/geometry/plane.hpp>
 #include <physim/math/math.hpp>
 
 namespace physim {

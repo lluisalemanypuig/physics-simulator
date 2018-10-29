@@ -1,7 +1,6 @@
 #pragma once
 
 // C inlcudes
-#include <assert.h>
 #include <stddef.h>
 
 // physim includes
