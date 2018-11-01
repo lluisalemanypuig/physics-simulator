@@ -1,8 +1,5 @@
 #pragma once
 
-// C includes
-#include <assert.h>
-
 // C++ includes
 #include <vector>
 #include <string>

@@ -5,6 +5,9 @@
 #include <iostream>
 using namespace std;
 
+// Custom includes
+#include <render/obj_reader.hpp>
+
 // PRIVATE
 
 SimulationRenderer *MainWindow::get_SimRend(int t) {

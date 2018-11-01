@@ -29,10 +29,6 @@ HEADERS +=						\
     simulation_renderer.hpp		\
 	utils.hpp
 
-DISTFILES +=					\
-	shaders/simpleshader.vert	\
-    shaders/simpleshader.frag
-
 RESOURCES += \
     resources.qrc
 

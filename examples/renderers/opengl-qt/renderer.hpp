@@ -1,17 +1,11 @@
 #pragma once
 
-#include <iostream>
-using namespace std;
-
-#include <QGLFramebufferObject>
+// Qt includes
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QMouseEvent>
 
-#include <GL/glu.h>
-#include <GL/gl.h>
-
-#include <render/obj_reader.hpp>
+// render includes
 #include <render/mesh/rendered_mesh.hpp>
 
 class ObjRenderer : public QOpenGLWidget, protected QOpenGLFunctions {

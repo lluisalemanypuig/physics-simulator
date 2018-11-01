@@ -1,5 +1,10 @@
 #include "rendered_mesh.hpp"
 
+// OpenGL includes
+#include <GL/glu.h>
+#include <GL/gl.h>
+
+// C++ includes
 #include <iostream>
 using namespace std;
 

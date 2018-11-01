@@ -4,12 +4,10 @@
 #include <vector>
 
 // Qt includes
-#include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QProgressBar>
 #include <QMouseEvent>
-#include <QMatrix4x4>
 #include <QLabel>
 
 // physim includes
@@ -18,7 +16,6 @@
 // Custom includes
 #include <render/rgeom/rendered_geometry.hpp>
 #include <render/mesh/rendered_mesh.hpp>
-#include <render/obj_reader.hpp>
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {

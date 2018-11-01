@@ -6,9 +6,6 @@
 // glm includes
 #include <glm/glm.hpp>
 
-// Qt includes
-#include <QOpenGLFunctions>
-
 // Custom includes
 #include "mesh_utils.hpp"
 

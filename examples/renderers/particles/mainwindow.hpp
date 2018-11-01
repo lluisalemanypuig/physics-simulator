@@ -1,12 +1,10 @@
 #pragma once
 
 // C++ includes
-#include <functional>
 #include <random>
 
 // Qt includes
 #include <QMainWindow>
-#include <QFileInfo>
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>

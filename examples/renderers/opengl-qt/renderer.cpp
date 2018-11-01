@@ -1,5 +1,16 @@
 #include "renderer.hpp"
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
+// OpenGL includes
+#include <GL/glu.h>
+#include <GL/gl.h>
+
+// render includes
+#include <render/obj_reader.hpp>
+
 static const float rotationFactor = 0.5f;
 static const float maxRotationCamera = 75.0f;
 static const float minDistanceCamera = 1.0f;

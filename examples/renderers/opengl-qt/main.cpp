@@ -1,7 +1,4 @@
 #include "mainwindow.h"
-#include <stdio.h>
-#include <iostream>
-using namespace std;
 #include <QApplication>
 
 int main(int argc, char *argv[]) {

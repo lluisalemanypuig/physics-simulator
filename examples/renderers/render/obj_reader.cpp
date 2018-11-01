@@ -1,6 +1,10 @@
 #include "obj_reader.hpp"
 
+// C includes
+#include <assert.h>
+
 // C++ includes
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -197,7 +201,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 			TC[0] = TC[1] = TC[2] = TC[3] = -1;
 
 			// parse face information
-			int C = count(file_lines[i].begin(), file_lines[i].end(),' ');
+			int C = std::count(file_lines[i].begin(), file_lines[i].end(),' ');
 			if (C == 3) {
 				// triangle
 				if (file_lines[i].find("//") != string::npos) {

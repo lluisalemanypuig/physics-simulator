@@ -2,6 +2,12 @@
 
 // Qt includes
 #include <QApplication>
+#include <QMatrix4x4>
+
+// Custom includes
+#include <render/obj_reader.hpp>
+
+
 
 // PRIVATE
 

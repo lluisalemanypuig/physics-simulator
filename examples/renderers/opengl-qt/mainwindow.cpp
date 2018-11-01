@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFileDialog>
+
 void MainWindow::on_actionLoad_triggered() {
 	QString filename = QFileDialog::getOpenFileName(this, tr("Open OBJ"), ".", tr("*.obj"));
 	ui->renderer->load_mesh(filename);
