@@ -36,7 +36,9 @@ mesh1d& mesh1d::operator= (const mesh1d& m) {
 // MODIFIERS
 
 void mesh1d::init(size_t n) {
-	clear();
+	if (ps != nullptr) {
+		clear();
+	}
 
 	N = n;
 	ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
@@ -84,12 +86,8 @@ size_t mesh1d::n_particles() const {
 	return N;
 }
 
-mesh_particle *mesh1d::get_particles() {
-	return ps[0];
-}
-
-const mesh_particle *mesh1d::get_particles() const {
-	return ps[0];
+mesh_particle **mesh1d::get_particles() {
+	return ps;
 }
 
 } // -- namespace meshes

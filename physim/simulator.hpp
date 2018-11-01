@@ -142,21 +142,29 @@ class simulator {
 		void init_particle(particles::free_particle *p);
 
 		/**
-		 * @brief Predicts a particle's next position and velocity.
-		 * @param p Particle to apply the solver on.
-		 * @param[out] pos The predicted position.
-		 * @param[out] vel The predicted velocity.
-		 */
-		void apply_solver
-		(const particles::free_particle *p, math::vec3& pos, math::vec3& vel);
-
-		/**
 		 * @brief Simulate free particles.
 		 *
 		 * Applies a time step on all the free particles of
 		 * the simulation.
 		 */
 		void simulate_free_particles();
+
+		/**
+		 * @brief Simulate 1-dimensional meshes.
+		 *
+		 * Applies a time step on all the particles that make
+		 * up the 1-dimensional meshes of the simulation.
+		 */
+		void simulate_meshes1d();
+
+		/**
+		 * @brief Predicts a particle's next position and velocity.
+		 * @param p Particle to apply the solver on.
+		 * @param[out] pos The predicted position.
+		 * @param[out] vel The predicted velocity.
+		 */
+		template<class P> void apply_solver
+		(const P *p, math::vec3& pos, math::vec3& vel);
 
 		/**
 		 * @brief Computes the forces acting in the simulation.
@@ -168,7 +176,11 @@ class simulator {
 		 * The result is set to the force acting on particle @e p.
 		 * @param p The particle whose force attribute is to be modified.
 		 */
-		void compute_forces(particles::free_particle *p);
+		template<class P>
+		void compute_forces(P *p);
+
+		template<class P> void check_collision_update
+		(math::vec3& pred_pos, math::vec3& pred_vel, P *p);
 
 	public:
 		/**

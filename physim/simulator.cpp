@@ -22,51 +22,6 @@ void simulator::init_particle(particles::free_particle *p) {
 	__pm_sub_v_vs(p->get_previous_position(), p->get_position(), p->get_velocity(), dt);
 }
 
-void simulator::apply_solver(const particles::free_particle *p, math::vec3& pred_pos, math::vec3& pred_vel) {
-	const float mass = p->get_mass();
-
-	switch (solver) {
-		case solver_type::EulerOrig:
-			// pred_pos <- pos + vel*dt
-			__pm_add_v_vs(pred_pos, p->get_position(), p->get_velocity(), dt);
-			// pred_vel <- vel + force*dt/mass
-			__pm_add_v_vs(pred_vel, p->get_velocity(), p->get_force(), dt/mass);
-			break;
-
-		case solver_type::EulerSemi:
-			// pred_vel <- vel + force*dt/mass
-			__pm_add_v_vs(pred_vel, p->get_velocity(), p->get_force(), dt/mass);
-			// pred_pos <- pos + pred_vel*dt
-			__pm_add_v_vs(pred_pos, p->get_position(), pred_vel, dt);
-			break;
-
-		case solver_type::Verlet:
-			// pred_pos <- pos + 1.0f*(pos - prev_pos) + force*dt*dt/m
-			__pm_sub_v_v(pred_pos, p->get_position(), p->get_previous_position());
-			__pm_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->get_force(),(dt*dt)*(1.0f/mass), p->get_position());
-
-			// pred_vel <- (pred_pos - pos)/dt
-			__pm_sub_v_v_div_s(pred_vel, pred_pos, p->get_position(), dt);
-			break;
-
-		default:
-			std::cerr << "Warning: solver not implemented" << std::endl;
-	}
-}
-
-void simulator::compute_forces(particles::free_particle *p) {
-	// clear the current force
-	__pm_assign_s(p->get_force(), 0.0f);
-
-	// compute the force every force field
-	// makes on every particle
-	math::vec3 F;
-	for (fields::field *f : force_fields) {
-		f->compute_force(p, F);
-		__pm_add_acc_v(p->get_force(), F);
-	}
-}
-
 // PUBLIC
 
 simulator::simulator(const solver_type& s, float t) {

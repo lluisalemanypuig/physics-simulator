@@ -83,10 +83,7 @@ class mesh1d {
 		size_t n_particles() const;
 
 		/// Returns a reference to this spring's particles.
-		particles::mesh_particle *get_particles();
-
-		/// Returns a constant reference to this spring's particles.
-		const particles::mesh_particle *get_particles() const;
+		particles::mesh_particle **get_particles();
 };
 
 } // -- namespace meshes
