@@ -112,21 +112,30 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	float Lp = (-b + std::sqrt(discr))/(2.0f*a);
 	float Lm = (-b - std::sqrt(discr))/(2.0f*a);
 
-	float dp = 0.0f;
-	if (Lp < 0.0f) {
-		dp = abs(Lp);
+	float L, dp, dm;
+	L = dp = dm = 0.0f;
+	if (0.0f <= Lp and Lp <= 1.0f) {
+		L = Lp;
 	}
-	else if (Lp > 1.0f) {
-		dp = Lp - 1.0f;
+	else if (0.0f <= Lm and Lm <= 1.0f) {
+		L = Lm;
 	}
-	float dm = 0.0f;
-	if (Lm < 0.0f) {
-		dm = abs(Lm);
+	else {
+		if (Lp < 0.0f) {
+			dp = abs(Lp);
+		}
+		else if (Lp > 1.0f) {
+			dp = Lp - 1.0f;
+		}
+		float dm = 0.0f;
+		if (Lm < 0.0f) {
+			dm = abs(Lm);
+		}
+		else if (Lm > 1.0f) {
+			dm = Lm - 1.0f;
+		}
+		L = (dp < dm ? Lp : Lm);
 	}
-	else if (Lm > 1.0f) {
-		dm = Lm - 1.0f;
-	}
-	float L = (dp < dm ? Lp : Lm);
 
 	#if defined (DEBUG)
 	// make sure that L has the right value (with some tolerance)
