@@ -44,10 +44,10 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	diff = normalise(diff);
 
 	hose h;
-	h.set_hose_source(hK, hose_direction, 0.5f, length_diff);
+	h.set_hose_source(hK, hose_direction, 0.5f, 3.0f*length_diff);
 	h.set_starttime_initialiser(
-		[](particle *p) {
-			p->set_starttime( p->get_index()/1000.0f );
+		[](free_particle *p) {
+			p->set_starttime( p->get_index()/500.0f );
 		}
 	);
 

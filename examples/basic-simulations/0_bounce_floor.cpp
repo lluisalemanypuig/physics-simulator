@@ -87,7 +87,7 @@ namespace study_cases {
 
 		initialiser I;
 		I.set_pos_initialiser(
-			[](particle *p) {
+			[](free_particle *p) {
 				cout << "Initialise particle's position" << endl;
 				p->set_position(0.0f,10.0f,0.0f);
 				cout << "After assignment:" << endl;
@@ -98,18 +98,18 @@ namespace study_cases {
 			}
 		);
 		I.set_vel_initialiser(
-			[](particle *p) {
+			[](free_particle *p) {
 				p->set_velocity(0.0f,0.0f,0.0f);
 			}
 		);
 		I.set_lifetime_initialiser(
-			[&](particle *p) { p->set_lifetime(lifetime); }
+			[&](free_particle *p) { p->set_lifetime(lifetime); }
 		);
 		I.set_bounce_initialiser(
-			[&](particle *p) { p->set_bouncing(bounce); }
+			[&](free_particle *p) { p->set_bouncing(bounce); }
 		);
 		I.set_friction_initialiser(
-			[&](particle *p) { p->set_friction(friction); }
+			[&](free_particle *p) { p->set_friction(friction); }
 		);
 
 		simulator S(solv, dt);
@@ -120,7 +120,7 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
-		const particle *p = S.add_particle();
+		const free_particle *p = S.add_particle();
 
 		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 		S.add_geometry(floor);

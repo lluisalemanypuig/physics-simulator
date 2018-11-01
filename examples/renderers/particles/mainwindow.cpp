@@ -5,6 +5,9 @@
 #include <iostream>
 using namespace std;
 
+// physim includes
+#include <physim/particles/free_particle.hpp>
+
 // Custom includes
 #include <render/obj_reader.hpp>
 
@@ -54,7 +57,7 @@ QProgressBar *MainWindow::get_sim_bar() {
 void MainWindow::get_init_bounce(physim::init::partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
-		bounce = [&](physim::particle *p) { p->set_bouncing( this->U01(this->eng) ); };
+		bounce = [&](physim::free_particle *p) { p->set_bouncing( this->U01(this->eng) ); };
 		cout << "        Use random bouncing coefficient" << endl;
 		return;
 	}
@@ -62,7 +65,7 @@ void MainWindow::get_init_bounce(physim::init::partinit& bounce) {
 	bool ok;
 	float b = text.toFloat(&ok);
 	if (ok) {
-		bounce = [b](physim::particle *p) { p->set_bouncing(b); };
+		bounce = [b](physim::free_particle *p) { p->set_bouncing(b); };
 		cout << "        Set bouncing coefficient to " << b << endl;
 		return;
 	}
@@ -73,7 +76,7 @@ void MainWindow::get_init_bounce(physim::init::partinit& bounce) {
 void MainWindow::get_init_friction(physim::init::partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
-		fric = [&](physim::particle *p) { p->set_friction( this->U01(this->eng) ); };
+		fric = [&](physim::free_particle *p) { p->set_friction( this->U01(this->eng) ); };
 		cout << "        Use random friction coefficient" << endl;
 		return;
 	}
@@ -81,7 +84,7 @@ void MainWindow::get_init_friction(physim::init::partinit& fric) {
 	bool ok;
 	float f = text.toFloat(&ok);
 	if (ok) {
-		fric = [f](physim::particle *p) { p->set_friction(f); };
+		fric = [f](physim::free_particle *p) { p->set_friction(f); };
 		cout << "        Set friction coefficient to " << f << endl;
 		return;
 	}
@@ -92,7 +95,7 @@ void MainWindow::get_init_friction(physim::init::partinit& fric) {
 void MainWindow::get_init_lifetime(physim::init::partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
-		lifetime = [&](physim::particle *p) { p->set_lifetime( this->U010(this->eng) ); };
+		lifetime = [&](physim::free_particle *p) { p->set_lifetime( this->U010(this->eng) ); };
 		cout << "        Use random physim::particle's lifetime" << endl;
 		return;
 	}
@@ -100,7 +103,7 @@ void MainWindow::get_init_lifetime(physim::init::partinit& lifetime) {
 	bool ok;
 	float l = text.toFloat(&ok);
 	if (ok) {
-		lifetime = [l](physim::particle *p) { p->set_lifetime(l); };
+		lifetime = [l](physim::free_particle *p) { p->set_lifetime(l); };
 		cout << "        Set physim::particle's lifetime to " << l << endl;
 		return;
 	}
@@ -246,8 +249,8 @@ void MainWindow::on_lEBounce_returnPressed() {
 	I->set_bounce_initialiser(bounce);
 
 	// change bouncing coefficient of all physim::particles
-	const vector<physim::particle *>& ps = sr->get_simulator().get_particles();
-	for (physim::particle *p : ps) {
+	const vector<physim::free_particle *>& ps = sr->get_simulator().get_particles();
+	for (physim::free_particle *p : ps) {
 		bounce(p);
 	}
 }
@@ -263,8 +266,8 @@ void MainWindow::on_lEFriction_returnPressed() {
 	I->set_friction_initialiser(fric);
 
 	// change friction coefficient of all physim::particles
-	const vector<physim::particle *>& ps = sr->get_simulator().get_particles();
-	for (physim::particle *p : ps) {
+	const vector<physim::free_particle *>& ps = sr->get_simulator().get_particles();
+	for (physim::free_particle *p : ps) {
 		fric(p);
 	}
 }
@@ -280,8 +283,8 @@ void MainWindow::on_lELifeTime_returnPressed() {
 	I->set_lifetime_initialiser(lifetime);
 
 	// change lifetime of all physim::particles
-	const vector<physim::particle *>& ps = sr->get_simulator().get_particles();
-	for (physim::particle *p : ps) {
+	const vector<physim::free_particle *>& ps = sr->get_simulator().get_particles();
+	for (physim::free_particle *p : ps) {
 		lifetime(p);
 	}
 }

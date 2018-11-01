@@ -19,7 +19,7 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 
 	initialiser i;
 	i.set_pos_initialiser(
-		[&](particle *p) {
+		[&](free_particle *p) {
 			p->set_previous_position(vec3(0.0f,0.0f,0.0f));
 
 			size_t idx = p->get_index();
@@ -37,7 +37,7 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 		}
 	);
 	i.set_vel_initialiser(
-		[](particle *p) {
+		[](free_particle *p) {
 			p->set_velocity(0.0f,0.0f,0.0f);
 		}
 	);

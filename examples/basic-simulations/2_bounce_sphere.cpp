@@ -71,23 +71,23 @@ namespace study_cases {
 
 		initialiser I;
 		I.set_pos_initialiser(
-			[&](particle *p) {
+			[&](free_particle *p) {
 				p->set_position(vec3(ix,5.0f,0.0f));
 			}
 		);
 		I.set_vel_initialiser(
-			[](particle *p) {
+			[](free_particle *p) {
 				p->set_velocity(vec3(0.0f,0.0f,0.0f));
 			}
 		);
 		I.set_lifetime_initialiser(
-			[&](particle *p) { p->set_lifetime(lifetime); }
+			[&](free_particle *p) { p->set_lifetime(lifetime); }
 		);
 		I.set_bounce_initialiser(
-			[&](particle *p) { p->set_bouncing(bounce); }
+			[&](free_particle *p) { p->set_bouncing(bounce); }
 		);
 		I.set_friction_initialiser(
-			[&](particle *p) { p->set_friction(friction); }
+			[&](free_particle *p) { p->set_friction(friction); }
 		);
 
 		simulator S(solver_type::EulerSemi, dt);
@@ -99,7 +99,7 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// Iialised using the function.
-		const particle *p = S.add_particle();
+		const free_particle *p = S.add_particle();
 
 		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
 		S.add_geometry(ball);

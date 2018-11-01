@@ -16,18 +16,18 @@ void MainWindow::make_sim4(SimulationRenderer *sr) {
 
 	initialiser *I = sr->get_simulator().get_initialiser();
 	I->set_pos_initialiser(
-		[](particle *p) {
+		[](free_particle *p) {
 			float z = -4.0f + p->get_index()*0.8f;
 			p->set_position(-5.0f,1.0f,z);
 		}
 	);
 	I->set_vel_initialiser(
-		[](particle *p) {
+		[](free_particle *p) {
 			p->set_velocity(5.0f,0.0f,0.0f);
 		}
 	);
 	I->set_friction_initialiser(
-		[](particle *p) {
+		[](free_particle *p) {
 			p->set_friction( p->get_index()/10.0f );
 		}
 	);

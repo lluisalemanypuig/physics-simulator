@@ -20,15 +20,15 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 	rect_shower w;
 	w.set_straight_source(math::vec3(-3.0f,10.0f,-3.0f), 6.0f,6.0f);
 	w.set_starttime_initialiser(
-		[](particle *p) {
+		[](free_particle *p) {
 			p->set_starttime( p->get_index()/1000.0f );
 		}
 	);
 	w.set_charge_initialiser(
-		[](particle *p) { p->set_charge( 1.0f ); }
+		[](free_particle *p) { p->set_charge( 1.0f ); }
 	);
 	w.set_mass_initialiser(
-		[](particle *p) { p->set_charge( 1.0f ); }
+		[](free_particle *p) { p->set_charge( 1.0f ); }
 	);
 
 	// the friction,bouncing coefficient, and lifetime

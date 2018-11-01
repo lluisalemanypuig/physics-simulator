@@ -13,7 +13,7 @@ using namespace std;
 #include <physim/initialiser/rect_shower.hpp>
 #include <physim/initialiser/rect_fountain.hpp>
 #include <physim/initialiser/hose.hpp>
-#include <physim/particles/particle.hpp>
+#include <physim/particles/free_particle.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/triangle.hpp>

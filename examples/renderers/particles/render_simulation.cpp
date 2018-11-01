@@ -100,10 +100,15 @@ void SimulationRenderer::draw_geom(rgeom *rg) {
 void SimulationRenderer::draw_particles() {
 	glDisable(GL_LIGHTING);
 
-	glColor3f(1.0f,1.0f,1.0f);
 	glBegin(GL_POINTS);
 	for (size_t i = 0; i < S.n_particles(); ++i) {
 		const physim::math::vec3& pos = S.get_particle(i).get_position();
+		if (S.get_particle(i).get_lifetime() < 0.2f) {
+			glColor3f(0.0f,0.0f,0.0f);
+		}
+		else {
+			glColor3f(1.0f,1.0f,1.0f);
+		}
 		glVertex3f(pos.x, pos.y, pos.z);
 	}
 	glEnd();
