@@ -10,7 +10,7 @@ namespace physim {
 namespace init {
 
 /// Shortcut for the initialiser function type.
-typedef std::function<void (free_particle *)> partinit;
+typedef std::function<void (particles::free_particle *)> partinit;
 
 /**
  * @brief The particle initialiser class.
@@ -130,7 +130,7 @@ class initialiser {
 		 * @ref starttime and @ref fixed are called on the particle.
 		 * @param p The particle to be initialised.
 		 */
-		void initialise_particle(free_particle *p) const;
+		void initialise_particle(particles::free_particle *p) const;
 };
 
 } // -- namespace init

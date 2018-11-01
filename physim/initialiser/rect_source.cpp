@@ -10,7 +10,7 @@ namespace init {
 // PROTECTED
 
 void rect_source::make_pos_init() {
-	pos = [this](free_particle *p) {
+	pos = [this](particles::free_particle *p) {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
 

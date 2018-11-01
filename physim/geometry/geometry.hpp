@@ -115,7 +115,7 @@ class geometry {
 		 */
 		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
-			free_particle *pred
+			particles::free_particle *pred
 		) const = 0;
 
 		/// Output on stream @e os information about this geometry.

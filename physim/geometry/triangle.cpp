@@ -105,7 +105,7 @@ bool triangle::intersec_segment
 // OTHERS
 
 void triangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, free_particle *p) const
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p) const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }

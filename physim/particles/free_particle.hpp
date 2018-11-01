@@ -7,6 +7,7 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
+namespace particles {
 
 /**
  * @brief Class implementing a free particle.
@@ -241,4 +242,5 @@ class free_particle {
 		size_t get_index() const;
 };
 
+} // -- namespace particles
 } // -- namespace sim

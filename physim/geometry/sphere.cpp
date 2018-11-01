@@ -158,7 +158,7 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 // OTHERS
 
 void sphere::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, free_particle *p) const
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p) const
 {
 	// define a plane tangent to the sphere
 	// that goes through the intersection point

@@ -29,7 +29,7 @@ class field {
 		 * @param[out] F The force from this field acting on the
 		 * particle.
 		 */
-		virtual void compute_force(const free_particle *p, math::vec3& F) = 0;
+		virtual void compute_force(const particles::free_particle *p, math::vec3& F) = 0;
 };
 
 } // -- namespace fields

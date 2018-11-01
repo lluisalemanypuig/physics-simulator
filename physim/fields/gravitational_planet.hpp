@@ -41,7 +41,7 @@ class gravitational_planet : public punctual {
 
 		// OTHERS
 
-		void compute_force(const free_particle *p, math::vec3& F);
+		void compute_force(const particles::free_particle *p, math::vec3& F);
 };
 
 } // -- namespace fields

@@ -7,6 +7,7 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
+namespace particles {
 
 /**
  * @brief Class implementing a particle.
@@ -185,4 +186,5 @@ class mesh_particle {
 		size_t get_index() const;
 };
 
+} // -- namespace particles
 } // -- namespace sim

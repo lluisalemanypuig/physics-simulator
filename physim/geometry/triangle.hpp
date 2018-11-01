@@ -85,8 +85,10 @@ class triangle : public geometry {
 
 		// OTHERS
 
-		void update_particle
-		(const math::vec3& pred_pos, const math::vec3& pred_vel, free_particle *p) const;
+		void update_particle(
+			const math::vec3& pp, const math::vec3& pv,
+			particles::free_particle *p
+		) const;
 
 		void display(std::ostream& os = std::cout) const;
 };

@@ -8,6 +8,8 @@
 #include <physim/math/math.hpp>
 
 namespace physim {
+using namespace particles;
+
 namespace init {
 
 // PROTECTED

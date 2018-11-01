@@ -40,7 +40,8 @@ HEADERS +=							\
 	math/math_ops_mixed.hpp			\
 	math/math_misc.hpp				\
     math/math_geometry.hpp			\
-    fields/gravitational_planet.hpp
+    fields/gravitational_planet.hpp \
+    meshes/mesh1d.hpp
 
 SOURCES +=							\
 	simulator.cpp					\
@@ -62,6 +63,8 @@ SOURCES +=							\
     fields/magnetic.cpp				\
     fields/punctual.cpp				\
     fields/gravitational.cpp		\
-    fields/gravitational_planet.cpp
+    fields/gravitational_planet.cpp \
+    meshes/mesh1d.cpp \
+    simulator_free_particles.cpp
 
 

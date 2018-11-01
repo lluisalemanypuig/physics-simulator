@@ -10,7 +10,7 @@ namespace init {
 // PROTECTED
 
 void rect_fountain::make_vel_init() {
-	vel = [this](free_particle *p) {
+	vel = [this](particles::free_particle *p) {
 		const float d2 = __pm_dist2(p->get_position(),this->C);
 		const float D2 = (this->h*this->h + this->w*this->w)/4.0f;
 

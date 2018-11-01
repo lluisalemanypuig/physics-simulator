@@ -9,6 +9,7 @@
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
 #include <physim/particles/free_particle.hpp>
+#include <physim/meshes/mesh1d.hpp>
 
 namespace physim {
 
@@ -83,8 +84,10 @@ class simulator {
 		std::vector<geom::geometry *> scene_fixed;
 		/// Collection of force fields.
 		std::vector<fields::field *> force_fields;
-		/// The set of particles in the simulation.
-		std::vector<free_particle *> ps;
+		/// The collection of particles in the simulation.
+		std::vector<particles::free_particle *> ps;
+		/// The collection of 1-dimensional meshes in the simulation.
+		std::vector<meshes::mesh1d *> m1ds;
 
 		/// Gravity of the simulation. [m/s^2].
 		math::vec3 gravity;
@@ -136,7 +139,7 @@ class simulator {
 		 * so that the Verlet solver works corectly (see @ref solver_type).
 		 * @param p The particle to be initialsed.
 		 */
-		void init_particle(free_particle *p);
+		void init_particle(particles::free_particle *p);
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
@@ -144,7 +147,16 @@ class simulator {
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
 		 */
-		void apply_solver(const free_particle *p, math::vec3& pos, math::vec3& vel);
+		void apply_solver
+		(const particles::free_particle *p, math::vec3& pos, math::vec3& vel);
+
+		/**
+		 * @brief Simulate free particles.
+		 *
+		 * Applies a time step on all the free particles of
+		 * the simulation.
+		 */
+		void simulate_free_particles();
 
 		/**
 		 * @brief Computes the forces acting in the simulation.
@@ -156,7 +168,7 @@ class simulator {
 		 * The result is set to the force acting on particle @e p.
 		 * @param p The particle whose force attribute is to be modified.
 		 */
-		void compute_forces(free_particle *p);
+		void compute_forces(particles::free_particle *p);
 
 	public:
 		/**
@@ -168,10 +180,12 @@ class simulator {
 		/// Destructor
 		~simulator();
 
-		// MODIFIERS
+		// BUILD SIMULATION'S CONTENTS
+
+		// ----------- particles
 
 		/// Adds a particle to the simulation.
-		const free_particle *add_particle();
+		const particles::free_particle *add_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
@@ -183,7 +197,7 @@ class simulator {
 		 * will take care of that.
 		 * @param p A non-null pointer to the object.
 		 */
-		void add_particle(free_particle *p);
+		void add_particle(particles::free_particle *p);
 		/// Adds @e n particles to the simulation.
 		void add_particles(size_t n);
 
@@ -203,6 +217,8 @@ class simulator {
 		 * container.
 		 */
 		void clear_particles();
+
+		// ----------- geometry
 
 		/**
 		 * @brief Adds a geometrical object to the scene.
@@ -231,6 +247,8 @@ class simulator {
 		 */
 		void clear_geometry();
 
+		// ----------- fields
+
 		/**
 		 * @brief Adds a force field to the scene.
 		 *
@@ -241,6 +259,13 @@ class simulator {
 		 * @param f A non-null pointer to the object.
 		 */
 		void add_field(fields::field *f);
+		/**
+		 * @brief Adds a gravity vector.
+		 *
+		 * Makes a force field of type @ref fields::gravitational_planet
+		 * using vector @e g.
+		 */
+		void add_gravity_acceleration(const math::vec3& g);
 		/**
 		 * @brief Removes the @e i-th force field object.
 		 *
@@ -257,6 +282,8 @@ class simulator {
 		 * the container.
 		 */
 		void clear_fields();
+
+		// MODIFIERS
 
 		/**
 		 * @brief Clears the simulation to an empty state;
@@ -280,6 +307,8 @@ class simulator {
 		 */
 		void reset_simulation();
 
+		// RUN SIMULATION
+
 		/**
 		 * @brief Apply a time step to the simulation.
 		 *
@@ -292,14 +321,6 @@ class simulator {
 		void apply_time_step();
 
 		// SETTERS
-
-		/**
-		 * @brief Sets the gravity vector.
-		 *
-		 * Makes a force field of type @ref fields::gravitational_planet
-		 * using vector @e g.
-		 */
-		void add_gravity_acceleration(const math::vec3& g);
 
 		/**
 		 * @brief Sets the time step of the simulation.
@@ -348,9 +369,9 @@ class simulator {
 		 * @return Returns a constant reference to the structure
 		 * containing all particles.
 		 */
-		const std::vector<free_particle *>& get_particles() const;
+		const std::vector<particles::free_particle *>& get_particles() const;
 		/// Return constant reference to i-th particle.
-		const free_particle& get_particle(size_t i) const;
+		const particles::free_particle& get_particle(size_t i) const;
 		/// Returns all fixed objects of the scene.
 		const std::vector<geom::geometry *>& get_fixed_objects() const;
 		/// Returns the current simulation time.

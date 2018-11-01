@@ -7,6 +7,7 @@
 #include <physim/math/math.hpp>
 
 namespace physim {
+namespace particles {
 
 // PRIVATE
 
@@ -203,4 +204,5 @@ size_t free_particle::get_index() const {
 	return index;
 }
 
-} // -- namespace sim
+} // -- namespace particles
+} // -- namespace physim

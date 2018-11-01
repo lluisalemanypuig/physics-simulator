@@ -10,7 +10,7 @@ namespace init {
 // PROTECTED
 
 void rect_shower::make_vel_init() {
-	vel = [](free_particle *p) {
+	vel = [](particles::free_particle *p) {
 		__pm_assign_c(p->get_velocity(), 0.0f,0.0f,0.0f);
 	};
 }

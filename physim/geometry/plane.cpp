@@ -98,7 +98,7 @@ bool plane::intersec_segment(const math::vec3& p1, const math::vec3& p2, math::v
 // OTHERS
 
 void plane::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, free_particle *p)
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
 const
 {
 	p->save_position();

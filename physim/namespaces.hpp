@@ -42,5 +42,28 @@ namespace physim {
      * not appearing in the html documentation).
      */
     namespace math { }
+    
+    /**
+     * @brief Force fields.
+     * 
+     * Contains the definition of several force fields.
+     * 
+     * These force fields are seen as vectorial fields in which a
+     * point in space has associated a vector force. That is, a particle
+     * at point of space @e p feels a force acting on it by a field.
+     */
+    namespace fields { }
+    
+    /**
+     * @brief The different types of particles.
+     * 
+     * In this library there are some types of particles, each of which
+     * are simulated differently depending on the context.
+     * 
+     * The types of particles implemented are:
+     * - @ref particles::free_particle
+     * - @ref particles::mesh_particle
+     */
+    namespace particles { }
 
 } // -- namespace sim
