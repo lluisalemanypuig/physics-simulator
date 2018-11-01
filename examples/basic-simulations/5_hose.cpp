@@ -10,9 +10,9 @@ namespace study_cases {
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
-		cout << "    --lifetime t:    the lifetime of the particle.         Default: 2.0" << endl;
-		cout << "    --total-time t:  total time of the simulation.         Default: 2.0" << endl;
-		cout << "    --step t:        time step of the simulation.          Default: 0.01" << endl;
+		cout << "    [-lt, --lifetime] t:    the lifetime of the particle.  Default: 2.0" << endl;
+		cout << "    [-tt, --total-time] t:  total time of the simulation.  Default: 2.0" << endl;
+		cout << "    [-dt, --step] t:        time step of the simulation.   Default: 0.01" << endl;
 		cout << "    --bounce b:      bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:    friction coefficient of the particle. Default: 0.0" << endl;
 		cout << "    --n-particles n: the initial value of the z position of the particle." << endl;
@@ -38,15 +38,15 @@ namespace study_cases {
 				hose_usage();
 				return;
 			}
-			else if (strcmp(argv[i], "--lifetime") == 0) {
+			else if (strcmp(argv[i], "-lt") == 0 or strcmp(argv[i], "--lifetime") == 0) {
 				lifetime = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--total-time") == 0) {
+			else if (strcmp(argv[i], "-tt") == 0 or strcmp(argv[i], "--total-time") == 0) {
 				total_time = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--step") == 0) {
+			else if (strcmp(argv[i], "-dt") == 0 or strcmp(argv[i], "--step") == 0) {
 				dt = atof(argv[i + 1]);
 				++i;
 			}
