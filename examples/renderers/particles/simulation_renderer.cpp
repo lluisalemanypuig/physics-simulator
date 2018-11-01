@@ -4,10 +4,13 @@
 #include <QApplication>
 #include <QMatrix4x4>
 
+// physim
+using namespace physim;
+using namespace particles;
+using namespace init;
+
 // Custom includes
 #include <render/obj_reader.hpp>
-
-
 
 // PRIVATE
 
@@ -125,13 +128,13 @@ void SimulationRenderer::add_particles(size_t n) {
 	S.add_particles(n);
 }
 
-void SimulationRenderer::set_solver(const physim::solver_type& s) {
+void SimulationRenderer::set_solver(const solver_type& s) {
 	S.set_solver(s);
 }
 
 // GETTERS
 
-physim::simulator& SimulationRenderer::get_simulator() {
+simulator& SimulationRenderer::get_simulator() {
 	return S;
 }
 
@@ -192,13 +195,13 @@ void SimulationRenderer::set_total_time(float T) {
 }
 
 void SimulationRenderer::set_bounce_all_particles(float b) {
-	for (physim::free_particle *p : S.get_particles()) {
+	for (free_particle *p : S.get_particles()) {
 		p->set_bouncing(b);
 	}
 }
 
 void SimulationRenderer::set_friction_all_particles(float f) {
-	for (physim::free_particle *p : S.get_particles()) {
+	for (free_particle *p : S.get_particles()) {
 		p->set_friction(f);
 	}
 }

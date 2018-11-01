@@ -7,6 +7,7 @@
 #include <physim/geometry/plane.hpp>
 #include <physim/math/math.hpp>
 using namespace physim;
+using namespace particles;
 using namespace fields;
 using namespace math;
 using namespace init;

@@ -20,6 +20,7 @@ using namespace std;
 #include <physim/geometry/rectangle.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
+using namespace particles;
 using namespace math;
 using namespace geom;
 using namespace init;

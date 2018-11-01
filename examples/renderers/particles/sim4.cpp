@@ -8,6 +8,7 @@
 #include <physim/geometry/plane.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
+using namespace particles;
 using namespace math;
 using namespace init;
 using namespace geom;
