@@ -5,7 +5,6 @@
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
-#include <physim/particles/particle.hpp>
 
 namespace physim {
 namespace init {
@@ -113,8 +112,11 @@ class rect_source : public initialiser {
 		 * @param _h See @ref h.
 		 */
 		void set_rectangular_source
-		(const math::vec3& _S, const math::vec3& _u,const math::vec3& _v,
-		 float _w,float _h);
+		(
+			const math::vec3& _S,
+			const math::vec3& _u,const math::vec3& _v,
+			float _w,float _h
+		);
 
 		/**
 		 * @brief Patricular case of flat rectangular source.

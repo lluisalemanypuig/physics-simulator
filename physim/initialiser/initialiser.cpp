@@ -8,15 +8,15 @@ namespace init {
 // PUBLIC
 
 initialiser::initialiser() {
-	pos			= [](particle *) {};
-	vel			= [](particle *) {};
-	mass		= [](particle *) {};
-	charge		= [](particle *) {};
-	bounce		= [](particle *) {};
-	friction	= [](particle *) {};
-	lifetime	= [](particle *) {};
-	starttime	= [](particle *) {};
-	fixed		= [](particle *) {};
+	pos			= [](free_particle *) {};
+	vel			= [](free_particle *) {};
+	mass		= [](free_particle *) {};
+	charge		= [](free_particle *) {};
+	bounce		= [](free_particle *) {};
+	friction	= [](free_particle *) {};
+	lifetime	= [](free_particle *) {};
+	starttime	= [](free_particle *) {};
+	fixed		= [](free_particle *) {};
 }
 
 initialiser::initialiser(const initialiser& i) {
@@ -115,7 +115,7 @@ const partinit& initialiser::get_fixed_initialiser() const {
 
 // INITIALISE A PARTICLE
 
-void initialiser::initialise_particle(particle *p) const {
+void initialiser::initialise_particle(free_particle *p) const {
 	pos(p);
 	vel(p);
 	mass(p);

@@ -24,7 +24,7 @@ gravitational_planet::~gravitational_planet() {
 
 // OTHERS
 
-void gravitational_planet::compute_force(const particle *p, math::vec3& F) {
+void gravitational_planet::compute_force(const free_particle *p, math::vec3& F) {
 	__pm_mul_v_s(F, pos, p->get_mass());
 }
 

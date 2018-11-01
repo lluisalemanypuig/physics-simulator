@@ -8,7 +8,7 @@
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
-#include <physim/particles/particle.hpp>
+#include <physim/particles/free_particle.hpp>
 
 namespace physim {
 
@@ -84,7 +84,7 @@ class simulator {
 		/// Collection of force fields.
 		std::vector<fields::field *> force_fields;
 		/// The set of particles in the simulation.
-		std::vector<particle *> ps;
+		std::vector<free_particle *> ps;
 
 		/// Gravity of the simulation. [m/s^2].
 		math::vec3 gravity;
@@ -136,7 +136,7 @@ class simulator {
 		 * so that the Verlet solver works corectly (see @ref solver_type).
 		 * @param p The particle to be initialsed.
 		 */
-		void init_particle(particle *p);
+		void init_particle(free_particle *p);
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
@@ -144,7 +144,7 @@ class simulator {
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
 		 */
-		void apply_solver(const particle *p, math::vec3& pos, math::vec3& vel);
+		void apply_solver(const free_particle *p, math::vec3& pos, math::vec3& vel);
 
 		/**
 		 * @brief Computes the forces acting in the simulation.
@@ -156,7 +156,7 @@ class simulator {
 		 * The result is set to the force acting on particle @e p.
 		 * @param p The particle whose force attribute is to be modified.
 		 */
-		void compute_forces(particle *p);
+		void compute_forces(free_particle *p);
 
 	public:
 		/**
@@ -171,7 +171,7 @@ class simulator {
 		// MODIFIERS
 
 		/// Adds a particle to the simulation.
-		const particle *add_particle();
+		const free_particle *add_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
@@ -183,7 +183,7 @@ class simulator {
 		 * will take care of that.
 		 * @param p A non-null pointer to the object.
 		 */
-		void add_particle(particle *p);
+		void add_particle(free_particle *p);
 		/// Adds @e n particles to the simulation.
 		void add_particles(size_t n);
 
@@ -348,9 +348,9 @@ class simulator {
 		 * @return Returns a constant reference to the structure
 		 * containing all particles.
 		 */
-		const std::vector<particle *>& get_particles() const;
+		const std::vector<free_particle *>& get_particles() const;
 		/// Return constant reference to i-th particle.
-		const particle& get_particle(size_t i) const;
+		const free_particle& get_particle(size_t i) const;
 		/// Returns all fixed objects of the scene.
 		const std::vector<geom::geometry *>& get_fixed_objects() const;
 		/// Returns the current simulation time.

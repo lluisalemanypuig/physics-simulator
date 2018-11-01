@@ -1,7 +1,7 @@
 #pragma once
 
 // physim includes
-#include <physim/particles/particle.hpp>
+#include <physim/particles/free_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -29,7 +29,7 @@ class field {
 		 * @param[out] F The force from this field acting on the
 		 * particle.
 		 */
-		virtual void compute_force(const particle* p, math::vec3& F) = 0;
+		virtual void compute_force(const free_particle *p, math::vec3& F) = 0;
 };
 
 } // -- namespace fields

@@ -4,13 +4,13 @@
 #include <functional>
 
 // physim includes
-#include <physim/particles/particle.hpp>
+#include <physim/particles/free_particle.hpp>
 
 namespace physim {
 namespace init {
 
 /// Shortcut for the initialiser function type.
-typedef std::function<void (particle *)> partinit;
+typedef std::function<void (free_particle *)> partinit;
 
 /**
  * @brief The particle initialiser class.
@@ -44,7 +44,7 @@ typedef std::function<void (particle *)> partinit;
  * Therefore, there is no need to initialise it.
  *
  * The initialisation of the particle takes place in the method
- * @ref initialise_particle(particle *)const .
+ * @ref initialise_particle(free_particle *)const .
  */
 class initialiser {
 	protected:
@@ -130,7 +130,7 @@ class initialiser {
 		 * @ref starttime and @ref fixed are called on the particle.
 		 * @param p The particle to be initialised.
 		 */
-		void initialise_particle(particle *p) const;
+		void initialise_particle(free_particle *p) const;
 };
 
 } // -- namespace init

@@ -22,7 +22,8 @@ HEADERS +=							\
 	initialiser/rect_source.hpp		\
 	initialiser/rect_shower.hpp		\
     initialiser/hose.hpp			\
-	particles/particle.hpp			\
+	particles/free_particle.hpp		\
+	particles/mesh_particle.hpp		\
     fields/field.hpp				\
     fields/punctual.hpp				\
     fields/magnetic.hpp				\
@@ -53,7 +54,8 @@ SOURCES +=							\
 	initialiser/rect_source.cpp		\
 	initialiser/rect_shower.cpp		\
     initialiser/hose.cpp			\
-    particles/particle.cpp			\
+	particles/free_particle.cpp		\
+	particles/mesh_particle.cpp		\
     fields/field.cpp				\
     fields/electric.cpp				\
     fields/magnetic_B.cpp			\

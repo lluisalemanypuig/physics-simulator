@@ -42,7 +42,7 @@ float gravitational::get_mass() const {
 
 // OTHERS
 
-void gravitational::compute_force(const particle *p, math::vec3& F) {
+void gravitational::compute_force(const free_particle *p, math::vec3& F) {
 	// unit directional vector
 	math::vec3 v;
 	__pm_sub_v_v(v, pos, p->get_position());

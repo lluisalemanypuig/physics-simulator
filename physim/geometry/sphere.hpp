@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/geometry/geometry.hpp>
-#include <physim/particles/particle.hpp>
+#include <physim/particles/free_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -64,7 +64,7 @@ class sphere : public geometry {
 		// OTHERS
 
 		void update_particle
-		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
+		(const math::vec3& pred_pos, const math::vec3& pred_vel, free_particle *p) const;
 
 		void display(std::ostream& os = std::cout) const;
 };

@@ -1,5 +1,7 @@
 #include <physim/initialiser/rect_source.hpp>
 
+// physim includes
+#include <physim/particles/free_particle.hpp>
 #include <physim/math/math.hpp>
 
 namespace physim {
@@ -8,7 +10,7 @@ namespace init {
 // PROTECTED
 
 void rect_source::make_pos_init() {
-	pos = [this](particle *p) {
+	pos = [this](free_particle *p) {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
 

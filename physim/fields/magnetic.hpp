@@ -1,7 +1,6 @@
 #pragma once
 
 // physim includes
-#include <physim/particles/particle.hpp>
 #include <physim/fields/punctual.hpp>
 #include <physim/math/vec3.hpp>
 

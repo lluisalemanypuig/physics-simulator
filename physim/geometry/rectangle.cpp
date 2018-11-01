@@ -123,7 +123,7 @@ bool rectangle::intersec_segment
 // OTHERS
 
 void rectangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const
+(const math::vec3& pred_pos, const math::vec3& pred_vel, free_particle *p) const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }

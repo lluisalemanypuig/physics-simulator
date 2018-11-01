@@ -11,7 +11,7 @@ namespace physim {
 
 // PRIVATE
 
-void simulator::init_particle(particle *p) {
+void simulator::init_particle(free_particle *p) {
 	global_init->initialise_particle(p);
 
 	// Update the previous position so that Verlet
@@ -22,7 +22,7 @@ void simulator::init_particle(particle *p) {
 	__pm_sub_v_vs(p->get_previous_position(), p->get_position(), p->get_velocity(), dt);
 }
 
-void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3& pred_vel) {
+void simulator::apply_solver(const free_particle *p, math::vec3& pred_pos, math::vec3& pred_vel) {
 	const float mass = p->get_mass();
 
 	switch (solver) {
@@ -54,7 +54,7 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 	}
 }
 
-void simulator::compute_forces(particle *p) {
+void simulator::compute_forces(free_particle *p) {
 	// clear the current force
 	__pm_assign_s(p->get_force(), 0.0f);
 
@@ -85,15 +85,15 @@ simulator::~simulator() {
 
 // MODIFIERS
 
-const particle *simulator::add_particle() {
-	particle *p = new particle();
+const free_particle *simulator::add_particle() {
+	free_particle *p = new free_particle();
 	p->set_index(ps.size());
 	init_particle(p);
 	ps.push_back(p);
 	return p;
 }
 
-void simulator::add_particle(particle *p) {
+void simulator::add_particle(free_particle *p) {
 	assert(p != nullptr);
 	p->set_index(ps.size());
 	ps.push_back(p);
@@ -121,7 +121,7 @@ void simulator::remove_particle(size_t i) {
 }
 
 void simulator::clear_particles() {
-	for (particle *p : ps) {
+	for (free_particle *p : ps) {
 		delete p;
 	}
 	ps.clear();
@@ -196,7 +196,7 @@ void simulator::clear_simulation() {
 void simulator::reset_simulation() {
 	stime = 0.0f;
 	int i = 0;
-	for (particle *p : ps) {
+	for (free_particle *p : ps) {
 		if (not p->is_fixed()) {
 			init_particle(p);
 		}
@@ -206,7 +206,7 @@ void simulator::reset_simulation() {
 
 void simulator::apply_time_step() {
 
-	for (particle *p : ps) {
+	for (free_particle *p : ps) {
 		// ignore fixed particles
 		if (p->is_fixed()) {
 			continue;
@@ -283,7 +283,7 @@ void simulator::apply_time_step() {
 		// collision prediction
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		particle coll_pred;
+		free_particle coll_pred;
 
 		// has there been any collision?
 		bool collision = false;
@@ -359,11 +359,11 @@ void simulator::set_solver(const solver_type& s) {
 
 // GETTERS
 
-const std::vector<particle *>& simulator::get_particles() const {
+const std::vector<free_particle *>& simulator::get_particles() const {
 	return ps;
 }
 
-const particle& simulator::get_particle(size_t i) const {
+const free_particle& simulator::get_particle(size_t i) const {
 	return *ps[i];
 }
 

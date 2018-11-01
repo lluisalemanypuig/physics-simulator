@@ -1,5 +1,7 @@
 #include <physim/initialiser/rect_shower.hpp>
 
+// physim includes
+#include <physim/particles/free_particle.hpp>
 #include <physim/math/math.hpp>
 
 namespace physim {
@@ -8,7 +10,7 @@ namespace init {
 // PROTECTED
 
 void rect_shower::make_vel_init() {
-	vel = [](particle *p) {
+	vel = [](free_particle *p) {
 		__pm_assign_c(p->get_velocity(), 0.0f,0.0f,0.0f);
 	};
 }

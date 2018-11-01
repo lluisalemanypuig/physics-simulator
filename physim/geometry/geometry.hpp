@@ -4,7 +4,7 @@
 #include <iostream>
 
 // physim includes
-#include <physim/particles/particle.hpp>
+#include <physim/particles/free_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -115,7 +115,7 @@ class geometry {
 		 */
 		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
-			particle *pred
+			free_particle *pred
 		) const = 0;
 
 		/// Output on stream @e os information about this geometry.

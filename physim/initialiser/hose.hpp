@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
-#include <physim/particles/particle.hpp>
+#include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace init {
@@ -37,7 +37,8 @@ namespace init {
  * to a randomly generated point on the base of the cone.
  * Therefore the minimum speed the particles will have is
  * - \f$h\f$ (in case the point generated is exactly on the
- * middle of the base), and
+ * middle of the base),
+ * and the maximum is
  * - \f$\sqrt{h^2 + r^2}\f$ (in case the point generated lies
  * on the circumference of the base).
  */
@@ -48,12 +49,10 @@ class hose : public initialiser {
 		/// Random number generator for uniform values between 0 and 1.
 		std::uniform_real_distribution<float> U01;
 
-		/// The vertex of the cone.
+		/// The vertex (apex) of the cone.
 		math::vec3 source;
 		/// The center of the cone's base.
 		math::vec3 cc;
-		/// Unit vector along the height.
-		math::vec3 u;
 
 		/**
 		 * @brief Unit vector on the circle.
@@ -115,7 +114,7 @@ class hose : public initialiser {
 		 * @param _r See @ref r.
 		 * @param _h See @ref h.
 		 */
-		void set_hose_source(const math::vec3& _S, const math::vec3& _u, float _r,float _h);
+		void set_hose_source(const math::vec3& S, const math::vec3& u, float _r,float _h);
 
 		// GETTERS
 

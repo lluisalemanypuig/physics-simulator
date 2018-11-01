@@ -4,6 +4,7 @@
 #include <assert.h>
 
 // physim includes
+#include <physim/particles/free_particle.hpp>
 #include <physim/math/math.hpp>
 
 namespace physim {
@@ -12,7 +13,7 @@ namespace init {
 // PROTECTED
 
 void hose::make_pos_init() {
-	pos = [this](particle *p) {
+	pos = [this](free_particle *p) {
 		p->set_position(this->source);
 
 		// copy the current position to the previous
@@ -22,14 +23,18 @@ void hose::make_pos_init() {
 }
 
 void hose::make_vel_init() {
-	vel = [this](particle *p) {
-		const float x = this->r*this->U01(this->E);
-		const float y = this->r*this->U01(this->E);
+	vel = [this](free_particle *p) {
+		const float x = (this->r)*this->U01(this->E);
+		const float y = (this->r)*this->U01(this->E);
 		const float phi = 2.0f*3.1415926535f*this->U01(this->E);
 
 		math::vec3 base_point;
-		__pm_add_vs_vs(base_point, this->v,(x*std::cos(phi)), this->w,(y*std::cos(phi)));
-		__pm_add_acc_v(base_point, this->cc);
+		__pm_add_vs_vs_v(
+			base_point,
+			this->v,(x*std::cos(phi)),
+			this->w,(y*std::sin(phi)),
+			this->cc
+		);
 		__pm_sub_v_v(p->get_velocity(), base_point, this->source);
 	};
 }
@@ -48,7 +53,6 @@ hose::hose(const hose& H) : initialiser(H) {
 
 	__pm_assign_v(source, H.source);
 	__pm_assign_v(cc, H.cc);
-	__pm_assign_v(u, H.u);
 	__pm_assign_v(v, H.v);
 	__pm_assign_v(w, H.w);
 
@@ -69,21 +73,18 @@ hose::~hose() { }
 
 // SETTERS
 
-void hose::set_hose_source(const math::vec3& _S, const math::vec3& _u, float _r,float _h) {
-	assert( std::abs(__pm_norm(_u) - 1.0f) <= 1e-06f );
+void hose::set_hose_source(const math::vec3& S, const math::vec3& u, float _r,float _h) {
+	assert( std::abs(__pm_norm(u) - 1.0f) <= 1e-06f );
 
-	__pm_assign_v(source, _S);
-
-	r = _r;
-	h = _h;
-
-	__pm_assign_v(u, _u);
+	__pm_assign_v(source, S);
 	__pm_perp(v, u);
 	__pm_normalise(v,v);
 	__pm_cross(w, u,v);
 
-	__pm_assign_v(cc, source);
-	__pm_add_v_s(cc, u, h);
+	__pm_add_v_vs(cc, source, u, _h);
+
+	r = _r;
+	h = _h;
 
 	make_pos_init();
 	make_vel_init();

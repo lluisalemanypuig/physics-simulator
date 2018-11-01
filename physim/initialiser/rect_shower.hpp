@@ -5,7 +5,6 @@
 
 // physim includes
 #include <physim/initialiser/rect_source.hpp>
-#include <physim/particles/particle.hpp>
 
 namespace physim {
 namespace init {
