@@ -1,5 +1,8 @@
 #include <physim/simulator.hpp>
 
+// C includes
+#include <assert.h>
+
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/math/math.hpp>
@@ -38,7 +41,7 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 			break;
 
 		case solver_type::Verlet:
-			// pred_pos <-  pos + 1.0f*(pos - prev_pos) + force*dt*dt/m
+			// pred_pos <- pos + 1.0f*(pos - prev_pos) + force*dt*dt/m
 			__pm_sub_v_v(pred_pos, p->get_position(), p->get_previous_position());
 			__pm_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->get_force(),(dt*dt)*(1.0f/mass), p->get_position());
 
@@ -52,26 +55,16 @@ void simulator::apply_solver(const particle *p, math::vec3& pred_pos, math::vec3
 }
 
 void simulator::compute_forces(particle *p) {
-	//std::cout << "--------------------" << std::endl;
-	//std::cout << "particle's charge: " << p->get_charge() << std::endl;
-
 	// clear the current force
 	__pm_assign_s(p->get_force(), 0.0f);
 
+	// compute the force every force field
+	// makes on every particle
 	math::vec3 F;
 	for (fields::field *f : force_fields) {
 		f->compute_force(p, F);
-		/*
-		std::cout << "force from field: "
-			 << F.x << ","
-			 << F.y << ","
-			 << F.z << std::endl;
-		*/
-		p->add_force(F);
+		__pm_add_acc_v(p->get_force(), F);
 	}
-
-	// finally, apply the acceleration of gravity
-	//__pm_add_acc_vs(p->get_force(), gravity, p->get_mass());
 }
 
 // PUBLIC
@@ -311,7 +304,7 @@ void simulator::apply_time_step() {
 				coll_pred = *p;
 
 				// the geometry updates the predicted particle
-				g->update_upon_collision(pred_pos, pred_vel, &coll_pred);
+				g->update_particle(pred_pos, pred_vel, &coll_pred);
 
 				if (solver == solver_type::Verlet) {
 					// this solver needs a correct position
@@ -344,7 +337,7 @@ void simulator::apply_time_step() {
 
 // SETTERS
 
-void simulator::set_gravity_acceleration(const math::vec3& g) {
+void simulator::add_gravity_acceleration(const math::vec3& g) {
 	fields::gravitational_planet *f = new fields::gravitational_planet(g);
 	force_fields.push_back(f);
 }

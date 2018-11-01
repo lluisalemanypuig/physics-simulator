@@ -148,7 +148,7 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 
 // OTHERS
 
-void sphere::update_upon_collision
+void sphere::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const
 {
 	// define a plane tangent to the sphere
@@ -168,7 +168,7 @@ void sphere::update_upon_collision
 	plane tan_plane(normal,I);
 
 	// tell the plane to update the particle
-	tan_plane.update_upon_collision(pred_pos, pred_vel, p);
+	tan_plane.update_particle(pred_pos, pred_vel, p);
 }
 
 void sphere::display(std::ostream& os) const {

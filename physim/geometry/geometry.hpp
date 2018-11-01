@@ -113,7 +113,7 @@ class geometry {
 		 * @param[in] pred_vel The predicted velocity of the particle.
 		 * @param[out] pred The particle with the result of the collision.
 		 */
-		virtual void update_upon_collision(
+		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
 			particle *pred
 		) const = 0;

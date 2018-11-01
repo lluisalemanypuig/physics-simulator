@@ -104,10 +104,10 @@ bool triangle::intersec_segment
 
 // OTHERS
 
-void triangle::update_upon_collision
+void triangle::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const
 {
-	pl.update_upon_collision(pred_pos, pred_vel, p);
+	pl.update_particle(pred_pos, pred_vel, p);
 }
 
 void triangle::display(std::ostream& os) const {

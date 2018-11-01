@@ -99,7 +99,7 @@ class rectangle : public geometry {
 
 		// OTHERS
 
-		void update_upon_collision
+		void update_particle
 		(const math::vec3& pred_pos, const math::vec3& pred_vel, particle *p) const;
 
 		void display(std::ostream& os = std::cout) const;

@@ -152,7 +152,7 @@ namespace study_cases {
 
 		SIM.add_particles(n_particles);
 
-		SIM.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		SIM.add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		// execute simulation

@@ -1,11 +1,6 @@
 #pragma once
 
-// C includes
-#include <assert.h>
-
 // C++ includes
-#include <functional>
-#include <iostream>
 #include <cstdint>
 #include <vector>
 
@@ -304,7 +299,7 @@ class simulator {
 		 * Makes a force field of type @ref fields::gravitational_planet
 		 * using vector @e g.
 		 */
-		void set_gravity_acceleration(const math::vec3& g);
+		void add_gravity_acceleration(const math::vec3& g);
 
 		/**
 		 * @brief Sets the time step of the simulation.
