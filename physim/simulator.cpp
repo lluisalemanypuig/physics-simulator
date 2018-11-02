@@ -7,6 +7,22 @@
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/math/math.hpp>
 
+template<class V>
+inline void remove_from_vector(size_t i, V& v) {
+	assert(i < v.size());
+
+	// in the position i:
+	// 1. free the memory,
+	// 2. put a valid pointer to another particle,
+	// to the vector: shrink it to delete the
+	// unused position at the end
+
+	delete v[i];
+	size_t N = v.size();
+	std::swap(v[i], v[N - 1]);
+	v.pop_back();
+}
+
 namespace physim {
 
 // PRIVATE
@@ -33,8 +49,7 @@ simulator::simulator(const solver_type& s, float t) {
 }
 
 simulator::~simulator() {
-	clear_geometry();
-	clear_particles();
+	clear_simulation();
 	delete global_init;
 }
 
@@ -63,18 +78,7 @@ void simulator::add_particles(size_t n) {
 }
 
 void simulator::remove_particle(size_t i) {
-	assert(i < ps.size());
-
-	// in the position i:
-	// 1. free the memory,
-	// 2. put a valid pointer to another particle,
-	// to the vector: shrink it to delete the
-	// unused position at the end
-
-	delete ps[i];
-	size_t N = ps.size();
-	std::swap(ps[i], ps[N - 1]);
-	ps.pop_back();
+	remove_from_vector(i, ps);
 }
 
 void simulator::clear_particles() {
@@ -92,18 +96,7 @@ void simulator::add_geometry(geom::geometry *g) {
 }
 
 void simulator::remove_geometry(size_t i) {
-	assert(i < scene_fixed.size());
-
-	// in the position i:
-	// 1. free the memory,
-	// 2. put a valid pointer to another particle,
-	// to the vector: shrink it to delete the
-	// unused position at the end
-
-	delete scene_fixed[i];
-	size_t N = scene_fixed.size();
-	std::swap(scene_fixed[i], scene_fixed[N - 1]);
-	scene_fixed.pop_back();
+	remove_from_vector(i, scene_fixed);
 }
 
 void simulator::clear_geometry() {
@@ -121,18 +114,7 @@ void simulator::add_field(fields::field *f) {
 }
 
 void simulator::remove_field(size_t i) {
-	assert(i < force_fields.size());
-
-	// in the position i:
-	// 1. free the memory,
-	// 2. put a valid pointer to another particle,
-	// to the vector: shrink it to delete the
-	// unused position at the end
-
-	delete force_fields[i];
-	size_t N = force_fields.size();
-	std::swap(force_fields[i], force_fields[N - 1]);
-	force_fields.pop_back();
+	remove_from_vector(i, force_fields);
 }
 
 void simulator::clear_fields() {
@@ -142,11 +124,31 @@ void simulator::clear_fields() {
 	force_fields.clear();
 }
 
+// ----------- meshes
+
+void simulator::add_mesh(meshes::mesh *m) {
+	assert(m != nullptr);
+	ms.push_back(m);
+}
+
+void simulator::remove_mesh(size_t i) {
+	remove_from_vector(i, ms);
+}
+
+void simulator::clear_meshes() {
+	for (meshes::mesh *m : ms) {
+		delete m;
+	}
+	ms.clear();
+}
+
 // MODIFIERS
 
 void simulator::clear_simulation() {
-	clear_particles();
 	clear_geometry();
+	clear_particles();
+	clear_fields();
+	clear_meshes();
 	stime = 0.0f;
 }
 
@@ -163,6 +165,7 @@ void simulator::reset_simulation() {
 
 void simulator::apply_time_step() {
 	simulate_free_particles();
+	simulate_meshes();
 	stime += dt;
 }
 

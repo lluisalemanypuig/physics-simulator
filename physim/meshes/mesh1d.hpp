@@ -1,60 +1,73 @@
 #pragma once
 
+// C++ includes
+#include <vector>
+
 // physim includes
 #include <physim/particles/mesh_particle.hpp>
+#include <physim/meshes/mesh.hpp>
 
 namespace physim {
 namespace meshes {
 
 /**
- * @brief 1-Dimensional meshes (or springs).
+ * @brief Abstract spring mesh.
  *
- * This represents a list of @ref particles::mesh_particle
- * where one particle is attached to the previous and next
- * particle with a spring. The movement of one particle in
- * the spring affects the other particles.
+ * This represents a set of @ref particles::mesh_particle
+ * where one particle is attached to some other particles
+ * of the same mesh with a spring. The movement of one
+ * particle in the spring, then, affects the other particles
+ * it is attached to.
  *
- * This spring has some parameters that describe it:
+ * All the springs of the mesh are described likewise with
+ * the following coefficients:
  * - elasticity parameter (see @ref Ke).
  * - damping factor (see @ref Kd).
  */
-class mesh1d {
+class mesh1d : public mesh {
 	private:
-		/**
-		 * @brief Number of particles of the spring.
-		 *
-		 * Size of the array @ref ps.
-		 */
-		size_t N;
-
-	public:
-		/// The particles of this mesh.
-		particles::mesh_particle **ps;
-
-		/// Elasticity coefficient of each spring.
-		float Ke;
-		/// Damping factor of each spring.
-		float Kd;
+		std::vector<float> ds;
 
 	public:
 		/// Default constructor.
 		mesh1d();
+		/**
+		 * @brief Constructor with parameters.
+		 * @param ke Elasticity parameter.
+		 * @param kd Damping factor.
+		 */
+		mesh1d(float ke, float kd);
 		/// Destructor.
 		~mesh1d();
 
-		// OPERATORS
+		// MODIFIERS
 
 		/**
-		 * @brief Operator =.
+		 * @brief Builds the initial state of the mesh.
 		 *
-		 * This new mesh is initialised with as many particles
-		 * as @e m has. Then, each particle's attributes are
-		 * copied into the new ones.
-		 * @param m Mesh to be copied.
+		 * Records the initial distances between neighbouring
+		 * particles.
+		 *
+		 * @pre All this mesh's particles must have been
+		 * initialised.
 		 */
-		mesh1d& operator= (const mesh1d& m);
+		void make_initial_state();
 
-		// MODIFIERS
+		/**
+		 * @brief Update the forces generated within the mesh.
+		 *
+		 * This method updates the forces acting on a particle @e i
+		 * and its neighbouring particles. The neighbouring particles
+		 * of a particle @e i are:
+		 * - \f$i + 1\f$ if \f$i=0\f$,
+		 * - \f$i - 1\f$ if \f$i=N-1\f$, (where \f$N\f$ is @ref mesh::N)
+		 * - \f$i - 1\f$ and \f$i + 1\f$ if otherwise.
+		 *
+		 * @pre The modification of the particle's forces should
+		 * not assume that particles start with null force (force
+		 * equal to 0 in the three axes).
+		 */
+		void update_forces();
 
 		/**
 		 * @brief Allocates memory for @e n particles.
@@ -68,34 +81,11 @@ class mesh1d {
 		 *
 		 * This index is local, that is, the first particle
 		 * of every 1-dimensional mesh has index 0, the second
-		 * index 1, ...
+		 * particle has index 1, ...
 		 */
 		void allocate(size_t n);
 
-		/// Frees the memory occupied by this mesh.
 		void clear();
-
-		// SETTERS
-
-		/// Sets elasticity coefficient of the mesh. See @ref Ke.
-		void set_elasticity(float ke);
-
-		/// Sets damping factor of the mesh. See @ref Kd.
-		void set_damping(float kd);
-
-		// GETTERS
-
-		/// Returns the elasticity coefficient of the mesh. See @ref Ke.
-		float get_elasticity() const;
-
-		/// Returns the damping factor of the mesh. See @ref Kd.
-		float get_damping() const;
-
-		/// Returns the number of particles of this mesh.
-		size_t size() const;
-
-		/// Returns a reference to this spring's particles.
-		particles::mesh_particle **get_particles();
 };
 
 } // -- namespace meshes

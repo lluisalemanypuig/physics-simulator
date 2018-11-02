@@ -15,7 +15,6 @@ HEADERS +=							\
 	sim_solver.cpp					\
 	particles/free_particle.hpp		\
 	particles/mesh_particle.hpp		\
-	meshes/mesh1d.hpp				\
 	geometry/geometry.hpp			\
 	geometry/triangle.hpp			\
 	geometry/sphere.hpp				\
@@ -42,15 +41,16 @@ HEADERS +=							\
 	math/math_ops_div.hpp			\
 	math/math_ops_mixed.hpp			\
 	math/math_misc.hpp				\
-	math/math_geometry.hpp
+	math/math_geometry.hpp			\
+	meshes/mesh.hpp					\
+    meshes/mesh1d.hpp
 
 SOURCES +=							\
 	simulator.cpp					\
 	sim_free_particles.cpp			\
-	sim_meshes1d.cpp				\
+	sim_meshes.cpp					\
 	particles/free_particle.cpp		\
 	particles/mesh_particle.cpp		\
-	meshes/mesh1d.cpp				\
 	geometry/geometry.cpp			\
 	geometry/triangle.cpp			\
 	geometry/sphere.cpp				\
@@ -67,6 +67,8 @@ SOURCES +=							\
     fields/magnetic.cpp				\
     fields/punctual.cpp				\
     fields/gravitational.cpp		\
-	fields/gravitational_planet.cpp
+	fields/gravitational_planet.cpp \
+	meshes/mesh.cpp					\
+	meshes/mesh1d.cpp
 
 

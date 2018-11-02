@@ -2,6 +2,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/mesh_particle.hpp>
 #include <physim/fields/magnetic.hpp>
 
 namespace physim {
@@ -21,6 +22,10 @@ namespace fields {
  * (see @ref particle::cur_vel).
  */
 class magnetic_B : public magnetic {
+	private:
+		template<class P>
+		void __compute_force(const P *p, math::vec3& F);
+
 	protected:
 
 	public:
@@ -35,7 +40,8 @@ class magnetic_B : public magnetic {
 
 		// OTHERS
 
-		void compute_force(const particles::free_particle* p, math::vec3& F);
+		void compute_force(const particles::free_particle *p, math::vec3& F);
+		void compute_force(const particles::mesh_particle *p, math::vec3& F);
 };
 
 } // -- namespace fields

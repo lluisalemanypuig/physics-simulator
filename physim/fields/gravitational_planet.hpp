@@ -2,6 +2,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/mesh_particle.hpp>
 #include <physim/fields/punctual.hpp>
 #include <physim/math/vec3.hpp>
 
@@ -25,6 +26,10 @@ namespace fields {
  * Here \f$g\f$ is the vector set in @ref punctual::pos.
  */
 class gravitational_planet : public punctual {
+	private:
+		template<class P>
+		void __compute_force(const P *p, math::vec3& F);
+
 	protected:
 
 	public:
@@ -42,6 +47,7 @@ class gravitational_planet : public punctual {
 		// OTHERS
 
 		void compute_force(const particles::free_particle *p, math::vec3& F);
+		void compute_force(const particles::mesh_particle *p, math::vec3& F);
 };
 
 } // -- namespace fields

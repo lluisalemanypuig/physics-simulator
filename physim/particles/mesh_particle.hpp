@@ -51,7 +51,7 @@ class mesh_particle {
 		/// Current position of the particle [m].
 		math::vec3 cur_pos;
 		/// Current velocity of the particle [m/s].
-		math::vec3 cur_velocity;
+		math::vec3 cur_vel;
 		/// Force currently applied to the particle [N].
 		math::vec3 force;
 

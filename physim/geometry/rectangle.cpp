@@ -127,6 +127,12 @@ void rectangle::update_particle
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }
+void rectangle::update_particle
+(const math::vec3& pred_pos, const math::vec3& pred_vel, size_t i, meshes::mesh *m)
+const
+{
+	pl.update_particle(pred_pos, pred_vel, i, m);
+}
 
 void rectangle::display(std::ostream& os) const {
 	os << "I am a rectangle" << std::endl;

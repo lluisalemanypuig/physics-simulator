@@ -31,6 +31,8 @@ void simulator::simulate_free_particles() {
 			continue;
 		}
 
+		// clear the current force
+		__pm_assign_s(p->force, 0.0f);
 		// compute forces for particle p
 		compute_forces(p);
 
@@ -44,7 +46,100 @@ void simulator::simulate_free_particles() {
 
 		// check if there is any collision between
 		// this free particle and a geometrical object
-		check_collision_update(pred_pos, pred_vel, p);
+
+		/* The main idea implemented in the following loop
+		 * is the following:
+		 *  -> We now know a prediction of the next position
+		 *     of the particle thanks to the solver. This is
+		 *     the "predicted position", stored in variable
+		 *     'pred_pos'.
+		 *
+		 *  -> Now we have a segment ('prev_pos','pred_pos')
+		 *     with which we can check collision with other
+		 *     geometry.
+		 *
+		 *  -> However, we should not update the particle with
+		 *     the first collision that has been detected.
+		 *     Instead, a prediction of the result of the
+		 *     collision is obtained and stored in 'pred_particle'.
+		 *     This particle is called the "predicted particle".
+		 *     Notice that this predicted particle also contains
+		 *     the predicted velocity, and may have other attributes
+		 *     modified after the collision (as part of the result
+		 *	   of the collision).
+		 *
+		 *  -> Then, checking the collision is done with the
+		 *     new segment from prev_pos to the position of
+		 *     the predicted particle. The position of the
+		 *     predicted particle, when there is any collision,
+		 *     is stored in variable 'pred_pos'.
+		 *
+		 *  -> Therefore, after the first collision, we have
+		 *     a prediction of the result of that collision
+		 *     of the particle with some geometry. Then, the
+		 *     second collision is detected with the segment
+		 *     from the previous position ('prev_pos') and
+		 *     the position of the predicted particle ('pred_pos').
+		 *     However, be aware now that the result of the
+		 *     second collision is NOT done with the state
+		 *     of the predicted particle. Instead, it is done
+		 *     with the original state of the particle.
+		 *
+		 *  -> The state that the particle takes is the state
+		 *     of the predicted particle at the end of the loop
+		 *     (only if there had been any collision).
+		 *
+		 */
+
+		// collision prediction:
+		// copy the particle at its current state and use it
+		// to predict the update upon collision with geometry
+		particles::free_particle coll_pred;
+
+		// has there been any collision?
+		bool collision = false;
+
+		// Check collision between the particle and
+		// every fixed geometrical object in the scene.
+
+		for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
+			const geom::geometry *g = scene_fixed[i];
+
+			// if the particle collides with some geometry
+			// then the geometry is in charge of updating
+			// this particle's position, velocity, ...
+
+			if (g->intersec_segment(p->cur_pos, pred_pos)) {
+				collision = true;
+
+				coll_pred = *p;
+
+				// the geometry updates the predicted particle
+				g->update_particle(pred_pos, pred_vel, &coll_pred);
+
+				if (solver == solver_type::Verlet) {
+					// this solver needs a correct position
+					// for the 'previous' position of the
+					// particle after a collision with geometry
+
+					__pm_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+				}
+
+				// keep track of the predicted particle's position
+				__pm_assign_v(pred_pos, coll_pred.cur_pos);
+				__pm_assign_v(pred_vel, coll_pred.cur_vel);
+			}
+		}
+
+		// give the particle the proper final state
+		if (collision) {
+			*p = coll_pred;
+		}
+		else {
+			p->save_position();
+			__pm_assign_v(p->cur_pos, pred_pos);
+			__pm_assign_v(p->cur_vel, pred_vel);
+		}
 	}
 
 }

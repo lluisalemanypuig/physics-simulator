@@ -158,7 +158,8 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 // OTHERS
 
 void sphere::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p) const
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
+const
 {
 	// define a plane tangent to the sphere
 	// that goes through the intersection point
@@ -166,18 +167,35 @@ void sphere::update_particle
 	// compute intersection point
 
 	math::vec3 I;
-	bool r = intersec_segment(p->cur_pos, pred_pos, I);
-	if (not r) {
-		return;
-	}
+	intersec_segment(p->cur_pos, pred_pos, I);
 
 	// define the plane
 	math::vec3 normal;
 	__pm_sub_v_v(normal, C, I);
 	plane tan_plane(normal,I);
 
-	// tell the plane to update the particle
+	// make the plane update the particle
 	tan_plane.update_particle(pred_pos, pred_vel, p);
+}
+void sphere::update_particle
+(const math::vec3& pred_pos, const math::vec3& pred_vel, size_t i, meshes::mesh *m)
+const
+{
+	// define a plane tangent to the sphere
+	// that goes through the intersection point
+
+	// compute intersection point
+
+	math::vec3 I;
+	intersec_segment(m->ps[i]->cur_pos, pred_pos, I);
+
+	// define the plane
+	math::vec3 normal;
+	__pm_sub_v_v(normal, C, I);
+	plane tan_plane(normal,I);
+
+	// make the plane update the particle
+	tan_plane.update_particle(pred_pos, pred_vel, i, m);
 }
 
 void sphere::display(std::ostream& os) const {

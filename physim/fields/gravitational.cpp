@@ -3,11 +3,22 @@
 // physim includes
 #include <physim/math/math.hpp>
 
-#include <iostream>
-using namespace std;
-
 namespace physim {
 namespace fields {
+
+// PRIVATE
+
+template<class P>
+void gravitational::__compute_force(const P *p, math::vec3& F) {
+	// unit directional vector
+	math::vec3 v;
+	__pm_sub_v_v(v, pos, p->cur_pos);
+	math::normalise(v, v);
+
+	__pm_mul_v_s(F, v, p->mass*M);
+}
+
+// PUBLIC
 
 gravitational::gravitational() : punctual() {
 	M = 0.0f;
@@ -43,12 +54,11 @@ float gravitational::get_mass() const {
 // OTHERS
 
 void gravitational::compute_force(const particles::free_particle *p, math::vec3& F) {
-	// unit directional vector
-	math::vec3 v;
-	__pm_sub_v_v(v, pos, p->cur_pos);
-	math::normalise(v, v);
+	__compute_force(p, F);
+}
 
-	__pm_mul_v_s(F, v, p->mass*M);
+void gravitational::compute_force(const particles::mesh_particle *p, math::vec3& F) {
+	__compute_force(p, F);
 }
 
 } // -- namespace fields

@@ -9,7 +9,7 @@
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
 #include <physim/particles/free_particle.hpp>
-#include <physim/meshes/mesh1d.hpp>
+#include <physim/meshes/mesh.hpp>
 
 namespace physim {
 
@@ -86,8 +86,8 @@ class simulator {
 		std::vector<fields::field *> force_fields;
 		/// The collection of particles in the simulation.
 		std::vector<particles::free_particle *> ps;
-		/// The collection of 1-dimensional meshes in the simulation.
-		std::vector<meshes::mesh1d *> m1ds;
+		/// The collection of meshes in the simulation.
+		std::vector<meshes::mesh *> ms;
 
 		/// Gravity of the simulation. [m/s^2].
 		math::vec3 gravity;
@@ -150,12 +150,15 @@ class simulator {
 		void simulate_free_particles();
 
 		/**
-		 * @brief Simulate 1-dimensional meshes.
+		 * @brief Simulate meshes.
 		 *
 		 * Applies a time step on all the particles that make
 		 * up the 1-dimensional meshes of the simulation.
+		 *
+		 * The forces due to the presence of force fields are
+		 * computed after the internal forces in each mesh.
 		 */
-		void simulate_meshes1d();
+		void simulate_meshes();
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
@@ -170,17 +173,15 @@ class simulator {
 		 * @brief Computes the forces acting in the simulation.
 		 *
 		 * These forces are defined in the different focuses added
-		 * to the simulator. Once calculated the total force coming
-		 * from these objects, gravity is added.
+		 * to the simulator. Each force vector is added to the particle's
+		 * force accumulator. The force accumulator, however, is not
+		 * initialised to 0.
 		 *
 		 * The result is set to the force acting on particle @e p.
-		 * @param p The particle whose force attribute is to be modified.
+		 * @param[out] p The particle whose force attribute is to be modified.
 		 */
 		template<class P>
 		void compute_forces(P *p);
-
-		template<class P> void check_collision_update
-		(math::vec3& pred_pos, math::vec3& pred_vel, P *p);
 
 	public:
 		/**
@@ -245,9 +246,8 @@ class simulator {
 		/**
 		 * @brief Removes the @e i-th fixed geometrical object.
 		 *
-		 * Frees the memory occupied by the object in the @e i-th
-		 * position. Therefore, any pointer to that object becomes
-		 * invalid.
+		 * Frees the memory occupied by the object in the @e i-th position from
+		 * @ref scene_fixed. Therefore, any pointer to that object becomes invalid.
 		 * @param i The index of the object in [0, number of geometrical objects).
 		 */
 		void remove_geometry(size_t i);
@@ -281,9 +281,8 @@ class simulator {
 		/**
 		 * @brief Removes the @e i-th force field object.
 		 *
-		 * Frees the memory occupied by the object in the @e i-th
-		 * position. Therefore, any pointer to that object becomes
-		 * invalid.
+		 * Frees the memory occupied by the object in the @e i-th position from
+		 * @ref force_fields. Therefore, any pointer to that object becomes invalid.
 		 * @param i The index of the object in [0, number of force fields).
 		 */
 		void remove_field(size_t i);
@@ -294,6 +293,33 @@ class simulator {
 		 * the container.
 		 */
 		void clear_fields();
+
+		// ----------- meshes
+
+		/**
+		 * @brief Adds a mesh to the scene.
+		 *
+		 * The mesh is added to @ref ms.
+		 *
+		 * The caller should not free the object since the simulator
+		 * will take care of that.
+		 * @param m A non-null pointer to the object.
+		 */
+		void add_mesh(meshes::mesh *m);
+		/**
+		 * @brief Removes the @e i-th mesh object.
+		 *
+		 * Frees the memory occupied by the object in the @e i-th position from
+		 * @ref ms. Therefore, any pointer to that object becomes invalid.
+		 * @param i The index of the object in [0, number of meshes).
+		 */
+		void remove_mesh(size_t i);
+		/**
+		 * @brief Deletes all meshes in this simulator.
+		 *
+		 * Deletes all the objects in @ref ms and clears the container.
+		 */
+		void clear_meshes();
 
 		// MODIFIERS
 
@@ -306,7 +332,8 @@ class simulator {
 		 * - @ref clear_particles,
 		 * - @ref clear_geometry,
 		 * - @ref clear_fields,
-		 * and sets @ref stime to 0.
+		 * - @ref clear_meshes,
+		 * and sets the simulation time (@ref stime) to 0.
 		 */
 		void clear_simulation();
 

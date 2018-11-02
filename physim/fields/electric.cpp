@@ -6,6 +6,18 @@
 namespace physim {
 namespace fields {
 
+// PRIVATE
+
+template<class P>
+void electric::__compute_force(const P *p, math::vec3& F) {
+	// unit directional vector
+	math::vec3 v;
+	__pm_sub_v_v(v, p->cur_pos, pos);
+	math::normalise(v, v);
+}
+
+// PUBLIC
+
 electric::electric() : punctual() {
 	Q = 0.0f;
 }
@@ -40,12 +52,11 @@ float electric::get_charge() const {
 // OTHERS
 
 void electric::compute_force(const particles::free_particle *p, math::vec3& F) {
-	// unit directional vector
-	math::vec3 v;
-	__pm_sub_v_v(v, p->cur_pos, pos);
-	math::normalise(v, v);
+	__compute_force(p, F);
+}
 
-
+void electric::compute_force(const particles::mesh_particle *p, math::vec3& F) {
+	__compute_force(p, F);
 }
 
 } // -- namespace fields

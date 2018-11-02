@@ -2,6 +2,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/mesh_particle.hpp>
 #include <physim/fields/punctual.hpp>
 #include <physim/math/vec3.hpp>
 
@@ -26,6 +27,10 @@ namespace fields {
  * - \f$O\f$ is the position of the particle causing the field.
  */
 class gravitational : public punctual {
+	private:
+		template<class P>
+		void __compute_force(const P *p, math::vec3& F);
+
 	protected:
 		/// Mass of object causing the gravitational field. [Kg]
 		float M;
@@ -53,6 +58,7 @@ class gravitational : public punctual {
 		// OTHERS
 
 		void compute_force(const particles::free_particle *p, math::vec3& F);
+		void compute_force(const particles::mesh_particle *p, math::vec3& F);
 };
 
 } // -- namespace fields

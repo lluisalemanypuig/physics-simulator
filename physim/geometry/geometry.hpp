@@ -5,6 +5,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
+#include <physim/meshes/mesh.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -116,6 +117,22 @@ class geometry {
 		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
 			particles::free_particle *pred
+		) const = 0;
+		/**
+		 * @brief Update a particle in a collision with geometry.
+		 *
+		 * Same as in @ref update_particle(const math::vec3&,
+		 * const math::vec3&, particles::free_particle*), but for the @e i-th
+		 * particle of the mesh @e m.
+		 *
+		 * @param[in] pred_pos The predicted position of the particle.
+		 * @param[in] pred_vel The predicted velocity of the particle.
+		 * @param i Valid particle index.
+		 * @param[out] m A non-null pointer to a mesh.
+		 */
+		virtual void update_particle(
+			const math::vec3& pred_pos, const math::vec3& pred_vel,
+			size_t i, meshes::mesh *m
 		) const = 0;
 
 		/// Output on stream @e os information about this geometry.

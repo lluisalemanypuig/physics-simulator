@@ -1,7 +1,11 @@
 #include <physim/meshes/mesh1d.hpp>
 
 // C includes
+#include <assert.h>
 #include <stdlib.h>
+
+// physim includes
+#include <physim/math/math.hpp>
 
 namespace physim {
 using namespace particles;
@@ -10,30 +14,54 @@ namespace meshes {
 
 // PUBLIC
 
-mesh1d::mesh1d() {
-	ps = nullptr;
+mesh1d::mesh1d() : mesh() {
+	mt = mesh_type::d1;
 }
+mesh1d::mesh1d(float ke, float kd) : mesh(ke,kd) {
+	mt = mesh_type::d1;
+}
+
 mesh1d::~mesh1d() {
-	clear();
-}
-
-// OPERATORS
-
-mesh1d& mesh1d::operator= (const mesh1d& m) {
-	clear();
-
-	N = m.N;
-	ps = (mesh_particle **)malloc(N*sizeof(mesh_particle));
-	for (size_t i = 0; i < N; ++i) {
-		ps[i] = new mesh_particle(*m.ps[i]);
-	}
-
-	Ke = m.Ke;
-	Kd = m.Kd;
-	return *this;
+	this->clear();
 }
 
 // MODIFIERS
+
+void mesh1d::make_initial_state() {
+	for (size_t i = 0; i < N - 1; ++i) {
+		ds[i] = __pm_dist(ps[i]->cur_pos, ps[i+1]->cur_pos);
+	}
+}
+
+void mesh1d::update_forces() {
+	math::vec3 F1_m1;
+	math::vec3 dir;
+	math::vec3 dvel;
+	float elastic_term, damping_term;
+
+	for (size_t i = 0; i < N - 1; ++i) {
+		__pm_assign_s(F1_m1, 0.0f);
+
+		// direction vector
+		__pm_sub_v_v(dir, ps[i+1]->cur_pos, ps[i]->cur_pos);
+		float dist = __pm_norm(dir);
+		__pm_normalise(dir, dir);
+
+		// difference of velocities
+		__pm_sub_v_v(dvel, ps[i+1]->cur_vel, ps[i]->cur_vel);
+
+		// compute terms
+		elastic_term = Ke*(dist - ds[i]);
+		damping_term = Kd*__pm_dot(dvel, dir);
+
+		// compute forces
+		__pm_add_acc_vs(F1_m1, dir, elastic_term + damping_term);
+
+		__pm_add_acc_v(ps[i]->force, F1_m1);
+		__pm_invert(F1_m1, F1_m1);
+		__pm_add_acc_v(ps[i + 1]->force, F1_m1);
+	}
+}
 
 void mesh1d::allocate(size_t n) {
 	if (ps != nullptr) {
@@ -42,6 +70,7 @@ void mesh1d::allocate(size_t n) {
 
 	N = n;
 	ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
+	ds = std::vector<float>(N - 1, 0.0f);
 
 	for (size_t i = 0; i < N; ++i) {
 		ps[i] = new mesh_particle();
@@ -50,44 +79,8 @@ void mesh1d::allocate(size_t n) {
 }
 
 void mesh1d::clear() {
-	if (ps == nullptr) {
-		return;
-	}
-
-	mesh_particle *p = ps[0];
-	for (size_t i = 0; i < N; ++i, ++p) {
-		delete p;
-	}
-	free(ps);
-	ps = nullptr;
-}
-
-// SETTERS
-
-void mesh1d::set_elasticity(float ke) {
-	Ke = ke;
-}
-
-void mesh1d::set_damping(float kd) {
-	Kd = kd;
-}
-
-// GETTERS
-
-float mesh1d::get_elasticity() const {
-	return Ke;
-}
-
-float mesh1d::get_damping() const {
-	return Kd;
-}
-
-size_t mesh1d::size() const {
-	return N;
-}
-
-mesh_particle **mesh1d::get_particles() {
-	return ps;
+	mesh::clear();
+	ds.clear();
 }
 
 } // -- namespace meshes

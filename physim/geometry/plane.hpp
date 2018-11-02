@@ -6,6 +6,7 @@
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/mesh_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -138,6 +139,10 @@ class plane : public geometry {
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
 			particles::free_particle *p
+		) const;
+		void update_particle(
+			const math::vec3& pred_pos, const math::vec3& pred_vel,
+			size_t i, meshes::mesh *m
 		) const;
 
 		void display(std::ostream& os = std::cout) const;
