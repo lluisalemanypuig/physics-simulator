@@ -22,6 +22,9 @@ namespace study_cases {
 		else if (strcmp(argv[1], "hose") == 0) {
 			hose_case(argc, argv);
 		}
+		else if (strcmp(argv[1], "mesh1d") == 0) {
+			mesh1d_case(argc, argv);
+		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './basic_simulations --list' to see all cases" << endl;

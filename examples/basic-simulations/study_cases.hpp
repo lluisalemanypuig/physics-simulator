@@ -72,4 +72,10 @@ namespace study_cases {
 	 */
 	void hose_case(int argc, char *argv[]);
 
+	/* -- 1-dimensional mesh case --
+	 * This scene contains a plane (floor) and a
+	 * simple 1-dimensional mesh.
+	 */
+	void mesh1d_case(int argc, char *argv[]);
+
 } // -- namespace study_cases

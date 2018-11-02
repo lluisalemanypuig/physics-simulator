@@ -17,7 +17,8 @@ SOURCES +=					\
 	2_bounce_sphere.cpp		\
 	3_tri_tri_plane.cpp		\
     4_roll_plane_sphere.cpp \
-    5_hose.cpp
+	5_hose.cpp				\
+    6_mesh1d.cpp
 
 HEADERS +=					\
 	utils.hpp				\

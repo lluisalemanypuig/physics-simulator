@@ -15,6 +15,8 @@ void list_all_cases() {
 	cout << "                    with a sphere at the bottom of the plane." << endl;
 	cout << "hose              : several geometrical objects. Intended for" << endl;
 	cout << "                    efficiency measuring." << endl;
+	cout << "mesh1d            : simulate a very simple 1-dimensional mesh" << endl;
+	cout << "                    of three particles" << endl;
 }
 
 int main(int argc, char *argv[]) {
