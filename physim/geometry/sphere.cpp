@@ -187,7 +187,7 @@ const
 	// compute intersection point
 
 	math::vec3 I;
-	intersec_segment(m->ps[i]->cur_pos, pred_pos, I);
+	intersec_segment((*m)[i]->cur_pos, pred_pos, I);
 
 	// define the plane
 	math::vec3 normal;
