@@ -116,17 +116,17 @@ namespace study_cases {
 		h.set_hose_source(hK, normalise(dhdir), 0.5f, norm(dhdir));
 		h.set_starttime_initialiser(
 			[n_particles](free_particle *p) {
-				p->set_starttime( p->get_index()/(float(n_particles)) );
+				p->starttime = p->index/(float(n_particles));
 			}
 		);
 		h.set_lifetime_initialiser(
-			[&](free_particle *p) { p->set_lifetime(lifetime); }
+			[&](free_particle *p) { p->lifetime = lifetime; }
 		);
 		h.set_bounce_initialiser(
-			[&](free_particle *p) { p->set_bouncing(bounce); }
+			[&](free_particle *p) { p->bouncing = bounce; }
 		);
 		h.set_friction_initialiser(
-			[&](free_particle *p) { p->set_friction(friction); }
+			[&](free_particle *p) { p->friction = friction; }
 		);
 
 		SIM.set_initialiser(&h);

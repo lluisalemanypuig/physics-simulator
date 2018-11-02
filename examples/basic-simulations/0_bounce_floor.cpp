@@ -88,28 +88,22 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[](free_particle *p) {
-				cout << "Initialise particle's position" << endl;
-				p->set_position(0.0f,10.0f,0.0f);
-				cout << "After assignment:" << endl;
-				cout << "    "
-					 << p->get_position().x << ","
-					 << p->get_position().y << ","
-					 << p->get_position().z << endl;
+				p->cur_pos = vec3(0.0f,10.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
 			[](free_particle *p) {
-				p->set_velocity(0.0f,0.0f,0.0f);
+				p->cur_vel = vec3(0.0f,0.0f,0.0f);
 			}
 		);
 		I.set_lifetime_initialiser(
-			[&](free_particle *p) { p->set_lifetime(lifetime); }
+			[&](free_particle *p) { p->lifetime = lifetime; }
 		);
 		I.set_bounce_initialiser(
-			[&](free_particle *p) { p->set_bouncing(bounce); }
+			[&](free_particle *p) { p->bouncing = bounce; }
 		);
 		I.set_friction_initialiser(
-			[&](free_particle *p) { p->set_friction(friction); }
+			[&](free_particle *p) { p->friction = friction; }
 		);
 
 		simulator S(solv, dt);
@@ -133,7 +127,7 @@ namespace study_cases {
 		vector<vec3> trajectory;
 
 		while (S.get_current_time() <= total_time) {
-			vec3 cur_pos = p->get_position();
+			vec3 cur_pos = p->cur_pos;
 			trajectory.push_back(cur_pos);
 			S.apply_time_step();
 		}

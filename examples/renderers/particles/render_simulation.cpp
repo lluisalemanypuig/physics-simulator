@@ -102,8 +102,8 @@ void SimulationRenderer::draw_particles() {
 
 	glBegin(GL_POINTS);
 	for (size_t i = 0; i < S.n_particles(); ++i) {
-		const physim::math::vec3& pos = S.get_particle(i).get_position();
-		if (S.get_particle(i).get_lifetime() < 0.2f) {
+		const physim::math::vec3& pos = S.get_particle(i).cur_pos;
+		if (S.get_particle(i).lifetime < 0.2f) {
 			glColor3f(0.0f,0.0f,0.0f);
 		}
 		else {

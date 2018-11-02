@@ -196,12 +196,12 @@ void SimulationRenderer::set_total_time(float T) {
 
 void SimulationRenderer::set_bounce_all_particles(float b) {
 	for (free_particle *p : S.get_particles()) {
-		p->set_bouncing(b);
+		p->bouncing = b;
 	}
 }
 
 void SimulationRenderer::set_friction_all_particles(float f) {
 	for (free_particle *p : S.get_particles()) {
-		p->set_friction(f);
+		p->friction = f;
 	}
 }

@@ -48,7 +48,7 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	h.set_hose_source(hK, hose_direction, 0.5f, 3.0f*length_diff);
 	h.set_starttime_initialiser(
 		[](free_particle *p) {
-			p->set_starttime( p->get_index()/500.0f );
+			p->starttime = p->index/500.0f ;
 		}
 	);
 

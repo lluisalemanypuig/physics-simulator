@@ -60,7 +60,7 @@ QProgressBar *MainWindow::get_sim_bar() {
 void MainWindow::get_init_bounce(partinit& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
-		bounce = [&](free_particle *p) { p->set_bouncing( this->U01(this->eng) ); };
+		bounce = [&](free_particle *p) { p->bouncing = this->U01(this->eng); };
 		cout << "        Use random bouncing coefficient" << endl;
 		return;
 	}
@@ -68,7 +68,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	bool ok;
 	float b = text.toFloat(&ok);
 	if (ok) {
-		bounce = [b](free_particle *p) { p->set_bouncing(b); };
+		bounce = [b](free_particle *p) { p->bouncing = b; };
 		cout << "        Set bouncing coefficient to " << b << endl;
 		return;
 	}
@@ -79,7 +79,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 void MainWindow::get_init_friction(partinit& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
-		fric = [&](free_particle *p) { p->set_friction( this->U01(this->eng) ); };
+		fric = [&](free_particle *p) { p->friction = this->U01(this->eng); };
 		cout << "        Use random friction coefficient" << endl;
 		return;
 	}
@@ -87,7 +87,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 	bool ok;
 	float f = text.toFloat(&ok);
 	if (ok) {
-		fric = [f](free_particle *p) { p->set_friction(f); };
+		fric = [f](free_particle *p) { p->friction = f; };
 		cout << "        Set friction coefficient to " << f << endl;
 		return;
 	}
@@ -98,7 +98,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 void MainWindow::get_init_lifetime(partinit& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
-		lifetime = [&](free_particle *p) { p->set_lifetime( this->U010(this->eng) ); };
+		lifetime = [&](free_particle *p) { p->lifetime = this->U010(this->eng); };
 		cout << "        Use random particle's lifetime" << endl;
 		return;
 	}
@@ -106,7 +106,7 @@ void MainWindow::get_init_lifetime(partinit& lifetime) {
 	bool ok;
 	float l = text.toFloat(&ok);
 	if (ok) {
-		lifetime = [l](free_particle *p) { p->set_lifetime(l); };
+		lifetime = [l](free_particle *p) { p->lifetime = l; };
 		cout << "        Set particle's lifetime to " << l << endl;
 		return;
 	}

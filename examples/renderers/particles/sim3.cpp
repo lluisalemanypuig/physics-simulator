@@ -21,9 +21,8 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	initialiser i;
 	i.set_pos_initialiser(
 		[&](free_particle *p) {
-			p->set_previous_position(vec3(0.0f,0.0f,0.0f));
 
-			size_t idx = p->get_index();
+			size_t idx = p->index;
 			float iz = 0.0;
 			if (idx == 0)		{ iz = -1.00f; }
 			else if (idx == 1)	{ iz = -0.75f; }
@@ -34,12 +33,12 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 			else if (idx == 6)	{ iz =  0.50f; }
 			else if (idx == 7)	{ iz =  0.75f; }
 			else if (idx == 8)	{ iz =  1.00f; }
-			p->set_position(-2.0f,4.5f,iz);
+			p->cur_pos = vec3(-2.0f,4.5f,iz);
 		}
 	);
 	i.set_vel_initialiser(
 		[](free_particle *p) {
-			p->set_velocity(0.0f,0.0f,0.0f);
+			p->cur_vel = vec3(0.0f,0.0f,0.0f);
 		}
 	);
 

@@ -22,7 +22,7 @@ void MainWindow::make_sim1(SimulationRenderer *sr) {
 	w.set_straight_source(physim::math::vec3(-4.5f,10.0f,-1.5f), 3.0f,3.0f);
 	w.set_starttime_initialiser(
 		[](free_particle *p) {
-			p->set_starttime( p->get_index()/300.0f );
+			p->starttime = p->index/300.0f;
 		}
 	);
 
