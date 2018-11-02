@@ -30,7 +30,7 @@ magnetic_B::~magnetic_B() {
 
 void magnetic_B::compute_force(const particles::free_particle *p, math::vec3& F) {
 	math::vec3 temp;
-	__pm_mul_v_s(temp, p->get_velocity(), p->get_charge());
+	__pm_mul_v_s(temp, p->cur_vel, p->charge);
 	__pm_cross(F, temp, B);
 }
 

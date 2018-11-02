@@ -22,11 +22,11 @@ void simulator::simulate_meshes1d() {
 		/* update a meshe's particles */
 		particles::mesh_particle **mps = m1->get_particles();
 		particles::mesh_particle *p = mps[0];
-		size_t N = m1->n_particles();
+		size_t N = m1->size();
 
 		for (size_t i = 0; i < N; ++i, ++p) {
 			// ignore fixed particles
-			if (p->is_fixed()) {
+			if (p->fixed) {
 				continue;
 			}
 

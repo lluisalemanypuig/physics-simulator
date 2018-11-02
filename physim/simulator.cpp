@@ -19,7 +19,7 @@ void simulator::init_particle(particles::free_particle *p) {
 	// do not need it, however.
 
 	// prev_pos <- pos - vel*dt
-	__pm_sub_v_vs(p->get_previous_position(), p->get_position(), p->get_velocity(), dt);
+	__pm_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
 }
 
 // PUBLIC
@@ -44,7 +44,7 @@ simulator::~simulator() {
 
 const particles::free_particle *simulator::add_particle() {
 	particles::free_particle *p = new particles::free_particle();
-	p->set_index(ps.size());
+	p->index = ps.size();
 	init_particle(p);
 	ps.push_back(p);
 	return p;
@@ -52,7 +52,7 @@ const particles::free_particle *simulator::add_particle() {
 
 void simulator::add_particle(particles::free_particle *p) {
 	assert(p != nullptr);
-	p->set_index(ps.size());
+	p->index = ps.size();
 	ps.push_back(p);
 }
 
@@ -154,7 +154,7 @@ void simulator::reset_simulation() {
 	stime = 0.0f;
 	int i = 0;
 	for (particles::free_particle *p : ps) {
-		if (not p->is_fixed()) {
+		if (not p->fixed) {
 			init_particle(p);
 		}
 		++i;

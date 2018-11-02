@@ -11,7 +11,7 @@ namespace init {
 
 void rect_shower::make_vel_init() {
 	vel = [](particles::free_particle *p) {
-		__pm_assign_c(p->get_velocity(), 0.0f,0.0f,0.0f);
+		__pm_assign_s(p->cur_vel, 0.0f);
 	};
 }
 

@@ -25,30 +25,30 @@ namespace physim {
 
 template<class P>
 void simulator::apply_solver(const P *p, math::vec3& pred_pos, math::vec3& pred_vel) {
-	const float mass = p->get_mass();
+	const float mass = p->mass;
 
 	switch (solver) {
 		case solver_type::EulerOrig:
 			// pred_pos <- pos + vel*dt
-			__pm_add_v_vs(pred_pos, p->get_position(), p->get_velocity(), dt);
+			__pm_add_v_vs(pred_pos, p->cur_pos, p->cur_vel, dt);
 			// pred_vel <- vel + force*dt/mass
-			__pm_add_v_vs(pred_vel, p->get_velocity(), p->get_force(), dt/mass);
+			__pm_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
 			break;
 
 		case solver_type::EulerSemi:
 			// pred_vel <- vel + force*dt/mass
-			__pm_add_v_vs(pred_vel, p->get_velocity(), p->get_force(), dt/mass);
+			__pm_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
 			// pred_pos <- pos + pred_vel*dt
-			__pm_add_v_vs(pred_pos, p->get_position(), pred_vel, dt);
+			__pm_add_v_vs(pred_pos, p->cur_pos, pred_vel, dt);
 			break;
 
 		case solver_type::Verlet:
 			// pred_pos <- pos + 1.0f*(pos - prev_pos) + force*dt*dt/m
-			__pm_sub_v_v(pred_pos, p->get_position(), p->get_previous_position());
-			__pm_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->get_force(),(dt*dt)*(1.0f/mass), p->get_position());
+			__pm_sub_v_v(pred_pos, p->cur_pos, p->prev_pos);
+			__pm_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->force,(dt*dt)*(1.0f/mass), p->cur_pos);
 
 			// pred_vel <- (pred_pos - pos)/dt
-			__pm_sub_v_v_div_s(pred_vel, pred_pos, p->get_position(), dt);
+			__pm_sub_v_v_div_s(pred_vel, pred_pos, p->cur_pos, dt);
 			break;
 
 		default:
@@ -59,14 +59,14 @@ void simulator::apply_solver(const P *p, math::vec3& pred_pos, math::vec3& pred_
 template<class P>
 void simulator::compute_forces(P *p) {
 	// clear the current force
-	__pm_assign_s(p->get_force(), 0.0f);
+	__pm_assign_s(p->force, 0.0f);
 
 	// compute the force every force field
 	// makes on every particle
 	math::vec3 F;
 	for (fields::field *f : force_fields) {
 		f->compute_force(p, F);
-		__pm_add_acc_v(p->get_force(), F);
+		__pm_add_acc_v(p->force, F);
 	}
 }
 
@@ -139,7 +139,7 @@ void simulator::check_collision_update
 		// then the geometry is in charge of updating
 		// this particle's position, velocity, ...
 
-		if (g->intersec_segment(p->get_position(), pred_pos)) {
+		if (g->intersec_segment(p->cur_pos, pred_pos)) {
 			collision = true;
 
 			coll_pred = *p;
@@ -152,13 +152,12 @@ void simulator::check_collision_update
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				math::vec3& cp_prev_pos = coll_pred.get_previous_position();
-				__pm_sub_v_vs(cp_prev_pos, coll_pred.get_position(), coll_pred.get_velocity(), dt);
+				__pm_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
 			}
 
 			// keep track of the predicted particle's position
-			__pm_assign_v(pred_pos, coll_pred.get_position());
-			__pm_assign_v(pred_vel, coll_pred.get_velocity());
+			__pm_assign_v(pred_pos, coll_pred.cur_pos);
+			__pm_assign_v(pred_vel, coll_pred.cur_vel);
 		}
 	}
 
@@ -168,8 +167,8 @@ void simulator::check_collision_update
 	}
 	else {
 		p->save_position();
-		p->set_position(pred_pos);
-		p->set_velocity(pred_vel);
+		__pm_assign_v(p->cur_pos, pred_pos);
+		__pm_assign_v(p->cur_vel, pred_vel);
 	}
 }
 

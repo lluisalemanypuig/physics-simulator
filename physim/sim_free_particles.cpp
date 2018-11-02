@@ -14,20 +14,20 @@ void simulator::simulate_free_particles() {
 
 	for (particles::free_particle *p : ps) {
 		// ignore fixed particles
-		if (p->is_fixed()) {
+		if (p->fixed) {
 			continue;
 		}
 		// Reset a particle when it dies.
 		// Do not smiulate this particle
 		// until the next step
-		if (p->get_lifetime() <= 0.0f) {
+		if (p->lifetime <= 0.0f) {
 			init_particle(p);
 			continue;
 		}
 		// is this particle allowed to move?
 		// if not, ignore it
 		p->reduce_starttime(dt);
-		if (p->get_starttime() > 0.0f) {
+		if (p->starttime > 0.0f) {
 			continue;
 		}
 

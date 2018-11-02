@@ -14,8 +14,7 @@ void rect_source::make_pos_init() {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
 
-		__pm_add_vs_vs(p->get_position(), this->u,(l*this->w), this->v,(m*this->h));
-		__pm_add_acc_v(p->get_position(), this->S);
+		__pm_add_vs_vs_v(p->cur_pos, this->u,(l*this->w), this->v,(m*this->h), this->S);
 
 		// copy the current position to the previous
 		// position so that Verlet's solver works properly.

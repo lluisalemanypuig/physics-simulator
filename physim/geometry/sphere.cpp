@@ -166,7 +166,7 @@ void sphere::update_particle
 	// compute intersection point
 
 	math::vec3 I;
-	bool r = intersec_segment(p->get_position(), pred_pos, I);
+	bool r = intersec_segment(p->cur_pos, pred_pos, I);
 	if (not r) {
 		return;
 	}

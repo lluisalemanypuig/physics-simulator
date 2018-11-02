@@ -13,7 +13,7 @@ namespace init {
 typedef std::function<void (particles::free_particle *)> partinit;
 
 /**
- * @brief The particle initialiser class.
+ * @brief Object for @ref particles::free_particle initialisation.
  *
  * This class is used to initialise the attributes of a particle.
  *

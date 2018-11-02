@@ -112,8 +112,8 @@ const
 
 	// --- update position --- (with bouncing coefficient)
 
-	float bounce = p->get_bouncing();
-	__pm_sub_v_vs(p->get_position(), pred_pos, Wn, 1.0f + bounce);
+	float bounce = p->bouncing;
+	__pm_sub_v_vs(p->cur_pos, pred_pos, Wn, 1.0f + bounce);
 
 	// --- update velocity (1) --- (with bouncing coefficient)
 
@@ -121,17 +121,17 @@ const
 	// velocity (time T - dt). A constant reference is
 	// not used because we need to keep this value after update.
 	math::vec3 vt;
-	__pm_assign_v(vt, p->get_velocity());
+	__pm_assign_v(vt, p->cur_vel);
 
 	// first update of the velociy (with bouncing)
-	__pm_sub_v_vs(p->get_velocity(), pred_vel, normal,(1.0f + bounce)*__pm_dot(normal, pred_vel));
+	__pm_sub_v_vs(p->cur_vel, pred_vel, normal,(1.0f + bounce)*__pm_dot(normal, pred_vel));
 
 	// --- update velocity (2) --- (with friction coefficient)
 
 	// Use 'vt', the velocity at time t
 	math::vec3 vT;
 	__pm_sub_v_vs(vT, vt, normal,__pm_dot(normal,vt));
-	__pm_sub_acc_vs(p->get_velocity(), vT, p->get_friction());
+	__pm_sub_acc_vs(p->cur_vel, vT, p->friction);
 }
 
 void plane::display(std::ostream& os) const {

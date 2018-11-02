@@ -35,7 +35,7 @@ mesh1d& mesh1d::operator= (const mesh1d& m) {
 
 // MODIFIERS
 
-void mesh1d::init(size_t n) {
+void mesh1d::allocate(size_t n) {
 	if (ps != nullptr) {
 		clear();
 	}
@@ -45,7 +45,7 @@ void mesh1d::init(size_t n) {
 
 	for (size_t i = 0; i < N; ++i) {
 		ps[i] = new mesh_particle();
-		ps[i]->set_index(i);
+		ps[i]->index = i;
 	}
 }
 
@@ -82,7 +82,7 @@ float mesh1d::get_damping() const {
 	return Kd;
 }
 
-size_t mesh1d::n_particles() const {
+size_t mesh1d::size() const {
 	return N;
 }
 

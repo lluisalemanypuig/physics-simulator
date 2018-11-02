@@ -16,7 +16,7 @@ namespace init {
 
 void hose::make_pos_init() {
 	pos = [this](free_particle *p) {
-		p->set_position(this->source);
+		__pm_assign_v(p->cur_pos, this->source);
 
 		// copy the current position to the previous
 		// position so that Verlet's solver works properly.
@@ -37,7 +37,7 @@ void hose::make_vel_init() {
 			this->w,(y*std::sin(phi)),
 			this->cc
 		);
-		__pm_sub_v_v(p->get_velocity(), base_point, this->source);
+		__pm_sub_v_v(p->cur_vel, base_point, this->source);
 	};
 }
 

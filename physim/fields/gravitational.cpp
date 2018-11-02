@@ -45,10 +45,10 @@ float gravitational::get_mass() const {
 void gravitational::compute_force(const particles::free_particle *p, math::vec3& F) {
 	// unit directional vector
 	math::vec3 v;
-	__pm_sub_v_v(v, pos, p->get_position());
+	__pm_sub_v_v(v, pos, p->cur_pos);
 	math::normalise(v, v);
 
-	__pm_mul_v_s(F, v, p->get_mass()*M);
+	__pm_mul_v_s(F, v, p->mass*M);
 }
 
 } // -- namespace fields

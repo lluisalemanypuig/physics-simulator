@@ -11,14 +11,14 @@ namespace init {
 
 void rect_fountain::make_vel_init() {
 	vel = [this](particles::free_particle *p) {
-		const float d2 = __pm_dist2(p->get_position(),this->C);
+		const float d2 = __pm_dist2(p->cur_pos,this->C);
 		const float D2 = (this->h*this->h + this->w*this->w)/4.0f;
 
 		math::vec3 temp;
-		__pm_add_v_v(temp, p->get_position(), this->n);
+		__pm_add_v_v(temp, p->cur_pos, this->n);
 		__pm_sub_v_v(temp, temp, this->C);
 		__pm_normalise(temp, temp);
-		__pm_mul_v_s(p->get_velocity(), temp, (D2/d2));
+		__pm_mul_v_s(p->cur_vel, temp, (D2/d2));
 	};
 }
 

@@ -8,17 +8,29 @@ namespace meshes {
 
 /**
  * @brief 1-Dimensional meshes (or springs).
+ *
+ * This represents a list of @ref particles::mesh_particle
+ * where one particle is attached to the previous and next
+ * particle with a spring. The movement of one particle in
+ * the spring affects the other particles.
+ *
+ * This spring has some parameters that describe it:
+ * - elasticity parameter (see @ref Ke).
+ * - damping factor (see @ref Kd).
  */
 class mesh1d {
 	private:
-		/// The particles of this mesh.
-		particles::mesh_particle **ps;
 		/**
 		 * @brief Number of particles of the spring.
 		 *
-		 * Size of the array @ref ps->
+		 * Size of the array @ref ps.
 		 */
 		size_t N;
+
+	public:
+		/// The particles of this mesh.
+		particles::mesh_particle **ps;
+
 		/// Elasticity coefficient of each spring.
 		float Ke;
 		/// Damping factor of each spring.
@@ -45,7 +57,7 @@ class mesh1d {
 		// MODIFIERS
 
 		/**
-		 * @brief Initialises the spring with @e n particles.
+		 * @brief Allocates memory for @e n particles.
 		 *
 		 * The previous contents of this spring are cleared
 		 * (see @ref clear).
@@ -58,7 +70,7 @@ class mesh1d {
 		 * of every 1-dimensional mesh has index 0, the second
 		 * index 1, ...
 		 */
-		void init(size_t n);
+		void allocate(size_t n);
 
 		/// Frees the memory occupied by this mesh.
 		void clear();
@@ -80,7 +92,7 @@ class mesh1d {
 		float get_damping() const;
 
 		/// Returns the number of particles of this mesh.
-		size_t n_particles() const;
+		size_t size() const;
 
 		/// Returns a reference to this spring's particles.
 		particles::mesh_particle **get_particles();
