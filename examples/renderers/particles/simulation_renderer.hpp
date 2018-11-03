@@ -52,9 +52,6 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// hard geometry are those geometrical objects with
 		// no material/textures. Soft geometry has materials
 		// and textures, so lighting has to be enabled.
-		void draw_hard_geom(rgeom *rg);
-		void draw_soft_geom(rgeom *rg);
-		void draw_geom(rgeom *rg);
 		void draw_particles();
 
 		// scene-rendering functions

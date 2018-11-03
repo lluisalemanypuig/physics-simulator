@@ -29,8 +29,7 @@ HEADERS +=						\
     simulation_renderer.hpp		\
 	utils.hpp
 
-RESOURCES += \
-    resources.qrc
+RESOURCES +=
 
 # base (mesh, .obj reader, ...)
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base/release/ -lbase

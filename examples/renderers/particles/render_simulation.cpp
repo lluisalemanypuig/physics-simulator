@@ -14,89 +14,6 @@ const float maxDistanceCamera = 50.0f;
 
 // PRIVATE
 
-void SimulationRenderer::draw_hard_geom(rgeom *rg) {
-	rendered_geometry_type type = rg->get_type();
-
-	rplane *rp = nullptr;
-	rrectangle *rc = nullptr;
-	rtriangle *rt = nullptr;
-
-	glDisable(GL_LIGHTING);
-
-	glColor4f(rg->r,rg->b,rg->g,rg->a);
-
-	switch (type) {
-		case rendered_geometry_type::plane:
-			rp = static_cast<rplane *>(rg);
-			glBegin(GL_QUADS);
-				glVertex3f(rp->p1.x, rp->p1.y, rp->p1.z);
-				glVertex3f(rp->p2.x, rp->p2.y, rp->p2.z);
-				glVertex3f(rp->p3.x, rp->p3.y, rp->p3.z);
-				glVertex3f(rp->p4.x, rp->p4.y, rp->p4.z);
-			glEnd();
-			break;
-
-		case rendered_geometry_type::rectangle:
-			rc = static_cast<rrectangle *>(rg);
-			glBegin(GL_QUADS);
-				glVertex3f(rc->p1.x, rc->p1.y, rc->p1.z);
-				glVertex3f(rc->p2.x, rc->p2.y, rc->p2.z);
-				glVertex3f(rc->p3.x, rc->p3.y, rc->p3.z);
-				glVertex3f(rc->p4.x, rc->p4.y, rc->p4.z);
-			glEnd();
-			break;
-
-		case rendered_geometry_type::triangle:
-			rt = static_cast<rtriangle *>(rg);
-			glBegin(GL_TRIANGLES);
-				glVertex3f(rt->p1.x, rt->p1.y, rt->p1.z);
-				glVertex3f(rt->p2.x, rt->p2.y, rt->p2.z);
-				glVertex3f(rt->p3.x, rt->p3.y, rt->p3.z);
-			glEnd();
-			break;
-
-		default:
-			cerr << "This type (" << int(type) << ") is not hard geometry" << endl;
-	}
-	glEnable(GL_LIGHTING);
-}
-
-void SimulationRenderer::draw_soft_geom(rgeom *rg) {
-	rendered_geometry_type type = rg->get_type();
-	rsphere *rs = nullptr;
-
-	switch (type) {
-		case rendered_geometry_type::sphere:
-			rs = static_cast<rsphere *>(rg);
-			glTranslatef(rs->c.x, rs->c.y, rs->c.z);
-			glScalef(2.0f*rs->r,2.0f*rs->r,2.0f*rs->r);
-			sphere->slow_render();
-			break;
-
-		default:
-			cerr << "This type (" << int(type) << ") is not soft geometry" << endl;
-	}
-}
-
-void SimulationRenderer::draw_geom(rgeom *rg) {
-	rendered_geometry_type type = rg->get_type();
-
-	switch (type) {
-		case rendered_geometry_type::plane:
-		case rendered_geometry_type::rectangle:
-		case rendered_geometry_type::triangle:
-			draw_hard_geom(rg);
-			break;
-
-		case rendered_geometry_type::sphere:
-			draw_soft_geom(rg);
-			break;
-
-		default:
-			cerr << "No type for geometry" << endl;
-	}
-}
-
 void SimulationRenderer::draw_particles() {
 	glDisable(GL_LIGHTING);
 
@@ -134,7 +51,7 @@ void SimulationRenderer::paintGL() {
 			continue;
 		}
 		glPushMatrix();
-		draw_geom(rg);
+		rg->draw();
 		glPopMatrix();
 	}
 
