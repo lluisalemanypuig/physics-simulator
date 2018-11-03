@@ -1,4 +1,4 @@
-#include "simple_renderer.hpp"
+#include <base/renderer.hpp>
 
 // C incldues
 #include <assert.h>
@@ -12,7 +12,7 @@ using namespace std;
 
 // PRIVATE
 
-void simple_renderer::make_model_box(model *m) {
+void renderer::make_model_box(model *m) {
 	const std::vector<vec3>& verts = m->get_vertices();
 
 	vec3 min = verts[0];
@@ -38,13 +38,13 @@ void simple_renderer::make_model_box(model *m) {
 
 // PROTECTED
 
-float simple_renderer::get_aspect_ratio() const {
+float renderer::get_aspect_ratio() const {
 	return float(vp_width)/float(vp_height);
 }
 
 // PUBLIC
 
-simple_renderer::simple_renderer(int w, int h) {
+renderer::renderer(int w, int h) {
 	cam_pos = vec3(0.0f,0.0f,0.0f);
 	pitch = 0.0f;
 	yaw = 0.0f;
@@ -62,11 +62,11 @@ simple_renderer::simple_renderer(int w, int h) {
 	vp_height = h;
 }
 
-simple_renderer::~simple_renderer() {
+renderer::~renderer() {
 	clear();
 }
 
-void simple_renderer::clear() {
+void renderer::clear() {
 	for (size_t i = 0; i < ms.size(); ++i) {
 		ms[i]->clear();
 		delete ms[i];
@@ -74,18 +74,18 @@ void simple_renderer::clear() {
 	ms.clear();
 }
 
-void simple_renderer::add_model(rendered_model *m) {
+void renderer::add_model(rendered_model *m) {
 	assert(m != nullptr);
 	ms.push_back(m);
 	make_model_box(m);
 }
 
-void simple_renderer::set_window_dims(int w, int h) {
+void renderer::set_window_dims(int w, int h) {
 	vp_width = w;
 	vp_height = h;
 }
 
-void simple_renderer::init_cameras() {
+void renderer::init_cameras() {
 	orth_cam.init_camera(B);
 	pers_cam.init_camera(B);
 	orth_cam.adapt_camera_to_viewport(B, vp_width, vp_height);
@@ -104,93 +104,93 @@ void simple_renderer::init_cameras() {
 	cam_pos.z += 5.0f;
 }
 
-void simple_renderer::increment_theta(float i)	{ theta += i; }
-void simple_renderer::increment_psi(float i)	{ psi += i; }
-void simple_renderer::increment_pitch(float i)	{ pitch += i; }
-void simple_renderer::increment_yaw(float i)	{ yaw += i; }
+void renderer::increment_theta(float i)	{ theta += i; }
+void renderer::increment_psi(float i)	{ psi += i; }
+void renderer::increment_pitch(float i)	{ pitch += i; }
+void renderer::increment_yaw(float i)	{ yaw += i; }
 
-void simple_renderer::increment_zoom(float i) {
+void renderer::increment_zoom(float i) {
 	pers_cam.zoom(i);
 	orth_cam.zoom(0.142f*i);
 }
 
-void simple_renderer::move_camera(float vel, float dir) {
+void renderer::move_camera(float vel, float dir) {
 	float rad = (yaw + dir)*M_PI/180.0;
 	cam_pos.x -= sin(rad)*vel;
 	cam_pos.z -= cos(rad)*vel;
 }
 
-void simple_renderer::tilt_camera_up(float vel, float dir) {
+void renderer::tilt_camera_up(float vel, float dir) {
 	float rad = (pitch + dir)*M_PI/180.0;
 	cam_pos.y += sin(rad)*vel;
 }
 
-void simple_renderer::camera_forwards(float vel) {
+void renderer::camera_forwards(float vel) {
 	if (pitch != 90.0f and pitch != -90.0f) {
 		move_camera(vel, 0.0f);
 	}
 	tilt_camera_up(vel, 0.0f);
 }
 
-void simple_renderer::camera_backwards(float vel) {
+void renderer::camera_backwards(float vel) {
 	if (pitch != 90.0f and pitch != -90.0f) {
 		move_camera(vel, 180.0f);
 	}
 	tilt_camera_up(vel, 180.0f);
 }
 
-void simple_renderer::camera_sideways_left(float vel) {
+void renderer::camera_sideways_left(float vel) {
 	move_camera(vel, 90.0);
 }
 
-void simple_renderer::camera_sideways_right(float vel) {
+void renderer::camera_sideways_right(float vel) {
 	move_camera(vel, 270.0);
 }
 
-void simple_renderer::switch_to_perspective()	{ use_perspective = true; use_orthogonal = false; }
-void simple_renderer::switch_to_orthogonal()	{ use_perspective = false; use_orthogonal = true; }
+void renderer::switch_to_perspective()	{ use_perspective = true; use_orthogonal = false; }
+void renderer::switch_to_orthogonal()	{ use_perspective = false; use_orthogonal = true; }
 
-void simple_renderer::switch_to_inspection()	{ inspect = true; fly = false; }
-void simple_renderer::switch_to_flight()		{ inspect = false; fly = true; }
+void renderer::switch_to_inspection()	{ inspect = true; fly = false; }
+void renderer::switch_to_flight()		{ inspect = false; fly = true; }
 
 // GETTERS
 
-perspective& simple_renderer::get_perspective_camera() {
+perspective& renderer::get_perspective_camera() {
 	return pers_cam;
 }
 
-orthogonal& simple_renderer::get_orthogonal_camera() {
+orthogonal& renderer::get_orthogonal_camera() {
 	return orth_cam;
 }
 
-const vec3& simple_renderer::get_viewer_pos() const {
+const vec3& renderer::get_viewer_pos() const {
 	return cam_pos;
 }
 
-const box& simple_renderer::get_box() const {
+const box& renderer::get_box() const {
 	return B;
 }
 
-int simple_renderer::window_width() const {
+int renderer::window_width() const {
 	return vp_width;
 }
-int simple_renderer::window_height() const {
+int renderer::window_height() const {
 	return vp_height;
 }
 
-bool simple_renderer::is_flying() const {
+bool renderer::is_flying() const {
 	return fly;
 }
-bool simple_renderer::is_inspecting() const {
+bool renderer::is_inspecting() const {
 	return inspect;
 }
 
-float simple_renderer::get_yaw() const	{ return yaw; }
-float simple_renderer::get_pitch() const{ return pitch; }
+float renderer::get_yaw() const	{ return yaw; }
+float renderer::get_pitch() const{ return pitch; }
 
 // OpenGL
 
-void simple_renderer::apply_view_mode() const {
+void renderer::apply_view_mode() const {
 	if (use_perspective) {
 		gluPerspective(
 			pers_cam.get_FOV(), pers_cam.getRAw(),
@@ -212,7 +212,7 @@ void simple_renderer::apply_view_mode() const {
 	}
 }
 
-void simple_renderer::apply_camera() const {
+void renderer::apply_camera() const {
 	if (inspect) {
 		glTranslatef(0.0f, 0.0f, -diag_length);
 		glRotatef(theta, 1.0f, 0.0f, 0.0f);
@@ -232,7 +232,7 @@ void simple_renderer::apply_camera() const {
 	}
 }
 
-void simple_renderer::render_models() const {
+void renderer::render_models() const {
 	for (rendered_model *m : ms) {
 		m->render();
 	}

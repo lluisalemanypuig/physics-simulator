@@ -9,8 +9,7 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-SOURCES += main.cpp \
-    simple_renderer.cpp
+SOURCES += main.cpp
 
 # base (model, obj reader, ...)
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base/release/ -lbase
@@ -50,6 +49,3 @@ unix {
 		LIBS += -lGL
 	}
 }
-
-HEADERS += \
-    simple_renderer.hpp

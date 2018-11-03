@@ -20,7 +20,7 @@ typedef physim::math::vec3 vec3;
  * This class does not contain the definition of
  * the functions GLUT needs.
  */
-class simple_renderer {
+class renderer {
 	private:
 		/**
 		 * @brief Make the bounding box of the model @e m.
@@ -83,9 +83,9 @@ class simple_renderer {
 
 	public:
 		/// Constructor with window width and height.
-		simple_renderer(int w = 640, int h = 480);
+		renderer(int w = 640, int h = 480);
 		/// Destructor.
-		~simple_renderer();
+		~renderer();
 
 		// MODIFIERS
 

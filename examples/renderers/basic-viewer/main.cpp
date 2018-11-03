@@ -9,7 +9,7 @@ using namespace std;
 #include <base/obj_reader.hpp>
 
 // custom includes
-#include "simple_renderer.hpp"
+#include <base/renderer.hpp>
 
 typedef pair<int,int> point;
 
@@ -17,7 +17,7 @@ typedef pair<int,int> point;
 // global variables
 // ------------------
 
-simple_renderer SR;
+renderer SR;
 
 int pressed_button;
 point last_mouse;
@@ -35,6 +35,9 @@ int window_id;
 // -----------------------
 // Global helper functions
 // -----------------------
+
+template<typename T>
+static inline void UNUSED(const T& x) { (void)x; }
 
 static inline
 bool inside_window(int x, int y) {
@@ -145,6 +148,9 @@ void reshape(int w, int h) {
 // -------------
 
 void mouse_click_event(int button, int state, int x, int y) {
+	UNUSED(x);
+	UNUSED(y);
+
 	if (SR.is_flying()) {
 		cout << "Flying..." << endl;
 		if (button == GLUT_LEFT_BUTTON and state == 0) {
@@ -201,10 +207,14 @@ void mouse_drag_event(int x, int y) {
 // ----------------
 
 void special_keys(int key, int x, int y) {
-
+	UNUSED(key);
+	UNUSED(x);
+	UNUSED(y);
 }
 
 void keyboard_event(unsigned char c, int x, int y) {
+	UNUSED(x);
+	UNUSED(y);
 
 	if (c == ESC) {
 		glutDestroyWindow(window_id);
