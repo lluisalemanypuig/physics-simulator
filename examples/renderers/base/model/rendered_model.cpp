@@ -1,8 +1,7 @@
-#include "rendered_mesh.hpp"
+#include <base/model/rendered_model.hpp>
 
 // OpenGL includes
-#include <GL/glu.h>
-#include <GL/gl.h>
+#include <base/include_gl.hpp>
 
 // C++ includes
 #include <iostream>
@@ -12,38 +11,38 @@ using namespace std;
 
 // PUBLIC
 
-rendered_mesh::rendered_mesh() : mesh() {
+rendered_model::rendered_model() : model() {
 }
 
-rendered_mesh::~rendered_mesh() {
+rendered_model::~rendered_model() {
 }
 
 // SETTERS
 
-void rendered_mesh::set_material_ids(const vector<string>& material_ids) {
+void rendered_model::set_material_ids(const vector<string>& material_ids) {
 	mat_ids = material_ids;
 }
 
-void rendered_mesh::set_materials(const vector<material>& mats) {
+void rendered_model::set_materials(const vector<material>& mats) {
 	materials = mats;
 }
 
-void rendered_mesh::set_texture_coords(const vector<glm::vec2>& texts) {
+void rendered_model::set_texture_coords(const vector<vec2>& texts) {
 	texture_coords = texts;
 }
 
-void rendered_mesh::set_texture_idxs(const vector<int>& text_idxs) {
+void rendered_model::set_texture_idxs(const vector<int>& text_idxs) {
 	texture_idxs = text_idxs;
 }
 
-void rendered_mesh::set_textures_indices(const vector<unsigned int>& text_idxs) {
+void rendered_model::set_textures_indices(const vector<unsigned int>& text_idxs) {
 	textures_indexes = text_idxs;
 }
 
 // GETTERS
 
-mesh_state rendered_mesh::state() const {
-	mesh_state s = mesh::state();
+mesh_state rendered_model::state() const {
+	mesh_state s = model::state();
 	if (s != mesh_state::correct) {
 		return s;
 	}
@@ -79,8 +78,8 @@ mesh_state rendered_mesh::state() const {
 
 // MODIFIERS
 
-void rendered_mesh::clear() {
-	mesh::clear();
+void rendered_model::clear() {
+	model::clear();
 
 	if (textures_indexes.size() > 0) {
 		vector<unsigned int>::iterator it;
@@ -98,8 +97,8 @@ void rendered_mesh::clear() {
 
 // OTHERS
 
-void rendered_mesh::display_mesh_info() {
-	mesh::display_mesh_info();
+void rendered_model::display_mesh_info() {
+	model::display_mesh_info();
 	cout << "    # Materials= " << materials.size() << endl;
 	cout << "    # Texture coordinates= " << texture_coords.size() << endl;
 	cout << "    # Textures= " << textures_indexes.size() << endl;
@@ -110,20 +109,19 @@ void rendered_mesh::display_mesh_info() {
 		cout << "        Ns " << materials[i].Ns;
 		cout << endl;
 		cout << "        Ka";
-		for (int j = 0; j < 3; ++j) {
+		for (int j = 0; j < 4; ++j) {
 			cout << " " << materials[i].Ka[j];
 		}
 		cout << endl;
 		cout << "        Kd";
-		for (int j = 0; j < 3; ++j) {
+		for (int j = 0; j < 4; ++j) {
 			cout << " " << materials[i].Kd[j];
 		}
 		cout << endl;
 		cout << "        Ks";
-		for (int j = 0; j < 3; ++j) {
+		for (int j = 0; j < 4; ++j) {
 			cout << " " << materials[i].Ks[j];
 		}
-		cout << endl;
 		cout << "        Ni " << materials[i].Ni << endl;
 		cout << "        illum " << materials[i].illum << endl;
 		cout << "        map_Kd " << materials[i].textureID << endl;
@@ -131,13 +129,13 @@ void rendered_mesh::display_mesh_info() {
 	}
 }
 
-void rendered_mesh::slow_render() const {
+void rendered_model::slow_render() const {
 	for (size_t t = 0; t < triangles.size(); t += 3) {
 		// set the material of the face
 		bool textenable = false;
 		// find the material color of the face
 		int M = -1;
-		for (int i = 0; i < materials.size(); ++i) {
+		for (size_t i = 0; i < materials.size(); ++i) {
 			if (materials[i].ID == mat_ids[t/3]) {
 				M = i;
 			}
@@ -160,18 +158,18 @@ void rendered_mesh::slow_render() const {
 		}
 
 		glBegin(GL_TRIANGLES);
-		for (int i = t; i < t + 3; ++i) {
+		for (size_t i = t; i < t + 3; ++i) {
 			if (textenable) {
-				const glm::vec2& uv = texture_coords[ texture_idxs[i] ];
+				const vec2& uv = texture_coords[ texture_idxs[i] ];
 				glTexCoord2f(uv.x, 1.0 - uv.y);
 			}
 
 			int vrtx_idx = triangles[i];
 
-			const glm::vec3& n = normals[ normal_idxs[i] ];
+			const vec3& n = normals[ normal_idxs[i] ];
 			glNormal3f(n.x, n.y, n.z);
 
-			const glm::vec3& v = vertices[vrtx_idx];
+			const vec3& v = vertices[vrtx_idx];
 			glVertex3f(v.x, v.y, v.z);
 		}
 		glEnd();

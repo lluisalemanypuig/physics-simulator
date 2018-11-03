@@ -1,4 +1,4 @@
-#include "rendered_geometry.hpp"
+#include <base/rgeom/rendered_geometry.hpp>
 
 rtriangle::rtriangle() : rgeom() {
 	t = rendered_geometry_type::triangle;

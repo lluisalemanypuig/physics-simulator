@@ -1,4 +1,4 @@
-#include "obj_reader.hpp"
+#include <base/obj_reader.hpp>
 
 // C includes
 #include <assert.h>
@@ -79,7 +79,7 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 
 	string material_name;
 	bool valid_material = false;
-	glm::vec3 amb, dif, spec;
+	vec3 amb, dif, spec;
 	float Ns, Ni, d;
 	int illum;
 	int textID = -1;
@@ -110,13 +110,13 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 			sscanf(mat_lines[i].c_str(), "Ns %f", &Ns);
 		}
 		else if (sub2 == "Ka") {
-			sscanf(mat_lines[i].c_str(), "Ka %f %f %f", &amb[0], &amb[1], &amb[2]);
+			sscanf(mat_lines[i].c_str(), "Ka %f %f %f", &amb.x, &amb.y, &amb.z);
 		}
 		else if (sub2 == "Kd") {
-			sscanf(mat_lines[i].c_str(), "Kd %f %f %f", &dif[0], &dif[1], &dif[2]);
+			sscanf(mat_lines[i].c_str(), "Kd %f %f %f", &dif.x, &dif.y, &dif.z);
 		}
 		else if (sub2 == "Ks") {
-			sscanf(mat_lines[i].c_str(), "Ks %f %f %f", &spec[0], &spec[1], &spec[2]);
+			sscanf(mat_lines[i].c_str(), "Ks %f %f %f", &spec.x, &spec.y, &spec.z);
 		}
 		else if (sub2 == "Ki") {
 			sscanf(mat_lines[i].c_str(), "Ni %f", &Ni);
@@ -176,17 +176,17 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 			if (file_lines[i][1] == ' ') {
 				// vertex coordinate
 				sscanf(file_lines[i].c_str(), "v %f %f %f", &x, &y, &z);
-				vertices.push_back(glm::vec3(x, y, z));
+				vertices.push_back(vec3(x, y, z));
 			}
 			else if (file_lines[i][1] == 'n') {
 				// vertex normal vector
 				sscanf(file_lines[i].c_str(), "vn %f %f %f", &x, &y, &z);
-				normals.push_back(glm::normalize(glm::vec3(x, y, z)));
+				normals.push_back(physim::math::normalise(vec3(x, y, z)));
 			}
 			else if (file_lines[i][1] == 't') {
 				// vertex texture coordinate
 				sscanf(file_lines[i].c_str(), "vt %f %f", &u, &v);
-				textures_coords.push_back(glm::vec2(u, v));
+				textures_coords.push_back(vec2(u, v));
 			}
 		}
 		else if (file_lines[i][0] == 'u' and file_lines[i][1] == 's' and file_lines[i][2] == 'e') {
@@ -300,7 +300,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 	}
 }
 
-bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mesh& M) {
+bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_model& M) {
 	directory = dir;
 	filename = fname;
 

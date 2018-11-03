@@ -1,4 +1,7 @@
-#include "mesh.hpp"
+#include <base/model/model.hpp>
+
+// C includes
+#include <assert.h>
 
 // C++ includes
 #include <iostream>
@@ -8,56 +11,56 @@ using namespace std;
 
 // PROTECTED
 
-glm::vec3 mesh::triangle_normal(int t) const {
+vec3 model::triangle_normal(int t) const {
 	assert(t != -1);
 
 	int T = 3*t;
-	const glm::vec3& v1 = vertices[triangles[T    ]];
-	const glm::vec3& v2 = vertices[triangles[T + 1]];
-	const glm::vec3& v3 = vertices[triangles[T + 2]];
+	const vec3& v1 = vertices[triangles[T    ]];
+	const vec3& v2 = vertices[triangles[T + 1]];
+	const vec3& v3 = vertices[triangles[T + 2]];
 
-	glm::vec3 u = v2 - v1;
-	glm::vec3 v = v3 - v1;
-	glm::vec3 w = glm::normalize(glm::cross(u,v));
+	vec3 u = v2 - v1;
+	vec3 v = v3 - v1;
+	vec3 w = physim::math::normalise(physim::math::cross(u,v));
 
 	return w;
 }
 
 // PUBLIC
 
-mesh::mesh() {
+model::model() {
 	mesh_name = "anonymous";
 }
 
-mesh::~mesh() {
+model::~model() {
 	clear();
 }
 
 // SETTERS
 
-void mesh::set_name(const string& name) {
+void model::set_name(const string& name) {
 	mesh_name = name;
 }
 
-void mesh::set_vertices(const vector<glm::vec3>& verts) {
+void model::set_vertices(const vector<vec3>& verts) {
 	vertices = verts;
 }
 
-void mesh::set_normals(const vector<glm::vec3>& nrmls) {
+void model::set_normals(const vector<vec3>& nrmls) {
 	normals = nrmls;
 }
 
-void mesh::set_triangles(const vector<int>& tris) {
+void model::set_triangles(const vector<int>& tris) {
 	triangles = tris;
 }
 
-void mesh::set_normal_idxs(const vector<int>& nrmls_idxs) {
+void model::set_normal_idxs(const vector<int>& nrmls_idxs) {
 	normal_idxs = nrmls_idxs;
 }
 
 // MODIFIERS
 
-mesh_state mesh::state() const {
+mesh_state model::state() const {
 	if (vertices.size() == 0) {
 		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    Vertices not found in mesh '" << mesh_name << "'" << endl;
@@ -90,12 +93,16 @@ mesh_state mesh::state() const {
 	return mesh_state::correct;
 }
 
-void mesh::make_normals_flat() {
+const std::vector<vec3>& model::get_vertices() const {
+	return vertices;
+}
+
+void model::make_normals_flat() {
 	normals.clear();
 	normal_idxs.clear();
 
 	for (size_t t = 0; t < triangles.size(); t += 3) {
-		glm::vec3 n = triangle_normal(t/3);
+		vec3 n = triangle_normal(t/3);
 
 		int idx = normals.size();
 		normals.push_back(n);
@@ -107,7 +114,7 @@ void mesh::make_normals_flat() {
 	}
 }
 
-void mesh::make_normals_smooth() {
+void model::make_normals_smooth() {
 	// compute to what faces each
 	// vertex is adjacent to
 	vector<vector<int> > tris_per_vertex(vertices.size());
@@ -126,13 +133,13 @@ void mesh::make_normals_smooth() {
 
 	// Firstly, compute the smoothed normals for each vertex,
 	// and store them in a separate vector.
-	vector<glm::vec3> smoothed_normals(vertices.size());
+	vector<vec3> smoothed_normals(vertices.size());
 
 	// compute normals for the vertices that make
 	// up the faces marked with 'smooth = true'
 	for (size_t v = 0; v < vertices.size(); ++v) {
-		smoothed_normals[v] = glm::vec3(0.0f,0.0f,0.0f);
-		glm::vec3& normal = smoothed_normals[v];
+		smoothed_normals[v] = vec3(0.0f,0.0f,0.0f);
+		vec3& normal = smoothed_normals[v];
 
 		// add to 'normal' the normal of those triangles
 		// that share vertex V.
@@ -149,7 +156,7 @@ void mesh::make_normals_smooth() {
 		// average the normal
 		normal /= tris_per_vertex[v].size();
 		// normalise the normal
-		normal = glm::normalize(normal);
+		normal = physim::math::normalise(normal);
 
 		// since 'normal' is a reference to a value of
 		// 'smoothed_normals' we do not need to
@@ -165,15 +172,15 @@ void mesh::make_normals_smooth() {
 	normals = smoothed_normals;
 }
 
-void mesh::scale_to_unit() {
-	glm::vec3 center(0.0f, 0.0f, 0.0f);
-	glm::vec3 m(1e10, 1e10, 1e10);
-	glm::vec3 M(-1e10, -1e10, -1e10);
+void model::scale_to_unit() {
+	vec3 center(0.0f, 0.0f, 0.0f);
+	vec3 m(1e10, 1e10, 1e10);
+	vec3 M(-1e10, -1e10, -1e10);
 
 	for (size_t i = 0; i < vertices.size(); ++i) {
 		center += vertices[i];
-		m = glm::min(m, vertices[i]);
-		M = glm::max(M, vertices[i]);
+		m = physim::math::min(m, vertices[i]);
+		M = physim::math::max(M, vertices[i]);
 	}
 	center /= vertices.size();
 
@@ -184,7 +191,7 @@ void mesh::scale_to_unit() {
 	}
 }
 
-void mesh::clear() {
+void model::clear() {
 	vertices.clear();
 	triangles.clear();
 	normals.clear();
@@ -193,7 +200,7 @@ void mesh::clear() {
 
 // OTHERS
 
-void mesh::display_mesh_info() {
+void model::display_mesh_info() {
 	cout << "Mesh '" << mesh_name << "' information: " << endl;
 	cout << "    # Vertices= " << vertices.size() << endl;
 	cout << "    # Triangles= " << triangles.size() << endl;

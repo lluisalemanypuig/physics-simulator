@@ -3,9 +3,11 @@
 // C++ includes
 #include <string>
 
-// glm includes
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
+// physim includes
+#include <physim/math/vec3.hpp>
+#include <physim/math/vec4.hpp>
+typedef physim::math::vec3 vec3;
+typedef physim::math::vec4 vec4;
 
 // constant for texture indices
 #if !defined (TEXTURE_START)
@@ -31,11 +33,11 @@ struct material {
 	/// Transparency.
 	float d;
 	/// Ambient colour, with transparency.
-	glm::vec4 Ka;
+	float Ka[4];
 	/// Diffuse colour, with transparency.
-	glm::vec4 Kd;
+	float Kd[4];
 	/// Specular colour, with transparency.
-	glm::vec4 Ks;
+	float Ks[4];
 
 	/**
 	 * @brief Constructor.
@@ -51,9 +53,9 @@ struct material {
 	 */
 	material
 	(
-		const glm::vec3& amb,
-		const glm::vec3& dif,
-		const glm::vec3& spec,
+		const vec3& amb,
+		const vec3& dif,
+		const vec3& spec,
 		float ns, float ni,float D,
 		int ill, int textID, const std::string& id
 	);

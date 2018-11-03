@@ -4,12 +4,15 @@
 #include <vector>
 #include <string>
 
-// glm includes
-#include <glm/glm.hpp>
+// physim includes
+#include <physim/math/vec2.hpp>
+#include <physim/math/vec3.hpp>
+typedef physim::math::vec2 vec2;
+typedef physim::math::vec3 vec3;
 
 // Custom includes
-#include "mesh/rendered_mesh.hpp"
-#include "mesh/mesh_utils.hpp"
+#include "base/model/rendered_model.hpp"
+#include "base/model/model_utils.hpp"
 
 /**
  * @brief Wavefront format file reader class.
@@ -48,9 +51,9 @@ class OBJ_reader {
 
 		// mesh data
 		/// Vertices of the mesh.
-		std::vector<glm::vec3> vertices;
+		std::vector<vec3> vertices;
 		/// Normals per vertex.
-		std::vector<glm::vec3> normals;
+		std::vector<vec3> normals;
 		/// Vertex indices.
 		std::vector<int> triangles;
 		/// Normal indices.
@@ -62,7 +65,7 @@ class OBJ_reader {
 		/// Set of materials found in the file.
 		std::vector<material> materials;
 		/// Texture coordinates.
-		std::vector<glm::vec2> textures_coords;
+		std::vector<vec2> textures_coords;
 		/// Texture indices per triangle.
 		std::vector<int> texture_idxs;
 		/**
@@ -110,7 +113,7 @@ class OBJ_reader {
 		 * @param[out] M The mesh constructed using the data in the file.
 		 * @return Returns true on success.
 		 */
-		bool load_object(const std::string& dir, const std::string& name, rendered_mesh& M);
+		bool load_object(const std::string& dir, const std::string& name, rendered_model& M);
 
 };
 

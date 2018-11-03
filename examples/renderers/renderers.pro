@@ -1,9 +1,9 @@
 TEMPLATE = subdirs
 
-SUBDIRS +=	\
-    render \
-	opengl-qt \
-    particles
+SUBDIRS +=			\
+	base			\
+	basic-viewer	\
+	particles
 
 DISTFILES +=					\
 	models/sphere_fsmooth.obj	\
