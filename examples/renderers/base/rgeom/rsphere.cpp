@@ -25,3 +25,6 @@ void rsphere::draw_geometry() const {
 	cout << "    using glBegin(), glEnd()" << endl;
 }
 
+void rsphere::make_box(box& b) const {
+	b.set_min_max(c - vec3(r,r,r), c + vec3(r,r,r));
+}

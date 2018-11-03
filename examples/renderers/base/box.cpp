@@ -6,8 +6,8 @@
 // C++ includes
 #include <cmath>
 
-// Custom includes
-#include "include_gl.hpp"
+// base includes
+#include <base/include_gl.hpp>
 
 // PRIVATE
 
@@ -53,12 +53,8 @@ void box::set_min_max(const vec3& m, const vec3& M) {
 }
 
 void box::enlarge_box(const vec3& v) {
-	min.x = std::min(min.x, v.x);
-	min.y = std::min(min.y, v.y);
-	min.z = std::min(min.z, v.z);
-	max.x = std::max(max.x, v.x);
-	max.y = std::max(max.y, v.y);
-	max.z = std::max(max.z, v.z);
+	min = physim::math::min(min, v);
+	max = physim::math::max(max, v);
 	update_vi();
 }
 

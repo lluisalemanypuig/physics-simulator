@@ -5,6 +5,7 @@
 
 // base includes
 #include <base/model/rendered_model.hpp>
+#include <base/box.hpp>
 
 // physim includes
 #include <physim/math/vec3.hpp>
@@ -86,6 +87,9 @@ class rgeom {
 		 * object where it should be.
 		 */
 		void draw() const;
+
+		/// Makes the bounding box of this model.
+		virtual void make_box(box& b) const = 0;
 };
 
 /**
@@ -108,6 +112,7 @@ class rplane : public rgeom {
 		// OTHERS
 
 		void draw_geometry() const;
+		void make_box(box& b) const;
 };
 
 // use the three points (they should be
@@ -124,6 +129,7 @@ class rtriangle : public rgeom {
 		// OTHERS
 
 		void draw_geometry() const;
+		void make_box(box& b) const;
 };
 
 // use the four points (they should be
@@ -140,6 +146,7 @@ class rrectangle : public rgeom {
 		// OTHERS
 
 		void draw_geometry() const;
+		void make_box(box& b) const;
 };
 
 // use the center to translate a model
@@ -158,4 +165,5 @@ class rsphere : public rgeom {
 
 		void translate_object() const;
 		void draw_geometry() const;
+		void make_box(box& b) const;
 };

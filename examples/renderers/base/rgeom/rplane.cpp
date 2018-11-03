@@ -22,3 +22,10 @@ void rplane::draw_geometry() const {
 	glEnd();
 	glEnable(GL_LIGHTING);
 }
+
+void rplane::make_box(box& b) const {
+	b.set_min_max(p1, p1);
+	b.enlarge_box(p2);
+	b.enlarge_box(p3);
+	b.enlarge_box(p4);
+}
