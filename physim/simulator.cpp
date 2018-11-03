@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/math_private.hpp>
 
 template<class V>
 inline void remove_from_vector(size_t i, V& v) {

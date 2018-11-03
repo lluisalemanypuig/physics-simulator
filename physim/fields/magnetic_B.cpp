@@ -1,7 +1,7 @@
 #include <physim/fields/magnetic_B.hpp>
 
 // physim includes
-#include <physim/math/math.hpp>
+#include <physim/math/math_private.hpp>
 
 namespace physim {
 namespace fields {

@@ -2,7 +2,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/math_private.hpp>
 
 namespace physim {
 namespace init {

@@ -1,7 +1,7 @@
 #include <physim/geometry/triangle.hpp>
 
 // physim includes
-#include <physim/math/math.hpp>
+#include <physim/math/math_private.hpp>
 
 inline float triangle_area
 (const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)

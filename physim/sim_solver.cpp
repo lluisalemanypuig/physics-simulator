@@ -1,4 +1,3 @@
-#pragma once
 
 /* This file contains a small function that tries to
  * update a particle after a collision with geometry
@@ -19,7 +18,7 @@
 #include <physim/simulator.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/math/vec3.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/math_private.hpp>
 
 namespace physim {
 

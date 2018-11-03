@@ -146,10 +146,7 @@ inline void normalise(const vec3& f, vec3& g) {
  */
 inline vec3 normalise(const vec3& f) {
 	vec3 out;
-	float n = norm(f);
-	out.x = f.x*(1.0f/n);
-	out.y = f.y*(1.0f/n);
-	out.z = f.z*(1.0f/n);
+	normalise(f, out);
 	return out;
 }
 

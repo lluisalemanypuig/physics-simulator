@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 // physim includes
-#include <physim/math/math.hpp>
+#include <physim/math/math_private.hpp>
 
 namespace physim {
 using namespace particles;

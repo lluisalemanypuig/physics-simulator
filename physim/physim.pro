@@ -33,7 +33,6 @@ HEADERS +=							\
     fields/gravitational.hpp		\
 	fields/gravitational_planet.hpp	\
 	math/vec3.hpp					\
-	math/math.hpp					\
 	math/math_ops.hpp				\
 	math/math_ops_add.hpp			\
 	math/math_ops_sub.hpp			\
@@ -43,7 +42,11 @@ HEADERS +=							\
 	math/math_misc.hpp				\
 	math/math_geometry.hpp			\
 	meshes/mesh.hpp					\
-    meshes/mesh1d.hpp
+    meshes/mesh1d.hpp \
+    math/math_private.hpp \
+    math/vec2.hpp \
+    math/vec4.hpp \
+    math/math.hpp
 
 SOURCES +=							\
 	simulator.cpp					\
@@ -70,5 +73,3 @@ SOURCES +=							\
 	fields/gravitational_planet.cpp \
 	meshes/mesh.cpp					\
 	meshes/mesh1d.cpp
-
-
