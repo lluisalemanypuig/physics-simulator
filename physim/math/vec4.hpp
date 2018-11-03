@@ -3,6 +3,9 @@
 // C++ includes
 #include <cmath>
 
+// physim includes
+#include <physim/math/math_utils.hpp>
+
 namespace physim {
 namespace math {
 
@@ -35,33 +38,109 @@ typedef struct vec4 {
 	vec4(const vec4& v)							{ x = v.x; y = v.y; z = v.z; w = v.w; }
 	/// Assignation operator.
 	vec4& operator= (const vec4& v)				{ x = v.x; y = v.y; z = v.z; w = v.w;									return *this; }
-	/// Scalar-vector addition.
+	/// Vector-scalar addition.
 	inline vec4 operator+ (float s) const		{ vec4 r;	r.x = x + s; r.y = y + s; r.z = z + s; r.w = w + s;			return r; }
 	/// Vector-vector addition.
 	inline vec4 operator+ (const vec4& v) const	{ vec4 r;	r.x = x + v.x; r.y = y + v.y; r.z = z + v.z; r.w = w + v.w;	return r; }
-	/// Scalar-vector addition.
+	/// Vector-scalar addition.
 	inline vec4& operator+= (float s)			{			x += s; y += s; z += s; w += s;								return *this; }
 	/// Vector-vector addition.
 	inline vec4& operator+= (const vec4& v)		{			x += v.x; y += v.y; z += v.z; w += v.w;						return *this; }
 	/// Unary '-' operator. Inverts direction of vector.
 	inline vec4 operator- () const				{ vec4 r;	r.x = -x; r.y = -y; r.z = -z; r.w = -w;						return r; }
-	/// Scalar-vector substraction.
+	/// Vector-scalar substraction.
 	inline vec4 operator- (float s) const		{ vec4 r;	r.x = x - s; r.y = y - s; r.z = z - s; r.w = w - s;			return r; }
 	/// Vector-vector substraction.
-	inline vec4 operator- (const vec4& v) const	{ vec4 r;	r.x = x - v.x; r.y = y - v.y; r.z = z - v.z; w.z = w - v.w;	return r; }
-	/// Scalar-vector substraction.
+	inline vec4 operator- (const vec4& v) const	{ vec4 r;	r.x = x - v.x; r.y = y - v.y; r.z = z - v.z; r.w = w - v.w;	return r; }
+	/// Vector-scalar substraction.
 	inline vec4& operator-= (float s)			{			x -= s; y -= s; z -= s; w -= s;								return *this; }
 	/// Vector-vector substraction.
 	inline vec4& operator-= (const vec4& v)		{			x -= v.x; y -= v.y; z -= v.z; w -= v.w;						return *this; }
-	/// Scalar-vector multiplication.
+	/// Vector-scalar multiplication.
 	inline vec4 operator* (float k) const		{ vec4 r;	r.x = x*k; r.y = y*k; r.z = z*k; r.w = w*k;					return r; }
 	/// Vector-vector multiplication.
 	inline vec4 operator* (const vec4& v) const	{ vec4 r;	r.x = x*v.x; r.y = y*v.y; r.z = z*v.z; r.w = w*v.w;			return r; }
-	/// Scalar-vector multiplication.
+	/// Vector-scalar multiplication.
 	inline vec4& operator*= (float s)			{			x *= s; y *= s; z *= s; w *= s;								return *this; }
 	/// Vector-vector multiplication.
 	inline vec4& operator*= (const vec4& v)		{			x *= v.x; y *= v.y; z *= v.z; w *= v.w;						return *this; }
+	/// Vector-scalar division.
+	inline vec4 operator/ (float k) const		{ vec4 r;	r.x = x*(1.0f/k); r.y = y*(1.0f/k); r.z = z*(1.0f/k); r.w = w*(1.0f/k);			return r; }
+	/// Vector-vector division.
+	inline vec4 operator/ (const vec4& v) const	{ vec4 r;	r.x = x*(1.0f/v.x); r.y = y*(1.0f/v.y); r.z = z*(1.0f/v.z); r.w = w*(1.0f/v.w);	return r; }
+	/// Vector-scalar division.
+	inline vec4& operator/= (float s)			{			x *= (1.0f/s); y *= (1.0f/s); z *= (1.0f/s); w *= (1.0f/s);						return *this; }
+	/// Vector-vector division.
+	inline vec4& operator/= (const vec4& v)		{			x *= (1.0f/v.x); y *= (1.0f/v.y); z *= (1.0f/v.z); w *= (1.0f/v.w);				return *this; }
 } vec4;
+
+/* MISCELLANEA */
+
+/**
+ * @brief Computes the minimum of two vectors.
+ *
+ * The first component of the result is the minimum value of the
+ * first components of the inputs, the second component of the result
+ * is the minimum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @param[out] m Minimum of @e a and @e b.
+ */
+inline void min(const vec4& a, const vec4& b, vec4& m) {
+	m.x = min(a.x, b.x);
+	m.y = min(a.y, b.y);
+	m.z = min(a.z, b.z);
+	m.w = min(a.w, b.w);
+}
+
+/**
+ * @brief Computes the minimum of two vectors.
+ *
+ * The first component of the result is the minimum value of the
+ * first components of the inputs, the second component of the result
+ * is the minimum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @returns Returns the minimum of @e a and @e b.
+ */
+inline vec4 min(const vec4& a, const vec4& b) {
+	vec4 m;
+	min(a, b, m);
+	return m;
+}
+
+/**
+ * @brief Computes the maximum of two vectors.
+ *
+ * The first component of the result is the maximum value of the
+ * first components of the inputs, the second component of the result
+ * is the maximum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @param[out] M Maximum of @e a and @e b.
+ */
+inline void max(const vec4& a, const vec4& b, vec4& M) {
+	M.x = max(a.x, b.x);
+	M.y = max(a.y, b.y);
+	M.z = max(a.z, b.z);
+	M.w = max(a.w, b.w);
+}
+
+/**
+ * @brief Computes the maximum of two vectors.
+ *
+ * The first component of the result is the maximum value of the
+ * first components of the inputs, the second component of the result
+ * is the maximum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @returns Returns the maximum of @e a and @e b.
+ */
+inline vec4 max(const vec4& a, const vec4& b) {
+	vec4 M;
+	max(a, b, M);
+	return M;
+}
 
 /* GEOMETRY */
 

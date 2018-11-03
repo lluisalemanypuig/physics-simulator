@@ -32,7 +32,11 @@ HEADERS +=							\
     fields/electric.hpp				\
     fields/gravitational.hpp		\
 	fields/gravitational_planet.hpp	\
+	math/math.hpp					\
+	math/math_utils.hpp				\
+	math/vec2.hpp					\
 	math/vec3.hpp					\
+	math/vec4.hpp					\
 	math/math_ops.hpp				\
 	math/math_ops_add.hpp			\
 	math/math_ops_sub.hpp			\
@@ -41,12 +45,9 @@ HEADERS +=							\
 	math/math_ops_mixed.hpp			\
 	math/math_misc.hpp				\
 	math/math_geometry.hpp			\
+	math/math_private.hpp			\
 	meshes/mesh.hpp					\
-    meshes/mesh1d.hpp \
-    math/math_private.hpp \
-    math/vec2.hpp \
-    math/vec4.hpp \
-    math/math.hpp
+	meshes/mesh1d.hpp
 
 SOURCES +=							\
 	simulator.cpp					\

@@ -3,6 +3,9 @@
 // C++ includes
 #include <cmath>
 
+// physim includes
+#include <physim/math/math_utils.hpp>
+
 namespace physim {
 namespace math {
 
@@ -32,33 +35,105 @@ typedef struct vec3 {
 	vec3(const vec3& v)							{ x = v.x; y = v.y; z = v.z; }
 	/// Assignation operator.
 	vec3& operator= (const vec3& v)				{ x = v.x; y = v.y; z = v.z;	return *this; }
-	/// Scalar-vector addition.
+	/// Vector-scalar addition.
 	inline vec3 operator+ (float s) const		{ vec3 r;	r.x = x + s; r.y = y + s; r.z = z + s;			return r; }
 	/// Vector-vector addition.
 	inline vec3 operator+ (const vec3& v) const	{ vec3 r;	r.x = x + v.x; r.y = y + v.y; r.z = z + v.z;	return r; }
-	/// Scalar-vector addition.
+	/// Vector-scalar addition.
 	inline vec3& operator+= (float s)			{			x += s; y += s; z += s;							return *this; }
 	/// Vector-vector addition.
 	inline vec3& operator+= (const vec3& v)		{			x += v.x; y += v.y; z += v.z;					return *this; }
 	/// Unary '-' operator. Inverts direction of vector.
 	inline vec3 operator- () const				{ vec3 r;	r.x = -x; r.y = -y; r.z = -z;					return r; }
-	/// Scalar-vector substraction.
+	/// Vector-scalar substraction.
 	inline vec3 operator- (float s) const		{ vec3 r;	r.x = x - s; r.y = y - s; r.z = z - s;			return r; }
 	/// Vector-vector substraction.
 	inline vec3 operator- (const vec3& v) const	{ vec3 r;	r.x = x - v.x; r.y = y - v.y; r.z = z - v.z;	return r; }
-	/// Scalar-vector substraction.
+	/// Vector-scalar substraction.
 	inline vec3& operator-= (float s)			{			x -= s; y -= s; z -= s;							return *this; }
 	/// Vector-vector substraction.
 	inline vec3& operator-= (const vec3& v)		{			x -= v.x; y -= v.y; z -= v.z;					return *this; }
-	/// Scalar-vector multiplication.
+	/// Vector-scalar multiplication.
 	inline vec3 operator* (float k) const		{ vec3 r;	r.x = x*k; r.y = y*k; r.z = z*k;				return r; }
 	/// Vector-vector multiplication.
 	inline vec3 operator* (const vec3& v) const	{ vec3 r;	r.x = x*v.x; r.y = y*v.y; r.z = z*v.z;			return r; }
-	/// Scalar-vector multiplication.
+	/// Vector-scalar multiplication.
 	inline vec3& operator*= (float s)			{			x *= s; y *= s; z *= s;							return *this; }
 	/// Vector-vector multiplication.
 	inline vec3& operator*= (const vec3& v)		{			x *= v.x; y *= v.y; z *= v.z;					return *this; }
+	/// Vector-scalar division.
+	inline vec3 operator/ (float k) const		{ vec3 r;	r.x = x*(1.0f/k); r.y = y*(1.0f/k); r.z = z*(1.0f/k);		return r; }
+	/// Vector-vector division.
+	inline vec3 operator/ (const vec3& v) const	{ vec3 r;	r.x = x*(1.0f/v.x); r.y = y*(1.0f/v.y); r.z = z*(1.0f/v.z);	return r; }
+	/// Vector-scalar division.
+	inline vec3& operator/= (float s)			{			x *= (1.0f/s); y *= (1.0f/s); z *= (1.0f/s);				return *this; }
+	/// Vector-vector division.
+	inline vec3& operator/= (const vec3& v)		{			x *= (1.0f/v.x); y *= (1.0f/v.y); z *= (1.0f/v.z);			return *this; }
 } vec3;
+
+/**
+ * @brief Computes the minimum of two vectors.
+ *
+ * The first component of the result is the minimum value of the
+ * first components of the inputs, the second component of the result
+ * is the minimum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @param[out] m Minimum of @e a and @e b.
+ */
+inline void min(const vec3& a, const vec3& b, vec3& m) {
+	m.x = min(a.x, b.x);
+	m.y = min(a.y, b.y);
+	m.z = min(a.z, b.z);
+}
+
+/**
+ * @brief Computes the minimum of two vectors.
+ *
+ * The first component of the result is the minimum value of the
+ * first components of the inputs, the second component of the result
+ * is the minimum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @returns Returns the minimum of @e a and @e b.
+ */
+inline vec3 min(const vec3& a, const vec3& b) {
+	vec3 m;
+	min(a, b, m);
+	return m;
+}
+
+/**
+ * @brief Computes the maximum of two vectors.
+ *
+ * The first component of the result is the maximum value of the
+ * first components of the inputs, the second component of the result
+ * is the maximum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @param[out] M Maximum of @e a and @e b.
+ */
+inline void max(const vec3& a, const vec3& b, vec3& M) {
+	M.x = max(a.x, b.x);
+	M.y = max(a.y, b.y);
+	M.z = max(a.z, b.z);
+}
+
+/**
+ * @brief Computes the maximum of two vectors.
+ *
+ * The first component of the result is the maximum value of the
+ * first components of the inputs, the second component of the result
+ * is the maximum value of the second components of the inputs, ...
+ * @param[in] a Input vector.
+ * @param[in] b Input vector.
+ * @returns Returns the maximum of @e a and @e b.
+ */
+inline vec3 max(const vec3& a, const vec3& b) {
+	vec3 M;
+	max(a, b, M);
+	return M;
+}
 
 /* GEOMETRY */
 
