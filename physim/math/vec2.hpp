@@ -28,7 +28,7 @@ typedef struct vec2 {
 	/// Constructor at point (@e s, @e s).
 	vec2(float s)								{ x = y = s; }
 	/// Construct a vector with coordinates (@e _x, @e _y).
-	vec2(float _x,float _y)			{ x = _x; y = _y; }
+	vec2(float _x,float _y)						{ x = _x; y = _y; }
 	/// Copy constructor.
 	vec2(const vec2& v)							{ x = v.x; y = v.y; }
 	/// Assignation operator.
