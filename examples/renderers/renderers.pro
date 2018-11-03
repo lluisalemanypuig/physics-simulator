@@ -3,7 +3,8 @@ TEMPLATE = subdirs
 SUBDIRS +=			\
 	base			\
 	basic-viewer	\
-	particles
+	particles		\
+    spring-meshes
 
 DISTFILES +=					\
 	models/sphere_fsmooth.obj	\
