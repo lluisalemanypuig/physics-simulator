@@ -47,26 +47,9 @@ bool inside_window(int x, int y) {
 // -----------------
 
 void initGL(int argc, char *argv[]) {
-	// ------------------------ //
-	/* load models for geometry */
-	rendered_model *m;
-	OBJ_reader obj;
-
-	m = new rendered_model();
-	obj.load_object("../../renderers/models" , "sphere.obj", *m);
-	SR.add_model(m);
-
-	// --------------------------- //
-	/* initialise global variables */
-	pressed_button = 0;
-	last_mouse = point(0,0);
-	lock_mouse = false;
-
 	// initial window size
 	int iw = 640;
 	int ih = 480;
-	SR.set_window_dims(iw, ih);
-	SR.init_cameras();
 
 	// ----------------- //
 	/* initialise window */
@@ -87,6 +70,25 @@ void initGL(int argc, char *argv[]) {
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
 	float amb[] = {0.2, 0.2, 0.2, 1.0};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+
+	// ------------------------ //
+	/* load models for geometry */
+	rendered_model *m;
+	OBJ_reader obj;
+
+	m = new rendered_model();
+	obj.load_object("../../renderers/models" , "sphere.obj", *m);
+	m->compile();
+	SR.add_model(m);
+
+	// --------------------------- //
+	/* initialise global variables */
+	pressed_button = 0;
+	last_mouse = point(0,0);
+	lock_mouse = false;
+
+	SR.set_window_dims(iw, ih);
+	SR.init_cameras();
 }
 
 // ------------

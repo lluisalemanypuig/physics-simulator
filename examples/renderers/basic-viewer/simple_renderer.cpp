@@ -234,6 +234,6 @@ void simple_renderer::apply_camera() const {
 
 void simple_renderer::render_models() const {
 	for (rendered_model *m : ms) {
-		m->slow_render();
+		m->render();
 	}
 }
