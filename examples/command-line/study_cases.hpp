@@ -30,7 +30,6 @@ using namespace init;
 
 namespace study_cases {
 
-	void list_all_cases();
 	void choose_case(int argc, char *argv[]);
 
 	/* -- Floor (1) study case --
