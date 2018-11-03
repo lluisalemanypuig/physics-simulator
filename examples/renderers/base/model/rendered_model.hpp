@@ -30,6 +30,9 @@ class rendered_model : public model {
 		/// OpenGL indexes of the textures.
 		std::vector<unsigned int> textures_indexes;
 
+		/// Index of the compiled list.
+		uint list_index;
+
 	public:
 		/// Constructor.
 		rendered_model();
@@ -87,4 +90,22 @@ class rendered_model : public model {
 		 * of method @ref is_valid is 'true'.
 		 */
 		void slow_render() const;
+
+		/**
+		 * @brief Compiles this object into a list.
+		 *
+		 * Uses glNewList, glEndList to compile the object.
+		 * Between these two calls, the function @ref slow_render()
+		 * is called.
+		 * @return Returns the list index.
+		 */
+		uint compile();
+
+		/**
+		 * @brief Chooses the best way of rendering this model.
+		 *
+		 * If no list is available (@ref list_index is -1) then
+		 * @ref slow_render() is used.
+		 */
+		void render() const;
 };

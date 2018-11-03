@@ -12,6 +12,7 @@ using namespace std;
 // PUBLIC
 
 rendered_model::rendered_model() : model() {
+	list_index = 0;
 }
 
 rendered_model::~rendered_model() {
@@ -86,6 +87,10 @@ void rendered_model::clear() {
 		for (it = textures_indexes.begin(); it != textures_indexes.end(); ++it) {
 			glDeleteTextures(TEXTURE_START, &(*it));
 		}
+	}
+
+	if (list_index >= 1) {
+		glDeleteLists(list_index, 1);
 	}
 
 	mat_ids.clear();
@@ -173,5 +178,25 @@ void rendered_model::slow_render() const {
 			glVertex3f(v.x, v.y, v.z);
 		}
 		glEnd();
+	}
+}
+
+uint rendered_model::compile() {
+	list_index = glGenLists(1);
+	glNewList(list_index, GL_COMPILE);
+	slow_render();
+	glEndList();
+
+	cout << "rendered_model::compile() - index generated: " << list_index << endl;
+
+	return list_index;
+}
+
+void rendered_model::render() const {
+	if (list_index == 0) {
+		slow_render();
+	}
+	else {
+		glCallList(list_index);
 	}
 }
