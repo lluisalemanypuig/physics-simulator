@@ -78,10 +78,13 @@ class simple_renderer {
 		std::vector<rendered_model *> ms;
 
 	protected:
+		/// Returns the ratio window width / window height.
 		float get_aspect_ratio() const;
 
 	public:
+		/// Constructor with window width and height.
 		simple_renderer(int w = 640, int h = 480);
+		/// Destructor.
 		~simple_renderer();
 
 		// MODIFIERS
@@ -115,12 +118,23 @@ class simple_renderer {
 		 */
 		void init_cameras();
 
+		/// Increments angle @ref theta.
 		void increment_theta(float i);
+		/// Increments angle @ref psi.
 		void increment_psi(float i);
 
+		/// Increments the pitch of the camera.
 		void increment_pitch(float i);
+		/// Increments the yaw of the camera.
 		void increment_yaw(float i);
 
+		/**
+		 * @brief Increments the zoom of both cameras.
+		 *
+		 * In order to have the same 'zoom' for both cameras,
+		 * parameter @e i is scaled with a factor of 0.142
+		 * for the orthogonal camera.
+		 */
 		void increment_zoom(float i);
 
 		void move_camera(float vel, float dir);
@@ -161,7 +175,9 @@ class simple_renderer {
 		/// Returns whether the camera is inspecting.
 		bool is_inspecting() const;
 
+		/// Returns the yaw of the camera.
 		float get_yaw() const;
+		/// Returns the pitch of the camera.
 		float get_pitch() const;
 
 		// OpenGL

@@ -22,6 +22,7 @@ simple_renderer SR;
 int pressed_button;
 point last_mouse;
 
+bool lock_mouse;
 int window_id;
 
 // glut helpers
@@ -55,10 +56,11 @@ void initGL(int argc, char *argv[]) {
 	obj.load_object("../../renderers/models" , "sphere.obj", *m);
 	SR.add_model(m);
 
-	// ------------------------------ //
-	/* initialise global variables... */
+	// --------------------------- //
+	/* initialise global variables */
 	pressed_button = 0;
 	last_mouse = point(0,0);
+	lock_mouse = false;
 
 	// initial window size
 	int iw = 640;
@@ -141,7 +143,24 @@ void reshape(int w, int h) {
 // -------------
 
 void mouse_click_event(int button, int state, int x, int y) {
-
+	if (SR.is_flying()) {
+		cout << "Flying..." << endl;
+		if (button == GLUT_LEFT_BUTTON and state == 0) {
+			cout << "Left click... " << state << endl;
+			cout << "    Is mouse locked? " << (lock_mouse ? "Yes" : "No") << endl;
+			if (lock_mouse) {
+				cout << "    Unlock mouse" << endl;
+				lock_mouse = false;
+				glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+			}
+			else {
+				cout << "    Lock mouse" << endl;
+				lock_mouse = true;
+				glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
+				glutSetCursor(GLUT_CURSOR_NONE);
+			}
+		}
+	}
 	pressed_button = button;
 }
 
@@ -150,7 +169,7 @@ void mouse_movement(int x, int y) {
 	int dy = y - last_mouse.second;
 	last_mouse = point(x,y);
 
-	if (SR.is_flying()) {
+	if (SR.is_flying() and lock_mouse) {
 		SR.increment_yaw(-0.2f*dx);
 		SR.increment_pitch(-0.2f*dy);
 
@@ -196,17 +215,17 @@ void keyboard_event(unsigned char c, int x, int y) {
 	}
 	else if (c == 'i') {
 		SR.switch_to_inspection();
-		glutSetCursor(GLUT_CURSOR_RIGHT_ARROW);
+		lock_mouse = false;
+		glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 	}
 	else if (c == 'f') {
 		SR.switch_to_flight();
+		lock_mouse = true;
 		glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
 		glutSetCursor(GLUT_CURSOR_NONE);
 	}
 	else {
-
 		if (SR.is_flying()) {
-
 			if (c == 'w') {
 				SR.camera_forwards(0.1f);
 			}
