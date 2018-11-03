@@ -1,5 +1,8 @@
 #include "simulation_renderer.hpp"
 
+// C includes
+#include <assert.h>
+
 // Qt includes
 #include <QApplication>
 #include <QMatrix4x4>
@@ -10,7 +13,7 @@ using namespace particles;
 using namespace init;
 
 // Custom includes
-#include <render/obj_reader.hpp>
+#include <base/obj_reader.hpp>
 
 // PRIVATE
 
@@ -174,7 +177,7 @@ void SimulationRenderer::set_limit_fps(bool l) {
 	limit_fps = l;
 }
 
-void SimulationRenderer::set_sphere(rendered_mesh *s) {
+void SimulationRenderer::set_sphere(rendered_model *s) {
 	sphere = s;
 }
 

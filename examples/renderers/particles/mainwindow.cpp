@@ -12,7 +12,7 @@ using namespace particles;
 using namespace init;
 
 // Custom includes
-#include <render/obj_reader.hpp>
+#include <base/obj_reader.hpp>
 
 // PRIVATE
 
@@ -414,7 +414,7 @@ MainWindow::MainWindow(QWidget *parent)
 	init_environment();
 
 	cout << "    Loading models for renderisation..." << endl;
-	sim_ball = new rendered_mesh();
+	sim_ball = new rendered_model();
 	OBJ_reader obj;
 	obj.load_object("../../renderers/models", "sphere_hsmooth.obj", *sim_ball);
 	sim_ball->scale_to_unit();

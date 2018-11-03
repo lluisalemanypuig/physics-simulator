@@ -14,8 +14,8 @@
 #include <physim/simulator.hpp>
 
 // Custom includes
-#include <render/rgeom/rendered_geometry.hpp>
-#include <render/mesh/rendered_mesh.hpp>
+#include <base/rgeom/rendered_geometry.hpp>
+#include <base/model/rendered_model.hpp>
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -43,7 +43,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
-		rendered_mesh *sphere;
+		rendered_model *sphere;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
 		QLabel *label_fps;
@@ -107,7 +107,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		void set_limit_fps(bool l);
 
-		void set_sphere(rendered_mesh *s);
+		void set_sphere(rendered_model *s);
 
 		// sets 'scene_cleared' to false, so that
 		// we can run the application

@@ -4,7 +4,7 @@ TARGET = particles-renderer
 QT += core gui opengl
 CONFIG += c++11
 
-QMAKE_CXXFLAGS_DEBUG += -DDEBUG -g
+QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
 LIBS += -lGLU
@@ -32,10 +32,10 @@ HEADERS +=						\
 RESOURCES += \
     resources.qrc
 
-# mesh and .obj reader
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../render/release/ -lrender
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../render/debug/ -lrender
-else:unix: LIBS += -L$$OUT_PWD/../render/ -lrender
+# base (mesh, .obj reader, ...)
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base/release/ -lbase
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base/debug/ -lbase
+else:unix: LIBS += -L$$OUT_PWD/../base/ -lbase
 
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../

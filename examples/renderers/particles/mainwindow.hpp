@@ -10,8 +10,8 @@
 #include <physim/initialiser/initialiser.hpp>
 
 // Custom includes
-#include <render/rgeom/rendered_geometry.hpp>
-#include <render/mesh/mesh.hpp>
+#include <base/rgeom/rendered_geometry.hpp>
+#include <base/model/model.hpp>
 #include "simulation_renderer.hpp"
 #include "utils.hpp"
 
@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow {
 		Ui::MainWindow *ui;
 		int current_tab;
 
-		rendered_mesh *sim_ball;
+		rendered_model *sim_ball;
 
 		std::default_random_engine eng;
 		// generator for random numbers between 0 and 1
