@@ -9,15 +9,39 @@ using namespace std;
 
 namespace glut_functions {
 
-	// 'global' variables
+	// key definitions
+	#define ESC 27
+
 	sim_renderer SR;
 	int pressed_button;
 	point last_mouse;
 	bool lock_mouse;
 	int window_id;
+	timing::time_point sec;
+
+	bool draw_box;
+
+	bool display_fps;
 	int FPS;
 	int fps_count;
-	timing::time_point tp;
+
+	void init_glut_variables() {
+		pressed_button = 0;
+		last_mouse = point(0,0);
+		lock_mouse = false;
+
+		draw_box = true;
+
+		display_fps = false;
+		FPS = 30;
+		fps_count = 0;
+
+		sec = timing::now();
+	}
+
+	// ---------------
+	// SCENE RENDERING
+	// ---------------
 
 	void refresh() {
 		glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -36,22 +60,35 @@ namespace glut_functions {
 		SR.render_simulation();
 		SR.apply_time_step();
 
-		glDisable(GL_LIGHTING);
-		glColor3f(1.0f,0.0f,0.0f);
-		SR.get_box().draw_box();
+		if (draw_box) {
+			glDisable(GL_LIGHTING);
+			glColor3f(1.0f,0.0f,0.0f);
+			SR.get_box().draw_box();
+		}
 
 		glutSwapBuffers();
+	}
 
-		timing::time_point end = timing::now();
+	void timed_refresh(int value) {
+		refresh();
 
 		++fps_count;
-		double sec = timing::elapsed_seconds(tp, end);
-		if (sec >= 1.0) {
-			cout << "fps: " << fps_count << " (max: " << FPS << ")" << endl;
+		timing::time_point here = timing::now();
+		double elapsed = timing::elapsed_seconds(sec, here);
+		if (elapsed >= 1.0) {
+			if (display_fps) {
+				cout << "fps= " << fps_count << " (" << FPS << ")" << endl;
+			}
 			fps_count = 0;
-			tp = timing::now();
+			sec = timing::now();
 		}
+
+		glutTimerFunc(1000.0f/FPS, timed_refresh, value);
 	}
+
+	// ---------------
+	// WINDOW RESIZING
+	// ---------------
 
 	void resize(int w,int h) {
 		float pzoom = SR.get_perspective_camera().get_zoom();
@@ -66,22 +103,21 @@ namespace glut_functions {
 		glViewport(0, 0, w, h);
 	}
 
+	// -------------
+	// MOUSE HANDLER
+	// -------------
+
 	void mouse_click_event(int button, int state, int x, int y) {
 		UNUSED(x);
 		UNUSED(y);
 
 		if (SR.is_flying()) {
-			cout << "Flying..." << endl;
 			if (button == GLUT_LEFT_BUTTON and state == 0) {
-				cout << "Left click... " << state << endl;
-				cout << "    Is mouse locked? " << (lock_mouse ? "Yes" : "No") << endl;
 				if (lock_mouse) {
-					cout << "    Unlock mouse" << endl;
 					lock_mouse = false;
 					glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 				}
 				else {
-					cout << "    Lock mouse" << endl;
 					lock_mouse = true;
 					glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
 					glutSetCursor(GLUT_CURSOR_NONE);
@@ -119,6 +155,74 @@ namespace glut_functions {
 		else if (pressed_button == GLUT_RIGHT_BUTTON) {
 			SR.increment_zoom(0.75f*dy);
 		}
+	}
+
+	// ----------------
+	// KEYBOARD HANDLER
+	// ----------------
+
+	void special_keys_keyboard(int key, int x, int y) {
+		UNUSED(key);
+		UNUSED(x);
+		UNUSED(y);
+	}
+
+	void regular_keys_keyboard(unsigned char c, int x, int y) {
+		UNUSED(x);
+		UNUSED(y);
+
+		switch (c) {
+		case ESC: glutDestroyWindow(window_id); break;
+		case 'p': SR.switch_to_perspective(); break;
+		case 'o': SR.switch_to_orthogonal(); break;
+		case 'b': draw_box = not draw_box; break;
+		case 'h': help(); break;
+		case 'z': display_fps = not display_fps; break;
+		case 'i':
+			SR.switch_to_inspection();
+			lock_mouse = false;
+			glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+			break;
+		case 'f':
+			SR.switch_to_flight();
+			lock_mouse = true;
+			glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
+			glutSetCursor(GLUT_CURSOR_NONE);
+		case 'w':
+			if (SR.is_flying()) {
+				SR.camera_forwards(0.1f);
+			}
+			break;
+		case 'a':
+			if (SR.is_flying()) {
+				SR.camera_sideways_left(0.1f);
+			}
+			break;
+		case 's':
+			if (SR.is_flying()) {
+				SR.camera_backwards(0.1f);
+			}
+			break;
+		case 'd':
+			if (SR.is_flying()) {
+				SR.camera_sideways_right(0.1f);
+			}
+			break;
+		case '+':
+			if (FPS < 60) {
+				++FPS;
+			}
+			break;
+		case '-':
+			if (FPS > 1) {
+				--FPS;
+			}
+			break;
+		}
+	}
+
+	void help() {
+
 	}
 
 } // -- namespace glut_functions

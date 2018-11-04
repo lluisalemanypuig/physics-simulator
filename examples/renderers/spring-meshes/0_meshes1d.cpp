@@ -1,5 +1,8 @@
 #include "study_cases.hpp"
 
+#include <iostream>
+using namespace std;
+
 // base includes
 #include <base/include_gl.hpp>
 #include <base/obj_reader.hpp>
@@ -20,14 +23,6 @@ using namespace geom;
 using namespace glut_functions;
 
 namespace study_cases {
-
-	// initial window size
-	#define iw 640
-	#define ih 480
-
-	void sim0_help() {
-
-	}
 
 	void sim0_initGL(int argc, char *argv[]) {
 		// ----------------- //
@@ -52,12 +47,10 @@ namespace study_cases {
 
 		// --------------------------- //
 		/* initialise global variables */
-		pressed_button = 0;
-		last_mouse = point(0,0);
-		lock_mouse = false;
+		glut_functions::init_glut_variables();
 
-		// -------------- //
-		/* build renderer */
+		// ---------------- //
+		/* build simulation */
 		SR.set_particle_size(2.0f);
 		SR.set_spring_width(1.5f);
 		rplane *floor = new rplane();
@@ -69,69 +62,47 @@ namespace study_cases {
 		SR.get_box().enlarge_box(vec3(0.0f,10.0f,0.0f));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
-		FPS = 30;
-		fps_count = 0;
-
-		// ---------------- //
-		/* build simulation */
-		plane *pl = new plane(
-			vec3(0.0f,1.0f,0.0f),
-			vec3(0.0f,7.0f,0.0f)
-		);
-		SR.get_simulator().add_geometry(pl);
 
 		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
-		meshes::mesh1d *m = new meshes::mesh1d();
-		m->allocate(5);
-		m->set_elasticity(500.0f);
-		m->set_damping(0.5f);
+		/* build meshes */
+		for (int i = 0; i < 1; ++i) {
+			// 10 'free' meshes of increasing
+			// number of particles
 
-		mesh_particle **mp = m->get_particles();
+			for (int j = 5; j <= 50; j += 5) {
+				meshes::mesh1d *m = new meshes::mesh1d();
+				m->allocate(j);
+				m->set_elasticity(500.0f);
+				m->set_damping(0.5f);
 
-		mp[0]->fixed = true;
+				mesh_particle **mp = m->get_particles();
+				mp[0]->fixed = true;
+				mp[0]->cur_pos = vec3(0.0f, 10.0f, i);
+				for (int k = 1; k < j; ++k) {
+					mp[k]->cur_pos = vec3((5.0f/j)*k, 10.0f, i);
+				}
+				m->make_initial_state();
 
-		mp[0]->cur_pos = vec3(0.0f, 10.0f, 0.0f);
-		mp[1]->cur_pos = vec3(1.0f, 10.0f, 0.0f);
-		mp[2]->cur_pos = vec3(2.0f, 10.0f, 0.0f);
-		mp[3]->cur_pos = vec3(3.0f, 10.0f, 0.0f);
-		mp[4]->cur_pos = vec3(4.0f, 10.0f, 0.0f);
-
-		m->make_initial_state();
-
-		SR.get_simulator().add_mesh(m);
-
-		// ----------- //
-		/* start timer */
-		tp = timing::now();
-	}
-
-	void sim0_keyboard_event(unsigned char c, int x, int y) {
-
-	}
-
-	void sim0_special_keys(int key, int x, int y) {
-
+				SR.get_simulator().add_mesh(m);
+			}
+		}
 	}
 
 	void sim0_1dmeshes(int argc, char *argv[]) {
 
-		// parse arguments
-
-		// build simulator
-
-		// call glut functions
 		sim0_initGL(0, nullptr);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
-		glutKeyboardFunc(sim0_keyboard_event);
-		glutSpecialFunc(sim0_special_keys);
 		glutMouseFunc(glut_functions::mouse_click_event);
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
+		glutSpecialFunc(glut_functions::special_keys_keyboard);
+		glutKeyboardFunc(glut_functions::regular_keys_keyboard);
 
-		glutIdleFunc(refresh);
+		//glutIdleFunc(refresh);
+		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);
 
 		glutMainLoop();
 	}
