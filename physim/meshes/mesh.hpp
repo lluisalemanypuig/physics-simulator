@@ -148,8 +148,6 @@ class mesh {
 		/// Returns a reference to this mesh's particles.
 		particles::mesh_particle **get_particles();
 
-		/// Returns a constant reference to this mesh's particles.
-		const particles::mesh_particle **get_particles() const;
 };
 
 } // -- namespace meshes

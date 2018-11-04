@@ -198,7 +198,17 @@ const std::vector<particles::free_particle *>& simulator::get_particles() const 
 }
 
 const particles::free_particle& simulator::get_particle(size_t i) const {
+	assert(i < ps.size());
 	return *ps[i];
+}
+
+const std::vector<meshes::mesh *>& simulator::get_meshes() const {
+	return ms;
+}
+
+const meshes::mesh& simulator::get_mesh(size_t i) const {
+	assert(i < ms.size());
+	return *ms[i];
 }
 
 const std::vector<geom::geometry *>& simulator::get_fixed_objects() const {

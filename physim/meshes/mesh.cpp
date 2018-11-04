@@ -78,12 +78,12 @@ size_t mesh::size() const {
 	return N;
 }
 
-mesh_particle **mesh::get_particles() {
-	return ps;
-}
-
 const mesh_type& mesh::get_type() const {
 	return mt;
+}
+
+mesh_particle **mesh::get_particles() {
+	return ps;
 }
 
 } // -- namespace meshes

@@ -401,8 +401,8 @@ class simulator {
 		 * @brief Returns all particles in the simulation.
 		 *
 		 * Note that the constant reference is to the container.
-		 * It cannot be added or deleted any of its particles,
-		 * however the particle's attributes may be modified.
+		 * It cannot be added new particles or have deleted any,
+		 * however any particle's attributes may be modified.
 		 *
 		 * The behaviour of the modified particles in the simulation
 		 * will change according to the modifications.
@@ -410,8 +410,23 @@ class simulator {
 		 * containing all particles.
 		 */
 		const std::vector<particles::free_particle *>& get_particles() const;
-		/// Return constant reference to i-th particle.
+		/// Returns a constant reference to i-th particle.
 		const particles::free_particle& get_particle(size_t i) const;
+		/**
+		 * @brief Returns all meshes in the simulation.
+		 *
+		 * Note that the constant reference is to the container.
+		 * It cannot be added new meshes or have deleted any,
+		 * however any meshe's attributes may be modified.
+		 *
+		 * The behaviour of the modified particles in the simulation
+		 * will change according to the modifications.
+		 * @return Returns a constant reference to the structure
+		 * containing all particles.
+		 */
+		const std::vector<meshes::mesh *>& get_meshes() const;
+		/// Returns a constant reference to i-th mesh.
+		const meshes::mesh& get_mesh(size_t i) const;
 		/// Returns all fixed objects of the scene.
 		const std::vector<geom::geometry *>& get_fixed_objects() const;
 		/// Returns the current simulation time.
