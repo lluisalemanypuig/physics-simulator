@@ -16,19 +16,18 @@ using namespace physim;
 using namespace meshes;
 using namespace particles;
 
-
 void render_1dmesh(const mesh *m) {
 
+	glColor3f(1.0f,1.0f,1.0f);
+	glBegin(GL_LINES);
 	for (size_t i = 0; i < m->size() - 1; ++i) {
 		const vec3& pos1 = (*m)[i]->cur_pos;
 		const vec3& pos2 = (*m)[i + 1]->cur_pos;
 
-		glColor3f(1.0f,1.0f,1.0f);
-		glBegin(GL_LINES);
-			glVertex3f(pos1.x, pos1.y, pos1.z);
-			glVertex3f(pos2.x, pos2.y, pos2.z);
-		glEnd();
+		glVertex3f(pos1.x, pos1.y, pos1.z);
+		glVertex3f(pos2.x, pos2.y, pos2.z);
 	}
+	glEnd();
 }
 
 // PUBLIC

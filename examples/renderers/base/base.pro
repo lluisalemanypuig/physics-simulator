@@ -12,7 +12,7 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 # for 'self' includes
 INCLUDEPATH += ..
 # physim includes
-INCLUDEPATH += ../../../
+INCLUDEPATH += ../../..
 
 HEADERS +=						\
 	obj_reader.hpp				\

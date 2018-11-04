@@ -12,32 +12,32 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 SOURCES += main.cpp
 
 # base (model, obj reader, ...)
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base/release/ -lbase
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base/debug/ -lbase
-else:unix: LIBS += -L$$OUT_PWD/../base/ -lbase
+win32:CONFIG(release, debug|release): LIBS += -L../base/release/ -lbase
+else:win32:CONFIG(debug, debug|release): LIBS += -L../base/debug/ -lbase
+else:unix: LIBS += -L../base/ -lbase
 
-INCLUDEPATH += $$PWD/../
-DEPENDPATH += $$PWD/../
+INCLUDEPATH += ..
+DEPENDPATH += ..
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../base/release/libbase.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../base/debug/libbase.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../base/release/base.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../base/debug/base.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../base/libbase.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += ../base/release/libbase.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += ../base/debug/libbase.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += ../base/release/base.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += ../base/debug/base.lib
+else:unix: PRE_TARGETDEPS += ../base/libbase.a
 
 # physim library
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../physim-release/ -lphysim
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../physim-debug/ -lphysim
-else:unix: LIBS += -L$$PWD/../../../physim-debug/ -lphysim
+win32:CONFIG(release, debug|release): LIBS += -L../../../physim-release/ -lphysim
+else:win32:CONFIG(debug, debug|release): LIBS += -L../../../physim-debug/ -lphysim
+else:unix: LIBS += -L../../../physim-debug/ -lphysim
 
-INCLUDEPATH += $$PWD/../../../
-DEPENDPATH += $$PWD/../../../
+INCLUDEPATH += ../../..
+DEPENDPATH += ../../..
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-release/libphysim.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-debug/libphysim.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-release/physim.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-debug/physim.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../../../physim-debug/libphysim.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += ../../../physim-release/libphysim.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += ../../../physim-release/physim.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += ../../../physim-debug/physim.lib
+else:unix: PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
 
 unix {
 	LIBS += -lglut -lGLU
