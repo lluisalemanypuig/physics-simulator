@@ -10,11 +10,14 @@ using namespace std;
 namespace glut_functions {
 
 	// 'global' variables
-	renderer SR;
+	sim_renderer SR;
 	int pressed_button;
 	point last_mouse;
 	bool lock_mouse;
 	int window_id;
+	int FPS;
+	int fps_count;
+	timing::time_point tp;
 
 	void refresh() {
 		glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -30,14 +33,24 @@ namespace glut_functions {
 
 		SR.apply_camera();
 
-		glEnable(GL_LIGHTING);
-		SR.render_models();
+		SR.render_simulation();
+		SR.apply_time_step();
 
 		glDisable(GL_LIGHTING);
 		glColor3f(1.0f,0.0f,0.0f);
 		SR.get_box().draw_box();
 
 		glutSwapBuffers();
+
+		timing::time_point end = timing::now();
+
+		++fps_count;
+		double sec = timing::elapsed_seconds(tp, end);
+		if (sec >= 1.0) {
+			cout << "fps: " << fps_count << " (max: " << FPS << ")" << endl;
+			fps_count = 0;
+			tp = timing::now();
+		}
 	}
 
 	void resize(int w,int h) {

@@ -4,18 +4,24 @@
 #include <utility>
 
 // base includes
-#include <base/renderer.hpp>
+#include <base/scene/sim_renderer.hpp>
+
+// custom includes
+#include "utils.hpp"
 
 namespace glut_functions {
 
 	typedef std::pair<int,int> point;
 
 	// 'global' variables
-	extern renderer SR;
+	extern sim_renderer SR;
 	extern int pressed_button;
 	extern point last_mouse;
 	extern bool lock_mouse;
 	extern int window_id;
+	extern int FPS;
+	extern int fps_count;
+	extern timing::time_point tp;
 
 	// helper functions
 	static inline

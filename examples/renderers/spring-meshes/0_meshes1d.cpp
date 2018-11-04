@@ -4,6 +4,16 @@
 #include <base/include_gl.hpp>
 #include <base/obj_reader.hpp>
 #include <base/model/rendered_model.hpp>
+#include <base/rgeom/rendered_geometry.hpp>
+
+// physim includes
+#include <physim/meshes/mesh1d.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/math/math.hpp>
+using namespace physim;
+using namespace particles;
+using namespace math;
+using namespace geom;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -45,6 +55,55 @@ namespace study_cases {
 		pressed_button = 0;
 		last_mouse = point(0,0);
 		lock_mouse = false;
+
+		// -------------- //
+		/* build renderer */
+		SR.set_particle_size(2.0f);
+		SR.set_spring_width(1.5f);
+		rplane *floor = new rplane();
+		floor->p1 = vec3(-5.0f, 7.0f, -5.0f);
+		floor->p2 = vec3(-5.0f, 7.0f,  5.0f);
+		floor->p3 = vec3( 5.0f, 7.0f,  5.0f);
+		floor->p4 = vec3( 5.0f, 7.0f, -5.0f);
+		SR.add_geometry(floor);
+		SR.get_box().enlarge_box(vec3(0.0f,10.0f,0.0f));
+		SR.set_window_dims(iw, ih);
+		SR.init_cameras();
+		FPS = 30;
+		fps_count = 0;
+
+		// ---------------- //
+		/* build simulation */
+		plane *pl = new plane(
+			vec3(0.0f,1.0f,0.0f),
+			vec3(0.0f,7.0f,0.0f)
+		);
+		SR.get_simulator().add_geometry(pl);
+
+		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+
+		meshes::mesh1d *m = new meshes::mesh1d();
+		m->allocate(5);
+		m->set_elasticity(500.0f);
+		m->set_damping(0.5f);
+
+		mesh_particle **mp = m->get_particles();
+
+		mp[0]->fixed = true;
+
+		mp[0]->cur_pos = vec3(0.0f, 10.0f, 0.0f);
+		mp[1]->cur_pos = vec3(1.0f, 10.0f, 0.0f);
+		mp[2]->cur_pos = vec3(2.0f, 10.0f, 0.0f);
+		mp[3]->cur_pos = vec3(3.0f, 10.0f, 0.0f);
+		mp[4]->cur_pos = vec3(4.0f, 10.0f, 0.0f);
+
+		m->make_initial_state();
+
+		SR.get_simulator().add_mesh(m);
+
+		// ----------- //
+		/* start timer */
+		tp = timing::now();
 	}
 
 	void sim0_keyboard_event(unsigned char c, int x, int y) {
@@ -61,17 +120,6 @@ namespace study_cases {
 
 		// build simulator
 
-		rendered_model *m;
-		OBJ_reader obj;
-
-		m = new rendered_model();
-		obj.load_object("../../renderers/models" , "sphere.obj", *m);
-		m->compile();
-		SR.add_model(m);
-
-		SR.set_window_dims(iw, ih);
-		SR.init_cameras();
-
 		// call glut functions
 		sim0_initGL(0, nullptr);
 
@@ -86,7 +134,6 @@ namespace study_cases {
 		glutIdleFunc(refresh);
 
 		glutMainLoop();
-
 	}
 
 } // -- namespace study_cases
