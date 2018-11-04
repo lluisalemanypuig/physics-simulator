@@ -13,7 +13,12 @@ rgeom::rgeom() {
 	model = nullptr;
 }
 
-rgeom::~rgeom() { }
+rgeom::~rgeom() {
+	if (model != nullptr) {
+		delete model;
+		model = nullptr;
+	}
+}
 
 // SETTERS
 

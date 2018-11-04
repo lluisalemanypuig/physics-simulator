@@ -34,7 +34,11 @@ void render_mesh1d(const mesh *m) {
 // PUBLIC
 
 sim_renderer::sim_renderer() : renderer() { }
-sim_renderer::~sim_renderer() { }
+sim_renderer::~sim_renderer() {
+	for (rgeom *g : geometry) {
+		delete g;
+	}
+}
 
 void sim_renderer::set_particle_size(float s) {
 	glPointSize(s);
