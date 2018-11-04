@@ -351,7 +351,8 @@ class simulator {
 		/**
 		 * @brief Apply a time step to the simulation.
 		 *
-		 * Particles move according to time. Parameter @e dt indicates
+		 * Particles move according to time. Parameter @e dt
+		 * (set via method @ref set_time_step(float)) indicates
 		 * how much time has passed since the last time step.
 		 *
 		 * Whenever a particle's lifetime has reached 0, method

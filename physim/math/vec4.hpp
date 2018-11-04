@@ -3,9 +3,6 @@
 // C++ includes
 #include <cmath>
 
-// physim includes
-#include <physim/math/math_utils.hpp>
-
 namespace physim {
 namespace math {
 
@@ -87,10 +84,10 @@ typedef struct vec4 {
  * @param[out] m Minimum of @e a and @e b.
  */
 inline void min(const vec4& a, const vec4& b, vec4& m) {
-	m.x = min(a.x, b.x);
-	m.y = min(a.y, b.y);
-	m.z = min(a.z, b.z);
-	m.w = min(a.w, b.w);
+	m.x = (a.x < b.x ? a.x : b.x);
+	m.y = (a.y < b.y ? a.y : b.y);
+	m.z = (a.z < b.z ? a.z : b.z);
+	m.w = (a.w < b.w ? a.w : b.w);
 }
 
 /**
@@ -120,10 +117,10 @@ inline vec4 min(const vec4& a, const vec4& b) {
  * @param[out] M Maximum of @e a and @e b.
  */
 inline void max(const vec4& a, const vec4& b, vec4& M) {
-	M.x = max(a.x, b.x);
-	M.y = max(a.y, b.y);
-	M.z = max(a.z, b.z);
-	M.w = max(a.w, b.w);
+	M.x = (a.x > b.x ? a.x : b.x);
+	M.y = (a.y > b.y ? a.y : b.y);
+	M.z = (a.z > b.z ? a.z : b.z);
+	M.w = (a.w > b.w ? a.w : b.w);
 }
 
 /**

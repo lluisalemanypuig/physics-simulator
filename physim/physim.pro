@@ -33,7 +33,6 @@ HEADERS +=							\
     fields/gravitational.hpp		\
 	fields/gravitational_planet.hpp	\
 	math/math.hpp					\
-	math/math_utils.hpp				\
 	math/vec2.hpp					\
 	math/vec3.hpp					\
 	math/vec4.hpp					\
