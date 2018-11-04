@@ -5,6 +5,7 @@
 
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
+#include <physim/particles/conversions.hpp>
 #include <physim/math/math_private.hpp>
 #include <physim/sim_solver.cpp>
 
@@ -12,11 +13,24 @@ namespace physim {
 
 void simulator::simulate_meshes() {
 
+	// collision prediction:
+	// copy the particle at its current state and use it
+	// to predict the update upon collision with geometry.
+	// Although it is a free particle, the attributes
+	// of the mesh particle will be copied into this one.
+	particles::free_particle coll_pred;
+
 	for (meshes::mesh *m : ms) {
 
 		/* check mesh start time and lifetime
 		 * of mesh
 		 */
+
+		// some of the meshe's attributes are needed
+		// in the collision prediction particle for...
+		// collision prediction
+		coll_pred.friction = m->friction;
+		coll_pred.bouncing = m->bouncing;
 
 		/* update a meshe's particles */
 		particles::mesh_particle **mps = m->get_particles();
@@ -31,21 +45,21 @@ void simulator::simulate_meshes() {
 		// originated within the mesh's structure
 		m->update_forces();
 
-		for (size_t i = 0; i < N; ++i) {
+		for (size_t p_idx = 0; p_idx < N; ++p_idx) {
 			// ignore fixed particles
-			if (mps[i]->fixed) {
+			if (mps[p_idx]->fixed) {
 				continue;
 			}
 
 			// compute forces for particle p that are
 			// originated by the force fields of the
 			// simulation
-			compute_forces(mps[i]);
+			compute_forces(mps[p_idx]);
 
 			// apply solver to predict next position and
 			// velocity of the particle
 			math::vec3 pred_pos, pred_vel;
-			apply_solver(mps[i], pred_pos, pred_vel);
+			apply_solver(mps[p_idx], pred_pos, pred_vel);
 
 			// check if there is any collision between
 			// this mesh particle and a geometrical object
@@ -57,10 +71,7 @@ void simulator::simulate_meshes() {
 			 * update.
 			 */
 
-			// collision prediction:
-			// copy the particle at its current state and use it
-			// to predict the update upon collision with geometry
-			particles::mesh_particle coll_pred;
+			particles::from_mesh_to_free(*mps[p_idx], coll_pred);
 
 			// has there been any collision?
 			bool collision = false;
@@ -68,20 +79,20 @@ void simulator::simulate_meshes() {
 			// Check collision between the particle and
 			// every fixed geometrical object in the scene.
 
-			for (unsigned int i = 0; i < scene_fixed.size(); ++i) {
-				const geom::geometry *g = scene_fixed[i];
+			for (unsigned int g_idx = 0; g_idx < scene_fixed.size(); ++g_idx) {
+				const geom::geometry *g = scene_fixed[g_idx];
 
 				// if the particle collides with some geometry
 				// then the geometry is in charge of updating
 				// this particle's position, velocity, ...
 
-				if (g->intersec_segment(mps[i]->cur_pos, pred_pos)) {
+				if (g->intersec_segment(mps[p_idx]->cur_pos, pred_pos)) {
 					collision = true;
 
-					coll_pred = *mps[i];
+					particles::from_mesh_to_free(*mps[p_idx], coll_pred);
 
 					// the geometry updates the predicted particle
-					g->update_particle(pred_pos, pred_vel, i, m);
+					g->update_particle(pred_pos, pred_vel, &coll_pred);
 
 					if (solver == solver_type::Verlet) {
 						// this solver needs a correct position
@@ -99,17 +110,17 @@ void simulator::simulate_meshes() {
 
 			// give the particle the proper final state
 			if (collision) {
-				*mps[i] = coll_pred;
+				particles::from_free_to_mesh(coll_pred, *mps[p_idx]);
 			}
 			else {
-				mps[i]->save_position();
-				__pm_assign_v(mps[i]->cur_pos, pred_pos);
-				__pm_assign_v(mps[i]->cur_vel, pred_vel);
+				mps[p_idx]->save_position();
+				__pm_assign_v(mps[p_idx]->cur_pos, pred_pos);
+				__pm_assign_v(mps[p_idx]->cur_vel, pred_vel);
 			}
 
 			// clear the force so that in the next iteration
 			// for the mesh, the forces can be computed
-			__pm_assign_s(mps[i]->force, 0.0f);
+			__pm_assign_s(mps[p_idx]->force, 0.0f);
 		}
 	}
 }

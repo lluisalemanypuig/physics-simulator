@@ -177,26 +177,6 @@ const
 	// make the plane update the particle
 	tan_plane.update_particle(pred_pos, pred_vel, p);
 }
-void sphere::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, size_t i, meshes::mesh *m)
-const
-{
-	// define a plane tangent to the sphere
-	// that goes through the intersection point
-
-	// compute intersection point
-
-	math::vec3 I;
-	intersec_segment((*m)[i]->cur_pos, pred_pos, I);
-
-	// define the plane
-	math::vec3 normal;
-	__pm_sub_v_v(normal, C, I);
-	plane tan_plane(normal,I);
-
-	// make the plane update the particle
-	tan_plane.update_particle(pred_pos, pred_vel, i, m);
-}
 
 void sphere::display(std::ostream& os) const {
 	os << "I am a sphere" << std::endl;

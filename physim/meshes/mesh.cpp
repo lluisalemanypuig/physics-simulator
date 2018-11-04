@@ -12,12 +12,16 @@ namespace meshes {
 // PUBLIC
 
 mesh::mesh() {
+	friction = 0.0f;
+	bouncing = 0.8f;
 	Ke = 0.0f;
 	Kd = 0.0f;
 	N = 0;
 	ps = nullptr;
 }
 mesh::mesh(float ke, float kd) {
+	friction = 0.0f;
+	bouncing = 0.8f;
 	Ke = ke;
 	Kd = kd;
 	N = 0;
@@ -83,6 +87,10 @@ const mesh_type& mesh::get_type() const {
 }
 
 mesh_particle **mesh::get_particles() {
+	return ps;
+}
+
+particles::mesh_particle *const *mesh::get_particles() const {
 	return ps;
 }
 

@@ -10,7 +10,7 @@ namespace math {
  * @brief 2-dimensional vector.
  *
  * Basic implementation of a two-dimensional vector as a struct
- * with only two attributes @ref vec2::__x, @ref vec2::__y.
+ * with only two attributes @ref vec2::x, @ref vec2::y.
  *
  * The notation is borrowed from the 'glm' library.
  */

@@ -10,7 +10,7 @@ namespace math {
  * @brief 3-dimensional vector.
  *
  * Basic implementation of a three-dimensional vector as a struct
- * with only three attributes @ref vec3::__x, @ref vec3::__y and @ref vec3::__z.
+ * with only three attributes @ref vec3::x, @ref vec3::y and @ref vec3::z.
  *
  * The notation is borrowed from the 'glm' library.
  */

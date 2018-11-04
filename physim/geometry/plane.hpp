@@ -140,10 +140,6 @@ class plane : public geometry {
 			const math::vec3& pp, const math::vec3& pv,
 			particles::free_particle *p
 		) const;
-		void update_particle(
-			const math::vec3& pred_pos, const math::vec3& pred_vel,
-			size_t i, meshes::mesh *m
-		) const;
 
 		void display(std::ostream& os = std::cout) const;
 };

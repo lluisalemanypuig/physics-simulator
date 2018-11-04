@@ -3,6 +3,9 @@
 // physim includes
 #include <physim/math/math_private.hpp>
 
+#include <iostream>
+using namespace std;
+
 namespace physim {
 namespace geom {
 
@@ -117,9 +120,9 @@ const
 
 	// --- update velocity (1) --- (with bouncing coefficient)
 
-	// We need the velocity at time T, not the previous
-	// velocity (time T - dt). A constant reference is
-	// not used because we need to keep this value after update.
+	// We need the velocity at time T, not the previous velocity (time T - dt)
+	// for the 'friction operation'. A constant reference is not used because
+	// we need to keep this value after update.
 	math::vec3 vt;
 	__pm_assign_v(vt, p->cur_vel);
 
@@ -132,42 +135,6 @@ const
 	math::vec3 vT;
 	__pm_sub_v_vs(vT, vt, normal,__pm_dot(normal,vt));
 	__pm_sub_acc_vs(p->cur_vel, vT, p->friction);
-}
-void plane::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, size_t i, meshes::mesh *m)
-const
-{
-	(*m)[i]->save_position();
-
-	// Wn is a vector normal to the plane with
-	// direction towards the intersection point
-	// (this point is not needed to calculate Wn)
-
-	math::vec3 Wn;
-	__pm_mul_v_s(Wn, normal, __pm_dot(pred_pos,normal) + dconst);
-
-	// --- update position --- (with bouncing coefficient)
-
-	float bounce = m->bouncing;
-	__pm_sub_v_vs((*m)[i]->cur_pos, pred_pos, Wn, 1.0f + bounce);
-
-	// --- update velocity (1) --- (with bouncing coefficient)
-
-	// We need the velocity at time T, not the previous
-	// velocity (time T - dt). A constant reference is
-	// not used because we need to keep this value after update.
-	math::vec3 vt;
-	__pm_assign_v(vt, (*m)[i]->cur_vel);
-
-	// first update of the velociy (with bouncing)
-	__pm_sub_v_vs((*m)[i]->cur_vel, pred_vel, normal,(1.0f + bounce)*__pm_dot(normal, pred_vel));
-
-	// --- update velocity (2) --- (with friction coefficient)
-
-	// Use 'vt', the velocity at time t
-	math::vec3 vT;
-	__pm_sub_v_vs(vT, vt, normal,__pm_dot(normal,vt));
-	__pm_sub_acc_vs((*m)[i]->cur_vel, vT, m->friction);
 }
 
 void plane::display(std::ostream& os) const {

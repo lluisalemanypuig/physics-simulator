@@ -10,8 +10,8 @@ namespace math {
  * @brief 4-dimensional vector.
  *
  * Basic implementation of a four-dimensional vector as a struct
- * with only four attributes @ref vec4::__x, @ref vec4::__y,
- * @ref vec4::__z and @ref vec4::__w.
+ * with only four attributes @ref vec4::x, @ref vec4::y,
+ * @ref vec4::z and @ref vec4::w.
  *
  * The notation is borrowed from the 'glm' library.
  */

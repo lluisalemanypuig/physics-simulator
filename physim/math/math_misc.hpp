@@ -18,6 +18,21 @@ namespace math {
 // g <- (s,s,s)
 #define __pm_assign_s(g, s)		\
 	(g).x = (g).y = (g).z = s
+// h <- f*g
+#define __pm_assign_vv(h,f,g)	\
+	(g).x = (f).x*(g).x;		\
+	(g).y = (f).y*(g).y;		\
+	(g).z = (f).z*(g).z
+// g <- f*(x,y,z)
+#define __pm_assign_vc(g,f,x,y,z)\
+	(g).x = (f).x*(x);			\
+	(g).y = (f).y*(y);			\
+	(g).z = (f).z*(z)
+// g <- f*s
+#define __pm_assign_vs(g,f,s)	\
+	(g).x = (f).x*(s);			\
+	(g).y = (f).y*(s);			\
+	(g).z = (f).z*(s)
 
 // m <- min(a,b)
 // (m.x,m.y,m.z) <- (min(a.x,b.x), min(a.y,b.y), min(a.z,b.z))

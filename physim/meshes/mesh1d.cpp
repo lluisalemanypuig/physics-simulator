@@ -28,20 +28,21 @@ mesh1d::~mesh1d() {
 // MODIFIERS
 
 void mesh1d::make_initial_state() {
+	ds = std::vector<float>(N - 1, 0.0f);
 	for (size_t i = 0; i < N - 1; ++i) {
 		ds[i] = __pm_dist(ps[i]->cur_pos, ps[i+1]->cur_pos);
 	}
 }
 
 void mesh1d::update_forces() {
+	assert(ds.size() == N - 1);
+
 	math::vec3 F1_m1;
 	math::vec3 dir;
 	math::vec3 dvel;
 	float elastic_term, damping_term;
 
 	for (size_t i = 0; i < N - 1; ++i) {
-		__pm_assign_s(F1_m1, 0.0f);
-
 		// direction vector
 		__pm_sub_v_v(dir, ps[i+1]->cur_pos, ps[i]->cur_pos);
 		float dist = __pm_norm(dir);
@@ -55,7 +56,7 @@ void mesh1d::update_forces() {
 		damping_term = Kd*__pm_dot(dvel, dir);
 
 		// compute forces
-		__pm_add_acc_vs(F1_m1, dir, elastic_term + damping_term);
+		__pm_assign_vs(F1_m1, dir, elastic_term + damping_term);
 
 		__pm_add_acc_v(ps[i]->force, F1_m1);
 		__pm_invert(F1_m1, F1_m1);
@@ -70,7 +71,6 @@ void mesh1d::allocate(size_t n) {
 
 	N = n;
 	ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
-	ds = std::vector<float>(N - 1, 0.0f);
 
 	for (size_t i = 0; i < N; ++i) {
 		ps[i] = new mesh_particle();
