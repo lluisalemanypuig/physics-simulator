@@ -1,22 +1,27 @@
 #include <physim/initialiser/initialiser.hpp>
 
+// physim includes
+#include <physim/math/math_private.hpp>
+
 namespace physim {
 namespace init {
+
+typedef particles::free_particle fpart;
 
 // PRIVATE
 
 // PUBLIC
 
 initialiser::initialiser() {
-	pos			= [](particles::free_particle *) {};
-	vel			= [](particles::free_particle *) {};
-	mass		= [](particles::free_particle *) {};
-	charge		= [](particles::free_particle *) {};
-	bounce		= [](particles::free_particle *) {};
-	friction	= [](particles::free_particle *) {};
-	lifetime	= [](particles::free_particle *) {};
-	starttime	= [](particles::free_particle *) {};
-	fixed		= [](particles::free_particle *) {};
+	pos			= [](fpart *p) { __pm_assign_s(p->cur_pos, 0.0f); };
+	vel			= [](fpart *p) { __pm_assign_s(p->cur_vel, 0.0f); };
+	mass		= [](fpart *p) { p->mass = 1.0f; };
+	charge		= [](fpart *p) { p->charge = 0.0f; };
+	bounce		= [](fpart *p) { p->bouncing = 1.0f; };
+	friction	= [](fpart *p) { p->friction = 0.0f; };
+	lifetime	= [](fpart *p) { p->lifetime = 10.0f; };
+	starttime	= [](fpart *p) { p->starttime = 0.0f; };
+	fixed		= [](fpart *p) { p->fixed = false; };
 }
 
 initialiser::initialiser(const initialiser& i) {

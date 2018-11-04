@@ -31,7 +31,8 @@ typedef std::function<void (particles::free_particle *)> partinit;
  * - @ref starttime : function used to initialise the starting time of a particle.
  * - @ref fixed : function used to initialise the fixed attribute of a particle.
  *
- * By default, all these function's behaviour is to do nothing.
+ * By default, all these function's behaviour is to initialise a particle
+ * the same way they are initialised when constructed (see @ref free_particle::init).
  *
  * Also, they are applied in the same order as they appear listed.
  * Therefore, for example, the position attributes can be used to initialise
