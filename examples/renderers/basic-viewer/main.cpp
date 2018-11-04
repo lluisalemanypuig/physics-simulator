@@ -9,7 +9,7 @@ using namespace std;
 #include <base/obj_reader.hpp>
 
 // custom includes
-#include <base/renderer.hpp>
+#include <base/scene/renderer.hpp>
 
 typedef pair<int,int> point;
 
