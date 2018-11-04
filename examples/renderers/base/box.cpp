@@ -4,6 +4,7 @@
 #include <assert.h>
 
 // C++ includes
+#include <limits>
 #include <cmath>
 
 // base includes
@@ -43,7 +44,14 @@ void box::update_vi() {
 
 // PUBLIC
 
-box::box() {}
+box::box() {
+	float M = std::numeric_limits<float>::max();
+	float m = -M;
+
+	min = vec3(M,M,M);
+	max = vec3(m,m,m);
+	update_vi();
+}
 box::~box() {}
 
 void box::set_min_max(const vec3& m, const vec3& M) {
@@ -55,6 +63,12 @@ void box::set_min_max(const vec3& m, const vec3& M) {
 void box::enlarge_box(const vec3& v) {
 	min = physim::math::min(min, v);
 	max = physim::math::max(max, v);
+	update_vi();
+}
+
+void box::enlarge_box(const box& b) {
+	min = physim::math::min(min, b.min);
+	max = physim::math::max(max, b.max);
 	update_vi();
 }
 

@@ -22,12 +22,7 @@ typedef physim::math::vec3 vec3;
  */
 class renderer {
 	private:
-		/**
-		 * @brief Make the bounding box of the model @e m.
-		 *
-		 * The box has its faces parallel to the axis.
-		 * @param m Non-null pointer to model.
-		 */
+
 		void make_model_box(model *m);
 
 	protected:
@@ -82,10 +77,10 @@ class renderer {
 		float get_aspect_ratio() const;
 
 	public:
-		/// Constructor with window width and height.
-		renderer(int w = 640, int h = 480);
+		/// Default constructor.
+		renderer();
 		/// Destructor.
-		~renderer();
+		virtual ~renderer();
 
 		// MODIFIERS
 
@@ -162,6 +157,8 @@ class renderer {
 		/// Returns the position of the viewer.
 		const vec3& get_viewer_pos() const;
 
+		/// Returns the bounding box of the scene.
+		box& get_box();
 		/// Returns the bounding box of the scene.
 		const box& get_box() const;
 

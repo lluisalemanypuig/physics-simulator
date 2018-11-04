@@ -11,7 +11,8 @@ typedef physim::math::vec2 vec2;
 typedef physim::math::vec3 vec3;
 typedef physim::math::vec4 vec4;
 
-// Custom includes
+// base includes
+#include <base/box.hpp>
 #include <base/model/model_utils.hpp>
 
 /**
@@ -74,6 +75,14 @@ class model {
 
 		/// Returns a constant reference to this model's vertices.
 		const std::vector<vec3>& get_vertices() const;
+
+		/**
+		 * @brief Make the bounding box of the model @e m.
+		 *
+		 * The box has its faces parallel to the axis.
+		 * @param[out] b Bounding box
+		 */
+		void make_box(box& b) const;
 
 		// MODIFIERS
 

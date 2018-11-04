@@ -1,4 +1,4 @@
-#include <base/renderer.hpp>
+#include <base/scene/renderer.hpp>
 
 // C incldues
 #include <assert.h>
@@ -13,26 +13,13 @@ using namespace std;
 // PRIVATE
 
 void renderer::make_model_box(model *m) {
-	const std::vector<vec3>& verts = m->get_vertices();
-
-	vec3 min = verts[0];
-	vec3 max = verts[0];
-	for (const vec3& v : verts) {
-		min.x = std::min(min.x, v.x);
-		min.y = std::min(min.y, v.y);
-		min.z = std::min(min.z, v.z);
-
-		max.x = std::max(max.x, v.x);
-		max.y = std::max(max.y, v.y);
-		max.z = std::max(max.z, v.z);
-	}
-
 	if (ms.size() == 1) {
-		B.set_min_max(min, max);
+		m->make_box(B);
 	}
 	else {
-		B.enlarge_box(min);
-		B.enlarge_box(max);
+		box b;
+		m->make_box(b);
+		B.enlarge_box(b);
 	}
 }
 
@@ -44,7 +31,7 @@ float renderer::get_aspect_ratio() const {
 
 // PUBLIC
 
-renderer::renderer(int w, int h) {
+renderer::renderer() {
 	cam_pos = vec3(0.0f,0.0f,0.0f);
 	pitch = 0.0f;
 	yaw = 0.0f;
@@ -57,9 +44,6 @@ renderer::renderer(int w, int h) {
 
 	inspect = true;
 	fly = false;
-
-	vp_width = w;
-	vp_height = h;
 }
 
 renderer::~renderer() {
@@ -165,6 +149,10 @@ orthogonal& renderer::get_orthogonal_camera() {
 
 const vec3& renderer::get_viewer_pos() const {
 	return cam_pos;
+}
+
+box& renderer::get_box() {
+	return B;
 }
 
 const box& renderer::get_box() const {

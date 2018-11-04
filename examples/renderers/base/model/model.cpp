@@ -97,6 +97,22 @@ const std::vector<vec3>& model::get_vertices() const {
 	return vertices;
 }
 
+void model::make_box(box& b) const {
+	vec3 min = vertices[0];
+	vec3 max = vertices[0];
+	for (const vec3& v : vertices) {
+		min.x = std::min(min.x, v.x);
+		min.y = std::min(min.y, v.y);
+		min.z = std::min(min.z, v.z);
+
+		max.x = std::max(max.x, v.x);
+		max.y = std::max(max.y, v.y);
+		max.z = std::max(max.z, v.z);
+	}
+
+	b.set_min_max(min, max);
+}
+
 void model::make_normals_flat() {
 	normals.clear();
 	normal_idxs.clear();

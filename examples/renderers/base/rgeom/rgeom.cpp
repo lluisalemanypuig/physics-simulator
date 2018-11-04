@@ -48,6 +48,7 @@ void rgeom::translate_object() const {
 
 void rgeom::draw() const {
 	if (model != nullptr) {
+		glEnable(GL_LIGHTING);
 		glPushMatrix();
 			translate_object();
 			model->render();

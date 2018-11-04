@@ -32,6 +32,7 @@ class box {
 
 		void set_min_max(const vec3& m, const vec3& M);
 		void enlarge_box(const vec3& v);
+		void enlarge_box(const box& b);
 		void translate_box(const vec3& t);
 
 		vec3 get_min() const;

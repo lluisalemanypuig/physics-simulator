@@ -18,19 +18,19 @@ HEADERS +=						\
 	obj_reader.hpp				\
 	box.hpp						\
 	include_gl.hpp				\
-	renderer.hpp				\
 	rgeom/rendered_geometry.hpp \
 	cameras/orthogonal.hpp		\
 	cameras/perspective.hpp		\
 	cameras/observer.hpp		\
 	model/model.hpp				\
 	model/model_utils.hpp		\
-	model/rendered_model.hpp
+	model/rendered_model.hpp	\
+	scene/renderer.hpp			\
+    scene/sim_renderer.hpp
 
 SOURCES +=						\
 	obj_reader.cpp				\
 	box.cpp						\
-	renderer.cpp				\
 	rgeom/rgeom.cpp				\
 	rgeom/rplane.cpp			\
 	rgeom/rrectangle.cpp		\
@@ -41,4 +41,6 @@ SOURCES +=						\
 	cameras/observer.cpp		\
 	model/model.cpp				\
 	model/model_utils.cpp		\
-	model/rendered_model.cpp
+	model/rendered_model.cpp	\
+	scene/renderer.cpp			\
+    scene/sim_renderer.cpp
