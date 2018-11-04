@@ -7,9 +7,10 @@ using namespace std;
 #include <base/include_gl.hpp>
 #include <base/model/rendered_model.hpp>
 #include <base/obj_reader.hpp>
+#include <base/scene/renderer.hpp>
 
 // custom includes
-#include <base/scene/renderer.hpp>
+#include "utils.hpp"
 
 typedef pair<int,int> point;
 
@@ -18,6 +19,10 @@ typedef pair<int,int> point;
 // ------------------
 
 renderer SR;
+timing::time_point sec;
+
+int FPS;
+int fps_count;
 
 int pressed_button;
 point last_mouse;
@@ -92,6 +97,10 @@ void initGL(int argc, char *argv[]) {
 
 	SR.set_window_dims(iw, ih);
 	SR.init_cameras();
+
+	sec = timing::now();
+	FPS = 20;
+	fps_count = 0;
 }
 
 // ------------
@@ -99,6 +108,8 @@ void initGL(int argc, char *argv[]) {
 // ------------
 
 void refresh() {
+	++fps_count;
+
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -120,6 +131,20 @@ void refresh() {
 	SR.get_box().draw_box();
 
 	glutSwapBuffers();
+}
+
+void timed_refresh(int value) {
+	refresh();
+
+	timing::time_point here = timing::now();
+	double elapsed = timing::elapsed_seconds(sec, here);
+	if (elapsed >= 1.0) {
+		cout << "fps count after a second: " << fps_count << endl;
+		fps_count = 0;
+		sec = timing::now();
+	}
+
+	glutTimerFunc(1000.0f/FPS, timed_refresh, 0);
 }
 
 // ---------------
@@ -236,6 +261,16 @@ void keyboard_event(unsigned char c, int x, int y) {
 		glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
 		glutSetCursor(GLUT_CURSOR_NONE);
 	}
+	else if (c == '+') {
+		if (FPS < 1000) {
+			++FPS;
+		}
+	}
+	else if (c == '-') {
+		if (FPS > 1) {
+			--FPS;
+		}
+	}
 	else {
 		if (SR.is_flying()) {
 			if (c == 'w') {
@@ -265,7 +300,8 @@ int main(int argc, char* argv[]) {
 	glutPassiveMotionFunc(mouse_movement);
 	glutMotionFunc(mouse_drag_event);
 
-	glutIdleFunc(refresh);
+	//glutIdleFunc(refresh);
+	glutTimerFunc(1000.0f/FPS, timed_refresh, 0);
 
 	glutMainLoop();
 }

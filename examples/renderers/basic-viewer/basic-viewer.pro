@@ -9,7 +9,8 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    utils.cpp
 
 # base (model, obj reader, ...)
 win32:CONFIG(release, debug|release): LIBS += -L../base/release/ -lbase
@@ -48,3 +49,6 @@ unix {
 		LIBS += -lGL
 	}
 }
+
+HEADERS += \
+    utils.hpp
