@@ -130,16 +130,25 @@ class simulator {
 	private:
 
 		/**
-		 * @brief Initialises a particle using @ref global_init.
+		 * @brief Initialises a particle using @ref global_init and computes
+		 * an initial previous position.
 		 *
-		 * First, it sets the force applied to the particle to be
-		 * the simulator's gravity (see @ref gravity). Then,
-		 * calls @ref global_init to initialise the rest of its
-		 * attributes. Finally, updates its previous position
-		 * so that the Verlet solver works corectly (see @ref solver_type).
+		 * Calls @ref global_init to initialise the rest of its
+		 * attributes and updates its previous position so that the Verlet
+		 * solver can corectly (see @ref solver_type).
 		 * @param p The particle to be initialsed.
 		 */
 		void init_particle(particles::free_particle *p);
+
+		/**
+		 * @brief Initialises a mesh.
+		 *
+		 * Computes an initial previous position for each particle of
+		 * the mesh so that the Verlet solver can work correctly
+		 * (see @ref solver_type).
+		 * @param m The mesh to be initialsed.
+		 */
+		void init_mesh(meshes::mesh *m);
 
 		/**
 		 * @brief Simulate free particles.
@@ -303,6 +312,9 @@ class simulator {
 		 *
 		 * The caller should not free the object since the simulator
 		 * will take care of that.
+		 *
+		 * This call must be called after initialising the mesh (that is,
+		 * after initialising the positions and making its initial state).
 		 * @param m A non-null pointer to the object.
 		 */
 		void add_mesh(meshes::mesh *m);

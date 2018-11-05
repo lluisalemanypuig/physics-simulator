@@ -38,6 +38,18 @@ void simulator::init_particle(particles::free_particle *p) {
 	__pm_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
 }
 
+void simulator::init_mesh(meshes::mesh *m) {
+	particles::mesh_particle **mps = m->get_particles();
+
+	// loop over the mesh's particles and compute
+	// their previous position
+
+	for (size_t i = 0; i < m->size(); ++i) {
+		// prev_pos <- pos - vel*dt
+		__pm_sub_v_vs(mps[i]->prev_pos, mps[i]->cur_pos, mps[i]->cur_vel, dt);
+	}
+}
+
 // PUBLIC
 
 simulator::simulator(const solver_type& s, float t) {
@@ -129,6 +141,7 @@ void simulator::clear_fields() {
 void simulator::add_mesh(meshes::mesh *m) {
 	assert(m != nullptr);
 	ms.push_back(m);
+	init_mesh(m);
 }
 
 void simulator::remove_mesh(size_t i) {
