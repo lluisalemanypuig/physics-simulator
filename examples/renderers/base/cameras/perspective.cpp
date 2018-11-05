@@ -9,6 +9,13 @@ static inline float rad_to_deg(float r) { return r*180.0f/M_PI; }
 perspective::perspective() {
 	zN = -1; zF = 1;
 }
+perspective::perspective(const perspective& p) : observer(p) {
+	raw = p.raw;
+	d = p.d;
+	alpha = p.alpha;
+	initial_alpha = p.initial_alpha;
+}
+
 perspective::~perspective() {}
 
 void perspective::make_Zs(const box& b) {

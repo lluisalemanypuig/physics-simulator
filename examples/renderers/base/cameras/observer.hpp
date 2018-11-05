@@ -6,6 +6,7 @@ class observer {
 
 	public:
 		observer();
+		observer(const observer& o);
 		~observer();
 
 		void set_znear(double zn);

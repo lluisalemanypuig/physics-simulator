@@ -26,7 +26,7 @@ void renderer::make_model_box(model *m) {
 // PROTECTED
 
 float renderer::get_aspect_ratio() const {
-	return float(vp_width)/float(vp_height);
+	return float(win_width)/float(win_height);
 }
 
 // PUBLIC
@@ -65,15 +65,15 @@ void renderer::add_model(rendered_model *m) {
 }
 
 void renderer::set_window_dims(int w, int h) {
-	vp_width = w;
-	vp_height = h;
+	win_width = w;
+	win_height = h;
 }
 
 void renderer::init_cameras() {
 	orth_cam.init_camera(B);
 	pers_cam.init_camera(B);
-	orth_cam.adapt_camera_to_viewport(B, vp_width, vp_height);
-	pers_cam.adapt_camera_to_viewport(vp_width, vp_height);
+	orth_cam.adapt_camera_to_viewport(B, win_width, win_height);
+	pers_cam.adapt_camera_to_viewport(win_width, win_height);
 
 	orth_cam.set_znear(0.1f);
 	orth_cam.set_zfar(1.5f*orth_cam.get_zfar());
@@ -137,6 +137,17 @@ void renderer::switch_to_orthogonal()	{ use_perspective = false; use_orthogonal 
 void renderer::switch_to_inspection()	{ inspect = true; fly = false; }
 void renderer::switch_to_flight()		{ inspect = false; fly = true; }
 
+// SETTERS
+
+void renderer::set_perspective(const perspective& p) { pers_cam = p; }
+void renderer::set_orthogonal(const orthogonal& o) { orth_cam = o; }
+void renderer::set_VRP(const vec3& _VRP) { VRP = _VRP; }
+void renderer::set_theta(float t) { theta = t; }
+void renderer::set_psi(float p) { psi = p; }
+void renderer::set_viewer_pos(const vec3& pos) { cam_pos = pos; }
+void renderer::set_yaw(float y) { yaw = y; }
+void renderer::set_pitch(float p) { pitch = p; }
+
 // GETTERS
 
 perspective& renderer::get_perspective_camera() {
@@ -160,10 +171,10 @@ const box& renderer::get_box() const {
 }
 
 int renderer::window_width() const {
-	return vp_width;
+	return win_width;
 }
 int renderer::window_height() const {
-	return vp_height;
+	return win_height;
 }
 
 bool renderer::is_flying() const {
@@ -175,6 +186,10 @@ bool renderer::is_inspecting() const {
 
 float renderer::get_yaw() const	{ return yaw; }
 float renderer::get_pitch() const{ return pitch; }
+
+const vec3& renderer::get_VRP() const { return VRP; }
+float renderer::get_theta() const { return theta; }
+float renderer::get_psi() const { return psi; }
 
 // OpenGL
 

@@ -15,6 +15,7 @@ class perspective : public observer {
 
 	public:
 		perspective();
+		perspective(const perspective& p);
 		~perspective();
 
 		void init_camera(const box& b);

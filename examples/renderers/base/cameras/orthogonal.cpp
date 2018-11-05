@@ -8,14 +8,23 @@ void orthogonal::iguala_NEW_OLD() {
 	total_zoom = 0;
 }
 
-orthogonal::orthogonal() {
+orthogonal::orthogonal() : observer() {
 	oleft = -1;
 	oright = 1;
 	obottom = -1;
 	otop = 1;
 	iguala_NEW_OLD();
-	zN = -1; zF = 1;
 	total_zoom = 0;
+}
+orthogonal::orthogonal(const orthogonal& o) : observer(o) {
+	oleft = o.oleft;
+	oright = o.oright;
+	obottom = o.obottom;
+	otop = o.otop;
+	nleft = o.nleft;
+	nright = o.nright;
+	nbottom = o.nbottom;
+	ntop = o.ntop;
 }
 
 orthogonal::~orthogonal() {}

@@ -16,15 +16,58 @@ using namespace physim;
 using namespace meshes;
 using namespace particles;
 
+inline
+void rainbow(float v, float m, float M, float& r, float& g, float& b) {
+	float s = (v - m)/(M - m);
+
+	if (s <= 0.2f) {
+		// RED
+		// from 0.0 to 0.2
+		r = 5.0f*(s - 0.0f);
+		g = 0.0f;
+		b = 0.0f;
+	}
+	else if (s <= 0.4f) {
+		// YELLOW
+		// from 0.2 to 0.4
+		r = 1.0f;
+		g = 5.0f*(s - 0.2f);
+		b = 0.0f;
+	}
+	else if (s <= 0.6f) {
+		// GREEN
+		// from 0.4 to 0.6
+		r = 5.0f*(s - 0.4f);
+		g = 1.0f;
+		b = 0.0f;
+	}
+	else if (s <= 0.8f) {
+		// TURQUOISE
+		// from 0.6 to 0.8
+		r = 0.0f;
+		g = 1.0f;
+		b = 5.0f*(s - 0.6f);
+	}
+	else if (s <= 1.0f) {
+		// BLUE
+		// from 0.8 to 1.0
+		r = 0.0f;
+		g = 5.0f*(s - 0.8f);
+		b = 1.0f;
+	}
+}
+
 void render_mesh1d(const mesh *m) {
 	particles::mesh_particle *const *ps = m->get_particles();
 
-	glColor3f(1.0f,1.0f,1.0f);
+	float r, g, b;
 	glBegin(GL_LINES);
 	for (size_t i = 0; i < m->size() - 1; ++i) {
 		const vec3& pos1 = ps[i]->cur_pos;
 		const vec3& pos2 = ps[i + 1]->cur_pos;
 
+		rainbow(i, 0,m->size(), r,g,b);
+		glColor3f(r,g,b);
 		glVertex3f(pos1.x, pos1.y, pos1.z);
 		glVertex3f(pos2.x, pos2.y, pos2.z);
 	}

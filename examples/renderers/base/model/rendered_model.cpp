@@ -199,9 +199,6 @@ uint rendered_model::compile() {
 	glNewList(list_index, GL_COMPILE);
 	slow_render();
 	glEndList();
-
-	cout << "rendered_model::compile() - index generated: " << list_index << endl;
-
 	return list_index;
 }
 

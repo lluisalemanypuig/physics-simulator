@@ -14,6 +14,7 @@ class orthogonal : public observer {
 
 	public:
 		orthogonal();
+		orthogonal(const orthogonal& o);
 		~orthogonal();
 
 		void init_camera(const box& b);

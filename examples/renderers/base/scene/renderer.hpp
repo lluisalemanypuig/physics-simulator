@@ -64,10 +64,10 @@ class renderer {
 		/// The camera flies free in the scene.
 		bool fly;
 
-		/// Viewport width.
-		int vp_width;
-		/// Viewport height.
-		int vp_height;
+		/// Window  width.
+		int win_width;
+		/// Window height.
+		int win_height;
 
 		/// Models in the scene.
 		std::vector<rendered_model *> loaded_models;
@@ -146,6 +146,19 @@ class renderer {
 		void switch_to_inspection();
 		void switch_to_flight();
 
+		// SETTERS
+
+		void set_perspective(const perspective& p);
+		void set_orthogonal(const orthogonal& o);
+
+		void set_VRP(const vec3& VRP);
+		void set_theta(float t);
+		void set_psi(float p);
+
+		void set_viewer_pos(const vec3& pos);
+		void set_yaw(float y);
+		void set_pitch(float p);
+
 		// GETTERS
 
 		/// Returns a reference to the perspective camera.
@@ -156,6 +169,14 @@ class renderer {
 
 		/// Returns the position of the viewer.
 		const vec3& get_viewer_pos() const;
+		/// Returns the yaw of the camera.
+		float get_yaw() const;
+		/// Returns the pitch of the camera.
+		float get_pitch() const;
+
+		const vec3& get_VRP() const;
+		float get_theta() const;
+		float get_psi() const;
 
 		/// Returns the bounding box of the scene.
 		box& get_box();
@@ -171,11 +192,6 @@ class renderer {
 		bool is_flying() const;
 		/// Returns whether the camera is inspecting.
 		bool is_inspecting() const;
-
-		/// Returns the yaw of the camera.
-		float get_yaw() const;
-		/// Returns the pitch of the camera.
-		float get_pitch() const;
 
 		// OpenGL
 
