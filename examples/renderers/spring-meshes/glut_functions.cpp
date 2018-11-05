@@ -33,7 +33,7 @@ namespace glut_functions {
 		draw_box = true;
 
 		display_fps = false;
-		FPS = 30;
+		FPS = 60;
 		fps_count = 0;
 
 		sec = timing::now();
