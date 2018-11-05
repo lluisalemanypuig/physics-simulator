@@ -26,6 +26,8 @@ class sim_renderer : public renderer {
 		/// Destructor.
 		~sim_renderer();
 
+		void clear();
+
 		void set_particle_size(float s);
 		void set_spring_width(float w);
 		void add_geometry(rgeom *r);

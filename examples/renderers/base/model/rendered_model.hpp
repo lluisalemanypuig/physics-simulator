@@ -36,7 +36,12 @@ class rendered_model : public model {
 	public:
 		/// Constructor.
 		rendered_model();
-		/// Copy constructor.
+		/**
+		 * @brief Copy constructor
+		 *
+		 * The index for the glList is not copied. Therefore, it
+		 * should be compiled again.
+		 */
 		rendered_model(const rendered_model& m);
 		/// Destructor.
 		~rendered_model();
@@ -60,6 +65,13 @@ class rendered_model : public model {
 
 		// MODIFIERS
 
+		/**
+		 * @brief Clears the memory occupied by the model.
+		 *
+		 * This means clearing not only the memory for the vertices,
+		 * normals, ..., but also the loaded textures and compiled
+		 * models.
+		 */
 		void clear();
 
 		// OTHERS

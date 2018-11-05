@@ -13,7 +13,7 @@ using namespace std;
 // PRIVATE
 
 void renderer::make_model_box(model *m) {
-	if (ms.size() == 1) {
+	if (loaded_models.size() == 1) {
 		m->make_box(B);
 	}
 	else {
@@ -51,16 +51,16 @@ renderer::~renderer() {
 }
 
 void renderer::clear() {
-	for (size_t i = 0; i < ms.size(); ++i) {
-		ms[i]->clear();
-		delete ms[i];
+	for (size_t i = 0; i < loaded_models.size(); ++i) {
+		loaded_models[i]->clear();
+		delete loaded_models[i];
 	}
-	ms.clear();
+	loaded_models.clear();
 }
 
 void renderer::add_model(rendered_model *m) {
 	assert(m != nullptr);
-	ms.push_back(m);
+	loaded_models.push_back(m);
 	make_model_box(m);
 }
 
@@ -221,7 +221,7 @@ void renderer::apply_camera() const {
 }
 
 void renderer::render_models() const {
-	for (rendered_model *m : ms) {
+	for (rendered_model *m : loaded_models) {
 		m->render();
 	}
 }

@@ -35,9 +35,17 @@ void render_mesh1d(const mesh *m) {
 
 sim_renderer::sim_renderer() : renderer() { }
 sim_renderer::~sim_renderer() {
+	clear();
+}
+
+void sim_renderer::clear() {
+	renderer::clear();
 	for (rgeom *g : geometry) {
+		g->clear();
 		delete g;
 	}
+	geometry.clear();
+	S.clear_simulation();
 }
 
 void sim_renderer::set_particle_size(float s) {

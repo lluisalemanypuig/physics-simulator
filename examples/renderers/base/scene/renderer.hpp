@@ -70,7 +70,7 @@ class renderer {
 		int vp_height;
 
 		/// Models in the scene.
-		std::vector<rendered_model *> ms;
+		std::vector<rendered_model *> loaded_models;
 
 	protected:
 		/// Returns the ratio window width / window height.
@@ -85,7 +85,7 @@ class renderer {
 		// MODIFIERS
 
 		/// Clears the models vector (see @ref ms).
-		void clear();
+		virtual void clear();
 
 		/**
 		 * @brief Adds a model to the simulation.

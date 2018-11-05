@@ -14,6 +14,10 @@ rgeom::rgeom() {
 }
 
 rgeom::~rgeom() {
+	clear();
+}
+
+void rgeom::clear() {
 	if (model != nullptr) {
 		delete model;
 		model = nullptr;

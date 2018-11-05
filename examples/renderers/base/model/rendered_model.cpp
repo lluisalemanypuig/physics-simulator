@@ -21,10 +21,10 @@ rendered_model::rendered_model(const rendered_model& m) : model(m) {
 	texture_coords = m.texture_coords;
 	texture_idxs = m.texture_idxs;
 	textures_indexes = m.textures_indexes;
-	list_index = m.list_index;
 }
 
 rendered_model::~rendered_model() {
+	clear();
 }
 
 // SETTERS

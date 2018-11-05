@@ -58,6 +58,10 @@ class rgeom {
 		rgeom();
 		virtual ~rgeom();
 
+		// MODIFIERS
+
+		void clear();
+
 		// SETTERS
 
 		void set_render(bool r);
