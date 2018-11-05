@@ -16,6 +16,7 @@ rsphere::~rsphere() {}
 
 void rsphere::translate_object() const {
 	glTranslatef(c.x,c.y,c.z);
+	glScalef(r/2.0f,r/2.0f,r/2.0f);
 }
 
 void rsphere::draw_geometry() const {

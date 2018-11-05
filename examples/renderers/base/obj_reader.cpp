@@ -402,6 +402,7 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 
 	mesh_state state = M.state();
 	if (state != mesh_state::correct) {
+		cout << "OBJ_reader::load_object: the contains errors" << endl;
 		return false;
 	}
 	else {

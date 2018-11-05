@@ -36,6 +36,8 @@ class rendered_model : public model {
 	public:
 		/// Constructor.
 		rendered_model();
+		/// Copy constructor.
+		rendered_model(const rendered_model& m);
 		/// Destructor.
 		~rendered_model();
 
@@ -54,7 +56,7 @@ class rendered_model : public model {
 
 		// GETTERS
 
-		mesh_state state() const;
+		mesh_state state(const mesh_state& ignore = mesh_state::correct) const;
 
 		// MODIFIERS
 

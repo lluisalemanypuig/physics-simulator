@@ -32,6 +32,14 @@ model::model() {
 	mesh_name = "anonymous";
 }
 
+model::model(const model& m) {
+	mesh_name = m.mesh_name;
+	vertices = m.vertices;
+	normals = m.normals;
+	triangles = m.triangles;
+	normal_idxs = m.normal_idxs;
+}
+
 model::~model() {
 	clear();
 }
@@ -60,33 +68,47 @@ void model::set_normal_idxs(const vector<int>& nrmls_idxs) {
 
 // MODIFIERS
 
-mesh_state model::state() const {
-	if (vertices.size() == 0) {
+mesh_state model::state(const mesh_state& ignore) const {
+	if (((ignore & mesh_state::no_vertices) == 0) and vertices.size() == 0) {
 		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    Vertices not found in mesh '" << mesh_name << "'" << endl;
 		return mesh_state::no_vertices;
 	}
-	if (triangles.size() == 0) {
+	if (((ignore & mesh_state::no_triangles) == 0) and triangles.size() == 0) {
 		cerr << "mesh::is_valid: Error" << endl;
 		cerr << "    No triangles found in mesh '" << mesh_name << "'" << endl;
 		return mesh_state::no_triangles;
 	}
+	if (((ignore & mesh_state::no_normals) == 0) and normals.size() == 0) {
+		cerr << "mesh::is_valid: Error" << endl;
+		cerr << "    No normal vectors found in mesh '" << mesh_name << "'" << endl;
+		return mesh_state::no_normals;
+	}
+
+	if ((ignore & mesh_state::vertex_idx_ob) == 0 and (ignore & mesh_state::normal_idx_ob) != 0) {
+		return mesh_state::correct;
+	}
 
 	// check that indexes are correct.
 	for (size_t t = 0; t < triangles.size(); ++t) {
-		if (triangles[t] != -1 and triangles[t] > vertices.size()) {
-			cerr << "mesh::is_valid: Error:" << endl;
-			cerr << "    Face " << t/3 << " has " << t%3 << "-th "
-				 << "vertex index (" << triangles[t]
-				 << ") out of bounds." << endl;
-			return mesh_state::vertex_idx_ob;
+		if ((ignore & mesh_state::vertex_idx_ob) == 0) {
+			if (triangles[t] != -1 and triangles[t] > vertices.size()) {
+				cerr << "mesh::is_valid: Error:" << endl;
+				cerr << "    Face " << t/3 << " has " << t%3 << "-th "
+					 << "vertex index (" << triangles[t]
+					 << ") out of bounds." << endl;
+				return mesh_state::vertex_idx_ob;
+			}
 		}
-		if (normal_idxs[t] != -1 and normal_idxs[t] > normals.size()) {
-			cerr << "mesh::is_valid: Error:" << endl;
-			cerr << "    Triangle " << t/3 << " has " << t%3 << "-th "
-				 << "normal index (" << normal_idxs[t]
-				 << ") out of bounds." << endl;
-			return mesh_state::normal_idx_ob;
+
+		if ((ignore & mesh_state::normal_idx_ob) == 0) {
+			if (normal_idxs[t] != -1 and normal_idxs[t] > normals.size()) {
+				cerr << "mesh::is_valid: Error:" << endl;
+				cerr << "    Triangle " << t/3 << " has " << t%3 << "-th "
+					 << "normal index (" << normal_idxs[t]
+					 << ") out of bounds." << endl;
+				return mesh_state::normal_idx_ob;
+			}
 		}
 	}
 

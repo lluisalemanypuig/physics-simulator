@@ -70,13 +70,17 @@ struct material {
  * These are used to inform the user of the type of errors
  * that are in the structure of the mesh.
  */
-enum class mesh_state : int8_t {
+enum mesh_state {
 	/// No errors in the mesh.
-	correct = 0,
+	correct					= 0x000,
 	/// The mesh has no vertices.
-	no_vertices,
+	no_vertices				= 0x001,
 	/// The mesh has no faces.
-	no_triangles,
+	no_triangles			= 0x002,
+	/// The mesh has no normals.
+	no_normals				= 0x004,
+	/// The mesh has no normal indexes.
+	no_normal_idxs			= 0x008,
 	/**
 	 * @brief There is a triangle that has a vertex
 	 * index out of bounds.
@@ -84,7 +88,7 @@ enum class mesh_state : int8_t {
 	 * That index has a value greater or equal than
 	 * the amount of vertices.
 	 */
-	vertex_idx_ob,
+	vertex_idx_ob			= 0x010,
 	/**
 	 * @brief There is a triangle that has a normal
 	 * index out of bounds.
@@ -92,7 +96,7 @@ enum class mesh_state : int8_t {
 	 * That index has a value greater or equal than the
 	 * amount of normal vectors.
 	 */
-	normal_idx_ob,
+	normal_idx_ob			= 0x020,
 	/**
 	 * @brief There is a triangle that has a texture coordinate
 	 * index out of bounds.
@@ -100,11 +104,11 @@ enum class mesh_state : int8_t {
 	 * That index has a value greater or equal than the amount
 	 * of texture coordinates.
 	 */
-	texture_coord_idx_ob,
+	texture_coord_idx_ob	= 0x040,
 	/**
 	 * @brief There is a triangle whose material was not
 	 * found within the collection of loaded materials.
 	 */
-	material_not_found
+	material_not_found		= 0x080
 };
 

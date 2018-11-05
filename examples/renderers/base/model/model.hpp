@@ -48,6 +48,8 @@ class model {
 	public:
 		/// Default constructor.
 		model();
+		/// Copy constructor.
+		model(const model& m);
 		/// Destructor.
 		virtual ~model();
 
@@ -71,7 +73,7 @@ class model {
 		 *
 		 * See @ref mesh_state for details.
 		 */
-		mesh_state state() const;
+		mesh_state state(const mesh_state& ignore = mesh_state::correct) const;
 
 		/// Returns a constant reference to this model's vertices.
 		const std::vector<vec3>& get_vertices() const;

@@ -15,6 +15,15 @@ rendered_model::rendered_model() : model() {
 	list_index = 0;
 }
 
+rendered_model::rendered_model(const rendered_model& m) : model(m) {
+	materials = m.materials;
+	mat_ids = m.mat_ids;
+	texture_coords = m.texture_coords;
+	texture_idxs = m.texture_idxs;
+	textures_indexes = m.textures_indexes;
+	list_index = m.list_index;
+}
+
 rendered_model::~rendered_model() {
 }
 
@@ -42,20 +51,22 @@ void rendered_model::set_textures_indices(const vector<unsigned int>& text_idxs)
 
 // GETTERS
 
-mesh_state rendered_model::state() const {
-	mesh_state s = model::state();
+mesh_state rendered_model::state(const mesh_state& ignore) const {
+	mesh_state s = model::state(ignore);
 	if (s != mesh_state::correct) {
 		return s;
 	}
 
 	// check that indexes are correct.
 	for (size_t t = 0; t < triangles.size(); ++t) {
-		if (texture_idxs[t] != -1 and texture_idxs[t] > texture_coords.size()) {
-			cerr << "mesh::is_valid: Error:" << endl;
-			cerr << "    Triangle " << t/3 << " has " << t%3 << "-th "
-				 << "texture index (" << texture_idxs[t]
-				 << ") out of bounds." << endl;
-			return mesh_state::texture_coord_idx_ob;
+		if ((ignore & mesh_state::texture_coord_idx_ob) == 0) {
+			if (texture_idxs[t] != -1 and texture_idxs[t] > texture_coords.size()) {
+				cerr << "mesh::is_valid: Error:" << endl;
+				cerr << "    Triangle " << t/3 << " has " << t%3 << "-th "
+					 << "texture index (" << texture_idxs[t]
+					 << ") out of bounds." << endl;
+				return mesh_state::texture_coord_idx_ob;
+			}
 		}
 		if (t%3 == 0) {
 			const string& m_id = mat_ids[t/3];
@@ -65,7 +76,7 @@ mesh_state rendered_model::state() const {
 					found = true;
 				}
 			}
-			if (not found) {
+			if ((ignore & mesh_state::material_not_found) == 0 and not found) {
 				cerr << "mesh::is_valid: Error:" << endl;
 				cerr << "    Triangle " << t/3 << " has a material assigned "
 					 << "that was not loaded" << endl;
@@ -171,8 +182,10 @@ void rendered_model::slow_render() const {
 
 			int vrtx_idx = triangles[i];
 
-			const vec3& n = normals[ normal_idxs[i] ];
-			glNormal3f(n.x, n.y, n.z);
+			if (normals.size() > 0) {
+				const vec3& n = normals[ normal_idxs[i] ];
+				glNormal3f(n.x, n.y, n.z);
+			}
 
 			const vec3& v = vertices[vrtx_idx];
 			glVertex3f(v.x, v.y, v.z);
