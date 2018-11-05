@@ -1,13 +1,8 @@
 
-/* This file contains a small function that tries to
- * update a particle after a collision with geometry
- * as best as possible (without using any data structure).
+/* This file contains small functions that can be used for
+ * all types of particles.
  *
- * This function tries to take into account that a
- * particle may collide with several geometrical objects
- * at the same time.
- *
- * This file is for the library's internal use only.
+ * This file is for library's internal use only.
  * Do not include.
  */
 
@@ -64,6 +59,9 @@ void simulator::compute_forces(P *p) {
 		f->compute_force(p, F);
 		__pm_add_acc_v(p->force, F);
 	}
+
+	// apply viscous drag
+	__pm_add_acc_vs(p->force, p->cur_vel, -visc_drag);
 }
 
 } // -- namespace physim

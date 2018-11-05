@@ -57,6 +57,7 @@ simulator::simulator(const solver_type& s, float t) {
 	stime = 0.0f;
 	dt = t;
 	solver = s;
+	visc_drag = 0.05f;
 	global_init = new init::initialiser();
 }
 
@@ -190,7 +191,13 @@ void simulator::add_gravity_acceleration(const math::vec3& g) {
 }
 
 void simulator::set_time_step(float t) {
+	assert(t >= 0.0f);
 	dt = t;
+}
+
+void simulator::set_viscous_drag(float d) {
+	assert(d >= 0.0f);
+	visc_drag = d;
 }
 
 void simulator::set_initialiser(const init::initialiser *f) {

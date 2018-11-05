@@ -103,8 +103,25 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	// discriminant of the quadratic equation
 	float discr = b*b - 4.0f*a*c;
 
-	// make sure the discriminant is positive
-	// to be safe that we can compute the square root
+	// allow negative values for the discriminant
+	// as long as they are close enough to 0
+	if (discr < 0.0f and std::abs(discr) <= 0.01f) {
+		discr = 0.0f;
+		#if defined (DEBUG)
+		std::cerr << "sphere::intersec_segment - corrected discriminant" << std::endl;
+		#endif
+	}
+
+	#if defined (DEBUG)
+	if (discr < 0.0f) {
+		std::cerr << "sphere::intersec_segment - Error:" << std::endl;
+		std::cerr << "    Negative value for the discriminant: " << discr << std::endl;
+		std::cerr << "    The application will crash" << std::endl;
+	}
+	#endif
+
+	// make sure the discriminant is positive so as
+	// to be safe when computing the square root
 	assert(discr >= 0.0f);
 
 	// compute both solutions of the equation and
@@ -139,7 +156,7 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	#if defined (DEBUG)
 	// make sure that L has the right value (with some tolerance)
 	if (not (-0.009f <= L and L <= 1.001f)) {
-		std::cerr << "sphere::intersec_segment: Error:" << std::endl;
+		std::cerr << "sphere::intersec_segment - Error:" << std::endl;
 		std::cerr << "    Value of L to determine intersection point is not valid." << std::endl;
 		std::cerr << "    L= " << L << std::endl;
 		std::cerr << "    Between the two solutions:" << std::endl;

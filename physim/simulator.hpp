@@ -94,8 +94,26 @@ class simulator {
 
 		/// Current time of the simulation.
 		float stime;
-		/// Time step of the simulation.
+		/**
+		 * @brief Time step of the simulation.
+		 *
+		 * Default value: 0.01.
+		 */
 		float dt;
+		/**
+		 * @brief Viscous drag coefficient.
+		 *
+		 * Applied as a force in the @ref compute_forces
+		 * method to enhance numerical stability (as
+		 * suggested in [1]).
+		 *
+		 * Default value: 0.01.
+		 *
+		 * [1] Physically based modeling.
+		 *     Andrew Witkin (Pixar Animation Studios)
+		 *     SIGGRAPH 2001 COURSE NOTES
+		 */
+		float visc_drag;
 
 		/// Solver used to update each particle's position.
 		solver_type solver;
@@ -379,6 +397,12 @@ class simulator {
 		 * @param t Time step of the simulation.
 		 */
 		void set_time_step(float t);
+
+		/**
+		 * @brief Sets the viscous drag coefficient.
+		 * @param d Positive floating-point value.
+		 */
+		void set_viscous_drag(float d);
 
 		/**
 		 * @brief Sets the particle initialiser function.
