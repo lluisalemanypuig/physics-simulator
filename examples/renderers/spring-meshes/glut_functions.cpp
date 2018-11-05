@@ -7,6 +7,9 @@ using namespace std;
 // base includes
 #include <base/include_gl.hpp>
 
+// physim includes
+#include <physim/meshes/mesh.hpp>
+
 namespace glut_functions {
 
 	// key definitions
@@ -171,12 +174,14 @@ namespace glut_functions {
 		UNUSED(x);
 		UNUSED(y);
 
+		string option;
+		float value;
+
 		switch (c) {
 		case ESC: glutDestroyWindow(window_id); break;
 		case 'p': SR.switch_to_perspective(); break;
 		case 'o': SR.switch_to_orthogonal(); break;
 		case 'b': draw_box = not draw_box; break;
-		case 'h': help(); break;
 		case 'z': display_fps = not display_fps; break;
 		case 'i':
 			SR.switch_to_inspection();
@@ -189,22 +194,22 @@ namespace glut_functions {
 			glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
 			glutSetCursor(GLUT_CURSOR_NONE);
 		case 'w':
-			if (SR.is_flying()) {
+			if (SR.is_flying() and lock_mouse) {
 				SR.camera_forwards(0.1f);
 			}
 			break;
 		case 'a':
-			if (SR.is_flying()) {
+			if (SR.is_flying() and lock_mouse) {
 				SR.camera_sideways_left(0.1f);
 			}
 			break;
 		case 's':
-			if (SR.is_flying()) {
+			if (SR.is_flying() and lock_mouse) {
 				SR.camera_backwards(0.1f);
 			}
 			break;
 		case 'd':
-			if (SR.is_flying()) {
+			if (SR.is_flying() and lock_mouse) {
 				SR.camera_sideways_right(0.1f);
 			}
 			break;
@@ -218,11 +223,78 @@ namespace glut_functions {
 				--FPS;
 			}
 			break;
+		case 'g':
+			cout << "Enter solver: ";
+			cin >> option;
+			if (option != "EulerOrig" and option != "EulerSemi" and option != "Verlet") {
+				cout << "    Invalid value for solver '" << option << "'" << endl;
+			}
+			else {
+				if (option == "EulerOrig") {
+					SR.get_simulator().set_solver(physim::solver_type::EulerOrig);
+				}
+				else if (option == "EulerSemi") {
+					SR.get_simulator().set_solver(physim::solver_type::EulerSemi);
+				}
+				else if (option == "Verlet") {
+					SR.get_simulator().set_solver(physim::solver_type::Verlet);
+				}
+			}
+			break;
+		case 'm':
+			cout << "Enter option: ";
+			cin >> option;
+
+			physim::simulator& S = SR.get_simulator();
+
+			if (option == "elasticity") {
+				cin >> value;
+				for (physim::meshes::mesh *m : S.get_meshes()) {
+					m->set_elasticity(value);
+				}
+			}
+			else if (option == "damping") {
+				cin >> value;
+				for (physim::meshes::mesh *m : S.get_meshes()) {
+					m->set_damping(value);
+				}
+			}
 		}
 	}
 
 	void help() {
-
+		cout << "Options common to all simulations:" << endl;
+		cout << endl;
+		cout << "    ESC: terminate the simulation" << endl;
+		cout << "    o: switch to orthogonal camera." << endl;
+		cout << "    p: switch to perspective camera." << endl;
+		cout << "    b: turn on/off drawing the bounding box of the scene." << endl;
+		cout << "    z: display fps count." << endl;
+		cout << "    i: switch to inspect mode." << endl;
+		cout << "        Click and drag with:" << endl;
+		cout << "        - left mouse button to rotate the scene." << endl;
+		cout << "        - right mouse button to zoom in/out." << endl;
+		cout << "    f: switch to flight mode." << endl;
+		cout << "        Move the cursor to orient the movement of the camera." << endl;
+		cout << "        Use the letters 'w','a','s','d' to move the camera." << endl;
+		cout << "        When clicking 'f' the mouse becomes locked: left click to unlock." << endl;
+		cout << "    g: change simulation solver." << endl;
+		cout << "        A message will be displayed 'Enter solver: '" << endl;
+		cout << "        Then, write one of the following strings and press enter" << endl;
+		cout << "        to set the solver:" << endl;
+		cout << "            EulerOrig, EulerSemi, Verlet" << endl;
+		cout << "    m: change properties of the mesh." << endl;
+		cout << "        A message will be displayed 'Enter option: '" << endl;
+		cout << "        Then, write one of the following options and its parameters:" << endl;
+		cout << "            elasticity k: change elasticity of the springs of the mesh." << endl;
+		cout << "                k is a floating point value. Default: 500" << endl;
+		cout << "            damping d: change damping factor of the springs of the mesh." << endl;
+		cout << "                d is a floating point value. Default: 0.5" << endl;
+		cout << "    r: reset simulation to its initial state" << endl;
+		cout << "    h: display the options available" << endl;
+		cout << "    +: increase FPS limit by one (up to at most 60)" << endl;
+		cout << "    -: decrease FPS limit by one (down to at least 1)" << endl;
+		cout << endl;
 	}
 
 } // -- namespace glut_functions

@@ -30,7 +30,7 @@ namespace study_cases {
 		SR.set_particle_size(2.0f);
 		SR.set_spring_width(1.5f);
 
-		SR.get_simulator().set_solver(solver_type::Verlet);
+		SR.get_simulator().set_solver(solver_type::EulerSemi);
 		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
 		float sx;
@@ -52,6 +52,7 @@ namespace study_cases {
 			mp[0]->cur_pos = vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
+				mp[k]->mass = 0.5f;
 			}
 			m->make_initial_state();
 
@@ -83,6 +84,7 @@ namespace study_cases {
 			mp[0]->cur_pos = vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
+				mp[k]->mass = 0.5f;
 			}
 			m->make_initial_state();
 
@@ -97,6 +99,7 @@ namespace study_cases {
 		sx = 12.5f;
 		for (int i = 0; i < 10; ++i) {
 			rendered_model *copy_ball = new rendered_model(*model_ball);
+			copy_ball->compile();
 
 			rsphere *rs = new rsphere();
 			rs->c = vec3(sx + 2.5f, 7.0f, 3*i);
@@ -120,22 +123,33 @@ namespace study_cases {
 			mp[0]->cur_pos = vec3(sx, 10.0f, 3*i);
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
+				mp[k]->mass = 0.5f;
 			}
 			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}
 
+		model_ball->clear();
+		delete model_ball;
+
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+	}
+
+	void sim0_help() {
+		glut_functions::help();
 	}
 
 	void sim0_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
+		case 'h':
+			sim0_help();
+			break;
 		case 'r':
-			SR.get_simulator().clear_simulation();
+			SR.clear();
 			sim0_make_simulation();
 			break;
 		}
