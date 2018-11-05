@@ -28,6 +28,11 @@ namespace glut_functions {
 	int FPS;
 	int fps_count;
 
+	float friction = 0.0f;
+	float bouncing = 0.8f;
+	float damping = 0.5f;
+	float elasticity = 500.0f;
+
 	void init_glut_variables() {
 		pressed_button = 0;
 		last_mouse = point(0,0);
@@ -114,7 +119,7 @@ namespace glut_functions {
 		UNUSED(x);
 		UNUSED(y);
 
-		if (SR.is_flying()) {
+		if (inside_window(x,y) and SR.is_flying()) {
 			if (button == GLUT_LEFT_BUTTON and state == 0) {
 				if (lock_mouse) {
 					lock_mouse = false;
@@ -135,7 +140,7 @@ namespace glut_functions {
 		int dy = y - last_mouse.second;
 		last_mouse = point(x,y);
 
-		if (SR.is_flying() and lock_mouse) {
+		if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 			SR.increment_yaw(-0.2f*dx);
 			SR.increment_pitch(-0.2f*dy);
 
@@ -184,32 +189,37 @@ namespace glut_functions {
 		case 'b': draw_box = not draw_box; break;
 		case 'z': display_fps = not display_fps; break;
 		case 'i':
-			SR.switch_to_inspection();
-			lock_mouse = false;
-			glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+			if (inside_window(x, y)) {
+				SR.switch_to_inspection();
+				lock_mouse = false;
+				glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+			}
 			break;
 		case 'f':
-			SR.switch_to_flight();
-			lock_mouse = true;
-			glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
-			glutSetCursor(GLUT_CURSOR_NONE);
+			if (inside_window(x, y)) {
+				SR.switch_to_flight();
+				lock_mouse = true;
+				glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
+				glutSetCursor(GLUT_CURSOR_NONE);
+			}
+			break;
 		case 'w':
-			if (SR.is_flying() and lock_mouse) {
+			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 				SR.camera_forwards(0.1f);
 			}
 			break;
 		case 'a':
-			if (SR.is_flying() and lock_mouse) {
+			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 				SR.camera_sideways_left(0.1f);
 			}
 			break;
 		case 's':
-			if (SR.is_flying() and lock_mouse) {
+			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 				SR.camera_backwards(0.1f);
 			}
 			break;
 		case 'd':
-			if (SR.is_flying() and lock_mouse) {
+			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 				SR.camera_sideways_right(0.1f);
 			}
 			break;
@@ -248,15 +258,31 @@ namespace glut_functions {
 			physim::simulator& S = SR.get_simulator();
 
 			if (option == "elasticity") {
-				cin >> value;
+				cin >> elasticity;
+				cout << "    Use elasticity coefficient: " << value << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
 					m->set_elasticity(value);
 				}
 			}
 			else if (option == "damping") {
-				cin >> value;
+				cin >> damping;
+				cout << "    Use damping factor: " << value << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
 					m->set_damping(value);
+				}
+			}
+			else if (option == "friction") {
+				cin >> friction;
+				cout << "    Use friction coefficient: " << value << endl;
+				for (physim::meshes::mesh *m : S.get_meshes()) {
+					m->friction = value;
+				}
+			}
+			else if (option == "bouncing") {
+				cin >> bouncing;
+				cout << "    Use bouncing coefficient: " << value << endl;
+				for (physim::meshes::mesh *m : S.get_meshes()) {
+					m->bouncing = value;
 				}
 			}
 		}
@@ -290,6 +316,10 @@ namespace glut_functions {
 		cout << "                k is a floating point value. Default: 500" << endl;
 		cout << "            damping d: change damping factor of the springs of the mesh." << endl;
 		cout << "                d is a floating point value. Default: 0.5" << endl;
+		cout << "            friction f: change friction coefficient of all meshes." << endl;
+		cout << "                f is a floating point value. Default: 0.0" << endl;
+		cout << "            bouncing b: change bouncing coefficient of all meshes." << endl;
+		cout << "                b is a floating point value. Default: 0.8" << endl;
 		cout << "    r: reset simulation to its initial state" << endl;
 		cout << "    h: display the options available" << endl;
 		cout << "    +: increase FPS limit by one (up to at most 60)" << endl;

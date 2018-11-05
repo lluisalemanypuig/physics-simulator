@@ -31,9 +31,16 @@ namespace glut_functions {
 	extern int FPS;
 	extern int fps_count;
 
+	extern float friction;
+	extern float bouncing;
+	extern float damping;
+	extern float elasticity;
+
 	// helper functions
 	static inline
-	bool inside_window(int x, int y, int w, int h) {
+	bool inside_window(int x, int y) {
+		int w = SR.window_width();
+		int h = SR.window_height();
 		return ((0 <= x) and (x <= w))
 		   and ((0 <= y) and (y <= h));
 	}

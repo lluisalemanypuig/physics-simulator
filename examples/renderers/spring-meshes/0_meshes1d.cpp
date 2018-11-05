@@ -44,8 +44,10 @@ namespace study_cases {
 			int j = 5*i;
 			meshes::mesh1d *m = new meshes::mesh1d();
 			m->allocate(j);
-			m->set_elasticity(500.0f);
-			m->set_damping(0.5f);
+			m->set_elasticity(glut_functions::elasticity);
+			m->set_damping(glut_functions::damping);
+			m->friction = glut_functions::friction;
+			m->bouncing = glut_functions::bouncing;
 
 			mesh_particle **mp = m->get_particles();
 			mp[0]->fixed = true;
@@ -61,8 +63,8 @@ namespace study_cases {
 
 		// 10 springs on top of a rectangle
 		rrectangle *rect = new rrectangle();
-		rect->p1 = vec3( 4.5f, 7.0f, -0.5f);
-		rect->p2 = vec3( 4.5f, 7.0f, 10.0f);
+		rect->p1 = vec3( 5.5f, 7.0f, -0.5f);
+		rect->p2 = vec3( 5.5f, 7.0f, 10.0f);
 		rect->p3 = vec3(10.5f, 7.0f, 10.0f);
 		rect->p4 = vec3(10.5f, 7.0f, -0.5f);
 		SR.add_geometry(rect);
@@ -76,8 +78,10 @@ namespace study_cases {
 			int j = 5*i;
 			meshes::mesh1d *m = new meshes::mesh1d();
 			m->allocate(j);
-			m->set_elasticity(500.0f);
-			m->set_damping(0.5f);
+			m->set_elasticity(glut_functions::elasticity);
+			m->set_damping(glut_functions::damping);
+			m->friction = glut_functions::friction;
+			m->bouncing = glut_functions::bouncing;
 
 			mesh_particle **mp = m->get_particles();
 			mp[0]->fixed = true;
@@ -115,8 +119,10 @@ namespace study_cases {
 			int j = 5*i;
 			meshes::mesh1d *m = new meshes::mesh1d();
 			m->allocate(j);
-			m->set_elasticity(500.0f);
-			m->set_damping(0.5f);
+			m->set_elasticity(glut_functions::elasticity);
+			m->set_damping(glut_functions::damping);
+			m->friction = glut_functions::friction;
+			m->bouncing = glut_functions::bouncing;
 
 			mesh_particle **mp = m->get_particles();
 			mp[0]->fixed = true;
@@ -150,7 +156,29 @@ namespace study_cases {
 			break;
 		case 'r':
 			SR.clear();
+			// copy cameras
+			perspective old_p = SR.get_perspective_camera();
+			orthogonal old_o = SR.get_orthogonal_camera();
+
+			vec3 VRP = SR.get_VRP();
+			float theta = SR.get_theta();
+			float psi = SR.get_psi();
+
+			vec3 viewer_pos = SR.get_viewer_pos();
+			float yaw = SR.get_yaw();
+			float pitch = SR.get_pitch();
+
 			sim0_make_simulation();
+
+			SR.set_perspective(old_p);
+			SR.set_orthogonal(old_o);
+			SR.set_VRP(VRP);
+			SR.set_theta(theta);
+			SR.set_psi(psi);
+			SR.set_viewer_pos(viewer_pos);
+			SR.set_yaw(yaw);
+			SR.set_pitch(pitch);
+
 			break;
 		}
 	}
@@ -186,7 +214,6 @@ namespace study_cases {
 	}
 
 	void sim0_1dmeshes(int argc, char *argv[]) {
-
 		sim0_initGL(0, nullptr);
 
 		glutDisplayFunc(glut_functions::refresh);
