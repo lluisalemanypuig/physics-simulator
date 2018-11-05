@@ -122,14 +122,13 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	}
 	else {
 		if (Lp < 0.0f) {
-			dp = abs(Lp);
+			dp = std::abs(Lp);
 		}
 		else if (Lp > 1.0f) {
 			dp = Lp - 1.0f;
 		}
-		float dm = 0.0f;
 		if (Lm < 0.0f) {
-			dm = abs(Lm);
+			dm = std::abs(Lm);
 		}
 		else if (Lm > 1.0f) {
 			dm = Lm - 1.0f;
@@ -139,14 +138,13 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 
 	#if defined (DEBUG)
 	// make sure that L has the right value (with some tolerance)
-	if (not (-0.00009f <= L and L <= 1.00009f)) {
+	if (not (-0.009f <= L and L <= 1.001f)) {
 		std::cerr << "sphere::intersec_segment: Error:" << std::endl;
 		std::cerr << "    Value of L to determine intersection point is not valid." << std::endl;
 		std::cerr << "    L= " << L << std::endl;
 		std::cerr << "    Between the two solutions:" << std::endl;
 		std::cerr << "        Lp= " << Lp << ", dp= " << dp << std::endl;
 		std::cerr << "        Lm= " << Lm << ", dm= " << dm << std::endl;
-		assert( false );
 	}
 	#endif
 
