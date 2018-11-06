@@ -15,6 +15,7 @@ HEADERS +=							\
 	sim_solver.cpp					\
 	particles/free_particle.hpp		\
 	particles/mesh_particle.hpp		\
+    particles/conversions.hpp		\
 	geometry/geometry.hpp			\
 	geometry/triangle.hpp			\
 	geometry/sphere.hpp				\
@@ -47,8 +48,7 @@ HEADERS +=							\
 	math/math_geometry.hpp			\
 	math/math_private.hpp			\
 	meshes/mesh.hpp					\
-    meshes/mesh1d.hp				\
-    particles/conversions.hpp
+    meshes/mesh1d.hpp
 
 SOURCES +=							\
 	simulator.cpp					\
