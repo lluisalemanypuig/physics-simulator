@@ -16,7 +16,7 @@ namespace fields {
  * applies on a particle of mass m.
  *
  * This gravitational field is caused by some body of mass
- * @ref M, at position @ref puntual::pos.
+ * @ref M, at position @ref punctual::pos.
  *
  * Therefore the force is computed using
  * \f$-G \cdot M \cdot m \cdot \frac{p - O}{||p - O||}\f$
@@ -28,6 +28,12 @@ namespace fields {
  */
 class gravitational : public punctual {
 	private:
+		/**
+		 * @brief Function that actuall computes the force of this field.
+		 *
+		 * Works for @ref particles::free_particle and
+		 * @ref particles::mesh_particle.
+		 */
 		template<class P>
 		void __compute_force(const P *p, math::vec3& F);
 

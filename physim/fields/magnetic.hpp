@@ -14,7 +14,7 @@ namespace fields {
  * field vector @ref B.
  *
  * There are several types of magnetic fields.
- * As an example, see @ref magnetic_B_field.
+ * As an example, see @ref magnetic_B.
  */
 class magnetic : public punctual {
 	protected:

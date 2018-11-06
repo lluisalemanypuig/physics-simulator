@@ -6,6 +6,7 @@
 namespace physim {
 namespace init {
 
+/// Shortcut for particles::free_particle.
 typedef particles::free_particle fpart;
 
 // PRIVATE

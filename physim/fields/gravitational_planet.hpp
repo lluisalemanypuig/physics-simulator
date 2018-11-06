@@ -27,6 +27,12 @@ namespace fields {
  */
 class gravitational_planet : public punctual {
 	private:
+		/**
+		 * @brief Function that actuall computes the force of this field.
+		 *
+		 * Works for @ref particles::free_particle and
+		 * @ref particles::mesh_particle.
+		 */
 		template<class P>
 		void __compute_force(const P *p, math::vec3& F);
 

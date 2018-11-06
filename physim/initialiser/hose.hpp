@@ -23,14 +23,13 @@ namespace init {
  * The distance between the vertex and the center of the base
  * is the height of the cone (see @ref h). For easier calculations
  * this object stores the perpendicular unit vectors @ref v and @ref w
- * that span the plane containing the base. Also, the unit vector
- * @ref u that points from the source to the base.
+ * that span the plane containing the base.
  *
  * In order to define this cone one has to use method
  * @ref set_hose_source. This method needs the @ref source of the
  * hose (the peak of the cone), a unit vector that points
- * from the source to the base (see @ref u), the radius of the
- * base @ref r, and finally the height of the cone, @ref h.
+ * from the source to the base, the radius of the base @ref r,
+ * and finally the height of the cone, @ref h.
  *
  * Particles are initialised with initial position @ref source.
  * The velocity is a random vector that goes from the @ref source
@@ -109,12 +108,15 @@ class hose : public initialiser {
 
 		/**
 		 * @brief Sets the source of the hose.
-		 * @param _S See @ref source.
-		 * @param _u See @ref u.
+		 * @param S See @ref source.
+		 * @param u Unit vector from the source to the center of the
+		 * base. Notice that the center of the base (@ref cc) is
+		 * calculated as S + h*u.
 		 * @param _r See @ref r.
 		 * @param _h See @ref h.
 		 */
-		void set_hose_source(const math::vec3& S, const math::vec3& u, float _r,float _h);
+		void set_hose_source
+		(const math::vec3& S, const math::vec3& u, float _r,float _h);
 
 		// GETTERS
 

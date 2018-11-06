@@ -126,9 +126,9 @@ class initialiser {
 		/**
 		 * @brief Initialise a particle.
 		 *
-		 * Each of the functions @ref pos, @ref vel, @ref force,
-		 * @ref mass, @ref bounce, @ref friction, @ref lifetime,
-		 * @ref starttime and @ref fixed are called on the particle.
+		 * Each of the functions for particle initialisation
+		 * are called on the particle. For details on the order,
+		 * see the description of this class.
 		 * @param p The particle to be initialised.
 		 */
 		void initialise_particle(particles::free_particle *p) const;

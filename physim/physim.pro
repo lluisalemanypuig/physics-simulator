@@ -29,7 +29,6 @@ HEADERS +=							\
     fields/punctual.hpp				\
     fields/magnetic.hpp				\
     fields/magnetic_B.hpp			\
-    fields/electric.hpp				\
     fields/gravitational.hpp		\
 	fields/gravitational_planet.hpp	\
 	math/math.hpp					\
@@ -66,7 +65,6 @@ SOURCES +=							\
 	initialiser/rect_shower.cpp		\
     initialiser/hose.cpp			\
     fields/field.cpp				\
-    fields/electric.cpp				\
     fields/magnetic_B.cpp			\
     fields/magnetic.cpp				\
     fields/punctual.cpp				\

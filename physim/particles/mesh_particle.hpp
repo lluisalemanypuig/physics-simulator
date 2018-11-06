@@ -31,7 +31,7 @@ class mesh_particle {
 		 *
 		 * The attributes of the class take the following values:
 		 * - @ref prev_pos : vec3(0,0,0)
-		 * - @ref cur_velocity : vec3(0,0,0)
+		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
 		 * - @ref mass : 1
 		 * - @ref charge : 0

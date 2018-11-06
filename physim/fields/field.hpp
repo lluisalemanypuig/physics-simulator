@@ -8,6 +8,19 @@
 namespace physim {
 namespace fields {
 
+/**
+ * @brief Abstract class for force fields.
+ *
+ * Any force field is interpreted as a vector field:
+ * given a position from the field's source there is
+ * a force vector that affects a particle in that
+ * position.
+ *
+ * The source is usually regarded as punctual, i.e.,
+ * the origin of the field is a point. However, this
+ * is considered as a type of field, and is implemented
+ * in class @ref fields::punctual.
+ */
 class field {
 	private:
 	protected:

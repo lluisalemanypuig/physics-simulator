@@ -130,18 +130,9 @@ class simulator {
 		 * like the velocity and position may not be zero, as a result
 		 * of running the simulation.
 		 *
-		 * The default behaviour of the function is not to do anything,
+		 * The default behaviour of the function is to not do anything,
 		 * that is, the attribtues of the particle are not modified
 		 * at all.
-		 *
-		 * It is important to mention that the force applied on a particle
-		 * is always set to be equal to the simulator's gravity (see @ref
-		 * gravity). However, it is set before calling the initialiser
-		 * function. Therefore, it is recommended to use the method @ref
-		 * particle::add_force if it is to be modified.
-		 *
-		 * It is recommended to set the particle's 'previous' state
-		 * to null values.
 		 */
 		init::initialiser *global_init;
 
@@ -386,7 +377,7 @@ class simulator {
 		 * how much time has passed since the last time step.
 		 *
 		 * Whenever a particle's lifetime has reached 0, method
-		 * @ref init_particle(particle*) is called.
+		 * @ref init_particle(particles::free_particle*) is called.
 		 */
 		void apply_time_step();
 

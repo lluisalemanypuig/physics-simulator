@@ -26,6 +26,16 @@ namespace meshes {
  */
 class mesh1d : public mesh {
 	private:
+		/**
+		 * @brief Original distances between the particles.
+		 *
+		 * Function @ref make_initial_state fills this vector
+		 * with the distances between the particles that they
+		 * had prior to calling this method.
+		 *
+		 * This vector is used to simulate correctly spring
+		 * meshes.
+		 */
 		std::vector<float> ds;
 
 	public:

@@ -16,13 +16,21 @@ namespace fields {
  *
  * \f$ \vec{F} = (q \cdot v_p) \times \vec{B}\f$,
  * where \f$q\f$ is the charge of the particle
- * (see @ref particle::charge), \f$B\f$ is the magnetic
- * field vector (see @ref magnetic_field::B) and
+ * (see @ref free_particle::charge and
+ * @ref mesh_particle::charge), \f$B\f$ is the
+ * magnetic field vector (see @ref magnetic::B) and
  * \f$v_p\f$ is the particle's punctual velocity
- * (see @ref particle::cur_vel).
+ * (see @ref free_particle::cur_vel and
+ * see @ref mesh_particle::cur_vel).
  */
 class magnetic_B : public magnetic {
 	private:
+		/**
+		 * @brief Function that actuall computes the force of this field.
+		 *
+		 * Works for @ref particles::free_particle and
+		 * @ref particles::mesh_particle.
+		 */
 		template<class P>
 		void __compute_force(const P *p, math::vec3& F);
 

@@ -88,7 +88,7 @@ class mesh {
 		// MODIFIERS
 
 		/// Frees the memory occupied by this mesh.
-		void clear();
+		virtual void clear();
 
 		/**
 		 * @brief Builds the initial state of the mesh.
@@ -142,7 +142,7 @@ class mesh {
 		/// Returns the number of particles of this mesh.
 		size_t size() const;
 
-		/// Returns the type of this mesh. See @ref mesh_type.
+		/// Returns the type of this mesh. See @ref mt.
 		const mesh_type& get_type() const;
 
 		/// Returns a reference to this mesh's particles.
