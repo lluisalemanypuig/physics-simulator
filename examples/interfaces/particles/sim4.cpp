@@ -1,7 +1,11 @@
 #include "mainwindow.hpp"
 
+// C includes
+#include <assert.h>
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/multisource.hpp>
 #include <physim/initialiser/hose.hpp>
 #include <physim/geometry/triangle.hpp>
 #include <physim/geometry/sphere.hpp>
@@ -33,27 +37,39 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	vec3 P(-1.0f, 3.0f, 0.5f);
 	vec3 S(-1.5f, 5.0f,-1.5f);
 
+	vec3 scene_top_center = (H + I + J + K)/4.0f;
 
-	//vec3 hK = K + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
-	//vec3 hL = L + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
-	vec3 hose_direction = normalise(L - K);
+	vec3 dir1 = normalise(scene_top_center - H);
+	vec3 dir2 = normalise(scene_top_center - I);
+	vec3 dir3 = normalise(scene_top_center - J);
+	vec3 dir4 = normalise(scene_top_center - K);
 
-	vec3 hK = K + hose_direction*0.1f + vec3(0.0f,0.5f,0.0f);
-	vec3 hL = L + vec3(0.0f,0.5f,0.0f);
-	vec3 diff = hK - hL;
-	float length_diff = norm(diff);
-	diff = normalise(diff);
+	vec3 source1 = H + dir1*0.25f;
+	vec3 source2 = I + dir2*0.25f;
+	vec3 source3 = J + dir3*0.25f;
+	vec3 source4 = K + dir4*0.25f;
 
-	hose h;
-	h.set_hose_source(hK, hose_direction, 0.5f, 3.0f*length_diff);
-	h.set_starttime_initialiser(
-		[](free_particle *p) {
-			p->starttime = p->index/500.0f ;
+	multisource<hose> ms;
+	ms.allocate(16000, 4);
+
+	std::vector<hose>& hoses = ms.get_sources();
+	hoses[0].set_hose_source(source1, dir1, 1.0f, 16.0f);
+	hoses[1].set_hose_source(source2, dir2, 8.0f, 12.0f);
+	hoses[2].set_hose_source(source3, dir3, 12.0f, 8.0f);
+	hoses[3].set_hose_source(source4, dir4, 16.0f, 1.0f);
+
+	ms.make_position_init();
+	ms.use_position_init();
+	ms.make_velocity_init();
+	ms.use_velocity_init();
+	ms.set_starttime_initialiser(
+		[](particles::free_particle *p) {
+			p->starttime = p->index/4000.0f;
 		}
 	);
 
-	make_init_with_params(h);
-	sr->get_simulator().set_initialiser(&h);
+	make_init_with_params(ms);
+	sr->get_simulator().set_initialiser(&ms);
 
 	rplane *floor = new rplane();
 	floor->p1 = E;
@@ -86,12 +102,21 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	wall4->p4 = D;
 	wall4->set_color(0.0f,0.0f,1.0f,1.0f);
 
+	rendered_model *sim_ball_copy;
+
 	rsphere *ball1 = new rsphere();
 	ball1->c = M;
 	ball1->r = 1.0f;
+	sim_ball_copy = new rendered_model(*sim_ball);
+	sim_ball_copy->compile();
+	ball1->set_model(sim_ball_copy);
+
 	rsphere *ball2 = new rsphere();
 	ball2->c = A;
 	ball2->r = 1.0f;
+	sim_ball_copy = new rendered_model(*sim_ball);
+	sim_ball_copy->compile();
+	ball2->set_model(sim_ball_copy);
 
 	rtriangle *ramp = new rtriangle();
 	ramp->p1 = S;
@@ -128,7 +153,7 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 
 	sr->get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
-	sr->add_particles(3000);
+	sr->add_particles(16000);
 }
 
 

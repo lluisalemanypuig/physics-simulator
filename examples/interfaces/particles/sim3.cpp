@@ -55,6 +55,10 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	ball->c = vec3(0.0f,2.0f,0.0f);
 	ball->r = 1.0f;
 
+	rendered_model *copy_sim_ball = new rendered_model(*sim_ball);
+	copy_sim_ball->compile();
+	ball->set_model(copy_sim_ball);
+
 	rrectangle *ramp = new rrectangle();
 	ramp->p1 = vec3( 0.0f, 2.0f,  1.0f);
 	ramp->p2 = vec3( 0.0f, 2.0f, -1.0f);

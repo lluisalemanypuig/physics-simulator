@@ -416,7 +416,7 @@ MainWindow::MainWindow(QWidget *parent)
 	cout << "    Loading models for renderisation..." << endl;
 	sim_ball = new rendered_model();
 	OBJ_reader obj;
-	obj.load_object("../../renderers/models", "sphere_hsmooth.obj", *sim_ball);
+	obj.load_object("../../interfaces/models", "sphere_hsmooth.obj", *sim_ball);
 	sim_ball->scale_to_unit();
 	get_SimRend(2)->set_sphere(sim_ball);
 	get_SimRend(3)->set_sphere(sim_ball);
