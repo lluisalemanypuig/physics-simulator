@@ -180,7 +180,6 @@ namespace glut_functions {
 		UNUSED(y);
 
 		string option;
-		float value;
 
 		switch (c) {
 		case ESC: glutDestroyWindow(window_id); break;
@@ -259,30 +258,30 @@ namespace glut_functions {
 
 			if (option == "elasticity") {
 				cin >> elasticity;
-				cout << "    Use elasticity coefficient: " << value << endl;
+				cout << "    Use elasticity coefficient: " << elasticity << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
-					m->set_elasticity(value);
+					m->set_elasticity(elasticity);
 				}
 			}
 			else if (option == "damping") {
 				cin >> damping;
-				cout << "    Use damping factor: " << value << endl;
+				cout << "    Use damping factor: " << damping << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
-					m->set_damping(value);
+					m->set_damping(damping);
 				}
 			}
 			else if (option == "friction") {
 				cin >> friction;
-				cout << "    Use friction coefficient: " << value << endl;
+				cout << "    Use friction coefficient: " << friction << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
-					m->friction = value;
+					m->friction = friction;
 				}
 			}
 			else if (option == "bouncing") {
 				cin >> bouncing;
-				cout << "    Use bouncing coefficient: " << value << endl;
+				cout << "    Use bouncing coefficient: " << bouncing << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
-					m->bouncing = value;
+					m->bouncing = bouncing;
 				}
 			}
 		}
