@@ -45,7 +45,9 @@ typedef std::function<void (particles::free_particle *)> partinit;
  * Therefore, there is no need to initialise it.
  *
  * The initialisation of the particle takes place in the method
- * @ref initialise_particle(free_particle *)const .
+ * @ref initialise_particle(free_particle *)const.
+ *
+ * Finally, all classes must implement the @ref clone function.
  */
 class initialiser {
 	protected:

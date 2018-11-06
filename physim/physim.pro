@@ -25,6 +25,8 @@ HEADERS +=							\
 	initialiser/rect_source.hpp		\
 	initialiser/rect_shower.hpp		\
     initialiser/hose.hpp			\
+    initialiser/multisource.hpp		\
+    initialiser/multisource.cpp		\
     fields/field.hpp				\
     fields/punctual.hpp				\
     fields/magnetic.hpp				\
@@ -45,7 +47,7 @@ HEADERS +=							\
 	math/math_geometry.hpp			\
 	math/math_private.hpp			\
 	meshes/mesh.hpp					\
-	meshes/mesh1d.hpp \
+    meshes/mesh1d.hp				\
     particles/conversions.hpp
 
 SOURCES +=							\
@@ -54,6 +56,7 @@ SOURCES +=							\
 	sim_meshes.cpp					\
 	particles/free_particle.cpp		\
 	particles/mesh_particle.cpp		\
+    particles/conversions.cpp		\
 	geometry/geometry.cpp			\
 	geometry/triangle.cpp			\
 	geometry/sphere.cpp				\
@@ -71,5 +74,4 @@ SOURCES +=							\
     fields/gravitational.cpp		\
 	fields/gravitational_planet.cpp \
 	meshes/mesh.cpp					\
-	meshes/mesh1d.cpp \
-    particles/conversions.cpp
+    meshes/mesh1d.cpp
