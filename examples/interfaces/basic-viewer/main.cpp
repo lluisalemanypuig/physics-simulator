@@ -23,6 +23,7 @@ timing::time_point sec;
 
 int FPS;
 int fps_count;
+bool display_fps_count;
 
 int pressed_button;
 point last_mouse;
@@ -85,7 +86,7 @@ void initGL(int argc, char *argv[]) {
 	OBJ_reader obj;
 
 	m = new rendered_model();
-	obj.load_object("../../renderers/models" , "sphere.obj", *m);
+	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
 	m->compile();
 	SR.add_model(m);
 
@@ -99,7 +100,8 @@ void initGL(int argc, char *argv[]) {
 	SR.init_cameras();
 
 	sec = timing::now();
-	FPS = 20;
+	display_fps_count = true;
+	FPS = 60;
 	fps_count = 0;
 }
 
@@ -134,12 +136,16 @@ void refresh() {
 }
 
 void timed_refresh(int value) {
+	UNUSED(value);
+
 	refresh();
 
 	timing::time_point here = timing::now();
 	double elapsed = timing::elapsed_seconds(sec, here);
 	if (elapsed >= 1.0) {
-		cout << "fps count after a second: " << fps_count << endl;
+		if (display_fps_count) {
+			cout << "fps " << fps_count << " (" << FPS << ")" << endl;
+		}
 		fps_count = 0;
 		sec = timing::now();
 	}
@@ -262,7 +268,7 @@ void keyboard_event(unsigned char c, int x, int y) {
 		glutSetCursor(GLUT_CURSOR_NONE);
 	}
 	else if (c == '+') {
-		if (FPS < 1000) {
+		if (FPS < 59) {
 			++FPS;
 		}
 	}
@@ -270,6 +276,9 @@ void keyboard_event(unsigned char c, int x, int y) {
 		if (FPS > 1) {
 			--FPS;
 		}
+	}
+	else if (c == 'x') {
+		display_fps_count = not display_fps_count;
 	}
 	else {
 		if (SR.is_flying()) {
