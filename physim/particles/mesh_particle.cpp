@@ -15,7 +15,7 @@ void mesh_particle::init() {
 	__pm_assign_s(prev_pos, 0.0f);
 	__pm_assign_s(cur_vel, 0.0f);
 	__pm_assign_s(force, 0.0f);
-	mass = 1.0f;
+	mass = 0.25f;
 	charge = 0.0f;
 	fixed = false;
 }

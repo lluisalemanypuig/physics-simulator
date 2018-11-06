@@ -16,8 +16,8 @@ void free_particle::init() {
 	__pm_assign_s(cur_vel, 0.0f);
 	__pm_assign_s(force, 0.0f);
 	mass = 1.0f;
-	bouncing = 1.0f;
-	friction = 0.0f;
+	bouncing = 0.8f;
+	friction = 0.2f;
 	charge = 0.0f;
 	lifetime = 10.0f;
 	starttime = 0.0f;

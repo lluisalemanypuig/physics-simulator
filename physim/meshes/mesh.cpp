@@ -12,15 +12,15 @@ namespace meshes {
 // PUBLIC
 
 mesh::mesh() {
-	friction = 0.0f;
+	friction = 0.2f;
 	bouncing = 0.8f;
-	Ke = 0.0f;
-	Kd = 0.0f;
+	Ke = 100.0f;
+	Kd = 0.05f;
 	N = 0;
 	ps = nullptr;
 }
 mesh::mesh(float ke, float kd) {
-	friction = 0.0f;
+	friction = 0.2f;
 	bouncing = 0.8f;
 	Ke = ke;
 	Kd = kd;

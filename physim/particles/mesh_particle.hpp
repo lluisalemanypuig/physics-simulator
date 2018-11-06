@@ -33,7 +33,7 @@ class mesh_particle {
 		 * - @ref prev_pos : vec3(0,0,0)
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
-		 * - @ref mass : 1
+		 * - @ref mass : 0.25
 		 * - @ref charge : 0
 		 * - @ref fixed : false
 		 * - @ref index : no value assigned, since it will be

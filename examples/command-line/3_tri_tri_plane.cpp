@@ -70,8 +70,8 @@ namespace study_cases {
 		float dt = 0.01f;
 		float total_time = 2.0f;
 		float lifetime = 2.0f;
-		float bounce = 1.0f;
-		float friction = 0.0f;
+		float bounce = 0.8f;
+		float friction = 0.2f;
 
 		bool ramp_plane = true;
 		bool bouncer_plane = true;

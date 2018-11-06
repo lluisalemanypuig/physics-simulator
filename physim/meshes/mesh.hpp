@@ -66,6 +66,12 @@ class mesh {
 		mesh();
 		/**
 		 * @brief Constructor with parameters.
+		 *
+		 * The following attributes are initialised:
+		 * - @ref Ke : 100
+		 * - @ref Kd : 0.05
+		 * - @ref bouncing : 0.8
+		 * - @ref friction : 0.2
 		 * @param ke Elasticity parameter.
 		 * @param kd Damping factor.
 		 */

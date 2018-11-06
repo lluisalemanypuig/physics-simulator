@@ -27,8 +27,8 @@ namespace study_cases {
 		float dt = 0.01f;
 		float total_time = 2.0f;
 		float lifetime = 2.0f;
-		float bounce = 1.0f;
-		float friction = 0.0f;
+		float bounce = 0.8f;
+		float friction = 0.2f;
 		float ix = 0.0f;
 
 		for (int i = 2; i < argc; ++i) {

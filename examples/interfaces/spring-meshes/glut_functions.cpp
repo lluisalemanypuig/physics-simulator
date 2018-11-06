@@ -28,7 +28,7 @@ namespace glut_functions {
 	int FPS;
 	int fps_count;
 
-	float friction = 0.0f;
+	float friction = 0.2f;
 	float bouncing = 0.8f;
 	float damping = 0.5f;
 	float elasticity = 500.0f;

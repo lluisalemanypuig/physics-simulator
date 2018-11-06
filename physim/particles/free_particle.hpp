@@ -36,18 +36,18 @@ class free_particle {
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
 		 * - @ref mass : 1
-		 * - @ref bouncing : 1
-		 * - @ref friction : 0
+		 * - @ref bouncing : 0.8
+		 * - @ref friction : 0.2
 		 * - @ref charge : 0
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
 		 * - @ref fixed : false
-		 * - @ref index : no value assigned, since it will be
-		 * overwritten by the simulator.
 		 *
 		 * The current position (@ref cur_pos) is not initialised
 		 * since it will be overwritten later in the methods that
-		 * also call this one.
+		 * also call this one. The other attributes, not mentioned
+		 * in the list above, are not modified either for similar
+		 * reasons.
 		 */
 		void init();
 

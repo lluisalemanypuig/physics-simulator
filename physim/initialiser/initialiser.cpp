@@ -18,8 +18,8 @@ initialiser::initialiser() {
 	vel			= [](fpart *p) { __pm_assign_s(p->cur_vel, 0.0f); };
 	mass		= [](fpart *p) { p->mass = 1.0f; };
 	charge		= [](fpart *p) { p->charge = 0.0f; };
-	bounce		= [](fpart *p) { p->bouncing = 1.0f; };
-	friction	= [](fpart *p) { p->friction = 0.0f; };
+	bounce		= [](fpart *p) { p->bouncing = 0.8f; };
+	friction	= [](fpart *p) { p->friction = 0.2f; };
 	lifetime	= [](fpart *p) { p->lifetime = 10.0f; };
 	starttime	= [](fpart *p) { p->starttime = 0.0f; };
 	fixed		= [](fpart *p) { p->fixed = false; };
