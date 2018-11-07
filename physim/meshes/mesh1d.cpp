@@ -64,20 +64,6 @@ void mesh1d::update_forces() {
 	}
 }
 
-void mesh1d::allocate(size_t n) {
-	if (ps != nullptr) {
-		clear();
-	}
-
-	N = n;
-	ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
-
-	for (size_t i = 0; i < N; ++i) {
-		ps[i] = new mesh_particle();
-		ps[i]->index = i;
-	}
-}
-
 void mesh1d::clear() {
 	mesh::clear();
 	ds.clear();

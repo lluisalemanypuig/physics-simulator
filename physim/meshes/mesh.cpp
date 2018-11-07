@@ -46,6 +46,36 @@ const particles::mesh_particle *mesh::operator[] (size_t i) const {
 
 // MODIFIERS
 
+void mesh::allocate(size_t n, float Kg) {
+	bool delete_particles;
+	if (ps != nullptr) {
+		// clear and allocate only if necessary
+		if (n == N) {
+			delete_particles = true;
+		}
+		else {
+			clear();
+			N = n;
+			ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
+			delete_particles = false;
+		}
+	}
+	else {
+		N = n;
+		ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
+		delete_particles = false;
+	}
+
+	for (size_t i = 0; i < N; ++i) {
+		if (delete_particles) {
+			delete ps[i];
+		}
+		ps[i] = new mesh_particle();
+		ps[i]->index = i;
+		ps[i]->mass = Kg/N;
+	}
+}
+
 void mesh::clear() {
 	if (ps == nullptr) {
 		return;
@@ -88,6 +118,14 @@ float mesh::get_friction() const {
 }
 float mesh::get_bouncing() const {
 	return bouncing;
+}
+
+void mesh::set_mass(float Kg) {
+	assert(ps != nullptr);
+
+	for (size_t i = 0; i < N; ++i) {
+		ps[i]->mass = Kg/N;
+	}
 }
 
 size_t mesh::size() const {

@@ -35,10 +35,14 @@ enum class mesh_type : int8_t {
  * particle in the spring, then, affects the other particles
  * it is attached to.
  *
- * All the springs of the mesh are described likewise with
+ * All the springs of the mesh are described similarly with
  * the following coefficients:
  * - elasticity parameter (see @ref Ke).
  * - damping factor (see @ref Kd).
+ *
+ * Some coefficients are common to all the particles:
+ * - bouncing coefficient (see @ref bouncing)
+ * - friction coefficient (see @ref friction)
  */
 class mesh {
 	protected:
@@ -66,7 +70,7 @@ class mesh {
 		/**
 		 * @brief Constructor with parameters.
 		 *
-		 * The following attributes are initialised:
+		 * The meshe's attributes are initialised to:
 		 * - @ref Ke : 100
 		 * - @ref Kd : 0.05
 		 * - @ref bouncing : 0.8
@@ -91,6 +95,28 @@ class mesh {
 		const particles::mesh_particle *operator[] (size_t i) const;
 
 		// MODIFIERS
+
+		/**
+		 * @brief Allocates memory for @e n particles.
+		 *
+		 * The previous contents of this spring are cleared
+		 * (see @ref clear).
+		 *
+		 * Every particle is initialised with its default
+		 * constructor. After that, they are assigned an
+		 * index within the mesh.
+		 *
+		 * This index is local, that is, the first particle
+		 * of every 1-dimensional mesh has index 0, the second
+		 * particle has index 1, ...
+		 *
+		 * The mass of each particle can also be initialised
+		 * at this point. The mass of the mesh (param @e Kg)
+		 * is divided uniformly among the @e n particles.
+		 * @param n Number of particles.
+		 * @param Kg Mass of the mesh.
+		 */
+		void allocate(size_t n, float Kg = 1.0f);
 
 		/// Frees the memory occupied by this mesh.
 		virtual void clear();
@@ -139,6 +165,15 @@ class mesh {
 		void set_friction(float ke);
 		/// Sets the bouncing factor of this mesh.
 		void set_bouncing(float kd);
+
+		/**
+		 * @brief Sets the mass (in Kg) of the mesh.
+		 *
+		 * The mass is divided uniformly among the particles of the mesh.
+		 * This method can only be called after allocating
+		 * @param Kg Mass of the mesh.
+		 */
+		void set_mass(float Kg);
 
 		// GETTERS
 

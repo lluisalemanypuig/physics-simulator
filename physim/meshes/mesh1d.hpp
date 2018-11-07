@@ -79,22 +79,6 @@ class mesh1d : public mesh {
 		 */
 		void update_forces();
 
-		/**
-		 * @brief Allocates memory for @e n particles.
-		 *
-		 * The previous contents of this spring are cleared
-		 * (see @ref clear).
-		 *
-		 * Every particle is initialised with its default
-		 * constructor. After that, they are assigned an
-		 * index within the mesh.
-		 *
-		 * This index is local, that is, the first particle
-		 * of every 1-dimensional mesh has index 0, the second
-		 * particle has index 1, ...
-		 */
-		void allocate(size_t n);
-
 		void clear();
 };
 
