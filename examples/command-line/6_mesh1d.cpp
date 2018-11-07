@@ -35,6 +35,7 @@ namespace study_cases {
 		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
 		cout << "        semi-euler: Euler semi-implicit integration method. Numerically stable." << endl;
 		cout << "        verlet:     Verlet integration method. Numerically even more stable." << endl;
+		cout << "    --print:        Print trajectory of particles.        Default: do not print" << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
@@ -47,6 +48,7 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 0.8f;
 		float friction = 0.2f;
+		bool print = false;
 		solver_type solv = solver_type::EulerSemi;
 
 		for (int i = 2; i < argc; ++i) {
@@ -73,6 +75,9 @@ namespace study_cases {
 			else if (strcmp(argv[i], "--friction") == 0) {
 				friction = atof(argv[i + 1]);
 				++i;
+			}
+			else if (strcmp(argv[i], "--print") == 0) {
+				print = true;
 			}
 			else if (strcmp(argv[i], "--solver") == 0) {
 				string solv_name = string(argv[i + 1]);
@@ -102,7 +107,11 @@ namespace study_cases {
 		}
 
 		mesh1d *m = new mesh1d();
+		// just for the sake of debugging
 		m->allocate(5);
+		m->clear();
+		m->allocate(5);
+
 		m->set_elasticity(500.0f);
 		m->set_damping(0.5f);
 
@@ -139,24 +148,26 @@ namespace study_cases {
 		}
 
 		if (output == "none") {
-			cout.setf(ios::fixed);
-			cout.precision(4);
+			if (print) {
+				cout.setf(ios::fixed);
+				cout.precision(4);
 
-			// only in plain text
-			cout << "Particle 0" << endl;
-			for (size_t i = 0; i < t0.size(); ++i) {
-				const vec3& v = t0[i];
-				cout << v.x << "," << v.y << "," << v.z << endl;
-			}
-			cout << "Particle 1" << endl;
-			for (size_t i = 0; i < t1.size(); ++i) {
-				const vec3& v = t1[i];
-				cout << v.x << "," << v.y << "," << v.z << endl;
-			}
-			cout << "Particle 2" << endl;
-			for (size_t i = 0; i < t2.size(); ++i) {
-				const vec3& v = t2[i];
-				cout << v.x << "," << v.y << "," << v.z << endl;
+				// only in plain text
+				cout << "Particle 0" << endl;
+				for (size_t i = 0; i < t0.size(); ++i) {
+					const vec3& v = t0[i];
+					cout << v.x << "," << v.y << "," << v.z << endl;
+				}
+				cout << "Particle 1" << endl;
+				for (size_t i = 0; i < t1.size(); ++i) {
+					const vec3& v = t1[i];
+					cout << v.x << "," << v.y << "," << v.z << endl;
+				}
+				cout << "Particle 2" << endl;
+				for (size_t i = 0; i < t2.size(); ++i) {
+					const vec3& v = t2[i];
+					cout << v.x << "," << v.y << "," << v.z << endl;
+				}
 			}
 		}
 		else {
