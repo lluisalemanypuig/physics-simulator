@@ -46,8 +46,8 @@ namespace study_cases {
 			m->allocate(j);
 			m->set_elasticity(glut_functions::elasticity);
 			m->set_damping(glut_functions::damping);
-			m->friction = glut_functions::friction;
-			m->bouncing = glut_functions::bouncing;
+			m->set_friction(glut_functions::friction);
+			m->set_bouncing(glut_functions::bouncing);
 
 			mesh_particle **mp = m->get_particles();
 			mp[0]->fixed = true;
@@ -80,8 +80,8 @@ namespace study_cases {
 			m->allocate(j);
 			m->set_elasticity(glut_functions::elasticity);
 			m->set_damping(glut_functions::damping);
-			m->friction = glut_functions::friction;
-			m->bouncing = glut_functions::bouncing;
+			m->set_friction(glut_functions::friction);
+			m->set_bouncing(glut_functions::bouncing);
 
 			mesh_particle **mp = m->get_particles();
 			mp[0]->fixed = true;
@@ -98,7 +98,7 @@ namespace study_cases {
 		// 10 springs on top of spheres
 		rendered_model *model_ball = new rendered_model();
 		OBJ_reader obj;
-		obj.load_object("../../renderers/models", "sphere.obj", *model_ball);
+		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
 
 		sx = 12.5f;
 		for (int i = 0; i < 10; ++i) {
@@ -121,8 +121,8 @@ namespace study_cases {
 			m->allocate(j);
 			m->set_elasticity(glut_functions::elasticity);
 			m->set_damping(glut_functions::damping);
-			m->friction = glut_functions::friction;
-			m->bouncing = glut_functions::bouncing;
+			m->set_friction(glut_functions::friction);
+			m->set_bouncing(glut_functions::bouncing);
 
 			mesh_particle **mp = m->get_particles();
 			mp[0]->fixed = true;

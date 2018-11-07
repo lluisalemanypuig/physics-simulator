@@ -63,9 +63,15 @@ void mesh::clear() {
 void mesh::set_elasticity(float ke) {
 	Ke = ke;
 }
-
 void mesh::set_damping(float kd) {
 	Kd = kd;
+}
+
+void mesh::set_friction(float f) {
+	friction = f;
+}
+void mesh::set_bouncing(float b) {
+	bouncing = b;
 }
 
 // GETTERS
@@ -73,9 +79,15 @@ void mesh::set_damping(float kd) {
 float mesh::get_elasticity() const {
 	return Ke;
 }
-
 float mesh::get_damping() const {
 	return Kd;
+}
+
+float mesh::get_friction() const {
+	return friction;
+}
+float mesh::get_bouncing() const {
+	return bouncing;
 }
 
 size_t mesh::size() const {

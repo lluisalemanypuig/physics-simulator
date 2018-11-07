@@ -55,7 +55,6 @@ class mesh {
 		/// Damping factor of each spring.
 		float Kd;
 
-	public:
 		/// Bouncing coefficient of all the particles in the mesh.
 		float bouncing;
 		/// Friction coefficient of all the particles in the mesh.
@@ -133,17 +132,25 @@ class mesh {
 
 		/// Sets the elasticity coefficient of this mesh.
 		void set_elasticity(float ke);
-
 		/// Sets the damping factor of this mesh.
 		void set_damping(float kd);
+
+		/// Sets the friction coefficient of this mesh.
+		void set_friction(float ke);
+		/// Sets the bouncing factor of this mesh.
+		void set_bouncing(float kd);
 
 		// GETTERS
 
 		/// Returns the elasticity coefficient of this mesh.
 		float get_elasticity() const;
-
 		/// Returns the damping factor of this mesh.
 		float get_damping() const;
+
+		/// Returns the friction coefficient of this mesh.
+		float get_friction() const;
+		/// Returns the bouncing factor of this mesh.
+		float get_bouncing() const;
 
 		/// Returns the number of particles of this mesh.
 		size_t size() const;

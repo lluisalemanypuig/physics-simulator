@@ -29,8 +29,8 @@ void simulator::simulate_meshes() {
 		// some of the meshe's attributes are needed
 		// in the collision prediction particle for...
 		// collision prediction
-		coll_pred.friction = m->friction;
-		coll_pred.bouncing = m->bouncing;
+		coll_pred.friction = m->get_friction();
+		coll_pred.bouncing = m->get_bouncing();
 
 		/* update a meshe's particles */
 		particles::mesh_particle **mps = m->get_particles();

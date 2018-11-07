@@ -274,14 +274,14 @@ namespace glut_functions {
 				cin >> friction;
 				cout << "    Use friction coefficient: " << friction << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
-					m->friction = friction;
+					m->set_friction(friction);
 				}
 			}
 			else if (option == "bouncing") {
 				cin >> bouncing;
 				cout << "    Use bouncing coefficient: " << bouncing << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
-					m->bouncing = bouncing;
+					m->set_bouncing(bouncing);
 				}
 			}
 		}
