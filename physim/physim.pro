@@ -38,6 +38,7 @@ HEADERS +=							\
 	math/vec2.hpp					\
 	math/vec3.hpp					\
 	math/vec4.hpp					\
+    math/vec6.hpp					\
 	math/math_ops.hpp				\
 	math/math_ops_add.hpp			\
 	math/math_ops_sub.hpp			\
