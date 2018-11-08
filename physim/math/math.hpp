@@ -7,3 +7,4 @@
 #include <physim/math/vec2.hpp>
 #include <physim/math/vec3.hpp>
 #include <physim/math/vec4.hpp>
+#include <physim/math/vec6.hpp>
