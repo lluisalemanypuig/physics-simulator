@@ -73,14 +73,14 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	/*
 	 * The intersection point between a segment and
 	 * a sphere is the point of the segment
-	 *          I = (1-L)*p + L*q, L in [0,1]
+	 *          I = (1-L)*p + L*q, for L in [0,1]
 	 * such that
 	 *     (I - C)**(I - C) - r = 0,
 	 * where ** represents the dot product
 	 *
 	 * Upon arithmetic manipulations we obtain that
 	 * we have to solve the following quadratic equation
-	 * for L:
+	 * in L:
 	 *   a*L^2 + b*L + c = 0
 	 *
 	 * where
@@ -145,7 +145,7 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 		// take value closest to the interval
 		L = (dp < dm ? Lp : Lm);
 		// if L is larger than 1 ... else if smaller than 0 ... else keep L
-		L = (L > 1.0f)*1.0f + (0.0f <= L and L <= 1.0f)*L;
+		L = (L > 1.0f)*1.0f + (L < 0.0f)*(0.0f) + (0.0f <= L and L <= 1.0f)*L;
 	}
 
 	// compute intersection point
