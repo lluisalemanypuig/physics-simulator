@@ -11,15 +11,6 @@ namespace particles {
 
 // PRIVATE
 
-void mesh_particle::init() {
-	__pm_assign_s(prev_pos, 0.0f);
-	__pm_assign_s(cur_vel, 0.0f);
-	__pm_assign_s(force, 0.0f);
-	mass = 0.25f;
-	charge = 0.0f;
-	fixed = false;
-}
-
 // PUBLIC
 
 mesh_particle::mesh_particle() {
@@ -45,6 +36,15 @@ mesh_particle::~mesh_particle() { }
 
 void mesh_particle::save_position() {
 	__pm_assign_v(prev_pos, cur_pos);
+}
+
+void mesh_particle::init() {
+	__pm_assign_s(prev_pos, 0.0f);
+	__pm_assign_s(cur_vel, 0.0f);
+	__pm_assign_s(force, 0.0f);
+	mass = 0.25f;
+	charge = 0.0f;
+	fixed = false;
 }
 
 } // -- namespace particles

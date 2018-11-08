@@ -11,19 +11,6 @@ namespace particles {
 
 // PRIVATE
 
-void free_particle::init() {
-	__pm_assign_s(prev_pos, 0.0f);
-	__pm_assign_s(cur_vel, 0.0f);
-	__pm_assign_s(force, 0.0f);
-	mass = 1.0f;
-	bouncing = 0.8f;
-	friction = 0.2f;
-	charge = 0.0f;
-	lifetime = 10.0f;
-	starttime = 0.0f;
-	fixed = false;
-}
-
 // PUBLIC
 
 free_particle::free_particle() {
@@ -63,6 +50,19 @@ void free_particle::reduce_starttime(float t) {
 
 void free_particle::save_position() {
 	__pm_assign_v(prev_pos, cur_pos);
+}
+
+void free_particle::init() {
+	__pm_assign_s(prev_pos, 0.0f);
+	__pm_assign_s(cur_vel, 0.0f);
+	__pm_assign_s(force, 0.0f);
+	mass = 1.0f;
+	bouncing = 0.8f;
+	friction = 0.2f;
+	charge = 0.0f;
+	lifetime = 10.0f;
+	starttime = 0.0f;
+	fixed = false;
 }
 
 } // -- namespace particles
