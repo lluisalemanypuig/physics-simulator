@@ -49,7 +49,9 @@ HEADERS +=							\
 	math/math_geometry.hpp			\
 	math/math_private.hpp			\
 	meshes/mesh.hpp					\
-    meshes/mesh1d.hpp
+    meshes/mesh1d.hpp				\
+    meshes/mesh2d.hpp				\
+    meshes/mesh2d_regular.hpp
 
 SOURCES +=							\
 	simulator.cpp					\
@@ -75,4 +77,6 @@ SOURCES +=							\
     fields/gravitational.cpp		\
 	fields/gravitational_planet.cpp \
 	meshes/mesh.cpp					\
-    meshes/mesh1d.cpp
+    meshes/mesh1d.cpp				\
+    meshes/mesh2d.cpp				\
+    meshes/mesh2d_regular.cpp
