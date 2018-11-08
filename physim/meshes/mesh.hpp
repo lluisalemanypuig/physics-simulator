@@ -18,12 +18,19 @@ namespace meshes {
  */
 enum class mesh_type : int8_t {
 	/**
-	 * @brief One-dimensional meshes.
+	 * @brief 1-dimensional meshes.
 	 *
 	 * Or, simply, springs. A particle's movement affects,
 	 * most, two particles (its neighbouring particles).
 	 */
-	d1 = 0
+	d1 = 0,
+	/**
+	 * @brief 2-dimensional meshes.
+	 *
+	 * Each non-border particle has 4 neighbours. Particles
+	 * at the corners have 2 neighbours and the rest have 3.
+	 */
+	d2_regular
 };
 
 /**

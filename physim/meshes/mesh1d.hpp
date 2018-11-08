@@ -5,6 +5,7 @@
 
 // physim includes
 #include <physim/particles/mesh_particle.hpp>
+#include <physim/math/math.hpp>
 #include <physim/meshes/mesh.hpp>
 
 namespace physim {
@@ -28,14 +29,24 @@ class mesh1d : public mesh {
 		/**
 		 * @brief Original distances between the particles.
 		 *
-		 * Function @ref make_initial_state fills this vector
-		 * with the distances between the particles that they
-		 * had prior to calling this method.
+		 * Function @ref make_initial_state fills this vector with the distances
+		 * between the particles' positions that they had prior to calling this
+		 * method. The particles used for computing these distances are neighbouring
+		 * particles.
 		 *
-		 * This vector is used to simulate correctly spring
-		 * meshes.
+		 * The contents are formally defined as:
+		 * stretch_ds[i].x = distance(particle i, particle i + 1)
+		 * for i ranging in [0, N - 2].
+		 *
+		 * stretch_ds[i].y = distance(particle i, particle i + 2)
+		 * for i ranging in [0, N - 3].
+		 *
+		 * The distances in the .x members are used for stretch forces.
+		 *
+		 * The distances in the .y members are used for bend forces.
 		 */
-		std::vector<float> ds;
+		math::vec2 *ds;
+
 
 	public:
 		/// Default constructor.
