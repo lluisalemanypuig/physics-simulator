@@ -27,43 +27,43 @@ typedef struct vec2 {
 	/// Construct a vector with coordinates (@e _x, @e _y).
 	vec2(float _x,float _y)						{ x = _x; y = _y; }
 	/// Copy constructor.
-	vec2(const vec2& v)							{ x = v.x; y = v.y; }
+	vec2(const vec2& p)							{ x = p.x; y = p.y; }
 	/// Assignation operator.
-	vec2& operator= (const vec2& v)				{ x = v.x; y = v.y;							return *this; }
+	vec2& operator= (const vec2& p)				{ x = p.x; y = p.y;							return *this; }
 	/// Vector-scalar addition.
 	inline vec2 operator+ (float s) const		{ vec2 r;	r.x = x + s; r.y = y + s;		return r; }
 	/// Vector-vector addition.
-	inline vec2 operator+ (const vec2& v) const	{ vec2 r;	r.x = x + v.x; r.y = y + v.y;	return r; }
+	inline vec2 operator+ (const vec2& p) const	{ vec2 r;	r.x = x + p.x; r.y = y + p.y;	return r; }
 	/// Vector-scalar addition.
 	inline vec2& operator+= (float s)			{			x += s; y += s;					return *this; }
 	/// Vector-vector addition.
-	inline vec2& operator+= (const vec2& v)		{			x += v.x; y += v.y;				return *this; }
+	inline vec2& operator+= (const vec2& p)		{			x += p.x; y += p.y;				return *this; }
 	/// Unary '-' operator. Inverts direction of vector.
 	inline vec2 operator- () const				{ vec2 r;	r.x = -x; r.y = -y;				return r; }
 	/// Vector-scalar substraction.
 	inline vec2 operator- (float s) const		{ vec2 r;	r.x = x - s; r.y = y - s;		return r; }
 	/// Vector-vector substraction.
-	inline vec2 operator- (const vec2& v) const	{ vec2 r;	r.x = x - v.x; r.y = y - v.y;	return r; }
+	inline vec2 operator- (const vec2& p) const	{ vec2 r;	r.x = x - p.x; r.y = y - p.y;	return r; }
 	/// Vector-scalar substraction.
 	inline vec2& operator-= (float s)			{			x -= s; y -= s;					return *this; }
 	/// Vector-vector substraction.
-	inline vec2& operator-= (const vec2& v)		{			x -= v.x; y -= v.y;				return *this; }
+	inline vec2& operator-= (const vec2& p)		{			x -= p.x; y -= p.y;				return *this; }
 	/// Vector-scalar multiplication.
 	inline vec2 operator* (float k) const		{ vec2 r;	r.x = x*k; r.y = y*k;			return r; }
 	/// Vector-vector multiplication.
-	inline vec2 operator* (const vec2& v) const	{ vec2 r;	r.x = x*v.x; r.y = y*v.y;		return r; }
+	inline vec2 operator* (const vec2& p) const	{ vec2 r;	r.x = x*p.x; r.y = y*p.y;		return r; }
 	/// Vector-scalar multiplication.
 	inline vec2& operator*= (float s)			{			x *= s; y *= s;					return *this; }
 	/// Vector-vector multiplication.
-	inline vec2& operator*= (const vec2& v)		{			x *= v.x; y *= v.y;				return *this; }
+	inline vec2& operator*= (const vec2& p)		{			x *= p.x; y *= p.y;				return *this; }
 	/// Vector-scalar division.
 	inline vec2 operator/ (float k) const		{ vec2 r;	r.x = x*(1.0f/k); r.y = y*(1.0f/k);		return r; }
 	/// Vector-vector division.
-	inline vec2 operator/ (const vec2& v) const	{ vec2 r;	r.x = x*(1.0f/v.x); r.y = y*(1.0f/v.y);	return r; }
+	inline vec2 operator/ (const vec2& p) const	{ vec2 r;	r.x = x*(1.0f/p.x); r.y = y*(1.0f/p.y);	return r; }
 	/// Vector-scalar division.
 	inline vec2& operator/= (float s)			{			x *= (1.0f/s); y *= (1.0f/s);			return *this; }
 	/// Vector-vector division.
-	inline vec2& operator/= (const vec2& v)		{			x *= (1.0f/v.x); y *= (1.0f/v.y);		return *this; }
+	inline vec2& operator/= (const vec2& p)		{			x *= (1.0f/p.x); y *= (1.0f/p.y);		return *this; }
 } vec2;
 
 /**

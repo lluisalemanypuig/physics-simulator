@@ -29,43 +29,43 @@ typedef struct vec3 {
 	/// Construct a vector with coordinates (@e _x, @e _y, @e _z).
 	vec3(float _x,float _y,float _z)			{ x = _x; y = _y; z = _z; }
 	/// Copy constructor.
-	vec3(const vec3& v)							{ x = v.x; y = v.y; z = v.z; }
+	vec3(const vec3& p)							{ x = p.x; y = p.y; z = p.z; }
 	/// Assignation operator.
-	vec3& operator= (const vec3& v)				{ x = v.x; y = v.y; z = v.z;	return *this; }
+	vec3& operator= (const vec3& p)				{ x = p.x; y = p.y; z = p.z;	return *this; }
 	/// Vector-scalar addition.
 	inline vec3 operator+ (float s) const		{ vec3 r;	r.x = x + s; r.y = y + s; r.z = z + s;			return r; }
 	/// Vector-vector addition.
-	inline vec3 operator+ (const vec3& v) const	{ vec3 r;	r.x = x + v.x; r.y = y + v.y; r.z = z + v.z;	return r; }
+	inline vec3 operator+ (const vec3& p) const	{ vec3 r;	r.x = x + p.x; r.y = y + p.y; r.z = z + p.z;	return r; }
 	/// Vector-scalar addition.
 	inline vec3& operator+= (float s)			{			x += s; y += s; z += s;							return *this; }
 	/// Vector-vector addition.
-	inline vec3& operator+= (const vec3& v)		{			x += v.x; y += v.y; z += v.z;					return *this; }
+	inline vec3& operator+= (const vec3& p)		{			x += p.x; y += p.y; z += p.z;					return *this; }
 	/// Unary '-' operator. Inverts direction of vector.
 	inline vec3 operator- () const				{ vec3 r;	r.x = -x; r.y = -y; r.z = -z;					return r; }
 	/// Vector-scalar substraction.
 	inline vec3 operator- (float s) const		{ vec3 r;	r.x = x - s; r.y = y - s; r.z = z - s;			return r; }
 	/// Vector-vector substraction.
-	inline vec3 operator- (const vec3& v) const	{ vec3 r;	r.x = x - v.x; r.y = y - v.y; r.z = z - v.z;	return r; }
+	inline vec3 operator- (const vec3& p) const	{ vec3 r;	r.x = x - p.x; r.y = y - p.y; r.z = z - p.z;	return r; }
 	/// Vector-scalar substraction.
 	inline vec3& operator-= (float s)			{			x -= s; y -= s; z -= s;							return *this; }
 	/// Vector-vector substraction.
-	inline vec3& operator-= (const vec3& v)		{			x -= v.x; y -= v.y; z -= v.z;					return *this; }
+	inline vec3& operator-= (const vec3& p)		{			x -= p.x; y -= p.y; z -= p.z;					return *this; }
 	/// Vector-scalar multiplication.
 	inline vec3 operator* (float k) const		{ vec3 r;	r.x = x*k; r.y = y*k; r.z = z*k;				return r; }
 	/// Vector-vector multiplication.
-	inline vec3 operator* (const vec3& v) const	{ vec3 r;	r.x = x*v.x; r.y = y*v.y; r.z = z*v.z;			return r; }
+	inline vec3 operator* (const vec3& p) const	{ vec3 r;	r.x = x*p.x; r.y = y*p.y; r.z = z*p.z;			return r; }
 	/// Vector-scalar multiplication.
 	inline vec3& operator*= (float s)			{			x *= s; y *= s; z *= s;							return *this; }
 	/// Vector-vector multiplication.
-	inline vec3& operator*= (const vec3& v)		{			x *= v.x; y *= v.y; z *= v.z;					return *this; }
+	inline vec3& operator*= (const vec3& p)		{			x *= p.x; y *= p.y; z *= p.z;					return *this; }
 	/// Vector-scalar division.
 	inline vec3 operator/ (float k) const		{ vec3 r;	r.x = x*(1.0f/k); r.y = y*(1.0f/k); r.z = z*(1.0f/k);		return r; }
 	/// Vector-vector division.
-	inline vec3 operator/ (const vec3& v) const	{ vec3 r;	r.x = x*(1.0f/v.x); r.y = y*(1.0f/v.y); r.z = z*(1.0f/v.z);	return r; }
+	inline vec3 operator/ (const vec3& p) const	{ vec3 r;	r.x = x*(1.0f/p.x); r.y = y*(1.0f/p.y); r.z = z*(1.0f/p.z);	return r; }
 	/// Vector-scalar division.
 	inline vec3& operator/= (float s)			{			x *= (1.0f/s); y *= (1.0f/s); z *= (1.0f/s);				return *this; }
 	/// Vector-vector division.
-	inline vec3& operator/= (const vec3& v)		{			x *= (1.0f/v.x); y *= (1.0f/v.y); z *= (1.0f/v.z);			return *this; }
+	inline vec3& operator/= (const vec3& p)		{			x *= (1.0f/p.x); y *= (1.0f/p.y); z *= (1.0f/p.z);			return *this; }
 } vec3;
 
 /**
