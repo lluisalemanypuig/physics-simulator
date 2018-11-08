@@ -37,14 +37,17 @@ namespace study_cases {
 
 		/* build meshes */
 
+		// -- group 1
 		// 10 'free' springs of increasing number of particles
 		sx = -2.5f;
-		for (int i = 1; i < 10; ++i) {
-
+		for (int i = 1; i <= 10; ++i) {
 			int j = 5*i;
 			meshes::mesh1d *m = new meshes::mesh1d();
-			m->allocate(j);
-			m->set_elasticity(glut_functions::elasticity);
+			m->allocate(j, 2.0f);
+			m->simulate_stretch(glut_functions::stretch);
+			m->simulate_shear(glut_functions::shear);
+			m->simulate_bend(glut_functions::bend);
+			m->set_elasticity(glut_functions::elasticity/i);
 			m->set_damping(glut_functions::damping);
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
@@ -54,13 +57,40 @@ namespace study_cases {
 			mp[0]->cur_pos = vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
-				mp[k]->mass = 0.5f;
 			}
 			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}
 
+		// -- group 2
+		// 10 'free' springs of increasing number of particles
+		sx = -2.5f;
+		for (int i = 1; i <= 10; ++i) {
+
+			int j = 5*i;
+			meshes::mesh1d *m = new meshes::mesh1d();
+			m->allocate(j, 0.5f*j);
+			m->simulate_stretch(glut_functions::stretch);
+			m->simulate_shear(glut_functions::shear);
+			m->simulate_bend(glut_functions::bend);
+			m->set_elasticity(glut_functions::elasticity);
+			m->set_damping(glut_functions::damping);
+			m->set_friction(glut_functions::friction);
+			m->set_bouncing(glut_functions::bouncing);
+
+			mesh_particle **mp = m->get_particles();
+			mp[0]->fixed = true;
+			mp[0]->cur_pos = vec3(sx, 10.0f, i + 15.0f);
+			for (int k = 1; k < j; ++k) {
+				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i + 15.0f);
+			}
+			m->make_initial_state();
+
+			SR.get_simulator().add_mesh(m);
+		}
+
+		// -- group 3
 		// 10 springs on top of a rectangle
 		rrectangle *rect = new rrectangle();
 		rect->p1 = vec3( 5.5f, 7.0f, -0.5f);
@@ -74,11 +104,14 @@ namespace study_cases {
 		SR.get_simulator().add_geometry(r);
 
 		sx = 5.0f;
-		for (int i = 1; i < 10; ++i) {
+		for (int i = 1; i <= 10; ++i) {
 			int j = 5*i;
 			meshes::mesh1d *m = new meshes::mesh1d();
-			m->allocate(j);
-			m->set_elasticity(glut_functions::elasticity);
+			m->allocate(j, 2.0f);
+			m->simulate_stretch(glut_functions::stretch);
+			m->simulate_shear(glut_functions::shear);
+			m->simulate_bend(glut_functions::bend);
+			m->set_elasticity(glut_functions::elasticity/i);
 			m->set_damping(glut_functions::damping);
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
@@ -88,20 +121,20 @@ namespace study_cases {
 			mp[0]->cur_pos = vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
-				mp[k]->mass = 0.5f;
 			}
 			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}
 
+		// -- group 4
 		// 10 springs on top of spheres
 		rendered_model *model_ball = new rendered_model();
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
 
 		sx = 12.5f;
-		for (int i = 0; i < 10; ++i) {
+		for (int i = 1; i <= 10; ++i) {
 			rendered_model *copy_ball = new rendered_model(*model_ball);
 			copy_ball->compile();
 
@@ -115,11 +148,14 @@ namespace study_cases {
 			SR.get_simulator().add_geometry(s);
 		}
 
-		for (int i = 1; i < 10; ++i) {
+		for (int i = 1; i <= 10; ++i) {
 			int j = 5*i;
 			meshes::mesh1d *m = new meshes::mesh1d();
-			m->allocate(j);
-			m->set_elasticity(glut_functions::elasticity);
+			m->allocate(j, 2.0f);
+			m->simulate_stretch(glut_functions::stretch);
+			m->simulate_shear(glut_functions::shear);
+			m->simulate_bend(glut_functions::bend);
+			m->set_elasticity(glut_functions::elasticity/i);
 			m->set_damping(glut_functions::damping);
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
@@ -129,7 +165,6 @@ namespace study_cases {
 			mp[0]->cur_pos = vec3(sx, 10.0f, 3*i);
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
-				mp[k]->mass = 0.5f;
 			}
 			m->make_initial_state();
 
@@ -145,6 +180,20 @@ namespace study_cases {
 
 	void sim0_help() {
 		glut_functions::help();
+
+		cout << "Simulation 1 description:" << endl;
+		cout << endl;
+		cout << "    This simulation features several springs colliding (or not)" << endl;
+		cout << "    with geometrical objects (spheres and planes)." << endl;
+		cout << endl;
+		cout << "    There are 4 groups of 10 meshes each. Except for one group," << endl;
+		cout << "    the mass (2 Kg) is diveded uniformly among the particles of the mesh." << endl;
+		cout << "    All springs have the same length but different number of particles." << endl;
+		cout << "    All the particles of all meshes in that one group have the same mass" << endl;
+		cout << "    (0.5 Kg), and the same elasticity constant (Ke = 500)." << endl;
+		cout << "    In the other groups, the i-th spring has 5*i particles, and its elasticity" << endl;
+		cout << "    constant (Ke) is set to 500/i, for 1 <= i <= 10." << endl;
+		cout << endl;
 	}
 
 	void sim0_regular_keys_keyboard(unsigned char c, int x, int y) {
@@ -208,12 +257,17 @@ namespace study_cases {
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
 
+		glut_functions::stretch = true;
+		glut_functions::shear = false;
+		glut_functions::bend = false;
+
 		// ---------------- //
 		/* build simulation */
 		sim0_make_simulation();
 	}
 
 	void sim0_1dmeshes(int argc, char *argv[]) {
+		sim0_help();
 		sim0_initGL(0, nullptr);
 
 		glutDisplayFunc(glut_functions::refresh);

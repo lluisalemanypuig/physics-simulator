@@ -1,4 +1,4 @@
-#include "sim_renderer.hpp"
+#include <base/scene/sim_renderer.hpp>
 
 // C includes
 #include <assert.h>
@@ -20,39 +20,53 @@ inline
 void rainbow(float v, float m, float M, float& r, float& g, float& b) {
 	float s = (v - m)/(M - m);
 
-	if (s <= 0.2f) {
+	if (s <= 0.0f) {
 		// RED
-		// from 0.0 to 0.2
-		r = 5.0f*(s - 0.0f);
+		// below 0.0
+		r = 1.0f;
 		g = 0.0f;
 		b = 0.0f;
 	}
-	else if (s <= 0.4f) {
-		// YELLOW
-		// from 0.2 to 0.4
+	else if (s <= 0.2f) {
+		// RED to YELLOW
+		// from 0.0 to 0.2
 		r = 1.0f;
-		g = 5.0f*(s - 0.2f);
+		g = 5.0f*(s - 0.0f);
+		b = 0.0f;
+	}
+	else if (s <= 0.4f) {
+		// YELLOW to GREEN
+		// from 0.2 to 0.4
+		r = -5.0f*s + 2.0f;
+		g = 1.0f;
 		b = 0.0f;
 	}
 	else if (s <= 0.6f) {
-		// GREEN
+		// GREEN to CYAN
 		// from 0.4 to 0.6
-		r = 5.0f*(s - 0.4f);
+		r = 0.0f;
 		g = 1.0f;
-		b = 0.0f;
+		b = 5.0f*(s - 0.4f);
 	}
 	else if (s <= 0.8f) {
-		// TURQUOISE
+		// CYAN to BLUE
 		// from 0.6 to 0.8
 		r = 0.0f;
-		g = 1.0f;
-		b = 5.0f*(s - 0.6f);
+		g = -5.0f*s + 4.0f;
+		b = 1.0f;
 	}
 	else if (s <= 1.0f) {
-		// BLUE
+		// BLUE to PURPLE
 		// from 0.8 to 1.0
-		r = 0.0f;
-		g = 5.0f*(s - 0.8f);
+		r = 5.0f*(s - 0.8f);
+		g = 0.0f;
+		b = 1.0f;
+	}
+	else if (1.0f <= s) {
+		// PURPLE
+		// above 1.0
+		r = 1.0f;
+		g = 0.0f;
 		b = 1.0f;
 	}
 }

@@ -19,11 +19,12 @@ namespace glut_functions {
 
 	// 'global' variables
 	extern sim_renderer SR;
+	extern int window_id;
+	extern timing::time_point sec;
+
 	extern int pressed_button;
 	extern point last_mouse;
 	extern bool lock_mouse;
-	extern int window_id;
-	extern timing::time_point sec;
 
 	extern bool draw_box;
 
@@ -36,7 +37,13 @@ namespace glut_functions {
 	extern float damping;
 	extern float elasticity;
 
-	// helper functions
+	extern bool stretch;
+	extern bool shear;
+	extern bool bend;
+
+	/* ---------------- */
+	/* helper functions */
+
 	static inline
 	bool inside_window(int x, int y) {
 		int w = SR.window_width();
@@ -47,6 +54,8 @@ namespace glut_functions {
 
 	template<typename T>
 	static inline void UNUSED(const T& x) { (void)x; }
+
+	void set_internal_forces();
 
 	/* --------------------- */
 	/* actual glut functions */

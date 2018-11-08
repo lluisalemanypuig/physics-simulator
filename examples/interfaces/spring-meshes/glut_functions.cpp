@@ -16,11 +16,12 @@ namespace glut_functions {
 	#define ESC 27
 
 	sim_renderer SR;
+	int window_id;
+	timing::time_point sec;
+
 	int pressed_button;
 	point last_mouse;
 	bool lock_mouse;
-	int window_id;
-	timing::time_point sec;
 
 	bool draw_box;
 
@@ -33,6 +34,10 @@ namespace glut_functions {
 	float damping = 0.5f;
 	float elasticity = 500.0f;
 
+	bool stretch;
+	bool shear;
+	bool bend;
+
 	void init_glut_variables() {
 		pressed_button = 0;
 		last_mouse = point(0,0);
@@ -44,7 +49,22 @@ namespace glut_functions {
 		FPS = 60;
 		fps_count = 0;
 
+		stretch = true;
+		shear = true;
+		bend = true;
+
 		sec = timing::now();
+
+		SR.get_simulator().set_solver(physim::solver_type::Verlet);
+	}
+
+	void set_internal_forces() {
+		const vector<physim::meshes::mesh *>& ms = SR.get_simulator().get_meshes();
+		for (physim::meshes::mesh *m : ms) {
+			m->simulate_stretch(stretch);
+			m->simulate_shear(shear);
+			m->simulate_bend(bend);
+		}
 	}
 
 	// ---------------
@@ -250,6 +270,21 @@ namespace glut_functions {
 				}
 			}
 			break;
+		case 't':
+			stretch = not stretch;
+			set_internal_forces();
+			cout << "Stretch: " << (stretch ? "On" : "Off") << endl;
+			break;
+		case 'y':
+			shear = not shear;
+			set_internal_forces();
+			cout << "Shear: " << (shear ? "On" : "Off") << endl;
+			break;
+		case 'u':
+			bend = not bend;
+			set_internal_forces();
+			cout << "Bend: " << (bend ? "On" : "Off") << endl;
+			break;
 		case 'm':
 			cout << "Enter option: ";
 			cin >> option;
@@ -308,6 +343,7 @@ namespace glut_functions {
 		cout << "        Then, write one of the following strings and press enter" << endl;
 		cout << "        to set the solver:" << endl;
 		cout << "            EulerOrig, EulerSemi, Verlet" << endl;
+		cout << "        Default: Verlet" << endl;
 		cout << "    m: change properties of the mesh." << endl;
 		cout << "        A message will be displayed 'Enter option: '" << endl;
 		cout << "        Then, write one of the following options and its parameters:" << endl;
@@ -321,6 +357,9 @@ namespace glut_functions {
 		cout << "                b is a floating point value. Default: 0.8" << endl;
 		cout << "    r: reset simulation to its initial state" << endl;
 		cout << "    h: display the options available" << endl;
+		cout << "    t: turn on/off stretch" << endl;
+		cout << "    y: turn on/off shear" << endl;
+		cout << "    u: turn on/off bend" << endl;
 		cout << "    +: increase FPS limit by one (up to at most 60)" << endl;
 		cout << "    -: decrease FPS limit by one (down to at least 1)" << endl;
 		cout << endl;
