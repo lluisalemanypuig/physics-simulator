@@ -31,15 +31,12 @@ namespace physim {
     /**
      * @brief Mathematical operations namespace.
      * 
-     * Contains the definition of the type @ref vec3.
+     * Contains the definition of the three different types of vectors:
+     * @ref vec2, @ref vec3 and @ref vec4.
      * 
      * Also, it contains several macros for the efficient compilation
      * of typical operations between vecors. These are not meant to be
      * used outside the library, since they are cumbersome to use.
-     * 
-     * However, in the files @ref math_ops.hpp, @ref math_misc.hpp,
-     * and @ref vec3.hpp, all the macros have been documented (though
-     * not appearing in the html documentation).
      */
     namespace math { }
     
@@ -65,5 +62,13 @@ namespace physim {
      * - @ref particles::mesh_particle
      */
     namespace particles { }
+    
+    /**
+     * @brief Spring meshes.
+     * 
+     * Namespace dedicated to the definition and implementation of
+     * systems of springs.
+     */
+    namespace meshes { }
 
 } // -- namespace sim
