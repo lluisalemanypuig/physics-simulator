@@ -12,20 +12,26 @@ namespace meshes {
 // PUBLIC
 
 mesh::mesh() {
+	N = 0;
+	ps = nullptr;
 	friction = 0.2f;
 	bouncing = 0.8f;
 	Ke = 100.0f;
 	Kd = 0.05f;
-	N = 0;
-	ps = nullptr;
+	stretch = false;
+	shear = false;
+	bend = false;
 }
 mesh::mesh(float ke, float kd) {
+	N = 0;
+	ps = nullptr;
 	friction = 0.2f;
 	bouncing = 0.8f;
 	Ke = ke;
 	Kd = kd;
-	N = 0;
-	ps = nullptr;
+	stretch = false;
+	shear = false;
+	bend = false;
 }
 
 mesh::~mesh() {
@@ -47,30 +53,35 @@ const particles::mesh_particle *mesh::operator[] (size_t i) const {
 // MODIFIERS
 
 void mesh::allocate(size_t n, float Kg) {
-	bool delete_particles;
+	// particles in the array should be
+	// initialised only, or reallocated?
+	bool new_particles;
+
 	if (ps != nullptr) {
 		// clear and allocate only if necessary
 		if (n == N) {
-			delete_particles = true;
+			new_particles = false;
 		}
 		else {
 			clear();
 			N = n;
 			ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
-			delete_particles = false;
+			new_particles = true;
 		}
 	}
 	else {
 		N = n;
 		ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
-		delete_particles = false;
+		new_particles = true;
 	}
 
 	for (size_t i = 0; i < N; ++i) {
-		if (delete_particles) {
-			delete ps[i];
+		if (new_particles) {
+			ps[i] = new mesh_particle();
 		}
-		ps[i] = new mesh_particle();
+		else {
+			ps[i]->init();
+		}
 		ps[i]->index = i;
 		ps[i]->mass = Kg/N;
 	}
@@ -104,6 +115,18 @@ void mesh::set_bouncing(float b) {
 	bouncing = b;
 }
 
+void mesh::simulate_stretch(bool s) {
+	stretch = s;
+}
+
+void mesh::simulate_shear(bool s) {
+	shear = s;
+}
+
+void mesh::simulate_bend(bool s) {
+	bend = s;
+}
+
 // GETTERS
 
 float mesh::get_elasticity() const {
@@ -118,6 +141,16 @@ float mesh::get_friction() const {
 }
 float mesh::get_bouncing() const {
 	return bouncing;
+}
+
+bool mesh::is_simulating_stretch() const {
+	return stretch;
+}
+bool mesh::is_simulating_shear() const {
+	return shear;
+}
+bool mesh::is_simulating_bend() const {
+	return bend;
 }
 
 void mesh::set_mass(float Kg) {

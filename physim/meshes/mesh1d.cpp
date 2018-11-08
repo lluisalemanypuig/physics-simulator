@@ -8,8 +8,6 @@
 #include <physim/math/math_private.hpp>
 
 namespace physim {
-using namespace particles;
-
 namespace meshes {
 
 // PUBLIC
@@ -40,16 +38,63 @@ void mesh1d::update_forces() {
 	math::vec3 F1_m1;
 	math::vec3 dir;
 	math::vec3 dvel;
-	float elastic_term, damping_term;
+	float elastic_term, damping_term, dist;
 
-	for (size_t i = 0; i < N - 1; ++i) {
+	// for loop for all valid indices in the mesh
+	for (size_t i = 0; i < N - 2; ++i) {
+		if (stretch) {
+			// direction vector
+			__pm_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
+			dist = __pm_norm(dir);
+			__pm_normalise(dir, dir);
+
+			// difference of velocities
+			__pm_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
+
+			// compute terms
+			elastic_term = Ke*(dist - ds[i]);
+			damping_term = Kd*__pm_dot(dvel, dir);
+
+			// compute forces
+			__pm_assign_vs(F1_m1, dir, elastic_term + damping_term);
+
+			__pm_add_acc_v(ps[i]->force, F1_m1);
+			__pm_invert(F1_m1, F1_m1);
+			__pm_add_acc_v(ps[i + 1]->force, F1_m1);
+		}
+
+		if (bend) {
+			// direction vector
+			__pm_sub_v_v(dir, ps[i + 2]->cur_pos, ps[i]->cur_pos);
+			dist = __pm_norm(dir);
+			__pm_normalise(dir, dir);
+
+			// difference of velocities
+			__pm_sub_v_v(dvel, ps[i + 2]->cur_vel, ps[i]->cur_vel);
+
+			// compute terms
+			elastic_term = Ke*(dist - ds[i]);
+			damping_term = Kd*__pm_dot(dvel, dir);
+
+			// compute forces
+			__pm_assign_vs(F1_m1, dir, elastic_term + damping_term);
+
+			__pm_add_acc_v(ps[i]->force, F1_m1);
+			__pm_invert(F1_m1, F1_m1);
+			__pm_add_acc_v(ps[i + 2]->force, F1_m1);
+		}
+	}
+
+	// last iteration of the for loop, only stretch
+	size_t i = N - 2;
+	if (stretch) {
 		// direction vector
-		__pm_sub_v_v(dir, ps[i+1]->cur_pos, ps[i]->cur_pos);
-		float dist = __pm_norm(dir);
+		__pm_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
+		dist = __pm_norm(dir);
 		__pm_normalise(dir, dir);
 
 		// difference of velocities
-		__pm_sub_v_v(dvel, ps[i+1]->cur_vel, ps[i]->cur_vel);
+		__pm_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
 
 		// compute terms
 		elastic_term = Ke*(dist - ds[i]);

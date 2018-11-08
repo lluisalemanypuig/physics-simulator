@@ -11,18 +11,17 @@ namespace physim {
 namespace meshes {
 
 /**
- * @brief Abstract spring mesh.
+ * @brief 1-Dimensional spring mesh.
  *
  * This represents a set of @ref particles::mesh_particle
- * where one particle is attached to some other particles
- * of the same mesh with a spring. The movement of one
- * particle in the spring, then, affects the other particles
- * it is attached to.
+ * where one particle is attached to at most two other
+ * particles.
  *
- * All the springs of the mesh are described likewise with
- * the following coefficients:
- * - elasticity parameter (see @ref Ke).
- * - damping factor (see @ref Kd).
+ * If the local index of a particle is 0, then
+ * that particle is connected only to particle with index 1.
+ * Similarly, the particle with local index N - 1 is only
+ * connected to that with index N - 2. The other particles
+ * are connected to the particles with index \f$\pm 1\f$.
  */
 class mesh1d : public mesh {
 	private:
@@ -67,15 +66,13 @@ class mesh1d : public mesh {
 		 * @brief Update the forces generated within the mesh.
 		 *
 		 * This method updates the forces acting on a particle @e i
-		 * and its neighbouring particles. The neighbouring particles
-		 * of a particle @e i are:
-		 * - \f$i + 1\f$ if \f$i=0\f$,
-		 * - \f$i - 1\f$ if \f$i=N-1\f$, (where \f$N\f$ is @ref mesh::N)
-		 * - \f$i - 1\f$ and \f$i + 1\f$ if otherwise.
+		 * and its neighbouring particles. This includes stretch and
+		 * beding forces.
 		 *
 		 * @pre The modification of the particle's forces should
 		 * not assume that particles start with null force (force
-		 * equal to 0 in the three axes).
+		 * equal to 0 in the three axes). Moreover, the initial state
+		 * of the mesh must have been made (see @ref make_initial_state).
 		 */
 		void update_forces();
 
