@@ -41,11 +41,11 @@ namespace study_cases {
 
 		// build regular mesh
 		mesh2d_regular *M = new mesh2d_regular();
-		M->simulate_bend(bend);
-		M->simulate_shear(shear);
-		M->simulate_stretch(stretch);
+		M->simulate_bend(glut_functions::bend);
+		M->simulate_shear(glut_functions::shear);
+		M->simulate_stretch(glut_functions::stretch);
 
-		M->allocate(n*m, 2.0f);
+		M->allocate(n*m, 5.0f);
 		M->set_dimensions(n, m);
 
 		M->set_elasticity(500.0f);
