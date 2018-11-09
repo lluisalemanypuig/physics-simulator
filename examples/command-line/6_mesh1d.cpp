@@ -26,10 +26,7 @@ namespace study_cases {
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
-		cout << "    --lifetime t:   the lifetime of the particle.         Default: 2.0" << endl;
 		cout << "    --total-time t: total time of the simulation.         Default: 2.0" << endl;
-		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
-		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
 		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
 		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
@@ -45,9 +42,6 @@ namespace study_cases {
 
 		float dt = 0.01f;
 		float total_time = 2.0f;
-		float lifetime = 2.0f;
-		float bounce = 0.8f;
-		float friction = 0.2f;
 		bool print = false;
 		solver_type solv = solver_type::EulerSemi;
 
@@ -56,24 +50,12 @@ namespace study_cases {
 				mesh1d_usage();
 				return;
 			}
-			else if (strcmp(argv[i], "--lifetime") == 0) {
-				lifetime = atof(argv[i + 1]);
-				++i;
-			}
 			else if (strcmp(argv[i], "--total-time") == 0) {
 				total_time = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--step") == 0) {
 				dt = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--bounce") == 0) {
-				bounce = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--friction") == 0) {
-				friction = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--print") == 0) {
@@ -184,9 +166,6 @@ namespace study_cases {
 				// configuration
 				fout << "step-time: " << dt << endl;
 				fout << "total-time: " << total_time << endl;
-				fout << "lifetime: " << lifetime << endl;
-				fout << "bounce: " << bounce << endl;
-				fout << "friction: " << friction << endl;
 
 				// first in Geogebra format
 				print_geogebra_trajectory(t0, fout);

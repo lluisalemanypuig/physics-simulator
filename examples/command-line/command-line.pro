@@ -18,7 +18,8 @@ SOURCES +=					\
 	3_tri_tri_plane.cpp		\
     4_roll_plane_sphere.cpp \
 	5_hose.cpp				\
-    6_mesh1d.cpp
+    6_mesh1d.cpp			\
+    7_mesh2d_regular.cpp
 
 HEADERS +=					\
 	utils.hpp				\

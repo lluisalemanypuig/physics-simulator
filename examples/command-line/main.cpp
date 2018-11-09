@@ -19,6 +19,7 @@ void list_all_cases() {
 	cout << "                        efficiency measuring." << endl;
 	cout << "    mesh1d            : simulate a very simple 1-dimensional mesh" << endl;
 	cout << "                        of three particles" << endl;
+	cout << "    mesh2d_regular    : simulate a two-dimensional regular mesh" << endl;
 }
 
 int main(int argc, char *argv[]) {

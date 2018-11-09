@@ -77,4 +77,10 @@ namespace study_cases {
 	 */
 	void mesh1d_case(int argc, char *argv[]);
 
+	/* -- 2-dimensional regular mesh case --
+	 * This scene contains a plane (floor) and a
+	 * 2-dimensional regular mesh.
+	 */
+	void mesh2d_regular_case(int argc, char *argv[]);
+
 } // -- namespace study_cases
