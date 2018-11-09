@@ -122,7 +122,6 @@ void mesh2d_regular::update_forces() {
 	math::vec3 dvel;
 	float dist;
 
-	// all stretch, bend and shear forces for [1,R-3]x[0,C-3]
 	for (size_t i = 0; i < R; ++i) {
 		for (size_t j = 0; j < C; ++j) {
 
@@ -157,6 +156,161 @@ void mesh2d_regular::update_forces() {
 		}
 	}
 
+	/* The following code, although nearly unreadable,
+	 * is slightly faster than the previous loop.
+	 */
+
+	/*
+	// -------
+	// -- 1 --
+	// -------
+
+	size_t i, j;
+
+	// all stretch, bend and shear forces for [1,R-3]x[0,C-2]
+	for (i = 1; i < R - 2; ++i) {
+		for (j = 0; j < C - 2; ++j) {
+			if (stretch) {
+				compute_forces( idx(i,j), idx(i,  j+1), sb_ds[idx(i,j)].x );
+				compute_forces( idx(i,j), idx(i+1,j  ), sb_ds[idx(i,j)].y );
+			}
+			if (bend) {
+				compute_forces( idx(i,j), idx(i,  j+2), sb_ds[idx(i,j)].z );
+				compute_forces( idx(i,j), idx(i+2,j  ), sb_ds[idx(i,j)].u );
+			}
+			if (shear) {
+				compute_forces( idx(i,j), idx(i-1,j+1), sb_ds[idx(i,j)].v );
+				compute_forces( idx(i,j), idx(i+1,j+1), sb_ds[idx(i,j)].w );
+			}
+		}
+	}
+
+	// -------
+	// -- 2 --
+	// -------
+
+	// 2.1: first row: stretch, bend and shear
+	i = 0;
+	for (j = 0; j < C - 2; ++j) {
+		if (stretch) {
+			compute_forces( idx(i,j), idx(i,  j+1), sb_ds[idx(i,j)].x );
+			compute_forces( idx(i,j), idx(i+1,j  ), sb_ds[idx(i,j)].y );
+		}
+		if (bend) {
+			compute_forces( idx(i,j), idx(i,  j+2), sb_ds[idx(i,j)].z );
+			compute_forces( idx(i,j), idx(i+2,j  ), sb_ds[idx(i,j)].u );
+		}
+		if (shear) {
+			compute_forces( idx(i,j), idx(i+1,j+1), sb_ds[idx(i,j)].w );
+		}
+	}
+
+	// 2.2: second-to-last row: stretch and shear
+	i = R - 2;
+	if (R > 2) {
+		for (j = 0; j < C - 2; ++j) {
+			if (stretch) {
+				compute_forces( idx(i,j), idx(i,  j+1), sb_ds[idx(i,j)].x );
+				compute_forces( idx(i,j), idx(i+1,j  ), sb_ds[idx(i,j)].y );
+			}
+			if (bend) {
+				compute_forces( idx(i,j), idx(i,  j+2), sb_ds[idx(i,j)].z );
+			}
+			if (shear) {
+				compute_forces( idx(i,j), idx(i-1,j+1), sb_ds[idx(i,j)].v );
+				compute_forces( idx(i,j), idx(i+1,j+1), sb_ds[idx(i,j)].w );
+			}
+		}
+	}
+
+	// 2.3: last row: stretch, bend and shear
+	i = R - 1;
+	for (j = 0; j < C - 2; ++j) {
+		if (stretch) {
+			compute_forces( idx(i,j), idx(i,  j+1), sb_ds[idx(i,j)].x );
+		}
+		if (bend) {
+			compute_forces( idx(i,j), idx(i,  j+2), sb_ds[idx(i,j)].z );
+		}
+		if (shear) {
+			compute_forces( idx(i,j), idx(i-1,j+1), sb_ds[idx(i,j)].v );
+		}
+	}
+
+	// -------
+	// -- 3 --
+	// -------
+
+	// 3.1: stretch and shear
+	j = C - 2;
+	i = 0;
+	if (stretch) {
+		compute_forces( idx(i,j), idx(i,  j+1), sb_ds[idx(i,j)].x );
+		compute_forces( idx(i,j), idx(i+1,j  ), sb_ds[idx(i,j)].y );
+	}
+	if (bend) {
+		compute_forces( idx(i,j), idx(i+2,j  ), sb_ds[idx(i,j)].u );
+	}
+	if (shear) {
+		compute_forces( idx(i,j), idx(i+1,j+1), sb_ds[idx(i,j)].w );
+	}
+
+	// 3.2: rows [1,R-3] in column C-2
+	for (i = 1; i < R - 2; ++i) {
+		if (stretch) {
+			compute_forces( idx(i,j), idx(i,  j+1), sb_ds[idx(i,j)].x );
+			compute_forces( idx(i,j), idx(i+1,j  ), sb_ds[idx(i,j)].y );
+		}
+		if (bend) {
+			compute_forces( idx(i,j), idx(i+2,j  ), sb_ds[idx(i,j)].u );
+		}
+		if (shear) {
+			compute_forces( idx(i,j), idx(i-1,j+1), sb_ds[idx(i,j)].v );
+			compute_forces( idx(i,j), idx(i+1,j+1), sb_ds[idx(i,j)].w );
+		}
+	}
+
+	// 3.3: second-to-last row in column C-2:
+	i = R - 2;
+	if (R > 2) {
+		if (stretch) {
+			compute_forces( idx(i,j), idx(i,j+1), sb_ds[idx(i,j)].x );
+		}
+		if (shear) {
+			compute_forces( idx(i,j), idx(i-1,j+1), sb_ds[idx(i,j)].v );
+		}
+	}
+
+	// 3.4: last row in column C-2:
+	i = R - 1;
+	if (stretch) {
+		compute_forces( idx(i,j), idx(i,j+1), sb_ds[idx(i,j)].x );
+	}
+	if (shear) {
+		compute_forces( idx(i,j), idx(i-1,j+1), sb_ds[idx(i,j)].v );
+	}
+
+	// -------
+	// -- 4 --
+	// -------
+
+	// 4.1: last column for rows [0,R-3]
+	j = C - 1;
+	for (i = 0; i < R - 2; ++i) {
+		if (stretch) {
+			compute_forces( idx(i,j), idx(i+1,j), sb_ds[idx(i,j)].y );
+		}
+		if (bend) {
+			compute_forces( idx(i,j), idx(i+2,j  ), sb_ds[idx(i,j)].u );
+		}
+	}
+
+	// 4.2: last two rows in last column
+	if (stretch) {
+		i = R - 2;
+		compute_forces( idx(i,j), idx(i+1,j), sb_ds[idx(i,j)].y );
+	}
+	*/
 }
 
 void mesh2d_regular::clear() {
