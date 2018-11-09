@@ -101,7 +101,7 @@ namespace study_cases {
 		M->simulate_shear(shear);
 		M->simulate_stretch(stretch);
 
-		M->allocate(n*m, 2.0f);
+		M->allocate(n*m, 5.0f);
 		M->set_dimensions(n, m);
 
 		M->set_elasticity(500.0f);
@@ -123,9 +123,6 @@ namespace study_cases {
 
 		M->make_initial_state();
 
-		ofstream fout;
-		fout.open("/tmp/ground");
-
 		timing::time_point end_build = timing::now();
 
 		// -----------------------------------------
@@ -141,18 +138,8 @@ namespace study_cases {
 
 		// execute simulation
 		while (S.get_current_time() <= total_time) {
-			fout << "------------------- " << S.get_current_time() << endl;
-			for (size_t i = 0; i < n; ++i) {
-				for (size_t j = 0; j < m; ++j) {
-					const vec3& v = mp[ M->get_global_index(i,j) ]->cur_pos;
-					fout << v.x << "," << v.y << "," << v.z << endl;
-				}
-			}
-
 			S.apply_time_step();
 		}
-
-		fout.close();
 
 		timing::time_point end_sim = timing::now();
 
