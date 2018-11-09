@@ -129,7 +129,7 @@ class mesh2d_regular : public mesh {
 		 * @param[out] r Number of rows.
 		 * @param[out] c Number of columns.
 		 */
-		void get_dimensions(size_t& r, size_t& c);
+		void get_dimensions(size_t& r, size_t& c) const;
 
 		size_t get_global_index(size_t i, size_t j) const;
 };

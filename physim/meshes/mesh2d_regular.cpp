@@ -73,7 +73,7 @@ void mesh2d_regular::make_initial_state() {
 	if (sb_ds != nullptr) {
 		free(sb_ds);
 	}
-	sb_ds = (math::vec6 *)malloc(R*(C - 1)*sizeof(math::vec6));
+	sb_ds = (math::vec6 *)malloc(R*C*sizeof(math::vec6));
 
 	/*
 	 * Since this is done only once, 'if' statements
@@ -82,25 +82,33 @@ void mesh2d_regular::make_initial_state() {
 	 * without doing the same loops more than twice.
 	 */
 
-	for (size_t i = 0; i < C - 1; ++i) {
-		for (size_t j = 0; j < R - 1; ++j) {
+	for (size_t i = 0; i < R; ++i) {
+		for (size_t j = 0; j < C; ++j) {
 
 			// stretch forces
-			sb_ds[idx(i,j)].x = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j)]->cur_pos);
-			sb_ds[idx(i,j)].y = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+1)]->cur_pos);
+			if (j + 1 < C) {
+				sb_ds[idx(i,j)].x = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+1)]->cur_pos);
+			}
+			if (i + 1 < R) {
+				sb_ds[idx(i,j)].y = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j)]->cur_pos);
+			}
 
 			// bend forces
-			if (i < R - 2 and j < C - 2) {
-				sb_ds[idx(i,j)].z = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+2,j)]->cur_pos);
-				sb_ds[idx(i,j)].u = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+2)]->cur_pos);
+			if (j + 2 < C) {
+				sb_ds[idx(i,j)].z = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+2)]->cur_pos);
+			}
+			if (i + 2 < R) {
+				sb_ds[idx(i,j)].u = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+2,j)]->cur_pos);
 			}
 
 			// shear forces
-			if (i > 0) {
-				sb_ds[idx(i,j)].v = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i-1,j+1)]->cur_pos);
-			}
-			if (i < R - 1) {
-				sb_ds[idx(i,j)].w = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j+1)]->cur_pos);
+			if (j + 1 < C) {
+				if (i > 0 ) {
+					sb_ds[idx(i,j)].v = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i-1,j+1)]->cur_pos);
+				}
+				if (i + 1 < R) {
+					sb_ds[idx(i,j)].w = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j+1)]->cur_pos);
+				}
 			}
 		}
 	}
@@ -114,38 +122,34 @@ void mesh2d_regular::update_forces() {
 	math::vec3 dvel;
 	float dist;
 
-	// -------
-	// -- 1 --
-	// -------
-
 	// all stretch, bend and shear forces for [1,R-3]x[0,C-3]
-	for (size_t i = 0; i < R - 1; ++i) {
-		for (size_t j = 0; j < C - 1; ++j) {
+	for (size_t i = 0; i < R; ++i) {
+		for (size_t j = 0; j < C; ++j) {
 
 			if (stretch) {
-				if (i < R - 1) {
-					compute_forces( idx(i,j), idx(i + 1,j), sb_ds[idx(i,j)].x );
+				if (j + 1 < C) {
+					compute_forces( idx(i,j), idx(i,j + 1), sb_ds[idx(i,j)].x );
 				}
-				if (j < C - 1) {
-					compute_forces( idx(i,j), idx(i,j + 1), sb_ds[idx(i,j)].y );
+				if (i + 1 < R) {
+					compute_forces( idx(i,j), idx(i + 1,j), sb_ds[idx(i,j)].y );
 				}
 			}
 
 			if (bend) {
-				if (i + 2 < R) {
-					compute_forces( idx(i,j), idx(i + 2,j), sb_ds[idx(i,j)].z );
-				}
 				if (j + 2 < C) {
-					compute_forces( idx(i,j), idx(i,j + 2), sb_ds[idx(i,j)].u );
+					compute_forces( idx(i,j), idx(i,j + 2), sb_ds[idx(i,j)].z );
+				}
+				if (i + 2 < R) {
+					compute_forces( idx(i,j), idx(i + 2,j), sb_ds[idx(i,j)].u );
 				}
 			}
 
 			if (shear) {
-				if (j + 1 < C - 1) {
+				if (j + 1 < C) {
 					if (i > 0) {
 						compute_forces( idx(i,j), idx(i - 1,j + 1), sb_ds[idx(i,j)].v );
 					}
-					if (i < R - 1) {
+					if (i + 1 < R) {
 						compute_forces( idx(i,j), idx(i + 1,j + 1), sb_ds[idx(i,j)].w );
 					}
 				}
@@ -177,7 +181,7 @@ void mesh2d_regular::set_dimensions(size_t r, size_t c) {
 
 // GETTERS
 
-void mesh2d_regular::get_dimensions(size_t& r, size_t& c) {
+void mesh2d_regular::get_dimensions(size_t& r, size_t& c) const {
 	r = R;
 	c = C;
 }
