@@ -65,7 +65,7 @@ void mesh1d::make_initial_state() {
 	if (ds != nullptr) {
 		free(ds);
 	}
-	ds = (math::vec2 *)malloc((N - 1)*sizeof(float));
+	ds = (math::vec2 *)malloc((N - 1)*sizeof(math::vec2));
 
 	for (size_t i = 0; i < N - 2; ++i) {
 		ds[i].x = __pm_dist(ps[i]->cur_pos, ps[i + 1]->cur_pos);
