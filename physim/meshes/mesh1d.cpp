@@ -56,7 +56,7 @@ mesh1d::mesh1d(float ke, float kd) : mesh(ke,kd) {
 }
 
 mesh1d::~mesh1d() {
-	this->clear();
+	clear();
 }
 
 // MODIFIERS

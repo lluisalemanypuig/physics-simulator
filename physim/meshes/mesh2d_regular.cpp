@@ -65,6 +65,10 @@ mesh2d_regular::mesh2d_regular(float ke, float kd) : mesh(ke,kd) {
 	C = 0;
 }
 
+mesh2d_regular::~mesh2d_regular() {
+	clear();
+}
+
 // MODIFIERS
 
 void mesh2d_regular::make_initial_state() {
@@ -132,6 +136,10 @@ void mesh2d_regular::set_dimensions(size_t r, size_t c) {
 void mesh2d_regular::get_dimensions(size_t& r, size_t& c) {
 	r = R;
 	c = C;
+}
+
+size_t mesh2d_regular::get_global_index(size_t i, size_t j) const {
+	return (idx(i,j));
 }
 
 } // -- namespace meshes
