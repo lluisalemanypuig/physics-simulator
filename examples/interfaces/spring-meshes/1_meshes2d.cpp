@@ -34,8 +34,8 @@ namespace study_cases {
 		SR.get_simulator().set_solver(solver_type::EulerSemi);
 		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
-		size_t n = 5;
-		size_t m = 5;
+		size_t n = 25;
+		size_t m = 25;
 		float length = 10.0f;
 		float height = 10.0f;
 
@@ -45,10 +45,10 @@ namespace study_cases {
 		M->simulate_shear(glut_functions::shear);
 		M->simulate_stretch(glut_functions::stretch);
 
-		M->allocate(n*m, 5.0f);
+		M->allocate(n*m, 50.0f);
 		M->set_dimensions(n, m);
 
-		M->set_elasticity(500.0f);
+		M->set_elasticity(150.0f);
 		M->set_damping(0.5f);
 
 		mesh_particle **mp = M->get_particles();
