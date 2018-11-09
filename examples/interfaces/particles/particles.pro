@@ -31,24 +31,16 @@ HEADERS +=						\
 
 RESOURCES +=
 
-# base (mesh, .obj reader, ...)
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../base/release/ -lbase
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../base/debug/ -lbase
-else:unix: LIBS += -L$$OUT_PWD/../base/ -lbase
+# base (model, obj reader, ...)
+CONFIG(release, debug|release): LIBS += -L../../base-release/ -lbase
+CONFIG(debug, debug|release): LIBS += -L../../base-debug/ -lbase
 
-INCLUDEPATH += $$PWD/../
-DEPENDPATH += $$PWD/../
+INCLUDEPATH += ..
+DEPENDPATH += ..
 
 # physim library
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../physim-release/ -lphysim
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../physim-debug/ -lphysim
-else:unix: LIBS += -L$$PWD/../../../physim-debug/ -lphysim
+CONFIG(release, debug|release): LIBS += -L../../physim-release/ -lphysim
+CONFIG(debug, debug|release): LIBS += -L../../physim-debug/ -lphysim
 
-INCLUDEPATH += $$PWD/../../../
-DEPENDPATH += $$PWD/../../../
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-release/libphysim.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-debug/libphysim.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-release/physim.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../physim-debug/physim.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../../../physim-debug/libphysim.a
+INCLUDEPATH += ../..
+DEPENDPATH += ../..

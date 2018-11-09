@@ -26,15 +26,8 @@ HEADERS +=					\
     study_cases.hpp
 
 # physim library
-win32:CONFIG(release, debug|release): LIBS += -L../../physim-release/ -lphysim
-else:win32:CONFIG(debug, debug|release): LIBS += -L../../physim-debug/ -lphysim
-else:unix: LIBS += -L../../physim-debug/ -lphysim
+CONFIG(release, debug|release): LIBS += -L../../physim-release/ -lphysim
+CONFIG(debug, debug|release): LIBS += -L../../physim-debug/ -lphysim
 
 INCLUDEPATH += ../..
 DEPENDPATH += ../..
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += ../../physim-release/libphysim.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += ../../physim-debug/libphysim.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += ../../physim-release/physim.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += ../../physim-debug/physim.lib
-else:unix: PRE_TARGETDEPS += ../../physim-debug/libphysim.a
