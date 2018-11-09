@@ -13,7 +13,8 @@ SOURCES += main.cpp		\
 	glut_functions.cpp	\
 	study_cases.cpp		\
     utils.cpp \
-    0_meshes1d.cpp
+    0_meshes1d.cpp \
+    1_meshes2d.cpp
 
 HEADERS +=				\
 	study_cases.hpp		\
@@ -21,18 +22,24 @@ HEADERS +=				\
     utils.hpp
 
 # base (model, obj reader, ...)
-CONFIG(release, debug|release): LIBS += -L../../base-release/ -lbase
-CONFIG(debug, debug|release): LIBS += -L../../base-debug/ -lbase
+CONFIG(debug, debug|release): LIBS += -L../base/ -lbase
+CONFIG(release, debug|release): LIBS += -L../base/ -lbase
 
 INCLUDEPATH += ..
 DEPENDPATH += ..
 
-# physim library
-CONFIG(release, debug|release): LIBS += -L../../physim-release/ -lphysim
-CONFIG(debug, debug|release): LIBS += -L../../physim-debug/ -lphysim
+CONFIG(debug, debug|release): PRE_TARGETDEPS += ../base/libbase.a
+CONFIG(release, debug|release): PRE_TARGETDEPS += ../base/libbase.a
 
-INCLUDEPATH += ../..
-DEPENDPATH += ../..
+# physim library
+CONFIG(debug, debug|release): LIBS += -L../../../physim-debug/ -lphysim
+CONFIG(release, debug|release): LIBS += -L../../../physim-release/ -lphysim
+
+INCLUDEPATH += ../../..
+DEPENDPATH += ../../..
+
+CONFIG(debug, debug|release): PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
+CONFIG(release, debug|release): PRE_TARGETDEPS += ../../../physim-release/libphysim.a
 
 unix {
 	LIBS += -lglut -lGLU

@@ -17,6 +17,7 @@ using namespace std;
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace particles;
+using namespace meshes;
 using namespace math;
 using namespace geom;
 
@@ -42,7 +43,7 @@ namespace study_cases {
 		sx = -2.5f;
 		for (int i = 1; i <= 10; ++i) {
 			int j = 5*i;
-			meshes::mesh1d *m = new meshes::mesh1d();
+			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
 			m->simulate_stretch(glut_functions::stretch);
 			m->simulate_shear(glut_functions::shear);
@@ -69,7 +70,7 @@ namespace study_cases {
 		for (int i = 1; i <= 10; ++i) {
 
 			int j = 5*i;
-			meshes::mesh1d *m = new meshes::mesh1d();
+			mesh1d *m = new mesh1d();
 			m->allocate(j, 0.5f*j);
 			m->simulate_stretch(glut_functions::stretch);
 			m->simulate_shear(glut_functions::shear);
@@ -106,7 +107,7 @@ namespace study_cases {
 		sx = 5.0f;
 		for (int i = 1; i <= 10; ++i) {
 			int j = 5*i;
-			meshes::mesh1d *m = new meshes::mesh1d();
+			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
 			m->simulate_stretch(glut_functions::stretch);
 			m->simulate_shear(glut_functions::shear);
@@ -150,7 +151,7 @@ namespace study_cases {
 
 		for (int i = 1; i <= 10; ++i) {
 			int j = 5*i;
-			meshes::mesh1d *m = new meshes::mesh1d();
+			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
 			m->simulate_stretch(glut_functions::stretch);
 			m->simulate_shear(glut_functions::shear);
