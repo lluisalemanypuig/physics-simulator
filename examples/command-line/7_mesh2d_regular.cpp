@@ -21,15 +21,21 @@ namespace study_cases {
 		cout << "        verlet:     Verlet integration method." << endl;
 		cout << "    -n k:           number of rows of the regular mesh.   Default: 5" << endl;
 		cout << "    -m k:           number of columns of the regular mesh.   Default: 5" << endl;
+		cout << "    --bend:         activate bend forces" << endl;
+		cout << "    --shear:        activate shear forces" << endl;
+		cout << "    --stretch:      activate stretch forces" << endl;
 		cout << endl;
 	}
 
 	void mesh2d_regular_case(int argc, char *argv[]) {
 		float dt = 0.01f;
-		float total_time = 2.0f;
+		float total_time = 5.0f;
 		solver_type solv = solver_type::EulerSemi;
 		size_t n = 5;
 		size_t m = 5;
+		bool shear = false;
+		bool stretch = false;
+		bool bend = false;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
@@ -69,6 +75,15 @@ namespace study_cases {
 				}
 				++i;
 			}
+			else if (strcmp(argv[i], "--bend") == 0) {
+				bend = true;
+			}
+			else if (strcmp(argv[i], "--shear") == 0) {
+				shear = true;
+			}
+			else if (strcmp(argv[i], "--stretch") == 0) {
+				stretch = true;
+			}
 			else {
 				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
 				return;
@@ -76,12 +91,16 @@ namespace study_cases {
 		}
 
 		float length = 10.0f;
-		float width = 10.f;
+		float height = 10.0f;
 
 		timing::time_point begin_build = timing::now();
 
 		// build regular mesh
 		mesh2d_regular *M = new mesh2d_regular();
+		M->simulate_bend(bend);
+		M->simulate_shear(shear);
+		M->simulate_stretch(stretch);
+
 		M->allocate(n*m, 2.0f);
 		M->set_dimensions(n, m);
 
@@ -91,18 +110,21 @@ namespace study_cases {
 		mesh_particle **mp = M->get_particles();
 
 		// fix some particles
-		mp[ M->get_global_index(0,0) ]->fixed = true;
-		mp[ M->get_global_index(0, m - 1) ]->fixed = true;
+		mp[ M->get_global_index(0,m-1) ]->fixed = true;
+		mp[ M->get_global_index(n-1,m - 1) ]->fixed = true;
 
 		// make positions
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ]->cur_pos =
-						vec3((length/n)*i, (width/m)*j, 0.0f);
+						vec3((length/n)*i, (height/m)*j, 0.0f);
 			}
 		}
 
 		M->make_initial_state();
+
+		ofstream fout;
+		fout.open("/tmp/ground");
 
 		timing::time_point end_build = timing::now();
 
@@ -119,15 +141,45 @@ namespace study_cases {
 
 		// execute simulation
 		while (S.get_current_time() <= total_time) {
+			fout << "------------------- " << S.get_current_time() << endl;
+			for (size_t i = 0; i < n; ++i) {
+				for (size_t j = 0; j < m; ++j) {
+					const vec3& v = mp[ M->get_global_index(i,j) ]->cur_pos;
+					fout << v.x << "," << v.y << "," << v.z << endl;
+				}
+			}
+
 			S.apply_time_step();
 		}
 
+		fout.close();
+
 		timing::time_point end_sim = timing::now();
 
-		cout << "Time spent in building: "
-			 << timing::elapsed_seconds(begin_build, end_build) << " s" << endl;
-		cout << "Time spent in simulating: "
-			 << timing::elapsed_seconds(begin_sim, end_sim) << " s" << endl;
+		cout << "Mesh characteristics:" << endl;
+		cout << "    dimensions: " << n << "x" << m << endl;
+		cout << "Simulation:" << endl;
+		cout << "    total time: " << total_time << endl;
+		cout << "    step time: " << dt << endl,
+		cout << "    solver: ";
+		if (solv == solver_type::EulerOrig) {
+			cout << " Euler" << endl;
+		}
+		else if (solv == solver_type::EulerSemi) {
+			cout << " Semi-Euler" << endl;
+		}
+		else if (solv == solver_type::Verlet) {
+			cout << " Verlet" << endl;
+		}
+		cout << "    bending? " << (bend ? "Yes" : "No") << endl;
+		cout << "    shear? " << (shear ? "Yes" : "No") << endl;
+		cout << "    stretch? " << (stretch ? "Yes" : "No") << endl;
+
+		double t_build = timing::elapsed_seconds(begin_build, end_build);
+		double t_sim = timing::elapsed_seconds(begin_sim, end_sim);
+		cout << "Time spent in building: " << t_build << " s" << endl;
+		cout << "Time spent in simulating: " << t_sim << " s" << endl;
+		cout << "Total: " << t_build + t_sim << " s" << endl;
 	}
 
 } // -- namespace study_cases
