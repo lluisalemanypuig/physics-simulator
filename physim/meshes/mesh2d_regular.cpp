@@ -37,16 +37,14 @@ namespace meshes {
 	__pm_add_acc_v(ps[i + 1]->force, F1_m1);
 */
 // d: original distance between particles i and j
-#define compute_forces(i,j, d)								\
-	__pm_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);		\
-	dist = __pm_norm(dir);									\
-	__pm_normalise(dir, dir);								\
-	__pm_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);		\
-	elastic_term = Ke*(dist - d);							\
-	damping_term = Kd*__pm_dot(dvel, dir);					\
-	__pm_assign_vs(F1_m1, dir, elastic_term + damping_term);\
-	__pm_add_acc_v(ps[i]->force, F1_m1);					\
-	__pm_invert(F1_m1, F1_m1);								\
+#define compute_forces(i,j, d)											\
+	__pm_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
+	dist = __pm_norm(dir);												\
+	__pm_normalise(dir, dir);											\
+	__pm_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
+	__pm_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm_dot(dvel, dir));	\
+	__pm_add_acc_v(ps[i]->force, F1_m1);								\
+	__pm_invert(F1_m1, F1_m1);											\
 	__pm_add_acc_v(ps[j]->force, F1_m1)
 
 // PUBLIC
@@ -78,8 +76,10 @@ void mesh2d_regular::make_initial_state() {
 	sb_ds = (math::vec6 *)malloc(R*(C - 1)*sizeof(math::vec6));
 
 	/*
-	 * Since this is done only once 'if' statements
-	 * can be tolerated here.
+	 * Since this is done only once, 'if' statements
+	 * can be tolerated here (I'm talking about the 'if (i < R - 2 ...)').
+	 * In the force update, the 'if' statements can't really be avoided
+	 * without doing the same loops more than twice.
 	 */
 
 	for (size_t i = 0; i < C - 1; ++i) {
@@ -108,6 +108,50 @@ void mesh2d_regular::make_initial_state() {
 
 void mesh2d_regular::update_forces() {
 	assert(sb_ds != nullptr);
+
+	math::vec3 F1_m1;
+	math::vec3 dir;
+	math::vec3 dvel;
+	float dist;
+
+	// -------
+	// -- 1 --
+	// -------
+
+	// all stretch, bend and shear forces for [1,R-3]x[0,C-3]
+	for (size_t i = 0; i < R - 1; ++i) {
+		for (size_t j = 0; j < C - 1; ++j) {
+
+			if (stretch) {
+				if (i < R - 1) {
+					compute_forces( idx(i,j), idx(i + 1,j), sb_ds[idx(i,j)].x );
+				}
+				if (j < C - 1) {
+					compute_forces( idx(i,j), idx(i,j + 1), sb_ds[idx(i,j)].y );
+				}
+			}
+
+			if (bend) {
+				if (i + 2 < R) {
+					compute_forces( idx(i,j), idx(i + 2,j), sb_ds[idx(i,j)].z );
+				}
+				if (j + 2 < C) {
+					compute_forces( idx(i,j), idx(i,j + 2), sb_ds[idx(i,j)].u );
+				}
+			}
+
+			if (shear) {
+				if (j + 1 < C - 1) {
+					if (i > 0) {
+						compute_forces( idx(i,j), idx(i - 1,j + 1), sb_ds[idx(i,j)].v );
+					}
+					if (i < R - 1) {
+						compute_forces( idx(i,j), idx(i + 1,j + 1), sb_ds[idx(i,j)].w );
+					}
+				}
+			}
+		}
+	}
 
 }
 
