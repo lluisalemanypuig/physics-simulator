@@ -12,7 +12,8 @@ void list_all_cases() {
 	cout << "Welcome to the Spring-meshes renderer" << endl;
 	cout << "The list of simulations available are:" << endl;
 	cout << endl;
-	cout << "    mesh1d : simulation of several one-dimensional meshes." << endl;
+	cout << "    mesh1d         : simulation of several one-dimensional meshes." << endl;
+	cout << "    mesh2d_regular : " << endl;
 }
 
 int main(int argc, char *argv[]) {

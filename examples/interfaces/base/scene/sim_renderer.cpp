@@ -3,15 +3,14 @@
 // C includes
 #include <assert.h>
 
-#include <iostream>
-using namespace std;
-
 // base includes
 #include <base/include_gl.hpp>
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
 #include <physim/meshes/mesh.hpp>
+#include <physim/meshes/mesh1d.hpp>
+#include <physim/meshes/mesh2d_regular.hpp>
 using namespace physim;
 using namespace meshes;
 using namespace particles;
@@ -71,7 +70,7 @@ void rainbow(float v, float m, float M, float& r, float& g, float& b) {
 	}
 }
 
-void render_mesh1d(const mesh *m) {
+void render_mesh1d(const mesh1d *m) {
 	particles::mesh_particle *const *ps = m->get_particles();
 
 	float r, g, b;
@@ -84,6 +83,33 @@ void render_mesh1d(const mesh *m) {
 		glColor3f(r,g,b);
 		glVertex3f(pos1.x, pos1.y, pos1.z);
 		glVertex3f(pos2.x, pos2.y, pos2.z);
+	}
+	glEnd();
+}
+
+void render_mesh2d_regular(const mesh2d_regular *m) {
+	particles::mesh_particle *const *ps = m->get_particles();
+
+	size_t N,M;
+	m->get_dimensions(N,M);
+
+	glBegin(GL_LINES);
+	glColor3f(1.0f,1.0f,1.0f);
+	for (size_t i = 0; i < N; ++i) {
+		for (size_t j = 0; j < M; ++j) {
+			if (i + 1 < N) {
+				const vec3& pos1 = ps[m->get_global_index(i,j)]->cur_pos;
+				glVertex3f(pos1.x, pos1.y, pos1.z);
+				const vec3& pos2 = ps[m->get_global_index(i + 1,j)]->cur_pos;
+				glVertex3f(pos2.x, pos2.y, pos2.z);
+			}
+			if (j + 1 < M) {
+				const vec3& pos1 = ps[m->get_global_index(i,j)]->cur_pos;
+				glVertex3f(pos1.x, pos1.y, pos1.z);
+				const vec3& pos2 = ps[m->get_global_index(i,j + 1)]->cur_pos;
+				glVertex3f(pos2.x, pos2.y, pos2.z);
+			}
+		}
 	}
 	glEnd();
 }
@@ -157,7 +183,10 @@ void sim_renderer::render_simulation() const {
 	for (const mesh *m : mss) {
 
 		if (m->get_type() == mesh_type::d1) {
-			render_mesh1d(m);
+			render_mesh1d(static_cast<const mesh1d *>(m));
+		}
+		else if (m->get_type() == mesh_type::d2_regular) {
+			render_mesh2d_regular(static_cast<const mesh2d_regular *>(m));
 		}
 	}
 }

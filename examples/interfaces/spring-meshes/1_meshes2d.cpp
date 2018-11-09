@@ -67,6 +67,9 @@ namespace study_cases {
 
 		M->make_initial_state();
 
+		SR.get_simulator().add_mesh(M);
+
+		SR.get_box().set_min_max(vec3(-5,-5,-5), vec3(15,15,5));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 	}
@@ -149,7 +152,7 @@ namespace study_cases {
 		sim1_make_simulation();
 	}
 
-	void sim1_1dmeshes(int argc, char *argv[]) {
+	void sim1_2dmeshes(int argc, char *argv[]) {
 		sim1_help();
 		sim1_initGL(0, nullptr);
 

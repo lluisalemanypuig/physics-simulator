@@ -8,4 +8,8 @@ namespace study_cases {
 	 */
 	void sim0_1dmeshes(int argc, char *argv[]);
 
+	/* -- One-dimensional spring meshes --
+	 */
+	void sim1_2dmeshes(int argc, char *argv[]);
+
 } // -- namespace study_cases
