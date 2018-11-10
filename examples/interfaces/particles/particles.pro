@@ -32,22 +32,19 @@ HEADERS +=						\
 RESOURCES +=
 
 # base (model, obj reader, ...)
-CONFIG(debug, debug|release): LIBS += -L../base/ -lbase
-CONFIG(release, debug|release): LIBS += -L../base/ -lbase
-
+LIBS += -L../base/ -lbase
+PRE_TARGETDEPS += ../base/libbase.a
 INCLUDEPATH += ..
 DEPENDPATH += ..
 
-CONFIG(debug, debug|release): PRE_TARGETDEPS += ../base/libbase.a
-CONFIG(release, debug|release): PRE_TARGETDEPS += ../base/libbase.a
-
 # physim library
-CONFIG(debug, debug|release): LIBS += -L../../../physim-debug/ -lphysim
-CONFIG(release, debug|release): LIBS += -L../../../physim-release/ -lphysim
-
+CONFIG(debug, debug|release) {
+    LIBS += -L../../../physim-debug/ -lphysim
+    PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
+}
+CONFIG(release, debug|release) {
+    LIBS += -L../../../physim-release/ -lphysim
+    PRE_TARGETDEPS += ../../../physim-release/libphysim.a
+}
 INCLUDEPATH += ../../..
 DEPENDPATH += ../../..
-
-CONFIG(debug, debug|release): PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
-CONFIG(release, debug|release): PRE_TARGETDEPS += ../../../physim-release/libphysim.a
-
