@@ -14,6 +14,7 @@ void list_all_cases() {
 	cout << endl;
 	cout << "    mesh1d         : simulation of several one-dimensional meshes." << endl;
 	cout << "    mesh2d_regular : " << endl;
+	cout << "    mesh2d_regular-sphere : " << endl;
 }
 
 int main(int argc, char *argv[]) {

@@ -27,7 +27,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	void sim1_make_simulation() {
+	void sim2_make_simulation() {
 		SR.set_particle_size(2.0f);
 		SR.set_spring_width(1.5f);
 
@@ -61,33 +61,48 @@ namespace study_cases {
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ]->cur_pos =
-						vec3((length/n)*i, (height/m)*j, 0.0f);
+					vec3((length/n)*i, 10.0f, (height/m)*j);
 			}
 		}
 
 		M->make_initial_state();
 
+		sphere *s = new sphere(vec3(5.0f, 5.0f, 5.0f), 2.0f);
+		SR.get_simulator().add_geometry(s);
+
+		rendered_model *model_ball = new rendered_model();
+		OBJ_reader obj;
+		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
+		model_ball->compile();
+
+		rsphere *rs = new rsphere();
+		rs->c = vec3(5.0f, 5.0f, 5.0f);
+		rs->r = 2.0f;
+		rs->set_model(model_ball);
+		SR.add_geometry(rs);
+
+		SR.get_box().enlarge_box(vec3(-2,-2,-2));
+		SR.get_box().enlarge_box(vec3(15,15,15));
 		SR.get_simulator().add_mesh(M);
 
-		SR.get_box().set_min_max(vec3(-5,-5,-5), vec3(15,15,5));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 	}
 
-	void sim1_help() {
+	void sim2_help() {
 		glut_functions::help();
 
-		cout << "Simulation 2 description:" << endl;
+		cout << "Simulation 3 description:" << endl;
 		cout << endl;
 
 	}
 
-	void sim1_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim2_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim1_help();
+			sim2_help();
 			break;
 		case 'r':
 			SR.clear();
@@ -103,7 +118,7 @@ namespace study_cases {
 			float yaw = SR.get_yaw();
 			float pitch = SR.get_pitch();
 
-			sim1_make_simulation();
+			sim2_make_simulation();
 
 			SR.set_perspective(old_p);
 			SR.set_orthogonal(old_o);
@@ -118,14 +133,14 @@ namespace study_cases {
 		}
 	}
 
-	void sim1_initGL(int argc, char *argv[]) {
+	void sim2_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Spring meshes - Simulation 2");
+		window_id = glutCreateWindow("Spring meshes - Simulation 3");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -149,12 +164,12 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim1_make_simulation();
+		sim2_make_simulation();
 	}
 
-	void sim1_2dmeshes(int argc, char *argv[]) {
-		sim1_help();
-		sim1_initGL(0, nullptr);
+	void sim2_2dmeshes(int argc, char *argv[]) {
+		sim2_help();
+		sim2_initGL(0, nullptr);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -162,7 +177,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim1_regular_keys_keyboard);
+		glutKeyboardFunc(sim2_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

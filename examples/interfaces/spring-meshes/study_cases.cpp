@@ -17,6 +17,9 @@ namespace study_cases {
 		else if (strcmp(argv[1], "mesh2d_regular") == 0) {
 			sim1_2dmeshes(argc, argv);
 		}
+		else if (strcmp(argv[1], "mesh2d_regular-sphere") == 0) {
+			sim2_2dmeshes(argc, argv);
+		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './spring-meshes --list' to see all cases" << endl;
