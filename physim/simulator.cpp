@@ -39,6 +39,8 @@ void simulator::init_particle(particles::free_particle *p) {
 }
 
 void simulator::init_mesh(meshes::mesh *m) {
+	m->make_initial_state();
+
 	particles::mesh_particle **mps = m->get_particles();
 
 	// loop over the mesh's particles and compute

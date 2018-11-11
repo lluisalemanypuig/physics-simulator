@@ -107,8 +107,6 @@ namespace study_cases {
 		mp[3]->cur_pos = vec3(3.0f, 10.0f, 0.0f);
 		mp[4]->cur_pos = vec3(4.0f, 10.0f, 0.0f);
 
-		m->make_initial_state();
-
 		simulator S(solv, dt);
 
 		// -----------------------------------------

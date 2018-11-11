@@ -121,8 +121,6 @@ namespace study_cases {
 			}
 		}
 
-		M->make_initial_state();
-
 		timing::time_point end_build = timing::now();
 
 		// -----------------------------------------
