@@ -14,11 +14,14 @@ namespace study_cases {
 		if (strcmp(argv[1], "mesh1d") == 0) {
 			sim1_1dmeshes(argc, argv);
 		}
-		else if (strcmp(argv[1], "mesh2d_regular") == 0) {
+		else if (strcmp(argv[1], "mesh2d-reg") == 0) {
 			sim2_2dmeshes(argc, argv);
 		}
-		else if (strcmp(argv[1], "mesh2d_regular-sphere") == 0) {
+		else if (strcmp(argv[1], "mesh2d-reg-sphere") == 0) {
 			sim3_2dmeshes(argc, argv);
+		}
+		else if (strcmp(argv[1], "mesh2d-reg-dome") == 0) {
+			sim4_2dmeshes(argc, argv);
 		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;

@@ -59,7 +59,6 @@ namespace study_cases {
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
 			}
-			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}
@@ -86,7 +85,6 @@ namespace study_cases {
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i + 15.0f);
 			}
-			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}
@@ -123,7 +121,6 @@ namespace study_cases {
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
 			}
-			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}
@@ -167,7 +164,6 @@ namespace study_cases {
 			for (int k = 1; k < j; ++k) {
 				mp[k]->cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
 			}
-			m->make_initial_state();
 
 			SR.get_simulator().add_mesh(m);
 		}

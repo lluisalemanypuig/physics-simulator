@@ -12,18 +12,29 @@ void list_all_cases() {
 	cout << "Welcome to the Spring-meshes renderer" << endl;
 	cout << "The list of simulations available are:" << endl;
 	cout << endl;
-	cout << "    mesh1d         : simulation of several one-dimensional meshes." << endl;
-	cout << "    mesh2d_regular : " << endl;
-	cout << "    mesh2d_regular-sphere : " << endl;
+	cout << "    * mesh1d : simulation of several one-dimensional meshes." << endl;
+	cout << endl;
+	cout << "    * mesh2d-reg : simulation of a single two-dimensional mesh." << endl;
+	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
+	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
+	cout << endl;
+	cout << "    * mesh2d-reg-sphere : simulation of a single two-dimensional" << endl;
+	cout << "        mesh that falls on a sphere." << endl;
+	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
+	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
+	cout << endl;
+	cout << "    * mesh2d-reg-dome : simulation of a single two-dimensional" << endl;
+	cout << "        mesh that is dome-shaped." << endl;
+	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
+	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
 }
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
-		cerr << "Error: lacking parameter for scene" << endl;
-		cerr << "    ./spring-meshes case_identifier" << endl;
+		cerr << "Error: lacking parameter for scene: ./spring-meshes case_identifier" << endl;
 		cerr << "    Use './spring-meshes --list' or" << endl;
 		cerr << "        './spring-meshes --help' or" << endl;
-		cerr << "    to see all cases." << endl;
+		cerr << "    to see all scenes available." << endl;
 		return 1;
 	}
 

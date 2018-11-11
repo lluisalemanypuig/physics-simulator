@@ -76,6 +76,7 @@ namespace glut_functions {
 	/* actual glut functions */
 
 	void init_glut_variables();
+	void parse_common_params(int argc, char *argv[]);
 
 	/* scene rendering */
 	void refresh();

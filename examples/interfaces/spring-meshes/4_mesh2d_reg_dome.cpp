@@ -34,15 +34,26 @@ namespace study_cases {
 	static float mesh_mass;
 	static size_t n, m;
 
-	void sim3_make_simulation() {
+	void sim4_make_simulation() {
 		SR.set_particle_size(2.0f);
-		SR.set_spring_width(1.5f);
+		SR.set_spring_width(1.0f);
 
 		SR.get_simulator().set_solver(glut_functions::solver);
 		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
 		float length = 10.0f;
 		float height = 10.0f;
+		float R = (1.0f/2.0f)*std::sqrt(200.0f) + 0.2f;
+
+		// add plane
+		plane *p = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
+		SR.get_simulator().add_geometry(p);
+		rplane *rp = new rplane();
+		rp->p1 = vec3(-5.0f, 0.0f, -5.0f);
+		rp->p2 = vec3(-5.0f, 0.0f, 15.0f);
+		rp->p3 = vec3(15.0f, 0.0f, 15.0f);
+		rp->p4 = vec3(15.0f, 0.0f, -5.0f);
+		SR.add_geometry(rp);
 
 		// build regular mesh
 		mesh2d_regular *M = new mesh2d_regular();
@@ -57,43 +68,27 @@ namespace study_cases {
 		M->set_damping(glut_functions::damping);
 
 		mesh_particle **mp = M->get_particles();
-
-		// fix some particles
-		mp[ M->get_global_index(0,m-1) ]->fixed = true;
-		mp[ M->get_global_index(n-1,m - 1) ]->fixed = true;
-
 		// make positions
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
+				float x = (length/n)*i;
+				float z = (height/m)*j;
+				float y2 = R*R - (x - 5.0f)*(x - 5.0f) - (z - 5.0f)*(z - 5.0f);
+
 				mp[ M->get_global_index(i,j) ]->cur_pos =
-					vec3((length/n)*i, 10.0f, (height/m)*j);
+					vec3(x, 5.0f + std::sqrt(y2), z);
 			}
 		}
 
-		M->make_initial_state();
-
-		sphere *s = new sphere(vec3(5.0f, 5.0f, 5.0f), 2.0f);
-		SR.get_simulator().add_geometry(s);
-
-		rendered_model *model_ball = new rendered_model();
-		OBJ_reader obj;
-		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
-		model_ball->compile();
-
-		rsphere *rs = new rsphere();
-		rs->c = vec3(5.0f, 5.0f, 5.0f);
-		rs->r = 2.0f;
-		rs->set_model(model_ball);
-		SR.add_geometry(rs);
-
-		SR.get_box().enlarge_box(vec3(-2,-2,-2));
-		SR.get_box().enlarge_box(vec3(15,15,15));
 		SR.get_simulator().add_mesh(M);
+
+		SR.get_box().enlarge_box(vec3(-5,-5,-5));
+		SR.get_box().enlarge_box(vec3(15,10,15));
 
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
-		cout << "Initialised simulation 3:" << endl;
+		cout << "Initialised simulation 4:" << endl;
 		cout << "    mesh mass: " << mesh_mass << endl;
 		cout << "    Ke: " << glut_functions::elasticity << endl;
 		cout << "    Kd: " << glut_functions::damping << endl;
@@ -113,15 +108,14 @@ namespace study_cases {
 		}
 	}
 
-	void sim3_help() {
+	void sim4_help() {
 		glut_functions::help();
 
-		cout << "Simulation 3 description:" << endl;
+		cout << "Simulation 4 description:" << endl;
 		cout << endl;
-		cout << "    This simulation features a single 2d mesh falling on a sphere." << endl;
-		cout << "    The aim of this simualtion is to show how a mesh interacts with" << endl;
-		cout << "    an object to which it can be wrapped around, depending on the" << endl;
-		cout << "    internal forces of the mesh." << endl;
+		cout << "    This simulation features a single 2d mesh that is dome-shaped." << endl;
+		cout << "    The aim of this simualtion is to show how the forces and elasticity" << endl;
+		cout << "    parameters of the springs can mantain a mesh's shape." << endl;
 		cout << endl;
 		cout << "    This simulation has options of its own:" << endl;
 		cout << "    SHIFT + m: change some of the mesh's characteristics." << endl;
@@ -146,7 +140,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim3_reset() {
+	void sim4_reset() {
 		SR.clear();
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -161,7 +155,7 @@ namespace study_cases {
 		float pitch = SR.get_pitch();
 
 		// remake simulations
-		sim3_make_simulation();
+		sim4_make_simulation();
 
 		// reset cameras
 		SR.set_perspective(old_p);
@@ -174,15 +168,15 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim3_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim4_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim3_help();
+			sim4_help();
 			break;
 		case 'r':
-			sim3_reset();
+			sim4_reset();
 			break;
 		}
 
@@ -208,20 +202,20 @@ namespace study_cases {
 			case 'd':
 				cout << "Enter dimensions (two numbers: x and z): ";
 				cin >> n >> m;
-				sim3_reset();
+				sim4_reset();
 				break;
 			}
 		}
 	}
 
-	void sim3_initGL(int argc, char *argv[]) {
+	void sim4_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Spring meshes - Simulation 3");
+		window_id = glutCreateWindow("Spring meshes - simulation 4");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -243,33 +237,16 @@ namespace study_cases {
 		glut_functions::shear = false;
 		glut_functions::bend = false;
 
+		glut_functions::elasticity = 100.0f;
+		glut_functions::damping = 0.5f;
+
 		n = 25;
 		m = 25;
 		mesh_mass = 50.0f;
 
-		for (int i = 1; i < argc; ++i) {
-			if (strcmp(argv[i], "--bend") == 0) {
-				glut_functions::bend = true;
-			}
-			else if (strcmp(argv[i], "--shear") == 0) {
-				glut_functions::shear = true;
-			}
-			else if (strcmp(argv[i], "--stretch") == 0) {
-				glut_functions::stretch = true;
-			}
-			else if (strcmp(argv[i], "--mass") == 0) {
-				mesh_mass = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--Ke") == 0) {
-				glut_functions::elasticity = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--Kd") == 0) {
-				glut_functions::damping = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--n") == 0) {
+		glut_functions::parse_common_params(argc, argv);
+		for (int i = 2; i < argc; ++i) {
+			if (strcmp(argv[i], "--n") == 0) {
 				n = atoi(argv[i + 1]);
 				++i;
 			}
@@ -277,35 +254,20 @@ namespace study_cases {
 				m = atoi(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--solver") == 0) {
-				string s = string(argv[i + 1]);
-				if (s == "exp-euler") {
-					glut_functions::solver = physim::solver_type::EulerOrig;
-				}
-				else if (s == "semi-euler") {
-					glut_functions::solver = physim::solver_type::EulerSemi;
-				}
-				else if (s == "verlet") {
-					glut_functions::solver = physim::solver_type::Verlet;
-				}
-				else {
-					cout << "Error: invalid value for solver: '" << s << "'" << endl;
-				}
+			else if (strcmp(argv[i], "--mass") == 0) {
+				mesh_mass = atof(argv[i + 1]);
 				++i;
-			}
-			else {
-				cerr << "Error: unrecognised option '" << string(argv[i]) << "'" << endl;
 			}
 		}
 
 		// ---------------- //
 		/* build simulation */
-		sim3_make_simulation();
+		sim4_make_simulation();
 	}
 
-	void sim3_2dmeshes(int argc, char *argv[]) {
-		sim3_help();
-		sim3_initGL(argc, argv);
+	void sim4_2dmeshes(int argc, char *argv[]) {
+		sim4_help();
+		sim4_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -313,7 +275,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim3_regular_keys_keyboard);
+		glutKeyboardFunc(sim4_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);
@@ -322,3 +284,4 @@ namespace study_cases {
 	}
 
 } // -- namespace study_cases
+

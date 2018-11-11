@@ -4,6 +4,9 @@
 #include <iostream>
 using namespace std;
 
+// C includes
+#include <string.h>
+
 // base includes
 #include <base/include_gl.hpp>
 
@@ -67,6 +70,44 @@ namespace glut_functions {
 		sec = timing::now();
 
 		SR.get_simulator().set_solver(physim::solver_type::Verlet);
+	}
+
+	void parse_common_params(int argc, char *argv[]) {
+		for (int i = 2; i < argc; ++i) {
+			if (strcmp(argv[i], "--bend") == 0) {
+				glut_functions::bend = true;
+			}
+			else if (strcmp(argv[i], "--shear") == 0) {
+				glut_functions::shear = true;
+			}
+			else if (strcmp(argv[i], "--stretch") == 0) {
+				glut_functions::stretch = true;
+			}
+			else if (strcmp(argv[i], "--Ke") == 0) {
+				glut_functions::elasticity = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--Kd") == 0) {
+				glut_functions::damping = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--solver") == 0) {
+				string s = string(argv[i + 1]);
+				if (s == "exp-euler") {
+					glut_functions::solver = physim::solver_type::EulerOrig;
+				}
+				else if (s == "semi-euler") {
+					glut_functions::solver = physim::solver_type::EulerSemi;
+				}
+				else if (s == "verlet") {
+					glut_functions::solver = physim::solver_type::Verlet;
+				}
+				else {
+					cout << "Error: invalid value for solver: '" << s << "'" << endl;
+				}
+				++i;
+			}
+		}
 	}
 
 	void set_internal_forces() {

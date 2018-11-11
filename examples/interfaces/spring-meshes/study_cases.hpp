@@ -8,12 +8,16 @@ namespace study_cases {
 	 */
 	void sim1_1dmeshes(int argc, char *argv[]);
 
-	/* -- Two-dimensional spring meshes --
+	/* -- Two-dimensional mesh --
 	 */
 	void sim2_2dmeshes(int argc, char *argv[]);
 
-	/* -- Two-dimensional spring meshes on a sphere --
+	/* -- Two-dimensional mesh on a sphere --
 	 */
 	void sim3_2dmeshes(int argc, char *argv[]);
+
+	/* -- Two-dimensional mesh dome-shaped --
+	 */
+	void sim4_2dmeshes(int argc, char *argv[]);
 
 } // -- namespace study_cases
