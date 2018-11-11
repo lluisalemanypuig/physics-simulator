@@ -12,10 +12,10 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 SOURCES += main.cpp		\
 	glut_functions.cpp	\
 	study_cases.cpp		\
-    utils.cpp \
-    0_meshes1d.cpp \
-    1_meshes2d.cpp \
-    2_meshes2d_sphere.cpp
+    utils.cpp			\
+    1_meshes1d.cpp		\
+    2_meshes2d.cpp		\
+    3_meshes2d_sphere.cpp
 
 HEADERS +=				\
 	study_cases.hpp		\

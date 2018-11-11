@@ -12,16 +12,18 @@ using namespace std;
 
 namespace glut_functions {
 
-	// key definitions
-	#define ESC 27
-
 	sim_renderer SR;
 	int window_id;
 	timing::time_point sec;
 
+	int special_key;
 	int pressed_button;
-	point last_mouse;
 	bool lock_mouse;
+
+	point last_mouse_moved;
+	point last_mouse_click;
+	point special_key_pressed;
+	point regular_key_pressed;
 
 	bool draw_box;
 
@@ -38,9 +40,14 @@ namespace glut_functions {
 	bool shear;
 	bool bend;
 
+	physim::solver_type solver;
+
+	physim::math::vec3 bgd_color;
+
 	void init_glut_variables() {
+		special_key = 0;
 		pressed_button = 0;
-		last_mouse = point(0,0);
+		last_mouse_moved = point(0,0);
 		lock_mouse = false;
 
 		draw_box = true;
@@ -52,6 +59,10 @@ namespace glut_functions {
 		stretch = true;
 		shear = true;
 		bend = true;
+
+		solver = physim::solver_type::Verlet;
+
+		bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
 
 		sec = timing::now();
 
@@ -72,7 +83,7 @@ namespace glut_functions {
 	// ---------------
 
 	void refresh() {
-		glClearColor(0.0, 0.0, 0.0, 1.0);
+		glClearColor(bgd_color.x, bgd_color.y, bgd_color.z, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glMatrixMode(GL_PROJECTION);
@@ -136,9 +147,6 @@ namespace glut_functions {
 	// -------------
 
 	void mouse_click_event(int button, int state, int x, int y) {
-		UNUSED(x);
-		UNUSED(y);
-
 		if (inside_window(x,y) and SR.is_flying()) {
 			if (button == GLUT_LEFT_BUTTON and state == 0) {
 				if (lock_mouse) {
@@ -152,27 +160,29 @@ namespace glut_functions {
 				}
 			}
 		}
+
 		pressed_button = button;
+		last_mouse_click = point(x,y);
 	}
 
 	void mouse_movement(int x, int y) {
-		int dx = x - last_mouse.first;
-		int dy = y - last_mouse.second;
-		last_mouse = point(x,y);
+		int dx = x - last_mouse_moved.first;
+		int dy = y - last_mouse_moved.second;
+		last_mouse_moved = point(x,y);
 
 		if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 			SR.increment_yaw(-0.2f*dx);
 			SR.increment_pitch(-0.2f*dy);
 
 			glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
-			last_mouse = point(SR.window_width()/2,SR.window_height()/2);
+			last_mouse_moved = point(SR.window_width()/2,SR.window_height()/2);
 		}
 	}
 
 	void mouse_drag_event(int x, int y) {
-		int dx = x - last_mouse.first;
-		int dy = y - last_mouse.second;
-		last_mouse = point(x,y);
+		int dx = x - last_mouse_moved.first;
+		int dy = y - last_mouse_moved.second;
+		last_mouse_moved = point(x,y);
 
 		if (pressed_button == GLUT_LEFT_BUTTON) {
 			if (SR.is_inspecting()) {
@@ -190,19 +200,17 @@ namespace glut_functions {
 	// ----------------
 
 	void special_keys_keyboard(int key, int x, int y) {
-		UNUSED(key);
-		UNUSED(x);
-		UNUSED(y);
+		special_key_pressed = point(x,y);
+		special_key = key;
 	}
 
 	void regular_keys_keyboard(unsigned char c, int x, int y) {
-		UNUSED(x);
-		UNUSED(y);
+		regular_key_pressed = point(x,y);
 
 		string option;
 
 		switch (c) {
-		case ESC: glutDestroyWindow(window_id); break;
+		case ESC_KEY: glutDestroyWindow(window_id); break;
 		case 'p': SR.switch_to_perspective(); break;
 		case 'o': SR.switch_to_orthogonal(); break;
 		case 'b': draw_box = not draw_box; break;
@@ -286,12 +294,15 @@ namespace glut_functions {
 			cout << "Bend: " << (bend ? "On" : "Off") << endl;
 			break;
 		case 'm':
-			cout << "Enter option: ";
+			cout << "What do you want to change?" << endl;
+			cout << "    elasticity, damping, friction, bouncing" << endl;
+			cout << "    ";
 			cin >> option;
 
 			physim::simulator& S = SR.get_simulator();
 
 			if (option == "elasticity") {
+				cout << "    enter elasticity: ";
 				cin >> elasticity;
 				cout << "    Use elasticity coefficient: " << elasticity << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
@@ -299,6 +310,7 @@ namespace glut_functions {
 				}
 			}
 			else if (option == "damping") {
+				cout << "    enter damping: ";
 				cin >> damping;
 				cout << "    Use damping factor: " << damping << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
@@ -306,6 +318,7 @@ namespace glut_functions {
 				}
 			}
 			else if (option == "friction") {
+				cout << "    enter friction: ";
 				cin >> friction;
 				cout << "    Use friction coefficient: " << friction << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {
@@ -313,6 +326,7 @@ namespace glut_functions {
 				}
 			}
 			else if (option == "bouncing") {
+				cout << "    enter bouncing: ";
 				cin >> bouncing;
 				cout << "    Use bouncing coefficient: " << bouncing << endl;
 				for (physim::meshes::mesh *m : S.get_meshes()) {

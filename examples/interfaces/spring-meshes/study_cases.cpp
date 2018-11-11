@@ -12,13 +12,13 @@ namespace study_cases {
 	void choose_case(int argc, char *argv[]) {
 
 		if (strcmp(argv[1], "mesh1d") == 0) {
-			sim0_1dmeshes(argc, argv);
+			sim1_1dmeshes(argc, argv);
 		}
 		else if (strcmp(argv[1], "mesh2d_regular") == 0) {
-			sim1_2dmeshes(argc, argv);
+			sim2_2dmeshes(argc, argv);
 		}
 		else if (strcmp(argv[1], "mesh2d_regular-sphere") == 0) {
-			sim2_2dmeshes(argc, argv);
+			sim3_2dmeshes(argc, argv);
 		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;

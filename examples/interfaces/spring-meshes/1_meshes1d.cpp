@@ -27,7 +27,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	void sim0_make_simulation() {
+	void sim1_make_simulation() {
 		SR.set_particle_size(2.0f);
 		SR.set_spring_width(1.5f);
 
@@ -179,7 +179,7 @@ namespace study_cases {
 		SR.init_cameras();
 	}
 
-	void sim0_help() {
+	void sim1_help() {
 		glut_functions::help();
 
 		cout << "Simulation 1 description:" << endl;
@@ -197,43 +197,46 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim0_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim1_reset() {
+		SR.clear();
+		// copy cameras
+		perspective old_p = SR.get_perspective_camera();
+		orthogonal old_o = SR.get_orthogonal_camera();
+
+		vec3 VRP = SR.get_VRP();
+		float theta = SR.get_theta();
+		float psi = SR.get_psi();
+
+		vec3 viewer_pos = SR.get_viewer_pos();
+		float yaw = SR.get_yaw();
+		float pitch = SR.get_pitch();
+
+		sim1_make_simulation();
+
+		SR.set_perspective(old_p);
+		SR.set_orthogonal(old_o);
+		SR.set_VRP(VRP);
+		SR.set_theta(theta);
+		SR.set_psi(psi);
+		SR.set_viewer_pos(viewer_pos);
+		SR.set_yaw(yaw);
+		SR.set_pitch(pitch);
+	}
+
+	void sim1_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim0_help();
+			sim1_help();
 			break;
 		case 'r':
-			SR.clear();
-			// copy cameras
-			perspective old_p = SR.get_perspective_camera();
-			orthogonal old_o = SR.get_orthogonal_camera();
-
-			vec3 VRP = SR.get_VRP();
-			float theta = SR.get_theta();
-			float psi = SR.get_psi();
-
-			vec3 viewer_pos = SR.get_viewer_pos();
-			float yaw = SR.get_yaw();
-			float pitch = SR.get_pitch();
-
-			sim0_make_simulation();
-
-			SR.set_perspective(old_p);
-			SR.set_orthogonal(old_o);
-			SR.set_VRP(VRP);
-			SR.set_theta(theta);
-			SR.set_psi(psi);
-			SR.set_viewer_pos(viewer_pos);
-			SR.set_yaw(yaw);
-			SR.set_pitch(pitch);
-
+			sim1_reset();
 			break;
 		}
 	}
 
-	void sim0_initGL(int argc, char *argv[]) {
+	void sim1_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -247,11 +250,11 @@ namespace study_cases {
 		glEnable(GL_LIGHTING);
 
 		glEnable(GL_LIGHT0);
-		float col[] = {1.0, 1.0, 1.0, 1.0};
+		float col[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, col);
-		float pos[] = {0.0, 0.0, 0.0, 1.0};
+		float pos[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightfv(GL_LIGHT0, GL_POSITION, pos);
-		float amb[] = {0.2, 0.2, 0.2, 1.0};
+		float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 		glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
 		// --------------------------- //
@@ -264,12 +267,12 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim0_make_simulation();
+		sim1_make_simulation();
 	}
 
-	void sim0_1dmeshes(int argc, char *argv[]) {
-		sim0_help();
-		sim0_initGL(0, nullptr);
+	void sim1_1dmeshes(int argc, char *argv[]) {
+		sim1_help();
+		sim1_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -277,7 +280,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim0_regular_keys_keyboard);
+		glutKeyboardFunc(sim1_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);
