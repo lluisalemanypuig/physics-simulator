@@ -174,6 +174,17 @@ const
 
 	// make the plane update the particle
 	tan_plane.update_particle(pred_pos, pred_vel, p);
+
+	// If the distance between the predicted position
+	// and the center is less than the radius then
+	// it means that the particle has pierced through
+	// the sphere's surface. If this happens, move the
+	// position to the surface (and a bit farther).
+	if (__pm_dist2(p->cur_pos, C) < R*R) {
+		__pm_sub_v_v(normal, p->cur_pos, C);
+		math::normalise(normal, normal);
+		__pm_add_v_vs(p->cur_pos, C, normal,R + 0.1f);
+	}
 }
 
 void sphere::display(std::ostream& os) const {
