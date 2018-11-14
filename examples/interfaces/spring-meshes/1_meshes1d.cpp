@@ -46,7 +46,6 @@ namespace study_cases {
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
 			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_shear(glut_functions::shear);
 			m->simulate_bend(glut_functions::bend);
 			m->set_elasticity(glut_functions::elasticity/i);
 			m->set_damping(glut_functions::damping);
@@ -72,7 +71,6 @@ namespace study_cases {
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 0.5f*j);
 			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_shear(glut_functions::shear);
 			m->simulate_bend(glut_functions::bend);
 			m->set_elasticity(glut_functions::elasticity);
 			m->set_damping(glut_functions::damping);
@@ -108,7 +106,6 @@ namespace study_cases {
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
 			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_shear(glut_functions::shear);
 			m->simulate_bend(glut_functions::bend);
 			m->set_elasticity(glut_functions::elasticity/i);
 			m->set_damping(glut_functions::damping);
@@ -151,7 +148,6 @@ namespace study_cases {
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
 			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_shear(glut_functions::shear);
 			m->simulate_bend(glut_functions::bend);
 			m->set_elasticity(glut_functions::elasticity/i);
 			m->set_damping(glut_functions::damping);

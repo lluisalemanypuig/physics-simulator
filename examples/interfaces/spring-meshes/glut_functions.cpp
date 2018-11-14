@@ -12,6 +12,8 @@ using namespace std;
 
 // physim includes
 #include <physim/meshes/mesh.hpp>
+#include <physim/meshes/mesh1d.hpp>
+#include <physim/meshes/mesh2d_regular.hpp>
 
 namespace glut_functions {
 
@@ -114,9 +116,16 @@ namespace glut_functions {
 	void set_internal_forces() {
 		const vector<physim::meshes::mesh *>& ms = SR.get_simulator().get_meshes();
 		for (physim::meshes::mesh *m : ms) {
-			m->simulate_stretch(stretch);
-			m->simulate_shear(shear);
-			m->simulate_bend(bend);
+			if (m->get_type() == physim::meshes::mesh_type::d1) {
+				physim::meshes::mesh1d *m1 = static_cast<physim::meshes::mesh1d *>(m);
+				m1->simulate_stretch(stretch);
+				m1->simulate_bend(bend);
+			}
+			else if (m->get_type() == physim::meshes::mesh_type::d2_regular) {
+				physim::meshes::mesh2d_regular *m2 = static_cast<physim::meshes::mesh2d_regular *>(m);
+				m2->simulate_stretch(stretch);
+				m2->simulate_bend(bend);
+			}
 		}
 	}
 
