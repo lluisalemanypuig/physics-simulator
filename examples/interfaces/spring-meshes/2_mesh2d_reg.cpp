@@ -69,7 +69,6 @@ namespace study_cases {
 						vec3((length/n)*i, (height/m)*j, 0.0f);
 			}
 		}
-
 		SR.get_simulator().add_mesh(M);
 
 		SR.get_box().set_min_max(vec3(-5,-5,-5), vec3(15,15,5));

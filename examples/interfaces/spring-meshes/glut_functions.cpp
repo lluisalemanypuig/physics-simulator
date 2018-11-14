@@ -70,6 +70,7 @@ namespace glut_functions {
 		sec = timing::now();
 
 		SR.get_simulator().set_solver(physim::solver_type::Verlet);
+		SR.get_simulator().set_time_step(0.001f);
 	}
 
 	void parse_common_params(int argc, char *argv[]) {
@@ -138,7 +139,10 @@ namespace glut_functions {
 		SR.apply_camera();
 
 		SR.render_simulation();
-		SR.apply_time_step();
+
+		for (int i = 0; i < 10; ++i) {
+			SR.apply_time_step();
+		}
 
 		if (draw_box) {
 			glDisable(GL_LIGHTING);
@@ -310,12 +314,15 @@ namespace glut_functions {
 			else {
 				if (option == "EulerOrig") {
 					SR.get_simulator().set_solver(physim::solver_type::EulerOrig);
+					solver = physim::solver_type::EulerOrig;
 				}
 				else if (option == "EulerSemi") {
 					SR.get_simulator().set_solver(physim::solver_type::EulerSemi);
+					solver = physim::solver_type::EulerSemi;
 				}
 				else if (option == "Verlet") {
 					SR.get_simulator().set_solver(physim::solver_type::Verlet);
+					solver = physim::solver_type::Verlet;
 				}
 			}
 			break;
