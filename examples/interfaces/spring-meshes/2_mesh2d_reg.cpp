@@ -109,9 +109,9 @@ namespace study_cases {
 		cout << "    --stretch, --shear, --bend: activate bend, shear, and stretch forces" << endl;
 		cout << "        Default: stretch=yes, shear,bend=no" << endl;
 		cout << "    --mass m : set mesh's mass to m" << endl;
-		cout << "        Default: 50 Kg" << endl;
+		cout << "        Default: 25 Kg" << endl;
 		cout << "    --ke e, --kd d : set elasticity and damping parameters of the mesh" << endl;
-		cout << "        Default: Ke=150, Kd=0.5" << endl;
+		cout << "        Default: Ke=100, Kd=0.5" << endl;
 		cout << "    --n #, --m # : number of particles in the x and z dimensions." << endl;
 		cout << "        Default: 25x25" << endl;
 		cout << "    --solver S: numerical solver used." << endl;
@@ -217,11 +217,29 @@ namespace study_cases {
 		glut_functions::shear = false;
 		glut_functions::bend = false;
 
+		glut_functions::elasticity = 100.0f;
+		glut_functions::damping = 0.5f;
+
 		n = 25;
 		m = 25;
-		mesh_mass = 50.0f;
+		mesh_mass = 25.0f;
 
 		glut_functions::parse_common_params(argc, argv);
+
+		for (int i = 2; i < argc; ++i) {
+			if (strcmp(argv[i], "--n") == 0) {
+				n = atoi(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--m") == 0) {
+				m = atoi(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--mass") == 0) {
+				mesh_mass = atof(argv[i + 1]);
+				++i;
+			}
+		}
 
 		// ---------------- //
 		/* build simulation */
