@@ -23,6 +23,17 @@ namespace meshes {
  * Similarly, the particle with local index N - 1 is only
  * connected to that with index N - 2. The other particles
  * are connected to the particles with index \f$\pm 1\f$.
+ *
+ * In this type of meshes, there two types of internal forces
+ * implemented by default:
+ * - stretch: @ref stretch.
+ * - bending: @ref bend.
+ * These internal forces can be activated through the functions
+ * - @ref simulate_stretch.
+ * - @ref simulate_bend.
+ * with an appropriate value of their parameter.
+ * Depending on the type of mesh some of these forces may not be
+ * implemented.
  */
 class mesh1d : public mesh {
 	private:
@@ -47,6 +58,12 @@ class mesh1d : public mesh {
 		 */
 		math::vec2 *ds;
 
+		/// Simulate stretch forces.
+		bool stretch;
+		/// Simulate shear forces.
+		bool shear;
+		/// Simulate bend forces.
+		bool bend;
 
 	public:
 		/// Default constructor.
@@ -88,6 +105,36 @@ class mesh1d : public mesh {
 		void update_forces();
 
 		void clear();
+
+		/**
+		 * @brief Activates/Deactivates the simulation of stretch internal forces.
+		 *
+		 * Sets @ref stretch to the value of @e s.
+		 * @param s True or false depending on whether the simulation
+		 * has to activated or deactivated.
+		 */
+		void simulate_stretch(bool s = true);
+		/**
+		 * @brief Activates/Deactivates the simulation of bending internal forces.
+		 *
+		 * Sets @ref bend to the value of @e s.
+		 * @param s True or false depending on whether the simulation
+		 * has to activated or deactivated.
+		 */
+		void simulate_bend(bool s = true);
+
+		// GETTERS
+
+		/**
+		 * @brief Returns whether stretch forces are actived.
+		 * @return Returns the value of @ref stretch.
+		 */
+		bool is_simulating_stretch() const;
+		/**
+		 * @brief Returns whether bend forces are actived.
+		 * @return Returns the value of @ref bend.
+		 */
+		bool is_simulating_bend() const;
 };
 
 } // -- namespace meshes

@@ -23,6 +23,19 @@ namespace meshes {
  * the grid. That is, in a grid of @e R and @e C particles in each
  * dimension the particle at \f$(i,j)\:|\: 0 \le i \le R - 1, 0 \le j \le C - 1\f$
  * has as neighbours the particles at \f$(i-1,j),(i+1,j),(i,j-1),(i,j+1)\f$.
+ *
+ * In this type of meshes, there three types of internal forces
+ * implemented by default:
+ * - stretch: @ref stretch.
+ * - shear: @ref shear.
+ * - bending: @ref bend.
+ * These internal forces can be activated through the functions
+ * - @ref simulate_stretch.
+ * - @ref simulate_shear.
+ * - @ref simulate_bend.
+ * with an appropriate value of their parameter.
+ * Depending on the type of mesh some of these forces may not be
+ * implemented.
  */
 class mesh2d_regular : public mesh {
 	private:
@@ -70,6 +83,13 @@ class mesh2d_regular : public mesh {
 		 */
 		math::vec6 *sb_ds;
 
+		/// Simulate stretch forces.
+		bool stretch;
+		/// Simulate shear forces.
+		bool shear;
+		/// Simulate bend forces.
+		bool bend;
+
 	public:
 		/// Default constructor.
 		mesh2d_regular();
@@ -111,6 +131,31 @@ class mesh2d_regular : public mesh {
 
 		void clear();
 
+		/**
+		 * @brief Activates/Deactivates the simulation of stretch internal forces.
+		 *
+		 * Sets @ref stretch to the value of @e s.
+		 * @param s True or false depending on whether the simulation
+		 * has to activated or deactivated.
+		 */
+		void simulate_stretch(bool s = true);
+		/**
+		 * @brief Activates/Deactivates the simulation of shear internal forces.
+		 *
+		 * Sets @ref shear to the value of @e s.
+		 * @param s True or false depending on whether the simulation
+		 * has to activated or deactivated.
+		 */
+		void simulate_shear(bool s = true);
+		/**
+		 * @brief Activates/Deactivates the simulation of bending internal forces.
+		 *
+		 * Sets @ref bend to the value of @e s.
+		 * @param s True or false depending on whether the simulation
+		 * has to activated or deactivated.
+		 */
+		void simulate_bend(bool s = true);
+
 		// SETTERS
 
 		/**
@@ -123,6 +168,22 @@ class mesh2d_regular : public mesh {
 		void set_dimensions(size_t r, size_t c);
 
 		// GETTERS
+
+		/**
+		 * @brief Returns whether stretch forces are actived.
+		 * @return Returns the value of @ref stretch.
+		 */
+		bool is_simulating_stretch() const;
+		/**
+		 * @brief Returns whether shear forces are actived.
+		 * @return Returns the value of @ref shear.
+		 */
+		bool is_simulating_shear() const;
+		/**
+		 * @brief Returns whether bend forces are actived.
+		 * @return Returns the value of @ref bend.
+		 */
+		bool is_simulating_bend() const;
 
 		/**
 		 * @brief Gets the number of rows and columns.

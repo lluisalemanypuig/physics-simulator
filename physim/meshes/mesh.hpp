@@ -52,17 +52,8 @@ enum class mesh_type : int8_t {
  * - bouncing coefficient (see @ref bouncing).
  * - friction coefficient (see @ref friction).
  *
- * There are internal forces that can be simulated.
- * - stretch: @ref stretch.
- * - shear: @ref shear.
- * - bending: @ref bend.
- * These internal forces can be activated through the functions
- * - @ref simulate_stretch
- * - @ref simulate_shear.
- * - @ref simulate_bend.
- * with an appropriate value of their parameter.
- * Depending on the type of mesh some of these forces may not be
- * implemented.
+ * There are internal forces that can be simulated. These are
+ * dependent on each type of mesh.
  */
 class mesh {
 	protected:
@@ -83,13 +74,6 @@ class mesh {
 		float bouncing;
 		/// Friction coefficient of all the particles in the mesh.
 		float friction;
-
-		/// Simulate stretch forces.
-		bool stretch;
-		/// Simulate shear forces.
-		bool shear;
-		/// Simulate bend forces.
-		bool bend;
 
 	public:
 		/// Default constructor.
@@ -202,31 +186,6 @@ class mesh {
 		 */
 		void set_mass(float Kg);
 
-		/**
-		 * @brief Activates/Deactivates the simulation of stretch internal forces.
-		 *
-		 * Sets @ref stretch to the value of @e s.
-		 * @param s True or false depending on whether the simulation
-		 * has to activated or deactivated.
-		 */
-		void simulate_stretch(bool s = true);
-		/**
-		 * @brief Activates/Deactivates the simulation of shear internal forces.
-		 *
-		 * Sets @ref shear to the value of @e s.
-		 * @param s True or false depending on whether the simulation
-		 * has to activated or deactivated.
-		 */
-		void simulate_shear(bool s = true);
-		/**
-		 * @brief Activates/Deactivates the simulation of bending internal forces.
-		 *
-		 * Sets @ref bend to the value of @e s.
-		 * @param s True or false depending on whether the simulation
-		 * has to activated or deactivated.
-		 */
-		void simulate_bend(bool s = true);
-
 		// GETTERS
 
 		/// Returns the elasticity coefficient of this mesh.
@@ -238,22 +197,6 @@ class mesh {
 		float get_friction() const;
 		/// Returns the bouncing factor of this mesh.
 		float get_bouncing() const;
-
-		/**
-		 * @brief Returns whether stretch forces are actived.
-		 * @return Returns the value of @ref stretch.
-		 */
-		bool is_simulating_stretch() const;
-		/**
-		 * @brief Returns whether shear forces are actived.
-		 * @return Returns the value of @ref shear.
-		 */
-		bool is_simulating_shear() const;
-		/**
-		 * @brief Returns whether bend forces are actived.
-		 * @return Returns the value of @ref bend.
-		 */
-		bool is_simulating_bend() const;
 
 		/// Returns the number of particles of this mesh.
 		size_t size() const;

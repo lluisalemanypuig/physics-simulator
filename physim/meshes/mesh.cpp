@@ -18,9 +18,6 @@ mesh::mesh() {
 	bouncing = 0.8f;
 	Ke = 100.0f;
 	Kd = 0.05f;
-	stretch = false;
-	shear = false;
-	bend = false;
 }
 mesh::mesh(float ke, float kd) {
 	N = 0;
@@ -29,9 +26,6 @@ mesh::mesh(float ke, float kd) {
 	bouncing = 0.8f;
 	Ke = ke;
 	Kd = kd;
-	stretch = false;
-	shear = false;
-	bend = false;
 }
 
 mesh::~mesh() {
@@ -115,18 +109,6 @@ void mesh::set_bouncing(float b) {
 	bouncing = b;
 }
 
-void mesh::simulate_stretch(bool s) {
-	stretch = s;
-}
-
-void mesh::simulate_shear(bool s) {
-	shear = s;
-}
-
-void mesh::simulate_bend(bool s) {
-	bend = s;
-}
-
 // GETTERS
 
 float mesh::get_elasticity() const {
@@ -141,16 +123,6 @@ float mesh::get_friction() const {
 }
 float mesh::get_bouncing() const {
 	return bouncing;
-}
-
-bool mesh::is_simulating_stretch() const {
-	return stretch;
-}
-bool mesh::is_simulating_shear() const {
-	return shear;
-}
-bool mesh::is_simulating_bend() const {
-	return bend;
 }
 
 void mesh::set_mass(float Kg) {

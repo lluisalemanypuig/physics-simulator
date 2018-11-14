@@ -49,10 +49,14 @@ namespace meshes {
 mesh1d::mesh1d() : mesh() {
 	mt = mesh_type::d1;
 	ds = nullptr;
+	stretch = false;
+	bend = false;
 }
 mesh1d::mesh1d(float ke, float kd) : mesh(ke,kd) {
 	mt = mesh_type::d1;
 	ds = nullptr;
+	stretch = false;
+	bend = false;
 }
 
 mesh1d::~mesh1d() {
@@ -105,6 +109,24 @@ void mesh1d::clear() {
 		free(ds);
 		ds = nullptr;
 	}
+}
+
+void mesh1d::simulate_stretch(bool s) {
+	stretch = s;
+}
+
+void mesh1d::simulate_bend(bool s) {
+	bend = s;
+}
+
+// GETTERS
+
+bool mesh1d::is_simulating_stretch() const {
+	return stretch;
+}
+
+bool mesh1d::is_simulating_bend() const {
+	return bend;
 }
 
 } // -- namespace meshes

@@ -54,6 +54,9 @@ mesh2d_regular::mesh2d_regular() : mesh() {
 	sb_ds = nullptr;
 	R = 0;
 	C = 0;
+	stretch = false;
+	shear = false;
+	bend = false;
 }
 
 mesh2d_regular::mesh2d_regular(float ke, float kd) : mesh(ke,kd) {
@@ -61,6 +64,9 @@ mesh2d_regular::mesh2d_regular(float ke, float kd) : mesh(ke,kd) {
 	sb_ds = nullptr;
 	R = 0;
 	C = 0;
+	stretch = false;
+	shear = false;
+	bend = false;
 }
 
 mesh2d_regular::~mesh2d_regular() {
@@ -333,7 +339,31 @@ void mesh2d_regular::set_dimensions(size_t r, size_t c) {
 	C = c;
 }
 
+void mesh2d_regular::simulate_stretch(bool s) {
+	stretch = s;
+}
+
+void mesh2d_regular::simulate_shear(bool s) {
+	shear = s;
+}
+
+void mesh2d_regular::simulate_bend(bool s) {
+	bend = s;
+}
+
 // GETTERS
+
+bool mesh2d_regular::is_simulating_stretch() const {
+	return stretch;
+}
+
+bool mesh2d_regular::is_simulating_shear() const {
+	return shear;
+}
+
+bool mesh2d_regular::is_simulating_bend() const {
+	return bend;
+}
 
 void mesh2d_regular::get_dimensions(size_t& r, size_t& c) const {
 	r = R;
