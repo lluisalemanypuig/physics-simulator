@@ -14,9 +14,8 @@ SOURCES += main.cpp		\
 	study_cases.cpp		\
     utils.cpp			\
     1_meshes1d.cpp		\
-    2_mesh2d_reg.cpp \
-    3_mesh2d_reg_sphere.cpp \
-    4_mesh2d_reg_dome.cpp
+    2_mesh2d_reg.cpp	\
+    3_mesh2d_reg_sphere.cpp
 
 HEADERS +=				\
 	study_cases.hpp		\

@@ -22,11 +22,6 @@ void list_all_cases() {
 	cout << "        mesh that falls on a sphere." << endl;
 	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
 	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
-	cout << endl;
-	cout << "    * mesh2d-reg-dome : simulation of a single two-dimensional" << endl;
-	cout << "        mesh that is dome-shaped." << endl;
-	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
-	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
 }
 
 int main(int argc, char *argv[]) {

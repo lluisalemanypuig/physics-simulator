@@ -16,8 +16,4 @@ namespace study_cases {
 	 */
 	void sim3_2dmeshes(int argc, char *argv[]);
 
-	/* -- Two-dimensional mesh dome-shaped --
-	 */
-	void sim4_2dmeshes(int argc, char *argv[]);
-
 } // -- namespace study_cases
