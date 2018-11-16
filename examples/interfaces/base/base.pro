@@ -9,11 +9,6 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-# for 'self' includes
-INCLUDEPATH += ..
-# physim includes
-INCLUDEPATH += ../../..
-
 HEADERS +=						\
 	obj_reader.hpp				\
 	box.hpp						\
@@ -44,3 +39,9 @@ SOURCES +=						\
 	model/rendered_model.cpp	\
 	scene/renderer.cpp			\
     scene/sim_renderer.cpp
+
+# for 'self' includes
+INCLUDEPATH += ..
+
+# physim includes
+INCLUDEPATH += ../../..
