@@ -124,6 +124,7 @@ namespace glut_functions {
 			else if (m->get_type() == physim::meshes::mesh_type::d2_regular) {
 				physim::meshes::mesh2d_regular *m2 = static_cast<physim::meshes::mesh2d_regular *>(m);
 				m2->simulate_stretch(stretch);
+				m2->simulate_shear(shear);
 				m2->simulate_bend(bend);
 			}
 		}
