@@ -195,10 +195,12 @@ void rendered_model::slow_render() const {
 }
 
 uint rendered_model::compile() {
-	list_index = glGenLists(1);
-	glNewList(list_index, GL_COMPILE);
-	slow_render();
-	glEndList();
+	if (list_index == 0) {
+		list_index = glGenLists(1);
+		glNewList(list_index, GL_COMPILE);
+		slow_render();
+		glEndList();
+	}
 	return list_index;
 }
 
