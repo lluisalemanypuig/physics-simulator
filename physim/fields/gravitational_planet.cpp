@@ -1,7 +1,7 @@
 #include <physim/fields/gravitational_planet.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace fields {
@@ -10,7 +10,7 @@ namespace fields {
 
 template<class P>
 void gravitational_planet::__compute_force(const P *p, math::vec3& F) {
-	__pm_mul_v_s(F, pos, p->mass);
+	__pm3_mul_v_s(F, pos, p->mass);
 }
 
 // PUBLIC

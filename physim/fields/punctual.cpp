@@ -1,21 +1,21 @@
 #include <physim/fields/punctual.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace fields {
 
 punctual::punctual() {
-	__pm_assign_s(pos, 0.0f);
+	__pm3_assign_s(pos, 0.0f);
 }
 
 punctual::punctual(const math::vec3& p) : field() {
-	__pm_assign_v(pos, p);
+	__pm3_assign_v(pos, p);
 }
 
 punctual::punctual(const punctual& f) : field(f) {
-	__pm_assign_v(pos, f.pos);
+	__pm3_assign_v(pos, f.pos);
 }
 
 punctual::~punctual() {
@@ -25,7 +25,7 @@ punctual::~punctual() {
 // SETTERS
 
 void punctual::set_position(const math::vec3& p) {
-	__pm_assign_v(pos, p);
+	__pm3_assign_v(pos, p);
 }
 
 // GETTERS

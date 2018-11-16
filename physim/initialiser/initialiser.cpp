@@ -1,7 +1,7 @@
 #include <physim/initialiser/initialiser.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace init {
@@ -14,8 +14,8 @@ typedef particles::free_particle fpart;
 // PUBLIC
 
 initialiser::initialiser() {
-	pos			= [](fpart *p) { __pm_assign_s(p->cur_pos, 0.0f); };
-	vel			= [](fpart *p) { __pm_assign_s(p->cur_vel, 0.0f); };
+	pos			= [](fpart *p) { __pm3_assign_s(p->cur_pos, 0.0f); };
+	vel			= [](fpart *p) { __pm3_assign_s(p->cur_vel, 0.0f); };
 	mass		= [](fpart *p) { p->mass = 1.0f; };
 	charge		= [](fpart *p) { p->charge = 0.0f; };
 	bounce		= [](fpart *p) { p->bouncing = 0.8f; };

@@ -1,14 +1,14 @@
 #include <physim/geometry/triangle.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 inline float triangle_area
 (const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)
 {
 	physim::math::vec3 C;
-	__pm_cross_diff(C, p1,p2,p3);
-	return __pm_norm(C)/2.0;
+	__pm3_cross_diff(C, p1,p2,p3);
+	return __pm3_norm(C)/2.0;
 }
 
 namespace physim {
@@ -26,17 +26,17 @@ triangle::triangle
 (const math::vec3& p1,const math::vec3& p2,const math::vec3& p3)
 	: geometry(), pl(plane(p1,p2,p3))
 {
-	__pm_assign_v(v1, p1);
-	__pm_assign_v(v2, p2);
-	__pm_assign_v(v3, p3);
+	__pm3_assign_v(v1, p1);
+	__pm3_assign_v(v2, p2);
+	__pm3_assign_v(v3, p3);
 }
 
 triangle::triangle(const triangle& t)
 	: geometry(t), pl(t.pl)
 {
-	__pm_assign_v(v1, t.v1);
-	__pm_assign_v(v2, t.v2);
-	__pm_assign_v(v3, t.v3);
+	__pm3_assign_v(v1, t.v1);
+	__pm3_assign_v(v2, t.v2);
+	__pm3_assign_v(v3, t.v3);
 }
 
 triangle::~triangle() { }
@@ -44,9 +44,9 @@ triangle::~triangle() { }
 // SETTERS
 
 void triangle::set_position(const math::vec3& v) {
-	__pm_add_acc_v(v1, v);
-	__pm_add_acc_v(v2, v);
-	__pm_add_acc_v(v3, v);
+	__pm3_add_acc_v(v1, v);
+	__pm3_add_acc_v(v2, v);
+	__pm3_add_acc_v(v3, v);
 	pl.set_position(v1);
 }
 

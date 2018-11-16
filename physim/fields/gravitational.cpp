@@ -1,7 +1,7 @@
 #include <physim/fields/gravitational.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace fields {
@@ -12,10 +12,10 @@ template<class P>
 void gravitational::__compute_force(const P *p, math::vec3& F) {
 	// unit directional vector
 	math::vec3 v;
-	__pm_sub_v_v(v, pos, p->cur_pos);
+	__pm3_sub_v_v(v, pos, p->cur_pos);
 	math::normalise(v, v);
 
-	__pm_mul_v_s(F, v, p->mass*M);
+	__pm3_mul_v_s(F, v, p->mass*M);
 }
 
 // PUBLIC

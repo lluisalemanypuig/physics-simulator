@@ -5,7 +5,7 @@
 #include <assert.h>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace meshes {
@@ -22,30 +22,30 @@ namespace meshes {
 //     Ke, Kd
 /*
 	// direction vector
-	__pm_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
-	dist = __pm_norm(dir);
-	__pm_normalise(dir, dir);
+	__pm3_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
+	dist = __pm3_norm(dir);
+	__pm3_normalise(dir, dir);
 	// difference of velocities
-	__pm_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
+	__pm3_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
 	// compute terms
 	elastic_term = Ke*(dist - ds[i]);
-	damping_term = Kd*__pm_dot(dvel, dir);
+	damping_term = Kd*__pm3_dot(dvel, dir);
 	// compute forces
-	__pm_assign_vs(F1_m1, dir, elastic_term + damping_term);
-	__pm_add_acc_v(ps[i]->force, F1_m1);
-	__pm_invert(F1_m1, F1_m1);
-	__pm_add_acc_v(ps[i + 1]->force, F1_m1);
+	__pm3_assign_vs(F1_m1, dir, elastic_term + damping_term);
+	__pm3_add_acc_v(ps[i]->force, F1_m1);
+	__pm3_invert(F1_m1, F1_m1);
+	__pm3_add_acc_v(ps[i + 1]->force, F1_m1);
 */
 // d: original distance between particles i and j
 #define compute_forces(i,j, d)											\
-	__pm_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
-	dist = __pm_norm(dir);												\
-	__pm_normalise(dir, dir);											\
-	__pm_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
-	__pm_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm_dot(dvel, dir));	\
-	__pm_add_acc_v(ps[i]->force, F1_m1);								\
-	__pm_invert(F1_m1, F1_m1);											\
-	__pm_add_acc_v(ps[j]->force, F1_m1)
+	__pm3_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
+	dist = __pm3_norm(dir);												\
+	__pm3_normalise(dir, dir);											\
+	__pm3_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
+	__pm3_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm3_dot(dvel, dir));	\
+	__pm3_add_acc_v(ps[i]->force, F1_m1);								\
+	__pm3_invert(F1_m1, F1_m1);											\
+	__pm3_add_acc_v(ps[j]->force, F1_m1)
 
 // PUBLIC
 
@@ -93,27 +93,27 @@ void mesh2d_regular::make_initial_state() {
 
 			// stretch forces
 			if (j + 1 < C) {
-				sb_ds[idx(i,j)].x = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+1)]->cur_pos);
+				sb_ds[idx(i,j)].x = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+1)]->cur_pos);
 			}
 			if (i + 1 < R) {
-				sb_ds[idx(i,j)].y = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j)]->cur_pos);
+				sb_ds[idx(i,j)].y = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j)]->cur_pos);
 			}
 
 			// bend forces
 			if (j + 2 < C) {
-				sb_ds[idx(i,j)].z = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+2)]->cur_pos);
+				sb_ds[idx(i,j)].z = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+2)]->cur_pos);
 			}
 			if (i + 2 < R) {
-				sb_ds[idx(i,j)].u = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+2,j)]->cur_pos);
+				sb_ds[idx(i,j)].u = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+2,j)]->cur_pos);
 			}
 
 			// shear forces
 			if (j + 1 < C) {
 				if (i > 0 ) {
-					sb_ds[idx(i,j)].v = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i-1,j+1)]->cur_pos);
+					sb_ds[idx(i,j)].v = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i-1,j+1)]->cur_pos);
 				}
 				if (i + 1 < R) {
-					sb_ds[idx(i,j)].w = __pm_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j+1)]->cur_pos);
+					sb_ds[idx(i,j)].w = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j+1)]->cur_pos);
 				}
 			}
 		}

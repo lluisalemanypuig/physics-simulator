@@ -13,7 +13,7 @@
 #include <physim/simulator.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/math/vec3.hpp>
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 
@@ -24,25 +24,25 @@ void simulator::apply_solver(const P *p, math::vec3& pred_pos, math::vec3& pred_
 	switch (solver) {
 		case solver_type::EulerOrig:
 			// pred_pos <- pos + vel*dt
-			__pm_add_v_vs(pred_pos, p->cur_pos, p->cur_vel, dt);
+			__pm3_add_v_vs(pred_pos, p->cur_pos, p->cur_vel, dt);
 			// pred_vel <- vel + force*dt/mass
-			__pm_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
+			__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
 			break;
 
 		case solver_type::EulerSemi:
 			// pred_vel <- vel + force*dt/mass
-			__pm_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
+			__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
 			// pred_pos <- pos + pred_vel*dt
-			__pm_add_v_vs(pred_pos, p->cur_pos, pred_vel, dt);
+			__pm3_add_v_vs(pred_pos, p->cur_pos, pred_vel, dt);
 			break;
 
 		case solver_type::Verlet:
 			// pred_pos <- pos + 1.0f*(pos - prev_pos) + force*dt*dt/m
-			__pm_sub_v_v(pred_pos, p->cur_pos, p->prev_pos);
-			__pm_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->force,(dt*dt)*(1.0f/mass), p->cur_pos);
+			__pm3_sub_v_v(pred_pos, p->cur_pos, p->prev_pos);
+			__pm3_add_vs_vs_v(pred_pos, pred_pos,1.0f, p->force,(dt*dt)*(1.0f/mass), p->cur_pos);
 
 			// pred_vel <- (pred_pos - pos)/dt
-			__pm_sub_v_v_div_s(pred_vel, pred_pos, p->cur_pos, dt);
+			__pm3_sub_v_v_div_s(pred_vel, pred_pos, p->cur_pos, dt);
 			break;
 
 		default:
@@ -57,11 +57,11 @@ void simulator::compute_forces(P *p) {
 	math::vec3 F;
 	for (fields::field *f : force_fields) {
 		f->compute_force(p, F);
-		__pm_add_acc_v(p->force, F);
+		__pm3_add_acc_v(p->force, F);
 	}
 
 	// apply viscous drag
-	__pm_add_acc_vs(p->force, p->cur_vel, -visc_drag);
+	__pm3_add_acc_vs(p->force, p->cur_vel, -visc_drag);
 }
 
 } // -- namespace physim

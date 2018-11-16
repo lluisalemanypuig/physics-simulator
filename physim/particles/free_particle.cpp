@@ -4,7 +4,7 @@
 #include <assert.h>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace particles {
@@ -15,14 +15,14 @@ namespace particles {
 
 free_particle::free_particle() {
 	init();
-	__pm_assign_s(cur_pos, 0.0f);
+	__pm3_assign_s(cur_pos, 0.0f);
 }
 
 free_particle::free_particle(const free_particle& p) {
-	__pm_assign_v(prev_pos, p.prev_pos);
-	__pm_assign_v(cur_pos, p.cur_pos);
-	__pm_assign_v(cur_vel, p.cur_vel);
-	__pm_assign_v(force, p.force);
+	__pm3_assign_v(prev_pos, p.prev_pos);
+	__pm3_assign_v(cur_pos, p.cur_pos);
+	__pm3_assign_v(cur_vel, p.cur_vel);
+	__pm3_assign_v(force, p.force);
 
 	mass = p.mass;
 	friction = p.friction;
@@ -49,13 +49,13 @@ void free_particle::reduce_starttime(float t) {
 }
 
 void free_particle::save_position() {
-	__pm_assign_v(prev_pos, cur_pos);
+	__pm3_assign_v(prev_pos, cur_pos);
 }
 
 void free_particle::init() {
-	__pm_assign_s(prev_pos, 0.0f);
-	__pm_assign_s(cur_vel, 0.0f);
-	__pm_assign_s(force, 0.0f);
+	__pm3_assign_s(prev_pos, 0.0f);
+	__pm3_assign_s(cur_vel, 0.0f);
+	__pm3_assign_s(force, 0.0f);
 	mass = 1.0f;
 	bouncing = 0.8f;
 	friction = 0.2f;

@@ -4,7 +4,7 @@
 #include <assert.h>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 // LOCAL-DEFINED
 
@@ -21,26 +21,26 @@ rectangle::rectangle
 (const math::vec3& p1,const math::vec3& p2,const math::vec3& p3,const math::vec3& p4)
 	: geometry(), pl(plane(p1,p2,p3))
 {
-	__pm_assign_v(v1, p1);
-	__pm_assign_v(v2, p2);
-	__pm_assign_v(v3, p3);
-	__pm_assign_v(v4, p4);
+	__pm3_assign_v(v1, p1);
+	__pm3_assign_v(v2, p2);
+	__pm3_assign_v(v3, p3);
+	__pm3_assign_v(v4, p4);
 
 	// make sure that last vertex is on plane...
 	assert(pl.is_inside(v4));
 
-	__pm_min_vec4(min, v1,v2,v3,v4);
-	__pm_max_vec4(max, v1,v2,v3,v4);
+	__pm3_min_vec4(min, v1,v2,v3,v4);
+	__pm3_max_vec4(max, v1,v2,v3,v4);
 }
 
 rectangle::rectangle(const rectangle& r) : geometry(r) {
-	__pm_assign_v(v1, r.v1);
-	__pm_assign_v(v2, r.v2);
-	__pm_assign_v(v3, r.v3);
-	__pm_assign_v(v4, r.v4);
+	__pm3_assign_v(v1, r.v1);
+	__pm3_assign_v(v2, r.v2);
+	__pm3_assign_v(v3, r.v3);
+	__pm3_assign_v(v4, r.v4);
 
-	__pm_assign_v(min, r.min);
-	__pm_assign_v(max, r.max);
+	__pm3_assign_v(min, r.min);
+	__pm3_assign_v(max, r.max);
 }
 
 rectangle::~rectangle() { }
@@ -48,13 +48,13 @@ rectangle::~rectangle() { }
 // SETTERS
 
 void rectangle::set_position(const math::vec3& v) {
-	__pm_add_acc_v(v1, v);
-	__pm_add_acc_v(v2, v);
-	__pm_add_acc_v(v3, v);
-	__pm_add_acc_v(v4, v);
+	__pm3_add_acc_v(v1, v);
+	__pm3_add_acc_v(v2, v);
+	__pm3_add_acc_v(v3, v);
+	__pm3_add_acc_v(v4, v);
 
-	__pm_add_acc_v(min, v);
-	__pm_add_acc_v(max, v);
+	__pm3_add_acc_v(min, v);
+	__pm3_add_acc_v(max, v);
 }
 
 // GETTERS

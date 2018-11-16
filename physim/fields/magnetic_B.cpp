@@ -1,7 +1,7 @@
 #include <physim/fields/magnetic_B.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace fields {
@@ -11,8 +11,8 @@ namespace fields {
 template<class P>
 void magnetic_B::__compute_force(const P *p, math::vec3& F) {
 	math::vec3 temp;
-	__pm_mul_v_s(temp, p->cur_vel, p->charge);
-	__pm_cross(F, temp, B);
+	__pm3_mul_v_s(temp, p->cur_vel, p->charge);
+	__pm3_cross(F, temp, B);
 }
 
 // PUBLIC

@@ -4,12 +4,8 @@
 #include <cmath>
 
 // physim includes
-#include <physim/math/math_misc.hpp>
-#include <physim/math/math_ops_add.hpp>
-#include <physim/math/math_ops_sub.hpp>
-#include <physim/math/math_ops_mul.hpp>
-#include <physim/math/math_ops_div.hpp>
-#include <physim/math/math_ops_mixed.hpp>
+#include <physim/math/private/math2.hpp>
+#include <physim/math/private/math3.hpp>
 
 /* The readability of the code resulting from using these
  * macros is not too good. However, each of them has a clear
@@ -17,8 +13,8 @@
  *
  * First, start with '__pm', which makes reference to the
  * namespaces physim::math. Then follows the type of operation:
- * 'add', 'sub', 'mul', 'div'. That is, '__pm_add', '__pm_sub',
- * '__pm_mul', '__pm_div'. Multiplication and division between
+ * 'add', 'sub', 'mul', 'div'. That is, '__pm3_add', '__pm3_sub',
+ * '__pm3_mul', '__pm3_div'. Multiplication and division between
  * two vectors are always component-wise.
  *
  * After the operation type comes the parameter specification.
@@ -36,9 +32,9 @@
  * they are both multiplied.
  *
  * For example, the macro:
- * * __pm_mul_v_v: indicates the component-wise multiplication
+ * * __pm3_mul_v_v: indicates the component-wise multiplication
  * of two vectors.
- * * __pm_add_v_vs: indicates the component-wise addition of a
+ * * __pm3_add_v_vs: indicates the component-wise addition of a
  * vector ('v') and the result of multiplying a vector by a
  * scalar ('vs').
  *
@@ -48,9 +44,9 @@
  * number of macros. These were added an 'acc' between the
  * indicator of the operation and the parameters.
  * Therefore, the macros:
- * * __pm_sub_c: implements 'u <- u - (x,y,z)' which is equivalent
+ * * __pm3_sub_c: implements 'u <- u - (x,y,z)' which is equivalent
  * to 'u -= (x,y,z)'.
- * * __pm_mul_s: implements 'u <- u*s' which is equivalent to
+ * * __pm3_mul_s: implements 'u <- u*s' which is equivalent to
  * 'u *= s', for a scalar value 's'.
  *
  * For longer operations, the operator indicated after 'pm'

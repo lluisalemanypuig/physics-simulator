@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace meshes {
@@ -19,30 +19,30 @@ namespace meshes {
 //     Ke, Kd
 /*
 	// direction vector
-	__pm_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
-	dist = __pm_norm(dir);
-	__pm_normalise(dir, dir);
+	__pm3_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
+	dist = __pm3_norm(dir);
+	__pm3_normalise(dir, dir);
 	// difference of velocities
-	__pm_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
+	__pm3_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
 	// compute terms
 	elastic_term = Ke*(dist - ds[i]);
-	damping_term = Kd*__pm_dot(dvel, dir);
+	damping_term = Kd*__pm3_dot(dvel, dir);
 	// compute forces
-	__pm_assign_vs(F1_m1, dir, elastic_term + damping_term);
-	__pm_add_acc_v(ps[i]->force, F1_m1);
-	__pm_invert(F1_m1, F1_m1);
-	__pm_add_acc_v(ps[i + 1]->force, F1_m1);
+	__pm3_assign_vs(F1_m1, dir, elastic_term + damping_term);
+	__pm3_add_acc_v(ps[i]->force, F1_m1);
+	__pm3_invert(F1_m1, F1_m1);
+	__pm3_add_acc_v(ps[i + 1]->force, F1_m1);
 */
 // d is the distance between particles i and j
 #define compute_forces(i,j, d)											\
-	__pm_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
-	dist = __pm_norm(dir);												\
-	__pm_normalise(dir, dir);											\
-	__pm_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
-	__pm_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm_dot(dvel, dir));	\
-	__pm_add_acc_v(ps[i]->force, F1_m1);								\
-	__pm_invert(F1_m1, F1_m1);											\
-	__pm_add_acc_v(ps[j]->force, F1_m1)
+	__pm3_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
+	dist = __pm3_norm(dir);												\
+	__pm3_normalise(dir, dir);											\
+	__pm3_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
+	__pm3_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm3_dot(dvel, dir));	\
+	__pm3_add_acc_v(ps[i]->force, F1_m1);								\
+	__pm3_invert(F1_m1, F1_m1);											\
+	__pm3_add_acc_v(ps[j]->force, F1_m1)
 
 // PUBLIC
 
@@ -72,10 +72,10 @@ void mesh1d::make_initial_state() {
 	ds = (math::vec2 *)malloc((N - 1)*sizeof(math::vec2));
 
 	for (size_t i = 0; i < N - 2; ++i) {
-		ds[i].x = __pm_dist(ps[i]->cur_pos, ps[i + 1]->cur_pos);
-		ds[i].y = __pm_dist(ps[i]->cur_pos, ps[i + 2]->cur_pos);
+		ds[i].x = __pm3_dist(ps[i]->cur_pos, ps[i + 1]->cur_pos);
+		ds[i].y = __pm3_dist(ps[i]->cur_pos, ps[i + 2]->cur_pos);
 	}
-	ds[N - 2].x = __pm_dist(ps[N - 2]->cur_pos, ps[N - 1]->cur_pos);
+	ds[N - 2].x = __pm3_dist(ps[N - 2]->cur_pos, ps[N - 1]->cur_pos);
 }
 
 void mesh1d::update_forces() {

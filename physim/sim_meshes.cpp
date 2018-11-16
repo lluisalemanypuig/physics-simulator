@@ -6,7 +6,7 @@
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/particles/conversions.hpp>
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 #include <physim/sim_solver.cpp>
 
 namespace physim {
@@ -38,7 +38,7 @@ void simulator::simulate_meshes() {
 
 		// set forces to 0
 		for (size_t i = 0; i < N; ++i) {
-			__pm_assign_s(mps[i]->force, 0.0f);
+			__pm3_assign_s(mps[i]->force, 0.0f);
 		}
 
 		// compute forces for particle p that are
@@ -99,12 +99,12 @@ void simulator::simulate_meshes() {
 						// for the 'previous' position of the
 						// particle after a collision with geometry
 
-						__pm_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+						__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
 					}
 
 					// keep track of the predicted particle's position
-					__pm_assign_v(pred_pos, coll_pred.cur_pos);
-					__pm_assign_v(pred_vel, coll_pred.cur_vel);
+					__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+					__pm3_assign_v(pred_vel, coll_pred.cur_vel);
 				}
 			}
 
@@ -114,13 +114,13 @@ void simulator::simulate_meshes() {
 			}
 			else {
 				mps[p_idx]->save_position();
-				__pm_assign_v(mps[p_idx]->cur_pos, pred_pos);
-				__pm_assign_v(mps[p_idx]->cur_vel, pred_vel);
+				__pm3_assign_v(mps[p_idx]->cur_pos, pred_pos);
+				__pm3_assign_v(mps[p_idx]->cur_vel, pred_vel);
 			}
 
 			// clear the force so that in the next iteration
 			// for the mesh, the forces can be computed
-			__pm_assign_s(mps[p_idx]->force, 0.0f);
+			__pm3_assign_s(mps[p_idx]->force, 0.0f);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace init {
@@ -14,7 +14,7 @@ void rect_source::make_pos_init() {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
 
-		__pm_add_vs_vs_v(p->cur_pos, this->u,(l*this->w), this->v,(m*this->h), this->S);
+		__pm3_add_vs_vs_v(p->cur_pos, this->u,(l*this->w), this->v,(m*this->h), this->S);
 
 		// copy the current position to the previous
 		// position so that Verlet's solver works properly.
@@ -34,12 +34,12 @@ rect_source::rect_source(const rect_source& rs) : initialiser(rs) {
 	E = rs.E;
 	U01 = rs.U01;
 
-	__pm_assign_v(S, rs.S);
-	__pm_assign_v(C, rs.C);
+	__pm3_assign_v(S, rs.S);
+	__pm3_assign_v(C, rs.C);
 
-	__pm_assign_v(u, rs.u);
-	__pm_assign_v(v, rs.v);
-	__pm_assign_v(n, rs.n);
+	__pm3_assign_v(u, rs.u);
+	__pm3_assign_v(v, rs.v);
+	__pm3_assign_v(n, rs.n);
 
 	w = rs.w;
 	h = rs.h;
@@ -60,33 +60,33 @@ rect_source::~rect_source() { }
 void rect_source::set_rectangular_source
 (const math::vec3& _S, const math::vec3& _u,const math::vec3& _v, float _w,float _h)
 {
-	__pm_assign_v(u, _u);
-	__pm_assign_v(v, _v);
-	__pm_cross(n,u,v);
-	__pm_normalise(n,n);
+	__pm3_assign_v(u, _u);
+	__pm3_assign_v(v, _v);
+	__pm3_cross(n,u,v);
+	__pm3_normalise(n,n);
 
 	w = _w;
 	h = _h;
 
-	__pm_assign_v(S, _S);
-	__pm_assign_v(C, S);
-	__pm_add_vs_vs(C, u,(0.5f*w), v,(0.5f*h));
+	__pm3_assign_v(S, _S);
+	__pm3_assign_v(C, S);
+	__pm3_add_vs_vs(C, u,(0.5f*w), v,(0.5f*h));
 
 	make_pos_init();
 	make_vel_init();
 }
 
 void rect_source::set_straight_source(const math::vec3& _S, float _w,float _h) {
-	__pm_assign_c(u, 1.0f,0.0f,0.0f);
-	__pm_assign_c(v, 0.0f,0.0f,1.0f);
-	__pm_assign_c(n, 0.0f,1.0f,0.0f);
+	__pm3_assign_c(u, 1.0f,0.0f,0.0f);
+	__pm3_assign_c(v, 0.0f,0.0f,1.0f);
+	__pm3_assign_c(n, 0.0f,1.0f,0.0f);
 
 	w = _w;
 	h = _h;
 
-	__pm_assign_v(S, _S);
-	__pm_assign_v(C, S);
-	__pm_add_vs_vs(C, u,(0.5f*w), v,(0.5f*h));
+	__pm3_assign_v(S, _S);
+	__pm3_assign_v(C, S);
+	__pm3_add_vs_vs(C, u,(0.5f*w), v,(0.5f*h));
 
 	make_pos_init();
 	make_vel_init();

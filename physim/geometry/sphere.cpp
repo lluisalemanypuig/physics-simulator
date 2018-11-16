@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/geometry/plane.hpp>
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace geom {
@@ -17,12 +17,12 @@ namespace geom {
 sphere::sphere() : geometry() { }
 
 sphere::sphere(const math::vec3& c, float r) : geometry() {
-	__pm_assign_v(C, c);
+	__pm3_assign_v(C, c);
 	R = r;
 }
 
 sphere::sphere(const sphere& s) : geometry(s) {
-	__pm_assign_v(C, s.C);
+	__pm3_assign_v(C, s.C);
 	R = s.R;
 }
 
@@ -31,7 +31,7 @@ sphere::~sphere() { }
 // SETTERS
 
 void sphere::set_position(const math::vec3& p) {
-	__pm_assign_v(C, p);
+	__pm3_assign_v(C, p);
 }
 
 // GETTERS
@@ -52,7 +52,7 @@ float sphere::get_radius() const {
 
 bool sphere::is_inside(const math::vec3& p, float tol) const {
 	// compute squared distance from centre to p
-	return ((__pm_dist2(C,p)) - R*R) <= tol;
+	return ((__pm3_dist2(C,p)) - R*R) <= tol;
 }
 
 geom_type sphere::get_geom_type() const {
@@ -91,14 +91,14 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 
 	// coefficients of quadratic equation
 	math::vec3 p_minus_C;
-	__pm_sub_v_v(p_minus_C, p, C);
+	__pm3_sub_v_v(p_minus_C, p, C);
 
 	math::vec3 v;
-	__pm_sub_v_v(v, q, p);
+	__pm3_sub_v_v(v, q, p);
 
-	float a = __pm_dot(v,v);
-	float b = 2.0f*__pm_dot(p_minus_C,v);
-	float c = __pm_dot(C,C) + __pm_dot(p,p) - 2.0f*__pm_dot(p,C) - R*R;
+	float a = __pm3_dot(v,v);
+	float b = 2.0f*__pm3_dot(p_minus_C,v);
+	float c = __pm3_dot(C,C) + __pm3_dot(p,p) - 2.0f*__pm3_dot(p,C) - R*R;
 
 	// discriminant of the quadratic equation
 	float discr = b*b - 4.0f*a*c;
@@ -149,7 +149,7 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	}
 
 	// compute intersection point
-	__pm_add_vs_vs(p_inter, p,(1.0f - L), q,L);
+	__pm3_add_vs_vs(p_inter, p,(1.0f - L), q,L);
 	return true;
 }
 
@@ -169,7 +169,7 @@ const
 
 	// define the plane
 	math::vec3 normal;
-	__pm_sub_v_v(normal, C, I);
+	__pm3_sub_v_v(normal, C, I);
 	plane tan_plane(normal,I);
 
 	// make the plane update the particle
@@ -180,10 +180,10 @@ const
 	// it means that the particle has pierced through
 	// the sphere's surface. If this happens, move the
 	// position to the surface (and a bit farther).
-	if (__pm_dist2(p->cur_pos, C) < R*R) {
-		__pm_sub_v_v(normal, p->cur_pos, C);
+	if (__pm3_dist2(p->cur_pos, C) < R*R) {
+		__pm3_sub_v_v(normal, p->cur_pos, C);
 		math::normalise(normal, normal);
-		__pm_add_v_vs(p->cur_pos, C, normal,R + 0.1f);
+		__pm3_add_v_vs(p->cur_pos, C, normal,R + 0.1f);
 	}
 }
 

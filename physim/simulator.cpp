@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 template<class V>
 inline void remove_from_vector(size_t i, V& v) {
@@ -35,7 +35,7 @@ void simulator::init_particle(particles::free_particle *p) {
 	// do not need it, however.
 
 	// prev_pos <- pos - vel*dt
-	__pm_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
+	__pm3_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
 }
 
 void simulator::init_mesh(meshes::mesh *m) {
@@ -48,14 +48,14 @@ void simulator::init_mesh(meshes::mesh *m) {
 
 	for (size_t i = 0; i < m->size(); ++i) {
 		// prev_pos <- pos - vel*dt
-		__pm_sub_v_vs(mps[i]->prev_pos, mps[i]->cur_pos, mps[i]->cur_vel, dt);
+		__pm3_sub_v_vs(mps[i]->prev_pos, mps[i]->cur_pos, mps[i]->cur_vel, dt);
 	}
 }
 
 // PUBLIC
 
 simulator::simulator(const solver_type& s, float t) {
-	__pm_assign_c(gravity, 0.0f, -9.81f, 0.0f);
+	__pm3_assign_c(gravity, 0.0f, -9.81f, 0.0f);
 	stime = 0.0f;
 	dt = t;
 	solver = s;

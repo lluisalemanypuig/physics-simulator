@@ -1,7 +1,7 @@
 #include <physim/geometry/plane.hpp>
 
 // physim includes
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 #include <iostream>
 using namespace std;
@@ -14,31 +14,31 @@ namespace geom {
 // PUBLIC
 
 plane::plane() : geometry() {
-	__pm_assign_c(normal, 0.0f,0.0f,0.0f);
+	__pm3_assign_c(normal, 0.0f,0.0f,0.0f);
 	dconst = 0.0f;
 }
 
 plane::plane(const math::vec3& n, const math::vec3& p) : geometry() {
-	__pm_normalise(normal,n);
-	dconst = -__pm_dot(p, normal);
+	__pm3_normalise(normal,n);
+	dconst = -__pm3_dot(p, normal);
 }
 
 plane::plane(const math::vec3& n, float d) : geometry() {
-	__pm_normalise(normal,n);
+	__pm3_normalise(normal,n);
 	dconst = d;
 }
 
 plane::plane(const math::vec3& p0, const math::vec3& p1, const math::vec3& p2) : geometry() {
 	math::vec3 v1, v2;
-	__pm_sub_v_v(v1, p1, p0);
-	__pm_sub_v_v(v2, p2, p0);
-	__pm_cross(normal, v1,v2);
-	__pm_normalise(normal,normal);
-	dconst = -__pm_dot(p0, normal);
+	__pm3_sub_v_v(v1, p1, p0);
+	__pm3_sub_v_v(v2, p2, p0);
+	__pm3_cross(normal, v1,v2);
+	__pm3_normalise(normal,normal);
+	dconst = -__pm3_dot(p0, normal);
 }
 
 plane::plane(const plane& p) : geometry(p) {
-	__pm_assign_v(normal, p.normal);
+	__pm3_assign_v(normal, p.normal);
 	dconst = p.dconst;
 }
 
@@ -47,7 +47,7 @@ plane::~plane() { }
 // SETTERS
 
 void plane::set_position(const math::vec3& p) {
-	dconst = -__pm_dot(p, normal);
+	dconst = -__pm3_dot(p, normal);
 }
 
 geom_type plane::get_geom_type() const {
@@ -55,11 +55,11 @@ geom_type plane::get_geom_type() const {
 }
 
 float plane::dist_point_plane(const math::vec3& p) const {
-	return __pm_dot(p, normal) + dconst;
+	return __pm3_dot(p, normal) + dconst;
 }
 
 void plane::closest_point_plane(const math::vec3& p, math::vec3& closest) const {
-	__pm_add_v_vs(closest, p, normal,-dconst - __pm_dot(p, normal));
+	__pm3_add_v_vs(closest, p, normal,-dconst - __pm3_dot(p, normal));
 }
 
 const math::vec3& plane::get_normal() const {
@@ -73,7 +73,7 @@ float plane::get_constant() const {
 // GETTERS
 
 bool plane::is_inside(const math::vec3& p, float tol) const {
-	if ((__pm_dot(p, normal) + dconst) <= tol) {
+	if ((__pm3_dot(p, normal) + dconst) <= tol) {
 		return true;
 	}
 	return false;
@@ -92,9 +92,9 @@ bool plane::intersec_segment(const math::vec3& p1, const math::vec3& p2, math::v
 
 	// Use point of intersection temporarily.
 	// It will be overwritten later.
-	__pm_sub_v_v(p_inter, p2, p1);
-	float r = (-dconst - __pm_dot(p1, normal))/__pm_dot(p_inter, normal);
-	__pm_add_vs_vs(p_inter, p1,(1.0f - r), p2,r);
+	__pm3_sub_v_v(p_inter, p2, p1);
+	float r = (-dconst - __pm3_dot(p1, normal))/__pm3_dot(p_inter, normal);
+	__pm3_add_vs_vs(p_inter, p1,(1.0f - r), p2,r);
 	return true;
 }
 
@@ -111,12 +111,12 @@ const
 	// (this point is not needed to calculate Wn)
 
 	math::vec3 Wn;
-	__pm_mul_v_s(Wn, normal, __pm_dot(pred_pos,normal) + dconst);
+	__pm3_mul_v_s(Wn, normal, __pm3_dot(pred_pos,normal) + dconst);
 
 	// --- update position --- (with bouncing coefficient)
 
 	float bounce = p->bouncing;
-	__pm_sub_v_vs(p->cur_pos, pred_pos, Wn, 1.0f + bounce);
+	__pm3_sub_v_vs(p->cur_pos, pred_pos, Wn, 1.0f + bounce);
 
 	// --- update velocity (1) --- (with bouncing coefficient)
 
@@ -124,17 +124,17 @@ const
 	// for the 'friction operation'. A constant reference is not used because
 	// we need to keep this value after update.
 	math::vec3 vt;
-	__pm_assign_v(vt, p->cur_vel);
+	__pm3_assign_v(vt, p->cur_vel);
 
 	// first update of the velociy (with bouncing)
-	__pm_sub_v_vs(p->cur_vel, pred_vel, normal,(1.0f + bounce)*__pm_dot(normal, pred_vel));
+	__pm3_sub_v_vs(p->cur_vel, pred_vel, normal,(1.0f + bounce)*__pm3_dot(normal, pred_vel));
 
 	// --- update velocity (2) --- (with friction coefficient)
 
 	// Use 'vt', the velocity at time t
 	math::vec3 vT;
-	__pm_sub_v_vs(vT, vt, normal,__pm_dot(normal,vt));
-	__pm_sub_acc_vs(p->cur_vel, vT, p->friction);
+	__pm3_sub_v_vs(vT, vt, normal,__pm3_dot(normal,vt));
+	__pm3_sub_acc_vs(p->cur_vel, vT, p->friction);
 }
 
 void plane::display(std::ostream& os) const {

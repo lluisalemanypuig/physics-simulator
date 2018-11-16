@@ -2,7 +2,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
-#include <physim/math/math_private.hpp>
+#include <physim/math/private/math3.hpp>
 
 namespace physim {
 namespace init {
@@ -11,7 +11,7 @@ namespace init {
 
 void rect_shower::make_vel_init() {
 	vel = [](particles::free_particle *p) {
-		__pm_assign_s(p->cur_vel, 0.0f);
+		__pm3_assign_s(p->cur_vel, 0.0f);
 	};
 }
 
