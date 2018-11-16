@@ -21,7 +21,8 @@ using namespace init;
 
 // PUBLIC
 
-SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) {
+SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent)
+{
 	angleX = 0.0f;
 	angleY = 0.0f;
 	distance = 2.0f;
@@ -39,7 +40,7 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent) 
 	dt = 0.01f;
 	tt = 10.0f;
 
-	sphere = nullptr;
+	sim_sphere = nullptr;
 	p_bar = nullptr;
 	label_fps = nullptr;
 }
@@ -177,8 +178,8 @@ void SimulationRenderer::set_limit_fps(bool l) {
 	limit_fps = l;
 }
 
-void SimulationRenderer::set_sphere(rendered_model *s) {
-	sphere = s;
+void SimulationRenderer::set_sphere(std::shared_ptr<rendered_model> s) {
+	sim_sphere = s;
 }
 
 void SimulationRenderer::set_scene_made() {

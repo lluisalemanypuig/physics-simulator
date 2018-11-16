@@ -1,6 +1,7 @@
 #pragma once
 
 // C++ includes
+#include <memory>
 #include <vector>
 
 // Qt includes
@@ -43,7 +44,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
-		rendered_model *sphere;
+		std::shared_ptr<rendered_model> sim_sphere;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
 		QLabel *label_fps;
@@ -104,7 +105,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		void set_limit_fps(bool l);
 
-		void set_sphere(rendered_model *s);
+		void set_sphere(std::shared_ptr<rendered_model> s);
 
 		// sets 'scene_cleared' to false, so that
 		// we can run the application

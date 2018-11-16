@@ -102,21 +102,17 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	wall4->p4 = D;
 	wall4->set_color(0.0f,0.0f,1.0f,1.0f);
 
-	rendered_model *sim_ball_copy;
+	sim_ball->compile();
 
 	rsphere *ball1 = new rsphere();
 	ball1->c = M;
 	ball1->r = 1.0f;
-	sim_ball_copy = new rendered_model(*sim_ball);
-	sim_ball_copy->compile();
-	ball1->set_model(sim_ball_copy);
+	ball1->set_model(sim_ball);
 
 	rsphere *ball2 = new rsphere();
 	ball2->c = A;
 	ball2->r = 1.0f;
-	sim_ball_copy = new rendered_model(*sim_ball);
-	sim_ball_copy->compile();
-	ball2->set_model(sim_ball_copy);
+	ball2->set_model(sim_ball);
 
 	rtriangle *ramp = new rtriangle();
 	ramp->p1 = S;

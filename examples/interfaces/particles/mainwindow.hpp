@@ -1,6 +1,7 @@
 #pragma once
 
 // C++ includes
+#include <memory>
 #include <random>
 
 // Qt includes
@@ -26,7 +27,7 @@ class MainWindow : public QMainWindow {
 		Ui::MainWindow *ui;
 		int current_tab;
 
-		rendered_model *sim_ball;
+		std::shared_ptr<rendered_model> sim_ball;
 
 		std::default_random_engine eng;
 		// generator for random numbers between 0 and 1

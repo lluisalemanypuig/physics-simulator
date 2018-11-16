@@ -2,6 +2,7 @@
 
 // C++ includes
 #include <stdint.h>
+#include <memory>
 
 // base includes
 #include <base/model/rendered_model.hpp>
@@ -29,7 +30,7 @@ class rgeom {
 	protected:
 		bool render;
 		rendered_geometry_type t;
-		rendered_model *model;
+		std::shared_ptr<rendered_model> model;
 
 		/**
 		 * @brief Translational operations
@@ -66,13 +67,13 @@ class rgeom {
 
 		void set_render(bool r);
 		void set_color(float _r, float _g, float _b, float _a);
-		void set_model(rendered_model *model);
+		void set_model(const std::shared_ptr<rendered_model>& model);
 
 		// GETTERS
 
 		bool should_render() const;
 		rendered_geometry_type get_type() const;
-		rendered_model *get_model();
+		std::shared_ptr<rendered_model> get_model();
 
 		// OTHERS
 

@@ -1,5 +1,6 @@
 #include <base/rgeom/rendered_geometry.hpp>
 
+// base includes
 #include <base/include_gl.hpp>
 
 rgeom::rgeom() {
@@ -19,7 +20,6 @@ rgeom::~rgeom() {
 
 void rgeom::clear() {
 	if (model != nullptr) {
-		delete model;
 		model = nullptr;
 	}
 }
@@ -33,7 +33,7 @@ void rgeom::set_color(float _r, float _g, float _b, float _a) {
 	b = _b;
 	a = _a;
 }
-void rgeom::set_model(rendered_model *_m) {
+void rgeom::set_model(const std::shared_ptr<rendered_model>& _m) {
 	model = _m;
 }
 
@@ -45,7 +45,7 @@ rendered_geometry_type rgeom::get_type() const {
 	return t;
 }
 
-rendered_model *rgeom::get_model() {
+std::shared_ptr<rendered_model> rgeom::get_model() {
 	return model;
 }
 

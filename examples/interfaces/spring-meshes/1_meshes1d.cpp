@@ -1,6 +1,8 @@
 #include "study_cases.hpp"
 
+// C++ includes
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // base includes
@@ -124,19 +126,21 @@ namespace study_cases {
 
 		// -- group 4
 		// 10 springs on top of spheres
-		rendered_model *model_ball = new rendered_model();
+		shared_ptr<rendered_model> model_ball(new rendered_model);
+
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
 
+		cout << "About to compile..." << endl;
+		model_ball->compile();
+		cout << "Compiled!" << endl;
+
 		sx = 12.5f;
 		for (int i = 1; i <= 10; ++i) {
-			rendered_model *copy_ball = new rendered_model(*model_ball);
-			copy_ball->compile();
-
 			rsphere *rs = new rsphere();
 			rs->c = vec3(sx + 2.5f, 7.0f, 3*i);
 			rs->r = 2.0f;
-			rs->set_model(copy_ball);
+			rs->set_model(model_ball);
 			SR.add_geometry(rs);
 
 			sphere *s = new sphere(rs->c, rs->r);
@@ -163,9 +167,6 @@ namespace study_cases {
 
 			SR.get_simulator().add_mesh(m);
 		}
-
-		model_ball->clear();
-		delete model_ball;
 
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();

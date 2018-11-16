@@ -73,7 +73,7 @@ namespace study_cases {
 		sphere *s = new sphere(vec3(5.0f, 5.0f, 5.0f), 2.0f);
 		SR.get_simulator().add_geometry(s);
 
-		rendered_model *model_ball = new rendered_model();
+		shared_ptr<rendered_model> model_ball(new rendered_model);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
 		model_ball->compile();

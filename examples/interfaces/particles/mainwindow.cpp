@@ -414,7 +414,7 @@ MainWindow::MainWindow(QWidget *parent)
 	init_environment();
 
 	cout << "    Loading models for renderisation..." << endl;
-	sim_ball = new rendered_model();
+	sim_ball = shared_ptr<rendered_model>(new rendered_model);
 	OBJ_reader obj;
 	obj.load_object("../../interfaces/models", "sphere_hsmooth.obj", *sim_ball);
 	sim_ball->scale_to_unit();
@@ -425,6 +425,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
 	delete ui;
 	if (sim_ball != nullptr) {
-		delete sim_ball;
+		sim_ball->clear();
+		sim_ball = nullptr;
 	}
 }

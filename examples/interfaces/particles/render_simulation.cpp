@@ -69,6 +69,8 @@ void SimulationRenderer::resizeGL(int w, int h) {
 }
 
 void SimulationRenderer::initializeGL() {
+	cout << "Initialise OpenGL" << endl;
+
 	initializeOpenGLFunctions();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
