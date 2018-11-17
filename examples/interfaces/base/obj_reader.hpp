@@ -11,8 +11,8 @@ typedef physim::math::vec2 vec2;
 typedef physim::math::vec3 vec3;
 
 // Custom includes
-#include "base/model/rendered_model.hpp"
-#include "base/model/model_utils.hpp"
+#include <base/model/rendered_model.hpp>
+#include <base/model/model_utils.hpp>
 
 /**
  * @brief Wavefront format file reader class.
