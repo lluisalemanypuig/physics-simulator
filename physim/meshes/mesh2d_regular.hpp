@@ -163,7 +163,7 @@ class mesh2d_regular : public mesh {
 		 * @param r Number of rows, at least 2.
 		 * @param c Number of columns, at least 2.
 		 * @pre The particles of this mesh must have been allocated.
-		 * The dimensions used must be equal to @ref N: r*c = N.
+		 * The dimensions used must be equal to @ref N : r*c = N.
 		 */
 		void set_dimensions(size_t r, size_t c);
 
@@ -192,6 +192,13 @@ class mesh2d_regular : public mesh {
 		 */
 		void get_dimensions(size_t& r, size_t& c) const;
 
+		/**
+		 * @brief Returns the index of a particle of the mesh.
+		 * @param i Row index.
+		 * @param j Column index.
+		 * @return Returns the index of the particle at row @e i and
+		 * column @e j as a single integer.
+		 */
 		size_t get_global_index(size_t i, size_t j) const;
 };
 

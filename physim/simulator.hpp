@@ -152,7 +152,7 @@ class simulator {
 		/**
 		 * @brief Initialises a mesh.
 		 *
-		 * Builds the initial state of the mesh (see @ref mesh::make_initial_state()).
+		 * Builds the initial state of the mesh (see @ref meshes::mesh::make_initial_state).
 		 * Computes an initial previous position for each particle of
 		 * the mesh so that the Verlet solver can work correctly
 		 * (see @ref solver_type).
