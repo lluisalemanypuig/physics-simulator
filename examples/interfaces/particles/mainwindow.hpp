@@ -11,7 +11,7 @@
 #include <physim/initialiser/initialiser.hpp>
 
 // Custom includes
-#include <base/rgeom/rendered_geometry.hpp>
+#include <base/render_geometry/rendered_geometry.hpp>
 #include <base/model/model.hpp>
 #include "simulation_renderer.hpp"
 #include "utils.hpp"

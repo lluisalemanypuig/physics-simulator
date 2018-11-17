@@ -15,7 +15,7 @@
 #include <physim/simulator.hpp>
 
 // Custom includes
-#include <base/rgeom/rendered_geometry.hpp>
+#include <base/render_geometry/rendered_geometry.hpp>
 #include <base/model/rendered_model.hpp>
 #include "utils.hpp"
 

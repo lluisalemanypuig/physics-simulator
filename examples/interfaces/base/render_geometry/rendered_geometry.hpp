@@ -97,14 +97,12 @@ class rgeom {
 		virtual void make_box(box& b) const = 0;
 };
 
-/**
- * @brief Rendered plane class
+/*
+ * Use the four points (they should be on the plane)
+ * to render the plane.
  *
- * Use the four points (they should be
- * on the plane) to render the plane.
- *
- * The points should be given in either
- * clockwise or counterclockwise order
+ * The points should be given in either clockwise or
+ * counterclockwise order
  */
 class rplane : public rgeom {
 	private:
@@ -160,7 +158,7 @@ class rsphere : public rgeom {
 	private:
 	public:
 		vec3 c;
-		float r;
+		float R;
 
 	public:
 		rsphere();

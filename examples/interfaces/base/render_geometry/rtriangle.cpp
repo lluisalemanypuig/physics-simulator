@@ -1,4 +1,4 @@
-#include <base/rgeom/rendered_geometry.hpp>
+#include <base/render_geometry/rendered_geometry.hpp>
 
 #include <base/include_gl.hpp>
 

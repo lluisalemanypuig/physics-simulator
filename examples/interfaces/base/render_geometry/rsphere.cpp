@@ -1,4 +1,4 @@
-#include <base/rgeom/rendered_geometry.hpp>
+#include <base/render_geometry/rendered_geometry.hpp>
 
 // base includes
 #include <base/include_gl.hpp>
@@ -16,7 +16,7 @@ rsphere::~rsphere() {}
 
 void rsphere::translate_object() const {
 	glTranslatef(c.x,c.y,c.z);
-	glScalef(r*2.0f,r*2.0f,r*2.0f);
+	glScalef(R*2.0f,R*2.0f,R*2.0f);
 }
 
 void rsphere::draw_geometry() const {
@@ -28,7 +28,7 @@ void rsphere::draw_geometry() const {
 
 void rsphere::make_box(box& b) const {
 	if (model != nullptr) {
-		b.set_min_max(c - vec3(r,r,r), c + vec3(r,r,r));
+		b.set_min_max(c - vec3(R,R,R), c + vec3(R,R,R));
 	}
 	else {
 		model->make_box(b);

@@ -1,14 +1,13 @@
-#include <base/rgeom/rendered_geometry.hpp>
+#include <base/render_geometry/rendered_geometry.hpp>
 
-// base includes
 #include <base/include_gl.hpp>
 
-rplane::rplane() : rgeom() {
-	t = rendered_geometry_type::plane;
+rrectangle::rrectangle() : rgeom() {
+	t = rendered_geometry_type::rectangle;
 }
-rplane::~rplane() {}
+rrectangle::~rrectangle() {}
 
-void rplane::draw_geometry() const {
+void rrectangle::draw_geometry() const {
 	glDisable(GL_LIGHTING);
 	glColor4f(r,g,b,a);
 	glBegin(GL_TRIANGLES);
@@ -24,7 +23,7 @@ void rplane::draw_geometry() const {
 	glEnable(GL_LIGHTING);
 }
 
-void rplane::make_box(box& b) const {
+void rrectangle::make_box(box& b) const {
 	b.set_min_max(p1, p1);
 	b.enlarge_box(p2);
 	b.enlarge_box(p3);

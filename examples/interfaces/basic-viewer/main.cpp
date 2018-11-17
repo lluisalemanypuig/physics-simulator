@@ -18,18 +18,18 @@ typedef pair<int,int> point;
 // global variables
 // ------------------
 
-renderer SR;
-timing::time_point sec;
+static renderer SR;
+static timing::time_point sec;
 
-int FPS;
-int fps_count;
-bool display_fps_count;
+static int FPS;
+static int fps_count;
+static bool display_fps_count;
 
-int pressed_button;
-point last_mouse;
+static int pressed_button;
+static point last_mouse;
 
-bool lock_mouse;
-int window_id;
+static bool lock_mouse;
+static int window_id;
 
 // glut helpers
 #define ESC 27
@@ -73,11 +73,11 @@ void initGL(int argc, char *argv[]) {
 	glEnable(GL_LIGHTING);
 
 	glEnable(GL_LIGHT0);
-	float col[] = {1.0, 1.0, 1.0, 1.0};
+	float col[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, col);
-	float pos[] = {0.0, 0.0, 0.0, 1.0};
+	float pos[] = {0.0f, 0.0f, 0.0f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
-	float amb[] = {0.2, 0.2, 0.2, 1.0};
+	float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
 	// ------------------------ //

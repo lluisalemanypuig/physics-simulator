@@ -11,22 +11,22 @@ LIBS += -lGLU
 
 FORMS += mainwindow.ui
 
-SOURCES +=						\
-	main.cpp					\
-	mainwindow.cpp				\
-	simulation_renderer.cpp		\
-	render_simulation.cpp		\
-	utils.cpp					\
-	sim1.cpp					\
-	sim2.cpp					\
-	sim3.cpp					\
-	sim4.cpp					\
-	sim5.cpp					\
+SOURCES += \
+    main.cpp \
+    mainwindow.cpp \
+    simulation_renderer.cpp \
+    render_simulation.cpp \
+    utils.cpp \
+    sim1.cpp \
+    sim2.cpp \
+    sim3.cpp \
+    sim4.cpp \
+    sim5.cpp \
 	sim6.cpp
 
-HEADERS +=						\
-    mainwindow.hpp				\
-    simulation_renderer.hpp		\
+HEADERS += \
+    mainwindow.hpp \
+    simulation_renderer.hpp \
 	utils.hpp
 
 RESOURCES +=

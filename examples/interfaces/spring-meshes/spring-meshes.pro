@@ -9,17 +9,17 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-SOURCES += main.cpp		\
-	glut_functions.cpp	\
-	study_cases.cpp		\
-    utils.cpp			\
-    1_meshes1d.cpp		\
-    2_mesh2d_reg.cpp	\
+SOURCES += main.cpp \
+    glut_functions.cpp \
+    study_cases.cpp \
+    utils.cpp \
+    1_meshes1d.cpp \
+    2_mesh2d_reg.cpp \
     3_mesh2d_reg_sphere.cpp
 
-HEADERS +=				\
-	study_cases.hpp		\
-	glut_functions.hpp	\
+HEADERS += \
+    study_cases.hpp \
+    glut_functions.hpp \
     utils.hpp
 
 # base (model, obj reader, ...)
