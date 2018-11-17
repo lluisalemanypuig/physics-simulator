@@ -8,10 +8,10 @@
 using namespace std;
 
 // base includes
+#include <base/render_geometry/rsphere.hpp>
+#include <base/model/rendered_model.hpp>
 #include <base/include_gl.hpp>
 #include <base/obj_reader.hpp>
-#include <base/model/rendered_model.hpp>
-#include <base/render_geometry/rendered_geometry.hpp>
 
 // physim includes
 #include <physim/meshes/mesh2d_regular.hpp>

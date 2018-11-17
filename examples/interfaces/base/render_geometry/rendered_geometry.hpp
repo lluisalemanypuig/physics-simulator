@@ -30,7 +30,10 @@ class rgeom {
 	protected:
 		bool render;
 		rendered_geometry_type t;
-		std::shared_ptr<rendered_model> model;
+		std::shared_ptr<rendered_model> _model;
+
+		// flat color of the model
+		float r,g,b,a;
 
 		/**
 		 * @brief Translational operations
@@ -54,8 +57,6 @@ class rgeom {
 		virtual void draw_geometry() const = 0;
 
 	public:
-		float r,g,b,a;
-
 		rgeom();
 		virtual ~rgeom();
 
@@ -67,13 +68,18 @@ class rgeom {
 
 		void set_render(bool r);
 		void set_color(float _r, float _g, float _b, float _a);
-		void set_model(const std::shared_ptr<rendered_model>& model);
+		void set_model(const std::shared_ptr<rendered_model>& _model);
 
 		// GETTERS
 
 		bool should_render() const;
 		rendered_geometry_type get_type() const;
 		std::shared_ptr<rendered_model> get_model();
+
+		float red() const;
+		float green() const;
+		float blue() const;
+		float alpha() const;
 
 		// OTHERS
 
@@ -97,76 +103,7 @@ class rgeom {
 		virtual void make_box(box& b) const = 0;
 };
 
-/*
- * Use the four points (they should be on the plane)
- * to render the plane.
- *
- * The points should be given in either clockwise or
- * counterclockwise order
- */
-class rplane : public rgeom {
-	private:
-	public:
-		vec3 p1,p2,p3,p4;
-	public:
-		rplane();
-		~rplane();
 
-		// OTHERS
 
-		void draw_geometry() const;
-		void make_box(box& b) const;
-};
 
-// use the three points (they should be
-// on the triangle) to render the plane.
-class rtriangle : public rgeom {
-	private:
-	public:
-		vec3 p1,p2,p3;
 
-	public:
-		rtriangle();
-		~rtriangle();
-
-		// OTHERS
-
-		void draw_geometry() const;
-		void make_box(box& b) const;
-};
-
-// use the four points (they should be
-// on the triangle) to render the plane.
-class rrectangle : public rgeom {
-	private:
-	public:
-		vec3 p1,p2,p3,p4;
-
-	public:
-		rrectangle();
-		~rrectangle();
-
-		// OTHERS
-
-		void draw_geometry() const;
-		void make_box(box& b) const;
-};
-
-// use the center to translate a model
-// of a sphere to the right position.
-class rsphere : public rgeom {
-	private:
-	public:
-		vec3 c;
-		float R;
-
-	public:
-		rsphere();
-		~rsphere();
-
-		// OTHERS
-
-		void translate_object() const;
-		void draw_geometry() const;
-		void make_box(box& b) const;
-};

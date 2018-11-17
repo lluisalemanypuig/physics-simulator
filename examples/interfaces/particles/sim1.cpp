@@ -1,5 +1,8 @@
 #include "mainwindow.hpp"
 
+// base includes
+#include <base/render_geometry/rplane.hpp>
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/rect_shower.hpp>
@@ -39,10 +42,10 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 	sr->get_simulator().set_initialiser(&w);
 
 	rplane *floor = new rplane();
-	floor->p1 = vec3(-5.0f, -0.05f, -5.0f);
-	floor->p2 = vec3(-5.0f, -0.05f,  5.0f);
-	floor->p3 = vec3( 5.0f, -0.05f,  5.0f);
-	floor->p4 = vec3( 5.0f, -0.05f, -5.0f);
+	floor->set_points(
+		vec3(-5.0f, -0.05f, -5.0f), vec3(-5.0f, -0.05f,  5.0f),
+		vec3( 5.0f, -0.05f,  5.0f), vec3( 5.0f, -0.05f, -5.0f)
+	);
 	sr->add_rgeom(floor);
 
 	plane *pl = new plane(

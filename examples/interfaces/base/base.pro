@@ -21,7 +21,11 @@ HEADERS += \
     model/model_utils.hpp \
     model/rendered_model.hpp \
     scene/renderer.hpp \
-    scene/sim_renderer.hpp
+    scene/sim_renderer.hpp \
+    render_geometry/rsphere.hpp \
+    render_geometry/rtriangle.hpp \
+    render_geometry/rplane.hpp \
+    render_geometry/rrectangle.hpp
 
 SOURCES += \
     obj_reader.cpp \

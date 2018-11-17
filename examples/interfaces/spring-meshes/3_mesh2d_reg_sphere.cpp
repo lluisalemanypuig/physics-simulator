@@ -8,10 +8,10 @@
 using namespace std;
 
 // base includes
+#include <base/render_geometry/rsphere.hpp>
+#include <base/model/rendered_model.hpp>
 #include <base/include_gl.hpp>
 #include <base/obj_reader.hpp>
-#include <base/model/rendered_model.hpp>
-#include <base/render_geometry/rendered_geometry.hpp>
 
 // physim includes
 #include <physim/meshes/mesh2d_regular.hpp>
@@ -79,8 +79,8 @@ namespace study_cases {
 		model_ball->compile();
 
 		rsphere *rs = new rsphere();
-		rs->c = vec3(5.0f, 5.0f, 5.0f);
-		rs->r = 2.0f;
+		rs->set_center(vec3(5.0f, 5.0f, 5.0f));
+		rs->set_radius(2.0f);
 		rs->set_model(model_ball);
 		SR.add_geometry(rs);
 

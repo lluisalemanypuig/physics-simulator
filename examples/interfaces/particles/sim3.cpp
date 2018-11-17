@@ -1,5 +1,11 @@
 #include "mainwindow.hpp"
 
+// base includes
+#include <base/render_geometry/rrectangle.hpp>
+#include <base/render_geometry/rtriangle.hpp>
+#include <base/render_geometry/rsphere.hpp>
+#include <base/render_geometry/rplane.hpp>
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/rect_shower.hpp>
@@ -46,23 +52,23 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	sr->get_simulator().set_initialiser(&i);
 
 	rplane *floor = new rplane();
-	floor->p1 = vec3(-5.0f, -0.05f, -5.0f);
-	floor->p2 = vec3(-5.0f, -0.05f,  5.0f);
-	floor->p3 = vec3( 5.0f, -0.05f,  5.0f);
-	floor->p4 = vec3( 5.0f, -0.05f, -5.0f);
+	floor->set_points(
+		vec3(-5.0f, -0.05f, -5.0f), vec3(-5.0f, -0.05f,  5.0f),
+		vec3( 5.0f, -0.05f,  5.0f), vec3( 5.0f, -0.05f, -5.0f)
+	);
 
 	rsphere *ball = new rsphere();
-	ball->c = vec3(0.0f,2.0f,0.0f);
-	ball->r = 1.0f;
+	ball->set_center(vec3(0.0f,2.0f,0.0f));
+	ball->set_radius(1.0f);
 
 	sim_ball->compile();
 	ball->set_model(sim_ball);
 
 	rrectangle *ramp = new rrectangle();
-	ramp->p1 = vec3( 0.0f, 2.0f,  1.0f);
-	ramp->p2 = vec3( 0.0f, 2.0f, -1.0f);
-	ramp->p3 = vec3(-3.0f, 5.0f, -1.0f);
-	ramp->p4 = vec3(-3.0f, 5.0f,  1.0f);
+	ramp->set_points(
+		vec3( 0.0f, 2.0f,  1.0f), vec3( 0.0f, 2.0f, -1.0f),
+		vec3(-3.0f, 5.0f, -1.0f), vec3(-3.0f, 5.0f,  1.0f)
+	);
 	ramp->set_color(0.0f,0.3f,0.0f,1.0f);
 
 	sr->add_rgeom(floor);
@@ -73,8 +79,8 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 		vec3(0.0f,1.0f,0.0f),
 		vec3(0.0f,0.0f,0.0f)
 	);
-	sphere *s = new sphere(ball->c, 1.0f);
-	rectangle *rl = new rectangle(ramp->p1,ramp->p2,ramp->p3,ramp->p4);
+	sphere *s = new sphere(ball->center(), 1.0f);
+	rectangle *rl = new rectangle(ramp->p1(),ramp->p2(),ramp->p3(),ramp->p4());
 
 	sr->get_simulator().add_geometry(pl);
 	sr->get_simulator().add_geometry(s);

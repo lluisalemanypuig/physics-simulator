@@ -1,4 +1,4 @@
-#include <base/render_geometry/rendered_geometry.hpp>
+#include <base/render_geometry/rtriangle.hpp>
 
 #include <base/include_gl.hpp>
 
@@ -7,19 +7,35 @@ rtriangle::rtriangle() : rgeom() {
 }
 rtriangle::~rtriangle() {}
 
+// SETTERS
+
+void rtriangle::set_points(const vec3& p1, const vec3& p2, const vec3& p3) {
+	_p1 = p1;
+	_p2 = p2;
+	_p3 = p3;
+}
+
+// MODIFIERS
+
+const vec3& rtriangle::p1() const { return _p1; }
+const vec3& rtriangle::p2() const { return _p2; }
+const vec3& rtriangle::p3() const { return _p3; }
+
+// OTHERS
+
 void rtriangle::draw_geometry() const {
 	glDisable(GL_LIGHTING);
 	glColor4f(r,g,b,a);
 	glBegin(GL_TRIANGLES);
-		glVertex3f(p1.x, p1.y, p1.z);
-		glVertex3f(p2.x, p2.y, p2.z);
-		glVertex3f(p3.x, p3.y, p3.z);
+		glVertex3f(_p1.x, _p1.y, _p1.z);
+		glVertex3f(_p2.x, _p2.y, _p2.z);
+		glVertex3f(_p3.x, _p3.y, _p3.z);
 	glEnd();
 	glEnable(GL_LIGHTING);
 }
 
 void rtriangle::make_box(box& b) const {
-	b.set_min_max(p1,p1);
-	b.enlarge_box(p2);
-	b.enlarge_box(p3);
+	b.set_min_max(_p1,_p1);
+	b.enlarge_box(_p2);
+	b.enlarge_box(_p3);
 }

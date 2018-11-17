@@ -11,7 +11,7 @@ rgeom::rgeom() {
 	a = 1.0f;
 
 	t = rendered_geometry_type::none;
-	model = nullptr;
+	_model = nullptr;
 }
 
 rgeom::~rgeom() {
@@ -19,8 +19,8 @@ rgeom::~rgeom() {
 }
 
 void rgeom::clear() {
-	if (model != nullptr) {
-		model = nullptr;
+	if (_model != nullptr) {
+		_model = nullptr;
 	}
 }
 
@@ -34,7 +34,7 @@ void rgeom::set_color(float _r, float _g, float _b, float _a) {
 	a = _a;
 }
 void rgeom::set_model(const std::shared_ptr<rendered_model>& _m) {
-	model = _m;
+	_model = _m;
 }
 
 // GETTERS
@@ -46,8 +46,13 @@ rendered_geometry_type rgeom::get_type() const {
 }
 
 std::shared_ptr<rendered_model> rgeom::get_model() {
-	return model;
+	return _model;
 }
+
+float rgeom::red() const { return r; }
+float rgeom::green() const { return g; }
+float rgeom::blue() const { return b; }
+float rgeom::alpha() const { return a; }
 
 // OTHERS
 
@@ -56,11 +61,11 @@ void rgeom::translate_object() const {
 }
 
 void rgeom::draw() const {
-	if (model != nullptr) {
+	if (_model != nullptr) {
 		glEnable(GL_LIGHTING);
 		glPushMatrix();
 			translate_object();
-			model->render();
+			_model->render();
 		glPopMatrix();
 	}
 	else {

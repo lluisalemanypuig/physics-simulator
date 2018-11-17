@@ -6,10 +6,11 @@
 using namespace std;
 
 // base includes
+#include <base/render_geometry/rrectangle.hpp>
+#include <base/render_geometry/rsphere.hpp>
+#include <base/model/rendered_model.hpp>
 #include <base/include_gl.hpp>
 #include <base/obj_reader.hpp>
-#include <base/model/rendered_model.hpp>
-#include <base/render_geometry/rendered_geometry.hpp>
 
 // physim includes
 #include <physim/meshes/mesh1d.hpp>
@@ -92,14 +93,14 @@ namespace study_cases {
 		// -- group 3
 		// 10 springs on top of a rectangle
 		rrectangle *rect = new rrectangle();
-		rect->p1 = vec3( 5.5f, 7.0f, -0.5f);
-		rect->p2 = vec3( 5.5f, 7.0f, 10.0f);
-		rect->p3 = vec3(10.5f, 7.0f, 10.0f);
-		rect->p4 = vec3(10.5f, 7.0f, -0.5f);
+		rect->set_points(
+			vec3( 5.5f, 7.0f, -0.5f), vec3( 5.5f, 7.0f, 10.0f),
+			vec3(10.5f, 7.0f, 10.0f), vec3(10.5f, 7.0f, -0.5f)
+		);
 		SR.add_geometry(rect);
 		SR.get_box().enlarge_box(vec3(sx,10.0f,0.0f));
 		SR.get_box().enlarge_box(vec3(sx + 5.0f,-5.0f,10.0f));
-		rectangle *r = new rectangle(rect->p1, rect->p2, rect->p3, rect->p4);
+		rectangle *r = new rectangle(rect->p1(), rect->p2(), rect->p3(), rect->p4());
 		SR.get_simulator().add_geometry(r);
 
 		sx = 5.0f;
@@ -130,20 +131,17 @@ namespace study_cases {
 
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
-
-		cout << "About to compile..." << endl;
 		model_ball->compile();
-		cout << "Compiled!" << endl;
 
 		sx = 12.5f;
 		for (int i = 1; i <= 10; ++i) {
 			rsphere *rs = new rsphere();
-			rs->c = vec3(sx + 2.5f, 7.0f, 3*i);
-			rs->r = 2.0f;
+			rs->set_center(vec3(sx + 2.5f, 7.0f, 3*i));
+			rs->set_radius(2.0f);
 			rs->set_model(model_ball);
 			SR.add_geometry(rs);
 
-			sphere *s = new sphere(rs->c, rs->r);
+			sphere *s = new sphere(rs->center(), rs->radius());
 			SR.get_simulator().add_geometry(s);
 		}
 

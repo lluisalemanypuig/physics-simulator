@@ -201,14 +201,19 @@ uint rendered_model::compile() {
 		slow_render();
 		glEndList();
 	}
+
+	#if defined (DEBUG)
+	cout << "rendered_model::compile:" << endl;
+	cout << "    Object compiled into list with index: " << list_index << endl;
+	#endif
 	return list_index;
 }
 
 void rendered_model::render() const {
-	if (list_index == 0) {
-		slow_render();
+	if (list_index > 0) {
+		glCallList(list_index);
 	}
 	else {
-		glCallList(list_index);
+		slow_render();
 	}
 }

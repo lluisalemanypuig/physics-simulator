@@ -3,6 +3,12 @@
 // C includes
 #include <assert.h>
 
+// base includes
+#include <base/render_geometry/rrectangle.hpp>
+#include <base/render_geometry/rtriangle.hpp>
+#include <base/render_geometry/rsphere.hpp>
+#include <base/render_geometry/rplane.hpp>
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/multisource.hpp>
@@ -72,52 +78,35 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	sr->get_simulator().set_initialiser(&ms);
 
 	rplane *floor = new rplane();
-	floor->p1 = E;
-	floor->p2 = G;
-	floor->p3 = F;
-	floor->p4 = D;
+	floor->set_points(E, G, F, D);
 
 	rplane *wall1 = new rplane();
-	wall1->p1 = K;
-	wall1->p2 = I;
-	wall1->p3 = E;
-	wall1->p4 = G;
+	wall1->set_points(K, I, E, G);
 	wall1->set_color(1.0f,1.0f,0.0f,1.0f);
 	rplane *wall2 = new rplane();
-	wall2->p1 = K;
-	wall2->p2 = J;
-	wall2->p3 = F;
-	wall2->p4 = G;
+	wall2->set_points(K, J, F, G);
 	wall2->set_color(1.0f,0.0f,1.0f,1.0f);
 	rplane *wall3 = new rplane();
-	wall3->p1 = J;
-	wall3->p2 = H;
-	wall3->p3 = D;
-	wall3->p4 = F;
+	wall3->set_points(J, H, D, F);
 	wall3->set_color(0.0f,1.0f,1.0f,1.0f);
 	rplane *wall4 = new rplane();
-	wall4->p1 = H;
-	wall4->p2 = I;
-	wall4->p3 = E;
-	wall4->p4 = D;
+	wall4->set_points(H, I, E, D);
 	wall4->set_color(0.0f,0.0f,1.0f,1.0f);
 
 	sim_ball->compile();
 
 	rsphere *ball1 = new rsphere();
-	ball1->c = M;
-	ball1->r = 1.0f;
+	ball1->set_center(M);
+	ball1->set_radius(1.0f);
 	ball1->set_model(sim_ball);
 
 	rsphere *ball2 = new rsphere();
-	ball2->c = A;
-	ball2->r = 1.0f;
+	ball2->set_center(A);
+	ball2->set_radius(1.0f);
 	ball2->set_model(sim_ball);
 
 	rtriangle *ramp = new rtriangle();
-	ramp->p1 = S;
-	ramp->p2 = O;
-	ramp->p3 = P;
+	ramp->set_points(S, O, P);
 	ramp->set_color(0.0f,1.0f,0.0f,1.0f);
 
 	sr->add_rgeom(floor);
@@ -129,13 +118,13 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	sr->add_rgeom(ball2);
 	sr->add_rgeom(ramp);
 
-	plane *floor_pl = new plane(vec3( 0.0f,1.0f, 0.0f), floor->p1);
-	plane *wall1_pl = new plane(vec3( 0.0f,0.0f,-1.0f), wall1->p1);
-	plane *wall2_pl = new plane(vec3(-1.0f,0.0f, 0.0f), wall2->p1);
-	plane *wall3_pl = new plane(vec3( 0.0f,0.0f, 1.0f), wall3->p1);
-	plane *wall4_pl = new plane(vec3( 1.0f,0.0f, 0.0f), wall4->p1);
-	sphere *ball1_pl = new sphere(ball1->c, ball1->r);
-	sphere *ball2_pl = new sphere(ball2->c, ball2->r);
+	plane *floor_pl = new plane(vec3( 0.0f,1.0f, 0.0f), floor->p1());
+	plane *wall1_pl = new plane(vec3( 0.0f,0.0f,-1.0f), wall1->p1());
+	plane *wall2_pl = new plane(vec3(-1.0f,0.0f, 0.0f), wall2->p1());
+	plane *wall3_pl = new plane(vec3( 0.0f,0.0f, 1.0f), wall3->p1());
+	plane *wall4_pl = new plane(vec3( 1.0f,0.0f, 0.0f), wall4->p1());
+	sphere *ball1_pl = new sphere(ball1->center(), ball1->radius());
+	sphere *ball2_pl = new sphere(ball2->center(), ball2->radius());
 	triangle *tri_ramp = new triangle(S,O,P);
 
 	sr->get_simulator().add_geometry(floor_pl);

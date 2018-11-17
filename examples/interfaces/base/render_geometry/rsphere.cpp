@@ -1,4 +1,4 @@
-#include <base/render_geometry/rendered_geometry.hpp>
+#include <base/render_geometry/rsphere.hpp>
 
 // base includes
 #include <base/include_gl.hpp>
@@ -12,10 +12,30 @@ rsphere::rsphere() : rgeom() {
 }
 rsphere::~rsphere() {}
 
+// SETTERS
+
+void rsphere::set_center(const vec3& _c) {
+	C = _c;
+}
+
+void rsphere::set_radius(float _r) {
+	R = _r;
+}
+
+// GETETRS
+
+const vec3& rsphere::center() const {
+	return C;
+}
+
+float rsphere::radius() const {
+	return R;
+}
+
 // OTHERS
 
 void rsphere::translate_object() const {
-	glTranslatef(c.x,c.y,c.z);
+	glTranslatef(C.x,C.y,C.z);
 	glScalef(R*2.0f,R*2.0f,R*2.0f);
 }
 
@@ -27,10 +47,10 @@ void rsphere::draw_geometry() const {
 }
 
 void rsphere::make_box(box& b) const {
-	if (model != nullptr) {
-		b.set_min_max(c - vec3(R,R,R), c + vec3(R,R,R));
+	if (_model != nullptr) {
+		b.set_min_max(C - vec3(R,R,R), C + vec3(R,R,R));
 	}
 	else {
-		model->make_box(b);
+		_model->make_box(b);
 	}
 }
