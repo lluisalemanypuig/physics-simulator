@@ -44,8 +44,11 @@ class texture_loader {
 		 * The indexes generated for each texture are stored in @e info.
 		 * @param[out] mats Collection of materials. The textures indexes
 		 * are is overriden for those materials with textures.
+		 * @param[out] idxs At the end will conatin the indexes of the
+		 * textures genereated.
 		 */
-		void load_textures(std::vector<material>& mats);
+		void load_textures(std::vector<material>& mats,
+							 std::vector<unsigned int>& idxs);
 
 		/**
 		 * @brief Clears the textures of a collection of materials.
@@ -66,6 +69,8 @@ class texture_loader {
 
 		/// Returns the index of the texture.
 		unsigned int texture_index(const std::string& s) const;
+
+		// OTHERS
 
 		/// Return the texture loader
 		static texture_loader& get_loader() {

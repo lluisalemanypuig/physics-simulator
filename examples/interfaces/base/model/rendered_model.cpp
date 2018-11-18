@@ -1,5 +1,8 @@
 #include <base/model/rendered_model.hpp>
 
+// C includes
+#include <assert.h>
+
 // C++ includes
 #include <iostream>
 using namespace std;
@@ -18,7 +21,7 @@ rendered_model::rendered_model() : model() {
 
 rendered_model::rendered_model(const rendered_model& m) : model(m) {
 	materials = m.materials;
-	mat_ids = m.mat_ids;
+	mat_idxs = m.mat_idxs;
 	texture_coords = m.texture_coords;
 	texture_idxs = m.texture_idxs;
 }
@@ -29,12 +32,27 @@ rendered_model::~rendered_model() {
 
 // SETTERS
 
-void rendered_model::set_material_ids(const vector<string>& material_ids) {
-	mat_ids = material_ids;
-}
-
-void rendered_model::set_materials(const vector<material>& mats) {
+void rendered_model::set_materials
+(const vector<material>& mats, const vector<string>& material_ids)
+{
 	materials = mats;
+
+	mat_idxs = vector<size_t>(triangles.size()/3, materials.size() + 1);
+	for (size_t t = 0; t < triangles.size(); t += 3) {
+
+		// material of (t/3)-th triangle
+		const string& tri_mat = material_ids[t/3];
+
+		size_t i = 0;
+		bool finish = false;
+		while (i < materials.size() and not finish) {
+			if (materials[i].id == tri_mat) {
+				mat_idxs[t/3] = i;
+				finish = true;
+			}
+			++i;
+		}
+	}
 }
 
 void rendered_model::set_texture_coords(const vector<vec2>& texts) {
@@ -64,21 +82,6 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 				return mesh_state::texture_coord_idx_ob;
 			}
 		}
-		if (t%3 == 0) {
-			const string& m_id = mat_ids[t/3];
-			bool found = false;
-			for (const material& mat : materials) {
-				if (mat.id == m_id) {
-					found = true;
-				}
-			}
-			if ((ignore & mesh_state::material_not_found) == 0 and not found) {
-				cerr << "mesh::is_valid: Error:" << endl;
-				cerr << "    Triangle " << t/3 << " has a material assigned "
-					 << "that was not loaded" << endl;
-				return mesh_state::material_not_found;
-			}
-		}
 	}
 
 	return mesh_state::correct;
@@ -86,7 +89,7 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 
 void rendered_model::load_textures() {
 	texture_loader& load = texture_loader::get_loader();
-	load.load_textures(materials);
+	load.load_textures(materials, textures_indexes);
 }
 
 // MODIFIERS
@@ -98,7 +101,7 @@ void rendered_model::clear() {
 		glDeleteLists(list_index, 1);
 	}
 
-	mat_ids.clear();
+	mat_idxs.clear();
 	materials.clear();
 	texture_coords.clear();
 	texture_idxs.clear();
@@ -148,13 +151,8 @@ void rendered_model::slow_render() const {
 	for (size_t t = 0; t < triangles.size(); t += 3) {
 		// set the material of the face
 		bool textenable = false;
-		// find the material color of the face
-		size_t M = materials.size();
-		for (size_t i = 0; i < materials.size(); ++i) {
-			if (materials[i].id == mat_ids[t/3]) {
-				M = i;
-			}
-		}
+		// material of the face
+		size_t M = mat_idxs[t/3];
 		// set the material so that the lighting works
 		if (M < materials.size()) {
 			glMaterialfv(GL_FRONT,GL_DIFFUSE,  &(materials[M].Kd.x));
@@ -206,6 +204,10 @@ uint rendered_model::compile() {
 	cout << "    Object compiled into list with index: " << list_index << endl;
 	#endif
 	return list_index;
+}
+
+void rendered_model::make_buffers() {
+
 }
 
 void rendered_model::render() const {

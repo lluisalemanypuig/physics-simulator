@@ -390,8 +390,7 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 	M.set_normals(normals);
 	M.set_normal_idxs(normal_idxs);
 
-	M.set_material_ids(mat_ids);
-	M.set_materials(materials);
+	M.set_materials(materials, mat_ids);
 	M.set_texture_coords(textures_coords);
 	M.set_texture_idxs(texture_idxs);
 

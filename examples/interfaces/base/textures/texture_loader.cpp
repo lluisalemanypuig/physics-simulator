@@ -2,6 +2,7 @@
 
 // C++ includes
 #include <iostream>
+#include <set>
 using namespace std;
 
 // base includes
@@ -22,8 +23,9 @@ texture_loader::~texture_loader() {
 
 // MODIFIERS
 
-void texture_loader::load_textures(vector<material>& mats)
+void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>& idxs)
 {
+	set<unsigned int> unique_texs;
 	for (size_t i = 0; i < mats.size(); ++i) {
 		material& m = mats[i];
 
@@ -40,6 +42,7 @@ void texture_loader::load_textures(vector<material>& mats)
 
 		// already loaded or not previously freed
 		if (id != 0) {
+			unique_texs.insert(id);
 			m.txt_id = id;
 			continue;
 		}
@@ -102,11 +105,15 @@ void texture_loader::load_textures(vector<material>& mats)
 		cout << "        done" << endl;
 		#endif
 
+		stbi_image_free(data);
+
 		textures[m.txt_name] = id;
 		m.txt_id = id;
-
-		stbi_image_free(data);
+		unique_texs.insert(id);
 	}
+
+	idxs.clear();
+	idxs = vector<unsigned int>( unique_texs.begin(), unique_texs.end() );
 }
 
 /**

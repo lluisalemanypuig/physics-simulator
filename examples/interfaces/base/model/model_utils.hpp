@@ -104,11 +104,6 @@ enum mesh_state {
 	 * That index has a value greater or equal than the amount
 	 * of texture coordinates.
 	 */
-	texture_coord_idx_ob	= 0x040,
-	/**
-	 * @brief There is a triangle whose material was not
-	 * found within the collection of loaded materials.
-	 */
-	material_not_found		= 0x080
+	texture_coord_idx_ob	= 0x040
 };
 

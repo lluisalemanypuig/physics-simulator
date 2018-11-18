@@ -35,8 +35,8 @@ class rendered_model : public model {
 		 */
 		std::vector<material> materials;
 
-		/// Material id per face.
-		std::vector<std::string> mat_ids;
+		/// Material idx per face.
+		std::vector<size_t> mat_idxs;
 		/// Texture coordinates.
 		std::vector<vec2> texture_coords;
 		/// Texture indices per vertex.
@@ -62,10 +62,8 @@ class rendered_model : public model {
 
 		// SETTERS
 
-		/// Sets the material ids of each face.
-		void set_material_ids(const std::vector<std::string>& mat_ids);
 		/// Sets the materials used in this mesh.
-		void set_materials(const std::vector<material>& mats);
+		void set_materials(const std::vector<material>& mats, const std::vector<std::string>& mat_idxs);
 		/// Sets the texture coordinates.
 		void set_texture_coords(const std::vector<vec2>& texts);
 		/// Sets the texture coordinates indices.
@@ -132,6 +130,14 @@ class rendered_model : public model {
 		 * @return Returns the list index.
 		 */
 		uint compile();
+
+		/**
+		 * @brief Builds buffer objects for fast rendering.
+		 *
+		 * Builds the necessary buffer objects to render the model
+		 *more efficiently than with GL lists.
+		 */
+		void make_buffers();
 
 		/**
 		 * @brief Chooses the best way of rendering this model.
