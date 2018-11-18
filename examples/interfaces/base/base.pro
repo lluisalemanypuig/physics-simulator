@@ -25,7 +25,8 @@ HEADERS += \
     geometry/rtriangle.hpp \
     geometry/rplane.hpp \
     geometry/rrectangle.hpp \
-    geometry/rgeometry.hpp
+    geometry/rgeometry.hpp \
+    shader.hpp
 
 SOURCES += \
     obj_reader.cpp \
@@ -42,7 +43,8 @@ SOURCES += \
     model/rendered_model.cpp \
     scene/renderer.cpp \
     scene/sim_renderer.cpp \
-    geometry/rgeometry.cpp
+    geometry/rgeometry.cpp \
+    shader.cpp
 
 # for 'self' includes
 INCLUDEPATH += ..
