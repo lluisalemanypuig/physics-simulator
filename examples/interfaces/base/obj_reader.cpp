@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <cmath>
 using namespace std;
 
@@ -25,7 +26,6 @@ void OBJ_reader::clean() {
 	mat_ids.clear();
 	materials.clear();
 	textures_coords.clear();
-	textures_indices.clear();
 }
 
 OBJ_reader::~OBJ_reader() {
@@ -77,12 +77,16 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 	}
 	mtl.close();
 
-	string material_name;
+	string mat_name, txt_name;
 	bool valid_material = false;
 	vec3 amb, dif, spec;
 	float Ns, Ni, d;
 	int illum;
-	int textID = -1;
+	unsigned int txt_id;
+
+	Ns = Ni = d = 0.0f;
+	illum = 0;
+	txt_id = 0;
 
 	for (size_t i = 0; i < mat_lines.size(); ++i) {
 		// ignore comments
@@ -90,64 +94,60 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 			continue;
 		}
 
-		string sub2 = mat_lines[i].substr(0,2);
-		string sub3 = mat_lines[i].substr(0,3);
+		string tag;
+
+		stringstream ss(mat_lines[i]);
+		ss >> tag;
+
+		if (tag == "") {
+			continue;
+		}
 
 		// if line starts with 'new'
-		if (sub3 == "new") {
+		if (tag == "newmtl") {
 			if (valid_material) {
 				// first, the contents of the variables do not
 				// contain a valid material, so this if is
 				// skipped in the first iteration it is found.
-				materials.push_back(material(amb, dif, spec, Ns, Ni, d, illum, textID, material_name));
+				materials.push_back(material(mat_name, txt_name, txt_id, amb, dif, spec, Ns, Ni, d, illum));
 			}
 			valid_material = true;
-			sscanf(mat_lines[i].c_str(),"newmtl %s", buf);
-			material_name = buf;
-			textID = -1;
+			txt_name = NULL_TEXTURE_NAME;
+			txt_id = 0;
+			ss >> mat_name;
+			txt_id = 0;
 		}
-		else if (sub2 == "Ns") {
-			sscanf(mat_lines[i].c_str(), "Ns %f", &Ns);
+		else if (tag == "Ns") {
+			ss >> Ns;
 		}
-		else if (sub2 == "Ka") {
-			sscanf(mat_lines[i].c_str(), "Ka %f %f %f", &amb.x, &amb.y, &amb.z);
+		else if (tag == "Ka") {
+			ss >> amb.x >> amb.y >> amb.z;
 		}
-		else if (sub2 == "Kd") {
-			sscanf(mat_lines[i].c_str(), "Kd %f %f %f", &dif.x, &dif.y, &dif.z);
+		else if (tag == "Kd") {
+			ss >> dif.x >> dif.y >> dif.z;
 		}
-		else if (sub2 == "Ks") {
-			sscanf(mat_lines[i].c_str(), "Ks %f %f %f", &spec.x, &spec.y, &spec.z);
+		else if (tag == "Ks") {
+			ss >> spec.x >> spec.y >> spec.z;
 		}
-		else if (sub2 == "Ki") {
-			sscanf(mat_lines[i].c_str(), "Ni %f", &Ni);
+		else if (tag == "Ki") {
+			ss >> Ni;
 		}
-		else if (sub2 == "d ") {
-			sscanf(mat_lines[i].c_str(), "d %f", &d);
+		else if (tag == "d") {
+			ss >> d;
 		}
-		else if (sub2 == "il") {
-			sscanf(mat_lines[i].c_str(), "illum %d", &illum);
+		else if (tag == "illum") {
+			ss >> illum;
 		}
-		else if (sub2 == "ma") {
-			char aux[100];
-			sscanf(mat_lines[i].c_str(), "map_Kd %s", aux);
-
-			/*string fileTXT = aux;
-			int k = fileTXT.size() - 1;
-			while (k > 0 and fileTXT[k] != '/') --k;
-
-			if (k == 0) textID = loadTXT(fileTXT.c_str());
-			else textID = loadTXT((fileTXT.substr(k + 1, fileTXT.size())).c_str());*/
-
-			if (textID == 0) {
-				cout << "	Error in file: " << mtl_file << endl;
-				cout << "		Cannot load texture" << endl;
-				cout << "		Texture '" << aux << "' could not be loaded" << endl << endl;
-				//return false;
-			}
+		else if (tag == "map_Kd") {
+			ss >> txt_name;
+			txt_name = directory + "/" + txt_name;
+		}
+		else {
+			cerr << "Tag '" << tag << "' not recognised" << endl;
 		}
 	}
 	// load last batch of data read
-	materials.push_back(material(amb, dif, spec, Ns, Ni, d, illum, textID, material_name));
+	materials.push_back(material(mat_name, txt_name, txt_id, amb, dif, spec, Ns, Ni, d, illum));
 
 	return true;
 }
@@ -201,7 +201,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 			TC[0] = TC[1] = TC[2] = TC[3] = -1;
 
 			// parse face information
-			int C = std::count(file_lines[i].begin(), file_lines[i].end(),' ');
+			size_t C = std::count(file_lines[i].begin(), file_lines[i].end(),' ');
 			if (C == 3) {
 				// triangle
 				if (file_lines[i].find("//") != string::npos) {
@@ -394,7 +394,6 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 	M.set_materials(materials);
 	M.set_texture_coords(textures_coords);
 	M.set_texture_idxs(texture_idxs);
-	M.set_textures_indices(textures_indices);
 
 	#if defined (DEBUG)
 	cout << "OBJ_reader::load_object: Object '" << mesh_name << "' ";

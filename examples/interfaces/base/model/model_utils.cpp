@@ -2,34 +2,39 @@
 
 material::material
 (
+	const std::string& _id,
+	const std::string& _txt_name,
+	unsigned int _txt_id,
 	const vec3& amb,
 	const vec3& dif,
 	const vec3& spec,
 	float ns, float ni,float D,
-	int ill, int textID, const std::string& id
+	int ill
 )
 {
-	ID = id;
+	id = _id;
+	txt_name = _txt_name;
+	txt_id = _txt_id;
+
 	Ns = ns;
 	Ni = ni;
 	d =  D;
 	illum = ill;
-	textureID = textID;
-	Ka[0] = amb.x; Ka[1] = amb.y; Ka[2] = amb.z; Ka[3] = D;
-	Kd[0] = dif.x; Kd[1] = dif.y; Kd[2] = dif.z; Kd[3] = D;
-	Ks[0] = spec.x; Ks[1] = spec.y; Ks[2] = spec.z; Ks[3] = D;
+	Ka = vec4(amb.x, amb.y, amb.z, D);
+	Kd = vec4(dif.x, dif.y, dif.z, D);
+	Ks = vec4(spec.x, spec.y, spec.z, D);
 }
 
 material::material(const material& m) {
-	ID = m.ID;
+	id = m.id;
+	txt_name = m.txt_name;
+	txt_id = m.txt_id;
+
 	Ns = m.Ns;
 	Ni = m.Ni;
 	d =  m.d;
 	illum = m.illum;
-	textureID = m.textureID;
-	for (int i = 0; i < 4; ++i) {
-		Ka[i] = m.Ka[i];
-		Kd[i] = m.Kd[i];
-		Ks[i] = m.Ks[i];
-	}
+	Ka = m.Ka;
+	Kd = m.Kd;
+	Ks = m.Ks;
 }

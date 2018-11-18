@@ -146,6 +146,6 @@ class model {
 		 * - Number of normals.
 		 * - Number of normals indices.
 		 */
-		virtual void display_mesh_info();
+		virtual void display_mesh_info() const;
 };
 

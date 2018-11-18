@@ -31,12 +31,12 @@ INCLUDEPATH += ../../..
 DEPENDPATH += ../../..
 
 unix {
-	LIBS += -lglut -lGLU
+    LIBS += -lglut -lGLU -lGLEW
 	exists(/usr/lib/nvidia-304/) {
-		LIBS += -L/usr/lib/nvidia-304/ -lGL
+        LIBS += -L/usr/lib/nvidia-304/ -lGL
 	}
 	else {
-		LIBS += -lGL
+        LIBS += -lGL
 	}
 }
 

@@ -68,12 +68,6 @@ class OBJ_reader {
 		std::vector<vec2> textures_coords;
 		/// Texture indices per triangle.
 		std::vector<int> texture_idxs;
-		/**
-		 * @brief Indexes of textures.
-		 *
-		 * These indices point to the textures loaded.
-		 */
-		std::vector<unsigned int> textures_indices;
 
 		/// Frees the memory occupied by the loader.
 		void clean();

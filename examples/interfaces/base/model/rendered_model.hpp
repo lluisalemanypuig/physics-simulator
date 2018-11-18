@@ -12,6 +12,20 @@ typedef physim::math::vec2 vec2;
 #include <base/model/model_utils.hpp>
 #include <base/model/model.hpp>
 
+/**
+ * @brief Rendered model class.
+ *
+ * This is an abstraction of a model that has to be rendered somehow.
+ *
+ * This means having to draw its geometry with flat colours, lighting,
+ * textures, ...
+ *
+ * Rendering this model requires calling the appropriate methods
+ * within a valid OpenGL context. For example, if one wants to render
+ * this model with textures method @ref load_textures must be loaded
+ * within an OpenGL context. Same for faster rendering using OpenGL lists
+ * (see @ref copmile).
+ */
 class rendered_model : public model {
 	private:
 		/**
@@ -56,8 +70,6 @@ class rendered_model : public model {
 		void set_texture_coords(const std::vector<vec2>& texts);
 		/// Sets the texture coordinates indices.
 		void set_texture_idxs(const std::vector<int>& text_idxs);
-		/// Sets the loaded texture indices.
-		void set_textures_indices(const std::vector<unsigned int>& text_idxs);
 
 		// GETTERS
 
@@ -66,11 +78,17 @@ class rendered_model : public model {
 		// MODIFIERS
 
 		/**
+		 * @brief Loads the textures for the model.
+		 *
+		 * In case this model has textures, they should be loaded here.
+		 */
+		void load_textures();
+
+		/**
 		 * @brief Clears the memory occupied by the model.
 		 *
 		 * This means clearing not only the memory for the vertices,
-		 * normals, ..., but also the loaded textures and compiled
-		 * models.
+		 * normals, ..., but also the compiled models.
 		 */
 		void clear();
 
@@ -89,7 +107,7 @@ class rendered_model : public model {
 		 * - Number of textures used to texturise this mesh.
 		 * - The definition of the materials used.
 		 */
-		void display_mesh_info();
+		void display_mesh_info() const;
 
 		/**
 		 * @brief Renders the mesh.

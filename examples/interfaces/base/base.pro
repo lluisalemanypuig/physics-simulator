@@ -26,7 +26,10 @@ HEADERS += \
     geometry/rplane.hpp \
     geometry/rrectangle.hpp \
     geometry/rgeometry.hpp \
-    shader.hpp
+    shader.hpp \
+    textures/stb_image.h \
+    textures/std_image.hpp \
+    textures/texture_loader.hpp
 
 SOURCES += \
     obj_reader.cpp \
@@ -44,7 +47,8 @@ SOURCES += \
     scene/renderer.cpp \
     scene/sim_renderer.cpp \
     geometry/rgeometry.cpp \
-    shader.cpp
+    shader.cpp \
+    textures/texture_loader.cpp
 
 # for 'self' includes
 INCLUDEPATH += ..

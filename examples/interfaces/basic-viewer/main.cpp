@@ -87,6 +87,7 @@ void initGL(int argc, char *argv[]) {
 
 	m = new rendered_model();
 	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
+	m->load_textures();
 	m->compile();
 	SR.add_model(m);
 

@@ -9,21 +9,18 @@
 typedef physim::math::vec3 vec3;
 typedef physim::math::vec4 vec4;
 
-// constant for texture indices
-#if !defined (TEXTURE_START)
-	#define TEXTURE_START 1
-#else
-	// display error message
-#endif
+#define NULL_TEXTURE_NAME "material-without-texture"
 
 /**
  * @brief The material struct.
  */
 struct material {
 	/// Identifier of this material.
-	std::string ID;
-	/// Texture used on this material.
-	int textureID;
+	std::string id;
+	/// Filename of the texture material.
+	std::string txt_name;
+	/// Texture id used on this material.
+	unsigned int txt_id;
 	/// Illumination model.
 	int illum;
 	/// Specular exponent.
@@ -33,11 +30,11 @@ struct material {
 	/// Transparency.
 	float d;
 	/// Ambient colour, with transparency.
-	float Ka[4];
+	vec4 Ka;
 	/// Diffuse colour, with transparency.
-	float Kd[4];
+	vec4 Kd;
 	/// Specular colour, with transparency.
-	float Ks[4];
+	vec4 Ks;
 
 	/**
 	 * @brief Constructor.
@@ -53,11 +50,14 @@ struct material {
 	 */
 	material
 	(
+		const std::string& _id,
+		const std::string& _txt_name,
+		unsigned int _txt_id,
 		const vec3& amb,
 		const vec3& dif,
 		const vec3& spec,
 		float ns, float ni,float D,
-		int ill, int textID, const std::string& id
+		int ill
 	);
 
 	/// Copy constructor.

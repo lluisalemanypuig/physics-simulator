@@ -1,11 +1,12 @@
 #include <base/model/rendered_model.hpp>
 
-// OpenGL includes
-#include <base/include_gl.hpp>
-
 // C++ includes
 #include <iostream>
 using namespace std;
+
+// base includes
+#include <base/include_gl.hpp>
+#include <base/textures/texture_loader.hpp>
 
 // PRIVATE
 
@@ -20,7 +21,6 @@ rendered_model::rendered_model(const rendered_model& m) : model(m) {
 	mat_ids = m.mat_ids;
 	texture_coords = m.texture_coords;
 	texture_idxs = m.texture_idxs;
-	textures_indexes = m.textures_indexes;
 }
 
 rendered_model::~rendered_model() {
@@ -43,10 +43,6 @@ void rendered_model::set_texture_coords(const vector<vec2>& texts) {
 
 void rendered_model::set_texture_idxs(const vector<int>& text_idxs) {
 	texture_idxs = text_idxs;
-}
-
-void rendered_model::set_textures_indices(const vector<unsigned int>& text_idxs) {
-	textures_indexes = text_idxs;
 }
 
 // GETTERS
@@ -72,7 +68,7 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 			const string& m_id = mat_ids[t/3];
 			bool found = false;
 			for (const material& mat : materials) {
-				if (mat.ID == m_id) {
+				if (mat.id == m_id) {
 					found = true;
 				}
 			}
@@ -88,17 +84,15 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 	return mesh_state::correct;
 }
 
+void rendered_model::load_textures() {
+	texture_loader& load = texture_loader::get_loader();
+	load.load_textures(materials);
+}
+
 // MODIFIERS
 
 void rendered_model::clear() {
 	model::clear();
-
-	if (textures_indexes.size() > 0) {
-		vector<unsigned int>::iterator it;
-		for (it = textures_indexes.begin(); it != textures_indexes.end(); ++it) {
-			glDeleteTextures(TEXTURE_START, &(*it));
-		}
-	}
 
 	if (list_index >= 1) {
 		glDeleteLists(list_index, 1);
@@ -108,39 +102,44 @@ void rendered_model::clear() {
 	materials.clear();
 	texture_coords.clear();
 	texture_idxs.clear();
-	textures_indexes.clear();
 }
 
 // OTHERS
 
-void rendered_model::display_mesh_info() {
+void rendered_model::display_mesh_info() const {
 	model::display_mesh_info();
 	cout << "    # Materials= " << materials.size() << endl;
 	cout << "    # Texture coordinates= " << texture_coords.size() << endl;
-	cout << "    # Textures= " << textures_indexes.size() << endl;
+	uint ntxts = 0;
+	for (const material& m : materials) {
+		if (m.txt_id != 0) {
+			++ntxts;
+		}
+	}
+	cout << "    # Textures: " << ntxts << endl;
 
 	cout << "    Materials: " << endl;
 	for (size_t i = 0; i < materials.size(); ++i) {
-		cout << "        newmtl " << materials[i].ID << endl;
+		cout << "        newmtl " << materials[i].id << endl;
 		cout << "        Ns " << materials[i].Ns;
 		cout << endl;
-		cout << "        Ka";
-		for (int j = 0; j < 4; ++j) {
-			cout << " " << materials[i].Ka[j];
-		}
+		cout << "        Ka" << materials[i].Ka.x << ","
+							 << materials[i].Ka.y << ","
+							 << materials[i].Ka.z << ","
+							 << materials[i].Ka.u;
 		cout << endl;
-		cout << "        Kd";
-		for (int j = 0; j < 4; ++j) {
-			cout << " " << materials[i].Kd[j];
-		}
+		cout << "        Kd" << materials[i].Kd.x << ","
+							 << materials[i].Kd.y << ","
+							 << materials[i].Kd.z << ","
+							 << materials[i].Kd.u;
 		cout << endl;
-		cout << "        Ks";
-		for (int j = 0; j < 4; ++j) {
-			cout << " " << materials[i].Ks[j];
-		}
+		cout << "        Ks" << materials[i].Ks.x << ","
+							 << materials[i].Ks.y << ","
+							 << materials[i].Ks.z << ","
+							 << materials[i].Ks.u;
 		cout << "        Ni " << materials[i].Ni << endl;
 		cout << "        illum " << materials[i].illum << endl;
-		cout << "        map_Kd " << materials[i].textureID << endl;
+		cout << "        map_Kd " << materials[i].txt_id << endl;
 		cout << endl;
 	}
 }
@@ -150,26 +149,26 @@ void rendered_model::slow_render() const {
 		// set the material of the face
 		bool textenable = false;
 		// find the material color of the face
-		int M = -1;
+		size_t M = materials.size();
 		for (size_t i = 0; i < materials.size(); ++i) {
-			if (materials[i].ID == mat_ids[t/3]) {
+			if (materials[i].id == mat_ids[t/3]) {
 				M = i;
 			}
 		}
 		// set the material so that the lighting works
-		if (M != -1) {
-			glMaterialfv(GL_FRONT,GL_DIFFUSE,  &(materials[M].Kd[0]));
-			glMaterialfv(GL_FRONT,GL_AMBIENT,  &(materials[M].Ka[0]));
-			glMaterialfv(GL_FRONT,GL_SPECULAR, &(materials[M].Ks[0]));
+		if (M < materials.size()) {
+			glMaterialfv(GL_FRONT,GL_DIFFUSE,  &(materials[M].Kd.x));
+			glMaterialfv(GL_FRONT,GL_AMBIENT,  &(materials[M].Ka.x));
+			glMaterialfv(GL_FRONT,GL_SPECULAR, &(materials[M].Ks.x));
 			glMaterialf(GL_FRONT,GL_SHININESS, materials[M].Ns);
 
-			if (materials[M].textureID == -1) {
+			if (materials[M].txt_id == 0) {
 				glDisable(GL_TEXTURE_2D);
 			}
 			else {
 				textenable = true;
 				glEnable(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, materials[M].textureID);
+				glBindTexture(GL_TEXTURE_2D, materials[M].txt_id);
 			}
 		}
 

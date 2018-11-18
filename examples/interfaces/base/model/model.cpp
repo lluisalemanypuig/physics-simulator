@@ -238,7 +238,7 @@ void model::clear() {
 
 // OTHERS
 
-void model::display_mesh_info() {
+void model::display_mesh_info() const {
 	cout << "Mesh '" << mesh_name << "' information: " << endl;
 	cout << "    # Vertices= " << vertices.size() << endl;
 	cout << "    # Triangles= " << triangles.size() << endl;
