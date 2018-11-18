@@ -131,6 +131,7 @@ namespace study_cases {
 
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
+		model_ball->load_textures();
 		model_ball->compile();
 
 		sx = 12.5f;

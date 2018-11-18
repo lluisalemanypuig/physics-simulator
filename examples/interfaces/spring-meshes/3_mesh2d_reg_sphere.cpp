@@ -76,6 +76,7 @@ namespace study_cases {
 		shared_ptr<rendered_model> model_ball(new rendered_model);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
+		model_ball->load_textures();
 		model_ball->compile();
 
 		rsphere *rs = new rsphere();

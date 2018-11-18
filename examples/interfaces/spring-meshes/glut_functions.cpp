@@ -9,6 +9,7 @@ using namespace std;
 
 // base includes
 #include <base/include_gl.hpp>
+#include <base/textures/texture_loader.hpp>
 
 // physim includes
 #include <physim/meshes/mesh.hpp>
@@ -73,6 +74,12 @@ namespace glut_functions {
 
 		SR.get_simulator().set_solver(physim::solver_type::Verlet);
 		SR.get_simulator().set_time_step(0.001f);
+	}
+
+	void finish_simulation() {
+		SR.clear();
+		texture_loader::get_loader().clear_all();
+		glutDestroyWindow(window_id);
 	}
 
 	void parse_common_params(int argc, char *argv[]) {
@@ -265,7 +272,9 @@ namespace glut_functions {
 		string option;
 
 		switch (c) {
-		case ESC_KEY: glutDestroyWindow(window_id); break;
+		case ESC_KEY:
+			finish_simulation();
+			break;
 		case 'p': SR.switch_to_perspective(); break;
 		case 'o': SR.switch_to_orthogonal(); break;
 		case 'b': draw_box = not draw_box; break;

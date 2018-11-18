@@ -102,11 +102,10 @@ void texture_loader::load_textures(vector<material>& mats)
 		cout << "        done" << endl;
 		#endif
 
-		it->second = id;
+		textures[m.txt_name] = id;
+		m.txt_id = id;
 
 		stbi_image_free(data);
-
-		m.txt_id = id;
 	}
 }
 
