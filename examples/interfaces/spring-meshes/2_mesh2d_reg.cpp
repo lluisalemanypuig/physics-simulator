@@ -8,7 +8,7 @@
 using namespace std;
 
 // base includes
-#include <base/render_geometry/rsphere.hpp>
+#include <base/geometry/rsphere.hpp>
 #include <base/model/rendered_model.hpp>
 #include <base/include_gl.hpp>
 #include <base/obj_reader.hpp>

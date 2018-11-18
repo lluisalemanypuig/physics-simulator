@@ -1,4 +1,4 @@
-#include <base/render_geometry/rendered_geometry.hpp>
+#include <base/geometry/rgeometry.hpp>
 
 // base includes
 #include <base/include_gl.hpp>

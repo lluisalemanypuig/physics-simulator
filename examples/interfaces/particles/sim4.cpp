@@ -4,10 +4,10 @@
 #include <assert.h>
 
 // base includes
-#include <base/render_geometry/rrectangle.hpp>
-#include <base/render_geometry/rtriangle.hpp>
-#include <base/render_geometry/rsphere.hpp>
-#include <base/render_geometry/rplane.hpp>
+#include <base/geometry/rrectangle.hpp>
+#include <base/geometry/rtriangle.hpp>
+#include <base/geometry/rsphere.hpp>
+#include <base/geometry/rplane.hpp>
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>

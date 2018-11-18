@@ -13,7 +13,6 @@ HEADERS += \
     obj_reader.hpp \
     box.hpp \
     include_gl.hpp \
-    render_geometry/rendered_geometry.hpp \
     cameras/orthogonal.hpp \
     cameras/perspective.hpp \
     cameras/observer.hpp \
@@ -22,19 +21,19 @@ HEADERS += \
     model/rendered_model.hpp \
     scene/renderer.hpp \
     scene/sim_renderer.hpp \
-    render_geometry/rsphere.hpp \
-    render_geometry/rtriangle.hpp \
-    render_geometry/rplane.hpp \
-    render_geometry/rrectangle.hpp
+    geometry/rsphere.hpp \
+    geometry/rtriangle.hpp \
+    geometry/rplane.hpp \
+    geometry/rrectangle.hpp \
+    geometry/rgeometry.hpp
 
 SOURCES += \
     obj_reader.cpp \
     box.cpp \
-    render_geometry/rendered_geometry.cpp \
-    render_geometry/rplane.cpp \
-    render_geometry/rrectangle.cpp \
-    render_geometry/rsphere.cpp \
-    render_geometry/rtriangle.cpp \
+    geometry/rplane.cpp \
+    geometry/rrectangle.cpp \
+    geometry/rsphere.cpp \
+    geometry/rtriangle.cpp \
     cameras/orthogonal.cpp \
     cameras/perspective.cpp \
     cameras/observer.cpp \
@@ -42,7 +41,8 @@ SOURCES += \
     model/model_utils.cpp \
     model/rendered_model.cpp \
     scene/renderer.cpp \
-    scene/sim_renderer.cpp
+    scene/sim_renderer.cpp \
+    geometry/rgeometry.cpp
 
 # for 'self' includes
 INCLUDEPATH += ..

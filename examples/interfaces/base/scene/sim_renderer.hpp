@@ -5,7 +5,7 @@
 
 // base includes
 #include <base/scene/renderer.hpp>
-#include <base/render_geometry/rendered_geometry.hpp>
+#include <base/geometry/rgeometry.hpp>
 
 // physim includes
 #include <physim/simulator.hpp>

@@ -5,7 +5,7 @@
 #include <memory>
 
 // base includes
-#include <base/render_geometry/rendered_geometry.hpp>
+#include <base/geometry/rgeometry.hpp>
 #include <base/model/rendered_model.hpp>
 #include <base/box.hpp>
 

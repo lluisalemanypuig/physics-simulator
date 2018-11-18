@@ -5,7 +5,7 @@
 #include <memory>
 
 // base includes
-#include <base/render_geometry/rendered_geometry.hpp>
+#include <base/geometry/rgeometry.hpp>
 #include <base/model/rendered_model.hpp>
 #include <base/box.hpp>
 
@@ -19,32 +19,26 @@ typedef physim::math::vec3 vec3;
  *
  */
 
-/*
- * Use the four points (they should be on the plane)
- * to render the plane.
- *
- * The points should be given in either clockwise or
- * counterclockwise order
- */
-class rplane : public rgeom {
+// use the three points (they should be
+// on the triangle) to render the plane.
+class rtriangle : public rgeom {
 	private:
-		vec3 _p1,_p2,_p3,_p4;
+		vec3 _p1,_p2,_p3;
+
 	public:
-		rplane();
-		~rplane();
+		rtriangle();
+		~rtriangle();
 
 		// SETTERS
 
-		void set_points
-		(const vec3& p1, const vec3& p2,
-		 const vec3& p3, const vec3& p4);
+		void set_points(const vec3& p1, const vec3& p2,
+						const vec3& p3);
 
 		// GETTERS
 
 		const vec3& p1() const;
 		const vec3& p2() const;
 		const vec3& p3() const;
-		const vec3& p4() const;
 
 		// OTHERS
 

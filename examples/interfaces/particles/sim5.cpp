@@ -1,7 +1,7 @@
 #include "mainwindow.hpp"
 
 // base includes
-#include <base/render_geometry/rplane.hpp>
+#include <base/geometry/rplane.hpp>
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>

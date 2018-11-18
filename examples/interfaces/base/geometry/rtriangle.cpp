@@ -1,4 +1,4 @@
-#include <base/render_geometry/rtriangle.hpp>
+#include <base/geometry/rtriangle.hpp>
 
 #include <base/include_gl.hpp>
 

@@ -1,4 +1,4 @@
-#include <base/render_geometry/rsphere.hpp>
+#include <base/geometry/rsphere.hpp>
 
 // base includes
 #include <base/include_gl.hpp>
