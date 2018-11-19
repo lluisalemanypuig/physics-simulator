@@ -3,6 +3,9 @@
 // C++ includes
 #include <cmath>
 
+// physim includes
+#include <physim/math/vec3.hpp>
+
 namespace physim {
 namespace math {
 
@@ -31,6 +34,8 @@ typedef struct vec4 {
 	vec4(float s)								{ x = y = z = u = s; }
 	/// Construct a vector with coordinates (@e _x, @e _y, @e _z, @e _w).
 	vec4(float _x,float _y,float _z,float _u)	{ x = _x; y = _y; z = _z; u = _u; }
+	/// Construct a vector with @ref vec3 and a coordinate.
+	vec4(const vec3& p,float _u)				{ x = p.x; y = p.y; z = p.z; u = _u; }
 	/// Copy constructor.
 	vec4(const vec4& p)							{ x = p.x; y = p.y; z = p.z; u = p.u; }
 	/// Assignation operator.
