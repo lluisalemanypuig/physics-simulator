@@ -76,9 +76,6 @@ class renderer {
 		/// Returns the ratio window width / window height.
 		float get_aspect_ratio() const;
 
-		/// Shader program.
-		shader shader_program;
-
 	public:
 		/// Default constructor.
 		renderer();
@@ -89,9 +86,6 @@ class renderer {
 
 		/// Clears the models vector (see @ref ms).
 		virtual void clear();
-
-		/// Initialise the shader program.
-		bool init_shader(const string& dir, const string& vert, const string& frag);
 
 		/**
 		 * @brief Adds a model to the simulation.
@@ -167,9 +161,6 @@ class renderer {
 
 		// GETTERS
 
-		shader& get_shader();
-		const shader& get_shader() const;
-
 		/// Returns a reference to the perspective camera.
 		perspective& get_perspective_camera();
 
@@ -212,16 +203,23 @@ class renderer {
 		 * If the renderer shaqer is used then sets the corresponding
 		 * uniform values.
 		 */
-		void apply_projection(bool use_shader) const;
+		void apply_projection() const;
+
+		/// Returns the projection matrix corresponding to the active camera.
+		glm::mat4 make_projection() const;
 
 		/**
 		 * @brief Move the scene according to the internal state.
 		 *
 		 * Either inspecting or flying.
 		 */
-		void apply_modelview(bool use_shader) const;
+		void apply_modelview() const;
+
+		/// Returns the modelview matrix corresponding to the active viewing mode.
+		glm::mat4 make_modelview() const;
+
 
 		/// Renders the models
-		void render_models(bool use_shader) const;
+		void render_models() const;
 };
 

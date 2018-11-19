@@ -14,8 +14,11 @@ using namespace std;
 
 // base includes
 #include <base/include_gl.hpp>
+#include <base/model/shader_helper.hpp>
 
 // PRIVATE
+
+#define TO_RAD float(M_PI)/180.0f
 
 void renderer::make_model_box(model *m) {
 	if (loaded_models.size() == 1) {
@@ -63,12 +66,6 @@ void renderer::clear() {
 	loaded_models.clear();
 }
 
-bool renderer::init_shader
-(const string& dir, const string& vert, const string& frag)
-{
-	return shader_program.init(dir, vert, frag);
-}
-
 void renderer::add_model(rendered_model *m) {
 	assert(m != nullptr);
 	loaded_models.push_back(m);
@@ -110,13 +107,13 @@ void renderer::increment_zoom(float i) {
 }
 
 void renderer::move_camera(float vel, float dir) {
-	float rad = (yaw + dir)*M_PI/180.0;
+	float rad = (yaw + dir)*TO_RAD;
 	cam_pos.x -= sin(rad)*vel;
 	cam_pos.z -= cos(rad)*vel;
 }
 
 void renderer::tilt_camera_up(float vel, float dir) {
-	float rad = (pitch + dir)*M_PI/180.0;
+	float rad = (pitch + dir)*TO_RAD;
 	cam_pos.y += sin(rad)*vel;
 }
 
@@ -161,13 +158,6 @@ void renderer::set_pitch(float p) { pitch = p; }
 
 // GETTERS
 
-shader& renderer::get_shader() {
-	return shader_program;
-}
-const shader& renderer::get_shader() const {
-	return shader_program;
-}
-
 perspective& renderer::get_perspective_camera() {
 	return pers_cam;
 }
@@ -211,53 +201,21 @@ float renderer::get_psi() const { return psi; }
 
 // OpenGL
 
-void renderer::apply_projection(bool use_shader) const {
-	bool error = false;
-	if (use_shader) {
-		glm::mat4 projection;
-		if (use_perspective) {
-			projection = glm::perspective(
-				pers_cam.get_FOV(), pers_cam.getRAw(),
-				pers_cam.get_znear(), pers_cam.get_zfar()
-			);
-		}
-		else if (use_orthogonal) {
-			projection = glm::ortho(
-				orth_cam.get_left(), orth_cam.get_right(),
-				orth_cam.get_bottom(), orth_cam.get_top(),
-				orth_cam.get_znear(), orth_cam.get_zfar()
-			);
-		}
-		else {
-			error = true;
-		}
-
-		if (not error) {
-			shader_program.bind();
-			shader_program.set_mat4("projection", projection);
-			shader_program.release();
-		}
+void renderer::apply_projection() const {
+	if (use_perspective) {
+		gluPerspective(
+			pers_cam.get_FOV(), pers_cam.getRAw(),
+			pers_cam.get_znear(), pers_cam.get_zfar()
+		);
+	}
+	else if (use_orthogonal) {
+		glOrtho(
+			orth_cam.get_left(), orth_cam.get_right(),
+			orth_cam.get_bottom(), orth_cam.get_top(),
+			orth_cam.get_znear(), orth_cam.get_zfar()
+		);
 	}
 	else {
-		if (use_perspective) {
-			gluPerspective(
-				pers_cam.get_FOV(), pers_cam.getRAw(),
-				pers_cam.get_znear(), pers_cam.get_zfar()
-			);
-		}
-		else if (use_orthogonal) {
-			glOrtho(
-				orth_cam.get_left(), orth_cam.get_right(),
-				orth_cam.get_bottom(), orth_cam.get_top(),
-				orth_cam.get_znear(), orth_cam.get_zfar()
-			);
-		}
-		else {
-			error = true;
-		}
-	}
-
-	if (error) {
 		cerr << "void simulation_renderer::apply_view_mode() - Error!" << endl;
 		cerr << "    Something went wrong with the cameras!" << endl;
 		cerr << "    No perspective or orthogonal camera activated" << endl;
@@ -265,57 +223,45 @@ void renderer::apply_projection(bool use_shader) const {
 	}
 }
 
-void renderer::apply_modelview(bool use_shader) const {
-	bool error = false;
-	if (use_shader) {
-		glm::mat4 modelview;
-		glm::mat3 normal_matrix;
-		if (inspect) {
-			modelview = glm::translate(modelview, glm::vec3(0.0f, 0.0f, -diag_length));
-			modelview = glm::rotate(modelview, theta, glm::vec3(1.0f, 0.0f, 0.0f));
-			modelview = glm::rotate(modelview, -psi, glm::vec3(0.0f, 1.0f, 0.0f));
-			modelview = glm::translate(modelview, glm::vec3(-VRP.x, -VRP.y, -VRP.z));
+glm::mat4 renderer::make_projection() const {
+	glm::mat4 proj;
 
-			normal_matrix =
-				glm::transpose(glm::inverse(glm::mat3(modelview)));
-		}
-		else if (fly) {
-			modelview = glm::rotate(modelview, -pitch, glm::vec3(1.0f, 0.0f, 0.0f));
-			modelview = glm::rotate(modelview, -yaw, glm::vec3(0.0f, 1.0f, 0.0f));
-			modelview = glm::translate(modelview, glm::vec3(-cam_pos.x, -cam_pos.y, -cam_pos.z));
-
-			normal_matrix =
-				glm::transpose(glm::inverse(glm::mat3(modelview)));
-		}
-		else {
-			error = true;
-		}
-
-		if (not error) {
-			shader_program.bind();
-			shader_program.set_mat4("modelview", modelview);
-			shader_program.set_mat3("normal_matrix", normal_matrix);
-			shader_program.release();
-		}
+	if (use_perspective) {
+		proj = glm::perspective(
+			pers_cam.get_FOV()*TO_RAD, pers_cam.getRAw(),
+			pers_cam.get_znear(), pers_cam.get_zfar()
+		);
+	}
+	else if (use_orthogonal) {
+		proj = glm::ortho(
+			orth_cam.get_left(), orth_cam.get_right(),
+			orth_cam.get_bottom(), orth_cam.get_top(),
+			orth_cam.get_znear(), orth_cam.get_zfar()
+		);
 	}
 	else {
-		if (inspect) {
-			glTranslatef(0.0f, 0.0f, -diag_length);
-			glRotatef(theta, 1.0f, 0.0f, 0.0f);
-			glRotatef(-psi, 0.0f, 1.0f, 0.0f);
-			glTranslatef(-VRP.x, -VRP.y, -VRP.z);
-		}
-		else if (fly) {
-			glRotatef(-pitch, 1.0f, 0.0f, 0.0f);
-			glRotatef(-yaw, 0.0f, 1.0f, 0.0f);
-			glTranslatef(-cam_pos.x, -cam_pos.y, -cam_pos.z);
-		}
-		else {
-			error = true;
-		}
+		cerr << "void simulation_renderer::apply_view_mode() - Error!" << endl;
+		cerr << "    Something went wrong with the cameras!" << endl;
+		cerr << "    No perspective or orthogonal camera activated" << endl;
+		assert(false);
 	}
 
-	if (error) {
+	return proj;
+}
+
+void renderer::apply_modelview() const {
+	if (inspect) {
+		glTranslatef(0.0f, 0.0f, -diag_length);
+		glRotatef(theta, 1.0f, 0.0f, 0.0f);
+		glRotatef(-psi, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-VRP.x, -VRP.y, -VRP.z);
+	}
+	else if (fly) {
+		glRotatef(-pitch, 1.0f, 0.0f, 0.0f);
+		glRotatef(-yaw, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-cam_pos.x, -cam_pos.y, -cam_pos.z);
+	}
+	else {
 		cerr << "void simulation_renderer::apply_camera() - Error!" << endl;
 		cerr << "    Something went wrong with the cameras!" << endl;
 		cerr << "    No inspect or fly mode activated" << endl;
@@ -323,14 +269,30 @@ void renderer::apply_modelview(bool use_shader) const {
 	}
 }
 
-void renderer::render_models(bool use_shader) const {
-	if (use_shader) {
-		shader_program.bind();
+glm::mat4 renderer::make_modelview() const {
+	glm::mat4 modelview;
+	if (inspect) {
+		modelview = glm::translate(modelview, glm::vec3(0.0f, 0.0f, -diag_length));
+		modelview = glm::rotate(modelview, theta*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
+		modelview = glm::rotate(modelview, -psi*TO_RAD, glm::vec3(0.0f, 1.0f, 0.0f));
 	}
+	else if (fly) {
+		modelview = glm::rotate(modelview, -pitch*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
+		modelview = glm::rotate(modelview, -yaw*TO_RAD, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelview = glm::translate(modelview, glm::vec3(-cam_pos.x, -cam_pos.y, -cam_pos.z));
+	}
+	else {
+		cerr << "void simulation_renderer::apply_camera() - Error!" << endl;
+		cerr << "    Something went wrong with the cameras!" << endl;
+		cerr << "    No inspect or fly mode activated" << endl;
+		assert(false);
+	}
+
+	return modelview;
+}
+
+void renderer::render_models() const {
 	for (rendered_model *m : loaded_models) {
 		m->render();
-	}
-	if (use_shader) {
-		shader_program.release();
 	}
 }

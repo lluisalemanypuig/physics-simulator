@@ -80,6 +80,10 @@ class rendered_model : public model {
 
 		mesh_state state(const mesh_state& ignore = mesh_state::correct) const;
 
+		const std::vector<size_t>& get_material_idxs() const;
+
+		const std::vector<material>& get_materials() const;
+
 		// MODIFIERS
 
 		/**

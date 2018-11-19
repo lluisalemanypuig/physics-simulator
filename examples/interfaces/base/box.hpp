@@ -18,6 +18,13 @@ class box {
 		glm::vec3 make_vi(int i) const;
 		void update_vi();
 
+		/// vertex array object.
+		uint VAO;
+		/// vertices buffer object index
+		uint VBO;
+		/// indices object
+		uint EBO;
+
 	public:
 		box();
 		~box();
@@ -47,5 +54,7 @@ class box {
 		float get_diag_length() const;
 		float get_half_diag_length() const;
 
-		void draw_box() const;
+		void make_buffers();
+		void slow_render() const;
+		void fast_render() const;
 };

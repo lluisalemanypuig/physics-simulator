@@ -3,6 +3,9 @@
 #include <utility>
 using namespace std;
 
+// glm includes
+#include <glm/glm.hpp>
+
 // base includes
 #include <base/include_gl.hpp>
 #include <base/model/rendered_model.hpp>
@@ -19,6 +22,7 @@ typedef pair<int,int> point;
 // global variables
 // ------------------
 
+static shader S;
 static renderer SR;
 static bool use_shader = true;
 
@@ -90,14 +94,23 @@ void initGL(int argc, char *argv[]) {
 	float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
+	// ------------ //
+	/* load shaders */
+	if (use_shader) {
+		cout << "Initialising shader program..." << endl;
+		bool r = S.init("../../interfaces/shaders", "vertex.vert", "fragment.frag");
+		if (not r) {
+			exit(1);
+		}
+
+		cout << "    Initialised" << endl;
+	}
+
 	// --------------------------- //
 	/* initialise global variables */
 	pressed_button = 0;
 	last_mouse = point(0,0);
 	lock_mouse = false;
-
-	SR.set_window_dims(iw, ih);
-	SR.init_cameras();
 
 	sec = timing::now();
 	display_fps_count = true;
@@ -106,10 +119,9 @@ void initGL(int argc, char *argv[]) {
 
 	// ------------------------ //
 	/* load models for geometry */
-	rendered_model *m;
-	OBJ_reader obj;
+	rendered_model *m = new rendered_model();
 
-	m = new rendered_model();
+	OBJ_reader obj;
 	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
 	m->load_textures();
 
@@ -118,18 +130,14 @@ void initGL(int argc, char *argv[]) {
 	SR.set_window_dims(iw, ih);
 	SR.init_cameras();
 
+	// ---------------------------------- //
+	/* compile or make buffers for models */
+
 	if (use_shader) {
-		cout << "Initialising shader program..." << endl;
-		bool r = SR.init_shader("../../interfaces/shaders", "vertex.vert", "fragment.frag");
-		if (not r) {
-			exit(1);
-		}
-
-		cout << "    Initialised" << endl;
-
-		SR.get_shader().bind();
+		cout << "Making buffers for models..." << endl;
+		SR.get_box().make_buffers();
 		m->make_buffers();
-		SR.get_shader().release();
+		cout << "    made!" << endl;
 	}
 	else {
 		m->compile();
@@ -147,28 +155,45 @@ void refresh() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (use_shader) {
-		SR.apply_projection(true);
-		SR.apply_modelview(true);
+		S.bind();
+
+		S.set_bool("box", false);
+		S.set_mat4("projection", SR.make_projection());
+
+		glm::mat4 modelview = SR.make_modelview();
+		S.set_mat4("modelview", modelview);
+
+		glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(modelview)));
+		S.set_mat3("normal_matrix", normal_matrix);
+
+		SR.render_models();
+
+		S.set_bool("box", true);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		SR.get_box().fast_render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		S.release();
 	}
 	else {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		SR.apply_projection(false);
+		SR.apply_projection();
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		SR.apply_modelview(false);
+		SR.apply_modelview();
 
 		glEnable(GL_LIGHTING);
+
+		SR.render_models();
+
+		glDisable(GL_LIGHTING);
+		glColor3f(1.0f,0.0f,0.0f);
+		SR.get_box().slow_render();
 	}
-
-	SR.render_models(use_shader);
-
-	glDisable(GL_LIGHTING);
-	glColor3f(1.0f,0.0f,0.0f);
-	SR.get_box().draw_box();
 
 	glutSwapBuffers();
 }
@@ -204,9 +229,6 @@ void reshape(int w, int h) {
 
 	SR.get_perspective_camera().set_zoom(pzoom);
 	SR.get_orthogonal_camera().set_zoom(ozoom);
-
-	SR.apply_projection(use_shader);
-	SR.apply_modelview(use_shader);
 
 	glViewport(0, 0, w, h);
 }
@@ -255,9 +277,6 @@ void mouse_movement(int x, int y) {
 
 		glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
 		last_mouse = point(SR.window_width()/2,SR.window_height()/2);
-
-		SR.apply_projection(use_shader);
-		SR.apply_modelview(use_shader);
 	}
 }
 
@@ -270,12 +289,10 @@ void mouse_drag_event(int x, int y) {
 		if (SR.is_inspecting()) {
 			SR.increment_psi(-0.3f*dx);
 			SR.increment_theta(0.3f*dy);
-			SR.apply_modelview(use_shader);
 		}
 	}
 	else if (pressed_button == GLUT_RIGHT_BUTTON) {
 		SR.increment_zoom(0.75f*dy);
-		SR.apply_projection(use_shader);
 	}
 }
 
@@ -298,28 +315,20 @@ void keyboard_event(unsigned char c, int x, int y) {
 	}
 	else if (c == 'p') {
 		SR.switch_to_perspective();
-
-		SR.apply_projection(use_shader);
 	}
 	else if (c == 'o') {
 		SR.switch_to_orthogonal();
-
-		SR.apply_projection(use_shader);
 	}
 	else if (c == 'i') {
 		SR.switch_to_inspection();
 		lock_mouse = false;
 		glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
-
-		SR.apply_modelview(use_shader);
 	}
 	else if (c == 'f') {
 		SR.switch_to_flight();
 		lock_mouse = true;
 		glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
 		glutSetCursor(GLUT_CURSOR_NONE);
-
-		SR.apply_modelview(use_shader);
 	}
 	else if (c == '+') {
 		if (FPS < 59) {
@@ -338,19 +347,15 @@ void keyboard_event(unsigned char c, int x, int y) {
 		if (SR.is_flying()) {
 			if (c == 'w') {
 				SR.camera_forwards(0.1f);
-				SR.apply_modelview(use_shader);
 			}
 			else if (c == 's') {
 				SR.camera_backwards(0.1f);
-				SR.apply_modelview(use_shader);
 			}
 			else if (c == 'a') {
 				SR.camera_sideways_left(0.1f);
-				SR.apply_modelview(use_shader);
 			}
 			else if (c == 'd') {
 				SR.camera_sideways_right(0.1f);
-				SR.apply_modelview(use_shader);
 			}
 		}
 	}

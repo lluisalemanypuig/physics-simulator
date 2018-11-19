@@ -6,12 +6,15 @@
 #include <fstream>
 using namespace std;
 
+// glm includes
+#include <glm/gtc/type_ptr.hpp>
+
 shader::shader() {
 	ID = 0;
 }
 
 shader::~shader() {
-
+	clear();
 }
 
 // MODIFIERS
@@ -100,9 +103,11 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 	cout << "        - create shader" << endl;
 	#endif
 
+	// -------------
 	// vertex shader
 	unsigned int vertex;
 	vertex = glCreateShader(GL_VERTEX_SHADER);
+	assert(glGetError() == GL_NO_ERROR);
 
 	#if defined (DEBUG)
 	cout << "        - set shader source" << endl;
@@ -110,14 +115,17 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 
 	int vertex_length = vertex_code.length();
 	glShaderSource(vertex, 1, &vertex_shader_code, &vertex_length);
+	assert(glGetError() == GL_NO_ERROR);
 
 	#if defined (DEBUG)
 	cout << "        - compile source" << endl;
 	#endif
 
 	glCompileShader(vertex);
+	assert(glGetError() == GL_NO_ERROR);
 	// print compile errors if any
 	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+	assert(glGetError() == GL_NO_ERROR);
 	if (success == 0) {
 		glGetShaderInfoLog(vertex, 512, nullptr, info_buf);
 		cerr << "-------------------------------------" << endl;
@@ -134,8 +142,10 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 	cout << "        - create shader" << endl;
 	#endif
 
+	// ---------------
 	// fragment shader
 	unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	assert(glGetError() == GL_NO_ERROR);
 	int fragment_length = fragment_code.length();
 
 	#if defined (DEBUG)
@@ -143,14 +153,17 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 	#endif
 
 	glShaderSource(fragment, 1, &fragment_shader_code, &fragment_length);
+	assert(glGetError() == GL_NO_ERROR);
 
 	#if defined (DEBUG)
 	cout << "        - compile source" << endl;
 	#endif
 
 	glCompileShader(fragment);
+	assert(glGetError() == GL_NO_ERROR);
 	// print compile errors if any
 	glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+	assert(glGetError() == GL_NO_ERROR);
 	if (success == 0) {
 		glGetShaderInfoLog(fragment, 512, nullptr, info_buf);
 		cerr << "-------------------------------------" << endl;
@@ -168,11 +181,16 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 
 	// create shader program
 	ID = glCreateProgram();
+	assert(glGetError() == GL_NO_ERROR);
 	glAttachShader(ID, vertex);
+	assert(glGetError() == GL_NO_ERROR);
 	glAttachShader(ID, fragment);
+	assert(glGetError() == GL_NO_ERROR);
 	glLinkProgram(ID);
+	assert(glGetError() == GL_NO_ERROR);
 	// print linking errors if any
 	glGetProgramiv(ID, GL_LINK_STATUS, &success);
+	assert(glGetError() == GL_NO_ERROR);
 	if (success == 0)
 	{
 		glGetProgramInfoLog(ID, 512, nullptr, info_buf);
@@ -186,13 +204,15 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 	}
 
 	#if defined (DEBUG)
-	cout << "        program created" << endl;
+	cout << "        program created: " << ID << endl;
 	#endif
 
 	// delete shaders as they're linked into
 	// the program now and no longer necessery
 	glDeleteShader(vertex);
+	assert(glGetError() == GL_NO_ERROR);
 	glDeleteShader(fragment);
+	assert(glGetError() == GL_NO_ERROR);
 
 	return true;
 }
@@ -231,14 +251,19 @@ void shader::set_vec3(const string& name, const glm::vec3& v) const {
 	glUniform3f(loc, v.x, v.y, v.z);
 }
 
+void shader::set_vec4(const string& name, const glm::vec4& v) const {
+	GLint loc = glGetUniformLocation(ID, name.c_str());
+	glUniform4fv(loc, 1, glm::value_ptr(v));
+}
+
 void shader::set_mat3(const string& name, const glm::mat3& m) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
-	glUniformMatrix3fv(loc, 1, GL_FALSE, &m[0][0]);
+	glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(m));
 }
 
 void shader::set_mat4(const string& name, const glm::mat4& m) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
-	glUniformMatrix4fv(loc, 1, GL_FALSE, &m[0][0]);
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m));
 }
 
 // GETTERS
@@ -251,8 +276,10 @@ GLuint shader::get_id() const {
 
 void shader::bind() const {
 	glUseProgram(ID);
+	assert(glGetError() == GL_NO_ERROR);
 }
 
 void shader::release() const {
 	glUseProgram(0);
+	assert(glGetError() == GL_NO_ERROR);
 }

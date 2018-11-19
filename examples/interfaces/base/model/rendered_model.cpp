@@ -94,6 +94,14 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 	return mesh_state::correct;
 }
 
+const std::vector<size_t>& rendered_model::get_material_idxs() const {
+	return mat_idxs;
+}
+
+const std::vector<material>& rendered_model::get_materials() const {
+	return materials;
+}
+
 void rendered_model::load_textures() {
 	texture_loader& load = texture_loader::get_loader();
 	load.load_textures(materials, textures_indexes);
@@ -109,13 +117,19 @@ void rendered_model::clear() {
 	}
 
 	if (VAO > 0) {
+		cout << "rendered_model::clear() - delete VAO" << endl;
 		glDeleteVertexArrays(1, &VAO);
+		VAO = 0;
 	}
 	if (VBO > 0) {
+		cout << "rendered_model::clear() - delete VBO" << endl;
 		glDeleteBuffers(1, &VBO);
+		VBO = 0;
 	}
 	if (EBO > 0) {
+		cout << "rendered_model::clear() - delete EBO" << endl;
 		glDeleteBuffers(1, &EBO);
+		EBO = 0;
 	}
 
 	mat_idxs.clear();
@@ -237,11 +251,12 @@ void rendered_model::make_buffers() {
 
 	for (size_t t = 0; t < triangles.size(); t += 3) {
 		data[2*t    ] = vertices[ triangles[t    ] ];
-		data[2*t + 1] = vertices[ triangles[t + 1] ];
-		data[2*t + 2] = vertices[ triangles[t + 2] ];
+		data[2*t + 1] = glm::normalize(normals[ normal_idxs[t    ] ]);
 
-		data[2*t + 3] = glm::normalize(normals[ normal_idxs[t    ] ]);
-		data[2*t + 4] = glm::normalize(normals[ normal_idxs[t + 1] ]);
+		data[2*t + 2] = vertices[ triangles[t + 1] ];
+		data[2*t + 3] = glm::normalize(normals[ normal_idxs[t + 1] ]);
+
+		data[2*t + 4] = vertices[ triangles[t + 2] ];
 		data[2*t + 5] = glm::normalize(normals[ normal_idxs[t + 2] ]);
 
 		indices[t    ] = t;
@@ -251,35 +266,33 @@ void rendered_model::make_buffers() {
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-
-	// ---------------------
-	// VBO bind
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	glBufferData(GL_ARRAY_BUFFER,
-				 sizeof(float)*data.size(), &data[0],
-				 GL_STATIC_DRAW);
+	glGenBuffers(1, &EBO);
 
 	// bind VAO
 	glBindVertexArray(VAO);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), &data[0]);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), &data[0] + 3);
-	glEnableVertexAttribArray(1);
-	// VBO release
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// ---------------------
+	// VBO fill
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, 3*data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
 
 	// ---------------------
-	// EBO bind
-	glGenBuffers(1, &EBO);
+	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-				 sizeof(unsigned int)*indices.size(), &indices[0],
-				 GL_STATIC_DRAW);
-	// EBO release
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*indices.size(), &indices[0], GL_STATIC_DRAW);
+
+	// ---------------------
+	// vertex attributes
+	glVertexAttribPointer
+	(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer
+	(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// VBO release
+	// ---------------------
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// ---------------------
 
 	// VAO release
@@ -288,18 +301,14 @@ void rendered_model::make_buffers() {
 
 void rendered_model::render() const {
 	if (uses_buffers()) {
-		cout << "Using buffers..." << endl;
 		glBindVertexArray(VAO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glDrawElements(GL_TRIANGLES, triangles.size(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, triangles.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 	else if (uses_lists()) {
-		cout << "Using lists..." << endl;
 		glCallList(list_index);
 	}
 	else {
-		cout << "slow render..." << endl;
 		slow_render();
 	}
 }

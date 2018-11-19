@@ -4,8 +4,10 @@
 #include <assert.h>
 
 // C++ includes
+#include <iostream>
 #include <limits>
 #include <cmath>
+using namespace std;
 
 // glm includes
 #include <glm/glm.hpp>
@@ -54,8 +56,26 @@ box::box() {
 	min = glm::vec3(M,M,M);
 	max = glm::vec3(m,m,m);
 	update_vi();
+
+	VAO = VBO = EBO = 0;
 }
-box::~box() {}
+box::~box() {
+	if (VAO > 0) {
+		cout << "box::~box() - delete VAO" << endl;
+		glDeleteVertexArrays(1, &VAO);
+		VAO = 0;
+	}
+	if (VBO > 0) {
+		cout << "box::~box() - delete VBO" << endl;
+		glDeleteBuffers(1, &VBO);
+		VBO = 0;
+	}
+	if (EBO > 0) {
+		cout << "box::~box() - delete EBO" << endl;
+		glDeleteBuffers(1, &EBO);
+		EBO = 0;
+	}
+}
 
 void box::set_min_max(const glm::vec3& m, const glm::vec3& M) {
 	min = m;
@@ -119,7 +139,36 @@ float box::get_half_diag_length() const {
 	return get_diag_length()/2.0f;
 }
 
-void box::draw_box() const {
+void box::make_buffers() {
+	unsigned int indices[] = {
+		0, 1, 2, 3,
+		1, 2, 6, 5,
+		2, 3, 7, 6,
+		3, 0, 4, 7,
+		4, 5, 6, 7
+	};
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, 8*3*sizeof(float), &vs[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices[0], GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0);
+}
+
+void box::slow_render() const {
 	draw_edge(vs[0], vs[1]);
 	draw_edge(vs[1], vs[2]);
 	draw_edge(vs[2], vs[3]);
@@ -133,5 +182,11 @@ void box::draw_box() const {
 	for (int i = 0; i < 4; ++i) {
 		draw_edge(vs[i], vs[i + 4]);
 	}
+}
+
+void box::fast_render() const {
+	glBindVertexArray(VAO);
+	glDrawElements(GL_QUADS, 20, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
 }
 

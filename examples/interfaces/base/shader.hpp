@@ -52,6 +52,8 @@ class shader {
 		void set_vec2(const std::string& name, const glm::vec2& v) const;
 		/// Sets a vec3 value to the specified uniform.
 		void set_vec3(const std::string& name, const glm::vec3& v) const;
+		/// Sets a vec4 value to the specified uniform.
+		void set_vec4(const std::string& name, const glm::vec4& v) const;
 		/// Sets a mat3 value to the specified uniform.
 		void set_mat3(const std::string& name, const glm::mat3& m) const;
 		/// Sets a mat4 value to the specified uniform.
@@ -66,14 +68,14 @@ class shader {
 		/**
 		 * @brief Use/activate the shader.
 		 *
-		 * Calls glUseProgram()
+		 * Calls glUseProgram(@ref ID)
 		 */
 		void bind() const;
 
 		/**
 		 * @brief Deactivate the shader.
 		 *
-		 * Calls glUseProgram()
+		 * Calls glUseProgram(0)
 		 */
 		void release() const;
 };

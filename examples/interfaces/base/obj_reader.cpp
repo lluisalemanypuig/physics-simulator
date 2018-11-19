@@ -139,7 +139,7 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 		else if (tag == "Ks") {
 			ss >> spec.x >> spec.y >> spec.z;
 		}
-		else if (tag == "Ki") {
+		else if (tag == "Ni") {
 			ss >> Ni;
 		}
 		else if (tag == "d") {
