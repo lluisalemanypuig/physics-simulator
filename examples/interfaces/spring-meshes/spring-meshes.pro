@@ -9,6 +9,11 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
+HEADERS += \
+    study_cases.hpp \
+    glut_functions.hpp \
+    utils.hpp
+
 SOURCES += main.cpp \
     glut_functions.cpp \
     study_cases.cpp \
@@ -16,11 +21,6 @@ SOURCES += main.cpp \
     1_meshes1d.cpp \
     2_mesh2d_reg.cpp \
     3_mesh2d_reg_sphere.cpp
-
-HEADERS += \
-    study_cases.hpp \
-    glut_functions.hpp \
-    utils.hpp
 
 # base (model, obj reader, ...)
 LIBS += -L../base/ -lbase
@@ -40,8 +40,8 @@ CONFIG(release, debug|release) {
 INCLUDEPATH += ../../..
 DEPENDPATH += ../../..
 
+LIBS += -lglut -lGLU -lGLEW
 unix {
-	LIBS += -lglut -lGLU
 	exists(/usr/lib/nvidia-304/) {
 		LIBS += -L/usr/lib/nvidia-304/ -lGL
 	}

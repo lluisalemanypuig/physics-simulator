@@ -7,9 +7,12 @@ CONFIG += c++11
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-LIBS += -lGLU
-
 FORMS += mainwindow.ui
+
+HEADERS += \
+    mainwindow.hpp \
+    simulation_renderer.hpp \
+    utils.hpp
 
 SOURCES += \
     main.cpp \
@@ -23,11 +26,6 @@ SOURCES += \
     sim4.cpp \
     sim5.cpp \
 	sim6.cpp
-
-HEADERS += \
-    mainwindow.hpp \
-    simulation_renderer.hpp \
-	utils.hpp
 
 RESOURCES +=
 
@@ -48,3 +46,5 @@ CONFIG(release, debug|release) {
 }
 INCLUDEPATH += ../../..
 DEPENDPATH += ../../..
+
+LIBS += -lGLU -lGLEW

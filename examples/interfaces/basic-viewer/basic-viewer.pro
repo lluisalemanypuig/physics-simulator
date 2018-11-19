@@ -9,7 +9,11 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-SOURCES += main.cpp \
+HEADERS += \
+    utils.hpp
+
+SOURCES += \
+    main.cpp \
     utils.cpp
 
 # base (model, obj reader, ...)
@@ -30,8 +34,8 @@ CONFIG(release, debug|release) {
 INCLUDEPATH += ../../..
 DEPENDPATH += ../../..
 
+LIBS += -lglut -lGLU -lGLEW
 unix {
-    LIBS += -lglut -lGLU -lGLEW
 	exists(/usr/lib/nvidia-304/) {
         LIBS += -L/usr/lib/nvidia-304/ -lGL
 	}
@@ -39,6 +43,3 @@ unix {
         LIBS += -lGL
 	}
 }
-
-HEADERS += \
-    utils.hpp
