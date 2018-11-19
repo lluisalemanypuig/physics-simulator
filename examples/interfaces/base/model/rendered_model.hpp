@@ -42,10 +42,15 @@ class rendered_model : public model {
 		/// Texture indices per vertex.
 		std::vector<int> texture_idxs;
 		/// OpenGL indexes of the textures.
-		std::vector<unsigned int> textures_indexes;
+		std::vector<uint> textures_indexes;
 
 		/// Index of the compiled list.
 		uint list_index;
+
+		/// Vertex Buffer Object index.
+		uint VBO;
+		/// Element Buffer Object (indices).
+		uint EBO;
 
 	public:
 		/// Constructor.
@@ -89,6 +94,20 @@ class rendered_model : public model {
 		 * normals, ..., but also the compiled models.
 		 */
 		void clear();
+
+		/**
+		 * @brief Returns whether glLists are used for rendering.
+		 * @return Returns @ref list_index > 0.
+		 */
+		bool uses_lists() const;
+
+		/**
+		 * @brief Returns whether buffers are used for rendering.
+		 *
+		 * In this case, a shader program wil be used.
+		 * @return Returns @ref VBO > 0 and @ref EBO > 0.
+		 */
+		bool uses_buffers() const;
 
 		// OTHERS
 
@@ -142,6 +161,7 @@ class rendered_model : public model {
 		/**
 		 * @brief Chooses the best way of rendering this model.
 		 *
+		 * If no buffer is available, then uses a glList.
 		 * If no list is available (@ref list_index is -1) then
 		 * @ref slow_render() is used.
 		 */

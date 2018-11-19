@@ -31,7 +31,7 @@ class model {
 		/**
 		 * @brief Vertices indices of each face.
 		 *
-		 * The number of triangles is, then: triangle.s.size()/3
+		 * The number of triangles is, then: triangles.size()/3
 		 */
 		std::vector<int> triangles;
 		/**

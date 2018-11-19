@@ -7,6 +7,7 @@
 #include <base/model/rendered_model.hpp>
 #include <base/cameras/perspective.hpp>
 #include <base/cameras/orthogonal.hpp>
+#include <base/shader.hpp>
 #include <base/box.hpp>
 
 // physim includes
@@ -76,6 +77,9 @@ class renderer {
 		/// Returns the ratio window width / window height.
 		float get_aspect_ratio() const;
 
+		/// Shader program.
+		shader shader_program;
+
 	public:
 		/// Default constructor.
 		renderer();
@@ -87,6 +91,9 @@ class renderer {
 		/// Clears the models vector (see @ref ms).
 		virtual void clear();
 
+		/// Initialise the shader program.
+		bool init_shader(const string& dir, const string& vert, const string& frag);
+
 		/**
 		 * @brief Adds a model to the simulation.
 		 *
@@ -95,13 +102,6 @@ class renderer {
 		 * @param m Non-null pointer to a model.
 		 */
 		void add_model(rendered_model *m);
-
-		/**
-		 * @brief Set window dimensions.
-		 * @param w Width of the window.
-		 * @param h Height of the window.
-		 */
-		void set_window_dims(int w, int h);
 
 		/**
 		 * @brief Initialise the perspective and orthogonal
@@ -147,6 +147,13 @@ class renderer {
 		void switch_to_flight();
 
 		// SETTERS
+
+		/**
+		 * @brief Set window dimensions.
+		 * @param w Width of the window.
+		 * @param h Height of the window.
+		 */
+		void set_window_dims(int w, int h);
 
 		void set_perspective(const perspective& p);
 		void set_orthogonal(const orthogonal& o);

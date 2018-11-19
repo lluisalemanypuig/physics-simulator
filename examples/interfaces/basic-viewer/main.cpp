@@ -8,6 +8,7 @@ using namespace std;
 #include <base/model/rendered_model.hpp>
 #include <base/obj_reader.hpp>
 #include <base/scene/renderer.hpp>
+#include <base/shader.hpp>
 
 // custom includes
 #include "utils.hpp"
@@ -17,6 +18,8 @@ typedef pair<int,int> point;
 // ------------------
 // global variables
 // ------------------
+
+shader S;
 
 static renderer SR;
 static timing::time_point sec;
@@ -68,6 +71,13 @@ void initGL(int argc, char *argv[]) {
 	glutInitWindowSize(iw, ih);
 	window_id = glutCreateWindow("Basic viewer");
 
+	GLenum err = glewInit();
+	if (err != 0) {
+		cerr << "initGL - Error:" << endl;
+		cerr << "    when initialising glew: " << err << endl;
+		exit(1);
+	}
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_LIGHTING);
@@ -88,7 +98,7 @@ void initGL(int argc, char *argv[]) {
 	m = new rendered_model();
 	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
 	m->load_textures();
-	m->compile();
+	m->make_buffers();
 	SR.add_model(m);
 
 	// --------------------------- //
@@ -104,6 +114,14 @@ void initGL(int argc, char *argv[]) {
 	display_fps_count = true;
 	FPS = 60;
 	fps_count = 0;
+
+	cout << "Initialising shader program..." << endl;
+	bool r = SR.init_shader("../../interfaces/shaders", "vertex.vert", "fragment.frag");
+	if (not r) {
+		exit(1);
+	}
+
+	cout << "    Initialised" << endl;
 }
 
 // ------------

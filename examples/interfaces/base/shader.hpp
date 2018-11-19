@@ -30,11 +30,12 @@ class shader {
 		 *
 		 * Loads a vertex and shader GLSL programs found in @e vertex and
 		 * @e fragment files.
+		 * @param dir Directory where the shaders are found.
 		 * @param vertex Filename of the vertex shader program.
 		 * @param fragment Filename of the fragment shader program.
 		 * @returns Returns true on success. Returns false if otherwise.
 		 */
-		bool init(const std::string& vertex, const std::string& fragment);
+		bool init(const std::string& dir, const std::string& vertex, const std::string& fragment);
 
 		/// Frees the shader program's memory.
 		void clear();
@@ -63,5 +64,5 @@ class shader {
 		 *
 		 * Calls glUseProgram()
 		 */
-		void use();
+		void use() const;
 };

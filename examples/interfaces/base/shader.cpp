@@ -16,12 +16,19 @@ shader::~shader() {
 
 // MODIFIERS
 
-bool shader::init(const string& vertex_file, const string& fragment_file) {
+bool shader::init(const string& dir, const string& vertex_name, const string& fragment_name) {
+	string vertex_file = dir + "/" + vertex_name;
+	string fragment_file = dir + "/" + fragment_name;
+
+	#if defined (DEBUG)
+	cout << "shader::init - Load shader programs:" << endl;
+	cout << "    vertex:   " << vertex_file << endl;
+	cout << "    fragment: " << fragment_file << endl;
+	#endif
+
 	// 1. retrieve the vertex/fragment source code from filePath
-	string vertex_code;
-	string fragment_code;
-	ifstream vertex_shader_file;
-	ifstream fragment_shader_file;
+	string vertex_code, fragment_code;
+	ifstream vertex_shader_file, fragment_shader_file;
 
 	// ensure ifstream objects can throw
 	// exceptions when reading
@@ -33,19 +40,27 @@ bool shader::init(const string& vertex_file, const string& fragment_file) {
 	try {
 		// open files
 		vertex_shader_file.open(vertex_file);
-		fragment_shader_file.open(fragment_file);
-
 		if (not vertex_shader_file.is_open()) {
 			throw new ifstream::failure("Could not open vertex shader file.");
 		}
+
+		fragment_shader_file.open(fragment_file);
 		if (not fragment_shader_file.is_open()) {
 			throw new ifstream::failure("Could not open fragment shader file.");
 		}
+
+		#if defined (DEBUG)
+		cout << "    Reading buffers..." << endl;
+		#endif
 
 		// read file's buffer contents into streams
 		stringstream vertex_shader_stream, fragment_shader_stream;
 		vertex_shader_stream << vertex_shader_file.rdbuf();
 		fragment_shader_stream << fragment_shader_file.rdbuf();
+
+		#if defined (DEBUG)
+		cout << "        buffers read" << endl;
+		#endif
 
 		// close file handlers
 		vertex_shader_file.close();
@@ -54,6 +69,10 @@ bool shader::init(const string& vertex_file, const string& fragment_file) {
 		// convert stream into string
 		vertex_code = vertex_shader_stream.str();
 		fragment_code = fragment_shader_stream.str();
+
+		#if defined (DEBUG)
+		cout << "        contents of files stored" << endl;
+		#endif
 	}
 	catch (ifstream::failure e) {
 		cerr << "shader::init - Error while reading shader files." << endl;
@@ -69,35 +88,82 @@ bool shader::init(const string& vertex_file, const string& fragment_file) {
 	const char *vertex_shader_code = vertex_code.c_str();
 	const char *fragment_shader_code = fragment_code.c_str();
 
+	#if defined (DEBUG)
+	cout << "    Compile shaders..." << endl;
+	#endif
+
 	// 2. compile shaders
 	char info_buf[512];
 
+	#if defined (DEBUG)
+	cout << "    * vertex shader:" << endl;
+	cout << "        - create shader" << endl;
+	#endif
+
 	// vertex shader
-	unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex, 1, &vertex_shader_code, nullptr);
+	unsigned int vertex;
+	vertex = glCreateShader(GL_VERTEX_SHADER);
+
+	#if defined (DEBUG)
+	cout << "        - set shader source" << endl;
+	#endif
+
+	int vertex_length = vertex_code.length();
+	glShaderSource(vertex, 1, &vertex_shader_code, &vertex_length);
+
+	#if defined (DEBUG)
+	cout << "        - compile source" << endl;
+	#endif
+
 	glCompileShader(vertex);
 	// print compile errors if any
 	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
 	if (success == 0) {
 		glGetShaderInfoLog(vertex, 512, nullptr, info_buf);
+		cerr << "-------------------------------------" << endl;
 		cerr << "shader::init - Error:" << endl;
 		cerr << "    Vertex shader compilation failed." << endl;
+		cerr << "    Log: " << endl;
+		cerr << info_buf << endl;
+		cerr << "-------------------------------------" << endl;
 		return false;
 	}
 
+	#if defined (DEBUG)
+	cout << "    * fragment shader..." << endl;
+	#endif
+
 	// fragment shader
-	unsigned int fragment = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(fragment, 1, &fragment_shader_code, nullptr);
+	unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	int fragment_length = fragment_code.length();
+
+	#if defined (DEBUG)
+	cout << "        - set shader source" << endl;
+	#endif
+
+	glShaderSource(fragment, 1, &fragment_shader_code, &fragment_length);
+
+	#if defined (DEBUG)
+	cout << "        - compile source" << endl;
+	#endif
+
 	glCompileShader(fragment);
 	// print compile errors if any
 	glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
 	if (success == 0) {
 		glGetShaderInfoLog(fragment, 512, nullptr, info_buf);
+		cerr << "-------------------------------------" << endl;
 		cerr << "shader::init - Error:" << endl;
-		cerr << "    Vertex shader compilation failed." << endl;
-		cerr << "    Log: " << info_buf << endl;
+		cerr << "    Fragment shader compilation failed." << endl;
+		cerr << "    Log: " << endl;
+		cerr << info_buf << endl;
+		cerr << "-------------------------------------" << endl;
 		return false;
 	}
+
+	#if defined (DEBUG)
+	cout << "    Creating program..." << endl;
+	#endif
 
 	// create shader program
 	ID = glCreateProgram();
@@ -109,11 +175,18 @@ bool shader::init(const string& vertex_file, const string& fragment_file) {
 	if (success == 0)
 	{
 		glGetProgramInfoLog(ID, 512, nullptr, info_buf);
+		cerr << "-------------------------------------" << endl;
 		cerr << "shader::init - Error:" << endl;
-		cerr << "    Fragment shader compilation failed." << endl;
-		cerr << "    Log: " << info_buf << endl;
+		cerr << "    Shader program linkage failed." << endl;
+		cerr << "    Log: " << endl;
+		cerr << info_buf << endl;
+		cerr << "-------------------------------------" << endl;
 		return false;
 	}
+
+	#if defined (DEBUG)
+	cout << "        program created" << endl;
+	#endif
 
 	// delete shaders as they're linked into
 	// the program now and no longer necessery
@@ -165,6 +238,6 @@ GLuint shader::get_id() const {
 
 // OTHERS
 
-void shader::use() {
+void shader::use() const {
 	glUseProgram(ID);
 }

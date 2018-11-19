@@ -58,6 +58,10 @@ void renderer::clear() {
 	loaded_models.clear();
 }
 
+bool renderer::init_shader(const string& dir, const string& vert, const string& frag) {
+	return shader_program.init(dir, vert, frag);
+}
+
 void renderer::add_model(rendered_model *m) {
 	assert(m != nullptr);
 	loaded_models.push_back(m);
@@ -237,6 +241,9 @@ void renderer::apply_camera() const {
 
 void renderer::render_models() const {
 	for (rendered_model *m : loaded_models) {
+		if (m->uses_buffers()) {
+			shader_program.use();
+		}
 		m->render();
 	}
 }

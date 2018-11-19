@@ -17,6 +17,7 @@ using namespace std;
 
 rendered_model::rendered_model() : model() {
 	list_index = 0;
+	VBO = EBO = 0;
 }
 
 rendered_model::rendered_model(const rendered_model& m) : model(m) {
@@ -24,6 +25,9 @@ rendered_model::rendered_model(const rendered_model& m) : model(m) {
 	mat_idxs = m.mat_idxs;
 	texture_coords = m.texture_coords;
 	texture_idxs = m.texture_idxs;
+
+	list_index = 0;
+	VBO = EBO = 0;
 }
 
 rendered_model::~rendered_model() {
@@ -105,6 +109,14 @@ void rendered_model::clear() {
 	materials.clear();
 	texture_coords.clear();
 	texture_idxs.clear();
+}
+
+bool rendered_model::uses_lists() const {
+	return list_index > 0;
+}
+
+bool rendered_model::uses_buffers() const {
+	return VBO > 0 and EBO > 0;
 }
 
 // OTHERS
@@ -207,14 +219,64 @@ uint rendered_model::compile() {
 }
 
 void rendered_model::make_buffers() {
+	#if defined(DEBUG)
+	cout << "rendered_model::make_buffers" << endl;
+	cout << "    generate array buffer" << endl;
+	#endif
 
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	#if defined(DEBUG)
+	cout << "        with index: " << VBO << endl;
+	#endif
+
+	vector<vec3> sorted_vertices(triangles.size());
+	vector<unsigned int> sorted_indices(triangles.size());
+	for (size_t t = 0; t < triangles.size(); t += 3) {
+		sorted_vertices[t    ] = vertices[ triangles[t    ] ];
+		sorted_vertices[t + 1] = vertices[ triangles[t + 1] ];
+		sorted_vertices[t + 2] = vertices[ triangles[t + 2] ];
+
+		sorted_indices[t    ] = t;
+		sorted_indices[t + 1] = t + 1;
+		sorted_indices[t + 2] = t + 2;
+	}
+
+	glBufferData(GL_ARRAY_BUFFER,
+				 3*sizeof(float)*sorted_vertices.size(), &sorted_vertices[0],
+				 GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
+	glEnableVertexAttribArray(0);
+
+	#if defined(DEBUG)
+	cout << "    generate element array buffer" << endl;
+	#endif
+
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+				 sizeof(unsigned int)*sorted_indices.size(), &sorted_indices[0],
+				 GL_STATIC_DRAW);
+
+	#if defined(DEBUG)
+	cout << "        with index: " << EBO << endl;
+	#endif
 }
 
 void rendered_model::render() const {
-	if (list_index > 0) {
+	if (uses_buffers()) {
+		cout << "Using buffers..." << endl;
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glDrawElements(GL_TRIANGLES, triangles.size(), GL_UNSIGNED_INT, nullptr);
+	}
+	else if (uses_lists()) {
+		cout << "Using lists..." << endl;
 		glCallList(list_index);
 	}
 	else {
+		cout << "slow render..." << endl;
 		slow_render();
 	}
 }

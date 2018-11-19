@@ -99,10 +99,10 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 		cout << "    glGenerateMipmap...   ";
 		#endif
 
-		//glGenerateMipmap(GL_TEXTURE_2D);
+		glGenerateMipmap(GL_TEXTURE_2D);
 
 		#if defined (DEBUG)
-		cout << "        done" << endl;
+		cout << "done" << endl;
 		#endif
 
 		stbi_image_free(data);
