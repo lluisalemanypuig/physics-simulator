@@ -1,17 +1,12 @@
 #pragma once
 
-// C++ includes
-#include <stdint.h>
-#include <memory>
+// glm includes
+#include <glm/vec3.hpp>
 
 // base includes
 #include <base/geometry/rgeometry.hpp>
 #include <base/model/rendered_model.hpp>
 #include <base/box.hpp>
-
-// physim includes
-#include <physim/math/vec3.hpp>
-typedef physim::math::vec3 vec3;
 
 /*
  * Simple wrapper on the geometry of the
@@ -23,7 +18,7 @@ typedef physim::math::vec3 vec3;
 // of a sphere to the right position.
 class rsphere : public rgeom {
 	private:
-		vec3 C;
+		glm::vec3 C;
 		float R;
 
 	public:
@@ -32,12 +27,12 @@ class rsphere : public rgeom {
 
 		// SETTERS
 
-		void set_center(const vec3& _c);
+		void set_center(const glm::vec3& _c);
 		void set_radius(float _r);
 
 		// GETETRS
 
-		const vec3& center() const;
+		const glm::vec3& center() const;
 		float radius() const;
 
 		// OTHERS

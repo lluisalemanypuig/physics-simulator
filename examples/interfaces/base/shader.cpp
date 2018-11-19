@@ -131,6 +131,7 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 
 	#if defined (DEBUG)
 	cout << "    * fragment shader..." << endl;
+	cout << "        - create shader" << endl;
 	#endif
 
 	// fragment shader
@@ -220,14 +221,24 @@ void shader::set_float(const string& name, float value) const {
 	glUniform1f(loc, value);
 }
 
-void shader::set_vec2(const string& name, const vec2& v) const {
+void shader::set_vec2(const string& name, const glm::vec2& v) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
 	glUniform2f(loc, v.x, v.y);
 }
 
-void shader::set_vec3(const string& name, const vec3& v) const {
+void shader::set_vec3(const string& name, const glm::vec3& v) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
 	glUniform3f(loc, v.x, v.y, v.z);
+}
+
+void shader::set_mat3(const string& name, const glm::mat3& m) const {
+	GLint loc = glGetUniformLocation(ID, name.c_str());
+	glUniformMatrix3fv(loc, 1, GL_FALSE, &m[0][0]);
+}
+
+void shader::set_mat4(const string& name, const glm::mat4& m) const {
+	GLint loc = glGetUniformLocation(ID, name.c_str());
+	glUniformMatrix4fv(loc, 1, GL_FALSE, &m[0][0]);
 }
 
 // GETTERS
@@ -238,6 +249,10 @@ GLuint shader::get_id() const {
 
 // OTHERS
 
-void shader::use() const {
+void shader::bind() const {
 	glUseProgram(ID);
+}
+
+void shader::release() const {
+	glUseProgram(0);
 }

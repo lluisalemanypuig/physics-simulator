@@ -11,9 +11,11 @@
 #include <physim/meshes/mesh.hpp>
 #include <physim/meshes/mesh1d.hpp>
 #include <physim/meshes/mesh2d_regular.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace meshes;
 using namespace particles;
+typedef physim::math::vec3 pm_vec3;
 
 inline
 void rainbow(float v, float m, float M, float& r, float& g, float& b) {
@@ -76,8 +78,8 @@ void render_mesh1d(const mesh1d *m) {
 	float r, g, b;
 	glBegin(GL_LINES);
 	for (size_t i = 0; i < m->size() - 1; ++i) {
-		const vec3& pos1 = ps[i]->cur_pos;
-		const vec3& pos2 = ps[i + 1]->cur_pos;
+		const pm_vec3& pos1 = ps[i]->cur_pos;
+		const pm_vec3& pos2 = ps[i + 1]->cur_pos;
 
 		rainbow(i, 0,m->size(), r,g,b);
 		glColor3f(r,g,b);
@@ -98,15 +100,15 @@ void render_mesh2d_regular(const mesh2d_regular *m) {
 	for (size_t i = 0; i < N; ++i) {
 		for (size_t j = 0; j < M; ++j) {
 			if (i + 1 < N) {
-				const vec3& pos1 = ps[m->get_global_index(i,j)]->cur_pos;
+				const pm_vec3& pos1 = ps[m->get_global_index(i,j)]->cur_pos;
 				glVertex3f(pos1.x, pos1.y, pos1.z);
-				const vec3& pos2 = ps[m->get_global_index(i + 1,j)]->cur_pos;
+				const pm_vec3& pos2 = ps[m->get_global_index(i + 1,j)]->cur_pos;
 				glVertex3f(pos2.x, pos2.y, pos2.z);
 			}
 			if (j + 1 < M) {
-				const vec3& pos1 = ps[m->get_global_index(i,j)]->cur_pos;
+				const pm_vec3& pos1 = ps[m->get_global_index(i,j)]->cur_pos;
 				glVertex3f(pos1.x, pos1.y, pos1.z);
-				const vec3& pos2 = ps[m->get_global_index(i,j + 1)]->cur_pos;
+				const pm_vec3& pos2 = ps[m->get_global_index(i,j + 1)]->cur_pos;
 				glVertex3f(pos2.x, pos2.y, pos2.z);
 			}
 		}

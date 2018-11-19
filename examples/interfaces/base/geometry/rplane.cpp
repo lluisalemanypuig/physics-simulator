@@ -11,18 +11,18 @@ rplane::~rplane() {}
 // SETTERS
 
 void rplane::set_points
-(const vec3& p1, const vec3& p2,
- const vec3& p3, const vec3& p4)
+(const glm::vec3& p1, const glm::vec3& p2,
+ const glm::vec3& p3, const glm::vec3& p4)
 {
 	_p1 = p1; _p2 = p2; _p3 = p3; _p4 = p4;
 }
 
 // GETTERS
 
-const vec3& rplane::p1() const { return _p1; }
-const vec3& rplane::p2() const { return _p2; }
-const vec3& rplane::p3() const { return _p3; }
-const vec3& rplane::p4() const { return _p4; }
+const glm::vec3& rplane::p1() const { return _p1; }
+const glm::vec3& rplane::p2() const { return _p2; }
+const glm::vec3& rplane::p3() const { return _p3; }
+const glm::vec3& rplane::p4() const { return _p4; }
 
 // OTHERS
 

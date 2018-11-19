@@ -148,12 +148,12 @@ namespace glut_functions {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		SR.apply_view_mode();
+		SR.apply_projection(false);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		SR.apply_camera();
+		SR.apply_modelview(false);
 
 		SR.render_simulation();
 

@@ -1,5 +1,8 @@
 #include "mainwindow.hpp"
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // base includes
 #include <base/geometry/rplane.hpp>
 
@@ -10,7 +13,6 @@
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace particles;
-using namespace math;
 using namespace init;
 using namespace geom;
 
@@ -22,12 +24,12 @@ void MainWindow::make_sim5(SimulationRenderer *sr) {
 	I->set_pos_initialiser(
 		[](free_particle *p) {
 			float z = -4.0f + p->index*0.8f;
-			p->cur_pos = vec3(-5.0f,1.0f,z);
+			p->cur_pos = math::vec3(-5.0f,1.0f,z);
 		}
 	);
 	I->set_vel_initialiser(
 		[](free_particle *p) {
-			p->cur_vel = vec3(5.0f,0.0f,0.0f);
+			p->cur_vel = math::vec3(5.0f,0.0f,0.0f);
 		}
 	);
 	I->set_bounce_initialiser(
@@ -36,22 +38,22 @@ void MainWindow::make_sim5(SimulationRenderer *sr) {
 		}
 	);
 
-	vec3 A( -5.0f, -0.25f,-5.0f);
-	vec3 B( -5.0f, -0.25f, 5.0f);
-	vec3 C( 20.0f, -0.25f, 5.0f);
-	vec3 D( 20.0f, -0.25f,-5.0f);
+	glm::vec3 A( -5.0f, -0.25f,-5.0f);
+	glm::vec3 B( -5.0f, -0.25f, 5.0f);
+	glm::vec3 C( 20.0f, -0.25f, 5.0f);
+	glm::vec3 D( 20.0f, -0.25f,-5.0f);
 
 	rplane *floor = new rplane();
 	floor->set_points(A, B, C, D);
 	sr->add_rgeom(floor);
 
 	plane *pl = new plane(
-		vec3(0.0f,1.0f,0.0f),
-		vec3(0.0f,0.0f,0.0f)
+		math::vec3(0.0f,1.0f,0.0f),
+		math::vec3(0.0f,0.0f,0.0f)
 	);
 	sr->get_simulator().add_geometry(pl);
 
-	sr->get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+	sr->get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 	sr->add_particles(11);
 }

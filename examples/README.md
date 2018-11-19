@@ -18,6 +18,7 @@ following:
 - [OpenGL]() (version >= 2.0).
 - [GLUT]()
 - [GLEW]()
+- [glm]()
 
 ## Building the examples
 

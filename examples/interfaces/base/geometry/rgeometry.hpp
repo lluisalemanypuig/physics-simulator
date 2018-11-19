@@ -1,16 +1,11 @@
 #pragma once
 
 // C++ includes
-#include <stdint.h>
 #include <memory>
 
 // base includes
 #include <base/model/rendered_model.hpp>
 #include <base/box.hpp>
-
-// physim includes
-#include <physim/math/vec3.hpp>
-typedef physim::math::vec3 vec3;
 
 /*
  * Simple wrapper on the geometry of the

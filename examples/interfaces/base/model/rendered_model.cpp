@@ -7,6 +7,9 @@
 #include <iostream>
 using namespace std;
 
+// glm includes
+#include <glm/glm.hpp>
+
 // base includes
 #include <base/include_gl.hpp>
 #include <base/textures/texture_loader.hpp>
@@ -17,7 +20,7 @@ using namespace std;
 
 rendered_model::rendered_model() : model() {
 	list_index = 0;
-	VBO = EBO = 0;
+	VAO = VBO = EBO = 0;
 }
 
 rendered_model::rendered_model(const rendered_model& m) : model(m) {
@@ -27,7 +30,7 @@ rendered_model::rendered_model(const rendered_model& m) : model(m) {
 	texture_idxs = m.texture_idxs;
 
 	list_index = 0;
-	VBO = EBO = 0;
+	VAO = VBO = EBO = 0;
 }
 
 rendered_model::~rendered_model() {
@@ -59,7 +62,7 @@ void rendered_model::set_materials
 	}
 }
 
-void rendered_model::set_texture_coords(const vector<vec2>& texts) {
+void rendered_model::set_texture_coords(const vector<glm::vec2>& texts) {
 	texture_coords = texts;
 }
 
@@ -101,8 +104,18 @@ void rendered_model::load_textures() {
 void rendered_model::clear() {
 	model::clear();
 
-	if (list_index >= 1) {
+	if (list_index > 0) {
 		glDeleteLists(list_index, 1);
+	}
+
+	if (VAO > 0) {
+		glDeleteVertexArrays(1, &VAO);
+	}
+	if (VBO > 0) {
+		glDeleteBuffers(1, &VBO);
+	}
+	if (EBO > 0) {
+		glDeleteBuffers(1, &EBO);
 	}
 
 	mat_idxs.clear();
@@ -138,20 +151,20 @@ void rendered_model::display_mesh_info() const {
 		cout << "        newmtl " << materials[i].id << endl;
 		cout << "        Ns " << materials[i].Ns;
 		cout << endl;
-		cout << "        Ka" << materials[i].Ka.x << ","
-							 << materials[i].Ka.y << ","
-							 << materials[i].Ka.z << ","
-							 << materials[i].Ka.u;
+		cout << "        Ka: " << materials[i].Ka[0];
+		for (size_t j = 1; j < 4; ++j) {
+			cout << "," << materials[i].Ka[j];
+		}
 		cout << endl;
-		cout << "        Kd" << materials[i].Kd.x << ","
-							 << materials[i].Kd.y << ","
-							 << materials[i].Kd.z << ","
-							 << materials[i].Kd.u;
+		cout << "        Kd: " << materials[i].Kd[0];
+		for (size_t j = 1; j < 4; ++j) {
+			cout << "," << materials[i].Kd[j];
+		}
 		cout << endl;
-		cout << "        Ks" << materials[i].Ks.x << ","
-							 << materials[i].Ks.y << ","
-							 << materials[i].Ks.z << ","
-							 << materials[i].Ks.u;
+		cout << "        Ks: " << materials[i].Ks[0];
+		for (size_t j = 1; j < 4; ++j) {
+			cout << "," << materials[i].Ks[j];
+		}
 		cout << "        Ni " << materials[i].Ni << endl;
 		cout << "        illum " << materials[i].illum << endl;
 		cout << "        map_Kd " << materials[i].txt_id << endl;
@@ -167,9 +180,9 @@ void rendered_model::slow_render() const {
 		size_t M = mat_idxs[t/3];
 		// set the material so that the lighting works
 		if (M < materials.size()) {
-			glMaterialfv(GL_FRONT,GL_DIFFUSE,  &(materials[M].Kd.x));
-			glMaterialfv(GL_FRONT,GL_AMBIENT,  &(materials[M].Ka.x));
-			glMaterialfv(GL_FRONT,GL_SPECULAR, &(materials[M].Ks.x));
+			glMaterialfv(GL_FRONT,GL_DIFFUSE,  &(materials[M].Kd[0]));
+			glMaterialfv(GL_FRONT,GL_AMBIENT,  &(materials[M].Ka[0]));
+			glMaterialfv(GL_FRONT,GL_SPECULAR, &(materials[M].Ks[0]));
 			glMaterialf(GL_FRONT,GL_SHININESS, materials[M].Ns);
 
 			if (materials[M].txt_id == 0) {
@@ -185,18 +198,18 @@ void rendered_model::slow_render() const {
 		glBegin(GL_TRIANGLES);
 		for (size_t i = t; i < t + 3; ++i) {
 			if (textenable) {
-				const vec2& uv = texture_coords[ texture_idxs[i] ];
+				const glm::vec2& uv = texture_coords[ texture_idxs[i] ];
 				glTexCoord2f(uv.x, 1.0 - uv.y);
 			}
 
 			int vrtx_idx = triangles[i];
 
 			if (normals.size() > 0) {
-				const vec3& n = normals[ normal_idxs[i] ];
+				const glm::vec3& n = normals[ normal_idxs[i] ];
 				glNormal3f(n.x, n.y, n.z);
 			}
 
-			const vec3& v = vertices[vrtx_idx];
+			const glm::vec3& v = vertices[vrtx_idx];
 			glVertex3f(v.x, v.y, v.z);
 		}
 		glEnd();
@@ -219,57 +232,67 @@ uint rendered_model::compile() {
 }
 
 void rendered_model::make_buffers() {
-	#if defined(DEBUG)
-	cout << "rendered_model::make_buffers" << endl;
-	cout << "    generate array buffer" << endl;
-	#endif
+	vector<glm::vec3> data(2*triangles.size());
+	vector<unsigned int> indices(triangles.size());
 
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	#if defined(DEBUG)
-	cout << "        with index: " << VBO << endl;
-	#endif
-
-	vector<vec3> sorted_vertices(triangles.size());
-	vector<unsigned int> sorted_indices(triangles.size());
 	for (size_t t = 0; t < triangles.size(); t += 3) {
-		sorted_vertices[t    ] = vertices[ triangles[t    ] ];
-		sorted_vertices[t + 1] = vertices[ triangles[t + 1] ];
-		sorted_vertices[t + 2] = vertices[ triangles[t + 2] ];
+		data[2*t    ] = vertices[ triangles[t    ] ];
+		data[2*t + 1] = vertices[ triangles[t + 1] ];
+		data[2*t + 2] = vertices[ triangles[t + 2] ];
 
-		sorted_indices[t    ] = t;
-		sorted_indices[t + 1] = t + 1;
-		sorted_indices[t + 2] = t + 2;
+		data[2*t + 3] = glm::normalize(normals[ normal_idxs[t    ] ]);
+		data[2*t + 4] = glm::normalize(normals[ normal_idxs[t + 1] ]);
+		data[2*t + 5] = glm::normalize(normals[ normal_idxs[t + 2] ]);
+
+		indices[t    ] = t;
+		indices[t + 1] = t + 1;
+		indices[t + 2] = t + 2;
 	}
 
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	// ---------------------
+	// VBO bind
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
 	glBufferData(GL_ARRAY_BUFFER,
-				 3*sizeof(float)*sorted_vertices.size(), &sorted_vertices[0],
+				 sizeof(float)*data.size(), &data[0],
 				 GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
+	// bind VAO
+	glBindVertexArray(VAO);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), &data[0]);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), &data[0] + 3);
+	glEnableVertexAttribArray(1);
+	// VBO release
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// ---------------------
 
-	#if defined(DEBUG)
-	cout << "    generate element array buffer" << endl;
-	#endif
-
+	// ---------------------
+	// EBO bind
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-				 sizeof(unsigned int)*sorted_indices.size(), &sorted_indices[0],
+				 sizeof(unsigned int)*indices.size(), &indices[0],
 				 GL_STATIC_DRAW);
+	// EBO release
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	// ---------------------
 
-	#if defined(DEBUG)
-	cout << "        with index: " << EBO << endl;
-	#endif
+	// VAO release
+	glBindVertexArray(0);
 }
 
 void rendered_model::render() const {
 	if (uses_buffers()) {
 		cout << "Using buffers..." << endl;
+		glBindVertexArray(VAO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glDrawElements(GL_TRIANGLES, triangles.size(), GL_UNSIGNED_INT, nullptr);
+		glBindVertexArray(0);
 	}
 	else if (uses_lists()) {
 		cout << "Using lists..." << endl;

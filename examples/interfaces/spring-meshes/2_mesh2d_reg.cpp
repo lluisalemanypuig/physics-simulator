@@ -7,6 +7,9 @@
 #include <iostream>
 using namespace std;
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // base includes
 #include <base/geometry/rsphere.hpp>
 #include <base/model/rendered_model.hpp>
@@ -22,7 +25,6 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace meshes;
-using namespace math;
 using namespace geom;
 
 // custom includes
@@ -39,7 +41,7 @@ namespace study_cases {
 		SR.set_spring_width(1.5f);
 
 		SR.get_simulator().set_solver(solver_type::EulerSemi);
-		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 		float length = 10.0f;
 		float height = 10.0f;
@@ -66,12 +68,12 @@ namespace study_cases {
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ]->cur_pos =
-						vec3((length/n)*i, (height/m)*j, 0.0f);
+					math::vec3((length/n)*i, (height/m)*j, 0.0f);
 			}
 		}
 		SR.get_simulator().add_mesh(M);
 
-		SR.get_box().set_min_max(vec3(-5,-5,-5), vec3(15,15,5));
+		SR.get_box().set_min_max(glm::vec3(-5,-5,-5), glm::vec3(15,15,5));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
@@ -125,11 +127,11 @@ namespace study_cases {
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();
 
-		vec3 VRP = SR.get_VRP();
+		glm::vec3 VRP = SR.get_VRP();
 		float theta = SR.get_theta();
 		float psi = SR.get_psi();
 
-		vec3 viewer_pos = SR.get_viewer_pos();
+		glm::vec3 viewer_pos = SR.get_viewer_pos();
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 

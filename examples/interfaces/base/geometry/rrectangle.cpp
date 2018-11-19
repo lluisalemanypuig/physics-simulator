@@ -1,5 +1,6 @@
 #include <base/geometry/rrectangle.hpp>
 
+// base includes
 #include <base/include_gl.hpp>
 
 rrectangle::rrectangle() : rgeom() {
@@ -10,17 +11,17 @@ rrectangle::~rrectangle() {}
 // SETTERS
 
 void rrectangle::set_points
-(const vec3& p1, const vec3& p2, const vec3& p3, const vec3& p4)
+(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec3& p4)
 {
 	_p1 = p1; _p2 = p2; _p3 = p3; _p4 = p4;
 }
 
 // GETTERS
 
-const vec3& rrectangle::p1() const { return _p1; }
-const vec3& rrectangle::p2() const { return _p2; }
-const vec3& rrectangle::p3() const { return _p3; }
-const vec3& rrectangle::p4() const { return _p4; }
+const glm::vec3& rrectangle::p1() const { return _p1; }
+const glm::vec3& rrectangle::p2() const { return _p2; }
+const glm::vec3& rrectangle::p3() const { return _p3; }
+const glm::vec3& rrectangle::p4() const { return _p4; }
 
 // OTHERS
 

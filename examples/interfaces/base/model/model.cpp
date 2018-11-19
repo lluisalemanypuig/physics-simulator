@@ -7,21 +7,24 @@
 #include <iostream>
 using namespace std;
 
+// glm includes
+#include <glm/glm.hpp>
+
 // PRIVATE
 
 // PROTECTED
 
-vec3 model::triangle_normal(int t) const {
+glm::vec3 model::triangle_normal(int t) const {
 	assert(t != -1);
 
 	int T = 3*t;
-	const vec3& v1 = vertices[triangles[T    ]];
-	const vec3& v2 = vertices[triangles[T + 1]];
-	const vec3& v3 = vertices[triangles[T + 2]];
+	const glm::vec3& v1 = vertices[triangles[T    ]];
+	const glm::vec3& v2 = vertices[triangles[T + 1]];
+	const glm::vec3& v3 = vertices[triangles[T + 2]];
 
-	vec3 u = v2 - v1;
-	vec3 v = v3 - v1;
-	vec3 w = physim::math::normalise(physim::math::cross(u,v));
+	glm::vec3 u = v2 - v1;
+	glm::vec3 v = v3 - v1;
+	glm::vec3 w = glm::normalize(glm::cross(u,v));
 
 	return w;
 }
@@ -50,11 +53,11 @@ void model::set_name(const string& name) {
 	mesh_name = name;
 }
 
-void model::set_vertices(const vector<vec3>& verts) {
+void model::set_vertices(const vector<glm::vec3>& verts) {
 	vertices = verts;
 }
 
-void model::set_normals(const vector<vec3>& nrmls) {
+void model::set_normals(const vector<glm::vec3>& nrmls) {
 	normals = nrmls;
 }
 
@@ -115,14 +118,14 @@ mesh_state model::state(const mesh_state& ignore) const {
 	return mesh_state::correct;
 }
 
-const std::vector<vec3>& model::get_vertices() const {
+const std::vector<glm::vec3>& model::get_vertices() const {
 	return vertices;
 }
 
 void model::make_box(box& b) const {
-	vec3 min = vertices[0];
-	vec3 max = vertices[0];
-	for (const vec3& v : vertices) {
+	glm::vec3 min = vertices[0];
+	glm::vec3 max = vertices[0];
+	for (const glm::vec3& v : vertices) {
 		min.x = std::min(min.x, v.x);
 		min.y = std::min(min.y, v.y);
 		min.z = std::min(min.z, v.z);
@@ -140,7 +143,7 @@ void model::make_normals_flat() {
 	normal_idxs.clear();
 
 	for (size_t t = 0; t < triangles.size(); t += 3) {
-		vec3 n = triangle_normal(t/3);
+		glm::vec3 n = triangle_normal(t/3);
 
 		int idx = normals.size();
 		normals.push_back(n);
@@ -171,13 +174,13 @@ void model::make_normals_smooth() {
 
 	// Firstly, compute the smoothed normals for each vertex,
 	// and store them in a separate vector.
-	vector<vec3> smoothed_normals(vertices.size());
+	vector<glm::vec3> smoothed_normals(vertices.size());
 
 	// compute normals for the vertices that make
 	// up the faces marked with 'smooth = true'
 	for (size_t v = 0; v < vertices.size(); ++v) {
-		smoothed_normals[v] = vec3(0.0f,0.0f,0.0f);
-		vec3& normal = smoothed_normals[v];
+		smoothed_normals[v] = glm::vec3(0.0f,0.0f,0.0f);
+		glm::vec3& normal = smoothed_normals[v];
 
 		// add to 'normal' the normal of those triangles
 		// that share vertex V.
@@ -194,7 +197,7 @@ void model::make_normals_smooth() {
 		// average the normal
 		normal /= tris_per_vertex[v].size();
 		// normalise the normal
-		normal = physim::math::normalise(normal);
+		normal = glm::normalize(normal);
 
 		// since 'normal' is a reference to a value of
 		// 'smoothed_normals' we do not need to
@@ -211,14 +214,14 @@ void model::make_normals_smooth() {
 }
 
 void model::scale_to_unit() {
-	vec3 center(0.0f, 0.0f, 0.0f);
-	vec3 m(1e10, 1e10, 1e10);
-	vec3 M(-1e10, -1e10, -1e10);
+	glm::vec3 center(0.0f, 0.0f, 0.0f);
+	glm::vec3 m(1e10, 1e10, 1e10);
+	glm::vec3 M(-1e10, -1e10, -1e10);
 
 	for (size_t i = 0; i < vertices.size(); ++i) {
 		center += vertices[i];
-		m = physim::math::min(m, vertices[i]);
-		M = physim::math::max(M, vertices[i]);
+		m = glm::min(m, vertices[i]);
+		M = glm::max(M, vertices[i]);
 	}
 	center /= vertices.size();
 

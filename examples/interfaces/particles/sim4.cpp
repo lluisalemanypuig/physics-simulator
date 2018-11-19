@@ -3,6 +3,9 @@
 // C includes
 #include <assert.h>
 
+// glm includes
+#include <glm/glm.hpp>
+
 // base includes
 #include <base/geometry/rrectangle.hpp>
 #include <base/geometry/rtriangle.hpp>
@@ -19,50 +22,52 @@
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
-using namespace math;
 using namespace init;
 using namespace geom;
+
+// custom includes
+#include "conversion_helper.hpp"
 
 // PRIVATE
 
 void MainWindow::make_sim3(SimulationRenderer *sr) {
 
-	vec3 A(-3.0f, 0.0f,-3.0f);
-	vec3 D(-5.0f,-0.5f,-5.0f);
-	vec3 E(-5.0f,-0.5f, 5.0f);
-	vec3 F( 5.0f,-0.5f,-5.0f);
-	vec3 G( 5.0f,-0.5f, 5.0f);
-	vec3 H(-5.0f, 5.0f,-5.0f);
-	vec3 I(-5.0f, 5.0f, 5.0f);
-	vec3 J( 5.0f, 5.0f,-5.0f);
-	vec3 K( 5.0f, 5.0f, 5.0f);
-	vec3 L( 3.0f, 5.0f, 3.0f);
-	vec3 M( 0.0f, 2.0f, 0.0f);
-	//vec3 N( 0.0f, 3.0f, 0.0f);
-	vec3 O( 0.5f, 3.0f,-1.0f);
-	vec3 P(-1.0f, 3.0f, 0.5f);
-	vec3 S(-1.5f, 5.0f,-1.5f);
+	glm::vec3 A(-3.0f, 0.0f,-3.0f);
+	glm::vec3 D(-5.0f,-0.5f,-5.0f);
+	glm::vec3 E(-5.0f,-0.5f, 5.0f);
+	glm::vec3 F( 5.0f,-0.5f,-5.0f);
+	glm::vec3 G( 5.0f,-0.5f, 5.0f);
+	glm::vec3 H(-5.0f, 5.0f,-5.0f);
+	glm::vec3 I(-5.0f, 5.0f, 5.0f);
+	glm::vec3 J( 5.0f, 5.0f,-5.0f);
+	glm::vec3 K( 5.0f, 5.0f, 5.0f);
+	glm::vec3 L( 3.0f, 5.0f, 3.0f);
+	glm::vec3 M( 0.0f, 2.0f, 0.0f);
+	//glm::vec3 N( 0.0f, 3.0f, 0.0f);
+	glm::vec3 O( 0.5f, 3.0f,-1.0f);
+	glm::vec3 P(-1.0f, 3.0f, 0.5f);
+	glm::vec3 S(-1.5f, 5.0f,-1.5f);
 
-	vec3 scene_top_center = (H + I + J + K)/4.0f;
+	glm::vec3 scene_top_center = (H + I + J + K)/4.0f;
 
-	vec3 dir1 = normalise(scene_top_center - H);
-	vec3 dir2 = normalise(scene_top_center - I);
-	vec3 dir3 = normalise(scene_top_center - J);
-	vec3 dir4 = normalise(scene_top_center - K);
+	glm::vec3 dir1 = glm::normalize(scene_top_center - H);
+	glm::vec3 dir2 = glm::normalize(scene_top_center - I);
+	glm::vec3 dir3 = glm::normalize(scene_top_center - J);
+	glm::vec3 dir4 = glm::normalize(scene_top_center - K);
 
-	vec3 source1 = H + dir1*0.25f;
-	vec3 source2 = I + dir2*0.25f;
-	vec3 source3 = J + dir3*0.25f;
-	vec3 source4 = K + dir4*0.25f;
+	glm::vec3 source1 = H + dir1*0.25f;
+	glm::vec3 source2 = I + dir2*0.25f;
+	glm::vec3 source3 = J + dir3*0.25f;
+	glm::vec3 source4 = K + dir4*0.25f;
 
 	multisource<hose> ms;
 	ms.allocate(16000, 4);
 
 	std::vector<hose>& hoses = ms.get_sources();
-	hoses[0].set_hose_source(source1, dir1, 1.0f, 16.0f);
-	hoses[1].set_hose_source(source2, dir2, 8.0f, 12.0f);
-	hoses[2].set_hose_source(source3, dir3, 12.0f, 8.0f);
-	hoses[3].set_hose_source(source4, dir4, 16.0f, 1.0f);
+	hoses[0].set_hose_source(to_physim(source1), to_physim(dir1), 1.0f, 16.0f);
+	hoses[1].set_hose_source(to_physim(source2), to_physim(dir2), 8.0f, 12.0f);
+	hoses[2].set_hose_source(to_physim(source3), to_physim(dir3), 12.0f, 8.0f);
+	hoses[3].set_hose_source(to_physim(source4), to_physim(dir4), 16.0f, 1.0f);
 
 	ms.make_position_init();
 	ms.use_position_init();
@@ -118,14 +123,14 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	sr->add_rgeom(ball2);
 	sr->add_rgeom(ramp);
 
-	plane *floor_pl = new plane(vec3( 0.0f,1.0f, 0.0f), floor->p1());
-	plane *wall1_pl = new plane(vec3( 0.0f,0.0f,-1.0f), wall1->p1());
-	plane *wall2_pl = new plane(vec3(-1.0f,0.0f, 0.0f), wall2->p1());
-	plane *wall3_pl = new plane(vec3( 0.0f,0.0f, 1.0f), wall3->p1());
-	plane *wall4_pl = new plane(vec3( 1.0f,0.0f, 0.0f), wall4->p1());
-	sphere *ball1_pl = new sphere(ball1->center(), ball1->radius());
-	sphere *ball2_pl = new sphere(ball2->center(), ball2->radius());
-	triangle *tri_ramp = new triangle(S,O,P);
+	plane *floor_pl = new plane(math::vec3( 0.0f,1.0f, 0.0f), to_physim(floor->p1()));
+	plane *wall1_pl = new plane(math::vec3( 0.0f,0.0f,-1.0f), to_physim(wall1->p1()));
+	plane *wall2_pl = new plane(math::vec3(-1.0f,0.0f, 0.0f), to_physim(wall2->p1()));
+	plane *wall3_pl = new plane(math::vec3( 0.0f,0.0f, 1.0f), to_physim(wall3->p1()));
+	plane *wall4_pl = new plane(math::vec3( 1.0f,0.0f, 0.0f), to_physim(wall4->p1()));
+	sphere *ball1_pl = new sphere(to_physim(ball1->center()), ball1->radius());
+	sphere *ball2_pl = new sphere(to_physim(ball2->center()), ball2->radius());
+	triangle *tri_ramp = new triangle(to_physim(S),to_physim(O),to_physim(P));
 
 	sr->get_simulator().add_geometry(floor_pl);
 	sr->get_simulator().add_geometry(wall1_pl);
@@ -136,7 +141,7 @@ void MainWindow::make_sim3(SimulationRenderer *sr) {
 	sr->get_simulator().add_geometry(ball2_pl);
 	sr->get_simulator().add_geometry(tri_ramp);
 
-	sr->get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+	sr->get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 	sr->add_particles(16000);
 }

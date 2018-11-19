@@ -7,33 +7,36 @@
 #include <limits>
 #include <cmath>
 
+// glm includes
+#include <glm/glm.hpp>
+
 // base includes
 #include <base/include_gl.hpp>
 
 // PRIVATE
 
 static inline
-void draw_edge(const vec3& a, const vec3& b) {
+void draw_edge(const glm::vec3& a, const glm::vec3& b) {
 	glBegin(GL_LINES);
 		glVertex3f(a.x, a.y, a.z);
 		glVertex3f(b.x, b.y, b.z);
 	glEnd();
 }
 
-vec3 box::make_vi(int i) const {
+glm::vec3 box::make_vi(int i) const {
 	switch (i) {
-		case 0: return vec3(min.x, min.y, max.z);
-		case 1: return vec3(max.x, min.y, max.z);
-		case 2: return vec3(max.x, min.y, min.z);
-		case 3: return vec3(min.x, min.y, min.z);
-		case 4: return vec3(min.x, max.y, max.z);
-		case 5: return vec3(max.x, max.y, max.z);
-		case 6: return vec3(max.x, max.y, min.z);
-		case 7: return vec3(min.x, max.y, min.z);
+		case 0: return glm::vec3(min.x, min.y, max.z);
+		case 1: return glm::vec3(max.x, min.y, max.z);
+		case 2: return glm::vec3(max.x, min.y, min.z);
+		case 3: return glm::vec3(min.x, min.y, min.z);
+		case 4: return glm::vec3(min.x, max.y, max.z);
+		case 5: return glm::vec3(max.x, max.y, max.z);
+		case 6: return glm::vec3(max.x, max.y, min.z);
+		case 7: return glm::vec3(min.x, max.y, min.z);
 	}
 
 	assert(i < 8);
-	return vec3(0.0f,0.0f,0.0f);
+	return glm::vec3(0.0f,0.0f,0.0f);
 }
 
 void box::update_vi() {
@@ -48,53 +51,53 @@ box::box() {
 	float M = std::numeric_limits<float>::max();
 	float m = -M;
 
-	min = vec3(M,M,M);
-	max = vec3(m,m,m);
+	min = glm::vec3(M,M,M);
+	max = glm::vec3(m,m,m);
 	update_vi();
 }
 box::~box() {}
 
-void box::set_min_max(const vec3& m, const vec3& M) {
+void box::set_min_max(const glm::vec3& m, const glm::vec3& M) {
 	min = m;
 	max = M;
 	update_vi();
 }
 
-void box::enlarge_box(const vec3& v) {
-	min = physim::math::min(min, v);
-	max = physim::math::max(max, v);
+void box::enlarge_box(const glm::vec3& v) {
+	min = glm::min(min, v);
+	max = glm::max(max, v);
 	update_vi();
 }
 
 void box::enlarge_box(const box& b) {
-	min = physim::math::min(min, b.min);
-	max = physim::math::max(max, b.max);
+	min = glm::min(min, b.min);
+	max = glm::max(max, b.max);
 	update_vi();
 }
 
-void box::translate_box(const vec3& t) {
+void box::translate_box(const glm::vec3& t) {
 	min += t;
 	max += t;
 	update_vi();
 }
 
-vec3 box::get_min() const { return min; }
-vec3 box::get_max() const { return max; }
+glm::vec3 box::get_min() const { return min; }
+glm::vec3 box::get_max() const { return max; }
 
-float box::length_x() const {return abs(max.x - min.x);}
-float box::length_y() const {return abs(max.y - min.y);}
-float box::length_z() const {return abs(max.z - min.z);}
+float box::length_x() const {return std::abs(max.x - min.x);}
+float box::length_y() const {return std::abs(max.y - min.y);}
+float box::length_z() const {return std::abs(max.z - min.z);}
 
 // punt mig de la capsa
-vec3 box::get_middle_point() const {
-	return vec3((min.x + max.x)/2.0f,
+glm::vec3 box::get_middle_point() const {
+	return glm::vec3((min.x + max.x)/2.0f,
 				(min.y + max.y)/2.0f,
 				(min.z + max.z)/2.0f);
 }
 
 // punt mig del pla inferior
-vec3 box::get_middle_bottom_point() const {
-	return vec3((min.x + max.x)/2.0f,
+glm::vec3 box::get_middle_bottom_point() const {
+	return glm::vec3((min.x + max.x)/2.0f,
 				 min.y,
 				(min.z + max.z)/2.0f);
 }
@@ -102,14 +105,14 @@ vec3 box::get_middle_bottom_point() const {
 // punt mig del pla frontal
 // una vegada rotada la capsa respecte l'eix vertical, no s'assegura
 // que el punt frontal sigui el que es correspon amb la "part del davant" de la capsa
-vec3 box::get_middle_front_point() const {
-	return vec3((min.x + max.x)/2.0f,
+glm::vec3 box::get_middle_front_point() const {
+	return glm::vec3((min.x + max.x)/2.0f,
 				(min.y + max.y)/2.0f,
 				 max.z);
 }
 
 float box::get_diag_length() const {
-	return physim::math::dist(min, max);
+	return glm::distance(min, max);
 }
 
 float box::get_half_diag_length() const {

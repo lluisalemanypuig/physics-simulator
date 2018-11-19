@@ -3,13 +3,10 @@
 // C++ includes
 #include <vector>
 
-// physim includes
-#include <physim/math/vec2.hpp>
-#include <physim/math/vec3.hpp>
-#include <physim/math/vec4.hpp>
-typedef physim::math::vec2 vec2;
-typedef physim::math::vec3 vec3;
-typedef physim::math::vec4 vec4;
+// glm includes
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 // base includes
 #include <base/box.hpp>
@@ -25,9 +22,9 @@ class model {
 
 		// mesh data
 		/// Vertices of the mesh.
-		std::vector<vec3> vertices;
+		std::vector<glm::vec3> vertices;
 		/// Normals of the mesh.
-		std::vector<vec3> normals;
+		std::vector<glm::vec3> normals;
 		/**
 		 * @brief Vertices indices of each face.
 		 *
@@ -43,7 +40,7 @@ class model {
 
 	protected:
 		/// Computes the normal of the plane containing triangle @e f.
-		vec3 triangle_normal(int F) const;
+		glm::vec3 triangle_normal(int F) const;
 
 	public:
 		/// Default constructor.
@@ -58,9 +55,9 @@ class model {
 		/// Sets the name of the mesh.
 		void set_name(const std::string& name);
 		/// Sets the vertices of the mesh.
-		void set_vertices(const std::vector<vec3>& verts);
+		void set_vertices(const std::vector<glm::vec3>& verts);
 		/// Sets the normals of the mesh.
-		void set_normals(const std::vector<vec3>& nrmls);
+		void set_normals(const std::vector<glm::vec3>& nrmls);
 		/// Sets the triangles of the mesh.
 		void set_triangles(const std::vector<int>& tris);
 		/// Sets the normals of the mesh.
@@ -76,7 +73,7 @@ class model {
 		mesh_state state(const mesh_state& ignore = mesh_state::correct) const;
 
 		/// Returns a constant reference to this model's vertices.
-		const std::vector<vec3>& get_vertices() const;
+		const std::vector<glm::vec3>& get_vertices() const;
 
 		/**
 		 * @brief Make the bounding box of the model @e m.

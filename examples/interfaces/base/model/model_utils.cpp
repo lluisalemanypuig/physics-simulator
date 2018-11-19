@@ -5,9 +5,9 @@ material::material
 	const std::string& _id,
 	const std::string& _txt_name,
 	unsigned int _txt_id,
-	const vec3& amb,
-	const vec3& dif,
-	const vec3& spec,
+	const glm::vec3& amb,
+	const glm::vec3& dif,
+	const glm::vec3& spec,
 	float ns, float ni,float D,
 	int ill
 )
@@ -20,9 +20,9 @@ material::material
 	Ni = ni;
 	d =  D;
 	illum = ill;
-	Ka = vec4(amb.x, amb.y, amb.z, D);
-	Kd = vec4(dif.x, dif.y, dif.z, D);
-	Ks = vec4(spec.x, spec.y, spec.z, D);
+	Ka = glm::vec4(amb.x, amb.y, amb.z, D);
+	Kd = glm::vec4(dif.x, dif.y, dif.z, D);
+	Ks = glm::vec4(spec.x, spec.y, spec.z, D);
 }
 
 material::material(const material& m) {

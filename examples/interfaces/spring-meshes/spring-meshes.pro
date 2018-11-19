@@ -12,7 +12,8 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 HEADERS += \
     study_cases.hpp \
     glut_functions.hpp \
-    utils.hpp
+    utils.hpp \
+    conversion_helper.hpp
 
 SOURCES += main.cpp \
     glut_functions.cpp \

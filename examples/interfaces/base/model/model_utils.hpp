@@ -3,11 +3,9 @@
 // C++ includes
 #include <string>
 
-// physim includes
-#include <physim/math/vec3.hpp>
-#include <physim/math/vec4.hpp>
-typedef physim::math::vec3 vec3;
-typedef physim::math::vec4 vec4;
+// glm includes
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 #define NULL_TEXTURE_NAME "material-without-texture"
 
@@ -30,11 +28,11 @@ struct material {
 	/// Transparency.
 	float d;
 	/// Ambient colour, with transparency.
-	vec4 Ka;
+	glm::vec4 Ka;
 	/// Diffuse colour, with transparency.
-	vec4 Kd;
+	glm::vec4 Kd;
 	/// Specular colour, with transparency.
-	vec4 Ks;
+	glm::vec4 Ks;
 
 	/**
 	 * @brief Constructor.
@@ -53,9 +51,9 @@ struct material {
 		const std::string& _id,
 		const std::string& _txt_name,
 		unsigned int _txt_id,
-		const vec3& amb,
-		const vec3& dif,
-		const vec3& spec,
+		const glm::vec3& amb,
+		const glm::vec3& dif,
+		const glm::vec3& spec,
 		float ns, float ni,float D,
 		int ill
 	);

@@ -1,5 +1,6 @@
 #include <base/geometry/rtriangle.hpp>
 
+// base includes
 #include <base/include_gl.hpp>
 
 rtriangle::rtriangle() : rgeom() {
@@ -9,7 +10,9 @@ rtriangle::~rtriangle() {}
 
 // SETTERS
 
-void rtriangle::set_points(const vec3& p1, const vec3& p2, const vec3& p3) {
+void rtriangle::set_points
+(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
+{
 	_p1 = p1;
 	_p2 = p2;
 	_p3 = p3;
@@ -17,9 +20,9 @@ void rtriangle::set_points(const vec3& p1, const vec3& p2, const vec3& p3) {
 
 // MODIFIERS
 
-const vec3& rtriangle::p1() const { return _p1; }
-const vec3& rtriangle::p2() const { return _p2; }
-const vec3& rtriangle::p3() const { return _p3; }
+const glm::vec3& rtriangle::p1() const { return _p1; }
+const glm::vec3& rtriangle::p2() const { return _p2; }
+const glm::vec3& rtriangle::p3() const { return _p3; }
 
 // OTHERS
 

@@ -3,16 +3,15 @@
 // C++ inlcudes
 #include <vector>
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // base includes
 #include <base/model/rendered_model.hpp>
 #include <base/cameras/perspective.hpp>
 #include <base/cameras/orthogonal.hpp>
 #include <base/shader.hpp>
 #include <base/box.hpp>
-
-// physim includes
-#include <physim/math/vec3.hpp>
-typedef physim::math::vec3 vec3;
 
 /**
  * @brief Class used for rendering and navigating
@@ -33,7 +32,7 @@ class renderer {
 		// Used only when flying.
 
 		/// Position of the camera.
-		vec3 cam_pos;
+		glm::vec3 cam_pos;
 		/// Camera pitch.
 		float pitch;
 		/// Camera yaw.
@@ -44,7 +43,7 @@ class renderer {
 		/// Bounding box's diagonal length.
 		float diag_length;
 		/// View Reference Point.
-		vec3 VRP;
+		glm::vec3 VRP;
 		/// Rotation angle theta.
 		float theta;
 		/// Rotation angle psi.
@@ -158,15 +157,18 @@ class renderer {
 		void set_perspective(const perspective& p);
 		void set_orthogonal(const orthogonal& o);
 
-		void set_VRP(const vec3& VRP);
+		void set_VRP(const glm::vec3& VRP);
 		void set_theta(float t);
 		void set_psi(float p);
 
-		void set_viewer_pos(const vec3& pos);
+		void set_viewer_pos(const glm::vec3& pos);
 		void set_yaw(float y);
 		void set_pitch(float p);
 
 		// GETTERS
+
+		shader& get_shader();
+		const shader& get_shader() const;
 
 		/// Returns a reference to the perspective camera.
 		perspective& get_perspective_camera();
@@ -175,13 +177,13 @@ class renderer {
 		orthogonal& get_orthogonal_camera();
 
 		/// Returns the position of the viewer.
-		const vec3& get_viewer_pos() const;
+		const glm::vec3& get_viewer_pos() const;
 		/// Returns the yaw of the camera.
 		float get_yaw() const;
 		/// Returns the pitch of the camera.
 		float get_pitch() const;
 
-		const vec3& get_VRP() const;
+		const glm::vec3& get_VRP() const;
 		float get_theta() const;
 		float get_psi() const;
 
@@ -206,18 +208,20 @@ class renderer {
 		 * @brief Makes the corresponding calls to render the
 		 * scene using the internal camera.
 		 *
-		 * Calls either gluPerspective, or glOrtho.
+		 * If no shader is to be used, calls either gluPerspective, or glOrtho.
+		 * If the renderer shaqer is used then sets the corresponding
+		 * uniform values.
 		 */
-		void apply_view_mode() const;
+		void apply_projection(bool use_shader) const;
 
 		/**
 		 * @brief Move the scene according to the internal state.
 		 *
 		 * Either inspecting or flying.
 		 */
-		void apply_camera() const;
+		void apply_modelview(bool use_shader) const;
 
 		/// Renders the models
-		void render_models() const;
+		void render_models(bool use_shader) const;
 };
 

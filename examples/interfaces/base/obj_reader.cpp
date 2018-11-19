@@ -11,6 +11,11 @@
 #include <cmath>
 using namespace std;
 
+// glm includes
+#include <glm/glm.hpp>
+
+// PUBLIC
+
 OBJ_reader::OBJ_reader() { }
 
 void OBJ_reader::clean() {
@@ -79,7 +84,7 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 
 	string mat_name, txt_name;
 	bool valid_material = false;
-	vec3 amb, dif, spec;
+	glm::vec3 amb, dif, spec;
 	float Ns, Ni, d;
 	int illum;
 	unsigned int txt_id;
@@ -109,7 +114,12 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 				// first, the contents of the variables do not
 				// contain a valid material, so this if is
 				// skipped in the first iteration it is found.
-				materials.push_back(material(mat_name, txt_name, txt_id, amb, dif, spec, Ns, Ni, d, illum));
+				materials.push_back(
+					material(
+						mat_name, txt_name, txt_id,
+						amb, dif, spec, Ns, Ni, d, illum
+					)
+				);
 			}
 			valid_material = true;
 			txt_name = NULL_TEXTURE_NAME;
@@ -143,11 +153,13 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 			txt_name = directory + "/" + txt_name;
 		}
 		else {
-			cerr << "Tag '" << tag << "' not recognised" << endl;
+			cerr << "    Tag '" << tag << "' not recognised" << endl;
 		}
 	}
 	// load last batch of data read
-	materials.push_back(material(mat_name, txt_name, txt_id, amb, dif, spec, Ns, Ni, d, illum));
+	materials.push_back(
+		material(mat_name, txt_name, txt_id, amb, dif, spec, Ns, Ni, d, illum)
+	);
 
 	return true;
 }
@@ -176,17 +188,17 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 			if (file_lines[i][1] == ' ') {
 				// vertex coordinate
 				sscanf(file_lines[i].c_str(), "v %f %f %f", &x, &y, &z);
-				vertices.push_back(vec3(x, y, z));
+				vertices.push_back(glm::vec3(x, y, z));
 			}
 			else if (file_lines[i][1] == 'n') {
 				// vertex normal vector
 				sscanf(file_lines[i].c_str(), "vn %f %f %f", &x, &y, &z);
-				normals.push_back(physim::math::normalise(vec3(x, y, z)));
+				normals.push_back(glm::normalize(glm::vec3(x, y, z)));
 			}
 			else if (file_lines[i][1] == 't') {
 				// vertex texture coordinate
 				sscanf(file_lines[i].c_str(), "vt %f %f", &u, &v);
-				textures_coords.push_back(vec2(u, v));
+				textures_coords.push_back(glm::vec2(u, v));
 			}
 		}
 		else if (file_lines[i][0] == 'u' and file_lines[i][1] == 's' and file_lines[i][2] == 'e') {
@@ -213,9 +225,9 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 				}
 				else if (file_lines[i].find("/") != string::npos) {
 					sscanf(
-						file_lines[i].c_str(),
-						"f %d/%d/%d %d/%d/%d %d/%d/%d",
-						&VN[0],&TC[0],&NI[0], &VN[1],&TC[1],&NI[1], &VN[2],&TC[2],&NI[2]
+						file_lines[i].c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
+						&VN[0],&TC[0],&NI[0], &VN[1],&TC[1],&NI[1],
+						&VN[2],&TC[2],&NI[2]
 					);
 				}
 				else {
@@ -250,7 +262,10 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 					);
 				}
 				else {
-					sscanf(file_lines[i].c_str(),"f %d %d %d %d",&VN[0],&VN[1],&VN[2],&VN[3]);
+					sscanf(
+						file_lines[i].c_str(),"f %d %d %d %d",
+						&VN[0],&VN[1],&VN[2],&VN[3]
+					);
 				}
 
 				//faces.push_back(face(NI,VN,TC,current_material,true,smooth_face));

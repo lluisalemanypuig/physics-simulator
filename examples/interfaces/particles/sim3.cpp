@@ -1,5 +1,8 @@
 #include "mainwindow.hpp"
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // base includes
 #include <base/geometry/rrectangle.hpp>
 #include <base/geometry/rtriangle.hpp>
@@ -16,9 +19,11 @@
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace particles;
-using namespace math;
 using namespace init;
 using namespace geom;
+
+// custom includes
+#include "conversion_helper.hpp"
 
 // PRIVATE
 
@@ -39,12 +44,12 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 			else if (idx == 6)	{ iz =  0.50f; }
 			else if (idx == 7)	{ iz =  0.75f; }
 			else if (idx == 8)	{ iz =  1.00f; }
-			p->cur_pos = vec3(-2.0f,4.5f,iz);
+			p->cur_pos = math::vec3(-2.0f,4.5f,iz);
 		}
 	);
 	i.set_vel_initialiser(
 		[](free_particle *p) {
-			p->cur_vel = vec3(0.0f,0.0f,0.0f);
+			p->cur_vel = math::vec3(0.0f,0.0f,0.0f);
 		}
 	);
 
@@ -53,12 +58,12 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 
 	rplane *floor = new rplane();
 	floor->set_points(
-		vec3(-5.0f, -0.05f, -5.0f), vec3(-5.0f, -0.05f,  5.0f),
-		vec3( 5.0f, -0.05f,  5.0f), vec3( 5.0f, -0.05f, -5.0f)
+		glm::vec3(-5.0f, -0.05f, -5.0f), glm::vec3(-5.0f, -0.05f,  5.0f),
+		glm::vec3( 5.0f, -0.05f,  5.0f), glm::vec3( 5.0f, -0.05f, -5.0f)
 	);
 
 	rsphere *ball = new rsphere();
-	ball->set_center(vec3(0.0f,2.0f,0.0f));
+	ball->set_center(glm::vec3(0.0f,2.0f,0.0f));
 	ball->set_radius(1.0f);
 
 	sim_ball->compile();
@@ -66,8 +71,8 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 
 	rrectangle *ramp = new rrectangle();
 	ramp->set_points(
-		vec3( 0.0f, 2.0f,  1.0f), vec3( 0.0f, 2.0f, -1.0f),
-		vec3(-3.0f, 5.0f, -1.0f), vec3(-3.0f, 5.0f,  1.0f)
+		glm::vec3( 0.0f, 2.0f,  1.0f), glm::vec3( 0.0f, 2.0f, -1.0f),
+		glm::vec3(-3.0f, 5.0f, -1.0f), glm::vec3(-3.0f, 5.0f,  1.0f)
 	);
 	ramp->set_color(0.0f,0.3f,0.0f,1.0f);
 
@@ -76,17 +81,20 @@ void MainWindow::make_sim2(SimulationRenderer *sr) {
 	sr->add_rgeom(ramp);
 
 	plane *pl = new plane(
-		vec3(0.0f,1.0f,0.0f),
-		vec3(0.0f,0.0f,0.0f)
+		math::vec3(0.0f,1.0f,0.0f),
+		math::vec3(0.0f,0.0f,0.0f)
 	);
-	sphere *s = new sphere(ball->center(), 1.0f);
-	rectangle *rl = new rectangle(ramp->p1(),ramp->p2(),ramp->p3(),ramp->p4());
+	sphere *s = new sphere(to_physim(ball->center()), 1.0f);
+	rectangle *rl = new rectangle(
+		to_physim(ramp->p1()), to_physim(ramp->p2()),
+		to_physim(ramp->p3()), to_physim(ramp->p3())
+	);
 
 	sr->get_simulator().add_geometry(pl);
 	sr->get_simulator().add_geometry(s);
 	sr->get_simulator().add_geometry(rl);
 
-	sr->get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+	sr->get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 	sr->add_particles(9);
 }

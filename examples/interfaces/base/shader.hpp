@@ -6,11 +6,11 @@
 // base includes
 #include <base/include_gl.hpp>
 
-// physim includes
-#include <physim/math/vec2.hpp>
-#include <physim/math/vec3.hpp>
-typedef physim::math::vec2 vec2;
-typedef physim::math::vec3 vec3;
+// glm includes
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat3x3.hpp>
+#include <glm/mat4x4.hpp>
 
 class shader {
 	private:
@@ -49,9 +49,13 @@ class shader {
 		/// Sets a floating-point value to the specified uniform.
 		void set_float(const std::string& name, float value) const;
 		/// Sets a vec2 value to the specified uniform.
-		void set_vec2(const std::string& name, const vec2& v) const;
+		void set_vec2(const std::string& name, const glm::vec2& v) const;
 		/// Sets a vec3 value to the specified uniform.
-		void set_vec3(const std::string& name, const vec3& v) const;
+		void set_vec3(const std::string& name, const glm::vec3& v) const;
+		/// Sets a mat3 value to the specified uniform.
+		void set_mat3(const std::string& name, const glm::mat3& m) const;
+		/// Sets a mat4 value to the specified uniform.
+		void set_mat4(const std::string& name, const glm::mat4& m) const;
 
 		// GETTERS
 
@@ -64,5 +68,12 @@ class shader {
 		 *
 		 * Calls glUseProgram()
 		 */
-		void use() const;
+		void bind() const;
+
+		/**
+		 * @brief Deactivate the shader.
+		 *
+		 * Calls glUseProgram()
+		 */
+		void release() const;
 };

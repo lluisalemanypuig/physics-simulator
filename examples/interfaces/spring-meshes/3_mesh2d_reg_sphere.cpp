@@ -7,6 +7,9 @@
 #include <iostream>
 using namespace std;
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // base includes
 #include <base/geometry/rsphere.hpp>
 #include <base/model/rendered_model.hpp>
@@ -22,7 +25,6 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace meshes;
-using namespace math;
 using namespace geom;
 
 // custom includes
@@ -39,7 +41,7 @@ namespace study_cases {
 		SR.set_spring_width(1.0f);
 
 		SR.get_simulator().set_solver(glut_functions::solver);
-		SR.get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 		float length = 10.0f;
 		float height = 10.0f;
@@ -66,11 +68,11 @@ namespace study_cases {
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ]->cur_pos =
-					vec3((length/n)*i, 10.0f, (height/m)*j);
+					math::vec3((length/n)*i, 10.0f, (height/m)*j);
 			}
 		}
 
-		sphere *s = new sphere(vec3(5.0f, 5.0f, 5.0f), 2.0f);
+		sphere *s = new sphere(math::vec3(5.0f, 5.0f, 5.0f), 2.0f);
 		SR.get_simulator().add_geometry(s);
 
 		shared_ptr<rendered_model> model_ball(new rendered_model);
@@ -80,13 +82,13 @@ namespace study_cases {
 		model_ball->compile();
 
 		rsphere *rs = new rsphere();
-		rs->set_center(vec3(5.0f, 5.0f, 5.0f));
+		rs->set_center(glm::vec3(5.0f, 5.0f, 5.0f));
 		rs->set_radius(2.0f);
 		rs->set_model(model_ball);
 		SR.add_geometry(rs);
 
-		SR.get_box().enlarge_box(vec3(-2,-2,-2));
-		SR.get_box().enlarge_box(vec3(15,15,15));
+		SR.get_box().enlarge_box(glm::vec3(-2,-2,-2));
+		SR.get_box().enlarge_box(glm::vec3(15,15,15));
 		SR.get_simulator().add_mesh(M);
 
 		SR.set_window_dims(iw, ih);
@@ -151,11 +153,11 @@ namespace study_cases {
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();
 
-		vec3 VRP = SR.get_VRP();
+		glm::vec3 VRP = SR.get_VRP();
 		float theta = SR.get_theta();
 		float psi = SR.get_psi();
 
-		vec3 viewer_pos = SR.get_viewer_pos();
+		glm::vec3 viewer_pos = SR.get_viewer_pos();
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
@@ -233,6 +235,13 @@ namespace study_cases {
 		glLightfv(GL_LIGHT0, GL_POSITION, pos);
 		float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 		glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+
+		GLenum err = glewInit();
+		if (err != 0) {
+			cerr << "initGL - Error:" << endl;
+			cerr << "    when initialising glew: " << err << endl;
+			exit(1);
+		}
 
 		// --------------------------- //
 		/* initialise global variables */

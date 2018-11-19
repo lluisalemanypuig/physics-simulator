@@ -1,5 +1,8 @@
 #include "mainwindow.hpp"
 
+// glm includes
+#include <glm/vec3.hpp>
+
 // base includes
 #include <base/geometry/rplane.hpp>
 
@@ -12,7 +15,6 @@
 using namespace physim;
 using namespace particles;
 using namespace fields;
-using namespace math;
 using namespace init;
 using namespace geom;
 
@@ -43,18 +45,18 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 
 	rplane *floor = new rplane();
 	floor->set_points(
-		vec3(-5.0f, -0.05f, -5.0f), vec3(-5.0f, -0.05f,  5.0f),
-		vec3( 5.0f, -0.05f,  5.0f), vec3( 5.0f, -0.05f, -5.0f)
+		glm::vec3(-5.0f, -0.05f, -5.0f), glm::vec3(-5.0f, -0.05f,  5.0f),
+		glm::vec3( 5.0f, -0.05f,  5.0f), glm::vec3( 5.0f, -0.05f, -5.0f)
 	);
 	sr->add_rgeom(floor);
 
 	plane *pl = new plane(
-		vec3(0.0f,1.0f,0.0f),
-		vec3(0.0f,0.0f,0.0f)
+		math::vec3(0.0f,1.0f,0.0f),
+		math::vec3(0.0f,0.0f,0.0f)
 	);
 	sr->get_simulator().add_geometry(pl);
 
-	sr->get_simulator().add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+	sr->get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 	sr->add_particles(1000);
 }

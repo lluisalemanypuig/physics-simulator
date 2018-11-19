@@ -1,11 +1,11 @@
 #include <base/geometry/rsphere.hpp>
 
-// base includes
-#include <base/include_gl.hpp>
-
 // C++ includes
 #include <iostream>
 using namespace std;
+
+// base includes
+#include <base/include_gl.hpp>
 
 rsphere::rsphere() : rgeom() {
 	t = rendered_geometry_type::sphere;
@@ -14,7 +14,7 @@ rsphere::~rsphere() {}
 
 // SETTERS
 
-void rsphere::set_center(const vec3& _c) {
+void rsphere::set_center(const glm::vec3& _c) {
 	C = _c;
 }
 
@@ -24,7 +24,7 @@ void rsphere::set_radius(float _r) {
 
 // GETETRS
 
-const vec3& rsphere::center() const {
+const glm::vec3& rsphere::center() const {
 	return C;
 }
 
@@ -48,7 +48,7 @@ void rsphere::draw_geometry() const {
 
 void rsphere::make_box(box& b) const {
 	if (_model != nullptr) {
-		b.set_min_max(C - vec3(R,R,R), C + vec3(R,R,R));
+		b.set_min_max(C - glm::vec3(R,R,R), C + glm::vec3(R,R,R));
 	}
 	else {
 		_model->make_box(b);

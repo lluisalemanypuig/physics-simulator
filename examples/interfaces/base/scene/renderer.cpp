@@ -5,9 +5,14 @@
 
 // C++ includes
 #include <iostream>
+#include <cmath>
 using namespace std;
 
-// OpenGL includes
+// glm includes
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+// base includes
 #include <base/include_gl.hpp>
 
 // PRIVATE
@@ -32,7 +37,7 @@ float renderer::get_aspect_ratio() const {
 // PUBLIC
 
 renderer::renderer() {
-	cam_pos = vec3(0.0f,0.0f,0.0f);
+	cam_pos = glm::vec3(0.0f,0.0f,0.0f);
 	pitch = 0.0f;
 	yaw = 0.0f;
 
@@ -58,7 +63,9 @@ void renderer::clear() {
 	loaded_models.clear();
 }
 
-bool renderer::init_shader(const string& dir, const string& vert, const string& frag) {
+bool renderer::init_shader
+(const string& dir, const string& vert, const string& frag)
+{
 	return shader_program.init(dir, vert, frag);
 }
 
@@ -145,14 +152,21 @@ void renderer::switch_to_flight()		{ inspect = false; fly = true; }
 
 void renderer::set_perspective(const perspective& p) { pers_cam = p; }
 void renderer::set_orthogonal(const orthogonal& o) { orth_cam = o; }
-void renderer::set_VRP(const vec3& _VRP) { VRP = _VRP; }
+void renderer::set_VRP(const glm::vec3& _VRP) { VRP = _VRP; }
 void renderer::set_theta(float t) { theta = t; }
 void renderer::set_psi(float p) { psi = p; }
-void renderer::set_viewer_pos(const vec3& pos) { cam_pos = pos; }
+void renderer::set_viewer_pos(const glm::vec3& pos) { cam_pos = pos; }
 void renderer::set_yaw(float y) { yaw = y; }
 void renderer::set_pitch(float p) { pitch = p; }
 
 // GETTERS
+
+shader& renderer::get_shader() {
+	return shader_program;
+}
+const shader& renderer::get_shader() const {
+	return shader_program;
+}
 
 perspective& renderer::get_perspective_camera() {
 	return pers_cam;
@@ -162,7 +176,7 @@ orthogonal& renderer::get_orthogonal_camera() {
 	return orth_cam;
 }
 
-const vec3& renderer::get_viewer_pos() const {
+const glm::vec3& renderer::get_viewer_pos() const {
 	return cam_pos;
 }
 
@@ -191,27 +205,59 @@ bool renderer::is_inspecting() const {
 float renderer::get_yaw() const	{ return yaw; }
 float renderer::get_pitch() const{ return pitch; }
 
-const vec3& renderer::get_VRP() const { return VRP; }
+const glm::vec3& renderer::get_VRP() const { return VRP; }
 float renderer::get_theta() const { return theta; }
 float renderer::get_psi() const { return psi; }
 
 // OpenGL
 
-void renderer::apply_view_mode() const {
-	if (use_perspective) {
-		gluPerspective(
-			pers_cam.get_FOV(), pers_cam.getRAw(),
-			pers_cam.get_znear(), pers_cam.get_zfar()
-		);
-	}
-	else if (use_orthogonal) {
-		glOrtho(
-			orth_cam.get_left(), orth_cam.get_right(),
-			orth_cam.get_bottom(), orth_cam.get_top(),
-			orth_cam.get_znear(), orth_cam.get_zfar()
-		);
+void renderer::apply_projection(bool use_shader) const {
+	bool error = false;
+	if (use_shader) {
+		glm::mat4 projection;
+		if (use_perspective) {
+			projection = glm::perspective(
+				pers_cam.get_FOV(), pers_cam.getRAw(),
+				pers_cam.get_znear(), pers_cam.get_zfar()
+			);
+		}
+		else if (use_orthogonal) {
+			projection = glm::ortho(
+				orth_cam.get_left(), orth_cam.get_right(),
+				orth_cam.get_bottom(), orth_cam.get_top(),
+				orth_cam.get_znear(), orth_cam.get_zfar()
+			);
+		}
+		else {
+			error = true;
+		}
+
+		if (not error) {
+			shader_program.bind();
+			shader_program.set_mat4("projection", projection);
+			shader_program.release();
+		}
 	}
 	else {
+		if (use_perspective) {
+			gluPerspective(
+				pers_cam.get_FOV(), pers_cam.getRAw(),
+				pers_cam.get_znear(), pers_cam.get_zfar()
+			);
+		}
+		else if (use_orthogonal) {
+			glOrtho(
+				orth_cam.get_left(), orth_cam.get_right(),
+				orth_cam.get_bottom(), orth_cam.get_top(),
+				orth_cam.get_znear(), orth_cam.get_zfar()
+			);
+		}
+		else {
+			error = true;
+		}
+	}
+
+	if (error) {
 		cerr << "void simulation_renderer::apply_view_mode() - Error!" << endl;
 		cerr << "    Something went wrong with the cameras!" << endl;
 		cerr << "    No perspective or orthogonal camera activated" << endl;
@@ -219,19 +265,57 @@ void renderer::apply_view_mode() const {
 	}
 }
 
-void renderer::apply_camera() const {
-	if (inspect) {
-		glTranslatef(0.0f, 0.0f, -diag_length);
-		glRotatef(theta, 1.0f, 0.0f, 0.0f);
-		glRotatef(-psi, 0.0f, 1.0f, 0.0f);
-		glTranslatef(-VRP.x, -VRP.y, -VRP.z);
-	}
-	else if (fly) {
-		glRotatef(-pitch, 1.0f, 0.0f, 0.0f);
-		glRotatef(-yaw, 0.0f, 1.0f, 0.0f);
-		glTranslatef(-cam_pos.x, -cam_pos.y, -cam_pos.z);
+void renderer::apply_modelview(bool use_shader) const {
+	bool error = false;
+	if (use_shader) {
+		glm::mat4 modelview;
+		glm::mat3 normal_matrix;
+		if (inspect) {
+			modelview = glm::translate(modelview, glm::vec3(0.0f, 0.0f, -diag_length));
+			modelview = glm::rotate(modelview, theta, glm::vec3(1.0f, 0.0f, 0.0f));
+			modelview = glm::rotate(modelview, -psi, glm::vec3(0.0f, 1.0f, 0.0f));
+			modelview = glm::translate(modelview, glm::vec3(-VRP.x, -VRP.y, -VRP.z));
+
+			normal_matrix =
+				glm::transpose(glm::inverse(glm::mat3(modelview)));
+		}
+		else if (fly) {
+			modelview = glm::rotate(modelview, -pitch, glm::vec3(1.0f, 0.0f, 0.0f));
+			modelview = glm::rotate(modelview, -yaw, glm::vec3(0.0f, 1.0f, 0.0f));
+			modelview = glm::translate(modelview, glm::vec3(-cam_pos.x, -cam_pos.y, -cam_pos.z));
+
+			normal_matrix =
+				glm::transpose(glm::inverse(glm::mat3(modelview)));
+		}
+		else {
+			error = true;
+		}
+
+		if (not error) {
+			shader_program.bind();
+			shader_program.set_mat4("modelview", modelview);
+			shader_program.set_mat3("normal_matrix", normal_matrix);
+			shader_program.release();
+		}
 	}
 	else {
+		if (inspect) {
+			glTranslatef(0.0f, 0.0f, -diag_length);
+			glRotatef(theta, 1.0f, 0.0f, 0.0f);
+			glRotatef(-psi, 0.0f, 1.0f, 0.0f);
+			glTranslatef(-VRP.x, -VRP.y, -VRP.z);
+		}
+		else if (fly) {
+			glRotatef(-pitch, 1.0f, 0.0f, 0.0f);
+			glRotatef(-yaw, 0.0f, 1.0f, 0.0f);
+			glTranslatef(-cam_pos.x, -cam_pos.y, -cam_pos.z);
+		}
+		else {
+			error = true;
+		}
+	}
+
+	if (error) {
 		cerr << "void simulation_renderer::apply_camera() - Error!" << endl;
 		cerr << "    Something went wrong with the cameras!" << endl;
 		cerr << "    No inspect or fly mode activated" << endl;
@@ -239,11 +323,14 @@ void renderer::apply_camera() const {
 	}
 }
 
-void renderer::render_models() const {
+void renderer::render_models(bool use_shader) const {
+	if (use_shader) {
+		shader_program.bind();
+	}
 	for (rendered_model *m : loaded_models) {
-		if (m->uses_buffers()) {
-			shader_program.use();
-		}
 		m->render();
+	}
+	if (use_shader) {
+		shader_program.release();
 	}
 }

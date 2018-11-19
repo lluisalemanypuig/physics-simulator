@@ -12,7 +12,8 @@ FORMS += mainwindow.ui
 HEADERS += \
     mainwindow.hpp \
     simulation_renderer.hpp \
-    utils.hpp
+    utils.hpp \
+    conversion_helper.hpp
 
 SOURCES += \
     main.cpp \

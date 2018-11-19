@@ -4,11 +4,10 @@
 #include <vector>
 #include <string>
 
-// physim includes
-#include <physim/math/vec2.hpp>
-typedef physim::math::vec2 vec2;
+// glm includes
+#include <glm/vec2.hpp>
 
-// Custom includes
+// base includes
 #include <base/model/model_utils.hpp>
 #include <base/model/model.hpp>
 
@@ -38,7 +37,7 @@ class rendered_model : public model {
 		/// Material idx per face.
 		std::vector<size_t> mat_idxs;
 		/// Texture coordinates.
-		std::vector<vec2> texture_coords;
+		std::vector<glm::vec2> texture_coords;
 		/// Texture indices per vertex.
 		std::vector<int> texture_idxs;
 		/// OpenGL indexes of the textures.
@@ -47,6 +46,8 @@ class rendered_model : public model {
 		/// Index of the compiled list.
 		uint list_index;
 
+		/// Vertex Array Object index
+		uint VAO;
 		/// Vertex Buffer Object index.
 		uint VBO;
 		/// Element Buffer Object (indices).
@@ -68,9 +69,10 @@ class rendered_model : public model {
 		// SETTERS
 
 		/// Sets the materials used in this mesh.
-		void set_materials(const std::vector<material>& mats, const std::vector<std::string>& mat_idxs);
+		void set_materials
+		(const std::vector<material>& mats, const std::vector<std::string>& mat_idxs);
 		/// Sets the texture coordinates.
-		void set_texture_coords(const std::vector<vec2>& texts);
+		void set_texture_coords(const std::vector<glm::vec2>& texts);
 		/// Sets the texture coordinates indices.
 		void set_texture_idxs(const std::vector<int>& text_idxs);
 

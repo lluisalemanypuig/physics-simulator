@@ -4,11 +4,9 @@
 #include <vector>
 #include <string>
 
-// physim includes
-#include <physim/math/vec2.hpp>
-#include <physim/math/vec3.hpp>
-typedef physim::math::vec2 vec2;
-typedef physim::math::vec3 vec3;
+// glm includes
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
 // Custom includes
 #include <base/model/rendered_model.hpp>
@@ -51,9 +49,9 @@ class OBJ_reader {
 
 		// mesh data
 		/// Vertices of the mesh.
-		std::vector<vec3> vertices;
+		std::vector<glm::vec3> vertices;
 		/// Normals per vertex.
-		std::vector<vec3> normals;
+		std::vector<glm::vec3> normals;
 		/// Vertex indices.
 		std::vector<int> triangles;
 		/// Normal indices.
@@ -65,7 +63,7 @@ class OBJ_reader {
 		/// Set of materials found in the file.
 		std::vector<material> materials;
 		/// Texture coordinates.
-		std::vector<vec2> textures_coords;
+		std::vector<glm::vec2> textures_coords;
 		/// Texture indices per triangle.
 		std::vector<int> texture_idxs;
 
@@ -107,7 +105,8 @@ class OBJ_reader {
 		 * @param[out] M The mesh constructed using the data in the file.
 		 * @return Returns true on success.
 		 */
-		bool load_object(const std::string& dir, const std::string& name, rendered_model& M);
+		bool load_object
+		(const std::string& dir, const std::string& name, rendered_model& M);
 
 };
 
