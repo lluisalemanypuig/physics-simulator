@@ -166,6 +166,13 @@ void box::make_buffers() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindVertexArray(0);
+
+	#if defined (DEBUG)
+	cout << "box::make_buffers() - buffers made" << endl;
+	cout << "    VAO: " << VAO << endl;
+	cout << "    VBO: " << VBO << endl;
+	cout << "    EBO: " << EBO << endl;
+	#endif
 }
 
 void box::slow_render() const {

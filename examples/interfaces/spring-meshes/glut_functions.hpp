@@ -27,6 +27,10 @@ namespace glut_functions {
 
 	// 'global' variables
 
+	extern shader texture_shader;
+	extern shader flat_shader;
+	extern bool use_shaders;
+
 	extern sim_renderer SR;
 	extern int window_id;
 	extern timing::time_point sec;
@@ -76,10 +80,14 @@ namespace glut_functions {
 	/* actual glut functions */
 
 	void init_glut_variables();
+	void init_openGL_simulation();
+
 	void finish_simulation();
 	void parse_common_params(int argc, char *argv[]);
 
 	/* scene rendering */
+	void shader_render();
+	void no_shader_render();
 	void refresh();
 	void timed_refresh(int value);
 

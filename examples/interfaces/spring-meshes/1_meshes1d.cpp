@@ -138,7 +138,9 @@ namespace study_cases {
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
 		model_ball->load_textures();
-		model_ball->compile();
+		if (use_shaders) {
+			model_ball->make_buffers_materials_textures();
+		}
 
 		sx = 12.5f;
 		for (int i = 1; i <= 10; ++i) {
@@ -175,6 +177,8 @@ namespace study_cases {
 
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+
+		glut_functions::init_openGL_simulation();
 	}
 
 	void sim1_help() {
@@ -193,6 +197,9 @@ namespace study_cases {
 		cout << "    In the other groups, the i-th spring has 5*i particles, and its elasticity" << endl;
 		cout << "    constant (Ke) is set to 500/i, for 1 <= i <= 10." << endl;
 		cout << endl;
+		cout << "    Options to manipulate the rendering:" << endl;
+		cout << "    --use-shaders: use GLSL shaders to render objects" << endl;
+		cout << "        Default: false" << endl;
 	}
 
 	void sim1_reset() {
@@ -269,6 +276,8 @@ namespace study_cases {
 		glut_functions::stretch = true;
 		glut_functions::shear = false;
 		glut_functions::bend = false;
+
+		glut_functions::parse_common_params(argc, argv);
 
 		// ---------------- //
 		/* build simulation */

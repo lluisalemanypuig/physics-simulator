@@ -62,11 +62,16 @@ void rgeom::translate_object() const {
 
 void rgeom::draw() const {
 	if (_model != nullptr) {
-		glEnable(GL_LIGHTING);
-		glPushMatrix();
-			translate_object();
+		if (_model->uses_buffers()) {
 			_model->render();
-		glPopMatrix();
+		}
+		else {
+			glEnable(GL_LIGHTING);
+			glPushMatrix();
+				translate_object();
+				_model->render();
+			glPopMatrix();
+		}
 	}
 	else {
 		draw_geometry();

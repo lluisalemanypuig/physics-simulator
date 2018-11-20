@@ -119,6 +119,9 @@ namespace study_cases {
 		cout << "        Either 'exp-euler', 'semi-euler', 'verlet'" << endl;
 		cout << "        Default: Verlet" << endl;
 		cout << endl;
+		cout << "    Options to manipulate the rendering:" << endl;
+		cout << "    --use-shaders: use GLSL shaders to render objects" << endl;
+		cout << "        Default: false" << endl;
 	}
 
 	void sim2_reset() {

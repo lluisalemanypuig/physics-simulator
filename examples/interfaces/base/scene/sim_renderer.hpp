@@ -32,9 +32,12 @@ class sim_renderer : public renderer {
 		void set_spring_width(float w);
 		void add_geometry(rgeom *r);
 
+		const std::vector<rgeom *>& get_geometry() const;
+
 		/// Returns a reference to the renderer's simulator.
 		physim::simulator& get_simulator();
 
 		void apply_time_step();
+		void render_geometry() const;
 		void render_simulation() const;
 };

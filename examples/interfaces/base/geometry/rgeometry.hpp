@@ -3,6 +3,9 @@
 // C++ includes
 #include <memory>
 
+// glm includes
+#include <glm/mat4x4.hpp>
+
 // base includes
 #include <base/model/rendered_model.hpp>
 #include <base/box.hpp>
@@ -43,13 +46,6 @@ class rgeom {
 		 * glBegin, glEnd.
 		 */
 		virtual void translate_object() const;
-
-		/**
-		 * @brief Draws the geometry.
-		 *
-		 * Using glBegin, glEnd, for example.
-		 */
-		virtual void draw_geometry() const = 0;
 
 	public:
 		rgeom();
@@ -93,6 +89,15 @@ class rgeom {
 		 * object where it should be.
 		 */
 		void draw() const;
+
+		/**
+		 * @brief Draws the geometry.
+		 *
+		 * Using glBegin, glEnd, for example.
+		 */
+		virtual void draw_geometry() const = 0;
+
+		virtual void make_modelview(glm::mat4& model) const = 0;
 
 		/// Makes the bounding box of this model.
 		virtual void make_box(box& b) const = 0;

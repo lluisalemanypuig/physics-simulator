@@ -150,6 +150,10 @@ void sim_renderer::add_geometry(rgeom *r) {
 	B.enlarge_box(b);
 }
 
+const std::vector<rgeom *>& sim_renderer::get_geometry() const {
+	return geometry;
+}
+
 physim::simulator& sim_renderer::get_simulator() {
 	return S;
 }
@@ -158,11 +162,13 @@ void sim_renderer::apply_time_step() {
 	S.apply_time_step();
 }
 
-void sim_renderer::render_simulation() const {
+void sim_renderer::render_geometry() const {
 	for (rgeom *r : geometry) {
 		r->draw();
 	}
+}
 
+void sim_renderer::render_simulation() const {
 	glDisable(GL_LIGHTING);
 
 	// render particles

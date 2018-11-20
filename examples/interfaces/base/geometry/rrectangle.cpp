@@ -41,6 +41,8 @@ void rrectangle::draw_geometry() const {
 	glEnable(GL_LIGHTING);
 }
 
+void rrectangle::make_modelview(glm::mat4& ) const {}
+
 void rrectangle::make_box(box& b) const {
 	b.set_min_max(_p1, _p1);
 	b.enlarge_box(_p2);

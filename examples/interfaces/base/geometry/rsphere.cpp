@@ -4,6 +4,9 @@
 #include <iostream>
 using namespace std;
 
+// glm inlcudes
+#include <glm/gtx/transform.hpp>
+
 // base includes
 #include <base/include_gl.hpp>
 
@@ -44,6 +47,11 @@ void rsphere::draw_geometry() const {
 	cout << "    This object does not have a model and" << endl;
 	cout << "    I don't know how to draw a sphere" << endl;
 	cout << "    using glBegin(), glEnd()" << endl;
+}
+
+void rsphere::make_modelview(glm::mat4& modelview) const {
+	modelview = glm::translate(modelview, C);
+	modelview = glm::scale(modelview, glm::vec3(R,R,R)*2.0f);
 }
 
 void rsphere::make_box(box& b) const {

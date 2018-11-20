@@ -329,6 +329,13 @@ void rendered_model::make_buffers() {
 
 	// VAO release
 	glBindVertexArray(0);
+
+	#if defined (DEBUG)
+	cout << "rendered_model::make_buffers() - buffers made" << endl;
+	cout << "    VAO: " << VAO << endl;
+	cout << "    VBO: " << VBO << endl;
+	cout << "    EBO: " << EBO << endl;
+	#endif
 }
 
 void rendered_model::make_buffers_materials() {
@@ -399,6 +406,14 @@ void rendered_model::make_buffers_materials() {
 
 	// VAO release
 	glBindVertexArray(0);
+
+	#if defined (DEBUG)
+	cout << "rendered_model::make_buffers_materials() - buffers made" << endl;
+	cout << "    VAO: " << VAO << endl;
+	cout << "    VBO: " << VBO << endl;
+	cout << "    IBO: " << IBO << endl;
+	cout << "    EBO: " << EBO << endl;
+	#endif
 }
 
 void rendered_model::make_buffers_materials_textures() {
@@ -491,6 +506,14 @@ void rendered_model::make_buffers_materials_textures() {
 
 	// VAO release
 	glBindVertexArray(0);
+
+	#if defined (DEBUG)
+	cout << "rendered_model::make_buffers_materials_textures() - buffers made" << endl;
+	cout << "    VAO: " << VAO << endl;
+	cout << "    VBO: " << VBO << endl;
+	cout << "    IBO: " << IBO << endl;
+	cout << "    EBO: " << EBO << endl;
+	#endif
 }
 
 void rendered_model::render() const {
