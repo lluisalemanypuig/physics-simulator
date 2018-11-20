@@ -148,12 +148,12 @@ namespace glut_functions {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		SR.apply_projection(false);
+		SR.apply_projection();
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		SR.apply_modelview(false);
+		SR.apply_modelview();
 
 		SR.render_simulation();
 
@@ -164,7 +164,7 @@ namespace glut_functions {
 		if (draw_box) {
 			glDisable(GL_LIGHTING);
 			glColor3f(1.0f,0.0f,0.0f);
-			SR.get_box().draw_box();
+			SR.get_box().slow_render();
 		}
 
 		glutSwapBuffers();
