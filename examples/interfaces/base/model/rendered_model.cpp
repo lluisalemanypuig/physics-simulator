@@ -60,6 +60,8 @@ void rendered_model::set_materials
 			++i;
 		}
 	}
+
+	unique_mat_idxs.insert(mat_idxs.begin(), mat_idxs.end());
 }
 
 void rendered_model::set_texture_coords(const vector<glm::vec2>& texts) {
@@ -96,6 +98,10 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 
 const std::vector<size_t>& rendered_model::get_material_idxs() const {
 	return mat_idxs;
+}
+
+const std::set<size_t>& rendered_model::get_unique_material_idxs() const {
+	return unique_mat_idxs;
 }
 
 const std::vector<material>& rendered_model::get_materials() const {
@@ -246,26 +252,29 @@ uint rendered_model::compile() {
 }
 
 void rendered_model::make_buffers() {
-	vector<glm::vec3> data(2*triangles.size());
-	vector<unsigned int> indices(triangles.size());
 
-	for (size_t t = 0; t < triangles.size(); t += 3) {
-		data[2*t    ] = vertices[ triangles[t    ] ];
-		data[2*t + 1] = glm::normalize(normals[ normal_idxs[t    ] ]);
+	vector<float> data(2*3*triangles.size());
+	vector<uint> flat_mat_idxs(triangles.size());
+	vector<uint> indices(triangles.size());
 
-		data[2*t + 2] = vertices[ triangles[t + 1] ];
-		data[2*t + 3] = glm::normalize(normals[ normal_idxs[t + 1] ]);
+	for (size_t t = 0; t < triangles.size(); ++t) {
+		data[6*t    ] = vertices[ triangles[t] ].x;
+		data[6*t + 1] = vertices[ triangles[t] ].y;
+		data[6*t + 2] = vertices[ triangles[t] ].z;
 
-		data[2*t + 4] = vertices[ triangles[t + 2] ];
-		data[2*t + 5] = glm::normalize(normals[ normal_idxs[t + 2] ]);
+		glm::vec3 norm = glm::normalize(normals[ normal_idxs[t] ]);
+		data[6*t + 3] = norm.x;
+		data[6*t + 4] = norm.y;
+		data[6*t + 5] = norm.z;
 
-		indices[t    ] = t;
-		indices[t + 1] = t + 1;
-		indices[t + 2] = t + 2;
+		flat_mat_idxs[t] = mat_idxs[t/3];
+
+		indices[t] = t;
 	}
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &MIBO);
 	glGenBuffers(1, &EBO);
 
 	// bind VAO
@@ -274,7 +283,11 @@ void rendered_model::make_buffers() {
 	// ---------------------
 	// VBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, 3*data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	glBufferData
+	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, MIBO);
+	glBufferData
+	(GL_ARRAY_BUFFER, flat_mat_idxs.size()*sizeof(uint), &flat_mat_idxs[0], GL_STATIC_DRAW);
 
 	// ---------------------
 	// EBO fill
@@ -283,12 +296,17 @@ void rendered_model::make_buffers() {
 
 	// ---------------------
 	// vertex attributes
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glVertexAttribPointer
 	(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer
 	(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
 	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, MIBO);
+	glVertexAttribPointer
+	(2, 1, GL_FLOAT, GL_FALSE, 0, (void *)0);
+	glEnableVertexAttribArray(2);
 	// VBO release
 	// ---------------------
 

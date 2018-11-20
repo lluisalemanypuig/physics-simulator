@@ -199,6 +199,10 @@ const glm::vec3& renderer::get_VRP() const { return VRP; }
 float renderer::get_theta() const { return theta; }
 float renderer::get_psi() const { return psi; }
 
+const std::vector<rendered_model *>& renderer::get_models() const {
+	return loaded_models;
+}
+
 // OpenGL
 
 void renderer::apply_projection() const {
@@ -291,7 +295,7 @@ glm::mat4 renderer::make_modelview() const {
 	return modelview;
 }
 
-void renderer::render_models() const {
+void renderer::slow_render_models() const {
 	for (rendered_model *m : loaded_models) {
 		m->render();
 	}

@@ -54,7 +54,8 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 		#endif
 
 		int width, height, n_channels;
-		unsigned char *data = stbi_load(m.txt_name.c_str(), &width, &height, &n_channels, 0);
+		unsigned char *data =
+			stbi_load(m.txt_name.c_str(), &width, &height, &n_channels, 0);
 		if (data == nullptr) {
 			cerr << "texture_loader::load_textures - Error:" << endl;
 			cerr << "    Could not load texture '" << m.txt_name << "'" << endl;
@@ -63,8 +64,7 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 
 		#if defined (DEBUG)
 		cout << "    image loaded!" << endl;
-		cout << "        width: " << width << endl;
-		cout << "        height: " << height << endl;
+		cout << "        dimensions: " << width << "x" << height << endl;
 		cout << "        # channels: " << n_channels << endl;
 		cout << "    Generating texture... ";
 		#endif
@@ -84,10 +84,12 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 		#endif
 
 		if (n_channels == 3) {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glTexImage2D
+			(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		}
 		else if (n_channels == 4) {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			glTexImage2D
+			(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		}
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -96,14 +98,9 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 
 		#if defined (DEBUG)
 		cout << "done" << endl;
-		cout << "    glGenerateMipmap...   ";
 		#endif
 
 		glGenerateMipmap(GL_TEXTURE_2D);
-
-		#if defined (DEBUG)
-		cout << "done" << endl;
-		#endif
 
 		stbi_image_free(data);
 
@@ -148,6 +145,9 @@ void texture_loader::clear_textures(const vector<material>& mats) {
 
 void texture_loader::clear_all() {
 	for (auto& txt_id : textures) {
+		if (txt_id.second == 0) {
+			continue;
+		}
 		glDeleteTextures(1, &txt_id.second);
 		txt_id.second = 0;
 	}
@@ -155,11 +155,11 @@ void texture_loader::clear_all() {
 
 // GETTERS
 
-/// Returns the index of the texture.
-unsigned int texture_loader::texture_index(const string& s) const {
+bool texture_loader::texture_index(const string& s, unsigned int& idx) const {
 	auto it = textures.find(s);
-	if (it != textures.end()) {
-		return it->second;
+	if (it == textures.end()) {
+		return false;
 	}
-	return 0;
+	idx = it->second;
+	return true;
 }

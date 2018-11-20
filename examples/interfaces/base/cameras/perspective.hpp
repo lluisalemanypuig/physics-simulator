@@ -3,7 +3,6 @@
 // base includes
 #include <base/cameras/observer.hpp>
 #include <base/box.hpp>
-using namespace std;
 
 class perspective : public observer {
 	private:

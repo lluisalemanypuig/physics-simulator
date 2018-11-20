@@ -16,17 +16,25 @@ namespace shader_helper {
 		return glm::vec3(v[0], v[1], v[2]);
 	}
 
-	void set_materials_shader(const rendered_model& M, shader& S) {
-		const vector<size_t>& mat_idxs = M.get_material_idxs();
-		set<size_t> unique_mat_idxs(mat_idxs.begin(), mat_idxs.end());
+	static inline
+	void set_mat_shader(const material& mat, const string& name, shader& S) {
+		S.set_vec3(name + ".ambient", to_vec3(mat.Ka));
+		S.set_vec3(name + ".diffuse", to_vec3(mat.Kd));
+		S.set_vec3(name + ".specular", to_vec3(mat.Ks));
+		S.set_float(name + ".shininess", mat.Ni);
+	}
 
-		if (unique_mat_idxs.size() >= 4) {
+	void set_materials_shader(const rendered_model& M, shader& S) {
+		const set<size_t>& unique_mat_idxs = M.get_unique_material_idxs();
+		size_t inf = unique_mat_idxs.size() + 1;
+
+		if (unique_mat_idxs.size() > 4) {
 			cerr << "shader_helper::set_materials_shaders - Error:" << endl;
 			cerr << "    Too many materials (" << unique_mat_idxs.size() << ")." << endl;
 			return;
 		}
 
-		size_t idxs[4] = {mat_idxs.size(), mat_idxs.size(), mat_idxs.size(), mat_idxs.size()};
+		size_t idxs[4] = {inf, inf, inf, inf};
 		auto it = unique_mat_idxs.begin();
 		for (size_t i = 0; i < 4; ++i, ++it) {
 			idxs[i] = *it;
@@ -34,29 +42,17 @@ namespace shader_helper {
 
 		const vector<material>& all_mats = M.get_materials();
 
-		if (idxs[0] != mat_idxs.size()) {
-			S.set_vec3("material0.ambient", to_vec3(all_mats[idxs[0]].Ka));
-			S.set_vec3("material0.diffuse", to_vec3(all_mats[idxs[0]].Kd));
-			S.set_vec3("material0.specular", to_vec3(all_mats[idxs[0]].Ks));
-			S.set_float("material0.shininess", all_mats[idxs[0]].Ni);
+		if (idxs[0] != inf) {
+			set_mat_shader(all_mats[idxs[0]], "material[0]", S);
 		}
-		if (idxs[1] != mat_idxs.size()) {
-			S.set_vec3("material1.ambient", to_vec3(all_mats[idxs[1]].Ka));
-			S.set_vec3("material1.diffuse", to_vec3(all_mats[idxs[1]].Kd));
-			S.set_vec3("material1.specular", to_vec3(all_mats[idxs[1]].Ks));
-			S.set_float("material1.shininess", all_mats[idxs[1]].Ni);
+		if (idxs[1] != inf) {
+			set_mat_shader(all_mats[idxs[1]], "material[1]", S);
 		}
-		if (idxs[2] != mat_idxs.size()) {
-			S.set_vec3("material2.ambient", to_vec3(all_mats[idxs[2]].Ka));
-			S.set_vec3("material2.diffuse", to_vec3(all_mats[idxs[2]].Kd));
-			S.set_vec3("material2.specular", to_vec3(all_mats[idxs[2]].Ks));
-			S.set_float("material2.shininess", all_mats[idxs[2]].Ni);
+		if (idxs[2] != inf) {
+			set_mat_shader(all_mats[idxs[2]], "material[2]", S);
 		}
-		if (idxs[3] != mat_idxs.size()) {
-			S.set_vec3("material3.ambient", to_vec3(all_mats[idxs[3]].Ka));
-			S.set_vec3("material3.diffuse", to_vec3(all_mats[idxs[3]].Kd));
-			S.set_vec3("material3.specular", to_vec3(all_mats[idxs[3]].Ks));
-			S.set_float("material3.shininess", all_mats[idxs[3]].Ni);
+		if (idxs[3] != inf) {
+			set_mat_shader(all_mats[idxs[3]], "material[3]", S);
 		}
 
 	}

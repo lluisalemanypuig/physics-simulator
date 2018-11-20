@@ -3,6 +3,7 @@
 // C++ includes
 #include <vector>
 #include <string>
+#include <set>
 
 // glm includes
 #include <glm/vec2.hpp>
@@ -33,6 +34,7 @@ class rendered_model : public model {
 		 * Material per triangle, not per vertex.
 		 */
 		std::vector<material> materials;
+		std::set<size_t> unique_mat_idxs;
 
 		/// Material idx per face.
 		std::vector<size_t> mat_idxs;
@@ -50,6 +52,8 @@ class rendered_model : public model {
 		uint VAO;
 		/// Vertex Buffer Object index.
 		uint VBO;
+		/// Material indices Buffer Object index.
+		uint MIBO;
 		/// Element Buffer Object (indices).
 		uint EBO;
 
@@ -81,6 +85,7 @@ class rendered_model : public model {
 		mesh_state state(const mesh_state& ignore = mesh_state::correct) const;
 
 		const std::vector<size_t>& get_material_idxs() const;
+		const std::set<size_t>& get_unique_material_idxs() const;
 
 		const std::vector<material>& get_materials() const;
 

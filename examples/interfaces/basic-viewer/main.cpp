@@ -9,8 +9,9 @@ using namespace std;
 // base includes
 #include <base/include_gl.hpp>
 #include <base/model/rendered_model.hpp>
-#include <base/obj_reader.hpp>
+#include <base/model/shader_helper.hpp>
 #include <base/scene/renderer.hpp>
+#include <base/obj_reader.hpp>
 #include <base/shader.hpp>
 
 // custom includes
@@ -22,7 +23,8 @@ typedef pair<int,int> point;
 // global variables
 // ------------------
 
-static shader S;
+static shader material_shader;
+static shader flat_shader;
 static renderer SR;
 static bool use_shader = true;
 
@@ -98,10 +100,21 @@ void initGL(int argc, char *argv[]) {
 	/* load shaders */
 	if (use_shader) {
 		cout << "Initialising shader program..." << endl;
-		bool r = S.init("../../interfaces/shaders", "vertex.vert", "fragment.frag");
+		bool r;
+		r = material_shader.init("../../interfaces/shaders", "material.vert", "material.frag");
 		if (not r) {
 			exit(1);
 		}
+		r = flat_shader.init("../../interfaces/shaders", "flat.vert", "flat.frag");
+		if (not r) {
+			exit(1);
+		}
+
+		material_shader.bind();
+		material_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
+		material_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
+		material_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
+		material_shader.release();
 
 		cout << "    Initialised" << endl;
 	}
@@ -155,25 +168,34 @@ void refresh() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (use_shader) {
-		S.bind();
-
-		S.set_bool("box", false);
-		S.set_mat4("projection", SR.make_projection());
-
+		glm::mat4 projection = SR.make_projection();
 		glm::mat4 modelview = SR.make_modelview();
-		S.set_mat4("modelview", modelview);
-
 		glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(modelview)));
-		S.set_mat3("normal_matrix", normal_matrix);
 
-		SR.render_models();
+		material_shader.bind();
+		material_shader.set_mat4("projection", projection);
+		material_shader.set_mat4("modelview", modelview);
+		material_shader.set_mat3("normal_matrix", normal_matrix);
+		material_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
 
-		S.set_bool("box", true);
+		const vector<rendered_model *>& models = SR.get_models();
+		for (rendered_model *m : models) {
+			shader_helper::set_materials_shader(*m, material_shader);
+			m->render();
+		}
+		material_shader.release();
+
+		flat_shader.bind();
+		flat_shader.set_bool("wireframe", true);
+		flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
+		flat_shader.set_mat4("projection", projection);
+		flat_shader.set_mat4("modelview", modelview);
+		flat_shader.set_mat3("normal_matrix", normal_matrix);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		SR.get_box().fast_render();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		S.release();
+		flat_shader.release();
 	}
 	else {
 		glMatrixMode(GL_PROJECTION);
@@ -188,7 +210,7 @@ void refresh() {
 
 		glEnable(GL_LIGHTING);
 
-		SR.render_models();
+		SR.slow_render_models();
 
 		glDisable(GL_LIGHTING);
 		glColor3f(1.0f,0.0f,0.0f);

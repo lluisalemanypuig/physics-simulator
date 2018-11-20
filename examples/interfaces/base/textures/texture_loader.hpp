@@ -67,8 +67,15 @@ class texture_loader {
 
 		// GETTERS
 
-		/// Returns the index of the texture.
-		unsigned int texture_index(const std::string& s) const;
+		/**
+		 * @brief Returns the index of the texture.
+		 * @param s Texture to look for.
+		 * @param idx (OpenGL) index of the texture.
+		 * @return Returns true if the texture was found. In this case
+		 * the value in idx is valid. Returns false if the texture was
+		 * not found.
+		 */
+		bool texture_index(const std::string& s, unsigned int& idx) const;
 
 		// OTHERS
 

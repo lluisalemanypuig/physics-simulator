@@ -16,4 +16,6 @@ DISTFILES += \
     models/spiral.png \
     models/stripes.png \
     shaders/flat.vert \
-    shaders/flat.frag
+    shaders/flat.frag \
+    shaders/material.vert \
+    shaders/material.frag

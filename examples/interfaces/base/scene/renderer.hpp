@@ -193,6 +193,8 @@ class renderer {
 		/// Returns whether the camera is inspecting.
 		bool is_inspecting() const;
 
+		const std::vector<rendered_model *>& get_models() const;
+
 		// OpenGL
 
 		/**
@@ -218,8 +220,7 @@ class renderer {
 		/// Returns the modelview matrix corresponding to the active viewing mode.
 		glm::mat4 make_modelview() const;
 
-
-		/// Renders the models
-		void render_models() const;
+		/// (Slow) Renders the models
+		void slow_render_models() const;
 };
 
