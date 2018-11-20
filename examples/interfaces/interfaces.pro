@@ -15,5 +15,5 @@ DISTFILES += \
     models/sphere.mtl \
     models/spiral.png \
     models/stripes.png \
-    shaders/vertex.vert	\
-    shaders/fragment.frag
+    shaders/flat.vert \
+    shaders/flat.frag
