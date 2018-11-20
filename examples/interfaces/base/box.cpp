@@ -61,17 +61,17 @@ box::box() {
 }
 box::~box() {
 	if (VAO > 0) {
-		cout << "box::~box() - delete VAO" << endl;
+		cout << "box::~box() - delete VAO " << VAO << endl;
 		glDeleteVertexArrays(1, &VAO);
 		VAO = 0;
 	}
 	if (VBO > 0) {
-		cout << "box::~box() - delete VBO" << endl;
+		cout << "box::~box() - delete VBO " << VBO << endl;
 		glDeleteBuffers(1, &VBO);
 		VBO = 0;
 	}
 	if (EBO > 0) {
-		cout << "box::~box() - delete EBO" << endl;
+		cout << "box::~box() - delete EBO " << EBO << endl;
 		glDeleteBuffers(1, &EBO);
 		EBO = 0;
 	}

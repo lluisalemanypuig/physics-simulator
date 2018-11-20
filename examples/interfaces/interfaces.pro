@@ -18,4 +18,6 @@ DISTFILES += \
     shaders/flat.vert \
     shaders/flat.frag \
     shaders/material.vert \
-    shaders/material.frag
+    shaders/material.frag \
+    shaders/textures.vert \
+    shaders/textures.frag

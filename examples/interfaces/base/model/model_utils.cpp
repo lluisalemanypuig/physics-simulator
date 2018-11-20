@@ -4,7 +4,7 @@ material::material
 (
 	const std::string& _id,
 	const std::string& _txt_name,
-	unsigned int _txt_id,
+	uint _txt_id,
 	const glm::vec3& amb,
 	const glm::vec3& dif,
 	const glm::vec3& spec,

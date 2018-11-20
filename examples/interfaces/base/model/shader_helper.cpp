@@ -21,14 +21,14 @@ namespace shader_helper {
 		S.set_vec3(name + ".ambient", to_vec3(mat.Ka));
 		S.set_vec3(name + ".diffuse", to_vec3(mat.Kd));
 		S.set_vec3(name + ".specular", to_vec3(mat.Ks));
-		S.set_float(name + ".shininess", mat.Ni);
+		S.set_float(name + ".shininess", mat.Ns);
 	}
 
 	void set_materials_shader(const rendered_model& M, shader& S) {
-		const set<size_t>& unique_mat_idxs = M.get_unique_material_idxs();
+		const set<int>& unique_mat_idxs = M.get_unique_material_idxs();
 		size_t inf = unique_mat_idxs.size() + 1;
 
-		if (unique_mat_idxs.size() > 4) {
+		if (unique_mat_idxs.size() > 5) {
 			cerr << "shader_helper::set_materials_shaders - Error:" << endl;
 			cerr << "    Too many materials (" << unique_mat_idxs.size() << ")." << endl;
 			return;
@@ -36,25 +36,59 @@ namespace shader_helper {
 
 		size_t idxs[4] = {inf, inf, inf, inf};
 		auto it = unique_mat_idxs.begin();
-		for (size_t i = 0; i < 4; ++i, ++it) {
+		if (*it == -1) {
+			++it;
+		}
+
+		for (int i = 0; i < 4; ++i, ++it) {
 			idxs[i] = *it;
 		}
 
 		const vector<material>& all_mats = M.get_materials();
 
-		if (idxs[0] != inf) {
-			set_mat_shader(all_mats[idxs[0]], "material[0]", S);
+		for (int i = 0; i < 4; ++i) {
+			if (idxs[i] != inf) {
+				const material& mat = all_mats[idxs[i]];
+				set_mat_shader(mat, "material[" + std::to_string(i) + "]", S);
+			}
 		}
-		if (idxs[1] != inf) {
-			set_mat_shader(all_mats[idxs[1]], "material[1]", S);
-		}
-		if (idxs[2] != inf) {
-			set_mat_shader(all_mats[idxs[2]], "material[2]", S);
-		}
-		if (idxs[3] != inf) {
-			set_mat_shader(all_mats[idxs[3]], "material[3]", S);
+	}
+
+	void activate_textures(const rendered_model& M, shader& S) {
+		const set<int>& unique_mat_idxs = M.get_unique_material_idxs();
+		size_t inf = unique_mat_idxs.size() + 1;
+
+		if (unique_mat_idxs.size() > 5) {
+			cerr << "shader_helper::activate_textures - Error:" << endl;
+			cerr << "    Too many materials (" << unique_mat_idxs.size() << ")." << endl;
+			return;
 		}
 
+		size_t idxs[4] = {inf, inf, inf, inf};
+		auto it = unique_mat_idxs.begin();
+		if (*it == -1) {
+			++it;
+		}
+
+		for (int i = 0; i < 4; ++i, ++it) {
+			idxs[i] = *it;
+		}
+
+		const vector<material>& all_mats = M.get_materials();
+
+		for (int i = 0; i < 4; ++i) {
+			if (idxs[i] != inf) {
+				const material& mat = all_mats[idxs[i]];
+				set_mat_shader(mat, "material[" + std::to_string(i) + "]", S);
+				if (mat.txt_id > __NULL_TEXTURE_INDEX) {
+					glActiveTexture(GL_TEXTURE0 + mat.txt_id);
+					glBindTexture(GL_TEXTURE_2D, mat.txt_id);
+
+					string texname = "tex" + std::to_string(mat.txt_id);
+					S.set_int(texname, mat.txt_id);
+				}
+			}
+		}
 	}
 
 } // -- namespace shader_helper

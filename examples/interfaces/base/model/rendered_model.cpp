@@ -20,17 +20,17 @@ using namespace std;
 
 rendered_model::rendered_model() : model() {
 	list_index = 0;
-	VAO = VBO = EBO = 0;
+	VAO = VBO = IBO = EBO = 0;
 }
 
 rendered_model::rendered_model(const rendered_model& m) : model(m) {
 	materials = m.materials;
 	mat_idxs = m.mat_idxs;
 	texture_coords = m.texture_coords;
-	texture_idxs = m.texture_idxs;
+	texture_coord_idxs = m.texture_coord_idxs;
 
 	list_index = 0;
-	VAO = VBO = EBO = 0;
+	VAO = VBO = IBO = EBO = 0;
 }
 
 rendered_model::~rendered_model() {
@@ -44,13 +44,17 @@ void rendered_model::set_materials
 {
 	materials = mats;
 
-	mat_idxs = vector<size_t>(triangles.size()/3, materials.size() + 1);
+	mat_idxs = vector<int>(triangles.size()/3, materials.size() + 1);
 	for (size_t t = 0; t < triangles.size(); t += 3) {
 
 		// material of (t/3)-th triangle
 		const string& tri_mat = material_ids[t/3];
+		if (tri_mat == __NULL_MATERIAL_NAME) {
+			mat_idxs[t/3] = __NULL_MATERIAL_INDEX;
+			continue;
+		}
 
-		size_t i = 0;
+		int i = 0;
 		bool finish = false;
 		while (i < materials.size() and not finish) {
 			if (materials[i].id == tri_mat) {
@@ -68,8 +72,8 @@ void rendered_model::set_texture_coords(const vector<glm::vec2>& texts) {
 	texture_coords = texts;
 }
 
-void rendered_model::set_texture_idxs(const vector<int>& text_idxs) {
-	texture_idxs = text_idxs;
+void rendered_model::set_texture_coord_idxs(const vector<int>& text_coord_idxs) {
+	texture_coord_idxs = text_coord_idxs;
 }
 
 // GETTERS
@@ -83,10 +87,10 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 	// check that indexes are correct.
 	for (size_t t = 0; t < triangles.size(); ++t) {
 		if ((ignore & mesh_state::texture_coord_idx_ob) == 0) {
-			if (texture_idxs[t] != -1 and texture_idxs[t] > texture_coords.size()) {
+			if (texture_coord_idxs[t] != -1 and texture_coord_idxs[t] > texture_coords.size()) {
 				cerr << "mesh::is_valid: Error:" << endl;
 				cerr << "    Triangle " << t/3 << " has " << t%3 << "-th "
-					 << "texture index (" << texture_idxs[t]
+					 << "texture index (" << texture_coord_idxs[t]
 					 << ") out of bounds." << endl;
 				return mesh_state::texture_coord_idx_ob;
 			}
@@ -96,11 +100,11 @@ mesh_state rendered_model::state(const mesh_state& ignore) const {
 	return mesh_state::correct;
 }
 
-const std::vector<size_t>& rendered_model::get_material_idxs() const {
+const std::vector<int>& rendered_model::get_material_idxs() const {
 	return mat_idxs;
 }
 
-const std::set<size_t>& rendered_model::get_unique_material_idxs() const {
+const std::set<int>& rendered_model::get_unique_material_idxs() const {
 	return unique_mat_idxs;
 }
 
@@ -110,7 +114,7 @@ const std::vector<material>& rendered_model::get_materials() const {
 
 void rendered_model::load_textures() {
 	texture_loader& load = texture_loader::get_loader();
-	load.load_textures(materials, textures_indexes);
+	load.load_textures(materials, texture_openGL_idxs);
 }
 
 // MODIFIERS
@@ -119,29 +123,48 @@ void rendered_model::clear() {
 	model::clear();
 
 	if (list_index > 0) {
+		#if defined(DEBUG)
+		cout << "rendered_model::clear() - delete OpenGL list" << endl;
+		#endif
 		glDeleteLists(list_index, 1);
 	}
 
 	if (VAO > 0) {
-		cout << "rendered_model::clear() - delete VAO" << endl;
+		#if defined(DEBUG)
+		cout << "rendered_model::clear() - delete VAO " << VAO << endl;
+		#endif
 		glDeleteVertexArrays(1, &VAO);
 		VAO = 0;
 	}
 	if (VBO > 0) {
-		cout << "rendered_model::clear() - delete VBO" << endl;
+		#if defined(DEBUG)
+		cout << "rendered_model::clear() - delete VBO " << VBO << endl;
+		#endif
 		glDeleteBuffers(1, &VBO);
 		VBO = 0;
 	}
+	if (IBO > 0) {
+		#if defined(DEBUG)
+		cout << "rendered_model::clear() - delete IBO " << IBO << endl;
+		#endif
+		glDeleteBuffers(1, &IBO);
+		IBO = 0;
+	}
 	if (EBO > 0) {
-		cout << "rendered_model::clear() - delete EBO" << endl;
+		#if defined(DEBUG)
+		cout << "rendered_model::clear() - delete EBO " << EBO << endl;
+		#endif
 		glDeleteBuffers(1, &EBO);
 		EBO = 0;
 	}
 
-	mat_idxs.clear();
 	materials.clear();
+	mat_idxs.clear();
+	unique_mat_idxs.clear();
+
 	texture_coords.clear();
-	texture_idxs.clear();
+	texture_coord_idxs.clear();
+	texture_openGL_idxs.clear();
 }
 
 bool rendered_model::uses_lists() const {
@@ -197,15 +220,15 @@ void rendered_model::slow_render() const {
 		// set the material of the face
 		bool textenable = false;
 		// material of the face
-		size_t M = mat_idxs[t/3];
+		int M = mat_idxs[t/3];
 		// set the material so that the lighting works
-		if (M < materials.size()) {
+		if (M != __NULL_MATERIAL_INDEX) {
 			glMaterialfv(GL_FRONT,GL_DIFFUSE,  &(materials[M].Kd[0]));
 			glMaterialfv(GL_FRONT,GL_AMBIENT,  &(materials[M].Ka[0]));
 			glMaterialfv(GL_FRONT,GL_SPECULAR, &(materials[M].Ks[0]));
 			glMaterialf(GL_FRONT,GL_SHININESS, materials[M].Ns);
 
-			if (materials[M].txt_id == 0) {
+			if (materials[M].txt_id == __NULL_TEXTURE_INDEX) {
 				glDisable(GL_TEXTURE_2D);
 			}
 			else {
@@ -218,7 +241,7 @@ void rendered_model::slow_render() const {
 		glBegin(GL_TRIANGLES);
 		for (size_t i = t; i < t + 3; ++i) {
 			if (textenable) {
-				const glm::vec2& uv = texture_coords[ texture_idxs[i] ];
+				const glm::vec2& uv = texture_coords[ texture_coord_idxs[i] ];
 				glTexCoord2f(uv.x, 1.0 - uv.y);
 			}
 
@@ -254,7 +277,6 @@ uint rendered_model::compile() {
 void rendered_model::make_buffers() {
 
 	vector<float> data(2*3*triangles.size());
-	vector<uint> flat_mat_idxs(triangles.size());
 	vector<uint> indices(triangles.size());
 
 	for (size_t t = 0; t < triangles.size(); ++t) {
@@ -267,15 +289,14 @@ void rendered_model::make_buffers() {
 		data[6*t + 4] = norm.y;
 		data[6*t + 5] = norm.z;
 
-		flat_mat_idxs[t] = mat_idxs[t/3];
-
 		indices[t] = t;
 	}
 
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &MIBO);
-	glGenBuffers(1, &EBO);
+	uint buffs[2];
+	glGenBuffers(2, buffs);
+	VBO = buffs[0];
+	EBO = buffs[1];
 
 	// bind VAO
 	glBindVertexArray(VAO);
@@ -285,14 +306,11 @@ void rendered_model::make_buffers() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData
 	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, MIBO);
-	glBufferData
-	(GL_ARRAY_BUFFER, flat_mat_idxs.size()*sizeof(uint), &flat_mat_idxs[0], GL_STATIC_DRAW);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*indices.size(), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
 
 	// ---------------------
 	// vertex attributes
@@ -303,10 +321,168 @@ void rendered_model::make_buffers() {
 	glVertexAttribPointer
 	(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
 	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, MIBO);
+	// VBO release
+	// ---------------------
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// ---------------------
+
+	// VAO release
+	glBindVertexArray(0);
+}
+
+void rendered_model::make_buffers_materials() {
+
+	vector<float> data((3 + 3)*triangles.size());
+	vector<int> flat_idxs(triangles.size());
+	vector<uint> indices(triangles.size());
+
+	for (size_t t = 0; t < triangles.size(); ++t) {
+		data[6*t    ] = vertices[ triangles[t] ].x;
+		data[6*t + 1] = vertices[ triangles[t] ].y;
+		data[6*t + 2] = vertices[ triangles[t] ].z;
+
+		glm::vec3 norm = glm::normalize(normals[ normal_idxs[t] ]);
+		data[6*t + 3] = norm.x;
+		data[6*t + 4] = norm.y;
+		data[6*t + 5] = norm.z;
+
+		flat_idxs[t] = mat_idxs[t/3];
+
+		indices[t] = t;
+	}
+
+	uint buffs[3];
+	glGenBuffers(3, buffs);
+	VBO = buffs[0];
+	IBO = buffs[1];
+	EBO = buffs[2];
+
+	// bind VAO
+	glBindVertexArray(VAO);
+
+	// ---------------------
+	// VBO fill
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData
+	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	glBufferData
+	(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+
+	// ---------------------
+	// EBO fill
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
+
+	// -----------------------
+	// ** vertex attributes **
+	// vertex coordinates
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer
+	(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	// normals
+	glVertexAttribPointer
+	(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// indices (materials)
+	glBindBuffer(GL_ARRAY_BUFFER, IBO);
 	glVertexAttribPointer
 	(2, 1, GL_FLOAT, GL_FALSE, 0, (void *)0);
 	glEnableVertexAttribArray(2);
+	// VBO release
+	// ---------------------
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// ---------------------
+
+	// VAO release
+	glBindVertexArray(0);
+}
+
+void rendered_model::make_buffers_materials_textures() {
+
+	vector<float> data((3 + 3 + 2)*triangles.size());
+	vector<int> flat_idxs((1 + 1)*triangles.size());
+	vector<uint> indices(triangles.size());
+
+	for (size_t t = 0; t < triangles.size(); ++t) {
+		const glm::vec3& vert = vertices[ triangles[t] ];
+		data[8*t    ] = vert.x;
+		data[8*t + 1] = vert.y;
+		data[8*t + 2] = vert.z;
+
+		glm::vec3 norm = glm::normalize(normals[ normal_idxs[t] ]);
+		data[8*t + 3] = norm.x;
+		data[8*t + 4] = norm.y;
+		data[8*t + 5] = norm.z;
+
+		const glm::vec2& tex = texture_coords[ texture_coord_idxs[t] ];
+		data[8*t + 6] = tex.x;
+		data[8*t + 7] = 1.0f - tex.y;
+
+		int M = mat_idxs[t/3];
+		flat_idxs[2*t    ] = M;
+		if (M != __NULL_MATERIAL_INDEX) {
+			flat_idxs[2*t + 1] = materials[M].txt_id;
+		}
+
+		indices[t] = t;
+	}
+
+	glGenVertexArrays(1, &VAO);
+
+	uint buffs[3];
+	glGenBuffers(3, buffs);
+	VBO = buffs[0];
+	IBO = buffs[1];
+	EBO = buffs[2];
+
+	// bind VAO
+	glBindVertexArray(VAO);
+
+	// ---------------------
+	// VBO fill
+	// vertex attributes
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData
+	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	//
+	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	glBufferData
+	(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+
+	// ---------------------
+	// EBO fill
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
+
+	// -----------------------
+	// ** vertex attributes **
+	// vertex coordinates
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer
+	(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	// normals
+	glVertexAttribPointer
+	(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coordinates
+	glVertexAttribPointer
+	(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(6*sizeof(float)));
+	glEnableVertexAttribArray(2);
+	// indices (materials + textures)
+	// -- materials
+	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	glVertexAttribPointer
+	(3, 1, GL_FLOAT, GL_FALSE, 2*sizeof(int), (void *)0);
+	glEnableVertexAttribArray(3);
+	// -- textures
+	glVertexAttribPointer
+	(4, 1, GL_FLOAT, GL_FALSE, 2*sizeof(int), (void *)(1*sizeof(int)));
+	glEnableVertexAttribArray(4);
 	// VBO release
 	// ---------------------
 

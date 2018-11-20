@@ -65,7 +65,7 @@ class OBJ_reader {
 		/// Texture coordinates.
 		std::vector<glm::vec2> textures_coords;
 		/// Texture indices per triangle.
-		std::vector<int> texture_idxs;
+		std::vector<int> texture_coord_idxs;
 
 		/// Frees the memory occupied by the loader.
 		void clean();

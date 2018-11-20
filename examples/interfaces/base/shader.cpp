@@ -219,6 +219,9 @@ bool shader::init(const string& dir, const string& vertex_name, const string& fr
 
 void shader::clear() {
 	if (ID != 0) {
+		#if defined(DEBUG)
+		cout << "shader::clear() - deleting shader program " << ID << endl;
+		#endif
 		glDeleteProgram(ID);
 		ID = 0;
 	}

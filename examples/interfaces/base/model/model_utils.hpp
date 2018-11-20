@@ -7,7 +7,11 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#define NULL_TEXTURE_NAME "material-without-texture"
+#define __NULL_MATERIAL_NAME "material-without-material"
+#define __NULL_MATERIAL_INDEX -1
+#define __NULL_TEXTURE_NAME "material-without-texture"
+#define __NULL_TEXTURE_INDEX 0
+#define __MAX_TEXTURES_LOADED 4
 
 /**
  * @brief The material struct.
@@ -17,8 +21,8 @@ struct material {
 	std::string id;
 	/// Filename of the texture material.
 	std::string txt_name;
-	/// Texture id used on this material.
-	unsigned int txt_id;
+	/// Texture (OpenGL) id used on this material.
+	uint txt_id;
 	/// Illumination model.
 	int illum;
 	/// Specular exponent.
@@ -50,7 +54,7 @@ struct material {
 	(
 		const std::string& _id,
 		const std::string& _txt_name,
-		unsigned int _txt_id,
+		uint _txt_id,
 		const glm::vec3& amb,
 		const glm::vec3& dif,
 		const glm::vec3& spec,

@@ -34,16 +34,17 @@ class rendered_model : public model {
 		 * Material per triangle, not per vertex.
 		 */
 		std::vector<material> materials;
-		std::set<size_t> unique_mat_idxs;
 
 		/// Material idx per face.
-		std::vector<size_t> mat_idxs;
+		std::vector<int> mat_idxs;
+		std::set<int> unique_mat_idxs;
+
 		/// Texture coordinates.
 		std::vector<glm::vec2> texture_coords;
-		/// Texture indices per vertex.
-		std::vector<int> texture_idxs;
+		/// Texture coordinate indices per vertex.
+		std::vector<int> texture_coord_idxs;
 		/// OpenGL indexes of the textures.
-		std::vector<uint> textures_indexes;
+		std::vector<uint> texture_openGL_idxs;
 
 		/// Index of the compiled list.
 		uint list_index;
@@ -52,8 +53,13 @@ class rendered_model : public model {
 		uint VAO;
 		/// Vertex Buffer Object index.
 		uint VBO;
-		/// Material indices Buffer Object index.
-		uint MIBO;
+		/**
+		 * @brief Indices Buffer Object index.
+		 *
+		 * May contain only material indices or both
+		 * material and texture indices.
+		 */
+		uint IBO;
 		/// Element Buffer Object (indices).
 		uint EBO;
 
@@ -78,14 +84,14 @@ class rendered_model : public model {
 		/// Sets the texture coordinates.
 		void set_texture_coords(const std::vector<glm::vec2>& texts);
 		/// Sets the texture coordinates indices.
-		void set_texture_idxs(const std::vector<int>& text_idxs);
+		void set_texture_coord_idxs(const std::vector<int>& text_coord_idxs);
 
 		// GETTERS
 
 		mesh_state state(const mesh_state& ignore = mesh_state::correct) const;
 
-		const std::vector<size_t>& get_material_idxs() const;
-		const std::set<size_t>& get_unique_material_idxs() const;
+		const std::vector<int>& get_material_idxs() const;
+		const std::set<int>& get_unique_material_idxs() const;
 
 		const std::vector<material>& get_materials() const;
 
@@ -165,9 +171,27 @@ class rendered_model : public model {
 		 * @brief Builds buffer objects for fast rendering.
 		 *
 		 * Builds the necessary buffer objects to render the model
-		 *more efficiently than with GL lists.
+		 * more efficiently than with GL lists.
 		 */
 		void make_buffers();
+
+		/**
+		 * @brief Builds buffer objects for fast rendering.
+		 *
+		 * Builds the necessary buffer objects to render the model
+		 * more efficiently than with GL lists. This function adds
+		 * materials to the buffers.
+		 */
+		void make_buffers_materials();
+
+		/**
+		 * @brief Builds buffer objects for fast rendering.
+		 *
+		 * Builds the necessary buffer objects to render the model
+		 * more efficiently than with GL lists. This function adds
+		 * materials to the buffers.
+		 */
+		void make_buffers_materials_textures();
 
 		/**
 		 * @brief Chooses the best way of rendering this model.

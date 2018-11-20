@@ -21,6 +21,9 @@ class texture_loader {
 
 		/// The textures loaded into memory
 		std::map<std::string, unsigned int> textures;
+		/// Amount of textures loaded.
+		uint tex_loaded;
+
 		/// Constructor
 		texture_loader();
 

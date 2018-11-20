@@ -12,7 +12,7 @@ using namespace std;
 // PRIVATE
 
 texture_loader::texture_loader() {
-
+	tex_loaded = 0;
 }
 
 // PUBLIC
@@ -29,7 +29,8 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 	for (size_t i = 0; i < mats.size(); ++i) {
 		material& m = mats[i];
 
-		if (m.txt_name == NULL_TEXTURE_NAME) {
+		if (m.txt_name == __NULL_TEXTURE_NAME) {
+			m.txt_id = __NULL_TEXTURE_INDEX;
 			continue;
 		}
 
@@ -46,6 +47,8 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 			m.txt_id = id;
 			continue;
 		}
+
+		// load texture and assign index to material
 
 		#if defined (DEBUG)
 		cout << "texture_loader::load_textures:" << endl;
@@ -107,10 +110,16 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
 		textures[m.txt_name] = id;
 		m.txt_id = id;
 		unique_texs.insert(id);
+		++tex_loaded;
 	}
 
 	idxs.clear();
 	idxs = vector<unsigned int>( unique_texs.begin(), unique_texs.end() );
+
+	if (tex_loaded > __MAX_TEXTURES_LOADED) {
+		cerr << "texture_loader::load_textures - Error" << endl;
+		cerr << "    Maximum amount of loaded textures reached" << endl;
+	}
 }
 
 /**
@@ -123,7 +132,7 @@ void texture_loader::load_textures(vector<material>& mats, vector<unsigned int>&
  */
 void texture_loader::clear_textures(const vector<material>& mats) {
 	for (const material& m : mats) {
-		if (m.txt_name == NULL_TEXTURE_NAME) {
+		if (m.txt_name == __NULL_TEXTURE_NAME) {
 			continue;
 		}
 
@@ -140,17 +149,25 @@ void texture_loader::clear_textures(const vector<material>& mats) {
 
 		glDeleteTextures(1, &id);
 		it->second = 0;
+		--tex_loaded;
 	}
 }
 
 void texture_loader::clear_all() {
+	#if defined(DEBUG)
+	cout << "texture_loader::clear_all() - Delete all texutres" << endl;
+	#endif
 	for (auto& txt_id : textures) {
 		if (txt_id.second == 0) {
 			continue;
 		}
+		#if defined(DEBUG)
+		cout << "    deleting " << txt_id.second << endl;
+		#endif
 		glDeleteTextures(1, &txt_id.second);
 		txt_id.second = 0;
 	}
+	tex_loaded = 0;
 }
 
 // GETTERS

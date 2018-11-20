@@ -122,7 +122,7 @@ bool OBJ_reader::load_material(const char *mtl_file) {
 				);
 			}
 			valid_material = true;
-			txt_name = NULL_TEXTURE_NAME;
+			txt_name = __NULL_TEXTURE_NAME;
 			txt_id = 0;
 			ss >> mat_name;
 			txt_id = 0;
@@ -168,7 +168,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 	assert(A < B and B < file_lines.size());
 
 	// current material's name
-	string current_material;
+	string current_material = __NULL_MATERIAL_NAME;
 	char buf[256];
 	// the current face should be smoothed
 	bool smooth_face = false;
@@ -240,7 +240,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 				for (int i = 0; i < 3; ++i) {
 					triangles.push_back(VN[i]);
 					normal_idxs.push_back(NI[i]);
-					texture_idxs.push_back(TC[i]);
+					texture_coord_idxs.push_back(TC[i]);
 				}
 				mat_ids.push_back(current_material);
 			}
@@ -276,7 +276,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 				for (int i = 0; i < 3; ++i) {
 					triangles.push_back(VN[i]);
 					normal_idxs.push_back(NI[i]);
-					texture_idxs.push_back(TC[i]);
+					texture_coord_idxs.push_back(TC[i]);
 				}
 				mat_ids.push_back(current_material);
 
@@ -288,7 +288,7 @@ void OBJ_reader::parse_file_lines(size_t A, size_t B) {
 				for (int i = 0; i < 3; ++i) {
 					triangles.push_back(VN[i]);
 					normal_idxs.push_back(NI[i]);
-					texture_idxs.push_back(TC[i]);
+					texture_coord_idxs.push_back(TC[i]);
 				}
 				mat_ids.push_back(current_material);
 			}
@@ -320,7 +320,7 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 	filename = fname;
 
 	#if defined (DEBUG)
-	cout << "OBJ_reader::load_object: Loading file '" << directory + filename << "'" << endl;
+	cout << "OBJ_reader::load_object: Loading file '" << directory + "/" + filename << "'" << endl;
 	#endif
 
 	if (not load_file()) {
@@ -366,7 +366,7 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 	}
 
 	#if defined (DEBUG)
-	cout << "OBJ_reader::load_object: Parsing object '" << mesh_name << "'" << endl;
+	cout << "    Parsing object '" << mesh_name << "'" << endl;
 	cout << "    Object '" << mesh_name << "' is described from line "
 		 << aux << " to line " << file_lines.size() << endl;
 	#endif
@@ -375,7 +375,7 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 	parse_file_lines(4, file_lines.size() - 1);
 
 	#if defined (DEBUG)
-	cout << "OBJ_reader::load_object: file '" << filename << "' "
+	cout << "    file '" << filename << "' "
 		 << "completely parsed" << endl;
 	#endif
 
@@ -393,8 +393,8 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 		if (normal_idxs[i] != -1) {
 			--normal_idxs[i];
 		}
-		if (texture_idxs[i] != -1) {
-			--texture_idxs[i];
+		if (texture_coord_idxs[i] != -1) {
+			--texture_coord_idxs[i];
 		}
 	}
 
@@ -407,19 +407,19 @@ bool OBJ_reader::load_object(const string& dir, const string& fname, rendered_mo
 
 	M.set_materials(materials, mat_ids);
 	M.set_texture_coords(textures_coords);
-	M.set_texture_idxs(texture_idxs);
+	M.set_texture_coord_idxs(texture_coord_idxs);
 
 	#if defined (DEBUG)
-	cout << "OBJ_reader::load_object: Object '" << mesh_name << "' ";
+	cout << "    object '" << mesh_name << "' ";
 	cout << "from file '" << filename << "' was loaded" << endl;
 
 	mesh_state state = M.state();
 	if (state != mesh_state::correct) {
-		cout << "OBJ_reader::load_object: the contains errors" << endl;
+		cout << "    the mesh contains errors" << endl;
 		return false;
 	}
 	else {
-		cout << "OBJ_reader::load_object: the mesh is in a correct state" << endl;
+		cout << "    the mesh is in a correct state" << endl;
 	}
 	#endif
 
