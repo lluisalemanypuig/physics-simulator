@@ -29,6 +29,8 @@ class box {
 		box();
 		~box();
 
+		void clear();
+
 		inline friend
 		std::ostream& operator<< (std::ostream& os, const box& b) {
 			os << "(" << b.min.x << "," << b.min.y << "," << b.min.z << "),"

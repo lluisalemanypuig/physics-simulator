@@ -45,6 +45,6 @@ class rplane : public rgeom {
 		// OTHERS
 
 		void draw_geometry() const;
-		void make_modelview(glm::mat4& model) const;
+		void make_model_matrix(glm::mat4& mat) const;
 		void make_box(box& b) const;
 };

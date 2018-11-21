@@ -49,9 +49,9 @@ void rsphere::draw_geometry() const {
 	cout << "    using glBegin(), glEnd()" << endl;
 }
 
-void rsphere::make_modelview(glm::mat4& modelview) const {
-	modelview = glm::translate(modelview, C);
-	modelview = glm::scale(modelview, glm::vec3(R,R,R)*2.0f);
+void rsphere::make_model_matrix(glm::mat4& mat) const {
+	mat = glm::translate(mat, C);
+	mat = glm::scale(mat, glm::vec3(R,R,R)*2.0f);
 }
 
 void rsphere::make_box(box& b) const {

@@ -78,8 +78,6 @@ namespace study_cases {
 		shared_ptr<rendered_model> model_ball(new rendered_model);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
-		model_ball->load_textures();
-		model_ball->compile();
 
 		rsphere *rs = new rsphere();
 		rs->set_center(glm::vec3(5.0f, 5.0f, 5.0f));
@@ -93,6 +91,16 @@ namespace study_cases {
 
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+
+		glut_functions::init_shaders();
+		model_ball->load_textures();
+		if (use_shaders) {
+			SR.get_box().make_buffers();
+			model_ball->make_buffers_materials_textures();
+		}
+		else {
+			model_ball->compile();
+		}
 
 		cout << "Initialised simulation 3:" << endl;
 		cout << "    mesh mass: " << mesh_mass << endl;
@@ -152,6 +160,8 @@ namespace study_cases {
 
 	void sim3_reset() {
 		SR.clear();
+		glut_functions::clear_shaders();
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();

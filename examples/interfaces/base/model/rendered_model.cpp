@@ -127,6 +127,7 @@ void rendered_model::clear() {
 		cout << "rendered_model::clear() - delete OpenGL list" << endl;
 		#endif
 		glDeleteLists(list_index, 1);
+		list_index = 0;
 	}
 
 	if (VAO > 0) {
@@ -304,25 +305,18 @@ void rendered_model::make_buffers() {
 	// ---------------------
 	// VBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData
-	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	// vertex coordinates
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	// normals
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
-
-	// ---------------------
-	// vertex attributes
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer
-	(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer
-	(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// VBO release
-	// ---------------------
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// ---------------------
@@ -341,7 +335,7 @@ void rendered_model::make_buffers() {
 void rendered_model::make_buffers_materials() {
 
 	vector<float> data((3 + 3)*triangles.size());
-	vector<int> flat_idxs(triangles.size());
+	vector<GLint> flat_idxs(triangles.size());
 	vector<uint> indices(triangles.size());
 
 	for (size_t t = 0; t < triangles.size(); ++t) {
@@ -359,6 +353,8 @@ void rendered_model::make_buffers_materials() {
 		indices[t] = t;
 	}
 
+	glGenVertexArrays(1, &VAO);
+
 	uint buffs[3];
 	glGenBuffers(3, buffs);
 	VBO = buffs[0];
@@ -371,35 +367,26 @@ void rendered_model::make_buffers_materials() {
 	// ---------------------
 	// VBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData
-	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	// vertex coordinates
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	// normals
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	// ---------------------
+	// IBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, IBO);
-	glBufferData
-	(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+	// indices (materials)
+	glVertexAttribIPointer(2, 1, GL_INT, 0, (void *)0);
+	glEnableVertexAttribArray(2);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
-
-	// -----------------------
-	// ** vertex attributes **
-	// vertex coordinates
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer
-	(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
-	glEnableVertexAttribArray(0);
-	// normals
-	glVertexAttribPointer
-	(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// indices (materials)
-	glBindBuffer(GL_ARRAY_BUFFER, IBO);
-	glVertexAttribPointer
-	(2, 1, GL_FLOAT, GL_FALSE, 0, (void *)0);
-	glEnableVertexAttribArray(2);
-	// VBO release
-	// ---------------------
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// ---------------------

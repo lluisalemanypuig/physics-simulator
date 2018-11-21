@@ -97,7 +97,7 @@ class rgeom {
 		 */
 		virtual void draw_geometry() const = 0;
 
-		virtual void make_modelview(glm::mat4& model) const = 0;
+		virtual void make_model_matrix(glm::mat4& mat) const = 0;
 
 		/// Makes the bounding box of this model.
 		virtual void make_box(box& b) const = 0;

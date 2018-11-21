@@ -1,3 +1,6 @@
+// C includes
+#include <string.h>
+
 // C++ includes
 #include <iostream>
 #include <utility>
@@ -27,7 +30,7 @@ typedef pair<int,int> point;
 static shader texture_shader;
 static shader flat_shader;
 static renderer SR;
-static bool use_shader = true;
+static bool use_shader = false;
 
 static timing::time_point sec;
 
@@ -66,6 +69,12 @@ bool inside_window(int x, int y) {
 // -----------------
 
 void initGL(int argc, char *argv[]) {
+	if (argc > 1) {
+		if (strcmp(argv[1], "--use-shaders") == 0) {
+			use_shader = true;
+		}
+	}
+
 	// initial window size
 	int iw = 640;
 	int ih = 480;
@@ -101,11 +110,13 @@ void initGL(int argc, char *argv[]) {
 	/* load shaders */
 	if (use_shader) {
 		bool r;
-		r = texture_shader.init("../../interfaces/shaders", "textures.vert", "textures.frag");
+		r = texture_shader.init
+			("../../interfaces/shaders", "material.vert", "material.frag");
 		if (not r) {
 			exit(1);
 		}
-		r = flat_shader.init("../../interfaces/shaders", "flat.vert", "flat.frag");
+		r = flat_shader.init
+			("../../interfaces/shaders", "flat.vert", "flat.frag");
 		if (not r) {
 			exit(1);
 		}
@@ -134,6 +145,7 @@ void initGL(int argc, char *argv[]) {
 
 	OBJ_reader obj;
 	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
+	m->display_mesh_info();
 
 	SR.add_model(m);
 
@@ -150,7 +162,7 @@ void initGL(int argc, char *argv[]) {
 		for (size_t i = 0; i < models.size(); ++i) {
 			cout << "    " << i << ":" << endl;
 			models[i]->load_textures();
-			models[i]->make_buffers_materials_textures();
+			models[i]->make_buffers_materials();
 		}
 		cout << "    all made" << endl;
 	}
@@ -176,13 +188,13 @@ void refresh() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (use_shader) {
-		glm::mat4 projection = SR.make_projection();
-		glm::mat4 modelview = SR.make_modelview();
-		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
+		glm::mat4 projection = SR.make_projection_matrix();
+		glm::mat4 view = SR.make_view_matrix();
+		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(view));
 
 		texture_shader.bind();
 		texture_shader.set_mat4("projection", projection);
-		texture_shader.set_mat4("modelview", modelview);
+		texture_shader.set_mat4("modelview", view);
 		texture_shader.set_mat3("normal_matrix", normal_matrix);
 		texture_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
 
@@ -198,12 +210,11 @@ void refresh() {
 		flat_shader.set_bool("wireframe", true);
 		flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
 		flat_shader.set_mat4("projection", projection);
-		flat_shader.set_mat4("modelview", modelview);
+		flat_shader.set_mat4("modelview", view);
 		flat_shader.set_mat3("normal_matrix", normal_matrix);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		SR.get_box().fast_render();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 		flat_shader.release();
 	}
 	else {
@@ -215,7 +226,7 @@ void refresh() {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		SR.apply_modelview();
+		SR.apply_view();
 
 		glEnable(GL_LIGHTING);
 

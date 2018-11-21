@@ -130,6 +130,7 @@ void sim_renderer::clear() {
 		delete g;
 	}
 	geometry.clear();
+	B.clear();
 	S.clear_simulation();
 }
 

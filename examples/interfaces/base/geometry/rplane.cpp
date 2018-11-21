@@ -43,7 +43,7 @@ void rplane::draw_geometry() const {
 }
 
 
-void rplane::make_modelview(glm::mat4& ) const {}
+void rplane::make_model_matrix(glm::mat4& ) const {}
 void rplane::make_box(box& b) const {
 	b.set_min_max(_p1, _p1);
 	b.enlarge_box(_p2);

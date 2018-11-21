@@ -252,21 +252,25 @@ void shader::set_vec2(const string& name, const glm::vec2& v) const {
 void shader::set_vec3(const string& name, const glm::vec3& v) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
 	glUniform3f(loc, v.x, v.y, v.z);
+	assert(glGetError() == GL_NO_ERROR);
 }
 
 void shader::set_vec4(const string& name, const glm::vec4& v) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
 	glUniform4fv(loc, 1, glm::value_ptr(v));
+	assert(glGetError() == GL_NO_ERROR);
 }
 
-void shader::set_mat3(const string& name, const glm::mat3& m) const {
+void shader::set_mat3(const string& name, const glm::mat3& m, bool transpose) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
-	glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(m));
+	glUniformMatrix3fv(loc, 1, transpose, glm::value_ptr(m));
+	assert(glGetError() == GL_NO_ERROR);
 }
 
-void shader::set_mat4(const string& name, const glm::mat4& m) const {
+void shader::set_mat4(const string& name, const glm::mat4& m, bool transpose) const {
 	GLint loc = glGetUniformLocation(ID, name.c_str());
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m));
+	glUniformMatrix4fv(loc, 1, transpose, glm::value_ptr(m));
+	assert(glGetError() == GL_NO_ERROR);
 }
 
 // GETTERS

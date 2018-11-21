@@ -208,17 +208,17 @@ class renderer {
 		void apply_projection() const;
 
 		/// Returns the projection matrix corresponding to the active camera.
-		glm::mat4 make_projection() const;
+		glm::mat4 make_projection_matrix() const;
 
 		/**
 		 * @brief Move the scene according to the internal state.
 		 *
 		 * Either inspecting or flying.
 		 */
-		void apply_modelview() const;
+		void apply_view() const;
 
 		/// Returns the modelview matrix corresponding to the active viewing mode.
-		glm::mat4 make_modelview() const;
+		glm::mat4 make_view_matrix() const;
 
 		/// (Slow) Renders the models
 		void slow_render_models() const;

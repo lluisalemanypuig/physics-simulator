@@ -137,10 +137,6 @@ namespace study_cases {
 
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
-		model_ball->load_textures();
-		if (use_shaders) {
-			model_ball->make_buffers_materials_textures();
-		}
 
 		sx = 12.5f;
 		for (int i = 1; i <= 10; ++i) {
@@ -178,7 +174,15 @@ namespace study_cases {
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
-		glut_functions::init_openGL_simulation();
+		glut_functions::init_shaders();
+		model_ball->load_textures();
+		if (use_shaders) {
+			SR.get_box().make_buffers();
+			model_ball->make_buffers_materials_textures();
+		}
+		else {
+			model_ball->compile();
+		}
 	}
 
 	void sim1_help() {
@@ -200,6 +204,7 @@ namespace study_cases {
 		cout << "    Options to manipulate the rendering:" << endl;
 		cout << "    --use-shaders: use GLSL shaders to render objects" << endl;
 		cout << "        Default: false" << endl;
+		cout << endl;
 	}
 
 	void sim1_reset() {

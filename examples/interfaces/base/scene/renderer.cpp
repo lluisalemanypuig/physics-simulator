@@ -227,7 +227,7 @@ void renderer::apply_projection() const {
 	}
 }
 
-glm::mat4 renderer::make_projection() const {
+glm::mat4 renderer::make_projection_matrix() const {
 	glm::mat4 proj;
 
 	if (use_perspective) {
@@ -253,7 +253,7 @@ glm::mat4 renderer::make_projection() const {
 	return proj;
 }
 
-void renderer::apply_modelview() const {
+void renderer::apply_view() const {
 	if (inspect) {
 		glTranslatef(0.0f, 0.0f, -diag_length);
 		glRotatef(theta, 1.0f, 0.0f, 0.0f);
@@ -273,17 +273,18 @@ void renderer::apply_modelview() const {
 	}
 }
 
-glm::mat4 renderer::make_modelview() const {
-	glm::mat4 modelview;
+glm::mat4 renderer::make_view_matrix() const {
+	glm::mat4 view;
 	if (inspect) {
-		modelview = glm::translate(modelview, glm::vec3(0.0f, 0.0f, -diag_length));
-		modelview = glm::rotate(modelview, theta*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
-		modelview = glm::rotate(modelview, -psi*TO_RAD, glm::vec3(0.0f, 1.0f, 0.0f));
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -diag_length));
+		view = glm::rotate(view, theta*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
+		view = glm::rotate(view, -psi*TO_RAD, glm::vec3(0.0f, 1.0f, 0.0f));
+		view = glm::translate(view, glm::vec3(-VRP.x, -VRP.y, -VRP.z));
 	}
 	else if (fly) {
-		modelview = glm::rotate(modelview, -pitch*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
-		modelview = glm::rotate(modelview, -yaw*TO_RAD, glm::vec3(0.0f, 1.0f, 0.0f));
-		modelview = glm::translate(modelview, glm::vec3(-cam_pos.x, -cam_pos.y, -cam_pos.z));
+		view = glm::rotate(view, -pitch*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
+		view = glm::rotate(view, -yaw*TO_RAD, glm::vec3(0.0f, 1.0f, 0.0f));
+		view = glm::translate(view, glm::vec3(-cam_pos.x, -cam_pos.y, -cam_pos.z));
 	}
 	else {
 		cerr << "void simulation_renderer::apply_camera() - Error!" << endl;
@@ -292,7 +293,7 @@ glm::mat4 renderer::make_modelview() const {
 		assert(false);
 	}
 
-	return modelview;
+	return view;
 }
 
 void renderer::slow_render_models() const {

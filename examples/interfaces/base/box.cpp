@@ -60,6 +60,10 @@ box::box() {
 	VAO = VBO = EBO = 0;
 }
 box::~box() {
+	clear();
+}
+
+void box::clear() {
 	if (VAO > 0) {
 		cout << "box::~box() - delete VAO " << VAO << endl;
 		glDeleteVertexArrays(1, &VAO);

@@ -80,7 +80,8 @@ namespace glut_functions {
 	/* actual glut functions */
 
 	void init_glut_variables();
-	void init_openGL_simulation();
+	void init_shaders();
+	void clear_shaders();
 
 	void finish_simulation();
 	void parse_common_params(int argc, char *argv[]);

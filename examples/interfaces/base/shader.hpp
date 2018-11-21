@@ -55,9 +55,9 @@ class shader {
 		/// Sets a vec4 value to the specified uniform.
 		void set_vec4(const std::string& name, const glm::vec4& v) const;
 		/// Sets a mat3 value to the specified uniform.
-		void set_mat3(const std::string& name, const glm::mat3& m) const;
+		void set_mat3(const std::string& name, const glm::mat3& m, bool transpose = false) const;
 		/// Sets a mat4 value to the specified uniform.
-		void set_mat4(const std::string& name, const glm::mat4& m) const;
+		void set_mat4(const std::string& name, const glm::mat4& m, bool transpose = false) const;
 
 		// GETTERS
 

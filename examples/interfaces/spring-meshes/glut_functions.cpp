@@ -90,7 +90,7 @@ namespace glut_functions {
 		use_shaders = false;
 	}
 
-	void init_openGL_simulation() {
+	void init_shaders() {
 		if (use_shaders) {
 			bool r;
 			r = texture_shader.init
@@ -109,8 +109,13 @@ namespace glut_functions {
 			texture_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
 			texture_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
 			texture_shader.release();
+		}
+	}
 
-			SR.get_box().make_buffers();
+	void clear_shaders() {
+		if (use_shaders) {
+			flat_shader.clear();
+			texture_shader.clear();
 		}
 	}
 
@@ -184,20 +189,24 @@ namespace glut_functions {
 
 	void shader_render() {
 		// texture shader for geometry
-		glm::mat4 projection = SR.make_projection();
+		glm::mat4 projection = SR.make_projection_matrix();
+		glm::mat4 view = SR.make_view_matrix();
 
 		texture_shader.bind();
-		texture_shader.set_mat4("projection", projection);
 		texture_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
+		texture_shader.set_mat4("projection", projection);
 
 		// render models of geometry
 		for (rgeom *r : SR.get_geometry()) {
-			glm::mat4 modelview = SR.make_modelview();
-
 			shared_ptr<rendered_model> m = r->get_model();
 			if (m != nullptr) {
-				r->make_modelview(modelview);
+
+				glm::mat4 model(1.0f);
+				r->make_model_matrix(model);
+
+				glm::mat4 modelview = view*model;
 				glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
+
 				texture_shader.set_mat4("modelview", modelview);
 				texture_shader.set_mat3("normal_matrix", normal_matrix);
 
@@ -207,16 +216,13 @@ namespace glut_functions {
 		}
 		texture_shader.release();
 
-		// shader for box, because I can
 		if (draw_box) {
-			glm::mat4 modelview = SR.make_modelview();
-			glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
-
+			glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(view));
 			flat_shader.bind();
 			flat_shader.set_bool("wireframe", true);
 			flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
 			flat_shader.set_mat4("projection", projection);
-			flat_shader.set_mat4("modelview", modelview);
+			flat_shader.set_mat4("modelview", view);
 			flat_shader.set_mat3("normal_matrix", normal_matrix);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			SR.get_box().fast_render();
@@ -226,28 +232,38 @@ namespace glut_functions {
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
 		SR.apply_projection();
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
-		SR.apply_modelview();
+		SR.apply_view();
 
 		SR.render_simulation();
+		// render geometry without models
+		for (rgeom *r : SR.get_geometry()) {
+			shared_ptr<rendered_model> m = r->get_model();
+			if (m == nullptr) {
+				r->draw();
+			}
+		}
+
+		/*
+		if (draw_box) {
+			glDisable(GL_LIGHTING);
+			glColor3f(1.0f,0.0f,0.0f);
+			SR.get_box().slow_render();
+		}*/
 	}
 
 	void no_shader_render() {
 		// no shader for all
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
 		SR.apply_projection();
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
-		SR.apply_modelview();
+		SR.apply_view();
 
 		SR.render_simulation();
 		SR.render_geometry();
@@ -269,11 +285,11 @@ namespace glut_functions {
 			no_shader_render();
 		}
 
-		glutSwapBuffers();
-
 		for (int i = 0; i < 10; ++i) {
 			SR.apply_time_step();
 		}
+
+		glutSwapBuffers();
 	}
 
 	void timed_refresh(int value) {
