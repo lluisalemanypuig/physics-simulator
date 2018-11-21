@@ -446,47 +446,35 @@ void rendered_model::make_buffers_materials_textures() {
 
 	// ---------------------
 	// VBO fill
-	// vertex attributes
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData
-	(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
-	//
+	glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	// vertex coordinates
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	// normals
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coordinates
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(6*sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+	// ---------------------
+	// IBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, IBO);
-	glBufferData
-	(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+	// indices (materials + textures)
+	// -- materials
+	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	glVertexAttribIPointer(3, 1, GL_INT, 2*sizeof(int), (void *)0);
+	glEnableVertexAttribArray(3);
+	// -- textures
+	glVertexAttribIPointer(4, 1, GL_INT, 2*sizeof(int), (void *)(1*sizeof(int)));
+	glEnableVertexAttribArray(4);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
-
-	// -----------------------
-	// ** vertex attributes **
-	// vertex coordinates
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer
-	(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)0);
-	glEnableVertexAttribArray(0);
-	// normals
-	glVertexAttribPointer
-	(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(3*sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coordinates
-	glVertexAttribPointer
-	(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(6*sizeof(float)));
-	glEnableVertexAttribArray(2);
-	// indices (materials + textures)
-	// -- materials
-	glBindBuffer(GL_ARRAY_BUFFER, IBO);
-	glVertexAttribPointer
-	(3, 1, GL_FLOAT, GL_FALSE, 2*sizeof(int), (void *)0);
-	glEnableVertexAttribArray(3);
-	// -- textures
-	glVertexAttribPointer
-	(4, 1, GL_FLOAT, GL_FALSE, 2*sizeof(int), (void *)(1*sizeof(int)));
-	glEnableVertexAttribArray(4);
-	// VBO release
-	// ---------------------
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// ---------------------

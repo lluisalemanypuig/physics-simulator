@@ -111,7 +111,7 @@ void initGL(int argc, char *argv[]) {
 	if (use_shader) {
 		bool r;
 		r = texture_shader.init
-			("../../interfaces/shaders", "material.vert", "material.frag");
+			("../../interfaces/shaders", "textures.vert", "textures.frag");
 		if (not r) {
 			exit(1);
 		}
@@ -162,7 +162,7 @@ void initGL(int argc, char *argv[]) {
 		for (size_t i = 0; i < models.size(); ++i) {
 			cout << "    " << i << ":" << endl;
 			models[i]->load_textures();
-			models[i]->make_buffers_materials();
+			models[i]->make_buffers_materials_textures();
 		}
 		cout << "    all made" << endl;
 	}
