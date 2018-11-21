@@ -216,20 +216,6 @@ namespace glut_functions {
 		}
 		texture_shader.release();
 
-		if (draw_box) {
-			glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(view));
-			flat_shader.bind();
-			flat_shader.set_bool("wireframe", true);
-			flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
-			flat_shader.set_mat4("projection", projection);
-			flat_shader.set_mat4("modelview", view);
-			flat_shader.set_mat3("normal_matrix", normal_matrix);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			SR.get_box().fast_render();
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			flat_shader.release();
-		}
-
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		SR.apply_projection();
@@ -246,13 +232,11 @@ namespace glut_functions {
 				r->draw();
 			}
 		}
-
-		/*
 		if (draw_box) {
 			glDisable(GL_LIGHTING);
 			glColor3f(1.0f,0.0f,0.0f);
 			SR.get_box().slow_render();
-		}*/
+		}
 	}
 
 	void no_shader_render() {
