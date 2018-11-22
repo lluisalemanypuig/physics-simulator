@@ -13,14 +13,15 @@ SOURCES += \
     utils.cpp \
     study_cases.cpp \
     00_bounce_floor.cpp \
-    08_bounce_floor_sized.cpp \
     01_roll_floor.cpp \
     02_bounce_sphere.cpp \
     03_tri_tri_plane.cpp \
     04_roll_plane_sphere.cpp \
     05_hose.cpp \
     06_mesh1d.cpp \
-    07_mesh2d_regular.cpp
+    07_mesh2d_regular.cpp \
+    08_bounce_floor_sized.cpp \
+    09_roll_floor_sized.cpp
 
 HEADERS += \
     utils.hpp \

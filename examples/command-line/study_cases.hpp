@@ -20,7 +20,6 @@ namespace study_cases {
 	 * on a plane (the floor).
 	 */
 	void bounce_on_floor(int argc, char *argv[]);
-
 	/* -- Floor (1') study case --
 	 * Simply a sized particle bouncing vertically
 	 * on a plane (the floor).
@@ -32,6 +31,11 @@ namespace study_cases {
 	 * on a plane (the floor).
 	 */
 	void roll_on_floor(int argc, char *argv[]);
+	/* -- Floor (2') study case --
+	 * Simply a particle bouncing vertically
+	 * on a plane (the floor).
+	 */
+	void roll_on_floor_sized(int argc, char *argv[]);
 
 	/* -- Sphere study case --
 	 * A aprticle falling onto a sphere below its

@@ -11,6 +11,7 @@ void list_all_cases() {
 	cout << "    bounce-floor       : particle bouncing on a floor." << endl;
 	cout << "    bounce-floor-sized : sized particle bouncing on a floor." << endl;
 	cout << "    roll-floor         : particle rolling on a floor." << endl;
+	cout << "    roll-floor-sized   : sized particle rolling on a floor." << endl;
 	cout << "    bounce-sphere      : particle bouncing on a sphere." << endl;
 	cout << "    tri2f              : two triangles on a floor. The particle" << endl;
 	cout << "                         falls directly on a triangle and bounces." << endl;
