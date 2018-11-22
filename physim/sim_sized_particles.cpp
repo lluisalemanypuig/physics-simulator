@@ -10,7 +10,7 @@
 
 namespace physim {
 
-void simulator::_simulate_free_particles() {
+void simulator::_simulate_sized_particles() {
 
 	for (particles::sized_particle *p : sps) {
 		// ignore fixed particles
