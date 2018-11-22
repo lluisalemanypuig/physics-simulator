@@ -74,33 +74,69 @@ simulator::~simulator() {
 
 const particles::free_particle *simulator::add_particle() {
 	particles::free_particle *p = new particles::free_particle();
-	p->index = ps.size();
+	p->index = fps.size();
 	init_particle(p);
-	ps.push_back(p);
+	fps.push_back(p);
+	return p;
+}
+
+const particles::sized_particle *simulator::add_sized_particle() {
+	particles::sized_particle *p = new particles::sized_particle();
+	p->index = fps.size();
+	init_particle(p);
+	sps.push_back(p);
 	return p;
 }
 
 void simulator::add_particle(particles::free_particle *p) {
 	assert(p != nullptr);
-	p->index = ps.size();
-	ps.push_back(p);
+	p->index = fps.size();
+	fps.push_back(p);
 }
 
-void simulator::add_particles(size_t n) {
+void simulator::add_particle(particles::sized_particle *p) {
+	assert(p != nullptr);
+	p->index = sps.size();
+	sps.push_back(p);
+}
+
+void simulator::add_free_particles(size_t n) {
 	for (size_t i = 0; i < n; ++i) {
 		add_particle();
 	}
 }
 
-void simulator::remove_particle(size_t i) {
-	remove_from_vector(i, ps);
+void simulator::add_sized_particles(size_t n) {
+	for (size_t i = 0; i < n; ++i) {
+		add_sized_particle();
+	}
+}
+
+void simulator::remove_free_particle(size_t i) {
+	remove_from_vector(i, fps);
+}
+
+void simulator::remove_sized_particle(size_t i) {
+	remove_from_vector(i, sps);
+}
+
+void simulator::clear_free_particles() {
+	for (particles::free_particle *p : fps) {
+		delete p;
+	}
+	fps.clear();
+}
+
+void simulator::clear_sized_particles() {
+	for (particles::sized_particle *p : sps) {
+		delete p;
+	}
+	fps.clear();
 }
 
 void simulator::clear_particles() {
-	for (particles::free_particle *p : ps) {
-		delete p;
-	}
-	ps.clear();
+	clear_free_particles();
+	clear_sized_particles();
 }
 
 // ----------- geometry
@@ -171,7 +207,7 @@ void simulator::clear_simulation() {
 void simulator::reset_simulation() {
 	stime = 0.0f;
 	int i = 0;
-	for (particles::free_particle *p : ps) {
+	for (particles::free_particle *p : fps) {
 		if (not p->fixed) {
 			init_particle(p);
 		}
@@ -179,9 +215,25 @@ void simulator::reset_simulation() {
 	}
 }
 
+void simulator::simulate_free_particles() {
+	_simulate_free_particles();
+	stime += dt;
+}
+
+void simulator::simulate_sized_particles() {
+	_simulate_sized_particles();
+	stime += dt;
+}
+
+void simulator::simulate_meshes() {
+	_simulate_meshes();
+	stime += dt;
+}
+
 void simulator::apply_time_step() {
-	simulate_free_particles();
-	simulate_meshes();
+	_simulate_free_particles();
+	_simulate_sized_particles();
+	_simulate_meshes();
 	stime += dt;
 }
 
@@ -216,12 +268,12 @@ void simulator::set_solver(const solver_type& s) {
 // GETTERS
 
 const std::vector<particles::free_particle *>& simulator::get_particles() const {
-	return ps;
+	return fps;
 }
 
 const particles::free_particle& simulator::get_particle(size_t i) const {
-	assert(i < ps.size());
-	return *ps[i];
+	assert(i < fps.size());
+	return *fps[i];
 }
 
 const std::vector<meshes::mesh *>& simulator::get_meshes() const {
@@ -246,7 +298,7 @@ const math::vec3& simulator::get_gravity() const {
 }
 
 size_t simulator::n_particles() const {
-	return ps.size();
+	return fps.size();
 }
 
 size_t simulator::n_geometry() const {

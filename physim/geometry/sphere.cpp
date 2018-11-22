@@ -153,6 +153,10 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	return true;
 }
 
+bool sphere::intersec_sphere(const math::vec3& c, float r) const {
+	return __pm3_dist2(C, c) - (R + r)*(R + r) <= 0.0f;
+}
+
 // OTHERS
 
 void sphere::update_particle
@@ -185,6 +189,30 @@ const
 		math::normalise(normal, normal);
 		__pm3_add_v_vs(p->cur_pos, C, normal,R + 0.1f);
 	}
+}
+
+void sphere::update_particle
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+const
+{
+	/* Following the ideas of the intersection between a sized particle
+	 * and a plane (see comments in code...), we now define the
+	 * intersection point I between the line L and the new sphere S.
+	 *
+	 * The line L goes through point pred_pos and has director vector
+	 * pred_vel. The new sphere S has the same center but has a larger
+	 * radius:
+	 *	1. Let D be the distance between the centre and pred_pos.
+	 *	2. Let u be the unit vector from pred_pos to the center.
+	 *	3. Let delta be the distance between the points:
+	 *		p = pred_pos + u*(particle's radius)
+	 *		q = C - u*R
+	 *	   delta is calculated as:
+	 *		delta = (R + particle's radius - D)/2
+	 *	4. The new sphere is defined by the centre C and radius
+	 *		R + delta
+	 */
+
 }
 
 void sphere::display(std::ostream& os) const {

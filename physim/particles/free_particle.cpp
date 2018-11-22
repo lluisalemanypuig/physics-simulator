@@ -65,5 +65,9 @@ void free_particle::init() {
 	fixed = false;
 }
 
+bool free_particle::is_sized() const {
+	return false;
+}
+
 } // -- namespace particles
 } // -- namespace physim

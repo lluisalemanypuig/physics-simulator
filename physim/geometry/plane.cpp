@@ -85,6 +85,25 @@ bool plane::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {
 	return d1*d2 <= 0.0f;
 }
 
+bool plane::intersec_sphere(const math::vec3& c, float R) const {
+	// find point at the surface of the sphere either in
+	// the opposite direction of the sphere, or in the same
+	// direction depending on the position of c with respect
+	// to the plane
+	float side = __pm3_dot(c,normal) + dconst;
+	math::vec3 surf;
+	if (side < 0.0f) {
+		__pm3_add_v_vs(surf, c, normal,R);
+	}
+	else {
+		__pm3_sub_v_vs(surf, c, normal,R);
+	}
+	// the plane intersects the sphere if the segment joining
+	// the center and the point at the surface intersects the
+	// plane.
+	return intersec_segment(c, surf);
+}
+
 bool plane::intersec_segment(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const {
 	if (not intersec_segment(p1,p2)) {
 		return false;
@@ -135,6 +154,37 @@ const
 	math::vec3 vT;
 	__pm3_sub_v_vs(vT, vt, normal,__pm3_dot(normal,vt));
 	__pm3_sub_acc_vs(p->cur_vel, vT, p->friction);
+}
+
+void plane::update_particle
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+const
+{
+	/* updating a sized particle's position when it collides with a plane
+	 * is a bit difficult to explain without drawings...
+	 * However:
+	 *	1. We know that the predicted position is at a certain distance D
+	 *		from the plane.
+	 *	2. Define a position P = pred_pos + normal*D
+	 *	3. Define a plane q with normal 'normal' that goes through P
+	 *	4. The last correct position of the sized particle 'p' is the
+	 *		intersection between the line through pred_pos with director
+	 *		vector the particle's velocity and the plane q. Let 'I' be
+	 *		this intersection.
+	 *	5. Once we know the intersection (or last valid position) we can
+	 *		update a particle when it is placed at I and that has collided
+	 *		with q.
+	*/
+
+	float D = dist_point_plane(pred_pos);
+	float delta = p->R - D;
+	math::vec3 vel_unit = math::normalise(pred_vel);
+
+	math::vec3 I;
+	__pm3_sub_v_vs(I, pred_pos, vel_unit, delta/(__pm3_dot(normal,pred_vel)));
+
+	plane q(normal, I);
+	q.update_particle(pred_pos, pred_vel, static_cast<particles::free_particle *>(p));
 }
 
 void plane::display(std::ostream& os) const {

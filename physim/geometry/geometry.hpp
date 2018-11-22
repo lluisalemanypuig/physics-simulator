@@ -5,6 +5,7 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/sized_particle.hpp>
 #include <physim/meshes/mesh.hpp>
 #include <physim/math/vec3.hpp>
 
@@ -88,10 +89,19 @@ class geometry {
 		virtual bool intersec_segment
 		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const = 0;
 
+		/**
+		 * @brief Returns if the sphere with center the point @e c and radius
+		 * @e R intersects the geometry.
+		 * @param[in] c Center of the sphere.
+		 * @param[in] R radius of the sphere.
+		 * @return Returns true if there is intersection.
+		 */
+		virtual bool intersec_sphere(const math::vec3& c, float R) const = 0;
+
 		// OTHERS
 
 		/**
-		 * @brief Update a particle in a collision with geometry.
+		 * @brief Update a free particle in a collision with geometry.
 		 *
 		 * Assumig that particle @e pred collided with this geometry, update
 		 * its position, velocity, ... accordingly.
@@ -100,11 +110,12 @@ class geometry {
 		 * some extra speed. This needs to be updated in this method.
 		 *
 		 * The particle @e pred is given in a state that is not modified by any
-		 * solver. That is, the particle's position, velocity, force, ... have the
-		 * value at time step @e T. The predicted position and velocity are given in
-		 * @e pred_pos and @e pred_vel. These are predictions of the position and
-		 * velocity for time @e T + @e dt (where dt is some time step). The modified
-		 * particle due to the collision must be stored in @e pred.
+		 * solver. That is, the particle's position, velocity, force, ... have
+		 * the value at time step @e T. The predicted position and velocity are
+		 * given in @e pred_pos and @e pred_vel. These are predictions of the
+		 * position and velocity for time @e T + @e dt (where dt is some time
+		 * step). The modified particle due to the collision must be stored in
+		 * @e pred.
 		 *
 		 * This method is called only when it is sure that there has been a
 		 * collision: the segment joining the particle's current position and
@@ -117,6 +128,36 @@ class geometry {
 		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
 			particles::free_particle *pred
+		) const = 0;
+
+		/**
+		 * @brief Update a sized particle in a collision with geometry.
+		 *
+		 * Assumig that particle @e pred collided with this geometry, update
+		 * its position, velocity, ... accordingly.
+		 *
+		 * For example, some geometry may be 'bouncy', it may give the particle
+		 * some extra speed. This needs to be updated in this method.
+		 *
+		 * The particle @e pred is given in a state that is not modified by any
+		 * solver. That is, the particle's position, velocity, force, ... have
+		 * the value at time step @e T. The predicted position and velocity are
+		 * given in @e pred_pos and @e pred_vel. These are predictions of the
+		 * position and velocity for time @e T + @e dt (where dt is some time
+		 * step). The modified particle due to the collision must be stored in
+		 * @e pred.
+		 *
+		 * This method is called only when it is sure that there has been a
+		 * collision: the segment joining the particle's current position and
+		 * the predicted position intersects the geometry.
+		 *
+		 * @param[in] pred_pos The predicted position of the particle.
+		 * @param[in] pred_vel The predicted velocity of the particle.
+		 * @param[out] pred The particle with the result of the collision.
+		 */
+		virtual void update_particle(
+			const math::vec3& pred_pos, const math::vec3& pred_vel,
+			particles::sized_particle *pred
 		) const = 0;
 
 		/// Output on stream @e os information about this geometry.

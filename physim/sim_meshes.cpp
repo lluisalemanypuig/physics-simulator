@@ -11,7 +11,7 @@
 
 namespace physim {
 
-void simulator::simulate_meshes() {
+void simulator::_simulate_meshes() {
 
 	// collision prediction:
 	// copy the particle at its current state and use it

@@ -120,12 +120,24 @@ bool rectangle::intersec_segment
 	return false;
 }
 
+bool rectangle::intersec_sphere(const math::vec3& c, float R) const {
+
+}
+
 // OTHERS
 
 void rectangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p) const
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
+const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
+}
+
+void update_particle
+(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+const
+{
+
 }
 
 void rectangle::display(std::ostream& os) const {

@@ -5,12 +5,14 @@
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/sized_particle.hpp>
 
 namespace physim {
 namespace init {
 
 /// Shortcut for the initialiser function type.
-typedef std::function<void (particles::free_particle *)> partinit;
+typedef std::function<void (particles::free_particle *)> partinit_free;
+typedef std::function<void (particles::sized_particle *)> partinit_sized;
 
 /**
  * @brief Object for @ref particles::free_particle initialisation.
@@ -30,6 +32,8 @@ typedef std::function<void (particles::free_particle *)> partinit;
  * - @ref lifetime : function used to initialise the lifetime of a particle.
  * - @ref starttime : function used to initialise the starting time of a particle.
  * - @ref fixed : function used to initialise the fixed attribute of a particle.
+ * - @ref radius : for the case of sized particles (see @ref particles::sized_particle,
+ * this function is used to initialse the radius attribute of the particle).
  *
  * By default, all these function's behaviour is to initialise a particle
  * the same way they are initialised when constructed (see @ref free_particle::init).
@@ -52,23 +56,25 @@ typedef std::function<void (particles::free_particle *)> partinit;
 class initialiser {
 	protected:
 		/// Initialiser of position.
-		partinit pos;
+		partinit_free pos;
 		/// Initialiser of velocity.
-		partinit vel;
+		partinit_free vel;
 		/// Initialiser of the mass.
-		partinit mass;
+		partinit_free mass;
 		/// Initialiser of the charge.
-		partinit charge;
+		partinit_free charge;
 		/// Initialiser of the friction coefficient.
-		partinit friction;
+		partinit_free friction;
 		/// Initialiser of the bouncing coefficient.
-		partinit bounce;
+		partinit_free bounce;
 		/// Initialiser of the lifetime.
-		partinit lifetime;
+		partinit_free lifetime;
 		/// Initialiser of the starttime.
-		partinit starttime;
+		partinit_free starttime;
 		/// Initialiser of the 'fixed' attribute.
-		partinit fixed;
+		partinit_free fixed;
+		/// Initialiser of the 'R' attribute.
+		partinit_sized radius;
 
 	public:
 		/// Default constructor.
@@ -81,23 +87,25 @@ class initialiser {
 		// SETTERS
 
 		/// Sets the position initialiser. See @ref pos.
-		void set_pos_initialiser(const partinit& f);
+		void set_pos_initialiser(const partinit_free& f);
 		/// Sets the velocity initialiser. See @ref vel.
-		void set_vel_initialiser(const partinit& f);
+		void set_vel_initialiser(const partinit_free& f);
 		/// Sets the mass initialiser. See @ref mass.
-		void set_mass_initialiser(const partinit& f);
+		void set_mass_initialiser(const partinit_free& f);
 		/// Sets the charge initialiser. See @ref charge.
-		void set_charge_initialiser(const partinit& f);
+		void set_charge_initialiser(const partinit_free& f);
 		/// Sets the bouncing coefficient initialiser. See @ref bounce.
-		void set_bounce_initialiser(const partinit& f);
+		void set_bounce_initialiser(const partinit_free& f);
 		/// Sets the friction coefficient initialiser. See @ref friction.
-		void set_friction_initialiser(const partinit& f);
+		void set_friction_initialiser(const partinit_free& f);
 		/// Sets the lifetime initialiser. See @ref lifetime.
-		void set_lifetime_initialiser(const partinit& f);
+		void set_lifetime_initialiser(const partinit_free& f);
 		/// Sets the starttime initialiser. See @ref starttime.
-		void set_starttime_initialiser(const partinit& f);
+		void set_starttime_initialiser(const partinit_free& f);
 		/// Sets the fixed initialiser. See @ref fixed.
-		void set_fixed_initialiser(const partinit& f);
+		void set_fixed_initialiser(const partinit_free& f);
+		/// Sets the radius initialiser. See @ref radius.
+		void set_radius_initialiser(const partinit_sized& f);
 
 		// GETTERS
 
@@ -105,23 +113,25 @@ class initialiser {
 		virtual initialiser *clone() const;
 
 		/// Returns the position initialiser. See @ref pos.
-		const partinit& get_pos_initialiser() const;
+		const partinit_free& get_pos_initialiser() const;
 		/// Returns the velocity initialiser. See @ref vel.
-		const partinit& get_vel_initialiser() const;
+		const partinit_free& get_vel_initialiser() const;
 		/// Returns the mass initialiser. See @ref mass.
-		const partinit& get_mass_initialiser() const;
+		const partinit_free& get_mass_initialiser() const;
 		/// Returns the charge initialiser. See @ref charge.
-		const partinit& get_charge_initialiser() const;
+		const partinit_free& get_charge_initialiser() const;
 		/// Returns the bouncing coefficient initialiser. See @ref bounce.
-		const partinit& get_bounce_initialiser() const;
+		const partinit_free& get_bounce_initialiser() const;
 		/// Returns the friction coefficient initialiser. See @ref friction.
-		const partinit& get_friction_initialiser() const;
+		const partinit_free& get_friction_initialiser() const;
 		/// Returns the lifetime initialiser. See @ref lifetime.
-		const partinit& get_lifetime_initialiser() const;
+		const partinit_free& get_lifetime_initialiser() const;
 		/// Returns the starttime initialiser. See @ref starttime.
-		const partinit& get_starttime_initialiser() const;
+		const partinit_free& get_starttime_initialiser() const;
 		/// Returns the fixed initialiser. See @ref fixed.
-		const partinit& get_fixed_initialiser() const;
+		const partinit_free& get_fixed_initialiser() const;
+		/// Returns the radius initialiser. See @ref radius.
+		const partinit_sized& get_radius_initialiser() const;
 
 		// INITIALISE A PARTICLE
 

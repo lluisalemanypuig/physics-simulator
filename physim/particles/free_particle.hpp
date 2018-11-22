@@ -20,9 +20,7 @@ namespace particles {
  * namespace @ref physim::geom) but not with other
  * particles.
  *
- * Although this class' attributes are public, it provides
- * a number of methods to 'set' and 'get' their values for
- * a more user-friendly usage.
+ * All this class' attributes are public.
  */
 class free_particle {
 	private:
@@ -88,7 +86,7 @@ class free_particle {
 		/// Copy constructor.
 		free_particle(const free_particle& p);
 		/// Destructor.
-		~free_particle();
+		virtual ~free_particle();
 
 		// MODIFIERS
 
@@ -134,7 +132,12 @@ class free_particle {
 		 * in the list above, are not modified either for similar
 		 * reasons.
 		 */
-		void init();
+		virtual void init();
+
+		// GETTERS
+
+		/// Returns false.
+		virtual bool is_sized() const;
 
 };
 

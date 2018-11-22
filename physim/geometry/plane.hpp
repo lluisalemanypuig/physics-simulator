@@ -112,33 +112,23 @@ class plane : public geometry {
 		 */
 		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 
-		/**
-		 * @brief Returns if the segment defined by the points @e p1 and @e p2 intersects
-		 * with the plane.
-		 * @param[in] p1 First endpoint of the segment.
-		 * @param[in] p2 Second endpoint of the segment.
-		 * @return Returns true if there is intersection.
-		 */
 		bool intersec_segment
 		(const math::vec3& p1, const math::vec3& p2) const;
-		/**
-		 * @brief Returns the intersection between this plane and the segment
-		 * defined by the points @e p1 and @e p2.
-		 * @param[in] p1 First endpoint of the segment.
-		 * @param[in] p2 Second endpoint of the segment.
-		 * @param[out] p_inter If the segment intersects the plane then
-		 * this will contain the intersection point.
-		 * @return Returns true if there is intersection. In this case, the value
-		 * of @e p_inter is valid at the end of the method.
-		 */
 		bool intersec_segment
 		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
+
+		bool intersec_sphere(const math::vec3& c, float R) const;
 
 		// OTHERS
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
 			particles::free_particle *p
+		) const;
+
+		void update_particle(
+			const math::vec3& pp, const math::vec3& pv,
+			particles::sized_particle *p
 		) const;
 
 		void display(std::ostream& os = std::cout) const;

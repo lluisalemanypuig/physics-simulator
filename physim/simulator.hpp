@@ -8,6 +8,7 @@
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
+#include <physim/particles/sized_particle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/meshes/mesh.hpp>
 
@@ -84,8 +85,10 @@ class simulator {
 		std::vector<geom::geometry *> scene_fixed;
 		/// Collection of force fields.
 		std::vector<fields::field *> force_fields;
-		/// The collection of particles in the simulation.
-		std::vector<particles::free_particle *> ps;
+		/// The collection of free particles in the simulation.
+		std::vector<particles::free_particle *> fps;
+		/// The collection of sized particles in the simulation.
+		std::vector<particles::sized_particle *> sps;
 		/// The collection of meshes in the simulation.
 		std::vector<meshes::mesh *> ms;
 
@@ -166,7 +169,14 @@ class simulator {
 		 * Applies a time step on all the free particles of
 		 * the simulation.
 		 */
-		void simulate_free_particles();
+		void _simulate_free_particles();
+		/**
+		 * @brief Simulate sized particles.
+		 *
+		 * Applies a time step on all the sized particles of
+		 * the simulation.
+		 */
+		void _simulate_sized_particles();
 
 		/**
 		 * @brief Simulate meshes.
@@ -177,7 +187,7 @@ class simulator {
 		 * The forces due to the presence of force fields are
 		 * computed after the internal forces in each mesh.
 		 */
-		void simulate_meshes();
+		void _simulate_meshes();
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
@@ -216,32 +226,101 @@ class simulator {
 
 		// ----------- particles
 
-		/// Adds a particle to the simulation.
+		/**
+		 * @brief Adds a free particle to the simulation.
+		 *
+		 * The particle is initialised using @ref global_init.
+		 * @pre For this initialisation to be completely correct, the step
+		 * time (see @ref dt) needs to be set.
+		 * @post The caller should not free the object, since the simulator
+		 * will take care of that.
+		 */
 		const particles::free_particle *add_particle();
+		/**
+		 * @brief Adds a sized particle to the simulation.
+		 *
+		 * The particle is initialised using @ref global_init.
+		 * @pre For this initialisation to be completely correct, the step
+		 * time (see @ref dt) needs to be set.
+		 * @post The caller should not free the object, since the simulator
+		 * will take care of that.
+		 */
+		const particles::sized_particle *add_sized_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialser function (see @ref global_init) is not called.
-		 * For this initialisation to be completely correct, the step time
-		 * (see @ref dt) needs to be set.
-		 *
-		 * The caller should not free the object, since the simulator
-		 * will take care of that.
+		 * The particle is added to @ref fps.
 		 * @param p A non-null pointer to the object.
+		 * @post The caller should not free the object, since the simulator
+		 * will take care of that.
 		 */
 		void add_particle(particles::free_particle *p);
-		/// Adds @e n particles to the simulation.
-		void add_particles(size_t n);
+		/**
+		 * @brief Adds the particle passed as parameter to the simulation.
+		 *
+		 * The initialser function (see @ref global_init) is not called.
+		 * The particle is added to @ref sps.
+		 *
+		 * @param p A non-null pointer to the object.
+		 * @pre For this initialisation to be completely correct, the step
+		 * time (see @ref dt) needs to be set.
+		 * @post The caller should not free the object, since the simulator
+		 * will take care of that.
+		 */
+		void add_particle(particles::sized_particle *p);
+		/**
+		 * @brief Adds @e n free particles to the simulation.
+		 *
+		 * Each of the particles is initialised with the @ref global_init
+		 * object used at the moment of calling this method. The particle
+		 * is added to @ref fps.
+		 * @param n Number of particles.
+		 */
+		void add_free_particles(size_t n);
+		/**
+		 * @brief Adds @e n sized particles to the simulation.
+		 *
+		 * Each of the particles is initialised with the @ref global_init
+		 * object used at the moment of calling this method. The particle
+		 * is added to @ref sps.
+		 * @param n Number of particles.
+		 */
+		void add_sized_particles(size_t n);
 
 		/**
-		 * @brief Removes the @e i-th particle.
+		 * @brief Removes the @e i-th free particle.
 		 *
 		 * Frees the memory occupied by the particle in the @e i-th
-		 * position. Therefore, any pointer to that particle becomes
-		 * invalid.
+		 * position of @ref fps. Therefore, any pointer to that particle
+		 * becomes invalid.
 		 * @param i The index of the particle in [0, number of particles).
 		 */
-		void remove_particle(size_t i);
+		void remove_free_particle(size_t i);
+		/**
+		 * @brief Removes the @e i-th sized particle.
+		 *
+		 * Frees the memory occupied by the particle in the @e i-th
+		 * position of @ref sps. Therefore, any pointer to that particle
+		 * becomes invalid.
+		 * @param i The index of the particle in [0, number of particles).
+		 */
+		void remove_sized_particle(size_t i);
+
+		/**
+		 * @brief Deletes all free particles in this simulator.
+		 *
+		 * Deletes all the objects in @ref fps and clears the
+		 * container.
+		 */
+		void clear_free_particles();
+		/**
+		 * @brief Deletes all sized particles in this simulator.
+		 *
+		 * Deletes all the objects in @ref sps and clears the
+		 * container.
+		 */
+		void clear_sized_particles();
 		/**
 		 * @brief Deletes all particles in this simulator.
 		 *
@@ -371,14 +450,38 @@ class simulator {
 		// RUN SIMULATION
 
 		/**
+		 * @brief Simulate free particles.
+		 *
+		 * Calls @ref _simulate_free_particles and increments the time
+		 * of the simulation (see @ref stime).
+		 */
+		void simulate_free_particles();
+		/**
+		 * @brief Simulate sized particles.
+		 *
+		 * Calls @ref _simulate_sized_particles and increments the time
+		 * of the simulation (see @ref stime).
+		 */
+		void simulate_sized_particles();
+
+		/**
+		 * @brief Simulate meshes.
+		 *
+		 * Calls @ref _simulate_meshes and increments the time of
+		 * the simulation (see @ref stime).
+		 */
+		void simulate_meshes();
+
+		/**
 		 * @brief Apply a time step to the simulation.
 		 *
-		 * Particles move according to time. Parameter @e dt
-		 * (set via method @ref set_time_step(float)) indicates
+		 * Calls the following functions:
+		 * - @ref _simulate_free_particles
+		 * - @ref _simulate_sized_particles
+		 * - @ref _simulate_meshes
+		 * and increments the time of the simulation. Parameter
+		 * @e dt (set via method @ref set_time_step(float)) indicates
 		 * how much time has passed since the last time step.
-		 *
-		 * Whenever a particle's lifetime has reached 0, method
-		 * @ref init_particle(particles::free_particle*) is called.
 		 */
 		void apply_time_step();
 

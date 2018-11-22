@@ -7,7 +7,7 @@
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/particles/free_particle.hpp>
-#include <physim/particles/mesh_particle.hpp>
+#include <physim/particles/sized_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -98,11 +98,18 @@ class rectangle : public geometry {
 		bool intersec_segment
 		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
 
+		bool intersec_sphere(const math::vec3& c, float R) const;
+
 		// OTHERS
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
 			particles::free_particle *p
+		) const;
+
+		void update_particle(
+			const math::vec3& pp, const math::vec3& pv,
+			particles::sized_particle *p
 		) const;
 
 		void display(std::ostream& os = std::cout) const;

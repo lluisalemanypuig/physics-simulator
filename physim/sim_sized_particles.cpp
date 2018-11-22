@@ -12,7 +12,7 @@ namespace physim {
 
 void simulator::_simulate_free_particles() {
 
-	for (particles::free_particle *p : fps) {
+	for (particles::sized_particle *p : sps) {
 		// ignore fixed particles
 		if (p->fixed) {
 			continue;
@@ -94,7 +94,7 @@ void simulator::_simulate_free_particles() {
 		// collision prediction:
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		particles::free_particle coll_pred;
+		particles::sized_particle coll_pred;
 
 		// has there been any collision?
 		bool collision = false;
@@ -109,7 +109,10 @@ void simulator::_simulate_free_particles() {
 			// then the geometry is in charge of updating
 			// this particle's position, velocity, ...
 
-			if (g->intersec_segment(p->cur_pos, pred_pos)) {
+			bool inter = false;
+			inter = inter or g->intersec_segment(p->cur_pos, pred_pos);
+			inter = inter or g->intersec_sphere(pred_pos, p->R);
+			if (inter) {
 				collision = true;
 
 				coll_pred = *p;
