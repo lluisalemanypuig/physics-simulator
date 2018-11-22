@@ -8,21 +8,22 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-SOURCES +=					\
-	main.cpp				\
-	utils.cpp				\
-	study_cases.cpp			\
-	0_bounce_floor.cpp		\
-	1_roll_floor.cpp		\
-	2_bounce_sphere.cpp		\
-	3_tri_tri_plane.cpp		\
-    4_roll_plane_sphere.cpp \
-	5_hose.cpp				\
-    6_mesh1d.cpp			\
-    7_mesh2d_regular.cpp
+SOURCES += \
+    main.cpp \
+    utils.cpp \
+    study_cases.cpp \
+    00_bounce_floor.cpp \
+    08_bounce_floor_sized.cpp \
+    01_roll_floor.cpp \
+    02_bounce_sphere.cpp \
+    03_tri_tri_plane.cpp \
+    04_roll_plane_sphere.cpp \
+    05_hose.cpp \
+    06_mesh1d.cpp \
+    07_mesh2d_regular.cpp
 
-HEADERS +=					\
-	utils.hpp				\
+HEADERS += \
+    utils.hpp \
     study_cases.hpp
 
 # physim library

@@ -4,7 +4,6 @@
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/geometry/plane.hpp>
-#include <physim/geometry/sphere.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
 using namespace particles;
@@ -14,11 +13,11 @@ using namespace init;
 
 namespace study_cases {
 
-	void bounce_sphere_usage() {
-		cout << "bounce on sphere study case:" << endl;
+	void bounce_floor_sized_usage() {
+		cout << "bounce on floor study case:" << endl;
 		cout << endl;
-		cout << "This study case is merely a particle that falls on" << endl;
-		cout << "a sphere, then bounces away from it." << endl;
+		cout << "This study case is merely a sized particle bouncing on" << endl;
+		cout << "a flat plane, a.k.a. the floor." << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
@@ -27,13 +26,16 @@ namespace study_cases {
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
-		cout << "    --Iial-x x:  the Iial value of the x position of the particle." << endl;
-		cout << "                                                          Default: 0.0" << endl;
+		cout << "    --radius r:     radius of the sized particle.         Default: 1.0" << endl;
+		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
+		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
+		cout << "        semi-euler: Euler semi-implicit integration method. Numerically stable." << endl;
+		cout << "        verlet:     Verlet integration method. Numerically even more stable." << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void bounce_on_sphere(int argc, char *argv[]) {
+	void bounce_on_floor_sized(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
@@ -41,11 +43,12 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 0.8f;
 		float friction = 0.2f;
-		float ix = 0.0f;
+		float radius = 1.0f;
+		solver_type solv = solver_type::EulerSemi;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				bounce_sphere_usage();
+				bounce_floor_sized_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {
@@ -68,8 +71,25 @@ namespace study_cases {
 				friction = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--Iial-x") == 0) {
-				ix = atof(argv[i + 1]);
+			else if (strcmp(argv[i], "--radius") == 0) {
+				radius = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--solver") == 0) {
+				string solv_name = string(argv[i + 1]);
+				if (solv_name == "euler") {
+					solv = solver_type::EulerOrig;
+				}
+				else if (solv_name == "semi-euler") {
+					solv = solver_type::EulerSemi;
+				}
+				else if (solv_name == "verlet") {
+					solv = solver_type::Verlet;
+				}
+				else {
+					cerr << "Error: invalid value for solver." << endl;
+					return;
+				}
 				++i;
 			}
 			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
@@ -77,14 +97,15 @@ namespace study_cases {
 				++i;
 			}
 			else {
-				cerr << "Unknown option '" << string(argv[i]) << "'" << endl;
+				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
+				return;
 			}
 		}
 
 		initialiser I;
 		I.set_pos_initialiser(
-			[&](free_particle *p) {
-				p->cur_pos = vec3(ix,5.0f,0.0f);
+			[](free_particle *p) {
+				p->cur_pos = vec3(0.0f,10.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
@@ -101,20 +122,19 @@ namespace study_cases {
 		I.set_friction_initialiser(
 			[&](free_particle *p) { p->friction = friction; }
 		);
+		I.set_radius_initialiser(
+			[&](sized_particle *p) { p->R = radius; }
+		);
 
-		simulator S(solver_type::EulerSemi, dt);
+		simulator S(solv, dt);
 
 		// -----------------------------------------
-		// -- Iialise simulator
-
+		// -- initialise simulator
 		S.set_initialiser(&I);
 
 		// the only particle bouncing up and down,
-		// Iialised using the function.
-		const free_particle *p = S.add_particle();
-
-		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
-		S.add_geometry(ball);
+		// initialised using the function.
+		const sized_particle *p = S.add_sized_particle();
 
 		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 		S.add_geometry(floor);
@@ -167,7 +187,6 @@ namespace study_cases {
 				fout << "lifetime: " << lifetime << endl;
 				fout << "bounce: " << bounce << endl;
 				fout << "friction: " << friction << endl;
-				fout << "Iial-x: " << ix << endl;
 
 				// first in Geogebra format
 				fout << "{";

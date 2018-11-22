@@ -1,5 +1,19 @@
 #include "study_cases.hpp"
 
+// physim includes
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/initialiser/hose.hpp>
+#include <physim/particles/free_particle.hpp>
+#include <physim/geometry/plane.hpp>
+#include <physim/geometry/sphere.hpp>
+#include <physim/geometry/triangle.hpp>
+#include <physim/simulator.hpp>
+using namespace physim;
+using namespace particles;
+using namespace math;
+using namespace geom;
+using namespace init;
+
 namespace study_cases {
 
 	void hose_usage() {

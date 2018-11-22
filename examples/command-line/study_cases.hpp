@@ -8,23 +8,6 @@
 #include <fstream>
 using namespace std;
 
-// physim includes
-#include <physim/initialiser/initialiser.hpp>
-#include <physim/initialiser/rect_shower.hpp>
-#include <physim/initialiser/rect_fountain.hpp>
-#include <physim/initialiser/hose.hpp>
-#include <physim/particles/free_particle.hpp>
-#include <physim/geometry/plane.hpp>
-#include <physim/geometry/sphere.hpp>
-#include <physim/geometry/triangle.hpp>
-#include <physim/geometry/rectangle.hpp>
-#include <physim/simulator.hpp>
-using namespace physim;
-using namespace particles;
-using namespace math;
-using namespace geom;
-using namespace init;
-
 // Custom includes
 #include "utils.hpp"
 
@@ -37,6 +20,12 @@ namespace study_cases {
 	 * on a plane (the floor).
 	 */
 	void bounce_on_floor(int argc, char *argv[]);
+
+	/* -- Floor (1') study case --
+	 * Simply a sized particle bouncing vertically
+	 * on a plane (the floor).
+	 */
+	void bounce_on_floor_sized(int argc, char *argv[]);
 
 	/* -- Floor (2) study case --
 	 * Simply a particle bouncing vertically

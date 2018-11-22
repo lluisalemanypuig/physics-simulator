@@ -7,6 +7,9 @@ namespace study_cases {
 		if (strcmp(argv[1], "bounce-floor") == 0) {
 			bounce_on_floor(argc, argv);
 		}
+		else if (strcmp(argv[1], "bounce-floor-sized") == 0) {
+			bounce_on_floor_sized(argc, argv);
+		}
 		else if (strcmp(argv[1], "roll-floor") == 0) {
 			roll_on_floor(argc, argv);
 		}
