@@ -131,7 +131,7 @@ void simulator::clear_sized_particles() {
 	for (particles::sized_particle *p : sps) {
 		delete p;
 	}
-	fps.clear();
+	sps.clear();
 }
 
 void simulator::clear_particles() {
