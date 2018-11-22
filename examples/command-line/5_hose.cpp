@@ -150,7 +150,7 @@ namespace study_cases {
 		triangle *tri = new triangle(S,O,P);
 		SIM.add_geometry(tri);
 
-		SIM.add_particles(n_particles);
+		SIM.add_free_particles(n_particles);
 
 		SIM.add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
