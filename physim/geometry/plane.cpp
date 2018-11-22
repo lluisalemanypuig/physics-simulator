@@ -3,9 +3,6 @@
 // physim includes
 #include <physim/math/private/math3.hpp>
 
-#include <iostream>
-using namespace std;
-
 namespace physim {
 namespace geom {
 
@@ -160,6 +157,8 @@ void plane::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const
 {
+	p->save_position();
+
 	/* updating a sized particle's position when it collides with a plane
 	 * is a bit difficult to explain without drawings...
 	 * However:
@@ -174,17 +173,16 @@ const
 	 *	5. Once we know the intersection (or last valid position) we can
 	 *		update a particle when it is placed at I and that has collided
 	 *		with q.
-	*/
+	 */
 
 	float D = dist_point_plane(pred_pos);
 	float delta = p->R - D;
 	math::vec3 vel_unit = math::normalise(pred_vel);
-
 	math::vec3 I;
-	__pm3_sub_v_vs(I, pred_pos, vel_unit, delta/(__pm3_dot(normal,pred_vel)));
+	__pm3_add_v_vs(I, pred_pos, vel_unit, delta/(__pm3_dot(normal,vel_unit)));
 
 	plane q(normal, I);
-	q.update_particle(pred_pos, pred_vel, static_cast<particles::free_particle *>(p));
+	q.update_particle(I, pred_vel, static_cast<particles::free_particle *>(p));
 }
 
 void plane::display(std::ostream& os) const {
