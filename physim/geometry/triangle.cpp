@@ -8,7 +8,7 @@ inline float triangle_area
 {
 	physim::math::vec3 C;
 	__pm3_cross_diff(C, p1,p2,p3);
-	return __pm3_norm(C)/2.0;
+	return __pm3_norm(C)/2.0f;
 }
 
 namespace physim {
