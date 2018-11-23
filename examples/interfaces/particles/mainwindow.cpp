@@ -57,7 +57,7 @@ QProgressBar *MainWindow::get_sim_bar() {
 	return get_sim_bar(current_tab);
 }
 
-void MainWindow::get_init_bounce(partinit& bounce) {
+void MainWindow::get_init_bounce(partinit_free& bounce) {
 	const QString& text = ui->lEBounce->text();
 	if (text == "r()") {
 		bounce = [&](free_particle *p) { p->bouncing = this->U01(this->eng); };
@@ -76,7 +76,7 @@ void MainWindow::get_init_bounce(partinit& bounce) {
 	cerr << "        Error: invalid text in 'friction' text box." << endl;
 }
 
-void MainWindow::get_init_friction(partinit& fric) {
+void MainWindow::get_init_friction(partinit_free& fric) {
 	const QString& text = ui->lEFriction->text();
 	if (text == "r()") {
 		fric = [&](free_particle *p) { p->friction = this->U01(this->eng); };
@@ -95,7 +95,7 @@ void MainWindow::get_init_friction(partinit& fric) {
 	cerr << "        Error: invalid text in 'friction' text box." << endl;
 }
 
-void MainWindow::get_init_lifetime(partinit& lifetime) {
+void MainWindow::get_init_lifetime(partinit_free& lifetime) {
 	const QString& text = ui->lELifeTime->text();
 	if (text == "r()") {
 		lifetime = [&](free_particle *p) { p->lifetime = this->U010(this->eng); };
@@ -138,7 +138,7 @@ void MainWindow::make_sim(SimulationRenderer *sr) {
 }
 
 void MainWindow::make_init_with_params(initialiser& i) {
-	partinit bounce,fric,lifetime;
+	partinit_free bounce,fric,lifetime;
 
 	// parse text boxes
 	get_init_bounce(bounce);
@@ -244,7 +244,7 @@ void MainWindow::on_TWscenes_currentChanged(int index) {
 void MainWindow::on_lEBounce_returnPressed() {
 	// obtain bouncing coefficient initialiser
 	// and set it to the appropriate simulator
-	partinit bounce;
+	partinit_free bounce;
 	get_init_bounce(bounce);
 
 	SimulationRenderer *sr = get_SimRend();
@@ -261,7 +261,7 @@ void MainWindow::on_lEBounce_returnPressed() {
 void MainWindow::on_lEFriction_returnPressed() {
 	// obtain friction coefficient initialiser
 	// and set it to the appropriate simulator
-	partinit fric;
+	partinit_free fric;
 	get_init_friction(fric);
 
 	SimulationRenderer *sr = get_SimRend();
@@ -278,7 +278,7 @@ void MainWindow::on_lEFriction_returnPressed() {
 void MainWindow::on_lELifeTime_returnPressed() {
 	// obtain lifetime initialiser and set
 	// it to the appropriate simulator
-	partinit lifetime;
+	partinit_free lifetime;
 	get_init_lifetime(lifetime);
 
 	SimulationRenderer *sr = get_SimRend();

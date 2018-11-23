@@ -109,7 +109,7 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
-		const free_particle *p = S.add_particle();
+		const free_particle *p = S.add_free_particle();
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);

@@ -41,9 +41,9 @@ class MainWindow : public QMainWindow {
 		QProgressBar *get_sim_bar(int t);
 		QProgressBar *get_sim_bar();
 
-		void get_init_bounce(physim::init::partinit& p);
-		void get_init_friction(physim::init::partinit& p);
-		void get_init_lifetime(physim::init::partinit& p);
+		void get_init_bounce(physim::init::partinit_free& p);
+		void get_init_friction(physim::init::partinit_free& p);
+		void get_init_lifetime(physim::init::partinit_free& p);
 
 		// 'make scene' functions
 		void make_sim0(SimulationRenderer *sr);

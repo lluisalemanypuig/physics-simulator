@@ -111,7 +111,7 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// Iialised using the function.
-		const free_particle *p = S.add_particle();
+		const free_particle *p = S.add_free_particle();
 
 		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
 		S.add_geometry(ball);

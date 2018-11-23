@@ -58,5 +58,5 @@ void MainWindow::make_sim0(SimulationRenderer *sr) {
 
 	sr->get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
-	sr->add_particles(1000);
+	sr->add_free_particles(1000);
 }

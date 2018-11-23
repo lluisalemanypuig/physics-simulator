@@ -128,8 +128,8 @@ void SimulationRenderer::add_rgeom(rgeom *rg) {
 	G.push_back(rg);
 }
 
-void SimulationRenderer::add_particles(size_t n) {
-	S.add_particles(n);
+void SimulationRenderer::add_free_particles(size_t n) {
+	S.add_free_particles(n);
 }
 
 void SimulationRenderer::set_solver(const solver_type& s) {

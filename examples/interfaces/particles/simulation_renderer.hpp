@@ -82,7 +82,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		// Adds the underlying geometrical objects to the simulator 'S'.
 		void add_rgeom(rgeom *rg);
 		// Adds n particles to the simulator
-		void add_particles(size_t n = 1);
+		void add_free_particles(size_t n = 1);
 		// Sets the solver
 		void set_solver(const physim::solver_type& s);
 

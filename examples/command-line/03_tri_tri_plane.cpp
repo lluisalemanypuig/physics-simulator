@@ -162,7 +162,7 @@ namespace study_cases {
 
 		S.set_initialiser(&I);
 
-		const free_particle *p = S.add_particle();
+		const free_particle *p = S.add_free_particle();
 
 		if (ramp_plane) {
 			make_ramp_plane(S);
