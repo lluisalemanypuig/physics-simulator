@@ -25,8 +25,8 @@ namespace study_cases {
 		cout << "    --lifetime t:   the lifetime of the particle.         Default: 2.0" << endl;
 		cout << "    --total-time t: total time of the simulation.         Default: 2.0" << endl;
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
-		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
-		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
+		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 0.8" << endl;
+		cout << "    --friction f:   friction coefficient of the particle. Default: 0.2" << endl;
 		cout << "    --initial-x x:  the initial value of the x position of the particle." << endl;
 		cout << "                                                          Default: 0.0" << endl;
 		cout << endl;

@@ -24,8 +24,8 @@ namespace study_cases {
 		cout << "    --lifetime t:   the lifetime of the particle.         Default: 2.0" << endl;
 		cout << "    --total-time t: total time of the simulation.         Default: 2.0" << endl;
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
-		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 1.0" << endl;
-		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
+		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 0.8" << endl;
+		cout << "    --friction f:   friction coefficient of the particle. Default: 0.2" << endl;
 		cout << "    --radius r:     radius of the sized particle.         Default: 1.0" << endl;
 		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
 		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
