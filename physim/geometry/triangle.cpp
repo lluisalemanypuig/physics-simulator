@@ -103,7 +103,7 @@ bool triangle::intersec_segment
 }
 
 bool triangle::intersec_sphere(const math::vec3& c, float R) const {
-
+	return false;
 }
 
 // OTHERS

@@ -121,7 +121,7 @@ bool rectangle::intersec_segment
 }
 
 bool rectangle::intersec_sphere(const math::vec3& c, float R) const {
-
+	return false;
 }
 
 // OTHERS
