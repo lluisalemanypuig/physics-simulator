@@ -183,7 +183,7 @@ namespace study_cases {
 				for (size_t i = 0; i < trajectory.size(); ++i) {
 					const vec3& v = trajectory[i];
 					fout << "Point({"
-						 << v.x << "," << v.y << "," << v.z
+						 << v.x << "," << v.y
 						 << "})";
 					if (i < trajectory.size() - 1) {
 						fout << ",";
