@@ -124,7 +124,8 @@ class simulator {
 		/**
 		 * @brief Initialiser applied to all added particles.
 		 *
-		 * Whenever @ref add_particle() or @ref add_particles(size_t)
+		 * Whenever @ref add_free_particle(), @ref add_free_particles(size_t),
+		 * @ref add_sized_particle() or @ref add_sized_particles()
 		 * are called, the attributes of the particles are initialised
 		 * using @ref global_init.
 		 *
@@ -204,7 +205,6 @@ class simulator {
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
-		 * @param P Particle type: free, sized or mesh particle.
 		 * @param p Particle to apply the solver on.
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
@@ -221,7 +221,6 @@ class simulator {
 		 * initialised to 0.
 		 *
 		 * The result is set to the force acting on particle @e p.
-		 * @param P Particle type: free, sized or mesh particle.
 		 * @param[out] p The particle whose force attribute is to be modified.
 		 */
 		template<class P> void compute_forces(P *p);
@@ -250,8 +249,6 @@ class simulator {
 		 * A particle has a predicted position and velocity which needs to be
 		 * changed in the event that it collides with another particle.
 		 * @param[in] p Current state of particle to be updated.
-		 * @param[in] exclude The particle at position 'exclude' of @ref sps
-		 * is ignored for detection.
 		 * @param[out] pred_pos Predicted position modified to the final position.
 		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
 		 * @param[out] coll_pred The particle with the updated state.
@@ -269,7 +266,7 @@ class simulator {
 		 * A particle has a predicted position and velocity which needs to be
 		 * changed in the event that it collides with geometry.
 		 *
-		 * The difference between this and @ref find_and_update_collision_free
+		 * The difference between this and @ref find_update_geom_collision_free
 		 * is that there is an extra intersection test.
 		 * @param[in] p Current state of particle to be updated.
 		 * @param[out] pred_pos Predicted position modified to the final position.
@@ -290,8 +287,7 @@ class simulator {
 		 * A particle has a predicted position and velocity which needs to be
 		 * changed in the event that it collides with another particle.
 		 * @param[in] p Current state of particle to be updated.
-		 * @param[in] exclude The particle at position 'exclude' of @ref sps
-		 * is ignored for detection.
+		 * @param[in] i Index of the sized particle to ignore.
 		 * @param[out] pred_pos Predicted position modified to the final position.
 		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
 		 * @param[out] coll_pred The particle with the updated state.
@@ -415,8 +411,8 @@ class simulator {
 		/**
 		 * @brief Deletes all particles in this simulator.
 		 *
-		 * Deletes all the objects in @ref ps and clears the
-		 * container.
+		 * Deletes all the objects in @ref fps and @ref sps and clears
+		 * the containers.
 		 */
 		void clear_particles();
 

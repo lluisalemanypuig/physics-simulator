@@ -10,12 +10,13 @@
 namespace physim {
 namespace init {
 
-/// Shortcut for the initialiser function type.
+/// Shortcut for the free particle initialiser function type.
 typedef std::function<void (particles::free_particle *)> partinit_free;
+/// Shortcut for the sized particle initialiser function type.
 typedef std::function<void (particles::sized_particle *)> partinit_sized;
 
 /**
- * @brief Object for @ref particles::free_particle initialisation.
+ * @brief Class for particle initialisation.
  *
  * This class is used to initialise the attributes of a particle.
  *
