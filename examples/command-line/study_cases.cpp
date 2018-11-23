@@ -19,6 +19,9 @@ namespace study_cases {
 		else if (strcmp(argv[1], "bounce-sphere") == 0) {
 			bounce_on_sphere(argc, argv);
 		}
+		else if (strcmp(argv[1], "bounce-sphere-sized") == 0) {
+			bounce_on_sphere_sized(argc, argv);
+		}
 		else if (strcmp(argv[1], "tri2f") == 0) {
 			tri_tri_floor(argc, argv);
 		}

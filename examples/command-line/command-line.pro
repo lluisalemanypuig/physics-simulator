@@ -21,7 +21,8 @@ SOURCES += \
     06_mesh1d.cpp \
     07_mesh2d_regular.cpp \
     08_bounce_floor_sized.cpp \
-    09_roll_floor_sized.cpp
+    09_roll_floor_sized.cpp \
+    10_bounce_sphere_sized.cpp
 
 HEADERS += \
     utils.hpp \

@@ -38,10 +38,15 @@ namespace study_cases {
 	void roll_on_floor_sized(int argc, char *argv[]);
 
 	/* -- Sphere study case --
-	 * A aprticle falling onto a sphere below its
+	 * A particle falling onto a sphere below its
 	 * initial position.
 	 */
 	void bounce_on_sphere(int argc, char *argv[]);
+	/* -- Sphere study case --
+	 * A sized particle falling onto a sphere below
+	 * its initial position.
+	 */
+	void bounce_on_sphere_sized(int argc, char *argv[]);
 
 	/* -- Triangle-triangle-floor case --
 	 * This scene contains two triangles and a floor.

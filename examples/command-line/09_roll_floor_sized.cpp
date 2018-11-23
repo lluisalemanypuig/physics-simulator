@@ -172,6 +172,7 @@ namespace study_cases {
 				fout << "bounce: " << bounce << endl;
 				fout << "friction: " << friction << endl;
 				fout << "initial-vx: " << vx << endl;
+				fout << "radius: " << radius << endl;
 
 				// first in Geogebra format
 				fout << "{";
