@@ -61,6 +61,7 @@ simulator::simulator(const solver_type& s, float t) {
 	solver = s;
 	visc_drag = 0.05f;
 	global_init = new init::initialiser();
+	part_part_collisions = false;
 }
 
 simulator::~simulator() {
@@ -102,7 +103,7 @@ void simulator::add_particle(particles::sized_particle *p) {
 
 void simulator::add_free_particles(size_t n) {
 	for (size_t i = 0; i < n; ++i) {
-		add_sized_particle();
+		add_free_particle();
 	}
 }
 
@@ -265,6 +266,10 @@ void simulator::set_solver(const solver_type& s) {
 	solver = s;
 }
 
+void simulator::set_particle_particle_collisions(bool a) {
+	part_part_collisions = a;
+}
+
 // GETTERS
 
 const std::vector<particles::free_particle *>& simulator::get_particles() const {
@@ -311,6 +316,10 @@ init::initialiser *simulator::get_initialiser() {
 
 const init::initialiser *simulator::get_initialiser() const {
 	return global_init;
+}
+
+bool simulator::part_part_colls_activated() const {
+	return part_part_collisions;
 }
 
 } // -- namespace physim

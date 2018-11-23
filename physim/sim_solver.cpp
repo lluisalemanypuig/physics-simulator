@@ -6,14 +6,13 @@
  * Do not include.
  */
 
-// C++ includes
-#include <vector>
-
 // physim includes
 #include <physim/simulator.hpp>
-#include <physim/geometry/geometry.hpp>
 #include <physim/math/vec3.hpp>
 #include <physim/math/private/math3.hpp>
+
+// C++ includes
+#include <vector>
 
 namespace physim {
 

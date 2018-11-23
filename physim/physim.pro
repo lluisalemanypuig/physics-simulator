@@ -15,6 +15,7 @@ HEADERS += \
     sim_solver.cpp \
     particles/free_particle.hpp \
     particles/mesh_particle.hpp	\
+    particles/sized_particle.hpp \
     particles/conversions.hpp \
     geometry/geometry.hpp \
     geometry/triangle.hpp \
@@ -34,14 +35,14 @@ HEADERS += \
     fields/magnetic_B.hpp \
     fields/gravitational.hpp \
     fields/gravitational_planet.hpp \
+    meshes/mesh.hpp \
+    meshes/mesh1d.hpp \
+    meshes/mesh2d.hpp \
     math/math.hpp \
     math/vec2.hpp \
     math/vec3.hpp \
     math/vec4.hpp \
     math/vec6.hpp \
-    meshes/mesh.hpp \
-    meshes/mesh1d.hpp \
-    meshes/mesh2d.hpp \
     meshes/mesh2d_regular.hpp \
     math/private/math2/div.hpp \
     math/private/math2/add.hpp \
@@ -59,16 +60,18 @@ HEADERS += \
     math/private/math2.hpp \
     math/private/math3.hpp \
     math/private/math3/geometry.hpp \
-    math/private/math2/geometry.hpp \
-    particles/sized_particle.hpp
+    math/private/math2/geometry.hpp
 
 SOURCES += \
     simulator.cpp \
     sim_free_particles.cpp \
     sim_meshes.cpp \
+    sim_sized_particles.cpp \
+    sim_find_collisions.cpp \
     particles/free_particle.cpp \
     particles/mesh_particle.cpp \
     particles/conversions.cpp \
+    particles/sized_particle.cpp \
     geometry/geometry.cpp \
     geometry/triangle.cpp \
     geometry/sphere.cpp \
@@ -88,6 +91,4 @@ SOURCES += \
     meshes/mesh.cpp \
     meshes/mesh1d.cpp \
     meshes/mesh2d.cpp \
-    meshes/mesh2d_regular.cpp \
-    particles/sized_particle.cpp \
-    sim_sized_particles.cpp
+    meshes/mesh2d_regular.cpp

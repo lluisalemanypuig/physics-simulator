@@ -139,6 +139,19 @@ class simulator {
 		 */
 		init::initialiser *global_init;
 
+		/**
+		 * @brief Are particle-particle collisions activated?
+		 *
+		 * Default: no.
+		 *
+		 * Activates or deactivates the detection of collisions between
+		 * pairs of sized particles and between pairs of a free and a
+		 * sized particle.
+		 *
+		 * Notice that this excludes pairs of free particles.
+		 */
+		bool part_part_collisions;
+
 	private:
 
 		/**
@@ -191,6 +204,7 @@ class simulator {
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
+		 * @param P Particle type: free, sized or mesh particle.
 		 * @param p Particle to apply the solver on.
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
@@ -207,10 +221,87 @@ class simulator {
 		 * initialised to 0.
 		 *
 		 * The result is set to the force acting on particle @e p.
+		 * @param P Particle type: free, sized or mesh particle.
 		 * @param[out] p The particle whose force attribute is to be modified.
 		 */
-		template<class P>
-		void compute_forces(P *p);
+		template<class P> void compute_forces(P *p);
+
+		/**
+		 * @brief Update a free particle that may collide with geometry.
+		 *
+		 * A particle has a predicted position and velocity which needs to be
+		 * changed in the event that it collides with geometry.
+		 * @param[in] p Current state of particle to be updated.
+		 * @param[out] pred_pos Predicted position modified to the final position.
+		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
+		 * @param[out] coll_pred The particle with the updated state.
+		 * @returns Returns true on collision with geometry.
+		 */
+		bool find_update_geom_collision_free
+		(
+			const particles::free_particle *p,
+			math::vec3& pred_pos, math::vec3& pred_vel,
+			particles::free_particle& coll_pred
+		);
+
+		/**
+		 * @brief Update a free particle that may collide with a sized particle.
+		 *
+		 * A particle has a predicted position and velocity which needs to be
+		 * changed in the event that it collides with another particle.
+		 * @param[in] p Current state of particle to be updated.
+		 * @param[in] exclude The particle at position 'exclude' of @ref sps
+		 * is ignored for detection.
+		 * @param[out] pred_pos Predicted position modified to the final position.
+		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
+		 * @param[out] coll_pred The particle with the updated state.
+		 * @returns Returns true on collision with geometry.
+		 */
+		bool find_update_particle_collision_free(
+			const particles::free_particle *p,
+			math::vec3& pred_pos, math::vec3& pred_vel,
+			particles::free_particle& coll_pred
+		);
+
+		/**
+		 * @brief Update a sized particle that may collide with geometry.
+		 *
+		 * A particle has a predicted position and velocity which needs to be
+		 * changed in the event that it collides with geometry.
+		 *
+		 * The difference between this and @ref find_and_update_collision_free
+		 * is that there is an extra intersection test.
+		 * @param[in] p Current state of particle to be updated.
+		 * @param[out] pred_pos Predicted position modified to the final position.
+		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
+		 * @param[out] coll_pred The particle with the updated state.
+		 * @returns Returns true on collision with geometry.
+		 */
+		bool find_update_geom_collision_sized
+		(
+			const particles::sized_particle *p,
+			math::vec3& pred_pos, math::vec3& pred_vel,
+			particles::sized_particle& coll_pred
+		);
+
+		/**
+		 * @brief Update a sized particle that may collide with a sized particle.
+		 *
+		 * A particle has a predicted position and velocity which needs to be
+		 * changed in the event that it collides with another particle.
+		 * @param[in] p Current state of particle to be updated.
+		 * @param[in] exclude The particle at position 'exclude' of @ref sps
+		 * is ignored for detection.
+		 * @param[out] pred_pos Predicted position modified to the final position.
+		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
+		 * @param[out] coll_pred The particle with the updated state.
+		 * @returns Returns true on collision with geometry.
+		 */
+		bool find_update_particle_collision_sized(
+			const particles::sized_particle *p, size_t i,
+			math::vec3& pred_pos, math::vec3& pred_vel,
+			particles::sized_particle& coll_pred
+		);
 
 	public:
 		/**
@@ -526,6 +617,14 @@ class simulator {
 		 */
 		void set_solver(const solver_type& s);
 
+		/**
+		 * @brief Activates/Deactivates particle-particle collisions.
+		 *
+		 * Sets the value to @ref part_part_collisions.
+		 * @param a Either true or false.
+		 */
+		void set_particle_particle_collisions(bool a);
+
 		// GETTERS
 
 		/**
@@ -572,6 +671,14 @@ class simulator {
 		init::initialiser *get_initialiser();
 		/// Returns a constant reference to the initialiser functions.
 		const init::initialiser *get_initialiser() const;
+
+		/**
+		 * @brief Are collisions between particles activated?
+		 *
+		 * See @ref part_part_collisions for details.
+		 * @return Returns the value of @ref part_part_collisions.
+		 */
+		bool part_part_colls_activated() const;
 };
 
 } // -- namespace sim
