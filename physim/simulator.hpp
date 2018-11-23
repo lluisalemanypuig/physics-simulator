@@ -235,7 +235,7 @@ class simulator {
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
-		const particles::free_particle *add_particle();
+		const particles::free_particle *add_free_particle();
 		/**
 		 * @brief Adds a sized particle to the simulation.
 		 *

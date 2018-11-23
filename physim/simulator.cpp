@@ -72,7 +72,7 @@ simulator::~simulator() {
 
 // ----------- particles
 
-const particles::free_particle *simulator::add_particle() {
+const particles::free_particle *simulator::add_free_particle() {
 	particles::free_particle *p = new particles::free_particle();
 	p->index = fps.size();
 	init_particle(p);
@@ -102,7 +102,7 @@ void simulator::add_particle(particles::sized_particle *p) {
 
 void simulator::add_free_particles(size_t n) {
 	for (size_t i = 0; i < n; ++i) {
-		add_particle();
+		add_sized_particle();
 	}
 }
 
