@@ -38,10 +38,10 @@
 // The computation of the cross product of vectors 'f' and 'g'.
 // Result is stored in 'h'. Do not use this macro as
 // '__pm3_cross(f, f,g)' since the result will not be correct.
-#define __pm3_cross(h, f,g)						\
+#define __pm3_cross(h, f,g)							\
 	__pm3_assign_c(h, (f).y*(g).z - (f).z*(g).y,	\
-					 (f).z*(g).x - (f).x*(g).z,	\
-					 (f).x*(g).y - (f).y*(g).x)
+					  (f).z*(g).x - (f).x*(g).z,	\
+					  (f).x*(g).y - (f).y*(g).x)
 
 // The computation of the cross product of the difference of
 // two vectors with respect respect to a first vector.

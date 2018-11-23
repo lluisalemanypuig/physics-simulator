@@ -186,7 +186,7 @@ const
 	// position to the surface (and a bit farther).
 	if (__pm3_dist2(p->cur_pos, C) < R*R) {
 		__pm3_sub_v_v(normal, p->cur_pos, C);
-		math::normalise(normal, normal);
+		__pm3_normalise(normal, normal);
 		__pm3_add_v_vs(p->cur_pos, C, normal,R + 0.1f);
 	}
 }
@@ -195,24 +195,28 @@ void sphere::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const
 {
-	/* Following the ideas of the intersection between a sized particle
-	 * and a plane (see comments in code...), we now define the
-	 * intersection point I between the line L and the new sphere S.
+	/* Let r be the particle's radius.
 	 *
-	 * The line L goes through point pred_pos and has director vector
-	 * pred_vel. The new sphere S has the same center but has a larger
-	 * radius:
-	 *	1. Let D be the distance between the centre and pred_pos.
-	 *	2. Let u be the unit vector from pred_pos to the center.
-	 *	3. Let delta be the distance between the points:
-	 *		p = pred_pos + u*(particle's radius)
-	 *		q = C - u*R
-	 *	   delta is calculated as:
-	 *		delta = (R + particle's radius - D)/2
-	 *	4. The new sphere is defined by the centre C and radius
-	 *		R + delta
+	 * The correct position of the particle I is at a distance R + r
+	 * of the sphere's center. This position is the intersection
+	 * between the segment from the particle's current position and
+	 * its predicted position, and the sphere of radius R + r (the
+	 * center does not change). Let S be this sphere.
+	 *
+	 * This intersection is guaranteed to exist because the current
+	 * position of the particle is at a distance greater than R + r
+	 * of the center of the sphere.
+	 *
+	 * The updated particle is obtained by updating a free particle
+	 * at a predicted position of I using sphere S.
 	 */
 
+	math::vec3 I;
+
+	float new_R = R + p->R;
+	sphere S(C, new_R);
+	S.intersec_segment(pred_pos, p->cur_pos, I);
+	S.update_particle(I, pred_vel, static_cast<particles::free_particle *>(p));
 }
 
 void sphere::display(std::ostream& os) const {
