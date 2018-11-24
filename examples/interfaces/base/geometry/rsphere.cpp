@@ -5,7 +5,7 @@
 using namespace std;
 
 // glm inlcudes
-#include <glm/gtx/transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 // base includes
 #include <base/include_gl.hpp>

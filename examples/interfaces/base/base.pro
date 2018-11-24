@@ -19,7 +19,6 @@ HEADERS += \
     model/model.hpp \
     model/model_utils.hpp \
     model/rendered_model.hpp \
-    scene/renderer.hpp \
     scene/sim_renderer.hpp \
     geometry/rsphere.hpp \
     geometry/rtriangle.hpp \
@@ -30,7 +29,8 @@ HEADERS += \
     textures/stb_image.h \
     textures/std_image.hpp \
     textures/texture_loader.hpp \
-    model/shader_helper.hpp
+    model/shader_helper.hpp \
+    scene/viewer.hpp
 
 SOURCES += \
     obj_reader.cpp \
@@ -45,12 +45,12 @@ SOURCES += \
     model/model.cpp \
     model/model_utils.cpp \
     model/rendered_model.cpp \
-    scene/renderer.cpp \
     scene/sim_renderer.cpp \
     geometry/rgeometry.cpp \
     shader.cpp \
     textures/texture_loader.cpp \
-    model/shader_helper.cpp
+    model/shader_helper.cpp \
+    scene/viewer.cpp
 
 # for 'self' includes
 INCLUDEPATH += ..

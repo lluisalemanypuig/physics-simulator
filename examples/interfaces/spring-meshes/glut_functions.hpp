@@ -8,6 +8,7 @@
 
 // base includes
 #include <base/scene/sim_renderer.hpp>
+#include <base/shader.hpp>
 
 // custom includes
 #include "utils.hpp"

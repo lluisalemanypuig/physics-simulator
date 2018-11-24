@@ -294,31 +294,51 @@ void rendered_model::make_buffers() {
 	}
 
 	glGenVertexArrays(1, &VAO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	uint buffs[2];
 	glGenBuffers(2, buffs);
+	assert(glGetError() == GL_NO_ERROR);
+
 	VBO = buffs[0];
 	EBO = buffs[1];
 
 	// bind VAO
 	glBindVertexArray(VAO);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// VBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// vertex coordinates
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// normals
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(1);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	assert(glGetError() == GL_NO_ERROR);
 	// ---------------------
 
 	// VAO release
@@ -354,45 +374,72 @@ void rendered_model::make_buffers_materials() {
 	}
 
 	glGenVertexArrays(1, &VAO);
+	assert(glGetError() == GL_NO_ERROR);
 
 	uint buffs[3];
 	glGenBuffers(3, buffs);
+	assert(glGetError() == GL_NO_ERROR);
+
 	VBO = buffs[0];
 	IBO = buffs[1];
 	EBO = buffs[2];
 
 	// bind VAO
 	glBindVertexArray(VAO);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// VBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// vertex coordinates
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// normals
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void *)(3*sizeof(float)));
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(1);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// IBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// indices (materials)
 	glVertexAttribIPointer(2, 1, GL_INT, 0, (void *)0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(2);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	assert(glGetError() == GL_NO_ERROR);
 	// ---------------------
 
 	// VAO release
 	glBindVertexArray(0);
+	assert(glGetError() == GL_NO_ERROR);
 
 	#if defined (DEBUG)
 	cout << "rendered_model::make_buffers_materials() - buffers made" << endl;
@@ -434,9 +481,12 @@ void rendered_model::make_buffers_materials_textures() {
 	}
 
 	glGenVertexArrays(1, &VAO);
+	assert(glGetError() == GL_NO_ERROR);
 
-	uint buffs[3];
+	GLuint buffs[3];
 	glGenBuffers(3, buffs);
+	assert(glGetError() == GL_NO_ERROR);
+
 	VBO = buffs[0];
 	IBO = buffs[1];
 	EBO = buffs[2];
@@ -447,40 +497,73 @@ void rendered_model::make_buffers_materials_textures() {
 	// ---------------------
 	// VBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float), &data[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// vertex coordinates
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// normals
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(3*sizeof(float)));
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(1);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// texture coordinates
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(6*sizeof(float)));
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(2);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// IBO fill
 	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ARRAY_BUFFER, flat_idxs.size()*sizeof(int), &flat_idxs[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// indices (materials + textures)
 	// -- materials
 	glBindBuffer(GL_ARRAY_BUFFER, IBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glVertexAttribIPointer(3, 1, GL_INT, 2*sizeof(int), (void *)0);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(3);
+	assert(glGetError() == GL_NO_ERROR);
+
 	// -- textures
 	glVertexAttribIPointer(4, 1, GL_INT, 2*sizeof(int), (void *)(1*sizeof(int)));
+	assert(glGetError() == GL_NO_ERROR);
+
 	glEnableVertexAttribArray(4);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// ---------------------
 	// EBO fill
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	assert(glGetError() == GL_NO_ERROR);
 	// ---------------------
 
 	// VAO release
 	glBindVertexArray(0);
+	assert(glGetError() == GL_NO_ERROR);
 
 	#if defined (DEBUG)
 	cout << "rendered_model::make_buffers_materials_textures() - buffers made" << endl;
@@ -494,8 +577,13 @@ void rendered_model::make_buffers_materials_textures() {
 void rendered_model::render() const {
 	if (uses_buffers()) {
 		glBindVertexArray(VAO);
+		assert(glGetError() == GL_NO_ERROR);
+
 		glDrawElements(GL_TRIANGLES, triangles.size(), GL_UNSIGNED_INT, 0);
+		assert(glGetError() == GL_NO_ERROR);
+
 		glBindVertexArray(0);
+		assert(glGetError() == GL_NO_ERROR);
 	}
 	else if (uses_lists()) {
 		glCallList(list_index);

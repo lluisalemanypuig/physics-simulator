@@ -116,15 +116,17 @@ void render_mesh2d_regular(const mesh2d_regular *m) {
 	glEnd();
 }
 
+// PRIVATE
+
 // PUBLIC
 
-sim_renderer::sim_renderer() : renderer() { }
+sim_renderer::sim_renderer() : viewer() { }
 sim_renderer::~sim_renderer() {
 	clear();
 }
 
 void sim_renderer::clear() {
-	renderer::clear();
+	viewer::clear();
 	for (rgeom *g : geometry) {
 		g->clear();
 		delete g;

@@ -9,7 +9,6 @@ using namespace std;
 #include <string.h>
 
 // glm includes
-#include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
 // base includes

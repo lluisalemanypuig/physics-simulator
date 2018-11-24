@@ -4,7 +4,7 @@
 #include <vector>
 
 // base includes
-#include <base/scene/renderer.hpp>
+#include <base/scene/viewer.hpp>
 #include <base/geometry/rgeometry.hpp>
 
 // physim includes
@@ -13,7 +13,7 @@
 /**
  * @brief Simulation renderer.
  */
-class sim_renderer : public renderer {
+class sim_renderer : public viewer {
 	private:
 		/// Renderer's simulator.
 		physim::simulator S;

@@ -1,4 +1,4 @@
-#include <base/scene/renderer.hpp>
+#include <base/scene/viewer.hpp>
 
 // C incldues
 #include <assert.h>
@@ -20,26 +20,15 @@ using namespace std;
 
 #define TO_RAD float(M_PI)/180.0f
 
-void renderer::make_model_box(model *m) {
-	if (loaded_models.size() == 1) {
-		m->make_box(B);
-	}
-	else {
-		box b;
-		m->make_box(b);
-		B.enlarge_box(b);
-	}
-}
-
 // PROTECTED
 
-float renderer::get_aspect_ratio() const {
+float viewer::get_aspect_ratio() const {
 	return float(win_width)/float(win_height);
 }
 
 // PUBLIC
 
-renderer::renderer() {
+viewer::viewer() {
 	cam_pos = glm::vec3(0.0f,0.0f,0.0f);
 	pitch = 0.0f;
 	yaw = 0.0f;
@@ -54,30 +43,18 @@ renderer::renderer() {
 	fly = false;
 }
 
-renderer::~renderer() {
+viewer::~viewer() {
 	clear();
 }
 
-void renderer::clear() {
-	for (size_t i = 0; i < loaded_models.size(); ++i) {
-		loaded_models[i]->clear();
-		delete loaded_models[i];
-	}
-	loaded_models.clear();
-}
+void viewer::clear() { }
 
-void renderer::add_model(rendered_model *m) {
-	assert(m != nullptr);
-	loaded_models.push_back(m);
-	make_model_box(m);
-}
-
-void renderer::set_window_dims(int w, int h) {
+void viewer::set_window_dims(int w, int h) {
 	win_width = w;
 	win_height = h;
 }
 
-void renderer::init_cameras() {
+void viewer::init_cameras() {
 	orth_cam.init_camera(B);
 	pers_cam.init_camera(B);
 	orth_cam.adapt_camera_to_viewport(B, win_width, win_height);
@@ -96,116 +73,112 @@ void renderer::init_cameras() {
 	cam_pos.z += 5.0f;
 }
 
-void renderer::increment_theta(float i)	{ theta += i; }
-void renderer::increment_psi(float i)	{ psi += i; }
-void renderer::increment_pitch(float i)	{ pitch += i; }
-void renderer::increment_yaw(float i)	{ yaw += i; }
+void viewer::increment_theta(float i)	{ theta += i; }
+void viewer::increment_psi(float i)	{ psi += i; }
+void viewer::increment_pitch(float i)	{ pitch += i; }
+void viewer::increment_yaw(float i)	{ yaw += i; }
 
-void renderer::increment_zoom(float i) {
+void viewer::increment_zoom(float i) {
 	pers_cam.zoom(i);
 	orth_cam.zoom(0.142f*i);
 }
 
-void renderer::move_camera(float vel, float dir) {
+void viewer::move_camera(float vel, float dir) {
 	float rad = (yaw + dir)*TO_RAD;
 	cam_pos.x -= sin(rad)*vel;
 	cam_pos.z -= cos(rad)*vel;
 }
 
-void renderer::tilt_camera_up(float vel, float dir) {
+void viewer::tilt_camera_up(float vel, float dir) {
 	float rad = (pitch + dir)*TO_RAD;
 	cam_pos.y += sin(rad)*vel;
 }
 
-void renderer::camera_forwards(float vel) {
+void viewer::camera_forwards(float vel) {
 	if (pitch != 90.0f and pitch != -90.0f) {
 		move_camera(vel, 0.0f);
 	}
 	tilt_camera_up(vel, 0.0f);
 }
 
-void renderer::camera_backwards(float vel) {
+void viewer::camera_backwards(float vel) {
 	if (pitch != 90.0f and pitch != -90.0f) {
 		move_camera(vel, 180.0f);
 	}
 	tilt_camera_up(vel, 180.0f);
 }
 
-void renderer::camera_sideways_left(float vel) {
+void viewer::camera_sideways_left(float vel) {
 	move_camera(vel, 90.0);
 }
 
-void renderer::camera_sideways_right(float vel) {
+void viewer::camera_sideways_right(float vel) {
 	move_camera(vel, 270.0);
 }
 
-void renderer::switch_to_perspective()	{ use_perspective = true; use_orthogonal = false; }
-void renderer::switch_to_orthogonal()	{ use_perspective = false; use_orthogonal = true; }
+void viewer::switch_to_perspective()	{ use_perspective = true; use_orthogonal = false; }
+void viewer::switch_to_orthogonal()	{ use_perspective = false; use_orthogonal = true; }
 
-void renderer::switch_to_inspection()	{ inspect = true; fly = false; }
-void renderer::switch_to_flight()		{ inspect = false; fly = true; }
+void viewer::switch_to_inspection()	{ inspect = true; fly = false; }
+void viewer::switch_to_flight()		{ inspect = false; fly = true; }
 
 // SETTERS
 
-void renderer::set_perspective(const perspective& p) { pers_cam = p; }
-void renderer::set_orthogonal(const orthogonal& o) { orth_cam = o; }
-void renderer::set_VRP(const glm::vec3& _VRP) { VRP = _VRP; }
-void renderer::set_theta(float t) { theta = t; }
-void renderer::set_psi(float p) { psi = p; }
-void renderer::set_viewer_pos(const glm::vec3& pos) { cam_pos = pos; }
-void renderer::set_yaw(float y) { yaw = y; }
-void renderer::set_pitch(float p) { pitch = p; }
+void viewer::set_perspective(const perspective& p) { pers_cam = p; }
+void viewer::set_orthogonal(const orthogonal& o) { orth_cam = o; }
+void viewer::set_VRP(const glm::vec3& _VRP) { VRP = _VRP; }
+void viewer::set_theta(float t) { theta = t; }
+void viewer::set_psi(float p) { psi = p; }
+void viewer::set_viewer_pos(const glm::vec3& pos) { cam_pos = pos; }
+void viewer::set_yaw(float y) { yaw = y; }
+void viewer::set_pitch(float p) { pitch = p; }
 
 // GETTERS
 
-perspective& renderer::get_perspective_camera() {
+perspective& viewer::get_perspective_camera() {
 	return pers_cam;
 }
 
-orthogonal& renderer::get_orthogonal_camera() {
+orthogonal& viewer::get_orthogonal_camera() {
 	return orth_cam;
 }
 
-const glm::vec3& renderer::get_viewer_pos() const {
+const glm::vec3& viewer::get_viewer_pos() const {
 	return cam_pos;
 }
 
-box& renderer::get_box() {
+box& viewer::get_box() {
 	return B;
 }
 
-const box& renderer::get_box() const {
+const box& viewer::get_box() const {
 	return B;
 }
 
-int renderer::window_width() const {
+int viewer::window_width() const {
 	return win_width;
 }
-int renderer::window_height() const {
+int viewer::window_height() const {
 	return win_height;
 }
 
-bool renderer::is_flying() const {
+bool viewer::is_flying() const {
 	return fly;
 }
-bool renderer::is_inspecting() const {
+bool viewer::is_inspecting() const {
 	return inspect;
 }
 
-float renderer::get_yaw() const	{ return yaw; }
-float renderer::get_pitch() const{ return pitch; }
+float viewer::get_yaw() const	{ return yaw; }
+float viewer::get_pitch() const{ return pitch; }
 
-const glm::vec3& renderer::get_VRP() const { return VRP; }
-float renderer::get_theta() const { return theta; }
-float renderer::get_psi() const { return psi; }
-
-const std::vector<rendered_model *>& renderer::get_models() const {
-	return loaded_models;
-}
+const glm::vec3& viewer::get_VRP() const { return VRP; }
+float viewer::get_theta() const { return theta; }
+float viewer::get_psi() const { return psi; }
 
 // OpenGL
 
-void renderer::apply_projection() const {
+void viewer::apply_projection() const {
 	if (use_perspective) {
 		gluPerspective(
 			pers_cam.get_FOV(), pers_cam.getRAw(),
@@ -227,8 +200,8 @@ void renderer::apply_projection() const {
 	}
 }
 
-glm::mat4 renderer::make_projection_matrix() const {
-	glm::mat4 proj;
+glm::mat4 viewer::make_projection_matrix() const {
+	glm::mat4 proj(1.0f);
 
 	if (use_perspective) {
 		proj = glm::perspective(
@@ -253,7 +226,7 @@ glm::mat4 renderer::make_projection_matrix() const {
 	return proj;
 }
 
-void renderer::apply_view() const {
+void viewer::apply_view() const {
 	if (inspect) {
 		glTranslatef(0.0f, 0.0f, -diag_length);
 		glRotatef(theta, 1.0f, 0.0f, 0.0f);
@@ -273,8 +246,8 @@ void renderer::apply_view() const {
 	}
 }
 
-glm::mat4 renderer::make_view_matrix() const {
-	glm::mat4 view;
+glm::mat4 viewer::make_view_matrix() const {
+	glm::mat4 view(1.0f);
 	if (inspect) {
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -diag_length));
 		view = glm::rotate(view, theta*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -294,10 +267,4 @@ glm::mat4 renderer::make_view_matrix() const {
 	}
 
 	return view;
-}
-
-void renderer::slow_render_models() const {
-	for (rendered_model *m : loaded_models) {
-		m->render();
-	}
 }

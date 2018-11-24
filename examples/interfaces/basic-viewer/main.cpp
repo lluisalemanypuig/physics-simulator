@@ -14,7 +14,7 @@ using namespace std;
 #include <base/include_gl.hpp>
 #include <base/model/rendered_model.hpp>
 #include <base/model/shader_helper.hpp>
-#include <base/scene/renderer.hpp>
+#include <base/scene/viewer.hpp>
 #include <base/obj_reader.hpp>
 #include <base/shader.hpp>
 
@@ -27,9 +27,11 @@ typedef pair<int,int> point;
 // global variables
 // ------------------
 
-static shader texture_shader;
+static rendered_model *m;
+
+static shader model_shader;
 static shader flat_shader;
-static renderer SR;
+static viewer SR;
 static bool use_shader = false;
 
 static timing::time_point sec;
@@ -64,6 +66,15 @@ bool inside_window(int x, int y) {
 	   and ((0 <= y) and (y <= SR.window_height()));
 }
 
+// -----------
+// Exit viewer
+// -----------
+
+void exit_func() {
+	m->clear();
+	delete m;
+}
+
 // -----------------
 // INITIALISE OpenGL
 // -----------------
@@ -71,6 +82,15 @@ bool inside_window(int x, int y) {
 void initGL(int argc, char *argv[]) {
 	if (argc > 1) {
 		if (strcmp(argv[1], "--use-shaders") == 0) {
+			use_shader = true;
+		}
+		else if (strcmp(argv[1], "--use-shader") == 0) {
+			use_shader = true;
+		}
+		else if (strcmp(argv[1], "--use-shade") == 0) {
+			use_shader = true;
+		}
+		else if (strcmp(argv[1], "--use-shad") == 0) {
 			use_shader = true;
 		}
 	}
@@ -110,7 +130,7 @@ void initGL(int argc, char *argv[]) {
 	/* load shaders */
 	if (use_shader) {
 		bool r;
-		r = texture_shader.init
+		r = model_shader.init
 			("../../interfaces/shaders", "textures.vert", "textures.frag");
 		if (not r) {
 			exit(1);
@@ -121,11 +141,11 @@ void initGL(int argc, char *argv[]) {
 			exit(1);
 		}
 
-		texture_shader.bind();
-		texture_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
-		texture_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
-		texture_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
-		texture_shader.release();
+		model_shader.bind();
+		model_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
+		model_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
+		model_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
+		model_shader.release();
 	}
 
 	// --------------------------- //
@@ -141,13 +161,15 @@ void initGL(int argc, char *argv[]) {
 
 	// ------------------------ //
 	/* load models for geometry */
-	rendered_model *m = new rendered_model();
+	m = new rendered_model();
 
 	OBJ_reader obj;
 	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
 	m->display_mesh_info();
 
-	SR.add_model(m);
+	box model_box;
+	m->make_box(model_box);
+	SR.get_box().set_min_max(model_box.get_min(), model_box.get_max());
 
 	SR.set_window_dims(iw, ih);
 	SR.init_cameras();
@@ -155,25 +177,16 @@ void initGL(int argc, char *argv[]) {
 	// ---------------------------------- //
 	/* compile or make buffers for models */
 
-	const vector<rendered_model *>& models = SR.get_models();
 	if (use_shader) {
 		cout << "Making buffers for models..." << endl;
 		SR.get_box().make_buffers();
-		for (size_t i = 0; i < models.size(); ++i) {
-			cout << "    " << i << ":" << endl;
-			models[i]->load_textures();
-			models[i]->make_buffers_materials_textures();
-		}
-		cout << "    all made" << endl;
+		m->load_textures();
+		m->make_buffers_materials_textures();
 	}
 	else {
 		cout << "Compiling models..." << endl;
-		for (size_t i = 0; i < models.size(); ++i) {
-			cout << i << ":" << endl;
-			models[i]->load_textures();
-			models[i]->compile();
-		}
-		cout << "    all compiled" << endl;
+		m->load_textures();
+		m->compile();
 	}
 }
 
@@ -189,22 +202,19 @@ void refresh() {
 
 	if (use_shader) {
 		glm::mat4 projection = SR.make_projection_matrix();
+		// in this case, the view matrix is
+		// equal to the model view matrix.
 		glm::mat4 view = SR.make_view_matrix();
 		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(view));
 
-		texture_shader.bind();
-		texture_shader.set_mat4("projection", projection);
-		texture_shader.set_mat4("modelview", view);
-		texture_shader.set_mat3("normal_matrix", normal_matrix);
-		texture_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
-
-		const vector<rendered_model *>& models = SR.get_models();
-		for (rendered_model *m : models) {
-			//shader_helper::set_materials_shader(*m, texture_shader);
-			shader_helper::activate_textures(*m, texture_shader);
-			m->render();
-		}
-		texture_shader.release();
+		model_shader.bind();
+		model_shader.set_mat4("projection", projection);
+		model_shader.set_mat4("modelview", view);
+		model_shader.set_mat3("normal_matrix", normal_matrix);
+		model_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
+		shader_helper::activate_textures(*m, model_shader);
+		m->render();
+		model_shader.release();
 
 		flat_shader.bind();
 		flat_shader.set_bool("wireframe", true);
@@ -230,7 +240,7 @@ void refresh() {
 
 		glEnable(GL_LIGHTING);
 
-		SR.slow_render_models();
+		m->slow_render();
 
 		glDisable(GL_LIGHTING);
 		glColor3f(1.0f,0.0f,0.0f);
@@ -405,6 +415,8 @@ void keyboard_event(unsigned char c, int x, int y) {
 
 int main(int argc, char* argv[]) {
 	initGL(argc, argv);
+
+	atexit(exit_func);
 
 	glutDisplayFunc(refresh);
 	glutReshapeFunc(reshape);

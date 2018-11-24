@@ -5,12 +5,11 @@
 
 // glm includes
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
 // base includes
-#include <base/model/rendered_model.hpp>
 #include <base/cameras/perspective.hpp>
 #include <base/cameras/orthogonal.hpp>
-#include <base/shader.hpp>
 #include <base/box.hpp>
 
 /**
@@ -20,10 +19,8 @@
  * This class does not contain the definition of
  * the functions GLUT needs.
  */
-class renderer {
+class viewer {
 	private:
-
-		void make_model_box(model *m);
 
 	protected:
 		/// Bounding box of the models.
@@ -69,32 +66,20 @@ class renderer {
 		/// Window height.
 		int win_height;
 
-		/// Models in the scene.
-		std::vector<rendered_model *> loaded_models;
-
 	protected:
 		/// Returns the ratio window width / window height.
 		float get_aspect_ratio() const;
 
 	public:
 		/// Default constructor.
-		renderer();
+		viewer();
 		/// Destructor.
-		virtual ~renderer();
+		virtual ~viewer();
 
 		// MODIFIERS
 
 		/// Clears the models vector (see @ref ms).
 		virtual void clear();
-
-		/**
-		 * @brief Adds a model to the simulation.
-		 *
-		 * After every addition the bounding box is
-		 * enlarged to fit this model.
-		 * @param m Non-null pointer to a model.
-		 */
-		void add_model(rendered_model *m);
 
 		/**
 		 * @brief Initialise the perspective and orthogonal
@@ -192,8 +177,6 @@ class renderer {
 		bool is_flying() const;
 		/// Returns whether the camera is inspecting.
 		bool is_inspecting() const;
-
-		const std::vector<rendered_model *>& get_models() const;
 
 		// OpenGL
 
