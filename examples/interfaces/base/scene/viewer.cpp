@@ -116,7 +116,7 @@ void viewer::camera_sideways_right(float vel) {
 	move_camera(vel, 270.0);
 }
 
-void viewer::switch_to_perspective()	{ use_perspective = true; use_orthogonal = false; }
+void viewer::switch_to_perspective(){ use_perspective = true; use_orthogonal = false; }
 void viewer::switch_to_orthogonal()	{ use_perspective = false; use_orthogonal = true; }
 
 void viewer::switch_to_inspection()	{ inspect = true; fly = false; }
@@ -193,8 +193,8 @@ void viewer::apply_projection() const {
 		);
 	}
 	else {
-		cerr << "void simulation_renderer::apply_view_mode() - Error!" << endl;
-		cerr << "    Something went wrong with the cameras!" << endl;
+		cerr << "simulation_renderer::apply_view_mode() - Error:" << endl;
+		cerr << "    Something went wrong with the cameras." << endl;
 		cerr << "    No perspective or orthogonal camera activated" << endl;
 		assert(false);
 	}
@@ -217,8 +217,8 @@ glm::mat4 viewer::make_projection_matrix() const {
 		);
 	}
 	else {
-		cerr << "void simulation_renderer::apply_view_mode() - Error!" << endl;
-		cerr << "    Something went wrong with the cameras!" << endl;
+		cerr << "simulation_renderer::apply_view_mode() - Error:" << endl;
+		cerr << "    Something went wrong with the cameras." << endl;
 		cerr << "    No perspective or orthogonal camera activated" << endl;
 		assert(false);
 	}
@@ -239,8 +239,8 @@ void viewer::apply_view() const {
 		glTranslatef(-cam_pos.x, -cam_pos.y, -cam_pos.z);
 	}
 	else {
-		cerr << "void simulation_renderer::apply_camera() - Error!" << endl;
-		cerr << "    Something went wrong with the cameras!" << endl;
+		cerr << "simulation_renderer::apply_camera() - Error:" << endl;
+		cerr << "    Something went wrong with the cameras." << endl;
 		cerr << "    No inspect or fly mode activated" << endl;
 		assert(false);
 	}
@@ -260,8 +260,8 @@ glm::mat4 viewer::make_view_matrix() const {
 		view = glm::translate(view, glm::vec3(-cam_pos.x, -cam_pos.y, -cam_pos.z));
 	}
 	else {
-		cerr << "void simulation_renderer::apply_camera() - Error!" << endl;
-		cerr << "    Something went wrong with the cameras!" << endl;
+		cerr << "simulation_renderer::apply_camera() - Error:" << endl;
+		cerr << "    Something went wrong with the cameras," << endl;
 		cerr << "    No inspect or fly mode activated" << endl;
 		assert(false);
 	}

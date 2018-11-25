@@ -176,7 +176,7 @@ void sim_renderer::render_simulation() const {
 
 	// render particles
 	glBegin(GL_POINTS);
-	const std::vector<free_particle *>& ps = S.get_particles();
+	const std::vector<free_particle *>& ps = S.get_free_particles();
 	for (const free_particle *p : ps) {
 		if (p->lifetime < 0.2f) {
 			glColor3f(0.0f,0.0f,0.0f);

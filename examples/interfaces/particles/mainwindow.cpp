@@ -252,7 +252,7 @@ void MainWindow::on_lEBounce_returnPressed() {
 	I->set_bounce_initialiser(bounce);
 
 	// change bouncing coefficient of all particles
-	const vector<free_particle *>& ps = sr->get_simulator().get_particles();
+	const vector<free_particle *>& ps = sr->get_simulator().get_free_particles();
 	for (free_particle *p : ps) {
 		bounce(p);
 	}
@@ -269,7 +269,7 @@ void MainWindow::on_lEFriction_returnPressed() {
 	I->set_friction_initialiser(fric);
 
 	// change friction coefficient of all particles
-	const vector<free_particle *>& ps = sr->get_simulator().get_particles();
+	const vector<free_particle *>& ps = sr->get_simulator().get_free_particles();
 	for (free_particle *p : ps) {
 		fric(p);
 	}
@@ -286,7 +286,7 @@ void MainWindow::on_lELifeTime_returnPressed() {
 	I->set_lifetime_initialiser(lifetime);
 
 	// change lifetime of all particles
-	const vector<free_particle *>& ps = sr->get_simulator().get_particles();
+	const vector<free_particle *>& ps = sr->get_simulator().get_free_particles();
 	for (free_particle *p : ps) {
 		lifetime(p);
 	}

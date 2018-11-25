@@ -199,13 +199,13 @@ void SimulationRenderer::set_total_time(float T) {
 }
 
 void SimulationRenderer::set_bounce_all_particles(float b) {
-	for (free_particle *p : S.get_particles()) {
+	for (free_particle *p : S.get_free_particles()) {
 		p->bouncing = b;
 	}
 }
 
 void SimulationRenderer::set_friction_all_particles(float f) {
-	for (free_particle *p : S.get_particles()) {
+	for (free_particle *p : S.get_free_particles()) {
 		p->friction = f;
 	}
 }
