@@ -144,7 +144,8 @@ void initialiser::initialise_particle(particles::free_particle *p) const {
 	starttime(p);
 	fixed(p);
 	if (p->is_sized()) {
-		particles::sized_particle *sp = static_cast<particles::sized_particle *>(p);
+		particles::sized_particle *sp =
+			static_cast<particles::sized_particle *>(p);
 		radius(sp);
 	}
 }

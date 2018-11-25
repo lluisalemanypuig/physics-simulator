@@ -4,6 +4,9 @@
 #include <physim/math/private/math3.hpp>
 #include <physim/geometry/sphere.hpp>
 
+#include <iostream>
+using namespace std;
+
 namespace physim {
 
 static geom::sphere Sj;
@@ -222,18 +225,41 @@ bool simulator::find_update_particle_collision_sized
 {
 	bool collision = false;
 
+	cout << "particle " << i << " is at: " << __pm3_out(p->cur_pos) << endl;
+	cout << "    predicted position for " << i << ": " << __pm3_out(pred_pos) << endl;
+
 	size_t j;
 	for (j = 0; j < i; ++j) {
 		Sj.set_position(sps[j]->cur_pos);
 		Sj.set_radius(sps[j]->R);
 
-		update_with_geometry(&Sj, solver, dt, p, pred_pos, pred_vel, coll_pred, collision);
+		bool this_collision = false;
+		update_with_geometry(&Sj, solver, dt, p, pred_pos, pred_vel, coll_pred, this_collision);
+		if (this_collision) {
+			cout << "Collision of particle " << i << " with particle " << j << endl;
+			cout << "    particle " << j << " is at: " << __pm3_out(sps[j]->cur_pos) << endl;
+			collision = true;
+
+			//exit(0);
+		}
 	}
 	for (j = i + 1; j < sps.size(); ++j) {
 		Sj.set_position(sps[j]->cur_pos);
 		Sj.set_radius(sps[j]->R);
 
-		update_with_geometry(&Sj, solver, dt, p, pred_pos, pred_vel, coll_pred, collision);
+		bool this_collision = false;
+		update_with_geometry(&Sj, solver, dt, p, pred_pos, pred_vel, coll_pred, this_collision);
+		if (this_collision) {
+			cout << "Collision of particle " << i << " with particle " << j << endl;
+			cout << "    particle " << j << " is at: " << __pm3_out(sps[j]->cur_pos) << endl;
+			collision = true;
+
+			cout << "Particle " << i << " is predicted to result in:" << endl;
+			cout << "    position: " << __pm3_out(coll_pred.cur_pos) << endl;
+			cout << "    velocity: " << __pm3_out(coll_pred.cur_vel) << endl;
+
+			//exit(0);
+		}
 	}
 
 	return collision;

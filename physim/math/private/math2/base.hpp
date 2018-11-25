@@ -5,6 +5,9 @@ namespace math {
 
 /* MISCELLANEA */
 
+// output a vec3
+#define __pm2_out(v) (v).x << "," << (v).y
+
 // g <- f
 #define __pm2_assign_v(g,f)			\
 	(g).x = (f).x;					\

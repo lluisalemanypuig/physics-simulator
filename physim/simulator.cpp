@@ -89,13 +89,13 @@ const particles::sized_particle *simulator::add_sized_particle() {
 	return p;
 }
 
-void simulator::add_particle(particles::free_particle *p) {
+void simulator::add_free_particle(particles::free_particle *p) {
 	assert(p != nullptr);
 	p->index = fps.size();
 	fps.push_back(p);
 }
 
-void simulator::add_particle(particles::sized_particle *p) {
+void simulator::add_sized_particle(particles::sized_particle *p) {
 	assert(p != nullptr);
 	p->index = sps.size();
 	sps.push_back(p);

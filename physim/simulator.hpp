@@ -342,7 +342,7 @@ class simulator {
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
-		void add_particle(particles::free_particle *p);
+		void add_free_particle(particles::free_particle *p);
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
@@ -355,7 +355,7 @@ class simulator {
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
-		void add_particle(particles::sized_particle *p);
+		void add_sized_particle(particles::sized_particle *p);
 		/**
 		 * @brief Adds @e n free particles to the simulation.
 		 *
