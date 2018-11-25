@@ -208,7 +208,8 @@ const
 	 * of the center of the sphere.
 	 *
 	 * The updated particle is obtained by updating a free particle
-	 * at a predicted position of I using sphere S.
+	 * at a predicted position I using a plane with normal a unit
+	 * vector from the center to I.
 	 */
 
 	math::vec3 I;
@@ -216,7 +217,19 @@ const
 	float new_R = R + p->R;
 	sphere S(C, new_R);
 	S.intersec_segment(pred_pos, p->cur_pos, I);
-	S.update_particle(I, pred_vel, static_cast<particles::free_particle *>(p));
+
+	math::vec3 normal;
+	__pm3_sub_v_v(normal, C, I);
+	plane tan_plane(normal,I);
+
+	// make the plane update the particle
+	tan_plane.update_particle(I, pred_vel, p);
+
+	if (__pm3_dist2(p->cur_pos, C) < new_R*new_R) {
+		__pm3_sub_v_v(normal, p->cur_pos, C);
+		__pm3_normalise(normal, normal);
+		__pm3_add_v_vs(p->cur_pos, C, normal,new_R + 0.1f);
+	}
 }
 
 void sphere::display(std::ostream& os) const {
