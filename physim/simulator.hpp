@@ -624,7 +624,7 @@ class simulator {
 		// GETTERS
 
 		/**
-		 * @brief Returns all particles in the simulation.
+		 * @brief Returns all free particles in the simulation.
 		 *
 		 * Note that the constant reference is to the container.
 		 * It cannot be added new particles or have deleted any,
@@ -635,9 +635,26 @@ class simulator {
 		 * @return Returns a constant reference to the structure
 		 * containing all particles.
 		 */
-		const std::vector<particles::free_particle *>& get_particles() const;
-		/// Returns a constant reference to i-th particle.
-		const particles::free_particle& get_particle(size_t i) const;
+		const std::vector<particles::free_particle *>& get_free_particles() const;
+		/// Returns a constant reference to i-th free particle.
+		const particles::free_particle& get_free_particle(size_t i) const;
+
+		/**
+		 * @brief Returns all sized particles in the simulation.
+		 *
+		 * Note that the constant reference is to the container.
+		 * It cannot be added new particles or have deleted any,
+		 * however any particle's attributes may be modified.
+		 *
+		 * The behaviour of the modified particles in the simulation
+		 * will change according to the modifications.
+		 * @return Returns a constant reference to the structure
+		 * containing all particles.
+		 */
+		const std::vector<particles::sized_particle *>& get_sized_particles() const;
+		/// Returns a constant reference to i-th sized particle.
+		const particles::sized_particle& get_sized_particle(size_t i) const;
+
 		/**
 		 * @brief Returns all meshes in the simulation.
 		 *

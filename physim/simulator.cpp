@@ -272,13 +272,20 @@ void simulator::set_particle_particle_collisions(bool a) {
 
 // GETTERS
 
-const std::vector<particles::free_particle *>& simulator::get_particles() const {
+const std::vector<particles::free_particle *>& simulator::get_free_particles() const {
 	return fps;
 }
-
-const particles::free_particle& simulator::get_particle(size_t i) const {
+const particles::free_particle& simulator::get_free_particle(size_t i) const {
 	assert(i < fps.size());
 	return *fps[i];
+}
+
+const std::vector<particles::sized_particle *>& simulator::get_sized_particles() const {
+	return sps;
+}
+const particles::sized_particle& simulator::get_sized_particle(size_t i) const {
+	assert(i < sps.size());
+	return *sps[i];
 }
 
 const std::vector<meshes::mesh *>& simulator::get_meshes() const {
