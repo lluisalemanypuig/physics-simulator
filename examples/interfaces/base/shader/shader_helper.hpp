@@ -2,7 +2,7 @@
 
 // base includes
 #include <base/model/rendered_model.hpp>
-#include <base/shader.hpp>
+#include <base/shader/shader.hpp>
 
 namespace shader_helper {
 

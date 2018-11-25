@@ -13,10 +13,10 @@ using namespace std;
 // base includes
 #include <base/include_gl.hpp>
 #include <base/model/rendered_model.hpp>
-#include <base/model/shader_helper.hpp>
+#include <base/shader/shader_helper.hpp>
+#include <base/shader/shader.hpp>
 #include <base/scene/viewer.hpp>
 #include <base/obj_reader.hpp>
-#include <base/shader.hpp>
 
 // custom includes
 #include "utils.hpp"

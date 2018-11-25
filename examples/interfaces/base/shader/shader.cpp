@@ -1,4 +1,4 @@
-#include <base/shader.hpp>
+#include <base/shader/shader.hpp>
 
 // C++ includes
 #include <iostream>

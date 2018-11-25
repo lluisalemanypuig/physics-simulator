@@ -14,8 +14,8 @@ using namespace std;
 // base includes
 #include <base/include_gl.hpp>
 #include <base/textures/texture_loader.hpp>
-#include <base/model/shader_helper.hpp>
-#include <base/shader.hpp>
+#include <base/shader/shader_helper.hpp>
+#include <base/shader/shader.hpp>
 #include <base/geometry/rsphere.hpp>
 
 // physim includes

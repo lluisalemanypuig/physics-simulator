@@ -1,4 +1,4 @@
-#include <base/model/shader_helper.hpp>
+#include <base/shader/shader_helper.hpp>
 
 // C++ includes
 #include <iostream>

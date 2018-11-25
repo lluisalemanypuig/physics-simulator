@@ -14,7 +14,7 @@ using namespace std;
 
 // base includes
 #include <base/include_gl.hpp>
-#include <base/model/shader_helper.hpp>
+#include <base/shader/shader_helper.hpp>
 
 // PRIVATE
 
