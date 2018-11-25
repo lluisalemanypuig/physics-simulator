@@ -16,7 +16,7 @@
 
 // Custom includes
 #include <render/geometry/rgeometry.hpp>
-#include <render/model/rendered_model.hpp>
+#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -44,7 +44,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		float tt;			// simulation total time
 		int sim_steps;		// number of steps of the simulation
 
-		std::shared_ptr<rendered_model> sim_sphere;
+		std::shared_ptr<rendered_triangle_mesh> sim_sphere;
 
 		QProgressBar *p_bar;// the progress bar of the simulation
 		QLabel *label_fps;
@@ -105,7 +105,7 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 
 		void set_limit_fps(bool l);
 
-		void set_sphere(std::shared_ptr<rendered_model> s);
+		void set_sphere(std::shared_ptr<rendered_triangle_mesh> s);
 
 		// sets 'scene_cleared' to false, so that
 		// we can run the application

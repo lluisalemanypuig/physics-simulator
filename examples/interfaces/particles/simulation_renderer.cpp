@@ -178,7 +178,7 @@ void SimulationRenderer::set_limit_fps(bool l) {
 	limit_fps = l;
 }
 
-void SimulationRenderer::set_sphere(std::shared_ptr<rendered_model> s) {
+void SimulationRenderer::set_sphere(std::shared_ptr<rendered_triangle_mesh> s) {
 	sim_sphere = s;
 }
 

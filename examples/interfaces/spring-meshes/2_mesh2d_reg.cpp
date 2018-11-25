@@ -12,7 +12,7 @@ using namespace std;
 
 // render includes
 #include <render/geometry/rsphere.hpp>
-#include <render/model/rendered_model.hpp>
+#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 

@@ -12,7 +12,7 @@ using namespace std;
 
 // render includes
 #include <render/include_gl.hpp>
-#include <render/model/rendered_model.hpp>
+#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/shader/shader_helper.hpp>
 #include <render/shader/shader.hpp>
 #include <render/scene/viewer.hpp>
@@ -27,7 +27,7 @@ typedef pair<int,int> point;
 // global variables
 // ------------------
 
-static rendered_model *m;
+static rendered_triangle_mesh *m;
 
 static shader model_shader;
 static shader flat_shader;
@@ -161,7 +161,7 @@ void initGL(int argc, char *argv[]) {
 
 	// ------------------------ //
 	/* load models for geometry */
-	m = new rendered_model();
+	m = new rendered_triangle_mesh();
 
 	OBJ_reader obj;
 	obj.load_object("../../interfaces/models" , "sphere.obj", *m);

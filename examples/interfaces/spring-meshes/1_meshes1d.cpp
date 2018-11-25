@@ -11,7 +11,7 @@ using namespace std;
 // render includes
 #include <render/geometry/rrectangle.hpp>
 #include <render/geometry/rsphere.hpp>
-#include <render/model/rendered_model.hpp>
+#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
@@ -133,7 +133,7 @@ namespace study_cases {
 
 		// -- group 4
 		// 10 springs on top of spheres
-		shared_ptr<rendered_model> model_ball(new rendered_model);
+		shared_ptr<rendered_triangle_mesh> model_ball(new rendered_triangle_mesh);
 
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);

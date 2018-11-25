@@ -16,10 +16,6 @@ HEADERS += \
     cameras/orthogonal.hpp \
     cameras/perspective.hpp \
     cameras/observer.hpp \
-    model/model.hpp \
-    model/model_utils.hpp \
-    model/rendered_model.hpp \
-    scene/sim_renderer.hpp \
     geometry/rsphere.hpp \
     geometry/rtriangle.hpp \
     geometry/rplane.hpp \
@@ -29,8 +25,12 @@ HEADERS += \
     textures/std_image.hpp \
     textures/texture_loader.hpp \
     scene/viewer.hpp \
+    scene/sim_renderer.hpp \
     shader/shader.hpp \
-    shader/shader_helper.hpp
+    shader/shader_helper.hpp \
+    triangle_mesh/triangle_mesh.hpp \
+    triangle_mesh/triangle_mesh_utils.hpp \
+    triangle_mesh/rendered_triangle_mesh.hpp
 
 SOURCES += \
     obj_reader.cpp \
@@ -42,18 +42,20 @@ SOURCES += \
     cameras/orthogonal.cpp \
     cameras/perspective.cpp \
     cameras/observer.cpp \
-    model/model.cpp \
-    model/model_utils.cpp \
-    model/rendered_model.cpp \
-    scene/sim_renderer.cpp \
     geometry/rgeometry.cpp \
     textures/texture_loader.cpp \
     scene/viewer.cpp \
+    scene/sim_renderer.cpp \
     shader/shader.cpp \
-    shader/shader_helper.cpp
+    shader/shader_helper.cpp \
+    triangle_mesh/rendered_triangle_mesh.cpp \
+    triangle_mesh/triangle_mesh.cpp \
+    triangle_mesh/triangle_mesh_utils.cpp
 
 # for 'self' includes
 INCLUDEPATH += ..
 
-# physim includes
-INCLUDEPATH += ../../..
+# physim library
+INCLUDEPATH += ../../../
+DEPENDPATH += ../../../
+

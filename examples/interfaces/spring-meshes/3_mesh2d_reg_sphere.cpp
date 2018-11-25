@@ -12,7 +12,7 @@ using namespace std;
 
 // render includes
 #include <render/geometry/rsphere.hpp>
-#include <render/model/rendered_model.hpp>
+#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
@@ -75,7 +75,7 @@ namespace study_cases {
 		sphere *s = new sphere(math::vec3(5.0f, 5.0f, 5.0f), 2.0f);
 		SR.get_simulator().add_geometry(s);
 
-		shared_ptr<rendered_model> model_ball(new rendered_model);
+		shared_ptr<rendered_triangle_mesh> model_ball(new rendered_triangle_mesh);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
 

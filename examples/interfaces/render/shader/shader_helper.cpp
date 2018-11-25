@@ -7,7 +7,7 @@
 using namespace std;
 
 // render includes
-#include <render/model/model_utils.hpp>
+#include <render/triangle_mesh/triangle_mesh_utils.hpp>
 
 namespace shader_helper {
 
@@ -24,7 +24,7 @@ namespace shader_helper {
 		S.set_float(name + ".shininess", mat.Ns);
 	}
 
-	void set_materials_shader(const rendered_model& M, shader& S) {
+	void set_materials_shader(const rendered_triangle_mesh& M, shader& S) {
 		const set<int>& unique_mat_idxs = M.get_unique_material_idxs();
 		size_t inf = unique_mat_idxs.size() + 1;
 
@@ -54,7 +54,7 @@ namespace shader_helper {
 		}
 	}
 
-	void activate_textures(const rendered_model& M, shader& S) {
+	void activate_textures(const rendered_triangle_mesh& M, shader& S) {
 		const set<int>& unique_mat_idxs = M.get_unique_material_idxs();
 		size_t inf = unique_mat_idxs.size() + 1;
 
@@ -70,7 +70,7 @@ namespace shader_helper {
 			++it;
 		}
 
-		for (int i = 0; i < 4; ++i, ++it) {
+		for (int i = 0; i < 4 and it != unique_mat_idxs.end(); ++i, ++it) {
 			idxs[i] = *it;
 		}
 

@@ -197,7 +197,7 @@ namespace glut_functions {
 
 		// render models of geometry
 		for (rgeom *r : SR.get_geometry()) {
-			shared_ptr<rendered_model> m = r->get_model();
+			shared_ptr<rendered_triangle_mesh> m = r->get_model();
 			if (m != nullptr) {
 
 				glm::mat4 model(1.0f);
@@ -226,7 +226,7 @@ namespace glut_functions {
 		SR.render_simulation();
 		// render geometry without models
 		for (rgeom *r : SR.get_geometry()) {
-			shared_ptr<rendered_model> m = r->get_model();
+			shared_ptr<rendered_triangle_mesh> m = r->get_model();
 			if (m == nullptr) {
 				r->draw();
 			}

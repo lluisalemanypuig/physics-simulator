@@ -12,7 +12,7 @@
 
 // Custom includes
 #include <render/geometry/rgeometry.hpp>
-#include <render/model/model.hpp>
+#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include "simulation_renderer.hpp"
 #include "utils.hpp"
 
@@ -27,7 +27,7 @@ class MainWindow : public QMainWindow {
 		Ui::MainWindow *ui;
 		int current_tab;
 
-		std::shared_ptr<rendered_model> sim_ball;
+		std::shared_ptr<rendered_triangle_mesh> sim_ball;
 
 		std::default_random_engine eng;
 		// generator for random numbers between 0 and 1
