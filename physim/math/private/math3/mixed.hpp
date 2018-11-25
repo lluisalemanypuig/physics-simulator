@@ -2,8 +2,12 @@
 
 // physim includes
 #include <physim/math/private/math3/base.hpp>
+#include <physim/math/private/math2/mixed.hpp>
 
 /* MIXED ARITHMETIC OPERATIONS */
+
+// v.x + v.y + v.z
+#define __pm3_sum(v) (__pm2_sum(v) + (v).z)
 
 // h <- (f + g)/(x,y,z)
 #define __pm3_add_v_v_div_c(h, f,g, x,y,z)			\

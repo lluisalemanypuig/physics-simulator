@@ -9,8 +9,6 @@ using namespace std;
 
 namespace physim {
 
-static geom::sphere Sj;
-
 // ------------------------------------------------------
 
 /* The main idea implemented in the following loop
@@ -108,6 +106,7 @@ bool simulator::find_update_geom_collision_free
 	return collision;
 }
 
+static geom::sphere Sj;
 bool simulator::find_update_particle_collision_free
 (
 	const particles::free_particle *p,
@@ -155,48 +154,9 @@ bool simulator::find_update_particle_collision_free
 // -----------------------------------------------
 // SIZED PARTICLES
 
-static inline
-void update_with_geometry
-(
-	const geom::geometry *g, const solver_type& solver,
-	float dt, const particles::sized_particle *p,
-	math::vec3& pred_pos, math::vec3& pred_vel,
-	particles::sized_particle& coll_pred,
-	bool& collision
-)
-{
-	// if the particle collides with some geometry
-	// then the geometry is in charge of updating
-	// this particle's position, velocity, ...
-
-	bool inter = false;
-	inter = inter or g->intersec_segment(p->cur_pos, pred_pos);
-	inter = inter or g->intersec_sphere(pred_pos, p->R);
-	if (inter) {
-		collision = true;
-
-		coll_pred = *p;
-
-		// the geometry updates the predicted particle
-		g->update_particle(pred_pos, pred_vel, &coll_pred);
-
-		if (solver == solver_type::Verlet) {
-			// this solver needs a correct position
-			// for the 'previous' position of the
-			// particle after a collision with geometry
-
-			__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
-		}
-
-		// keep track of the predicted particle's position
-		__pm3_assign_v(pred_pos, coll_pred.cur_pos);
-		__pm3_assign_v(pred_vel, coll_pred.cur_vel);
-	}
-}
-
 bool simulator::find_update_geom_collision_sized
 (
-	const particles::sized_particle *p,
+	const particles::sized_particle *in,
 	math::vec3& pred_pos, math::vec3& pred_vel,
 	particles::sized_particle& coll_pred
 )
@@ -210,59 +170,97 @@ bool simulator::find_update_geom_collision_sized
 	for (size_t i = 0; i < scene_fixed.size(); ++i) {
 		const geom::geometry *g = scene_fixed[i];
 
-		update_with_geometry(g, solver, dt, p, pred_pos, pred_vel, coll_pred, collision);
+		// if the particle collides with some geometry
+		// then the geometry is in charge of updating
+		// this particle's position, velocity, ...
+
+		bool inter = false;
+		inter = inter or g->intersec_segment(in->cur_pos, pred_pos);
+		inter = inter or g->intersec_sphere(pred_pos, in->R);
+		if (inter) {
+			collision = true;
+
+			coll_pred = *in;
+
+			// the geometry updates the predicted particle
+			g->update_particle(pred_pos, pred_vel, &coll_pred);
+
+			if (solver == solver_type::Verlet) {
+				// this solver needs a correct position
+				// for the 'previous' position of the
+				// particle after a collision with geometry
+
+				__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+			}
+
+			// keep track of the predicted particle's position
+			__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+			__pm3_assign_v(pred_vel, coll_pred.cur_vel);
+		}
 	}
 
 	return collision;
 }
 
-bool simulator::find_update_particle_collision_sized
-(
-	const particles::sized_particle *p, size_t i,
-	math::vec3& pred_pos, math::vec3& pred_vel,
-	particles::sized_particle& coll_pred
-)
+static inline bool spart_spart_collision
+(const particles::sized_particle *in, const particles::sized_particle *out)
 {
-	bool collision = false;
+	float center_d2 = __pm3_dist2(in->cur_pos, out->cur_pos);
+	float sum_r = in->R + out->R;
+	return center_d2 <= sum_r*sum_r;
+}
 
-	cout << "particle " << i << " is at: " << __pm3_out(p->cur_pos) << endl;
-	cout << "    predicted position for " << i << ": " << __pm3_out(pred_pos) << endl;
+static inline void spart_spart_update
+(particles::sized_particle *in, particles::sized_particle *out)
+{
+	// following the steps in
+	// https://www.atmos.illinois.edu/courses/atmos100/userdocs/3Dcollisions.html
 
-	size_t j;
-	for (j = 0; j < i; ++j) {
-		Sj.set_position(sps[j]->cur_pos);
-		Sj.set_radius(sps[j]->R);
+	// 1. angles between the two colliders
+	math::vec3 D;
+	__pm3_sub_v_v(D, in->cur_pos, out->cur_pos);
 
-		bool this_collision = false;
-		update_with_geometry(&Sj, solver, dt, p, pred_pos, pred_vel, coll_pred, this_collision);
-		if (this_collision) {
-			cout << "Collision of particle " << i << " with particle " << j << endl;
-			cout << "    particle " << j << " is at: " << __pm3_out(sps[j]->cur_pos) << endl;
-			collision = true;
+	float xyz1 = math::angle_xyz(D, in->cur_vel);
+	float xyz2 = math::angle_xyz(D, out->cur_vel);
 
-			//exit(0);
+	// 2. force vectors towards each other
+	math::vec3 c1, c2;
+	__pm3_assign_vs(c1, in->cur_vel,xyz1);
+	__pm3_assign_vs(c2, out->cur_vel,xyz2);
+
+	float a_xy1 = math::angle_xy(in->cur_vel, in->cur_vel);
+	float a_xz1 = math::angle_xz(in->cur_vel, in->cur_vel);
+	float a_xy2 = math::angle_xy(out->cur_vel, out->cur_vel);
+	float a_xz2 = math::angle_xz(out->cur_vel, out->cur_vel);
+
+	c1.x = c1.x*std::sin(a_xz1)*std::cos(a_xy1);
+	c1.y = c1.y*std::sin(a_xz1)*std::sin(a_xy1);
+	c1.z = c1.z*std::cos(a_xz1);
+
+	c2.x = c2.x*std::sin(a_xz2)*std::cos(a_xy2);
+	c2.y = c2.y*std::sin(a_xz2)*std::sin(a_xy2);
+	c2.z = c2.z*std::cos(a_xz2);
+
+	math::vec3 n1, n2;
+	__pm3_sub_v_v(n1, in->cur_vel, c1);
+	__pm3_sub_v_v(n2, out->cur_vel, c2);
+
+	__pm3_add_v_v(in->cur_vel, c2, n1);
+	__pm3_add_v_v(out->cur_vel, c1, n2);
+}
+
+// particle 'in' has index 'i'
+void simulator::find_update_particle_collision_sized
+(particles::sized_particle *in, size_t i)
+{
+
+	for (size_t j = i + 1; j < sps.size(); ++j) {
+
+		if (spart_spart_collision(in, sps[j])) {
+			// collision between particle 'in' and particle 'j'
+			spart_spart_update(in, sps[j]);
 		}
 	}
-	for (j = i + 1; j < sps.size(); ++j) {
-		Sj.set_position(sps[j]->cur_pos);
-		Sj.set_radius(sps[j]->R);
-
-		bool this_collision = false;
-		update_with_geometry(&Sj, solver, dt, p, pred_pos, pred_vel, coll_pred, this_collision);
-		if (this_collision) {
-			cout << "Collision of particle " << i << " with particle " << j << endl;
-			cout << "    particle " << j << " is at: " << __pm3_out(sps[j]->cur_pos) << endl;
-			collision = true;
-
-			cout << "Particle " << i << " is predicted to result in:" << endl;
-			cout << "    position: " << __pm3_out(coll_pred.cur_pos) << endl;
-			cout << "    velocity: " << __pm3_out(coll_pred.cur_vel) << endl;
-
-			//exit(0);
-		}
-	}
-
-	return collision;
 }
 
 } // -- namespace physim

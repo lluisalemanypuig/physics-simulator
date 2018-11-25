@@ -227,5 +227,40 @@ inline vec3 normalise(const vec3& f) {
 	return out;
 }
 
+/**
+ * @brief Returns the angle between two vectors.
+ * @param[in] f 3D vector.
+ * @param[in] g 3D vector.
+ * @return Returns the angle between the vectors \f$f,g\f$.
+ */
+inline float angle_xyz(const vec3& f, const vec3& g) {
+	return std::acos( (dot(f,g))/(norm(f)*norm(g)) );
+}
+
+/**
+ * @brief Returns the xy angle between two vectors.
+ * @param[in] f 3D vector.
+ * @param[in] g 3D vector.
+ * @return Returns the angle between the vectors \f$(f_x,0,0)\f$
+ * and \f$(g_x,g_y,0)\f$.
+ */
+inline float angle_xy(const vec3& f, const vec3& g) {
+	vec3 fx(f.x,0.0f,0.0f);
+	vec3 gxy(g.x,g.y,0.0f);
+	return angle_xyz(fx,gxy);
+}
+
+/**
+ * @brief Returns the xz angle between two vectors.
+ * @param[in] f 3D vector.
+ * @param[in] g 3D vector.
+ * @return Returns the angle between the vectors \f$(f_x,f_y,0)\f$
+ * and \f$g\f$.
+ */
+inline float angle_xz(const vec3& f, const vec3& g) {
+	vec3 fxy(f.x,f.y,0.0f);
+	return angle_xyz(fxy,g);
+}
+
 } // -- namespace math
 } // -- namespace physim

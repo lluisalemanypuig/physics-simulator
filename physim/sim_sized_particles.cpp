@@ -53,17 +53,6 @@ void simulator::_simulate_sized_particles() {
 		bool collision =
 		find_update_geom_collision_sized(p, pred_pos, pred_vel, coll_pred);
 
-		// Now it is time to perform collisions between particles.
-		// A data structure would come really in handy but, for now,
-		// a linear-time algorithm (for every particle) will be used.
-
-		if (part_part_colls_activated()) {
-			bool r = find_update_particle_collision_sized
-			(p, i, pred_pos, pred_vel, coll_pred);
-
-			collision = collision or r;
-		}
-
 		// give the particle the proper final state
 		if (collision) {
 			*p = coll_pred;
@@ -72,6 +61,14 @@ void simulator::_simulate_sized_particles() {
 			p->save_position();
 			__pm3_assign_v(p->cur_pos, pred_pos);
 			__pm3_assign_v(p->cur_vel, pred_vel);
+		}
+
+		// Now it is time to perform collisions between particles.
+		// A data structure would come really in handy but, for now,
+		// a linear-time algorithm (for every particle) will be used.
+
+		if (part_part_colls_activated()) {
+			find_update_particle_collision_sized(p, i);
 		}
 	}
 

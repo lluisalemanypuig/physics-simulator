@@ -284,20 +284,12 @@ class simulator {
 		/**
 		 * @brief Update a sized particle that may collide with a sized particle.
 		 *
-		 * A particle has a predicted position and velocity which needs to be
-		 * changed in the event that it collides with another particle.
+		 * This method is called after finding a definitive state of a particle
+		 * after colliding with geometry.
 		 * @param[in] p Current state of particle to be updated.
 		 * @param[in] i Index of the sized particle to ignore.
-		 * @param[out] pred_pos Predicted position modified to the final position.
-		 * @param[out] pred_vel Predicted velocity modified to the final velocity.
-		 * @param[out] coll_pred The particle with the updated state.
-		 * @returns Returns true on collision with geometry.
 		 */
-		bool find_update_particle_collision_sized(
-			const particles::sized_particle *p, size_t i,
-			math::vec3& pred_pos, math::vec3& pred_vel,
-			particles::sized_particle& coll_pred
-		);
+		void find_update_particle_collision_sized(particles::sized_particle *p, size_t i);
 
 	public:
 		/**
