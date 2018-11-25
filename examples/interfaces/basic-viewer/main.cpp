@@ -10,13 +10,13 @@ using namespace std;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
-// base includes
-#include <base/include_gl.hpp>
-#include <base/model/rendered_model.hpp>
-#include <base/shader/shader_helper.hpp>
-#include <base/shader/shader.hpp>
-#include <base/scene/viewer.hpp>
-#include <base/obj_reader.hpp>
+// render includes
+#include <render/include_gl.hpp>
+#include <render/model/rendered_model.hpp>
+#include <render/shader/shader_helper.hpp>
+#include <render/shader/shader.hpp>
+#include <render/scene/viewer.hpp>
+#include <render/obj_reader.hpp>
 
 // custom includes
 #include "utils.hpp"

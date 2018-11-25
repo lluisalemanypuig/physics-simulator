@@ -3,10 +3,10 @@
 // glm includes
 #include <glm/vec3.hpp>
 
-// base includes
-#include <base/geometry/rrectangle.hpp>
-#include <base/geometry/rtriangle.hpp>
-#include <base/geometry/rplane.hpp>
+// render includes
+#include <render/geometry/rrectangle.hpp>
+#include <render/geometry/rtriangle.hpp>
+#include <render/geometry/rplane.hpp>
 
 // physim includes
 #include <physim/initialiser/initialiser.hpp>

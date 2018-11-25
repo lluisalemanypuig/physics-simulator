@@ -12,7 +12,7 @@ using namespace particles;
 using namespace init;
 
 // Custom includes
-#include <base/obj_reader.hpp>
+#include <render/obj_reader.hpp>
 
 // PRIVATE
 

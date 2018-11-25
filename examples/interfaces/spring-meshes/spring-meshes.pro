@@ -23,9 +23,9 @@ SOURCES += main.cpp \
     2_mesh2d_reg.cpp \
     3_mesh2d_reg_sphere.cpp
 
-# base (model, obj reader, ...)
-LIBS += -L../base/ -lbase
-PRE_TARGETDEPS += ../base/libbase.a
+# render (model, obj reader, ...)
+LIBS += -L../render/ -lrender
+PRE_TARGETDEPS += ../render/librender.a
 INCLUDEPATH += ..
 DEPENDPATH += ..
 

@@ -6,9 +6,9 @@
 // physim includes
 #include <physim/math/vec3.hpp>
 
-// base includes
-#include <base/scene/sim_renderer.hpp>
-#include <base/shader/shader.hpp>
+// render includes
+#include <render/scene/sim_renderer.hpp>
+#include <render/shader/shader.hpp>
 
 // custom includes
 #include "utils.hpp"

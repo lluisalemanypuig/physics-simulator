@@ -15,8 +15,8 @@
 #include <physim/simulator.hpp>
 
 // Custom includes
-#include <base/geometry/rgeometry.hpp>
-#include <base/model/rendered_model.hpp>
+#include <render/geometry/rgeometry.hpp>
+#include <render/model/rendered_model.hpp>
 #include "utils.hpp"
 
 class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {

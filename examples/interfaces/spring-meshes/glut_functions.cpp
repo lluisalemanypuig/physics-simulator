@@ -11,12 +11,12 @@ using namespace std;
 // glm includes
 #include <glm/gtc/matrix_inverse.hpp>
 
-// base includes
-#include <base/include_gl.hpp>
-#include <base/textures/texture_loader.hpp>
-#include <base/shader/shader_helper.hpp>
-#include <base/shader/shader.hpp>
-#include <base/geometry/rsphere.hpp>
+// render includes
+#include <render/include_gl.hpp>
+#include <render/textures/texture_loader.hpp>
+#include <render/shader/shader_helper.hpp>
+#include <render/shader/shader.hpp>
+#include <render/geometry/rsphere.hpp>
 
 // physim includes
 #include <physim/meshes/mesh.hpp>

@@ -10,11 +10,11 @@ using namespace std;
 // glm includes
 #include <glm/vec3.hpp>
 
-// base includes
-#include <base/geometry/rsphere.hpp>
-#include <base/model/rendered_model.hpp>
-#include <base/include_gl.hpp>
-#include <base/obj_reader.hpp>
+// render includes
+#include <render/geometry/rsphere.hpp>
+#include <render/model/rendered_model.hpp>
+#include <render/include_gl.hpp>
+#include <render/obj_reader.hpp>
 
 // physim includes
 #include <physim/meshes/mesh2d_regular.hpp>

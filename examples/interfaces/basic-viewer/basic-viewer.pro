@@ -16,9 +16,9 @@ SOURCES += \
     main.cpp \
     utils.cpp
 
-# base (model, obj reader, ...)
-LIBS += -L../base/ -lbase
-PRE_TARGETDEPS += ../base/libbase.a
+# render (model, obj reader, ...)
+LIBS += -L../render/ -lrender
+PRE_TARGETDEPS += ../render/librender.a
 INCLUDEPATH += ..
 DEPENDPATH += ..
 
