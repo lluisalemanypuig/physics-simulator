@@ -182,6 +182,10 @@ void initGL(int argc, char *argv[]) {
 		SR.get_box().make_buffers();
 		m->load_textures();
 		m->make_buffers_materials_textures();
+
+		model_shader.bind();
+		shader_helper::activate_textures(*m, model_shader);
+		model_shader.release();
 	}
 	else {
 		cout << "Compiling models..." << endl;
@@ -212,7 +216,7 @@ void refresh() {
 		model_shader.set_mat4("modelview", view);
 		model_shader.set_mat3("normal_matrix", normal_matrix);
 		model_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
-		shader_helper::activate_textures(*m, model_shader);
+		shader_helper::set_materials_shader(*m, model_shader);
 		m->render();
 		model_shader.release();
 
