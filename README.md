@@ -29,6 +29,6 @@ One can build the library by issuing the following commands:
 
 ## Context
 
-This repository was developed during the first semester of the academic
+This project was developed during the first semester of the academic
 year 2018-2019 as part of the Computer Animation course project from the
 Master in Innovation and Research in Informatics (MIRI).
