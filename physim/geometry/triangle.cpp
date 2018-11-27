@@ -103,6 +103,39 @@ bool triangle::intersec_segment
 }
 
 bool triangle::intersec_sphere(const math::vec3& c, float R) const {
+	cerr << "triangle::update_particle (" << __LINE__ << ") - Warning" << endl;
+	cerr << "    This code has not been tested" << endl;
+
+	// projection of point 'c' onto the
+	// plane containing the triangle
+	math::vec3 projection;
+	// remember that a plane's normal is stored as a unit vector
+	__pm3_sub_v_vs(projection, c, pl.normal,__pm3_dot(pl.normal, c) + pl.d);
+	float d2;
+	__pm3_dist2(c,projection);
+
+	float r2 = R*R - d2;
+
+	// if any of the segments <v1,v2>, <v2,v3>, <v3,v1>
+	// intersects the circumference centered at 'projection'
+	// and of radius sqrt(r2) then the triangle intersects
+	// the sphere.
+	// <->
+	// if any of the segments intersect the circumference
+	// in one or two points
+	//	* one point: this happens iff any of the points v1,v2,v3
+	//		is inside the circumference
+	//	* two points: apply equations
+
+	// one point: easy check
+	if (
+		__pm3_dist2(v1,projection) <= r2 or __pm3_dist2(v2,projection) <= r2 or
+		__pm3_dist2(v3,projection) <= r2
+	)
+	{
+		return true;
+	}
+
 	return false;
 }
 
@@ -119,7 +152,8 @@ void triangle::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const
 {
-
+	cerr << "triangle::update_particle (" << __LINE__ << ") - Error" << endl;
+	cerr << "    Not implemented yet" << endl;
 }
 
 void triangle::display(std::ostream& os) const {

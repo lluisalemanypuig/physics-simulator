@@ -17,7 +17,10 @@ namespace geom {
  *
  * A triangle is, informally, a polygonal object of three
  * sides of arbitrary length, whose endpoints are
- * defined by three vertices (see @ref v1, @ref v2, @ref v3).
+ * defined by three vertices (see @ref v1, @ref v2, @ref v3),
+ * in this order: the normal of the triangle is then
+ *
+ * \f$ (v_1 - v_0) \times (v_2 - v_0) / || (v_1 - v_0) \times (v_2 - v_0) || \f$
  *
  * These three vertices all lie on a plane (see @ref pl),
  * the creation of which depends on the order of the vertices

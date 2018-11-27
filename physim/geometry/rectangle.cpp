@@ -3,6 +3,10 @@
 // C includes
 #include <assert.h>
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/math/private/math3.hpp>
 
@@ -121,6 +125,8 @@ bool rectangle::intersec_segment
 }
 
 bool rectangle::intersec_sphere(const math::vec3& c, float R) const {
+	cerr << "rectangle::intersec_sphere (" << __LINE__ << ") - Error" << endl;
+	cerr << "    Not implemented yet" << endl;
 	return false;
 }
 
@@ -137,7 +143,8 @@ void rectangle::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const
 {
-
+	cerr << "rectangle::update_particle (" << __LINE__ << ") - Error" << endl;
+	cerr << "    Not implemented yet" << endl;
 }
 
 void rectangle::display(std::ostream& os) const {
