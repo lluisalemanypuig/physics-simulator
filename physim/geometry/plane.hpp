@@ -6,7 +6,6 @@
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/particles/free_particle.hpp>
-#include <physim/particles/mesh_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {

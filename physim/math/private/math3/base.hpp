@@ -31,8 +31,8 @@ namespace math {
 	__pm2_assign_vc(g,f, x,y);		\
 	(g).z = (f).z*(z)
 // g <- f*s
-#define __pm3_assign_vs(g,f, s)		\
-	__pm2_assign_vs(g,f, s);		\
+#define __pm3_assign_vs(g, f,s)		\
+	__pm2_assign_vs(g, f,s);		\
 	(g).z = (f).z*(s)
 
 // m <- min(a,b)

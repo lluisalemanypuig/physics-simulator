@@ -23,7 +23,7 @@
 // The expression for the square of the norm of a vector.
 #define __pm2_norm2(g)	(__pm2_dot(g,g))
 // The expression for the norm of a vector.
-#define __pm2_norm(g)	(std::sqrt((__pm2_norm2(g))))
+#define __pm2_norm(g)	(std::sqrt(__pm2_norm2(g)))
 
 // The expression for the squared distance between
 // two points, given their position vectors.

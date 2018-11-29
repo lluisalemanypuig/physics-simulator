@@ -1,5 +1,9 @@
 #include <physim/geometry/triangle.hpp>
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/math/private/math3.hpp>
 
@@ -110,9 +114,12 @@ bool triangle::intersec_sphere(const math::vec3& c, float R) const {
 	// plane containing the triangle
 	math::vec3 projection;
 	// remember that a plane's normal is stored as a unit vector
-	__pm3_sub_v_vs(projection, c, pl.normal,__pm3_dot(pl.normal, c) + pl.d);
-	float d2;
-	__pm3_dist2(c,projection);
+	__pm3_sub_v_vs(
+		projection,
+		c,
+		pl.get_normal(),__pm3_dot(pl.get_normal(), c) + pl.get_constant()
+	);
+	float d2 = __pm3_dist2(c,projection);
 
 	float r2 = R*R - d2;
 
