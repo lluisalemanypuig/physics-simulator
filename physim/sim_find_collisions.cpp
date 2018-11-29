@@ -210,9 +210,40 @@ static inline bool spart_spart_collision
 	return center_d2 <= sum_r*sum_r;
 }
 
-static inline void spart_spart_update
+static inline void update_particles_position
+(particles::sized_particle *in, particles::sized_particle *out)
+{	
+	// distances: from 'in' to 'out', for the others see
+	// http://mathworld.wolfram.com/Circle-CircleIntersection.html
+	const float D = __pm3_dist(in->cur_pos, out->cur_pos);
+	const float d1 = (D*D + in->R*in->R - out->R*out->R)/(2*D);
+	//const float d2 = (D*D - in->R*in->R + out->R*out->R)/(2*D);
+
+	// unit vector from 'in' to 'out'
+	math::vec3 u;
+	__pm3_sub_v_v(u, out->cur_pos, in->cur_pos);
+	math::normalise(u, u);
+
+	math::vec3 M,A1,A2;
+	__pm3_add_v_vs(M,   in->cur_pos, u,  d1);		//  M := c1 + d1*u
+	__pm3_add_v_vs(A1,  in->cur_pos, u,  in->R);	// A1 := c1 + R1*u
+	__pm3_add_v_vs(A2, out->cur_pos, u,-out->R);	// A2 := c2 - R2*u
+
+	// distances to move particle in and out
+	// to correct positions
+	float m_in  = __pm3_dist(M, A1);
+	float m_out = __pm3_dist(M, A2);
+
+	__pm3_add_v_vs( in->cur_pos,  in->cur_pos, u, -m_in);
+	__pm3_add_v_vs(out->cur_pos, out->cur_pos, u, m_out);
+}
+
+static inline void update_particles_velocity
 (particles::sized_particle *in, particles::sized_particle *out)
 {
+	float norm1 = __pm3_norm(in->cur_vel);
+	float norm2 = __pm3_norm(out->cur_vel);
+
 	// following the steps in
 	// https://www.atmos.illinois.edu/courses/atmos100/userdocs/3Dcollisions.html
 
@@ -228,6 +259,8 @@ static inline void spart_spart_update
 	__pm3_assign_vs(c1, in->cur_vel,xyz1);
 	__pm3_assign_vs(c2, out->cur_vel,xyz2);
 
+	// 3. decompose this vector into x'-y'-z' components,
+	// where x' is aligned with the center-line
 	float a_xy1 = math::angle_xy(in->cur_vel, in->cur_vel);
 	float a_xz1 = math::angle_xz(in->cur_vel, in->cur_vel);
 	float a_xy2 = math::angle_xy(out->cur_vel, out->cur_vel);
@@ -241,24 +274,47 @@ static inline void spart_spart_update
 	c2.y = c2.y*std::sin(a_xz2)*std::sin(a_xy2);
 	c2.z = c2.z*std::cos(a_xz2);
 
+	// 4. determine the force vector normal to the center-line
 	math::vec3 n1, n2;
 	__pm3_sub_v_v(n1, in->cur_vel, c1);
 	__pm3_sub_v_v(n2, out->cur_vel, c2);
 
+	// 5. compose the new vectors into a new velocity
 	__pm3_add_v_v(in->cur_vel, c2, n1);
 	__pm3_add_v_v(out->cur_vel, c1, n2);
+
+	// 6. The new velocies must have
+	// the same norm as before
+	math::normalise(in->cur_vel, in->cur_vel);
+	math::normalise(out->cur_vel, out->cur_vel);
+	__pm3_assign_vs(in->cur_vel, in->cur_vel,norm1);
+	__pm3_assign_vs(out->cur_vel, out->cur_vel,norm2);
 }
 
 // particle 'in' has index 'i'
 void simulator::find_update_particle_collision_sized
 (particles::sized_particle *in, size_t i)
 {
-
 	for (size_t j = i + 1; j < sps.size(); ++j) {
 
 		if (spart_spart_collision(in, sps[j])) {
+			// update the particle's position before
+			// updating velocities
+			update_particles_position(in, sps[j]);
+
 			// collision between particle 'in' and particle 'j'
-			spart_spart_update(in, sps[j]);
+			update_particles_velocity(in, sps[j]);
+
+			// compute valid previous positions
+			// for Verlet solver
+			if (solver == solver_type::Verlet) {
+				// this solver needs a correct position
+				// for the 'previous' position of the
+				// particle after a collision with geometry
+
+				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
+				__pm3_sub_v_vs(sps[j]->prev_pos, sps[j]->cur_pos, sps[j]->cur_vel, dt);
+			}
 		}
 	}
 }
