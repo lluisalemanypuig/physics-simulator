@@ -234,7 +234,12 @@ inline vec3 normalise(const vec3& f) {
  * @return Returns the angle between the vectors \f$f,g\f$.
  */
 inline float angle_xyz(const vec3& f, const vec3& g) {
-	return std::acos( (dot(f,g))/(norm(f)*norm(g)) );
+	float frac = dot(f,g)/(norm(f)*norm(g));
+	// truncate the value of frag so that we don't gent NaNs
+	frac = (frac <= -1.0f)*(-1.0f) +
+		   (frac >= 1.0f)*(1.0f) +
+		   (-1.0f < frac and frac < 1.0f)*frac;
+	return std::acos(frac);
 }
 
 /**
