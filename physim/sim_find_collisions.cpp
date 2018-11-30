@@ -4,9 +4,6 @@
 #include <physim/math/private/math3.hpp>
 #include <physim/geometry/sphere.hpp>
 
-#include <iostream>
-using namespace std;
-
 namespace physim {
 
 // ------------------------------------------------------
@@ -229,7 +226,7 @@ static inline void update_particles_position
 	__pm3_add_v_vs(A1,  in->cur_pos, u,  in->R);	// A1 := c1 + R1*u
 	__pm3_add_v_vs(A2, out->cur_pos, u,-out->R);	// A2 := c2 - R2*u
 
-	// distances to move particle in and out
+	// distances to move particle 'in' and 'out'
 	// to correct positions
 	float m_in  = __pm3_dist(M, A1);
 	float m_out = __pm3_dist(M, A2);
