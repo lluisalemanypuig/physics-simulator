@@ -158,7 +158,8 @@ namespace glut_functions {
 					glut_functions::solver = physim::solver_type::Verlet;
 				}
 				else {
-					cout << "Error: invalid value for solver: '" << s << "'" << endl;
+					cout << "Error: invalid value for solver: '" << s << "'"
+						 << endl;
 				}
 				++i;
 			}
@@ -166,15 +167,18 @@ namespace glut_functions {
 	}
 
 	void set_internal_forces() {
-		const vector<physim::meshes::mesh *>& ms = SR.get_simulator().get_meshes();
+		const vector<physim::meshes::mesh *>& ms =
+			SR.get_simulator().get_meshes();
 		for (physim::meshes::mesh *m : ms) {
 			if (m->get_type() == physim::meshes::mesh_type::d1) {
-				physim::meshes::mesh1d *m1 = static_cast<physim::meshes::mesh1d *>(m);
+				physim::meshes::mesh1d *m1 =
+					static_cast<physim::meshes::mesh1d *>(m);
 				m1->simulate_stretch(stretch);
 				m1->simulate_bend(bend);
 			}
 			else if (m->get_type() == physim::meshes::mesh_type::d2_regular) {
-				physim::meshes::mesh2d_regular *m2 = static_cast<physim::meshes::mesh2d_regular *>(m);
+				physim::meshes::mesh2d_regular *m2 =
+					static_cast<physim::meshes::mesh2d_regular *>(m);
 				m2->simulate_stretch(stretch);
 				m2->simulate_shear(shear);
 				m2->simulate_bend(bend);
@@ -204,7 +208,9 @@ namespace glut_functions {
 				r->make_model_matrix(model);
 
 				glm::mat4 modelview = view*model;
-				glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
+				glm::mat3 normal_matrix = glm::inverseTranspose(
+					glm::mat3(modelview)
+				);
 
 				texture_shader.set_mat4("modelview", modelview);
 				texture_shader.set_mat3("normal_matrix", normal_matrix);
