@@ -3,7 +3,6 @@ TEMPLATE = subdirs
 SUBDIRS += \
     render \
     basic-viewer \
-    particles \
     spring-meshes
 
 DISTFILES += \
