@@ -209,7 +209,6 @@ namespace glut_functions {
 				texture_shader.set_mat4("modelview", modelview);
 				texture_shader.set_mat3("normal_matrix", normal_matrix);
 
-				shader_helper::activate_textures(*m, texture_shader);
 				m->render();
 			}
 		}

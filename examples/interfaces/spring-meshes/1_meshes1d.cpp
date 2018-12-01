@@ -12,6 +12,7 @@ using namespace std;
 #include <render/geometry/rrectangle.hpp>
 #include <render/geometry/rsphere.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
+#include <render/shader/shader_helper.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
@@ -179,6 +180,10 @@ namespace study_cases {
 		if (use_shaders) {
 			SR.get_box().make_buffers();
 			model_ball->make_buffers_materials_textures();
+			shader& ts = glut_functions::texture_shader;
+			ts.bind();
+			shader_helper::activate_materials_textures(*model_ball, ts);
+			ts.release();
 		}
 		else {
 			model_ball->compile();
