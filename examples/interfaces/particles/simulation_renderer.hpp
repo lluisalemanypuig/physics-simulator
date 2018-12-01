@@ -41,7 +41,8 @@ class SimulationRenderer : public QOpenGLWidget, protected QOpenGLFunctions {
 		bool scene_cleared;	// if true then the simulation was cleared
 							// the scene needs to be remade
 		float dt;			// time step
-		float tt;			// simulation total time
+		float sim_time;		// simulation total time
+		float tt;			// simulation maximum time
 		int sim_steps;		// number of steps of the simulation
 
 		std::shared_ptr<rendered_triangle_mesh> sim_sphere;

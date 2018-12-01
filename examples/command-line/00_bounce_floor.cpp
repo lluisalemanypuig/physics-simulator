@@ -136,11 +136,13 @@ namespace study_cases {
 		// execute simulation
 		timing::time_point begin = timing::now();
 		vector<vec3> trajectory;
+		float sim_time = 0.0f;
 
-		while (S.get_current_time() <= total_time) {
+		while (sim_time <= total_time) {
 			vec3 cur_pos = p->cur_pos;
 			trajectory.push_back(cur_pos);
 			S.apply_time_step();
+			sim_time += dt;
 		}
 
 		timing::time_point end = timing::now();

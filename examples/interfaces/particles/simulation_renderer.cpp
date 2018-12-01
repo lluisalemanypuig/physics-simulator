@@ -38,6 +38,7 @@ SimulationRenderer::SimulationRenderer(QWidget *parent) : QOpenGLWidget(parent)
 	allow_run = true;
 
 	dt = 0.01f;
+	sim_time = 0.0f;
 	tt = 10.0f;
 
 	sim_sphere = nullptr;
@@ -59,7 +60,7 @@ void SimulationRenderer::run_simulation() {
 	timing::time_point begin, end, second;
 	second = timing::now();
 
-	while (S.get_current_time() <= tt and allow_run) {
+	while (sim_time <= tt and allow_run) {
 		begin = timing::now();
 		S.apply_time_step();
 		update();
@@ -84,11 +85,14 @@ void SimulationRenderer::run_simulation() {
 			QCoreApplication::processEvents();
 			timing::sleep_seconds( 1.0/FPS - frame );
 		}
+
+		sim_time += dt;
 	}
 
 	allow_run = true;
 
-	if (S.get_current_time() > tt) {
+	if (sim_time > tt) {
+		sim_time = 0.0f;
 		emit simulation_completed();
 	}
 }
@@ -100,6 +104,7 @@ void SimulationRenderer::pause_simulation() {
 void SimulationRenderer::reset_simulation() {
 	S.reset_simulation();
 	sim_steps = 0;
+	sim_time = 0.0f;
 	fps_count = 0;
 	label_fps->setText(QString::fromStdString(""));
 
@@ -117,6 +122,7 @@ void SimulationRenderer::clear_simulation() {
 
 	scene_cleared = true;
 	sim_steps = 0;
+	sim_time = 0.0f;
 	fps_count = 0;
 	p_bar->setValue(0);
 	label_fps->setText(QString::fromStdString(""));

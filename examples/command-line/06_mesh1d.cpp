@@ -128,13 +128,15 @@ namespace study_cases {
 
 		// execute simulation
 		vector<vec3> t0, t1, t2, t3, t4;
-		while (S.get_current_time() <= total_time) {
+		float sim_time = 0.0f;
+		while (sim_time <= total_time) {
 			t0.push_back(mp[0]->cur_pos);
 			t1.push_back(mp[1]->cur_pos);
 			t2.push_back(mp[2]->cur_pos);
 			t3.push_back(mp[3]->cur_pos);
 			t4.push_back(mp[4]->cur_pos);
 			S.apply_time_step();
+			sim_time += dt;
 		}
 
 		if (output == "none") {

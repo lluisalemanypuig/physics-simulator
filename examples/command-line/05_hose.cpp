@@ -171,8 +171,10 @@ namespace study_cases {
 
 		// execute simulation
 		timing::time_point begin = timing::now();
-		while (SIM.get_current_time() <= total_time) {
+		float sim_time = 0.0f;
+		while (sim_time <= total_time) {
 			SIM.apply_time_step();
+			sim_time += dt;
 		}
 		timing::time_point end = timing::now();
 
