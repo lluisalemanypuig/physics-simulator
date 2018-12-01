@@ -56,7 +56,6 @@ void simulator::init_mesh(meshes::mesh *m) {
 
 simulator::simulator(const solver_type& s, float t) {
 	__pm3_assign_c(gravity, 0.0f, -9.81f, 0.0f);
-	stime = 0.0f;
 	dt = t;
 	solver = s;
 	visc_drag = 0.05f;
@@ -202,11 +201,9 @@ void simulator::clear_simulation() {
 	clear_particles();
 	clear_fields();
 	clear_meshes();
-	stime = 0.0f;
 }
 
 void simulator::reset_simulation() {
-	stime = 0.0f;
 	int i = 0;
 	for (particles::free_particle *p : fps) {
 		if (not p->fixed) {
@@ -218,24 +215,20 @@ void simulator::reset_simulation() {
 
 void simulator::simulate_free_particles() {
 	_simulate_free_particles();
-	stime += dt;
 }
 
 void simulator::simulate_sized_particles() {
 	_simulate_sized_particles();
-	stime += dt;
 }
 
 void simulator::simulate_meshes() {
 	_simulate_meshes();
-	stime += dt;
 }
 
 void simulator::apply_time_step() {
 	_simulate_free_particles();
 	_simulate_sized_particles();
 	_simulate_meshes();
-	stime += dt;
 }
 
 // SETTERS
@@ -299,10 +292,6 @@ const meshes::mesh& simulator::get_mesh(size_t i) const {
 
 const std::vector<geom::geometry *>& simulator::get_fixed_objects() const {
 	return scene_fixed;
-}
-
-float simulator::get_current_time() const {
-	return stime;
 }
 
 const math::vec3& simulator::get_gravity() const {

@@ -95,8 +95,6 @@ class simulator {
 		/// Gravity of the simulation. [m/s^2].
 		math::vec3 gravity;
 
-		/// Current time of the simulation.
-		float stime;
 		/**
 		 * @brief Time step of the simulation.
 		 *
@@ -664,8 +662,6 @@ class simulator {
 		const meshes::mesh& get_mesh(size_t i) const;
 		/// Returns all fixed objects of the scene.
 		const std::vector<geom::geometry *>& get_fixed_objects() const;
-		/// Returns the current simulation time.
-		float get_current_time() const;
 		/// Returns the gravity of the scene.
 		const math::vec3& get_gravity() const;
 		/// Returns the number of particles.
