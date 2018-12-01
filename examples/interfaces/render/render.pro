@@ -30,7 +30,8 @@ HEADERS += \
     shader/shader_helper.hpp \
     triangle_mesh/triangle_mesh.hpp \
     triangle_mesh/triangle_mesh_utils.hpp \
-    triangle_mesh/rendered_triangle_mesh.hpp
+    triangle_mesh/rendered_triangle_mesh.hpp \
+    err_war_utils.hpp
 
 SOURCES += \
     obj_reader.cpp \
