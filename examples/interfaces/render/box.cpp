@@ -229,7 +229,6 @@ void box::slow_render() const {
 
 void box::fast_render() const {
 	if (VAO == 0) {
-		cout << "Do not render box" << endl;
 		return;
 	}
 

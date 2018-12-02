@@ -12,6 +12,8 @@
 
 // custom includes
 #include "utils.hpp"
+#include "glut_variables.hpp"
+using namespace glut_variables;
 
 // initial window size
 #define iw 640
@@ -23,43 +25,6 @@
 #define SHIFT_KEY 112
 
 namespace glut_functions {
-
-	typedef std::pair<int,int> point;
-
-	// 'global' variables
-
-	extern shader texture_shader;
-	extern shader flat_shader;
-	extern bool use_shaders;
-
-	extern sim_renderer SR;
-	extern int window_id;
-	extern timing::time_point sec;
-
-	extern int special_key;
-	extern int pressed_button;
-	extern bool lock_mouse;
-
-	extern point last_mouse_moved;
-	extern point last_mouse_click;
-	extern point special_key_pressed;
-	extern point regular_key_pressed;
-
-	extern float particle_size;
-	extern bool draw_box;
-
-	extern bool display_fps;
-	extern int FPS;
-	extern int fps_count;
-
-	// particle attributes
-	extern float lifetime;
-	extern float friction;
-	extern float bouncing;
-
-	extern physim::solver_type solver;
-	extern physim::math::vec3 bgd_color;
-
 	/* ---------------- */
 	/* helper functions */
 
@@ -78,6 +43,7 @@ namespace glut_functions {
 	void init_shaders();
 	void clear_shaders();
 
+	void clear_simulation();
 	void finish_simulation();
 	void parse_common_params(int argc, char *argv[]);
 

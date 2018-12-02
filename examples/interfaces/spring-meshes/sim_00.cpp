@@ -134,17 +134,17 @@ namespace study_cases {
 
 		// -- group 4
 		// 10 springs on top of spheres
-		shared_ptr<rendered_triangle_mesh> model_ball(new rendered_triangle_mesh);
+		shared_ptr<rendered_triangle_mesh> sim_ball(new rendered_triangle_mesh);
 
 		OBJ_reader obj;
-		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
+		obj.load_object("../../interfaces/models", "sphere.obj", *sim_ball);
 
 		sx = 12.5f;
 		for (int i = 1; i <= 10; ++i) {
 			rsphere *rs = new rsphere();
 			rs->set_center(glm::vec3(sx + 2.5f, 7.0f, 3*i));
 			rs->set_radius(2.0f);
-			rs->set_model(model_ball);
+			rs->set_model(sim_ball);
 			SR.add_geometry(rs);
 
 			sphere *s = new sphere(to_physim(rs->center()), rs->radius());
@@ -175,18 +175,17 @@ namespace study_cases {
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
-		model_ball->load_textures();
+		sim_ball->load_textures();
 		if (use_shaders) {
 			glut_functions::init_shaders();
 			SR.get_box().make_buffers();
-			model_ball->make_buffers_materials_textures();
-			shader& ts = glut_functions::texture_shader;
-			ts.bind();
-			shader_helper::activate_materials_textures(*model_ball, ts);
-			ts.release();
+			sim_ball->make_buffers_materials_textures();
+			texture_shader.bind();
+			shader_helper::activate_materials_textures(*sim_ball, texture_shader);
+			texture_shader.release();
 		}
 		else {
-			model_ball->compile();
+			sim_ball->compile();
 		}
 	}
 
@@ -214,6 +213,8 @@ namespace study_cases {
 
 	void sim_00_reset() {
 		SR.clear();
+		glut_functions::clear_shaders();
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();

@@ -29,6 +29,21 @@ namespace study_cases {
 		else if (strcmp(argv[1], "05") == 0) {
 			sim_05(argc, argv);
 		}
+		else if (strcmp(argv[1], "06") == 0) {
+			sim_06(argc, argv);
+		}
+		else if (strcmp(argv[1], "07") == 0) {
+			sim_07(argc, argv);
+		}
+		else if (strcmp(argv[1], "08") == 0) {
+			sim_08(argc, argv);
+		}
+		else if (strcmp(argv[1], "09") == 0) {
+			sim_09(argc, argv);
+		}
+		else if (strcmp(argv[1], "10") == 0) {
+			sim_10(argc, argv);
+		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './spring-meshes --list' to see all cases" << endl;

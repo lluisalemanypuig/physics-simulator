@@ -76,15 +76,15 @@ namespace study_cases {
 			glm::vec3( 5.0f, -0.05f,  5.0f), glm::vec3( 5.0f, -0.05f, -5.0f)
 		);
 
-		rsphere *ball = new rsphere();
-		ball->set_center(glm::vec3(0.0f,2.0f,0.0f));
-		ball->set_radius(1.0f);
+		rsphere *rball = new rsphere();
+		rball->set_center(glm::vec3(0.0f,2.0f,0.0f));
+		rball->set_radius(1.0f);
 
 		shared_ptr<rendered_triangle_mesh> sim_ball(new rendered_triangle_mesh);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere.obj", *sim_ball);
 
-		ball->set_model(sim_ball);
+		rball->set_model(sim_ball);
 
 		rrectangle *ramp = new rrectangle();
 		ramp->set_points(
@@ -94,25 +94,22 @@ namespace study_cases {
 		ramp->set_color(0.0f,0.3f,0.0f,1.0f);
 
 		SR.add_geometry(floor);
-		SR.add_geometry(ball);
+		SR.add_geometry(rball);
 		SR.add_geometry(ramp);
 
 		plane *pl = new plane(
 			math::vec3(0.0f,1.0f,0.0f),
 			math::vec3(0.0f,0.0f,0.0f)
 		);
-		sphere *s = new sphere(to_physim(ball->center()), 1.0f);
+		sphere *s = new sphere(to_physim(rball->center()), 1.0f);
 		rectangle *rl = new rectangle(
 			to_physim(ramp->p1()), to_physim(ramp->p2()),
 			to_physim(ramp->p3()), to_physim(ramp->p3())
 		);
-
 		SR.get_simulator().add_geometry(pl);
 		SR.get_simulator().add_geometry(s);
 		SR.get_simulator().add_geometry(rl);
-
 		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
-
 		SR.get_simulator().add_free_particles(9);
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 7.0f, 0.0f));
@@ -124,14 +121,16 @@ namespace study_cases {
 			glut_functions::init_shaders();
 			SR.get_box().make_buffers();
 			sim_ball->make_buffers_materials_textures();
-			shader& ts = glut_functions::texture_shader;
-			ts.bind();
-			shader_helper::activate_materials_textures(*sim_ball, ts);
-			ts.release();
+			texture_shader.bind();
+			shader_helper::activate_materials_textures(*sim_ball, texture_shader);
+			texture_shader.release();
 		}
 		else {
 			sim_ball->compile();
 		}
+
+		n_iterations = 1;
+		SR.get_simulator().set_time_step(time_step);
 	}
 
 	void sim_02_help() {
@@ -142,7 +141,7 @@ namespace study_cases {
 		cout << "This simulation consists on 9 particles rolling down a" << endl;
 		cout << "rectangle until they collide with a sphere at the bottom" << endl;
 		cout << "of the triangle. 8 of these particles will collide with the" << endl;
-		cout << "sphere in a way that will make the fall off the rectangle." << endl;
+		cout << "sphere in a way that will make them fall off the rectangle." << endl;
 		cout << "One of them will bounce on the sphere and roll the rectangle" << endl;
 		cout << "back up again. It will repeat the process until it loses its" << endl;
 		cout << "'energy'." << endl;
@@ -150,7 +149,11 @@ namespace study_cases {
 	}
 
 	void sim_02_reset() {
-		SR.clear();
+		clear_simulation();
+		if (use_shaders) {
+			clear_shaders();
+		}
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();

@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     utils.cpp \
     sim_00.cpp \
     sim_01.cpp \
-    sim_02.cpp
+    sim_02.cpp \
+    glut_render.cpp
 
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender

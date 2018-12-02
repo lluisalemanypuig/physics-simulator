@@ -8,9 +8,6 @@ using namespace std;
 // C includes
 #include <string.h>
 
-// glm includes
-#include <glm/gtc/matrix_inverse.hpp>
-
 // render includes
 #include <render/include_gl.hpp>
 #include <render/textures/texture_loader.hpp>
@@ -18,46 +15,11 @@ using namespace std;
 #include <render/shader/shader.hpp>
 #include <render/geometry/rsphere.hpp>
 
-// physim includes
-#include <physim/meshes/mesh.hpp>
-#include <physim/meshes/mesh1d.hpp>
-#include <physim/meshes/mesh2d_regular.hpp>
-
 namespace glut_functions {
 
-	shader texture_shader;
-	shader flat_shader;
-	bool use_shaders;
-
-	sim_renderer SR;
-	int window_id;
-	timing::time_point sec;
-
-	int special_key;
-	int pressed_button;
-	bool lock_mouse;
-
-	point last_mouse_moved;
-	point last_mouse_click;
-	point special_key_pressed;
-	point regular_key_pressed;
-
-	float particle_size;
-	bool draw_box;
-
-	bool display_fps;
-	int FPS;
-	int fps_count;
-
-	float lifetime;
-	float friction;
-	float bouncing;
-
-	physim::solver_type solver;
-
-	physim::math::vec3 bgd_color;
-
 	void init_glut_variables() {
+		wireframe_sphere = nullptr;
+
 		lifetime = 10.0f;
 		friction = 0.2f;
 		bouncing = 0.8f;
@@ -67,7 +29,10 @@ namespace glut_functions {
 		last_mouse_moved = point(0,0);
 		lock_mouse = false;
 
+		n_iterations = 10;
+		time_step = 0.01f;
 		draw_box = true;
+		draw_sized_particles_wire = false;
 
 		display_fps = false;
 		FPS = 60;
@@ -75,12 +40,12 @@ namespace glut_functions {
 
 		solver = physim::solver_type::Verlet;
 
-		bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
+		bgd_color = glm::vec3(0.0f,0.0f,0.0f);
 
 		SR.get_simulator().set_solver(physim::solver_type::Verlet);
-		SR.get_simulator().set_time_step(0.01f);
 
 		use_shaders = false;
+		particle_size = 1.0f;
 
 		sec = timing::now();
 	}
@@ -99,24 +64,35 @@ namespace glut_functions {
 				exit(1);
 			}
 
+			cout << "glut_functions::init_shaders (" << __LINE__
+				 << ") bind texture shader" << endl;
 			texture_shader.bind();
 			texture_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
 			texture_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
 			texture_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
 			texture_shader.release();
+			cout << "glut_functions::init_shaders (" << __LINE__
+				 << ") release texture shader" << endl;
 		}
 	}
 
 	void clear_shaders() {
-		if (use_shaders) {
-			flat_shader.clear();
-			texture_shader.clear();
+		flat_shader.clear();
+		texture_shader.clear();
+	}
+
+	void clear_simulation() {
+		if (wireframe_sphere != nullptr) {
+			wireframe_sphere->clear();
+			delete wireframe_sphere;
+			wireframe_sphere = nullptr;
 		}
+		SR.clear();
+		texture_loader::get_loader().clear_all();
 	}
 
 	void finish_simulation() {
-		SR.clear();
-		texture_loader::get_loader().clear_all();
+		clear_simulation();
 		glutDestroyWindow(window_id);
 	}
 
@@ -140,13 +116,13 @@ namespace glut_functions {
 			else if (strcmp(argv[i], "--solver") == 0) {
 				string s = string(argv[i + 1]);
 				if (s == "exp-euler") {
-					glut_functions::solver = physim::solver_type::EulerOrig;
+					solver = physim::solver_type::EulerOrig;
 				}
 				else if (s == "semi-euler") {
-					glut_functions::solver = physim::solver_type::EulerSemi;
+					solver = physim::solver_type::EulerSemi;
 				}
 				else if (s == "verlet") {
-					glut_functions::solver = physim::solver_type::Verlet;
+					solver = physim::solver_type::Verlet;
 				}
 				else {
 					cout << "Error: invalid value for solver: '" << s << "'" << endl;
@@ -154,112 +130,6 @@ namespace glut_functions {
 				++i;
 			}
 		}
-	}
-
-	// ---------------
-	// SCENE RENDERING
-	// ---------------
-
-	void shader_render() {
-		// texture shader for geometry
-		glm::mat4 projection = SR.make_projection_matrix();
-		glm::mat4 view = SR.make_view_matrix();
-
-		texture_shader.bind();
-		texture_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
-		texture_shader.set_mat4("projection", projection);
-
-		// render models of geometry
-		for (rgeom *r : SR.get_geometry()) {
-			shared_ptr<rendered_triangle_mesh> m = r->get_model();
-			if (m != nullptr) {
-
-				glm::mat4 model(1.0f);
-				r->make_model_matrix(model);
-
-				glm::mat4 modelview = view*model;
-				glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
-
-				texture_shader.set_mat4("modelview", modelview);
-				texture_shader.set_mat3("normal_matrix", normal_matrix);
-
-				m->render();
-			}
-		}
-		texture_shader.release();
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		SR.apply_projection();
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		SR.apply_view();
-
-		SR.render_simulation();
-		// render geometry without models
-		for (rgeom *r : SR.get_geometry()) {
-			shared_ptr<rendered_triangle_mesh> m = r->get_model();
-			if (m == nullptr) {
-				r->draw();
-			}
-		}
-		if (draw_box) {
-			glDisable(GL_LIGHTING);
-			glColor3f(1.0f,0.0f,0.0f);
-			SR.get_box().slow_render();
-		}
-	}
-
-	void no_shader_render() {
-		// no shader for all
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		SR.apply_projection();
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		SR.apply_view();
-
-		SR.render_simulation();
-		SR.render_geometry();
-		if (draw_box) {
-			glDisable(GL_LIGHTING);
-			glColor3f(1.0f,0.0f,0.0f);
-			SR.get_box().slow_render();
-		}
-	}
-
-	void refresh() {
-		glClearColor(bgd_color.x, bgd_color.y, bgd_color.z, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		if (use_shaders) {
-			shader_render();
-		}
-		else {
-			no_shader_render();
-		}
-
-		SR.apply_time_step();
-		glutSwapBuffers();
-	}
-
-	void timed_refresh(int value) {
-		refresh();
-
-		++fps_count;
-		timing::time_point here = timing::now();
-		double elapsed = timing::elapsed_seconds(sec, here);
-		if (elapsed >= 1.0) {
-			if (display_fps) {
-				cout << "fps= " << fps_count << " (" << FPS << ")" << endl;
-			}
-			fps_count = 0;
-			sec = timing::now();
-		}
-
-		glutTimerFunc(1000.0f/FPS, timed_refresh, value);
 	}
 
 	// ---------------

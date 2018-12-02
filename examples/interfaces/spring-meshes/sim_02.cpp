@@ -93,9 +93,9 @@ namespace study_cases {
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
-		glut_functions::init_shaders();
 		model_ball->load_textures();
 		if (use_shaders) {
+			glut_functions::init_shaders();
 			SR.get_box().make_buffers();
 			model_ball->make_buffers_materials_textures();
 			shader& ts = glut_functions::texture_shader;

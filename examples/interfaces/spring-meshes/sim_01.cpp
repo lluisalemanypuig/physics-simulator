@@ -126,6 +126,8 @@ namespace study_cases {
 
 	void sim_01_reset() {
 		SR.clear();
+		glut_functions::clear_shaders();
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();

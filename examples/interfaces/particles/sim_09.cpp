@@ -9,16 +9,18 @@ using namespace std;
 #include <glm/vec3.hpp>
 
 // render includes
+#include <render/geometry/rplane.hpp>
+#include <render/geometry/rrectangle.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/shader/shader_helper.hpp>
-#include <render/geometry/rplane.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
 // physim includes
-#include <physim/initialiser/multisource.hpp>
-#include <physim/initialiser/hose.hpp>
 #include <physim/geometry/plane.hpp>
+#include <physim/geometry/rectangle.hpp>
+#include <physim/initialiser/initialiser.hpp>
+#include <physim/particles/sized_particle.hpp>
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace particles;
@@ -32,69 +34,93 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	void sim_04_make_simulation() {
-		initialiser *I = SR.get_simulator().get_initialiser();
-		I->set_pos_initialiser(
-			[](free_particle *p) {
-				float z = -4.0f + p->index*0.8f;
-				p->cur_pos = math::vec3(-5.0f,1.0f,z);
+	void sim_09_make_simulation() {
+		initialiser I;
+		I.set_pos_initialiser(
+			[&](free_particle *p) {
+				p->cur_pos = math::vec3(0.0f,5.0f,0.0f);
 			}
 		);
-		I->set_vel_initialiser(
+		I.set_vel_initialiser(
 			[](free_particle *p) {
-				p->cur_vel = math::vec3(5.0f,0.0f,0.0f);
+				p->cur_vel = math::vec3(0.0f,0.0f,0.0f);
 			}
 		);
-		I->set_friction_initialiser(
-			[](free_particle *p) {
-				p->friction = p->index/10.0f;
-			}
+		I.set_lifetime_initialiser(
+			[&](free_particle *p) { p->lifetime = lifetime; }
 		);
-		I->set_bounce_initialiser(
-			[](free_particle *p) {
-				p->bouncing = 1.0f;
-			}
+		I.set_bounce_initialiser(
+			[&](free_particle *p) { p->bouncing = bouncing; }
 		);
-
-		glm::vec3 A( -5.0f, -0.25f,-5.0f);
-		glm::vec3 B( -5.0f, -0.25f, 5.0f);
-		glm::vec3 C( 20.0f, -0.25f, 5.0f);
-		glm::vec3 D( 20.0f, -0.25f,-5.0f);
-
-		rplane *floor = new rplane();
-		floor->set_points(A, B, C, D);
-		SR.add_geometry(floor);
+		I.set_friction_initialiser(
+			[&](free_particle *p) { p->friction = friction; }
+		);
+		I.set_radius_initialiser(
+			[&](sized_particle *p) { p->R = 1.0f; }
+		);
+		SR.get_simulator().set_initialiser(&I);
+		SR.get_simulator().add_sized_particle();
 
 		plane *pl = new plane(
 			math::vec3(0.0f,1.0f,0.0f),
 			math::vec3(0.0f,0.0f,0.0f)
 		);
 		SR.get_simulator().add_geometry(pl);
-		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
-		SR.get_simulator().add_free_particles(11);
+		rectangle *rl = new rectangle(
+			math::vec3( 2.0f,2.0f, 2.0f), math::vec3( 2.0f,2.0f,-2.0f),
+			math::vec3(-2.0f,2.0f,-2.0f), math::vec3(-2.0f,2.0f, 2.0f)
+		);
+		SR.get_simulator().add_geometry(rl);
+		SR.get_simulator().add_gravity_acceleration(
+			math::vec3(0.0f,-9.81f,0.0f)
+		);
 
-		SR.get_box().enlarge_box(glm::vec3(0.0f, 5.0f, 0.0f));
+		rplane *floor = new rplane();
+		floor->set_points(
+			glm::vec3(-5.0f, -0.05f, -5.0f), glm::vec3(-5.0f, -0.05f,  5.0f),
+			glm::vec3( 5.0f, -0.05f,  5.0f), glm::vec3( 5.0f, -0.05f, -5.0f)
+		);
+		SR.add_geometry(floor);
+		rrectangle *rect = new rrectangle();
+		rect->set_points(
+			glm::vec3( 2.0f,2.0f, 2.0f), glm::vec3( 2.0f,2.0f,-2.0f),
+			glm::vec3(-2.0f,2.0f,-2.0f), glm::vec3(-2.0f,2.0f, 2.0f)
+		);
+		rect->set_color(1.0f, 1.0f, 0.0f, 1.0f);
+		SR.add_geometry(rect);
+
+		SR.get_box().enlarge_box(glm::vec3(0.0f, 6.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+
+		wireframe_sphere = new rendered_triangle_mesh();
+		OBJ_reader obj;
+		obj.load_object
+		("../../interfaces/models", "sphere_fsmooth.obj", *wireframe_sphere);
+
+		if (use_shaders) {
+			glut_functions::init_shaders();
+			SR.get_box().make_buffers();
+			wireframe_sphere->make_buffers();
+		}
+		else {
+			wireframe_sphere->compile();
+		}
 
 		n_iterations = 1;
 		SR.get_simulator().set_time_step(time_step);
 	}
 
-	void sim_04_help() {
+	void sim_09_help() {
 		glut_functions::help();
 
-		cout << "Simulation 04 description:" << endl;
+		cout << "Simulation 07 description:" << endl;
 		cout << endl;
-		cout << "This simulation is used to study the effects of the friction" << endl;
-		cout << "coefficient: some particles with different friction coefficient" << endl;
-		cout << "value roll on a plane. One of them will stop as soon as it touches" << endl;
-		cout << "the plane, and one will never stop moving forward. The others will" << endl;
-		cout << "eventually stop, the time to do so being dependent on that value." << endl;
-		cout << "The value of the bouncing coefficient is fixed to 1.0." << endl;
+		cout << "Sized particle bouncing on a triangle." << endl;
+		cout << endl;
 	}
 
-	void sim_04_reset() {
+	void sim_09_reset() {
 		clear_simulation();
 		if (use_shaders) {
 			clear_shaders();
@@ -112,7 +138,7 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		sim_04_make_simulation();
+		sim_09_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -124,27 +150,27 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_04_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_09_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_04_help();
+			sim_09_help();
 			break;
 		case 'r':
-			sim_04_reset();
+			sim_09_reset();
 			break;
 		}
 	}
 
-	void sim_04_initGL(int argc, char *argv[]) {
+	int sim_09_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 04");
+		window_id = glutCreateWindow("Particles - Simulation 07");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -173,13 +199,15 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		use_shaders = false;
-		sim_04_make_simulation();
+		draw_sized_particles_wire = true;
+		sim_09_make_simulation();
+		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
+		return 0;
 	}
 
-	void sim_04(int argc, char *argv[]) {
-		sim_04_help();
-		sim_04_initGL(argc, argv);
+	void sim_09(int argc, char *argv[]) {
+		sim_09_help();
+		sim_09_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -187,7 +215,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_04_regular_keys_keyboard);
+		glutKeyboardFunc(sim_09_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

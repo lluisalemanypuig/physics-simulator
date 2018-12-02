@@ -170,7 +170,7 @@ namespace study_cases {
 			glut_functions::init_shaders();
 			SR.get_box().make_buffers();
 			sim_ball->make_buffers_materials_textures();
-			shader& ts = glut_functions::texture_shader;
+			shader& ts = texture_shader;
 			ts.bind();
 			shader_helper::activate_materials_textures(*sim_ball, ts);
 			ts.release();
@@ -178,6 +178,9 @@ namespace study_cases {
 		else {
 			sim_ball->compile();
 		}
+
+		n_iterations = 1;
+		SR.get_simulator().set_time_step(time_step);
 	}
 
 	void sim_03_help() {
@@ -192,7 +195,11 @@ namespace study_cases {
 	}
 
 	void sim_03_reset() {
-		SR.clear();
+		clear_simulation();
+		if (use_shaders) {
+			clear_shaders();
+		}
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();

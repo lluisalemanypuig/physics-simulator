@@ -102,6 +102,9 @@ namespace study_cases {
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 12.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+
+		n_iterations = 1;
+		SR.get_simulator().set_time_step(time_step);
 	}
 
 	void sim_01_help() {
@@ -120,7 +123,11 @@ namespace study_cases {
 	}
 
 	void sim_01_reset() {
-		SR.clear();
+		clear_simulation();
+		if (use_shaders) {
+			clear_shaders();
+		}
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();
@@ -158,7 +165,7 @@ namespace study_cases {
 		}
 	}
 
-	int sim_01_initGL(int argc, char *argv[]) {
+	void sim_01_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -200,10 +207,7 @@ namespace study_cases {
 
 	void sim_01(int argc, char *argv[]) {
 		sim_01_help();
-		int r = sim_01_initGL(argc, argv);
-		if (r != 0) {
-			return;
-		}
+		sim_01_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);

@@ -76,6 +76,9 @@ namespace study_cases {
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 5.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+
+		n_iterations = 1;
+		SR.get_simulator().set_time_step(time_step);
 	}
 
 	void sim_05_help() {
@@ -93,7 +96,11 @@ namespace study_cases {
 	}
 
 	void sim_05_reset() {
-		SR.clear();
+		clear_simulation();
+		if (use_shaders) {
+			clear_shaders();
+		}
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();
