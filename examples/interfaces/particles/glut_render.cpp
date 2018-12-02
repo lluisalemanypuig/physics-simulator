@@ -150,13 +150,14 @@ namespace glut_functions {
 
 		if (draw_sized_particles_wire) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glDisable(GL_LIGHTING);
 			glColor3f(0.0f,0.0f,1.0f);
 
-			for (size_t i = 0; i < ps.size(); ++i) {
-				float R = 2.0f*ps[i]->R;
+			for (const SP *p : ps) {
+				float R = 2.0f*p->R;
 
 				glPushMatrix();
-					glTranslatef(ps[i]->cur_pos.x, ps[i]->cur_pos.y, ps[i]->cur_pos.z);
+					glTranslatef(p->cur_pos.x, p->cur_pos.y, p->cur_pos.z);
 					glScalef(R,R,R);
 					wireframe_sphere->render();
 				glPopMatrix();
