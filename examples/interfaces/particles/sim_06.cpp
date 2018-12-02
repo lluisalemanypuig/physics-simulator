@@ -33,6 +33,9 @@ using namespace glut_functions;
 namespace study_cases {
 
 	void sim_06_make_simulation() {
+		draw_sized_particles_wire = true;
+		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
+
 		initialiser I;
 		I.set_pos_initialiser(
 			[&](free_particle *p) {
@@ -180,14 +183,11 @@ namespace study_cases {
 		// --------------------------- //
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
-
 		glut_functions::parse_common_params(argc, argv);
 
 		// ---------------- //
 		/* build simulation */
-		draw_sized_particles_wire = true;
 		sim_06_make_simulation();
-		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
 		return 0;
 	}
 

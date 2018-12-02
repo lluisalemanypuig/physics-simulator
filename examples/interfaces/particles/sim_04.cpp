@@ -168,12 +168,11 @@ namespace study_cases {
 		// --------------------------- //
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
-
 		glut_functions::parse_common_params(argc, argv);
+		use_shaders = false;
 
 		// ---------------- //
 		/* build simulation */
-		use_shaders = false;
 		sim_04_make_simulation();
 	}
 

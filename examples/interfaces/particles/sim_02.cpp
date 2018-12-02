@@ -222,7 +222,6 @@ namespace study_cases {
 		// --------------------------- //
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
-
 		glut_functions::parse_common_params(argc, argv);
 
 		// ---------------- //
