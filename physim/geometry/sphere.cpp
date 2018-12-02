@@ -223,13 +223,8 @@ const
 	plane tan_plane(normal,I);
 
 	// make the plane update the particle
-	tan_plane.update_particle(I, pred_vel, p);
-
-	if (__pm3_dist2(p->cur_pos, C) < new_R*new_R) {
-		__pm3_sub_v_v(normal, p->cur_pos, C);
-		__pm3_normalise(normal, normal);
-		__pm3_add_v_vs(p->cur_pos, C, normal,new_R + 0.1f);
-	}
+	tan_plane.update_particle
+	(pred_pos, pred_vel, static_cast<particles::free_particle *>(p));
 }
 
 void sphere::display(std::ostream& os) const {
