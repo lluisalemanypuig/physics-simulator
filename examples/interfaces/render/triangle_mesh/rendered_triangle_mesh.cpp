@@ -343,8 +343,8 @@ void rendered_triangle_mesh::make_buffers() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	assert(glGetError() == GL_NO_ERROR);
-	// ---------------------
 
+	// ---------------------
 	// VAO release
 	glBindVertexArray(0);
 
@@ -439,8 +439,8 @@ void rendered_triangle_mesh::make_buffers_materials() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	assert(glGetError() == GL_NO_ERROR);
-	// ---------------------
 
+	// ---------------------
 	// VAO release
 	glBindVertexArray(0);
 	assert(glGetError() == GL_NO_ERROR);
@@ -565,8 +565,8 @@ void rendered_triangle_mesh::make_buffers_materials_textures() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	assert(glGetError() == GL_NO_ERROR);
-	// ---------------------
 
+	// ---------------------
 	// VAO release
 	glBindVertexArray(0);
 	assert(glGetError() == GL_NO_ERROR);
@@ -593,6 +593,7 @@ void rendered_triangle_mesh::render() const {
 	}
 	else if (uses_lists()) {
 		glCallList(list_index);
+		assert(glGetError() == GL_NO_ERROR);
 	}
 	else {
 		slow_render();
