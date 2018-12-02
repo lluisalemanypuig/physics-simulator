@@ -673,6 +673,9 @@ class simulator {
 		/// Returns a constant reference to the initialiser functions.
 		const init::initialiser *get_initialiser() const;
 
+		/// Returns the time step of the simulation (see @ref dt).
+		float get_time_step() const;
+
 		/**
 		 * @brief Are collisions between particles activated?
 		 *

@@ -314,6 +314,10 @@ const init::initialiser *simulator::get_initialiser() const {
 	return global_init;
 }
 
+float simulator::get_time_step() const {
+	return dt;
+}
+
 bool simulator::part_part_colls_activated() const {
 	return part_part_collisions;
 }
