@@ -3,6 +3,9 @@
 // C includes
 #include <assert.h>
 
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/math/private/math3.hpp>
@@ -92,12 +95,22 @@ void simulator::add_free_particle(particles::free_particle *p) {
 	assert(p != nullptr);
 	p->index = fps.size();
 	fps.push_back(p);
+
+	if (solver == solver_type::Verlet) {
+		// Update the previous position for Verlet
+		__pm3_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
+	}
 }
 
 void simulator::add_sized_particle(particles::sized_particle *p) {
 	assert(p != nullptr);
 	p->index = sps.size();
 	sps.push_back(p);
+
+	if (solver == solver_type::Verlet) {
+		// Update the previous position for Verlet
+		__pm3_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
+	}
 }
 
 void simulator::add_free_particles(size_t n) {

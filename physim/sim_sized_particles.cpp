@@ -4,6 +4,9 @@
 #include <physim/math/private/math3.hpp>
 #include <physim/sim_solver.cpp>
 
+#include <iostream>
+using namespace std;
+
 namespace physim {
 
 void simulator::_simulate_sized_particles() {

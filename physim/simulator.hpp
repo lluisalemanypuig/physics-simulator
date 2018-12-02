@@ -329,6 +329,9 @@ class simulator {
 		 * The initialser function (see @ref global_init) is not called.
 		 * The particle is added to @ref fps.
 		 * @param p A non-null pointer to the object.
+		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
+		 * then the step time (see @ref dt) needs to be set to initialise correctly
+		 * the particle's previous position.
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
@@ -340,8 +343,9 @@ class simulator {
 		 * The particle is added to @ref sps.
 		 *
 		 * @param p A non-null pointer to the object.
-		 * @pre For this initialisation to be completely correct, the step
-		 * time (see @ref dt) needs to be set.
+		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
+		 * then the step time (see @ref dt) needs to be set to initialise correctly
+		 * the particle's previous position.
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
