@@ -124,6 +124,9 @@ namespace study_cases {
 		cout << endl;
 		cout << "Sized particle bouncing on a triangle." << endl;
 		cout << endl;
+		cout << "Options of this simulation:" << endl;
+		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
+		cout << endl;
 	}
 
 	void sim_08_reset() {
@@ -166,6 +169,17 @@ namespace study_cases {
 		case 'r':
 			sim_08_reset();
 			break;
+		}
+
+		if (GLUT_ACTIVE_CTRL) {
+			c = c + 'a' - 1;
+			// If 'p' is pressed then c = 1 + actual_char - 'a'
+			// So: actual_char = c + 'a' - 1
+			switch(c) {
+			case 'w':
+				draw_sized_particles_wire = not draw_sized_particles_wire;
+				break;
+			}
 		}
 	}
 

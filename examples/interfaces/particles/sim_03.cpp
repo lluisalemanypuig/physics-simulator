@@ -192,6 +192,7 @@ namespace study_cases {
 		cout << "into a quadrilateral in which there are 2 spheres and a triangle." << endl;
 		cout << "This simulation is meant to be used to test the efficiency of" << endl;
 		cout << "the simulator." << endl;
+		cout << endl;
 	}
 
 	void sim_03_reset() {

@@ -151,6 +151,7 @@ namespace study_cases {
 		cout << endl;
 		cout << "Options of this simulation:" << endl;
 		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
+		cout << endl;
 	}
 
 	void sim_10_reset() {

@@ -93,6 +93,7 @@ namespace study_cases {
 		cout << "always moving forward since the friction coefficient is fixed to 1.0." << endl;
 		cout << "The others will eventually stop bouncing, the time to do so being" << endl;
 		cout << "dependent on that value." << endl;
+		cout << endl;
 	}
 
 	void sim_05_reset() {

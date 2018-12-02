@@ -92,6 +92,7 @@ namespace study_cases {
 		cout << "the plane, and one will never stop moving forward. The others will" << endl;
 		cout << "eventually stop, the time to do so being dependent on that value." << endl;
 		cout << "The value of the bouncing coefficient is fixed to 1.0." << endl;
+		cout << endl;
 	}
 
 	void sim_04_reset() {
