@@ -6,7 +6,7 @@
 using namespace std;
 
 // glm includes
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 
 // render includes
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
