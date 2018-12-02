@@ -3,9 +3,6 @@
 // C includes
 #include <assert.h>
 
-#include <iostream>
-using namespace std;
-
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/math/private/math3.hpp>
