@@ -112,6 +112,13 @@ namespace study_cases {
 	}
 
 	void sim_10_make_simulation() {
+		n_iterations = 10;
+		time_step = 0.01f;
+		SR.get_simulator().set_time_step(time_step);
+
+		draw_sized_particles_wire = true;
+		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
+
 		initialise_simulation();
 		initialise_renderer();
 
@@ -132,10 +139,6 @@ namespace study_cases {
 		else {
 			wireframe_sphere->compile();
 		}
-
-		n_iterations = 1;
-		time_step = 0.001f;
-		SR.get_simulator().set_time_step(time_step);
 	}
 
 	void sim_10_help() {
@@ -146,6 +149,8 @@ namespace study_cases {
 		cout << "Exactly 1000 particles bouncing on top of a plane. These" << endl;
 		cout << "particles are generated with a rectangular source." << endl;
 		cout << endl;
+		cout << "Options of this simulation:" << endl;
+		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
 	}
 
 	void sim_10_reset() {
@@ -190,6 +195,17 @@ namespace study_cases {
 			sim_10_reset();
 			break;
 		}
+
+		if (GLUT_ACTIVE_CTRL) {
+			c = c + 'a' - 1;
+			// If 'p' is pressed then c = 1 + actual_char - 'a'
+			// So: actual_char = c + 'a' - 1
+			switch(c) {
+			case 'w':
+				draw_sized_particles_wire = not draw_sized_particles_wire;
+				break;
+			}
+		}
 	}
 
 	int sim_10_initGL(int argc, char *argv[]) {
@@ -223,14 +239,11 @@ namespace study_cases {
 		// --------------------------- //
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
-
 		glut_functions::parse_common_params(argc, argv);
 
 		// ---------------- //
 		/* build simulation */
-		draw_sized_particles_wire = true;
 		sim_10_make_simulation();
-		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
 		return 0;
 	}
 
