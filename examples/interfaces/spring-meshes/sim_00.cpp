@@ -34,7 +34,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	void sim1_make_simulation() {
+	void sim_00_make_simulation() {
 		SR.set_particle_size(2.0f);
 		SR.set_spring_width(1.5f);
 
@@ -190,10 +190,10 @@ namespace study_cases {
 		}
 	}
 
-	void sim1_help() {
+	void sim_00_help() {
 		glut_functions::help();
 
-		cout << "Simulation 1 description:" << endl;
+		cout << "Simulation 00 description:" << endl;
 		cout << endl;
 		cout << "    This simulation features several springs colliding (or not)" << endl;
 		cout << "    with geometrical objects (spheres and planes)." << endl;
@@ -212,7 +212,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim1_reset() {
+	void sim_00_reset() {
 		SR.clear();
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -226,7 +226,7 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		sim1_make_simulation();
+		sim_00_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -238,27 +238,27 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim1_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_00_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim1_help();
+			sim_00_help();
 			break;
 		case 'r':
-			sim1_reset();
+			sim_00_reset();
 			break;
 		}
 	}
 
-	void sim1_initGL(int argc, char *argv[]) {
+	void sim_00_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Spring meshes - Simulation 1");
+		window_id = glutCreateWindow("Spring meshes - Simulation 00");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -291,12 +291,12 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim1_make_simulation();
+		sim_00_make_simulation();
 	}
 
-	void sim1_1dmeshes(int argc, char *argv[]) {
-		sim1_help();
-		sim1_initGL(argc, argv);
+	void sim_00(int argc, char *argv[]) {
+		sim_00_help();
+		sim_00_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -304,7 +304,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim1_regular_keys_keyboard);
+		glutKeyboardFunc(sim_00_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

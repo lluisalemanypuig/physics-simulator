@@ -11,14 +11,14 @@ namespace study_cases {
 
 	void choose_case(int argc, char *argv[]) {
 
-		if (strcmp(argv[1], "mesh1d") == 0) {
-			sim1_1dmeshes(argc, argv);
+		if (strcmp(argv[1], "00") == 0) {
+			sim_00(argc, argv);
 		}
-		else if (strcmp(argv[1], "mesh2d-reg") == 0) {
-			sim2_2dmeshes(argc, argv);
+		else if (strcmp(argv[1], "01") == 0) {
+			sim_01(argc, argv);
 		}
-		else if (strcmp(argv[1], "mesh2d-reg-sphere") == 0) {
-			sim3_2dmeshes(argc, argv);
+		else if (strcmp(argv[1], "02") == 0) {
+			sim_02(argc, argv);
 		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;

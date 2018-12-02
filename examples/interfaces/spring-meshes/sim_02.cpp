@@ -13,6 +13,7 @@ using namespace std;
 // render includes
 #include <render/geometry/rsphere.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
+#include <render/shader/shader_helper.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
@@ -36,11 +37,11 @@ namespace study_cases {
 	static float mesh_mass;
 	static size_t n, m;
 
-	void sim2_make_simulation() {
+	void sim_02_make_simulation() {
 		SR.set_particle_size(2.0f);
-		SR.set_spring_width(1.5f);
+		SR.set_spring_width(1.0f);
 
-		SR.get_simulator().set_solver(solver_type::EulerSemi);
+		SR.get_simulator().set_solver(glut_functions::solver);
 		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 		float length = 10.0f;
@@ -68,16 +69,45 @@ namespace study_cases {
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ]->cur_pos =
-					math::vec3((length/n)*i, (height/m)*j, 0.0f);
+					math::vec3((length/n)*i, 10.0f, (height/m)*j);
 			}
 		}
+
+		sphere *s = new sphere(math::vec3(5.0f, 5.0f, 5.0f), 2.0f);
+		SR.get_simulator().add_geometry(s);
+
+		shared_ptr<rendered_triangle_mesh> model_ball(new rendered_triangle_mesh);
+		OBJ_reader obj;
+		obj.load_object("../../interfaces/models", "sphere.obj", *model_ball);
+
+		rsphere *rs = new rsphere();
+		rs->set_center(glm::vec3(5.0f, 5.0f, 5.0f));
+		rs->set_radius(2.0f);
+		rs->set_model(model_ball);
+		SR.add_geometry(rs);
+
+		SR.get_box().enlarge_box(glm::vec3(-2,-2,-2));
+		SR.get_box().enlarge_box(glm::vec3(15,15,15));
 		SR.get_simulator().add_mesh(M);
 
-		SR.get_box().set_min_max(glm::vec3(-5,-5,-5), glm::vec3(15,15,5));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
-		cout << "Initialised simulation 2:" << endl;
+		glut_functions::init_shaders();
+		model_ball->load_textures();
+		if (use_shaders) {
+			SR.get_box().make_buffers();
+			model_ball->make_buffers_materials_textures();
+			shader& ts = glut_functions::texture_shader;
+			ts.bind();
+			shader_helper::activate_materials_textures(*model_ball, ts);
+			ts.release();
+		}
+		else {
+			model_ball->compile();
+		}
+
+		cout << "Initialised simulation 02:" << endl;
 		cout << "    mesh mass: " << mesh_mass << endl;
 		cout << "    Ke: " << glut_functions::elasticity << endl;
 		cout << "    Kd: " << glut_functions::damping << endl;
@@ -97,22 +127,31 @@ namespace study_cases {
 		}
 	}
 
-	void sim2_help() {
+	void sim_02_help() {
 		glut_functions::help();
 
-		cout << "Simulation 2 description:" << endl;
+		cout << "Simulation 02 description:" << endl;
 		cout << endl;
-		cout << "    This simulation features a simple 2-dimensional regular mesh" << endl;
-		cout << "    dangling from two fixed points. This is meant to show in a simple" << endl;
-		cout << "    situation the effects of the stretch, shear and bending forces." << endl;
+		cout << "    This simulation features a single 2d mesh falling on a sphere." << endl;
+		cout << "    The aim of this simualtion is to show how a mesh interacts with" << endl;
+		cout << "    an object to which it can be wrapped around, depending on the" << endl;
+		cout << "    internal forces of the mesh." << endl;
+		cout << endl;
+		cout << "    This simulation has options of its own:" << endl;
+		cout << "    SHIFT + m: change some of the mesh's characteristics." << endl;
+		cout << "        A message will be displayed 'Enter option: '" << endl;
+		cout << "        Then, write one of the following options and its parameters:" << endl;
+		cout << "            mass m: change mass of the mesh. The mass is divided uniformly" << endl;
+		cout << "            among its particles." << endl;
+		cout << "                m is a floating point value. Default: 50" << endl;
 		cout << endl;
 		cout << "    This simulation allows to set initial values to its parameters" << endl;
 		cout << "    --stretch, --shear, --bend: activate bend, shear, and stretch forces" << endl;
 		cout << "        Default: stretch=yes, shear,bend=no" << endl;
 		cout << "    --mass m : set mesh's mass to m" << endl;
-		cout << "        Default: 25 Kg" << endl;
+		cout << "        Default: 50 Kg" << endl;
 		cout << "    --ke e, --kd d : set elasticity and damping parameters of the mesh" << endl;
-		cout << "        Default: Ke=100, Kd=0.5" << endl;
+		cout << "        Default: Ke=150, Kd=0.5" << endl;
 		cout << "    --n #, --m # : number of particles in the x and z dimensions." << endl;
 		cout << "        Default: 25x25" << endl;
 		cout << "    --solver S: numerical solver used." << endl;
@@ -124,8 +163,10 @@ namespace study_cases {
 		cout << "        Default: false" << endl;
 	}
 
-	void sim2_reset() {
+	void sim_02_reset() {
 		SR.clear();
+		glut_functions::clear_shaders();
+
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();
@@ -139,7 +180,7 @@ namespace study_cases {
 		float pitch = SR.get_pitch();
 
 		// remake simulations
-		sim2_make_simulation();
+		sim_02_make_simulation();
 
 		// reset cameras
 		SR.set_perspective(old_p);
@@ -152,15 +193,15 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim2_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_02_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim2_help();
+			sim_02_help();
 			break;
 		case 'r':
-			sim2_reset();
+			sim_02_reset();
 			break;
 		}
 
@@ -186,20 +227,20 @@ namespace study_cases {
 			case 'd':
 				cout << "Enter dimensions (two numbers: x and z): ";
 				cin >> n >> m;
-				sim2_reset();
+				sim_02_reset();
 				break;
 			}
 		}
 	}
 
-	void sim2_initGL(int argc, char *argv[]) {
+	void sim_02_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Spring meshes - Simulation 2");
+		window_id = glutCreateWindow("Spring meshes - Simulation 02");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -212,6 +253,13 @@ namespace study_cases {
 		glLightfv(GL_LIGHT0, GL_POSITION, pos);
 		float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 		glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+
+		GLenum err = glewInit();
+		if (err != 0) {
+			cerr << "initGL - Error:" << endl;
+			cerr << "    when initialising glew: " << err << endl;
+			exit(1);
+		}
 
 		// --------------------------- //
 		/* initialise global variables */
@@ -226,10 +274,9 @@ namespace study_cases {
 
 		n = 25;
 		m = 25;
-		mesh_mass = 25.0f;
+		mesh_mass = 50.0f;
 
 		glut_functions::parse_common_params(argc, argv);
-
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "--n") == 0) {
 				n = atoi(argv[i + 1]);
@@ -247,12 +294,12 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim2_make_simulation();
+		sim_02_make_simulation();
 	}
 
-	void sim2_2dmeshes(int argc, char *argv[]) {
-		sim2_help();
-		sim2_initGL(argc, argv);
+	void sim_02(int argc, char *argv[]) {
+		sim_02_help();
+		sim_02_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -260,7 +307,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim2_regular_keys_keyboard);
+		glutKeyboardFunc(sim_02_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

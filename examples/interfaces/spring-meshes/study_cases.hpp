@@ -6,14 +6,14 @@ namespace study_cases {
 
 	/* -- One-dimensional spring meshes --
 	 */
-	void sim1_1dmeshes(int argc, char *argv[]);
+	void sim_00(int argc, char *argv[]);
 
 	/* -- Two-dimensional mesh --
 	 */
-	void sim2_2dmeshes(int argc, char *argv[]);
+	void sim_01(int argc, char *argv[]);
 
 	/* -- Two-dimensional mesh on a sphere --
 	 */
-	void sim3_2dmeshes(int argc, char *argv[]);
+	void sim_02(int argc, char *argv[]);
 
 } // -- namespace study_cases

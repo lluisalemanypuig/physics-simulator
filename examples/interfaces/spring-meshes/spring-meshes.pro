@@ -19,9 +19,9 @@ SOURCES += main.cpp \
     glut_functions.cpp \
     study_cases.cpp \
     utils.cpp \
-    1_meshes1d.cpp \
-    2_mesh2d_reg.cpp \
-    3_mesh2d_reg_sphere.cpp
+    sim_00.cpp \
+    sim_01.cpp \
+    sim_02.cpp
 
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender

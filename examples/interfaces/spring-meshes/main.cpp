@@ -12,13 +12,13 @@ void list_all_cases() {
 	cout << "Welcome to the Spring-meshes renderer" << endl;
 	cout << "The list of simulations available are:" << endl;
 	cout << endl;
-	cout << "    * mesh1d : simulation of several one-dimensional meshes." << endl;
+	cout << "    * 00 : simulation of several one-dimensional meshes." << endl;
 	cout << endl;
-	cout << "    * mesh2d-reg : simulation of a single two-dimensional mesh." << endl;
+	cout << "    * 01 : simulation of a single two-dimensional mesh." << endl;
 	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
 	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
 	cout << endl;
-	cout << "    * mesh2d-reg-sphere : simulation of a single two-dimensional" << endl;
+	cout << "    * 03 : simulation of a single two-dimensional" << endl;
 	cout << "        mesh that falls on a sphere." << endl;
 	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
 	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
