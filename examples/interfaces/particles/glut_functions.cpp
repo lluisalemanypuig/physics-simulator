@@ -64,15 +64,11 @@ namespace glut_functions {
 				exit(1);
 			}
 
-			cout << "glut_functions::init_shaders (" << __LINE__
-				 << ") bind texture shader" << endl;
 			texture_shader.bind();
 			texture_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
 			texture_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
 			texture_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
 			texture_shader.release();
-			cout << "glut_functions::init_shaders (" << __LINE__
-				 << ") release texture shader" << endl;
 		}
 	}
 

@@ -200,9 +200,7 @@ void viewer::apply_projection() const {
 	}
 }
 
-glm::mat4 viewer::make_projection_matrix() const {
-	glm::mat4 proj(1.0f);
-
+void viewer::make_projection_matrix(glm::mat4& proj) const {
 	if (use_perspective) {
 		proj = glm::perspective(
 			pers_cam.get_FOV()*TO_RAD, pers_cam.getRAw(),
@@ -222,8 +220,6 @@ glm::mat4 viewer::make_projection_matrix() const {
 		cerr << "    No perspective or orthogonal camera activated" << endl;
 		assert(false);
 	}
-
-	return proj;
 }
 
 void viewer::apply_view() const {
@@ -246,8 +242,7 @@ void viewer::apply_view() const {
 	}
 }
 
-glm::mat4 viewer::make_view_matrix() const {
-	glm::mat4 view(1.0f);
+void viewer::make_view_matrix(glm::mat4& view) const {
 	if (inspect) {
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -diag_length));
 		view = glm::rotate(view, theta*TO_RAD, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -265,6 +260,4 @@ glm::mat4 viewer::make_view_matrix() const {
 		cerr << "    No inspect or fly mode activated" << endl;
 		assert(false);
 	}
-
-	return view;
 }

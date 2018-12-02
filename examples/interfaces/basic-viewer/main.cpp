@@ -205,10 +205,9 @@ void refresh() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (use_shader) {
-		glm::mat4 projection = SR.make_projection_matrix();
-		// in this case, the view matrix is
-		// equal to the model view matrix.
-		glm::mat4 view = SR.make_view_matrix();
+		glm::mat4 projection(1.0f), view(1.0f);
+		SR.make_projection_matrix(projection);
+		SR.make_view_matrix(view);
 		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(view));
 
 		model_shader.bind();

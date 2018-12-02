@@ -20,8 +20,9 @@ namespace glut_functions {
 
 	void shader_render() {
 		// texture shader for geometry
-		glm::mat4 projection = SR.make_projection_matrix();
-		glm::mat4 view = SR.make_view_matrix();
+		glm::mat4 projection(1.0f), view(1.0f);
+		SR.make_projection_matrix(projection);
+		SR.make_view_matrix(view);
 
 		/* TEXTURE BIND */
 		texture_shader.bind();
