@@ -88,6 +88,9 @@ namespace study_cases {
 
 		cout << "Simulation 00 description:" << endl;
 		cout << endl;
+		cout << "Exactly 1000 particles bouncing on top of a plane. These" << endl;
+		cout << "particles are generated with a rectangular source." << endl;
+		cout << endl;
 	}
 
 	void sim_00_reset() {
@@ -130,7 +133,7 @@ namespace study_cases {
 		}
 	}
 
-	void sim_00_initGL(int argc, char *argv[]) {
+	int sim_00_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -168,6 +171,7 @@ namespace study_cases {
 		/* build simulation */
 		use_shaders = false;
 		sim_00_make_simulation();
+		return 0;
 	}
 
 	void sim_00(int argc, char *argv[]) {

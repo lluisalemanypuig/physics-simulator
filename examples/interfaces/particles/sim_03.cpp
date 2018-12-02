@@ -185,6 +185,10 @@ namespace study_cases {
 
 		cout << "Simulation 03 description:" << endl;
 		cout << endl;
+		cout << "This is a simulation of 16000 particles randonmly shot" << endl;
+		cout << "into a quadrilateral in which there are 2 spheres and a triangle." << endl;
+		cout << "This simulation is meant to be used to test the efficiency of" << endl;
+		cout << "the simulator." << endl;
 	}
 
 	void sim_03_reset() {

@@ -83,6 +83,13 @@ namespace study_cases {
 
 		cout << "Simulation 05 description:" << endl;
 		cout << endl;
+		cout << "This simulation is used to study the effects of the bouncing" << endl;
+		cout << "coefficient: some particles with different bouncing coefficient" << endl;
+		cout << "value roll on a plane. One of them will stop bouncing as soon as" << endl;
+		cout << "it touches the plane, and one will never stop bouncing, all of them" << endl;
+		cout << "always moving forward since the friction coefficient is fixed to 1.0." << endl;
+		cout << "The others will eventually stop bouncing, the time to do so being" << endl;
+		cout << "dependent on that value." << endl;
 	}
 
 	void sim_05_reset() {

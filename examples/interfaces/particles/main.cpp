@@ -15,14 +15,14 @@ void list_all_cases() {
 	cout << "    * 00 : shower of 1000 particles on a plane." << endl;
 	cout << endl;
 	cout << "    * 01 : similar to '00' but with 300 particles and a" << endl;
-	cout << "           triangle and a rectangle in between" << endl;
+	cout << "           triangle and a rectangle in between." << endl;
 	cout << endl;
 	cout << "    * 02 : particles rolling down a rectangle and" << endl;
 	cout << "           colliding with a sphere." << endl;
 	cout << endl;
 	cout << "    * 03 : simulation of 16000 particles randomly shot" << endl;
 	cout << "           inside a quadrilateral (delimited by planes)" << endl;
-	cout << "           with geometry inside it (2 spheres and a triangle)" << endl;
+	cout << "           with geometry inside it (2 spheres and a triangle)." << endl;
 	cout << endl;
 	cout << "    * 04 : to study the effects of the friction coefficient." << endl;
 	cout << "           11 particles, each with a different friction cofficient" << endl;
@@ -36,9 +36,9 @@ void list_all_cases() {
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
-		cerr << "Error: lacking parameter for scene: ./spring-meshes case_identifier" << endl;
-		cerr << "    Use './spring-meshes --list' or" << endl;
-		cerr << "        './spring-meshes --help' or" << endl;
+		cerr << "Error: lacking parameter for scene: ./particles case_identifier" << endl;
+		cerr << "    Use './particles --list' or" << endl;
+		cerr << "        './particles --help' or" << endl;
 		cerr << "    to see all scenes available." << endl;
 		return 1;
 	}

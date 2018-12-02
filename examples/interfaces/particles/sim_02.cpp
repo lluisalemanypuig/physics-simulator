@@ -139,6 +139,14 @@ namespace study_cases {
 
 		cout << "Simulation 02 description:" << endl;
 		cout << endl;
+		cout << "This simulation consists on 9 particles rolling down a" << endl;
+		cout << "rectangle until they collide with a sphere at the bottom" << endl;
+		cout << "of the triangle. 8 of these particles will collide with the" << endl;
+		cout << "sphere in a way that will make the fall off the rectangle." << endl;
+		cout << "One of them will bounce on the sphere and roll the rectangle" << endl;
+		cout << "back up again. It will repeat the process until it loses its" << endl;
+		cout << "'energy'." << endl;
+		cout << endl;
 	}
 
 	void sim_02_reset() {

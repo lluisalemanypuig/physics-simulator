@@ -109,6 +109,14 @@ namespace study_cases {
 
 		cout << "Simulation 01 description:" << endl;
 		cout << endl;
+		cout << "Exactly 300 generated with a rectangular source. Some of" << endl;
+		cout << "these particles will bounce on top a rectangle placed beneath" << endl;
+		cout << "the source, and some others will not - these will bounce" << endl;
+		cout << "on top of the plane underneath. The particles that collide" << endl;
+		cout << "with the rectangle will bounce on it and move towards a triangle." << endl;
+		cout << "Again, some particles will skip the triangle and some others" << endl;
+		cout << "will not." << endl;
+		cout << endl;
 	}
 
 	void sim_01_reset() {
@@ -150,7 +158,7 @@ namespace study_cases {
 		}
 	}
 
-	void sim_01_initGL(int argc, char *argv[]) {
+	int sim_01_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -192,7 +200,10 @@ namespace study_cases {
 
 	void sim_01(int argc, char *argv[]) {
 		sim_01_help();
-		sim_01_initGL(argc, argv);
+		int r = sim_01_initGL(argc, argv);
+		if (r != 0) {
+			return;
+		}
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
