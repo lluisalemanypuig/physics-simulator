@@ -32,15 +32,17 @@ void list_all_cases() {
 	cout << "    * 05 : likewise '04' but for the bouncing coefficient." << endl;
 	cout << "           Friction coefficient is fixed to 0." << endl;
 	cout << endl;
-	cout << "    * 06 : (debugging) sized particle bouncing on a plane." << endl;
+	cout << "    * 06 : (testing) sized particle bouncing on a plane." << endl;
 	cout << endl;
-	cout << "    * 07 : (debugging) sized particle bouncing on a sphere." << endl;
+	cout << "    * 07 : (testing) sized particle bouncing on a sphere." << endl;
 	cout << endl;
-	cout << "    * 08 : (debugging) sized particle bouncing on a triangle." << endl;
+	cout << "    * 08 : (testing) sized particle bouncing on a triangle." << endl;
 	cout << endl;
-	cout << "    * 09 : (debugging) sized particle bouncing on a rectangle." << endl;
+	cout << "    * 09 : (testing) sized particle bouncing on a rectangle." << endl;
 	cout << endl;
-	cout << "    * 10 : (debugging) two sized particle bouncing within a quadrilateral." << endl;
+	cout << "    * 10 : (testing) two sized particles bouncing within a quadrilateral." << endl;
+	cout << endl;
+	cout << "    * 10 : (testing) three sized particles bouncing within a quadrilateral." << endl;
 	cout << endl;
 }
 

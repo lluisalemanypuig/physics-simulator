@@ -44,6 +44,9 @@ namespace study_cases {
 		else if (strcmp(argv[1], "10") == 0) {
 			sim_10(argc, argv);
 		}
+		else if (strcmp(argv[1], "11") == 0) {
+			sim_11(argc, argv);
+		}
 		else {
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './spring-meshes --list' to see all cases" << endl;
