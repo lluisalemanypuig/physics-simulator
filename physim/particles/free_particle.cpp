@@ -11,10 +11,19 @@ namespace particles {
 
 // PRIVATE
 
+void free_particle::partial_init() {
+	bouncing = 0.8f;
+	friction = 0.2f;
+	charge = 0.0f;
+	lifetime = 10.0f;
+	starttime = 0.0f;
+	fixed = false;
+}
+
 // PUBLIC
 
 free_particle::free_particle() : base_particle() {
-	free_particle::init();
+	partial_init();
 }
 
 free_particle::free_particle(const free_particle& p) : base_particle(p) {
@@ -42,12 +51,7 @@ void free_particle::reduce_starttime(float t) {
 
 void free_particle::init() {
 	base_particle::init();
-	bouncing = 0.8f;
-	friction = 0.2f;
-	charge = 0.0f;
-	lifetime = 10.0f;
-	starttime = 0.0f;
-	fixed = false;
+	partial_init();
 }
 
 particle_type free_particle::get_particle_type() const {

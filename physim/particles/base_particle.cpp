@@ -11,7 +11,6 @@ namespace particles {
 
 base_particle::base_particle() {
 	init();
-	__pm3_assign_s(cur_pos, 0.0f);
 }
 
 base_particle::base_particle(const base_particle& p) {
@@ -35,6 +34,7 @@ void base_particle::save_position() {
 
 void base_particle::init() {
 	__pm3_assign_s(prev_pos, 0.0f);
+	__pm3_assign_s(cur_pos, 0.0f);
 	__pm3_assign_s(cur_vel, 0.0f);
 	__pm3_assign_s(force, 0.0f);
 	mass = 1.0f;

@@ -26,6 +26,15 @@ namespace particles {
  */
 class mesh_particle : public base_particle {
 	private:
+		/**
+		 * @brief Initialises this class's attributes.
+		 *
+		 * The attributes of the class take the following values:
+		 * - @ref charge : 0
+		 * - @ref fixed : false
+		 */
+		void partial_init();
+
 	public:
 		/// Electrical charge of the particle [C].
 		float charge;
@@ -38,19 +47,6 @@ class mesh_particle : public base_particle {
 		 * other force will have any effect on it).
 		 */
 		bool fixed;
-
-		/**
-		 * @brief Index of the particle.
-		 *
-		 * This index is automatically set when added to the
-		 * simulator object. The collection of indexes determine
-		 * the order in which particles have been added to it.
-		 * The indexes start at 0.
-		 *
-		 * It can be used to initialise its attributes through
-		 * the @ref init::initialiser class.
-		 */
-		size_t index;
 
 	public:
 		/// Default constructor.
@@ -70,11 +66,11 @@ class mesh_particle : public base_particle {
 		 * - @ref prev_pos : vec3(0,0,0)
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
-		 * - @ref mass : 0.0
-		 * - @ref charge : 0
-		 * - @ref fixed : false
+		 * - @ref mass : 1
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
+		 * - @ref charge : 0
+		 * - @ref fixed : false
 		 *
 		 * The current position (@ref cur_pos) is not initialised
 		 * since it will be overwritten later in the methods that

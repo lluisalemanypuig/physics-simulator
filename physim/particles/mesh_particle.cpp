@@ -11,11 +11,15 @@ namespace particles {
 
 // PRIVATE
 
+void mesh_particle::partial_init() {
+	charge = 0.0f;
+	fixed = false;
+}
+
 // PUBLIC
 
 mesh_particle::mesh_particle() : base_particle() {
-	init();
-	__pm3_assign_s(cur_pos, 0.0f);
+	partial_init();
 }
 
 mesh_particle::mesh_particle(const mesh_particle& p) : base_particle(p) {
@@ -31,8 +35,7 @@ mesh_particle::~mesh_particle() { }
 
 void mesh_particle::init() {
 	base_particle::init();
-	charge = 0.0f;
-	fixed = false;
+	partial_init();
 }
 
 particle_type mesh_particle::get_particle_type() const {

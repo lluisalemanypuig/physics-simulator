@@ -24,6 +24,19 @@ namespace particles {
  */
 class free_particle : public base_particle {
 	private:
+		/**
+		 * @brief Initialises this class's attributes.
+		 *
+		 * The attributes of the class take the following values:
+		 * - @ref bouncing : 0.8
+		 * - @ref friction : 0.2
+		 * - @ref charge : 0
+		 * - @ref lifetime : 10
+		 * - @ref starttime : 0
+		 * - @ref fixed : false
+		 */
+		void partial_init();
+
 	public:
 		/// Bouncing coefficient of the particle.
 		float bouncing;
@@ -88,6 +101,8 @@ class free_particle : public base_particle {
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
 		 * - @ref mass : 1
+		 * - @ref index : no value assigned, since it will be
+		 * overwritten by the simulator.
 		 * - @ref bouncing : 0.8
 		 * - @ref friction : 0.2
 		 * - @ref charge : 0

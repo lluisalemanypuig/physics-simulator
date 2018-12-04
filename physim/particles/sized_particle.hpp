@@ -26,6 +26,15 @@ namespace particles {
  * All this class' attributes are public.
  */
 class sized_particle : public free_particle {
+	private:
+		/**
+		 * @brief Initialises this class's attributes.
+		 *
+		 * The attributes of the class take the following values:
+		 * - @ref R : 1.0
+		 */
+		void partial_init();
+
 	public:
 		/// Radius of the particle [m].
 		float R;
@@ -47,6 +56,8 @@ class sized_particle : public free_particle {
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
 		 * - @ref mass : 1
+		 * - @ref index : no value assigned, since it will be
+		 * overwritten by the simulator.
 		 * - @ref bouncing : 0.8
 		 * - @ref friction : 0.2
 		 * - @ref charge : 0

@@ -73,8 +73,12 @@ class base_particle {
 		 *
 		 * The attributes of the class take the following values:
 		 * - @ref prev_pos : vec3(0,0,0)
+		 * - @ref cur_pos : vec3(0,0,0)
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
+		 * - @ref mass : 1
+		 * - @ref index : no value assigned, since it will be
+		 * overwritten by the simulator.
 		 *
 		 * The current position (@ref cur_pos) is not initialised
 		 * since it will be overwritten later in the methods that
