@@ -1,5 +1,8 @@
 #include <physim/geometry/plane.hpp>
 
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/math/private/math3.hpp>
 
@@ -162,27 +165,28 @@ const
 	/* updating a sized particle's position when it collides with a plane
 	 * is a bit difficult to explain without drawings...
 	 * However:
-	 *	1. We know that the predicted position is at a certain distance D
-	 *		from the plane.
-	 *	2. Define a position P = pred_pos + normal*D
-	 *	3. Define a plane q with normal 'normal' that goes through P
+	 *	1. We know that the predicted position is at a certain SIGNED
+	 *		distance D from the plane.
+	 *	2. Define a position P = pred_pos + normal*d, where
+	 *		d = p->R - D
+	 *	3. Define a plane 'Q' with normal 'normal' that goes through P
 	 *	4. The last correct position of the sized particle 'p' is the
-	 *		intersection between the line through pred_pos with director
-	 *		vector the particle's velocity and the plane q. Let 'I' be
-	 *		this intersection.
-	 *	5. Once we know the intersection (or last valid position) we can
-	 *		update a particle when it is placed at I and that has collided
-	 *		with q.
+	 *		intersection between the line through pred_pos and p->cur_pos
+	 *		and the plane 'Q'. Let 'I' be such position.
+	 *	5. We only have to update the free particle associated to 'p'
+	 *		with plane 'Q' considering the predicted position to be 'I'.
 	 */
 
 	float D = dist_point_plane(pred_pos);
-	float delta = p->R - D;
-	math::vec3 vel_unit = math::normalise(pred_vel);
-	math::vec3 I;
-	__pm3_add_v_vs(I, pred_pos, vel_unit, delta/(__pm3_dot(normal,vel_unit)));
+	float d = (std::signbit(D) ? -1.0f : 1.0f)*(p->R - std::abs(D));
 
-	plane q(normal, I);
-	q.update_particle(I, pred_vel, static_cast<particles::free_particle *>(p));
+	math::vec3 P;
+	__pm3_add_v_vs(P, pred_pos, normal,d);
+
+	plane Q(normal, P);
+	math::vec3 I;
+	Q.intersec_segment(p->cur_pos, pred_pos, I);
+	Q.update_particle(I, pred_vel, static_cast<particles::free_particle *>(p));
 }
 
 void plane::display(std::ostream& os) const {

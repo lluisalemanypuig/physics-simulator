@@ -45,10 +45,7 @@ class plane : public geometry {
 		/**
 		 * @brief Construct a plane with a normal and the equation's independent term.
 		 *
-		 * The plane's equation is
-		 \verbatim
-		 dot(n,X) + d = 0
-		 \endverbatim
+		 * The plane's equation is \f$ n \cdot X + d = 0\f$.
 		 * @param n Normal vector of the plane.
 		 * @param d Independent term of the plane's equation.
 		 * @post @ref normal takes the normalisation of the vector @e n.
@@ -59,9 +56,7 @@ class plane : public geometry {
 		 *
 		 * The normal of the plane is defined as the cross product
 		 * of the vectors from @e p0 to @e p1 and from @e p0 to @e p2:
-		 \verbatim
-		 n = normalise( (p1 - p0) x (p2 - p0) )
-		 \endverbatim
+		 * \f$n = ( (p1 - p0) \times (p2 - p0) )/||(p1 - p0) \times (p2 - p0)|| \f$.
 		 */
 		plane(const math::vec3& p0, const math::vec3& p1, const math::vec3& p2);
 		/// Copy constructor.
@@ -86,7 +81,17 @@ class plane : public geometry {
 
 		geom_type get_geom_type() const;
 
-		/// Returns the distance between point @e p and this plane.
+		/**
+		 * @brief Returns the signed distance between point @e p and this plane.
+		 * @param p Point
+		 * @return Returns a positive distance if the point @e p is at the
+		 * 'positive' side of the plane, and a negative distance if the point
+		 * @e p is at the 'negative' side of the plane.\n
+		 * The positive side is that halfspace such that all the points \f$q\f$
+		 * belonging to it are such that \f$ q\cdotn + d > 0\f$, where \f$n,d\f$
+		 * are the normal vector and the constant term, respectively, of this
+		 * plane.
+		 */
 		float dist_point_plane(const math::vec3& p) const;
 		/// Returns the project of point @e p onto the plane.
 		void closest_point_plane(const math::vec3& p, math::vec3& c) const;
@@ -98,10 +103,7 @@ class plane : public geometry {
 		/**
 		 * @brief Returns true if @e p satisfies this plane's equation.
 		 *
-		 * Returns true iff
-		 \verbatim
-		 normal**p + dconst = 0
-		 \endverbatim
+		 * Returns true iff \f$normal \cdot p + dconst = 0\f$
 		 * where @e normal is @ref normal and @e dconst is
 		 * @ref dconst.
 		 *
