@@ -514,16 +514,14 @@ class simulator {
 		 * - @ref clear_particles,
 		 * - @ref clear_geometry,
 		 * - @ref clear_fields,
-		 * - @ref clear_meshes,
-		 * and sets the simulation time (@ref stime) to 0.
+		 * - @ref clear_meshes.
 		 */
 		void clear_simulation();
 
 		/**
 		 * @brief Resets the simulation to its initial state.
 		 *
-		 * Resets the simulation time (see @ref stime) to 0 and
-		 * initialises all particles with the initialiser function
+		 * Initialises all particles with the initialiser function
 		 * @ref global_init.
 		 */
 		void reset_simulation();
@@ -533,23 +531,20 @@ class simulator {
 		/**
 		 * @brief Simulate free particles.
 		 *
-		 * Calls @ref _simulate_free_particles and increments the time
-		 * of the simulation (see @ref stime).
+		 * Calls @ref _simulate_free_particles.
 		 */
 		void simulate_free_particles();
 		/**
 		 * @brief Simulate sized particles.
 		 *
-		 * Calls @ref _simulate_sized_particles and increments the time
-		 * of the simulation (see @ref stime).
+		 * Calls @ref _simulate_sized_particles.
 		 */
 		void simulate_sized_particles();
 
 		/**
 		 * @brief Simulate meshes.
 		 *
-		 * Calls @ref _simulate_meshes and increments the time of
-		 * the simulation (see @ref stime).
+		 * Calls @ref _simulate_meshes.
 		 */
 		void simulate_meshes();
 
@@ -559,10 +554,9 @@ class simulator {
 		 * Calls the following functions:
 		 * - @ref _simulate_free_particles
 		 * - @ref _simulate_sized_particles
-		 * - @ref _simulate_meshes
-		 * and increments the time of the simulation. Parameter
-		 * @e dt (set via method @ref set_time_step(float)) indicates
-		 * how much time has passed since the last time step.
+		 * - @ref _simulate_meshes.
+		 * Parameter @e dt (set via method @ref set_time_step(float))
+		 * indicates how much time has passed since the last time step.
 		 */
 		void apply_time_step();
 
