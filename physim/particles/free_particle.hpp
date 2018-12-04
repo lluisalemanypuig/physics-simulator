@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 // physim includes
-#include <physim/particles/mesh_particle.hpp>
+#include <physim/particles/base_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -22,20 +22,9 @@ namespace particles {
  *
  * All this class' attributes are public.
  */
-class free_particle {
+class free_particle : public base_particle {
 	private:
 	public:
-		/// Previous position of the particle [m].
-		math::vec3 prev_pos;
-		/// Current position of the particle [m].
-		math::vec3 cur_pos;
-		/// Current velocity of the particle [m/s].
-		math::vec3 cur_vel;
-		/// Force currently applied to the particle [N].
-		math::vec3 force;
-
-		/// Mass of the particle [Kg].
-		float mass;
 		/// Bouncing coefficient of the particle.
 		float bouncing;
 		/// Friction coefficient of the particle.
@@ -67,19 +56,6 @@ class free_particle {
 		 */
 		bool fixed;
 
-		/**
-		 * @brief Index of the particle.
-		 *
-		 * This index is automatically set when added to the
-		 * simulator object. The collection of indexes determine
-		 * the order in which particles have been added to it.
-		 * The indexes start at 0.
-		 *
-		 * It can be used to initialise its attributes through
-		 * the @ref init::initialiser class.
-		 */
-		size_t index;
-
 	public:
 		/// Default constructor.
 		free_particle();
@@ -102,13 +78,6 @@ class free_particle {
 		 * @param t A value equal to or greater than 0.
 		 */
 		void reduce_starttime(float t);
-
-		/**
-		 * @brief Saves the current position in the particle's state.
-		 *
-		 * Copies @ref cur_pos into @ref prev_pos.
-		 */
-		void save_position();
 
 		/**
 		 * @brief Initialises all particle's attributes, most of them
@@ -136,8 +105,7 @@ class free_particle {
 
 		// GETTERS
 
-		/// Returns false.
-		virtual bool is_sized() const;
+		virtual particle_type get_particle_type() const;
 
 };
 

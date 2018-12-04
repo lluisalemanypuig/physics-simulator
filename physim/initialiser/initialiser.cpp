@@ -1,6 +1,7 @@
 #include <physim/initialiser/initialiser.hpp>
 
 // physim includes
+#include <physim/particles/particle_types.hpp>
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
@@ -143,7 +144,7 @@ void initialiser::initialise_particle(particles::free_particle *p) const {
 	lifetime(p);
 	starttime(p);
 	fixed(p);
-	if (p->is_sized()) {
+	if (p->get_particle_type() == particles::particle_type::sized_particle) {
 		particles::sized_particle *sp =
 			static_cast<particles::sized_particle *>(p);
 		radius(sp);

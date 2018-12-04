@@ -65,8 +65,7 @@ class sized_particle : public free_particle {
 
 		// GETTERS
 
-		/// Returns true.
-		bool is_sized() const;
+		virtual particle_type get_particle_type() const;
 };
 
 } // -- namespace particles

@@ -21,8 +21,8 @@ void sized_particle::init() {
 
 // GETTERS
 
-bool sized_particle::is_sized() const {
-	return true;
+particle_type sized_particle::get_particle_type() const {
+	return particle_type::sized_particle;
 }
 
 } // -- namespace particles

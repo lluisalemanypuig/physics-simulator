@@ -60,7 +60,9 @@ HEADERS += \
     math/private/math2.hpp \
     math/private/math3.hpp \
     math/private/math3/geometry.hpp \
-    math/private/math2/geometry.hpp
+    math/private/math2/geometry.hpp \
+    particles/base_particle.hpp \
+    particles/particle_types.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -91,4 +93,5 @@ SOURCES += \
     meshes/mesh.cpp \
     meshes/mesh1d.cpp \
     meshes/mesh2d.cpp \
-    meshes/mesh2d_regular.cpp
+    meshes/mesh2d_regular.cpp \
+    particles/base_particle.cpp

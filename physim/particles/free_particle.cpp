@@ -13,25 +13,17 @@ namespace particles {
 
 // PUBLIC
 
-free_particle::free_particle() {
-	init();
-	__pm3_assign_s(cur_pos, 0.0f);
+free_particle::free_particle() : base_particle() {
+	free_particle::init();
 }
 
-free_particle::free_particle(const free_particle& p) {
-	__pm3_assign_v(prev_pos, p.prev_pos);
-	__pm3_assign_v(cur_pos, p.cur_pos);
-	__pm3_assign_v(cur_vel, p.cur_vel);
-	__pm3_assign_v(force, p.force);
-
-	mass = p.mass;
+free_particle::free_particle(const free_particle& p) : base_particle(p) {
 	friction = p.friction;
 	bouncing = p.bouncing;
 	charge = p.charge;
 	lifetime = p.lifetime;
 	starttime = p.starttime;
 	fixed = p.fixed;
-	index = p.index;
 }
 
 free_particle::~free_particle() { }
@@ -48,15 +40,8 @@ void free_particle::reduce_starttime(float t) {
 	starttime -= t;
 }
 
-void free_particle::save_position() {
-	__pm3_assign_v(prev_pos, cur_pos);
-}
-
 void free_particle::init() {
-	__pm3_assign_s(prev_pos, 0.0f);
-	__pm3_assign_s(cur_vel, 0.0f);
-	__pm3_assign_s(force, 0.0f);
-	mass = 1.0f;
+	base_particle::init();
 	bouncing = 0.8f;
 	friction = 0.2f;
 	charge = 0.0f;
@@ -65,8 +50,8 @@ void free_particle::init() {
 	fixed = false;
 }
 
-bool free_particle::is_sized() const {
-	return false;
+particle_type free_particle::get_particle_type() const {
+	return particle_type::free_particle;
 }
 
 } // -- namespace particles

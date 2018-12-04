@@ -5,39 +5,37 @@
 
 // physim includes
 #include <physim/particles/particle_types.hpp>
-#include <physim/particles/base_particle.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace particles {
 
 /**
- * @brief Class implementing a particle.
+ * @brief Class implementing the most basic particle.
  *
- * A particle is a 0-dimensional object, subject to
- * several forces. It can also collide with other
- * objects in the scene (geometrical objects, see
- * namespace @ref physim::geom) but not with other
- * particles.
+ * The most basic particle in this library is a 0-dimensional
+ * object that is subject to several forces but not to any
+ * other particle's direct interaction through them. It can
+ * collide with other objects in the scene (geometrical objects,
+ * see namespace @ref physim::geom) and maybe with other
+ * particles, depending on the subclass.
  *
- * When specified in the simulator, the moving particle
- * may create a variable electric field that acts on
- * the other particles.
+ * All this class' attributes are public.
  */
-class mesh_particle : public base_particle {
+class base_particle {
 	private:
 	public:
-		/// Electrical charge of the particle [C].
-		float charge;
+		/// Previous position of the particle [m].
+		math::vec3 prev_pos;
+		/// Current position of the particle [m].
+		math::vec3 cur_pos;
+		/// Current velocity of the particle [m/s].
+		math::vec3 cur_vel;
+		/// Force currently applied to the particle [N].
+		math::vec3 force;
 
-		/**
-		 * @brief Is this particle fixed?
-		 *
-		 * If the particle, it will be ignored by the solver, therefore
-		 * not taken into account in the simulation (gravity nor any
-		 * other force will have any effect on it).
-		 */
-		bool fixed;
+		/// Mass of the particle [Kg].
+		float mass;
 
 		/**
 		 * @brief Index of the particle.
@@ -54,13 +52,20 @@ class mesh_particle : public base_particle {
 
 	public:
 		/// Default constructor.
-		mesh_particle();
+		base_particle();
 		/// Copy constructor.
-		mesh_particle(const mesh_particle& p);
+		base_particle(const base_particle& p);
 		/// Destructor.
-		~mesh_particle();
+		virtual ~base_particle();
 
 		// MODIFIERS
+
+		/**
+		 * @brief Saves the current position in the particle's state.
+		 *
+		 * Copies @ref cur_pos into @ref prev_pos.
+		 */
+		void save_position();
 
 		/**
 		 * @brief Initialises all particle's attributes, most of them
@@ -70,18 +75,16 @@ class mesh_particle : public base_particle {
 		 * - @ref prev_pos : vec3(0,0,0)
 		 * - @ref cur_vel : vec3(0,0,0)
 		 * - @ref force : vec3(0,0,0)
-		 * - @ref mass : 0.0
-		 * - @ref charge : 0
-		 * - @ref fixed : false
-		 * - @ref index : no value assigned, since it will be
-		 * overwritten by the simulator.
 		 *
 		 * The current position (@ref cur_pos) is not initialised
 		 * since it will be overwritten later in the methods that
-		 * also call this one.
+		 * also call this one. The other attributes, not mentioned
+		 * in the list above, are not modified either for similar
+		 * reasons.
 		 */
 		virtual void init();
 
+		/// Returns the type of this particle.
 		virtual particle_type get_particle_type() const;
 
 };

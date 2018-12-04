@@ -13,17 +13,12 @@ namespace particles {
 
 // PUBLIC
 
-mesh_particle::mesh_particle() {
+mesh_particle::mesh_particle() : base_particle() {
 	init();
 	__pm3_assign_s(cur_pos, 0.0f);
 }
 
-mesh_particle::mesh_particle(const mesh_particle& p) {
-	__pm3_assign_v(prev_pos, p.prev_pos);
-	__pm3_assign_v(cur_pos, p.cur_pos);
-	__pm3_assign_v(cur_vel, p.cur_vel);
-	__pm3_assign_v(force, p.force);
-
+mesh_particle::mesh_particle(const mesh_particle& p) : base_particle(p) {
 	mass = p.mass;
 	charge = p.charge;
 	fixed = p.fixed;
@@ -34,17 +29,14 @@ mesh_particle::~mesh_particle() { }
 
 // MODIFIERS
 
-void mesh_particle::save_position() {
-	__pm3_assign_v(prev_pos, cur_pos);
-}
-
 void mesh_particle::init() {
-	__pm3_assign_s(prev_pos, 0.0f);
-	__pm3_assign_s(cur_vel, 0.0f);
-	__pm3_assign_s(force, 0.0f);
-	mass = 0.25f;
+	base_particle::init();
 	charge = 0.0f;
 	fixed = false;
+}
+
+particle_type mesh_particle::get_particle_type() const {
+	return particle_type::mesh_particle;
 }
 
 } // -- namespace particles
