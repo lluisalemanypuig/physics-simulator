@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     sim_10.cpp \
     glut_variables.cpp \
     glut_render.cpp \
-    sim_11.cpp
+    sim_11.cpp \
+    sim_12.cpp
 
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender

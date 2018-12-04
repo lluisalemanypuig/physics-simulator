@@ -42,7 +42,12 @@ void list_all_cases() {
 	cout << endl;
 	cout << "    * 10 : (testing) two sized particles bouncing within a quadrilateral." << endl;
 	cout << endl;
-	cout << "    * 10 : (testing) three sized particles bouncing within a quadrilateral." << endl;
+	cout << "    * 11 : (testing) three sized particles bouncing within a quadrilateral" << endl;
+	cout << "           with no gravity." << endl;
+	cout << endl;
+	cout << "    * 12 : (testing) three sized particles bouncing within a quadrilateral" << endl;
+	cout << "           with gravity. All planes have their normals pointing outwards" << endl;
+	cout << "           quadrilateral." << endl;
 	cout << endl;
 }
 
