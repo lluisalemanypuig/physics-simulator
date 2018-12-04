@@ -71,10 +71,6 @@ class mesh_particle : public base_particle {
 		 * overwritten by the simulator.
 		 * - @ref charge : 0
 		 * - @ref fixed : false
-		 *
-		 * The current position (@ref cur_pos) is not initialised
-		 * since it will be overwritten later in the methods that
-		 * also call this one.
 		 */
 		virtual void init();
 

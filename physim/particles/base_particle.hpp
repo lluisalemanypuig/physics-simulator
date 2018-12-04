@@ -79,12 +79,6 @@ class base_particle {
 		 * - @ref mass : 1
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
-		 *
-		 * The current position (@ref cur_pos) is not initialised
-		 * since it will be overwritten later in the methods that
-		 * also call this one. The other attributes, not mentioned
-		 * in the list above, are not modified either for similar
-		 * reasons.
 		 */
 		virtual void init();
 

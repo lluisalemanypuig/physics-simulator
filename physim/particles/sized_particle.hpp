@@ -65,12 +65,6 @@ class sized_particle : public free_particle {
 		 * - @ref starttime : 0
 		 * - @ref fixed : false
 		 * - @ref R : 1.0
-		 *
-		 * The current position (@ref cur_pos) is not initialised
-		 * since it will be overwritten later in the methods that
-		 * also call this one. The other attributes, not mentioned
-		 * in the list above, are not modified either for similar
-		 * reasons.
 		 */
 		void init();
 

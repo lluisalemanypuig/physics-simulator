@@ -109,12 +109,6 @@ class free_particle : public base_particle {
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
 		 * - @ref fixed : false
-		 *
-		 * The current position (@ref cur_pos) is not initialised
-		 * since it will be overwritten later in the methods that
-		 * also call this one. The other attributes, not mentioned
-		 * in the list above, are not modified either for similar
-		 * reasons.
 		 */
 		virtual void init();
 
