@@ -120,12 +120,9 @@ namespace study_cases {
 	void sim_08_help() {
 		glut_functions::help();
 
-		cout << "Simulation 07 description:" << endl;
+		cout << "Simulation 08 description:" << endl;
 		cout << endl;
-		cout << "Sized particle bouncing on a triangle." << endl;
-		cout << endl;
-		cout << "Options of this simulation:" << endl;
-		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
+		cout << "PENDING" << endl;
 		cout << endl;
 	}
 
@@ -190,7 +187,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 07");
+		window_id = glutCreateWindow("Particles - Simulation 08");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);

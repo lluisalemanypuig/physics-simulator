@@ -144,13 +144,9 @@ namespace study_cases {
 	void sim_11_help() {
 		glut_functions::help();
 
-		cout << "Simulation 00 description:" << endl;
+		cout << "Simulation 11 description:" << endl;
 		cout << endl;
-		cout << "Exactly 1000 particles bouncing on top of a plane. These" << endl;
-		cout << "particles are generated with a rectangular source." << endl;
-		cout << endl;
-		cout << "Options of this simulation:" << endl;
-		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
+		cout << "PENDING" << endl;
 		cout << endl;
 	}
 
@@ -216,7 +212,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 10");
+		window_id = glutCreateWindow("Particles - Simulation 11");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);

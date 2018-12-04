@@ -134,13 +134,9 @@ namespace study_cases {
 	void sim_10_help() {
 		glut_functions::help();
 
-		cout << "Simulation 00 description:" << endl;
+		cout << "Simulation 10 description:" << endl;
 		cout << endl;
-		cout << "Exactly 1000 particles bouncing on top of a plane. These" << endl;
-		cout << "particles are generated with a rectangular source." << endl;
-		cout << endl;
-		cout << "Options of this simulation:" << endl;
-		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
+		cout << "PENDING" << endl;
 		cout << endl;
 	}
 
