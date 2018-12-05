@@ -6,6 +6,7 @@ using namespace std;
 
 // physim includes
 #include <physim/math/private/math3.hpp>
+#include <physim/geometry/sphere.hpp>
 
 inline float triangle_area
 (const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)
@@ -106,40 +107,65 @@ bool triangle::intersec_segment
 	return false;
 }
 
-bool triangle::intersec_sphere(const math::vec3& c, float R) const {
-	cerr << "triangle::update_particle (" << __LINE__ << ") - Warning" << endl;
-	cerr << "    This code has not been tested" << endl;
+#define lambdas(p,q,C,r, pq,qc, a,b,c, l0,l1)		\
+	__pm3_sub_v_v(pq, p, q);						\
+	__pm3_sub_v_v(qc, q, C);						\
+	a = __pm3_dot(pq,pq);							\
+	b = 2.0f*__pm3_dot(pq, qc);						\
+	c = __pm3_dot(qc,qc) - r*r;						\
+	l0 = (-b + std::sqrt(b*b - 4.0f*a*c))/(2.0f*a);	\
+	l1 = (-b - std::sqrt(b*b - 4.0f*a*c))/(2.0f*a)
 
-	// projection of point 'c' onto the
-	// plane containing the triangle
-	math::vec3 projection;
-	// remember that a plane's normal is stored as a unit vector
-	__pm3_sub_v_vs(
-		projection,
-		c,
-		pl.get_normal(),__pm3_dot(pl.get_normal(), c) + pl.get_constant()
-	);
-	float d2 = __pm3_dist2(c,projection);
+bool triangle::intersec_sphere(const math::vec3& C, float R) const {
+	/* Update: we should use the method outlined in
+	 * https://www.geometrictools.com/Documentation/IntersectionMovingSphereTriangle.pdf
+	 */
 
-	float r2 = R*R - d2;
 
-	// if any of the segments <v1,v2>, <v2,v3>, <v3,v1>
-	// intersects the circumference centered at 'projection'
-	// and of radius sqrt(r2) then the triangle intersects
-	// the sphere.
-	// <->
-	// if any of the segments intersect the circumference
-	// in one or two points
-	//	* one point: this happens iff any of the points v1,v2,v3
-	//		is inside the circumference
-	//	* two points: apply equations
 
-	// one point: easy check
+	// 1. If any of this triangle's points is inside the sphere
+	// we have intersection
 	if (
-		__pm3_dist2(v1,projection) <= r2 or __pm3_dist2(v2,projection) <= r2 or
-		__pm3_dist2(v3,projection) <= r2
+		__pm3_dist2(v1, C) <= R*R or
+		__pm3_dist2(v2, C) <= R*R or
+		__pm3_dist2(v3, C) <= R*R
 	)
 	{
+		return true;
+	}
+
+	// 2. If any of the segments of triangle intersects
+	// the sphere we have intersection.
+	//	Define the segment from P to Q as:
+	//			l*P + (1 - l)*Q
+	//	Define the sphere as
+	//			(X - C)**(X - C) = R*R
+	//	There is intersectionbetween the segment and the
+	//	sphere iff at least one of l0,l1 is in [0,1] where
+	//
+	//				 -b + sqrt(b^2 - 4*a*c)
+	//			l0 = ----------------------
+	//						  2*a
+	//				 -b - sqrt(b^2 - 4*a*c)
+	//			l1 = ----------------------
+	//						  2*a
+	//	with
+	//			a = (P - Q)**(P - Q)
+	//			b = 2*(P - Q)**(Q - C)
+	//			c = (Q - C)**(Q - C) - R*R
+	float a, b, c, l0, l1;
+	math::vec3 pq, qc;
+
+	lambdas(v1,v2,C,R, pq,qc, a,b,c, l0,l1);
+	if ((0.0f <= l0 and l0 <= 1.0f) or (0.0f <= l1 and l1 <= 1.0f)) {
+		return true;
+	}
+	lambdas(v2,v3,C,R, pq,qc, a,b,c, l0,l1);
+	if ((0.0f <= l0 and l0 <= 1.0f) or (0.0f <= l1 and l1 <= 1.0f)) {
+		return true;
+	}
+	lambdas(v3,v1,C,R, pq,qc, a,b,c, l0,l1);
+	if ((0.0f <= l0 and l0 <= 1.0f) or (0.0f <= l1 and l1 <= 1.0f)) {
 		return true;
 	}
 
@@ -159,8 +185,12 @@ void triangle::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const
 {
-	cerr << "triangle::update_particle (" << __LINE__ << ") - Error" << endl;
-	cerr << "    Not implemented yet" << endl;
+	// 1. Correct the position of the sized particle
+	// as if the triangle was a plane:
+
+
+
+	// 2. Update the position of the underlying free particle
 }
 
 void triangle::display(std::ostream& os) const {
