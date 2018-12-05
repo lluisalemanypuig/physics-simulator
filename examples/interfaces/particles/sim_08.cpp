@@ -1,5 +1,8 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
 // C++ includes
 #include <iostream>
 #include <memory>
@@ -34,6 +37,8 @@ using namespace glut_functions;
 
 namespace study_cases {
 
+	float px_08, py_08;
+
 	void sim_08_make_simulation() {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
@@ -44,9 +49,9 @@ namespace study_cases {
 				p->cur_pos = math::vec3(0.0f,5.0f,0.0f);
 			}
 		);
-		I.set_vel_initialiser(
-			[](free_particle *p) {
-				p->cur_vel = math::vec3(0.0f,0.0f,0.0f);
+		I.set_pos_initialiser(
+			[&](free_particle *p) {
+				p->cur_pos = math::vec3(px_08,5.0f,py_08);
 			}
 		);
 		I.set_lifetime_initialiser(
@@ -94,12 +99,11 @@ namespace study_cases {
 		tri->set_color(1.0f, 1.0f, 0.0f, 1.0f);
 		SR.add_geometry(tri);
 
-		OBJ_reader obj;
-
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 6.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
+		OBJ_reader obj;
 		wireframe_sphere = new rendered_triangle_mesh();
 		obj.load_object
 		("../../interfaces/models", "sphere_fsmooth.obj", *wireframe_sphere);
@@ -132,7 +136,7 @@ namespace study_cases {
 			clear_shaders();
 		}
 
-		// copy cameras
+		// copy_08 cameras
 		perspective old_p = SR.get_perspective_camera();
 		orthogonal old_o = SR.get_orthogonal_camera();
 
@@ -212,6 +216,17 @@ namespace study_cases {
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
 		glut_functions::parse_common_params(argc, argv);
+
+		for (int i = 2; i < argc; ++i) {
+			 if (strcmp(argv[i], "--x") == 0) {
+				 px_08 = atof(argv[i + 1]);
+				 ++i;
+			 }
+			 else if (strcmp(argv[i], "--y") == 0) {
+				 py_08 = atof(argv[i + 1]);
+				 ++i;
+			 }
+		}
 
 		// ---------------- //
 		/* build simulation */

@@ -1,5 +1,8 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
 // C++ includes
 #include <iostream>
 #include <memory>
@@ -34,6 +37,8 @@ using namespace glut_functions;
 
 namespace study_cases {
 
+	float px_09, py_09;
+
 	void sim_09_make_simulation() {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
@@ -41,7 +46,7 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[&](free_particle *p) {
-				p->cur_pos = math::vec3(0.0f,5.0f,0.0f);
+				p->cur_pos = math::vec3(px_09,5.0f,py_09);
 			}
 		);
 		I.set_vel_initialiser(
@@ -209,6 +214,17 @@ namespace study_cases {
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
 		glut_functions::parse_common_params(argc, argv);
+
+		for (int i = 2; i < argc; ++i) {
+			 if (strcmp(argv[i], "--x") == 0) {
+				 px_09 = atof(argv[i + 1]);
+				 ++i;
+			 }
+			 else if (strcmp(argv[i], "--y") == 0) {
+				 py_09 = atof(argv[i + 1]);
+				 ++i;
+			 }
+		}
 
 		// ---------------- //
 		/* build simulation */
