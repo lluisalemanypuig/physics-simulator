@@ -58,13 +58,14 @@ namespace glut_functions {
 		SR.apply_view();
 
 		SR.render_simulation();
-		// render geometry without models
-		for (rgeom *r : SR.get_geometry()) {
-			shared_ptr<rendered_triangle_mesh> m = r->get_model();
-			if (m == nullptr) {
-				r->draw();
+
+		glDisable(GL_LIGHTING);
+		for (const rgeom *r : SR.get_geometry()) {
+			if (r->get_model() == nullptr) {
+				r->draw_geometry();
 			}
 		}
+
 		if (draw_box) {
 			glDisable(GL_LIGHTING);
 			glColor3f(1.0f,0.0f,0.0f);
