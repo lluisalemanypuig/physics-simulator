@@ -62,7 +62,11 @@ HEADERS += \
     math/private/math3/geometry.hpp \
     math/private/math2/geometry.hpp \
     particles/base_particle.hpp \
-    particles/particle_types.hpp
+    particles/particle_types.hpp \
+    io/obj_reader.hpp \
+    io/ply_reader.hpp \
+    geometry/object.hpp \
+    io/io.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -94,4 +98,8 @@ SOURCES += \
     meshes/mesh1d.cpp \
     meshes/mesh2d.cpp \
     meshes/mesh2d_regular.cpp \
-    particles/base_particle.cpp
+    particles/base_particle.cpp \
+    io/obj_reader.cpp \
+    io/ply_reader.cpp \
+    geometry/object.cpp \
+    io/io.cpp
