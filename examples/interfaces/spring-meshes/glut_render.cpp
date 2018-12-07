@@ -82,8 +82,22 @@ namespace glut_functions {
 		glLoadIdentity();
 		SR.apply_view();
 
+		glDisable(GL_LIGHTING);
 		SR.render_simulation();
-		SR.render_geometry();
+
+		glDisable(GL_LIGHTING);
+		for (const rgeom *r : SR.get_geometry()) {
+			if (r->get_model() == nullptr) {
+				r->draw_geometry();
+			}
+		}
+		glEnable(GL_LIGHTING);
+		for (const rgeom *r : SR.get_geometry()) {
+			if (r->get_model() != nullptr) {
+				r->draw();
+			}
+		}
+
 		if (draw_box) {
 			glDisable(GL_LIGHTING);
 			glColor3f(1.0f,0.0f,0.0f);

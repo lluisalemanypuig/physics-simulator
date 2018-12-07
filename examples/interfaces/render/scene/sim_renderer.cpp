@@ -172,8 +172,6 @@ void sim_renderer::render_geometry() const {
 }
 
 void sim_renderer::render_simulation() const {
-	glDisable(GL_LIGHTING);
-
 	// render particles
 	glBegin(GL_POINTS);
 	const std::vector<free_particle *>& ps = S.get_free_particles();

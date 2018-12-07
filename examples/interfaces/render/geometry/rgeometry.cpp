@@ -49,6 +49,10 @@ std::shared_ptr<rendered_triangle_mesh> rgeom::get_model() {
 	return _model;
 }
 
+const std::shared_ptr<rendered_triangle_mesh> rgeom::get_model() const {
+	return _model;
+}
+
 float rgeom::red() const { return r; }
 float rgeom::green() const { return g; }
 float rgeom::blue() const { return b; }
@@ -66,7 +70,6 @@ void rgeom::draw() const {
 			_model->render();
 		}
 		else {
-			glEnable(GL_LIGHTING);
 			glPushMatrix();
 				translate_object();
 				_model->render();
