@@ -156,6 +156,35 @@ const
 	__pm3_sub_acc_vs(p->cur_vel, vT, p->friction);
 }
 
+void plane::correct_position(
+	const math::vec3& pred_pos, const particles::sized_particle *p,
+	math::vec3& correct_position
+) const
+{
+	/* correcting a sized particle's position when it collides with a plane
+	 * is a bit difficult to explain without drawings...
+	 * However:
+	 *	1. We know that the predicted position is at a certain SIGNED
+	 *		distance D from the plane.
+	 *	2. Define a position P = pred_pos + normal*d, where
+	 *		d = p->R - D
+	 *	3. Define a plane 'Q' with normal 'normal' that goes through P
+	 *	4. The last correct position of the sized particle 'p' is the
+	 *		intersection between the line through pred_pos and p->cur_pos
+	 *		and the plane 'Q'. Let 'I' be such position.
+	 *	5. 'I' is the corrected position.
+	 */
+
+	float D = dist_point_plane(pred_pos);
+	float d = (std::signbit(D) ? -1.0f : 1.0f)*(p->R - std::abs(D));
+
+	math::vec3 P;
+	__pm3_add_v_vs(P, pred_pos, normal,d);
+
+	plane Q(normal, P);
+	Q.intersec_segment(p->cur_pos, pred_pos, correct_position);
+}
+
 void plane::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const

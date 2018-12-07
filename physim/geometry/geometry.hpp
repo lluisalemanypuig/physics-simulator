@@ -31,6 +31,7 @@ enum geom_type {
  * any collision between this object and another one.
  */
 class geometry {
+	private:
 	public:
 		/// Default constructor
 		geometry();
@@ -64,7 +65,8 @@ class geometry {
 		 * false if otherwise. Depending on the type of geometry this
 		 * method has a different geometrical interpretation.
 		 */
-		virtual bool is_inside(const math::vec3& p, float tol = 1.e-6f) const = 0;
+		virtual bool is_inside
+		(const math::vec3& p, float tol = 1.e-6f) const = 0;
 
 		/**
 		 * @brief Returns if the segment defined by the points @e p1
@@ -73,7 +75,8 @@ class geometry {
 		 * @param[in] p2 Second endpoint of the segment.
 		 * @return Returns true if there is intersection.
 		 */
-		virtual bool intersec_segment(const math::vec3& p1, const math::vec3& p2) const = 0;
+		virtual bool intersec_segment
+		(const math::vec3& p1, const math::vec3& p2) const = 0;
 
 		/**
 		 * @brief Returns true if the segment [@e p1, @e p2 ] intersects with
@@ -95,7 +98,8 @@ class geometry {
 		 * @param[in] R radius of the sphere.
 		 * @return Returns true if there is intersection.
 		 */
-		virtual bool intersec_sphere(const math::vec3& c, float R) const = 0;
+		virtual bool intersec_sphere
+		(const math::vec3& c, float R) const = 0;
 
 		// OTHERS
 
@@ -128,6 +132,22 @@ class geometry {
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
 			particles::free_particle *pred
 		) const = 0;
+
+		/**
+		 * @brief Corrects the position of a sized particle.
+		 *
+		 * Assuming that a sized particle at position @e pred_pos and radius
+		 * @e R intersects the geometry, update the position of the particle
+		 * to @e correct_pos, so that it no longer intersects the geometry but
+		 * that is as closest as possible to it. The correction is done in
+		 * the direction of the velocity vector.
+		 * @param[in] pred_pos Position predicted by a solver.
+		 * @param[in] p Current state of the particle.
+		 * @param[out] correct_pos Correction of the particle's position.
+		 */
+		virtual void correct_position
+		(const math::vec3& pred_pos, const particles::sized_particle *p,
+		 math::vec3& correct_pos) const = 0;
 
 		/**
 		 * @brief Update a sized particle in a collision with geometry.

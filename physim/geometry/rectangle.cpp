@@ -139,6 +139,14 @@ const
 	pl.update_particle(pred_pos, pred_vel, p);
 }
 
+void rectangle::correct_position(
+	const math::vec3& pred_pos, const particles::sized_particle *p,
+	math::vec3& correct_position
+) const
+{
+
+}
+
 void rectangle::update_particle
 (const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
 const
