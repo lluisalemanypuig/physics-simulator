@@ -1,7 +1,9 @@
 #pragma once
 
 // physim includes
+#include <physim/particles/particle_types.hpp>
 #include <physim/particles/free_particle.hpp>
+#include <physim/math/vec3.hpp>
 
 namespace physim {
 namespace particles {

@@ -12,8 +12,8 @@ namespace particles {
 // PRIVATE
 
 void free_particle::partial_init() {
-	bouncing = 0.8f;
 	friction = 0.2f;
+	bouncing = 0.8f;
 	charge = 0.0f;
 	lifetime = 10.0f;
 	starttime = 0.0f;
@@ -27,8 +27,8 @@ free_particle::free_particle() : base_particle() {
 }
 
 free_particle::free_particle(const free_particle& p) : base_particle(p) {
-	friction = p.friction;
 	bouncing = p.bouncing;
+	friction = p.friction;
 	charge = p.charge;
 	lifetime = p.lifetime;
 	starttime = p.starttime;

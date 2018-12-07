@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 // physim includes
+#include <physim/particles/particle_types.hpp>
 #include <physim/particles/base_particle.hpp>
 #include <physim/math/vec3.hpp>
 

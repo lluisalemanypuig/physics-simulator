@@ -23,10 +23,8 @@ mesh_particle::mesh_particle() : base_particle() {
 }
 
 mesh_particle::mesh_particle(const mesh_particle& p) : base_particle(p) {
-	mass = p.mass;
 	charge = p.charge;
 	fixed = p.fixed;
-	index = p.index;
 }
 
 mesh_particle::~mesh_particle() { }
