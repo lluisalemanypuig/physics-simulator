@@ -70,5 +70,34 @@ namespace physim {
      * systems of springs.
      */
     namespace meshes { }
+    
+    /**
+     * @brief Namespace for file reading.
+     * 
+     * It supports two formats:
+     * - Wavefront. File extension: .obj.
+     * - Polygon File Format (a.k.a. Stanford Triangle Format). File
+     * extension: .ply.
+     * 
+     * These are meant for constructing triangular meshes for geometry
+     * that cannot be parametrised.
+     * 
+     * The function used for reading a file should be
+     * @ref read_file(const std::string&,const std::string&,geom::object *),
+     * however, if the extension of the file is known then the user can
+     * call the corresponding function:
+     * - @ref obj_read_file(const std::string&,const std::string&,geom::object *) 
+     * - @ref ply_read_file(const std::string&,const std::string&,geom::object *)
+     */
+    namespace input {
+		
+		/**
+		 * @brief This namespace contains functions for private use.
+		 * 
+		 * There is no need to call any of these functions.
+		 */
+		namespace input_private {}
+		
+	} // -- namespace input
 
 } // -- namespace sim

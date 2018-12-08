@@ -1,4 +1,4 @@
-#include <physim/io/ply_reader.hpp>
+#include <physim/input/ply_reader.hpp>
 
 // C includes
 #include <string.h>
@@ -9,18 +9,28 @@
 using namespace std;
 
 namespace physim {
-namespace io {
+namespace input {
 
-
-namespace io_private {
-	bool __load_header
+namespace input_private {
+	/**
+	 * @brief Loads the header of the ply file
+	 *
+	 * Extracts number of vertices, faces, and whether it is binary
+	 * or ASCII format.
+	 * @param fin File stream.
+	 * @param[out] n_verts Number of vertices.
+	 * @param[out] n_faces Number of faces.
+	 * @param[out] format Format of the file.
+	 * @return Returns true on success.
+	 */
+	bool __ply_load_header
 	(ifstream& fin, int& n_verts, int& n_faces, string& format)
 	{
 		char line[100];
 
 		fin.getline(line, 100);
 		if (strncmp(line, "ply", 3) != 0) {
-			cerr << "physim::io::io_private::__ply_load_header - Error:" << endl;
+			cerr << "physim::input::input_private::__ply_load_header - Error:" << endl;
 			cerr << "    Wrong format of file: first line does not contain 'ply'."
 				 << endl;
 			return false;
@@ -39,7 +49,7 @@ namespace io_private {
 				format = string(&line[7]);
 			}
 			else if (strncmp(line, "property float nx", 17) == 0) {
-				cerr << "PLY_reader::__load_header - Error:" << endl;
+				cerr << "physim::input::input_private::__ply_load_header - Error:" << endl;
 				cerr << "    This model has normals: more vertices than necessary"
 					 << endl;
 				cerr << "    are in the file and this makes it too difficult to"
@@ -50,7 +60,7 @@ namespace io_private {
 			fin.getline(line, 100);
 		}
 		if (n_verts <= 0) {
-			cerr << "physim::io::io_private::__ply_load_header - Error:" << endl;
+			cerr << "physim::input::input_private::__ply_load_header - Error:" << endl;
 			cerr << "    Number of vertices read is negative." << endl;
 			return false;
 		}
@@ -61,7 +71,8 @@ namespace io_private {
 
 	// ---------------- BINARY ----------------
 	// ---- LITTLE ENDIAN 1.0
-	void __load_vertices_binary_le_1_0
+	/// Load vertices in binary, little endian format
+	void __ply_load_vertices_binary_le_1_0
 	(ifstream& fin, int n_verts, vector<math::vec3>& verts)
 	{
 		float v1, v2, v3;
@@ -77,7 +88,8 @@ namespace io_private {
 		}
 	}
 
-	void __load_faces_binary_le_1_0
+	/// Load faces in binary, little endian format
+	void __ply_load_faces_binary_le_1_0
 	(ifstream& fin, int n_faces, vector<size_t>& tris)
 	{
 		// indices of vertices per face
@@ -112,7 +124,8 @@ namespace io_private {
 	// ---------------- ASCII ----------------
 	// ---- ASCII 1.0
 
-	void __load_vertices_ascii_1_0
+	/// Load vertices in ASCII
+	void __ply_load_vertices_ascii_1_0
 	(ifstream& fin, int n_verts, vector<math::vec3>& verts)
 	{
 		float v1,v2,v3;
@@ -126,7 +139,8 @@ namespace io_private {
 		}
 	}
 
-	void __load_faces_ascii_1_0
+	/// Load faces in ASCII
+	void __ply_load_faces_ascii_1_0
 	(ifstream& fin, int n_faces, vector<size_t>& tris)
 	{
 		// indices of vertices per face
@@ -169,17 +183,17 @@ namespace io_private {
 
 		fin.open(filename.c_str(), ios_base::in | ios_base::binary);
 		if (not fin.is_open()) {
-			cerr << "PLY_reader::read_mesh - Error:" << endl;
+			cerr << "physim::input::ply_read_file - Error:" << endl;
 			cerr << "    Could not open file '" << filename << "'." << endl;
 			return false;
 		}
 
 		string format;
 		bool header_read =
-			io_private::__ply_load_header(fin, n_verts, n_faces, format);
+			input_private::__ply_load_header(fin, n_verts, n_faces, format);
 		if (not header_read) {
 			fin.close();
-			cerr << "PLY_reader::read_mesh - Error:" << endl;
+			cerr << "physim::input::ply_read_file - Error:" << endl;
 			cerr << "    Bad input file format." << endl;
 			return false;
 		}
@@ -190,12 +204,17 @@ namespace io_private {
 		// Load the vertices and the faces from the ply file.
 		// Call the appropriate functions depending on the format.
 		if (format == "binary_little_endian 1.0") {
-			io_private::__ply_load_vertices_binary_le_1_0(fin, n_verts, vertices);
-			io_private::__ply_load_faces_binary_le_1_0(fin, n_faces, triangles);
+			input_private::__ply_load_vertices_binary_le_1_0(fin, n_verts, vertices);
+			input_private::__ply_load_faces_binary_le_1_0(fin, n_faces, triangles);
 		}
 		else if (format == "ascii 1.0") {
-			io_private::__ply_load_vertices_ascii_1_0(fin, n_verts, vertices);
-			io_private::__ply_load_faces_ascii_1_0(fin, n_faces, triangles);
+			input_private::__ply_load_vertices_ascii_1_0(fin, n_verts, vertices);
+			input_private::__ply_load_faces_ascii_1_0(fin, n_faces, triangles);
+		}
+		else {
+			cerr << "physim::input::ply_read_file - Error:" << endl;
+			cerr << "    Unknown file format '" << format << "'." << endl;
+			return false;
 		}
 
 		fin.close();

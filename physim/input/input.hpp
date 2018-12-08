@@ -7,9 +7,9 @@
 #include <physim/geometry/object.hpp>
 
 namespace physim {
-namespace io {
+namespace input {
 
-	bool read_mesh
+	bool read_file
 	(
 		const std::string& directory,
 		const std::string& filename,

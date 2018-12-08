@@ -1,4 +1,4 @@
-#include <physim/io/obj_reader.hpp>
+#include <physim/input/obj_reader.hpp>
 
 // C includes
 #include <assert.h>
@@ -8,13 +8,22 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <cmath>
+#include <vector>
 using namespace std;
 
 namespace physim {
-namespace io {
+namespace input {
 
-namespace io_private {
+namespace input_private {
+
+	/**
+	 * @brief Retrieves the vertex coordinates and the faces
+	 *
+	 * Private function. Do not call directly.
+	 * @param fin Input stream.
+	 * @param[out] vertices Vertices of the object read from the file.
+	 * @param[out] triangles Triangles of the object read from the file.
+	 */
 	void __obj_parse_file_lines
 	(ifstream& fin, vector<math::vec3>& vertices, vector<size_t>& triangles)
 	{
@@ -114,7 +123,7 @@ namespace io_private {
 					}
 				}
 				else {
-					cerr << "io::parse_file_lines - Error" << endl;
+					cerr << "physim::input::input_private::__obj_parse_file_lines - Error" << endl;
 					cerr << "    Line " << i << " does not contain a triangle or a quad" << endl;
 					cerr << "    Found: " << line << endl;
 				}
@@ -128,14 +137,14 @@ namespace io_private {
 	}
 } // -- namespace io_private
 
-	bool load_object(const string& dir, const string& fname, geom::object *o)
+	bool obj_read_file(const string& dir, const string& fname, geom::object *o)
 	{
 		// the '/' should be a '\' in windows...
 		string full_path = dir + "/" + fname;
 		ifstream fin;
 		fin.open(full_path.c_str());
 		if (not fin.is_open()) {
-			cerr << "OBJ_reader::load_object - Error:" << endl;
+			cerr << "physim::input::input_private::obj_read_file - Error:" << endl;
 			cerr << "    Could not open file " << endl;
 			cerr << "        " << fname << endl;
 			cerr << "    in directory" << endl;
@@ -147,7 +156,7 @@ namespace io_private {
 		vector<size_t> triangles;
 
 		// parse the vertices and faces information
-		io_private::__obj_parse_file_lines(fin, vertices, triangles);
+		input_private::__obj_parse_file_lines(fin, vertices, triangles);
 		fin.close();
 
 		o->set_vertices(vertices);

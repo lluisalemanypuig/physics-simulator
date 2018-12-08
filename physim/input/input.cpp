@@ -1,17 +1,17 @@
-#include <physim/io/io.hpp>
+#include <physim/input/input.hpp>
 
 // C++ includes
 #include <string>
 
 // physim includes
 #include <physim/geometry/object.hpp>
-#include <physim/io/ply_reader.hpp>
-#include <physim/io/obj_reader.hpp>
+#include <physim/input/ply_reader.hpp>
+#include <physim/input/obj_reader.hpp>
 
 namespace physim {
-namespace io {
+namespace input {
 
-	bool read_mesh
+	bool read_file
 	(
 		const std::string& directory,
 		const std::string& filename,
