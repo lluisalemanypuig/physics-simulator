@@ -74,7 +74,7 @@ namespace study_cases {
 
 		timing::time_point begin_sim = timing::now();
 
-		geom::object *o = new geom::object();
+		geometry::object *o = new geometry::object();
 		bool r = input::read_file(directory, filename, o);
 		if (not r) {
 			cerr << "Error: some error occurred while trying to read" << endl;

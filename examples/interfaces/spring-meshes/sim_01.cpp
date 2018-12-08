@@ -25,7 +25,7 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace meshes;
-using namespace geom;
+using namespace geometry;
 
 // custom includes
 #include "glut_functions.hpp"

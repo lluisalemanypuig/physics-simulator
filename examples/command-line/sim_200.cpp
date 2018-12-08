@@ -20,7 +20,7 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace math;
-using namespace geom;
+using namespace geometry;
 using namespace init;
 using namespace meshes;
 
