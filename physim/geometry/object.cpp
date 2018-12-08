@@ -1,5 +1,8 @@
 #include <physim/geometry/object.hpp>
 
+// C includes
+#include <assert.h>
+
 // C++ includes
 #include <iostream>
 using namespace std;
@@ -19,7 +22,6 @@ object::object() : geometry() {
 }
 
 object::object(const object& o) : geometry(o) {
-	verts = o.verts;
 	tris = o.tris;
 }
 
@@ -28,17 +30,23 @@ object::~object() { }
 // SETTERS
 
 void object::set_position(const math::vec3& dir) {
-	for (math::vec3& v : verts) {
-		__pm3_add_acc_v(v, dir);
+	for (triangle& t : tris) {
+		t.set_position(dir);
 	}
 }
 
-void object::set_vertices(const std::vector<math::vec3>& vs) {
-	verts = vs;
-}
+void object::set_triangles
+(const std::vector<math::vec3>& vs, const std::vector<size_t>& trs)
+{
+	assert(trs.size()%3 == 0);
 
-void object::set_triangles(const std::vector<size_t>& trs) {
-	tris = trs;
+	tris.resize(trs.size()/3);
+	for (size_t i = 0; i < tris.size(); ++i) {
+		size_t i1 = trs[3*i    ];
+		size_t i2 = trs[3*i + 1];
+		size_t i3 = trs[3*i + 2];
+		tris[i] = triangle(vs[i1], vs[i2], vs[i3]);
+	}
 }
 
 // GETTERS

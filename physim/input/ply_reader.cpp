@@ -231,8 +231,7 @@ namespace input_private {
 
 		fin.close();
 
-		o->set_vertices(vertices);
-		o->set_triangles(triangles);
+		o->set_triangles(vertices, triangles);
 		return true;
 	}
 

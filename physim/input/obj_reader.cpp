@@ -81,7 +81,7 @@ namespace input_private {
 
 					// make the face
 					for (int i = 0; i < 3; ++i) {
-						triangles.push_back(VN[i]);
+						triangles.push_back(VN[i] - 1);
 					}
 				}
 				else if (C == 4) {
@@ -109,17 +109,15 @@ namespace input_private {
 					}
 
 					// make two triangular faces
-					// use the first 3 vertices: 0,1,2
-					// gather info
 					for (int i = 0; i < 3; ++i) {
-						triangles.push_back(VN[i]);
+						triangles.push_back(VN[i] - 1);
 					}
 
 					// use the other vertices
 					VN[1] = VN[2]; VN[2] = VN[3];
 					// gather info
 					for (int i = 0; i < 3; ++i) {
-						triangles.push_back(VN[i]);
+						triangles.push_back(VN[i] - 1);
 					}
 				}
 				else {
@@ -142,7 +140,7 @@ namespace input_private {
 	bool obj_read_file
 	(const std::string& dir, const std::string& fname, geometry::object *o)
 	{
-		// the '/' should be a '\' in windows...
+		// should the '/' be a '\' in windows?
 		string full_path = dir + "/" + fname;
 		ifstream fin;
 		fin.open(full_path.c_str());
@@ -165,8 +163,7 @@ namespace input_private {
 		input_private::__obj_parse_file_lines(fin, vertices, triangles);
 		fin.close();
 
-		o->set_vertices(vertices);
-		o->set_triangles(triangles);
+		o->set_triangles(vertices, triangles);
 		return true;
 	}
 

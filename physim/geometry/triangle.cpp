@@ -48,6 +48,15 @@ triangle::~triangle() { }
 
 // SETTERS
 
+void triangle::set_points
+(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3)
+{
+	__pm3_assign_v(v1, p1);
+	__pm3_assign_v(v2, p2);
+	__pm3_assign_v(v3, p3);
+	pl = plane(p1,p2,p3);
+}
+
 void triangle::set_position(const math::vec3& v) {
 	__pm3_add_acc_v(v1, v);
 	__pm3_add_acc_v(v2, v);

@@ -6,6 +6,7 @@
 
 // physim includes
 #include <physim/geometry/geometry.hpp>
+#include <physim/geometry/triangle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/math/vec3.hpp>
 
@@ -20,15 +21,8 @@ namespace geometry {
  */
 class object : public geometry {
 	private:
-		/// The vertices of this object.
-		std::vector<math::vec3> verts;
-		/**
-		 * @brief Triangles of this object.
-		 *
-		 * Every three integer values we have a triangle. Each of
-		 * this indices points to a value in @ref verts.
-		 */
-		std::vector<size_t> tris;
+		/// The triangles of this object.
+		std::vector<triangle> tris;
 
 	public:
 		/// Default constructor.
@@ -52,9 +46,8 @@ class object : public geometry {
 		void set_position(const math::vec3& v);
 
 		/// Sets the vertices of this object. See @ref verts.
-		void set_vertices(const std::vector<math::vec3>& vs);
-		/// Sets the triangles indices of this object. See @ref tris.
-		void set_triangles(const std::vector<size_t>& trs);
+		void set_triangles
+		(const std::vector<math::vec3>& vs, const std::vector<size_t>& trs);
 
 		// GETTERS
 

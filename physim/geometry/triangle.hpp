@@ -63,10 +63,23 @@ class triangle : public geometry {
 		// SETTERS
 
 		/**
+		 * @brief Set the points of this triangle.
+		 *
+		 * The plane associated to this triangle (see @ref pl)
+		 * is built using these vertices in the same order they
+		 * are given in this method.
+		 *
+		 * See
+		 * @ref plane::plane(const math::vec3&,const math::vec3&,const math::vec3&)
+		 * to see how the normal is determined.
+		 */
+		void set_points
+		(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3);
+
+		/**
 		 * @brief Sets the position of this triangle.
 		 *
-		 * The vertices of the triangle are translated according
-		 * to vector @e v.
+		 * The vertices of the triangle are translated with vector @e v.
 		 * @param v Vector representing the direction in which
 		 * every vertex moves.
 		 */
