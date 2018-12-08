@@ -1,5 +1,16 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Custom includes
+#include "utils.hpp"
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/initialiser/hose.hpp>
@@ -16,8 +27,8 @@ using namespace init;
 
 namespace study_cases {
 
-	void hose_usage() {
-		cout << "hose, collision with rectangles, triangles, spheres study case:" << endl;
+	void sim_005_usage() {
+		cout << "sim_005, collision with rectangles, triangles, spheres study case:" << endl;
 		cout << endl;
 		cout << "This study case is meants basically to study performance with" << endl;
 		cout << "lots of particles (millions)" << endl;
@@ -38,7 +49,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void hose_case(int argc, char *argv[]) {
+	void sim_005(int argc, char *argv[]) {
 		float dt = 0.01f;
 		float total_time = 2.0f;
 		float lifetime = 2.0f;
@@ -49,7 +60,7 @@ namespace study_cases {
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				hose_usage();
+				sim_005_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "-lt") == 0 or strcmp(argv[i], "--lifetime") == 0) {
@@ -123,7 +134,7 @@ namespace study_cases {
 		vec3 hK = K + hdir*0.1f + vec3(0.0f,0.5f,0.0f);
 		vec3 hL = L + hdir*0.1f + vec3(0.0f,0.5f,0.0f);
 
-		// displaced hose direction
+		// displaced sim_005 direction
 		vec3 dhdir = hL - hK;
 
 		hose h;

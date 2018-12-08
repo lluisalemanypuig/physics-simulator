@@ -1,5 +1,16 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Custom includes
+#include "utils.hpp"
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/free_particle.hpp>
@@ -16,7 +27,7 @@ using namespace meshes;
 
 namespace study_cases {
 
-	void mesh2d_regular_usage() {
+	void sim_201_usage() {
 		cout << "2-dimensional mesh:" << endl;
 		cout << endl;
 		cout << "This study case of a regular 2-dimensinal mesh" << endl;
@@ -37,7 +48,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void mesh2d_regular_case(int argc, char *argv[]) {
+	void sim_201(int argc, char *argv[]) {
 		float dt = 0.01f;
 		float total_time = 5.0f;
 		solver_type solv = solver_type::EulerSemi;
@@ -49,7 +60,7 @@ namespace study_cases {
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				mesh2d_regular_usage();
+				sim_201_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--total-time") == 0) {

@@ -1,5 +1,16 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Custom includes
+#include "utils.hpp"
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/free_particle.hpp>
@@ -14,7 +25,7 @@ using namespace init;
 
 namespace study_cases {
 
-	void bounce_sphere_usage() {
+	void sim_002_usage() {
 		cout << "bounce on sphere study case:" << endl;
 		cout << endl;
 		cout << "This study case is merely a particle that falls on" << endl;
@@ -33,7 +44,7 @@ namespace study_cases {
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void bounce_on_sphere(int argc, char *argv[]) {
+	void sim_002(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
@@ -45,7 +56,7 @@ namespace study_cases {
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				bounce_sphere_usage();
+				sim_002_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {

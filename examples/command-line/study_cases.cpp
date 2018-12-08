@@ -1,43 +1,34 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+using namespace std;
+
 namespace study_cases {
 
 	void choose_case(int argc, char *argv[]) {
 
-		if (strcmp(argv[1], "bounce-floor") == 0) {
-			bounce_on_floor(argc, argv);
-		}
-		else if (strcmp(argv[1], "bounce-floor-sized") == 0) {
-			bounce_on_floor_sized(argc, argv);
-		}
-		else if (strcmp(argv[1], "roll-floor") == 0) {
-			roll_on_floor(argc, argv);
-		}
-		else if (strcmp(argv[1], "roll-floor-sized") == 0) {
-			roll_on_floor_sized(argc, argv);
-		}
-		else if (strcmp(argv[1], "bounce-sphere") == 0) {
-			bounce_on_sphere(argc, argv);
-		}
-		else if (strcmp(argv[1], "bounce-sphere-sized") == 0) {
-			bounce_on_sphere_sized(argc, argv);
-		}
-		else if (strcmp(argv[1], "tri2f") == 0) {
-			tri_tri_floor(argc, argv);
-		}
-		else if (strcmp(argv[1], "roll-plane-sphere") == 0) {
-			roll_plane_sphere(argc, argv);
-		}
-		else if (strcmp(argv[1], "hose") == 0) {
-			hose_case(argc, argv);
-		}
-		else if (strcmp(argv[1], "mesh1d") == 0) {
-			mesh1d_case(argc, argv);
-		}
-		else if (strcmp(argv[1], "mesh2d_regular") == 0) {
-			mesh2d_regular_case(argc, argv);
-		}
-		else {
+		int id_num = atoi(argv[1]);
+
+		switch (id_num) {
+		// free particles
+		case 000:	sim_000(argc, argv); break;
+		case 001:	sim_001(argc, argv); break;
+		case 002:	sim_002(argc, argv); break;
+		case 003:	sim_003(argc, argv); break;
+		case 004:	sim_004(argc, argv); break;
+		case 005:	sim_005(argc, argv); break;
+		// sized particles
+		case 100:	sim_100(argc, argv); break;
+		case 101:	sim_101(argc, argv); break;
+		case 102:	sim_102(argc, argv); break;
+		// spring meshes
+		case 200:	sim_200(argc, argv); break;
+		case 201:	sim_201(argc, argv); break;
+		default:
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './basic_simulations --list' to see all cases" << endl;
 		}

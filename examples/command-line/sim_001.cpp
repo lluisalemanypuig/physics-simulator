@@ -1,5 +1,16 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Custom includes
+#include "utils.hpp"
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/free_particle.hpp>
@@ -13,10 +24,10 @@ using namespace init;
 
 namespace study_cases {
 
-	void roll_floor_sized_usage() {
+	void sim_001_usage() {
 		cout << "roll on floor study case:" << endl;
 		cout << endl;
-		cout << "This study case is merely a sized particle rolling on" << endl;
+		cout << "This study case is merely a particle rolling on" << endl;
 		cout << "a flat plane, a.k.a. the floor." << endl;
 		cout << endl;
 		cout << "Options:" << endl;
@@ -27,12 +38,11 @@ namespace study_cases {
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 0.8" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.2" << endl;
 		cout << "    --vel v:        initial value of velocity along x.    Default: -10.0" << endl;
-		cout << "    --radius r:     radius of sized particle.             Default: 1.0" << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void roll_on_floor_sized(int argc, char *argv[]) {
+	void sim_001(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
@@ -40,12 +50,11 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 0.8f;
 		float friction = 0.2f;
-		float radius = 1.0f;
 		float vx = -10.0f;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				roll_floor_sized_usage();
+				sim_001_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {
@@ -72,10 +81,6 @@ namespace study_cases {
 				vx = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--radius") == 0) {
-				radius = atof(argv[i + 1]);
-				++i;
-			}
 			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
 				output = string(argv[i + 1]);
 				++i;
@@ -87,8 +92,8 @@ namespace study_cases {
 
 		initialiser I;
 		I.set_pos_initialiser(
-			[&](free_particle *p) {
-				p->cur_pos = vec3(10.0f,radius + 2.0f,0.0f);
+			[](free_particle *p) {
+				p->cur_pos = vec3(10.0f,0.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
@@ -105,9 +110,6 @@ namespace study_cases {
 		I.set_friction_initialiser(
 			[&](free_particle *p) { p->friction = friction; }
 		);
-		I.set_radius_initialiser(
-			[&](sized_particle *p) { p->R = radius; }
-		);
 
 		simulator S(solver_type::EulerSemi, dt);
 
@@ -118,7 +120,7 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
-		const sized_particle *p = S.add_sized_particle();
+		const free_particle *p = S.add_free_particle();
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
@@ -174,7 +176,6 @@ namespace study_cases {
 				fout << "bounce: " << bounce << endl;
 				fout << "friction: " << friction << endl;
 				fout << "initial-vx: " << vx << endl;
-				fout << "radius: " << radius << endl;
 
 				// first in Geogebra format
 				fout << "{";

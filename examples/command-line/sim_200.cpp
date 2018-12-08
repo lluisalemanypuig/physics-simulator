@@ -1,8 +1,20 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Custom includes
+#include "utils.hpp"
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/free_particle.hpp>
+#include <physim/meshes/mesh1d.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
@@ -10,48 +22,54 @@ using namespace particles;
 using namespace math;
 using namespace geom;
 using namespace init;
+using namespace meshes;
 
 namespace study_cases {
 
-	void bounce_floor_usage() {
-		cout << "bounce on floor study case:" << endl;
+	void sim_200_print_geogebra_trajectory(const vector<vec3>& t, ofstream& fout) {
+		fout << "{";
+		for (size_t i = 0; i < t.size(); ++i) {
+			const vec3& v = t[i];
+			fout << "Point({"
+				 << v.x << "," << v.y
+				 << "})";
+			if (i < t.size() - 1) {
+				fout << ",";
+			}
+		}
+		fout << "}" << endl;
+	}
+
+	void sim_200_usage() {
+		cout << "1-dimensional mesh:" << endl;
 		cout << endl;
-		cout << "This study case is merely a particle bouncing on" << endl;
-		cout << "a flat plane, a.k.a. the floor." << endl;
+		cout << "This study case is merely a spring of a few particles" << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
-		cout << "    --lifetime t:   the lifetime of the particle.         Default: 2.0" << endl;
 		cout << "    --total-time t: total time of the simulation.         Default: 2.0" << endl;
-		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
-		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 0.8" << endl;
-		cout << "    --friction f:   friction coefficient of the particle. Default: 0.2" << endl;
+		cout << "    --friction f:   friction coefficient of the particle. Default: 0.0" << endl;
 		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
 		cout << "        euler:      Euler integration method. Numerically unstable." << endl;
 		cout << "        semi-euler: Euler semi-implicit integration method. Numerically stable." << endl;
 		cout << "        verlet:     Verlet integration method. Numerically even more stable." << endl;
+		cout << "    --print:        Print trajectory of particles.        Default: do not print" << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void bounce_on_floor(int argc, char *argv[]) {
+	void sim_200(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
 		float total_time = 2.0f;
-		float lifetime = 2.0f;
-		float bounce = 0.8f;
-		float friction = 0.2f;
+		bool print = false;
 		solver_type solv = solver_type::EulerSemi;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				bounce_floor_usage();
+				sim_200_usage();
 				return;
-			}
-			else if (strcmp(argv[i], "--lifetime") == 0) {
-				lifetime = atof(argv[i + 1]);
-				++i;
 			}
 			else if (strcmp(argv[i], "--total-time") == 0) {
 				total_time = atof(argv[i + 1]);
@@ -61,13 +79,8 @@ namespace study_cases {
 				dt = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--bounce") == 0) {
-				bounce = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--friction") == 0) {
-				friction = atof(argv[i + 1]);
-				++i;
+			else if (strcmp(argv[i], "--print") == 0) {
+				print = true;
 			}
 			else if (strcmp(argv[i], "--solver") == 0) {
 				string solv_name = string(argv[i + 1]);
@@ -96,71 +109,68 @@ namespace study_cases {
 			}
 		}
 
-		initialiser I;
-		I.set_pos_initialiser(
-			[](free_particle *p) {
-				p->cur_pos = vec3(0.0f,10.0f,0.0f);
-			}
-		);
-		I.set_vel_initialiser(
-			[](free_particle *p) {
-				p->cur_vel = vec3(0.0f,0.0f,0.0f);
-			}
-		);
-		I.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
-		);
-		I.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bounce; }
-		);
-		I.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
-		);
+		mesh1d *m = new mesh1d();
+		// just for the sake of debugging
+		m->allocate(5);
+		m->clear();
+		m->allocate(5);
+
+		m->set_elasticity(500.0f);
+		m->set_damping(0.5f);
+
+		mesh_particle **mp = m->get_particles();
+
+		mp[0]->fixed = true;
+
+		mp[0]->cur_pos = vec3(0.0f, 10.0f, 0.0f);
+		mp[1]->cur_pos = vec3(1.0f, 10.0f, 0.0f);
+		mp[2]->cur_pos = vec3(2.0f, 10.0f, 0.0f);
+		mp[3]->cur_pos = vec3(3.0f, 10.0f, 0.0f);
+		mp[4]->cur_pos = vec3(4.0f, 10.0f, 0.0f);
 
 		simulator S(solv, dt);
 
 		// -----------------------------------------
 		// -- initialise simulator
-		S.set_initialiser(&I);
-
-		// the only particle bouncing up and down,
-		// initialised using the function.
-		const free_particle *p = S.add_free_particle();
-
-		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
-		S.add_geometry(floor);
+		S.add_mesh(m);
 
 		S.add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		// execute simulation
-		timing::time_point begin = timing::now();
-		vector<vec3> trajectory;
+		vector<vec3> t0, t1, t2, t3, t4;
 		float sim_time = 0.0f;
-
 		while (sim_time <= total_time) {
-			vec3 cur_pos = p->cur_pos;
-			trajectory.push_back(cur_pos);
+			t0.push_back(mp[0]->cur_pos);
+			t1.push_back(mp[1]->cur_pos);
+			t2.push_back(mp[2]->cur_pos);
+			t3.push_back(mp[3]->cur_pos);
+			t4.push_back(mp[4]->cur_pos);
 			S.apply_time_step();
 			sim_time += dt;
 		}
 
-		timing::time_point end = timing::now();
-
-		S.clear_geometry();
-		S.clear_particles();
-
-		// output result
-		cerr << "Simulation completed in " << timing::elapsed_seconds(begin, end) << " s" << endl;
-
 		if (output == "none") {
-			cout.setf(ios::fixed);
-			cout.precision(4);
+			if (print) {
+				cout.setf(ios::fixed);
+				cout.precision(4);
 
-			// only in plain text
-			for (size_t i = 0; i < trajectory.size(); ++i) {
-				const vec3& v = trajectory[i];
-				cout << v.x << "," << v.y << "," << v.z << endl;
+				// only in plain text
+				cout << "Particle 0" << endl;
+				for (size_t i = 0; i < t0.size(); ++i) {
+					const vec3& v = t0[i];
+					cout << v.x << "," << v.y << "," << v.z << endl;
+				}
+				cout << "Particle 1" << endl;
+				for (size_t i = 0; i < t1.size(); ++i) {
+					const vec3& v = t1[i];
+					cout << v.x << "," << v.y << "," << v.z << endl;
+				}
+				cout << "Particle 2" << endl;
+				for (size_t i = 0; i < t2.size(); ++i) {
+					const vec3& v = t2[i];
+					cout << v.x << "," << v.y << "," << v.z << endl;
+				}
 			}
 		}
 		else {
@@ -177,31 +187,16 @@ namespace study_cases {
 				// configuration
 				fout << "step-time: " << dt << endl;
 				fout << "total-time: " << total_time << endl;
-				fout << "lifetime: " << lifetime << endl;
-				fout << "bounce: " << bounce << endl;
-				fout << "friction: " << friction << endl;
 
 				// first in Geogebra format
-				fout << "{";
-				for (size_t i = 0; i < trajectory.size(); ++i) {
-					const vec3& v = trajectory[i];
-					fout << "Point({"
-						 << v.x << "," << v.y
-						 << "})";
-					if (i < trajectory.size() - 1) {
-						fout << ",";
-					}
-				}
-				fout << "}" << endl;
-
-				// then in plain text
-				for (size_t i = 0; i < trajectory.size(); ++i) {
-					const vec3& v = trajectory[i];
-					fout << v.x << "," << v.y << "," << v.z << endl;
-				}
-				fout.close();
+				sim_200_print_geogebra_trajectory(t0, fout);
+				sim_200_print_geogebra_trajectory(t1, fout);
+				sim_200_print_geogebra_trajectory(t2, fout);
+				sim_200_print_geogebra_trajectory(t3, fout);
+				sim_200_print_geogebra_trajectory(t4, fout);
 			}
 		}
 	}
 
 } // -- namespace study_cases
+

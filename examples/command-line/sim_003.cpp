@@ -1,9 +1,21 @@
 #include "study_cases.hpp"
 
+// C includes
+#include <string.h>
+
+// C++ includes
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Custom includes
+#include "utils.hpp"
+
 // physim includes
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/geometry/plane.hpp>
+#include <physim/geometry/triangle.hpp>
 #include <physim/simulator.hpp>
 using namespace physim;
 using namespace particles;
@@ -13,11 +25,19 @@ using namespace init;
 
 namespace study_cases {
 
-	void roll_floor_usage() {
-		cout << "roll on floor study case:" << endl;
+	void sim_003_usage() {
+		cout << "sim_003 study case:" << endl;
 		cout << endl;
-		cout << "This study case is merely a particle rolling on" << endl;
-		cout << "a flat plane, a.k.a. the floor." << endl;
+		cout << "This study case consists of two triangles almost perfectly" << endl;
+		cout << "facing each other, and a floor. The particle falls onto the" << endl;
+		cout << "first triangle so that it bounces towards the second." << endl;
+		cout << endl;
+		cout << "Although they are called 'triangles' the parameters allow" << endl;
+		cout << "using planes, in order to debug the particle-plane and" << endl;
+		cout << "particle-triangle collisions." << endl;
+		cout << endl;
+		cout << "Either triangle or plane, both geometrical objects have a name," << endl;
+		cout << "the first being the 'ramp' and the second the 'bouncer'." << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
@@ -26,12 +46,48 @@ namespace study_cases {
 		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
 		cout << "    --bounce b:     bouncing coefficient of the particle. Default: 0.8" << endl;
 		cout << "    --friction f:   friction coefficient of the particle. Default: 0.2" << endl;
-		cout << "    --vel v:        initial value of velocity along x.    Default: -10.0" << endl;
+		cout << endl;
+		cout << "    --ramp-plane      : make the simulation use the 'ramp' as a plane.       Default: true" << endl;
+		cout << "    --bouncer-plane   : make the simulation use the 'bouncer' as a plane.    Default: true" << endl;
+		cout << "    --ramp-triangle   : make the simulation use the 'ramp' as a triangle.    Default: false" << endl;
+		cout << "    --bouncer-triangle: make the simulation use the 'bouncer' as a triangle. Default: false" << endl;
 		cout << endl;
 		cout << "    [-o|--output]:  store the particle's trajectory in the specified file." << endl;
 	}
 
-	void roll_on_floor(int argc, char *argv[]) {
+	void sim_003_make_ramp_plane(simulator& S) {
+		vec3 B(-2.0f, 0.0f,  2.0f);
+		vec3 C(-2.0f, 0.0f, -2.0f);
+		vec3 D( 2.0f, 4.0f,  0.0f);
+		plane *ramp = new plane(B, D, C);
+		S.add_geometry(ramp);
+	}
+
+	void sim_003_make_ramp_triangle(simulator& S) {
+		vec3 B(-2.0f, 0.0f,  2.0f);
+		vec3 C(-2.0f, 0.0f, -2.0f);
+		vec3 D( 2.0f, 4.0f,  0.0f);
+		triangle *ramp = new triangle(B, D, C);
+		S.add_geometry(ramp);
+	}
+
+	void sim_003_make_bouncer_plane(simulator& S) {
+		vec3 E(-5.0f, 0.0f, -1.5f);
+		vec3 F(-5.1f, 0.0f,  1.0f);
+		vec3 G(-9.0f, 4.0f, -1.0f);
+		plane *bouncer = new plane(E, G, F);
+		S.add_geometry(bouncer);
+	}
+
+	void sim_003_make_bouncer_triangle(simulator& S) {
+		vec3 E(-5.0f, 0.0f, -1.5f);
+		vec3 F(-5.1f, 0.0f,  1.0f);
+		vec3 G(-9.0f, 4.0f, -1.0f);
+		triangle *bouncer = new triangle(E, G, F);
+		S.add_geometry(bouncer);
+	}
+
+	void sim_003(int argc, char *argv[]) {
 		string output = "none";
 
 		float dt = 0.01f;
@@ -39,11 +95,13 @@ namespace study_cases {
 		float lifetime = 2.0f;
 		float bounce = 0.8f;
 		float friction = 0.2f;
-		float vx = -10.0f;
+
+		bool ramp_plane = true;
+		bool bouncer_plane = true;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				roll_floor_usage();
+				sim_003_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {
@@ -66,13 +124,21 @@ namespace study_cases {
 				friction = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--vel") == 0) {
-				vx = atof(argv[i + 1]);
-				++i;
-			}
 			else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
 				output = string(argv[i + 1]);
 				++i;
+			}
+			else if (strcmp(argv[i], "--ramp-plane") == 0) {
+				ramp_plane = true;
+			}
+			else if (strcmp(argv[i], "--bouncer-plane") == 0) {
+				bouncer_plane = true;
+			}
+			else if (strcmp(argv[i], "--ramp-triangle") == 0) {
+				ramp_plane = false;
+			}
+			else if (strcmp(argv[i], "--bouncer-triangle") == 0) {
+				bouncer_plane = false;
 			}
 			else {
 				cerr << "Unknown option '" << string(argv[i]) << "'" << endl;
@@ -82,12 +148,12 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[](free_particle *p) {
-				p->cur_pos = vec3(10.0f,0.0f,0.0f);
+				p->cur_pos = vec3(0.0f,10.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
-			[&](free_particle *p) {
-				p->cur_vel = vec3(vx,0.0f,0.0f);
+			[](free_particle *p) {
+				p->cur_vel = vec3(0.0f,0.0f,0.0f);
 			}
 		);
 		I.set_lifetime_initialiser(
@@ -107,9 +173,21 @@ namespace study_cases {
 
 		S.set_initialiser(&I);
 
-		// the only particle bouncing up and down,
-		// initialised using the function.
 		const free_particle *p = S.add_free_particle();
+
+		if (ramp_plane) {
+			sim_003_make_ramp_plane(S);
+		}
+		else {
+			sim_003_make_ramp_triangle(S);
+		}
+
+		if (bouncer_plane) {
+			sim_003_make_bouncer_plane(S);
+		}
+		else {
+			sim_003_make_bouncer_triangle(S);
+		}
 
 		plane *floor = new plane(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 		S.add_geometry(floor);
@@ -164,7 +242,8 @@ namespace study_cases {
 				fout << "lifetime: " << lifetime << endl;
 				fout << "bounce: " << bounce << endl;
 				fout << "friction: " << friction << endl;
-				fout << "initial-vx: " << vx << endl;
+				fout << "ramp-plane: " << (ramp_plane ? "Yes" : "No") << endl;
+				fout << "bouncer-plane: " << (bouncer_plane ? "Yes" : "No") << endl;
 
 				// first in Geogebra format
 				fout << "{";
@@ -190,4 +269,3 @@ namespace study_cases {
 	}
 
 } // -- namespace study_cases
-
