@@ -70,10 +70,16 @@ namespace study_cases {
 			return;
 		}
 
+		cout << "Reading: " << directory + "/" + filename << endl;
+
 		timing::time_point begin_sim = timing::now();
 
 		geom::object *o = new geom::object();
-		input::read_file(directory, filename, o);
+		bool r = input::read_file(directory, filename, o);
+		if (not r) {
+			cerr << "Error: some error occurred while trying to read" << endl;
+			cerr << "    " << directory + "/" + filename << endl;
+		}
 
 		timing::time_point end_sim = timing::now();
 
