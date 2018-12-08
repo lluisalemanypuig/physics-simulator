@@ -30,10 +30,7 @@ plane::plane(const math::vec3& n, float d) : geometry() {
 }
 
 plane::plane(const math::vec3& p0, const math::vec3& p1, const math::vec3& p2) : geometry() {
-	math::vec3 v1, v2;
-	__pm3_sub_v_v(v1, p1, p0);
-	__pm3_sub_v_v(v2, p2, p0);
-	__pm3_cross(normal, v1,v2);
+	__pm3_cross_diff(normal, p0,p1,p2);
 	__pm3_normalise(normal,normal);
 	dconst = -__pm3_dot(p0, normal);
 }
