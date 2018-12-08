@@ -30,9 +30,11 @@ namespace input_private {
 
 		fin.getline(line, 100);
 		if (strncmp(line, "ply", 3) != 0) {
+			#if defined(DEBUG)
 			cerr << "physim::input::input_private::__ply_load_header - Error:" << endl;
 			cerr << "    Wrong format of file: first line does not contain 'ply'."
 				 << endl;
+			#endif
 			return false;
 		}
 		n_verts = 0;
@@ -49,19 +51,23 @@ namespace input_private {
 				format = string(&line[7]);
 			}
 			else if (strncmp(line, "property float nx", 17) == 0) {
+				#if defined(DEBUG)
 				cerr << "physim::input::input_private::__ply_load_header - Error:" << endl;
 				cerr << "    This model has normals: more vertices than necessary"
 					 << endl;
 				cerr << "    are in the file and this makes it too difficult to"
 					 << endl;
 				cerr << "    create the mesh." << endl;
+				#endif
 				return false;
 			}
 			fin.getline(line, 100);
 		}
 		if (n_verts <= 0) {
+			#if defined(DEBUG)
 			cerr << "physim::input::input_private::__ply_load_header - Error:" << endl;
 			cerr << "    Number of vertices read is negative." << endl;
+			#endif
 			return false;
 		}
 		return true;
@@ -183,8 +189,10 @@ namespace input_private {
 
 		fin.open(filename.c_str(), ios_base::in | ios_base::binary);
 		if (not fin.is_open()) {
+			#if defined(DEBUG)
 			cerr << "physim::input::ply_read_file - Error:" << endl;
 			cerr << "    Could not open file '" << filename << "'." << endl;
+			#endif
 			return false;
 		}
 
@@ -193,8 +201,10 @@ namespace input_private {
 			input_private::__ply_load_header(fin, n_verts, n_faces, format);
 		if (not header_read) {
 			fin.close();
+			#if defined(DEBUG)
 			cerr << "physim::input::ply_read_file - Error:" << endl;
 			cerr << "    Bad input file format." << endl;
+			#endif
 			return false;
 		}
 
@@ -212,8 +222,10 @@ namespace input_private {
 			input_private::__ply_load_faces_ascii_1_0(fin, n_faces, triangles);
 		}
 		else {
+			#if defined(DEBUG)
 			cerr << "physim::input::ply_read_file - Error:" << endl;
 			cerr << "    Unknown file format '" << format << "'." << endl;
+			#endif
 			return false;
 		}
 

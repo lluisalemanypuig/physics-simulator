@@ -123,9 +123,11 @@ namespace input_private {
 					}
 				}
 				else {
+					#if defined(DEBUG)
 					cerr << "physim::input::input_private::__obj_parse_file_lines - Error" << endl;
 					cerr << "    Line " << i << " does not contain a triangle or a quad" << endl;
 					cerr << "    Found: " << line << endl;
+					#endif
 				}
 			}
 			else if (line[0] == 's' and line[1] == ' ') {
@@ -143,12 +145,15 @@ namespace input_private {
 		string full_path = dir + "/" + fname;
 		ifstream fin;
 		fin.open(full_path.c_str());
+
 		if (not fin.is_open()) {
+			#if defined(DEBUG)
 			cerr << "physim::input::input_private::obj_read_file - Error:" << endl;
 			cerr << "    Could not open file " << endl;
 			cerr << "        " << fname << endl;
 			cerr << "    in directory" << endl;
 			cerr << "        " << dir << endl;
+			#endif
 			return false;
 		}
 

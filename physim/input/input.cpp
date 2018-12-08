@@ -2,6 +2,7 @@
 
 // C++ includes
 #include <string>
+using namespace std;
 
 // physim includes
 #include <physim/geometry/object.hpp>
@@ -23,6 +24,15 @@ namespace input {
 		while (i > 0 and filename[i] != '.') {
 			--i;
 		}
+
+		#if defined(DEBUG)
+		if (i == 0) {
+			cerr << "physim::input::read_file - Error:" << endl;
+			cerr << "    File '" << filename << "' has no extension." << endl;
+			return false;
+		}
+		#endif
+
 		++i;
 		std::string extension = filename.substr(i, filename.length() - i);
 
@@ -34,6 +44,11 @@ namespace input {
 			// read .obj file
 			return ply_read_file(directory, filename, mesh);
 		}
+
+		#if defined(DEBUG)
+		cerr << "physim::input::read_file - Error:" << endl;
+		cerr << "    Extension '" << extension << "' not recognised" << endl;
+		#endif
 
 		return false;
 	}
