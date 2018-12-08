@@ -26,6 +26,8 @@ void list_all_cases() {
 	cout << "    200 : simulate a very simple 1-dimensional mesh" << endl;
 	cout << "          of three particles" << endl;
 	cout << "    201 : simulate a two-dimensional regular mesh" << endl;
+	cout << "    300 : read two models from a file and create a" << endl;
+	cout << "          geometrical object from it" << endl;
 }
 
 int main(int argc, char *argv[]) {

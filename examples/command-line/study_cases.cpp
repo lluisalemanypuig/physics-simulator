@@ -28,6 +28,8 @@ namespace study_cases {
 		// spring meshes
 		case 200:	sim_200(argc, argv); break;
 		case 201:	sim_201(argc, argv); break;
+		// input/output
+		case 300:	sim_300(argc, argv); break;
 		default:
 			cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 			cerr << "    Use './basic_simulations --list' to see all cases" << endl;

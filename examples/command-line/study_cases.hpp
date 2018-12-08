@@ -27,4 +27,9 @@ namespace study_cases {
 	void sim_200(int argc, char *argv[]);
 	void sim_201(int argc, char *argv[]);
 
+	/* ------------- */
+	/* INPUT/OUTPUT */
+
+	void sim_300(int argc, char *argv[]);
+
 } // -- namespace study_cases
