@@ -139,7 +139,8 @@ namespace input_private {
 	}
 } // -- namespace io_private
 
-	bool obj_read_file(const string& dir, const string& fname, geom::object *o)
+	bool obj_read_file
+	(const std::string& dir, const std::string& fname, geometry::object *o)
 	{
 		// the '/' should be a '\' in windows...
 		string full_path = dir + "/" + fname;

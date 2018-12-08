@@ -9,7 +9,7 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 /**
  * @brief Class that implements a plane.
@@ -79,7 +79,7 @@ class plane : public geometry {
 
 		// GETTERS
 
-		geom_type get_geom_type() const;
+		geometry_type get_geom_type() const;
 
 		/**
 		 * @brief Returns the signed distance between point @e p and this plane.
@@ -88,7 +88,7 @@ class plane : public geometry {
 		 * 'positive' side of the plane, and a negative distance if the point
 		 * @e p is at the 'negative' side of the plane.\n
 		 * The positive side is that halfspace such that all the points \f$q\f$
-		 * belonging to it are such that \f$ q\cdotn + d > 0\f$, where \f$n,d\f$
+		 * belonging to it are such that \f$ q\cdot n + d > 0\f$, where \f$n,d\f$
 		 * are the normal vector and the constant term, respectively, of this
 		 * plane.
 		 */

@@ -80,7 +80,7 @@ void simulator::_simulate_meshes() {
 			// every fixed geometrical object in the scene.
 
 			for (unsigned int g_idx = 0; g_idx < scene_fixed.size(); ++g_idx) {
-				const geom::geometry *g = scene_fixed[g_idx];
+				const geometry::geometry *g = scene_fixed[g_idx];
 
 				// if the particle collides with some geometry
 				// then the geometry is in charge of updating

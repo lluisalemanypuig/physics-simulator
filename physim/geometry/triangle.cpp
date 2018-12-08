@@ -17,7 +17,7 @@ inline float triangle_area
 }
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 // LOCAL-DEFINED
 
@@ -81,8 +81,8 @@ bool triangle::is_inside(const math::vec3& p, float tol) const {
 	return false;
 }
 
-geom_type triangle::get_geom_type() const {
-	return geom_type::Triangle;
+geometry_type triangle::get_geom_type() const {
+	return geometry_type::Triangle;
 }
 
 bool triangle::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {

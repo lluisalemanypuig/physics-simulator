@@ -21,7 +21,7 @@ namespace input {
 	 */
 	bool obj_read_file
 	(const std::string& directory, const std::string& filename,
-	 geom::object *o);
+	 geometry::object *o);
 
 } // -- namespace io
 } // -- namespace physim

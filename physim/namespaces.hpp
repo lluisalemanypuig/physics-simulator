@@ -8,12 +8,19 @@
 namespace physim {
 
     /**
-     * @brief Geometry objects.
+     * @brief Geometrical objects.
      *
      * Namespace containing geometrical objects whose position does not
-     * depend on the interaction with other objects.
+     * depend on the interaction with other objects, namely, they remain
+	 * fixed on the same place throughout the simulation.
+	 *
+	 * Some of the geometrical objects are parametrised by their points,
+	 * like @ref geometry::triangle, @ref geometry::sphere, @ref geometry::plane,
+	 * @ref geometry::rectangle, but more general objects, see @ref geometry::object,
+	 * are supported. These general objects must be read from a file,
+	 * see namespace @ref physim::input.
      */
-    namespace geom { }
+    namespace geometry { }
     
     /**
      * @brief Particle initialiser classes.
@@ -83,11 +90,11 @@ namespace physim {
      * that cannot be parametrised.
      * 
      * The function used for reading a file should be
-     * @ref read_file(const std::string&,const std::string&,geom::object *),
+     * @ref read_file(const std::string&,const std::string&,geometry::object *),
      * however, if the extension of the file is known then the user can
      * call the corresponding function:
-     * - @ref obj_read_file(const std::string&,const std::string&,geom::object *) 
-     * - @ref ply_read_file(const std::string&,const std::string&,geom::object *)
+     * - @ref obj_read_file(const std::string&,const std::string&,geometry::object *) 
+     * - @ref ply_read_file(const std::string&,const std::string&,geometry::object *)
      */
     namespace input {
 		

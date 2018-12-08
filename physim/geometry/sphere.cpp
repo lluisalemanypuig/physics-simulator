@@ -8,7 +8,7 @@
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 // PRIVATE
 
@@ -55,8 +55,8 @@ bool sphere::is_inside(const math::vec3& p, float tol) const {
 	return ((__pm3_dist2(C,p)) - R*R) <= tol;
 }
 
-geom_type sphere::get_geom_type() const {
-	return geom_type::Sphere;
+geometry_type sphere::get_geom_type() const {
+	return geometry_type::Sphere;
 }
 
 bool sphere::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {

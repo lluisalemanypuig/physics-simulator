@@ -16,7 +16,7 @@ namespace input {
 	(
 		const std::string& directory,
 		const std::string& filename,
-		geom::object *mesh
+		geometry::object *mesh
 	)
 	{
 		// retrieve extension

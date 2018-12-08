@@ -72,7 +72,7 @@ bool simulator::find_update_geom_collision_free
 	// every fixed geometrical object in the scene.
 
 	for (size_t i = 0; i < scene_fixed.size(); ++i) {
-		const geom::geometry *g = scene_fixed[i];
+		const geometry::geometry *g = scene_fixed[i];
 
 		// if the particle collides with some geometry
 		// then the geometry is in charge of updating
@@ -103,7 +103,7 @@ bool simulator::find_update_geom_collision_free
 	return collision;
 }
 
-static geom::sphere Sj;
+static geometry::sphere Sj;
 bool simulator::find_update_particle_collision_free
 (
 	const particles::free_particle *p,
@@ -165,7 +165,7 @@ bool simulator::find_update_geom_collision_sized
 	// every fixed geometrical object in the scene.
 
 	for (size_t i = 0; i < scene_fixed.size(); ++i) {
-		const geom::geometry *g = scene_fixed[i];
+		const geometry::geometry *g = scene_fixed[i];
 
 		// if the particle collides with some geometry
 		// then the geometry is in charge of updating

@@ -9,10 +9,10 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 /// Enumeration for the type of geometry.
-enum geom_type {
+enum geometry_type {
 	none = -1,
 	Plane,
 	Triangle,
@@ -58,7 +58,7 @@ class geometry {
 		// GETTERS
 
 		/// Returns the type of geometry of this object.
-		virtual geom_type get_geom_type() const;
+		virtual geometry_type get_geom_type() const;
 
 		/**
 		 * @brief Returns whether a point is inside the geometry.

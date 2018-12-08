@@ -8,7 +8,7 @@ using namespace std;
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 // PRIVATE
 
@@ -51,8 +51,8 @@ void plane::set_position(const math::vec3& p) {
 	dconst = -__pm3_dot(p, normal);
 }
 
-geom_type plane::get_geom_type() const {
-	return geom_type::Plane;
+geometry_type plane::get_geom_type() const {
+	return geometry_type::Plane;
 }
 
 float plane::dist_point_plane(const math::vec3& p) const {

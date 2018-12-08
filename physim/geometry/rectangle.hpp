@@ -11,7 +11,7 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 /**
  * @brief Class that implements a rectangle.
@@ -91,7 +91,7 @@ class rectangle : public geometry {
 
 		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 
-		geom_type get_geom_type() const;
+		geometry_type get_geom_type() const;
 
 		bool intersec_segment
 		(const math::vec3& p1, const math::vec3& p2) const;

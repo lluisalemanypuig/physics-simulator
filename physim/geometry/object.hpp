@@ -10,7 +10,7 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 /**
  * @brief Class that implements a triangular object.
@@ -58,7 +58,7 @@ class object : public geometry {
 
 		// GETTERS
 
-		geom_type get_geom_type() const;
+		geometry_type get_geom_type() const;
 
 		/**
 		 * @brief Returns the vertices of this object.

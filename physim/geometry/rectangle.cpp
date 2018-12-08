@@ -13,7 +13,7 @@ using namespace std;
 // LOCAL-DEFINED
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 // PRIVATE
 
@@ -96,8 +96,8 @@ bool rectangle::is_inside(const math::vec3& p, float tol) const {
 	return true;
 }
 
-geom_type rectangle::get_geom_type() const {
-	return geom_type::Rectangle;
+geometry_type rectangle::get_geom_type() const {
+	return geometry_type::Rectangle;
 }
 
 bool rectangle::intersec_segment

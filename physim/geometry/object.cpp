@@ -8,7 +8,7 @@ using namespace std;
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
-namespace geom {
+namespace geometry {
 
 // PRIVATE
 
@@ -43,8 +43,8 @@ void object::set_triangles(const std::vector<size_t>& trs) {
 
 // GETTERS
 
-geom_type object::get_geom_type() const {
-	return geom_type::Object;
+geometry_type object::get_geom_type() const {
+	return geometry_type::Object;
 }
 
 bool object::is_inside(const math::vec3& p, float tol) const {

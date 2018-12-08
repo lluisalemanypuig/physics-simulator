@@ -17,7 +17,7 @@ namespace particles {
  * A particle is a 0-dimensional object, subject to
  * several forces. It can also collide with other
  * objects in the scene (geometrical objects, see
- * namespace @ref physim::geom) but not with other
+ * namespace @ref physim::geometry) but not with other
  * particles.
  *
  * When specified in the simulator, the moving particle

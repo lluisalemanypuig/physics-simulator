@@ -82,7 +82,7 @@ class simulator {
 		 * @brief The collection of objects whose position
 		 * does not depend on the interaction with other objects.
 		 */
-		std::vector<geom::geometry *> scene_fixed;
+		std::vector<geometry::geometry *> scene_fixed;
 		/// Collection of force fields.
 		std::vector<fields::field *> force_fields;
 		/// The collection of free particles in the simulation.
@@ -421,7 +421,7 @@ class simulator {
 		 * will take care of that.
 		 * @param g A non-null pointer to the object.
 		 */
-		void add_geometry(geom::geometry *g);
+		void add_geometry(geometry::geometry *g);
 		/**
 		 * @brief Removes the @e i-th fixed geometrical object.
 		 *
@@ -659,7 +659,7 @@ class simulator {
 		/// Returns a constant reference to i-th mesh.
 		const meshes::mesh& get_mesh(size_t i) const;
 		/// Returns all fixed objects of the scene.
-		const std::vector<geom::geometry *>& get_fixed_objects() const;
+		const std::vector<geometry::geometry *>& get_fixed_objects() const;
 		/// Returns the gravity of the scene.
 		const math::vec3& get_gravity() const;
 		/// Returns the number of particles.

@@ -18,7 +18,7 @@ namespace particles {
  * to several forces but not to any other particle's
  * direct interaction through them. It can collide with
  * other objects in the scene (geometrical objects, see
- * namespace @ref physim::geom) but not with other
+ * namespace @ref physim::geometry) but not with other
  * particles.
  *
  * All this class' attributes are public.

@@ -179,7 +179,7 @@ namespace input_private {
 
 } // -- namespace io_private
 
-	bool ply_read_file(const std::string& dir, const std::string& fname, geom::object *o)
+	bool ply_read_file(const std::string& dir, const std::string& fname, geometry::object *o)
 	{
 		// the '/' should be a '\' in windows...
 		string filename = dir + "/" + fname;
