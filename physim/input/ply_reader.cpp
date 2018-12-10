@@ -1,6 +1,7 @@
 #include <physim/input/ply_reader.hpp>
 
 // C includes
+#include <assert.h>
 #include <string.h>
 
 // C++ includes
@@ -181,6 +182,8 @@ namespace input_private {
 
 	bool ply_read_file(const std::string& dir, const std::string& fname, geometry::object *o)
 	{
+		assert(o != nullptr);
+
 		// the '/' should be a '\' in windows...
 		string filename = dir + "/" + fname;
 

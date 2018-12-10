@@ -15,7 +15,8 @@ namespace input {
 	 *
 	 * Anything that are not vertices or vertices indices are ignored.
 	 * @param directory Directory in the system.
-	 * @param filename File with the mesh in wavefront (obj) format.
+	 * @param filename File with the mesh in Stanford Triangle format
+	 * (ply) format.
 	 * @param[out] o Mesh loaded from file.
 	 * @return Returns false on error.
 	 */

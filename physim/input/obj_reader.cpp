@@ -140,6 +140,8 @@ namespace input_private {
 	bool obj_read_file
 	(const std::string& dir, const std::string& fname, geometry::object *o)
 	{
+		assert(o != nullptr);
+
 		// should the '/' be a '\' in windows?
 		string full_path = dir + "/" + fname;
 		ifstream fin;
