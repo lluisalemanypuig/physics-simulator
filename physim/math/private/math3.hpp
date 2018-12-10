@@ -8,3 +8,4 @@
 #include <physim/math/private/math3/div.hpp>
 #include <physim/math/private/math3/mixed.hpp>
 #include <physim/math/private/math3/geometry.hpp>
+#include <physim/math/private/math3/comparison.hpp>
