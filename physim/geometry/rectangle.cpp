@@ -33,8 +33,8 @@ rectangle::rectangle
 	// make sure that last vertex is on plane...
 	assert(pl.is_inside(v4));
 
-	__pm3_min_vec4(min, v1,v2,v3,v4);
-	__pm3_max_vec4(max, v1,v2,v3,v4);
+	__pm3_min4(min, v1,v2,v3,v4);
+	__pm3_max4(max, v1,v2,v3,v4);
 }
 
 rectangle::rectangle(const rectangle& r) : geometry(r) {
