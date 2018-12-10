@@ -29,6 +29,14 @@ HEADERS += \
     utils.hpp \
     study_cases.hpp
 
+DISTFILES += \
+    example-models/cropped-cube.obj \
+    example-models/cropped-cube.ply \
+    example-models/pipe.obj \
+    example-models/pipe.obj \
+    example-models/slide.obj \
+    example-models/slide.obj
+
 # physim library
 CONFIG(debug, debug|release) {
     LIBS += -L../../physim-debug/ -lphysim
