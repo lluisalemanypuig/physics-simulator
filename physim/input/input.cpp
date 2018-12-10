@@ -8,6 +8,7 @@ using namespace std;
 #include <physim/geometry/object.hpp>
 #include <physim/input/ply_reader.hpp>
 #include <physim/input/obj_reader.hpp>
+#include <physim/input/soup_reader.hpp>
 
 namespace physim {
 namespace input {
