@@ -67,7 +67,9 @@ HEADERS += \
     input/ply_reader.hpp \
     geometry/object.hpp \
     input/input.hpp \
-    input/soup_reader.hpp
+    input/soup_reader.hpp \
+    math/private/math2/comparison.hpp \
+    math/private/math3/comparison.hpp
 
 SOURCES += \
     simulator.cpp \
