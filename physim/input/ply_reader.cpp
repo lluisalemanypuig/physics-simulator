@@ -89,9 +89,7 @@ namespace input_private {
 			fin.read((char *)&v2, sizeof(float));
 			fin.read((char *)&v3, sizeof(float));
 
-			verts.push_back(v1);
-			verts.push_back(v2);
-			verts.push_back(v3);
+			verts.push_back(math::vec3(v1,v2,v3));
 		}
 	}
 
@@ -139,10 +137,7 @@ namespace input_private {
 
 		for (int i = 0; i < n_verts; ++i) {
 			fin >> v1 >> v2 >> v3;
-
-			verts.push_back(v1);
-			verts.push_back(v2);
-			verts.push_back(v3);
+			verts.push_back(math::vec3(v1,v2,v3));
 		}
 	}
 
@@ -231,8 +226,11 @@ namespace input_private {
 			#endif
 			return false;
 		}
-
 		fin.close();
+
+		cout << "object info:" << endl;
+		cout << "    #vertices= " << vertices.size() << endl;
+		cout << "    #triangles= " << triangles.size()/3 << endl;
 
 		o->set_triangles(vertices, triangles);
 		return true;
