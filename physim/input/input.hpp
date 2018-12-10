@@ -17,7 +17,11 @@ namespace input {
 	 *
 	 * Supported formats:
 	 * - Wavefront. File extension: .obj.
-	 * - Polygon File Format (a.k.a. Stanford Triangle Format). File extension: .ply.
+	 * - Polygon File Format (a.k.a. Stanford Triangle Format).
+	 *		File extension: .ply.
+	 * - Triangle Soup Format. File extension: .soup. This file consists of
+	 *		a list of triangles, each described with three vertices. A
+	 *		vertex is described as usual with three coordinate values.
 	 *
 	 * @param directory Directory that contains the file to be read.
 	 * @param filename The filename describing the object.

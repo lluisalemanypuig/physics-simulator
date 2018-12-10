@@ -66,7 +66,8 @@ HEADERS += \
     input/obj_reader.hpp \
     input/ply_reader.hpp \
     geometry/object.hpp \
-    input/input.hpp
+    input/input.hpp \
+    input/soup_reader.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -102,4 +103,5 @@ SOURCES += \
     input/obj_reader.cpp \
     input/ply_reader.cpp \
     geometry/object.cpp \
-    input/input.cpp
+    input/input.cpp \
+    input/soup_reader.cpp

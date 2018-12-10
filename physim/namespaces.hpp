@@ -85,6 +85,7 @@ namespace physim {
      * - Wavefront. File extension: .obj.
      * - Polygon File Format (a.k.a. Stanford Triangle Format). File
      * extension: .ply.
+     * - Triangle Soup Format. File extension: .soup.
      * 
      * These are meant for constructing triangular meshes for geometry
      * that cannot be parametrised.
@@ -95,6 +96,7 @@ namespace physim {
      * call the corresponding function:
      * - @ref obj_read_file(const std::string&,const std::string&,geometry::object *) 
      * - @ref ply_read_file(const std::string&,const std::string&,geometry::object *)
+     * - @ref soup_read_file(const std::string&,const std::string&,geometry::object *)
      */
     namespace input {
 		

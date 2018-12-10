@@ -44,6 +44,10 @@ namespace input {
 			// read .obj file
 			return ply_read_file(directory, filename, mesh);
 		}
+		if (extension == "soup") {
+			// read .soup file
+			return soup_read_file(directory, filename, mesh);
+		}
 
 		#if defined(DEBUG)
 		cerr << "physim::input::read_file - Error:" << endl;
