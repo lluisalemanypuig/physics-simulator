@@ -1,6 +1,7 @@
 #include <physim/input/input.hpp>
 
 // C++ includes
+#include <iostream>
 #include <string>
 using namespace std;
 

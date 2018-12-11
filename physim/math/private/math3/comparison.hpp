@@ -2,6 +2,7 @@
 
 // physim includes
 #include <physim/math/private/math2/comparison.hpp>
+#include <physim/math/private/math3/base.hpp>
 
 // the first  bit of comp stores: u.x < v.x
 // the second bit of comp stores: u.y < v.y
@@ -45,6 +46,10 @@
 #define __pm3_eq_tol(comp, u,v, tol)				\
 	__pm2_eq_tol(comp, u,v, tol);					\
 	comp = comp | static_cast<decltype(comp)>(((((u).z - (v).z) <= tol) << 2))
+
+// equality with tolerance comparison
+#define __pm3_eq_tol_single(u,v, tol)				\
+	(__pm2_eq_tol_single(u,v, tol)) and (((u).z - (v).z) <= tol)
 
 // the expression for the equality
 // of two vectors

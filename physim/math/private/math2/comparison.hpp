@@ -1,5 +1,8 @@
 #pragma once
 
+// physim includes
+#include <physim/math/private/math2/base.hpp>
+
 // the first  bit of comp stores: u.x < v.x
 // the second bit of comp stores: u.y < v.y
 #define __pm2_lt(comp, u,v)												\
@@ -36,6 +39,10 @@
 #define __pm2_eq_tol(comp, u,v, tol)										\
 	comp = comp | static_cast<decltype(comp)>((((u).x - (v).x) <= tol));	\
 	comp = comp | static_cast<decltype(comp)>(((((u).y - (v).y) <= tol) << 1))
+
+// equality with tolerance comparison
+#define __pm2_eq_tol_single(u,v, tol)				\
+	(((u).x - (v).x) <= tol) and (((u).y - (v).y) <= tol)
 
 // the expression for the equality
 // of two vectors

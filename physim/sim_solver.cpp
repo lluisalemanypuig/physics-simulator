@@ -12,6 +12,7 @@
 #include <physim/math/private/math3.hpp>
 
 // C++ includes
+#include <iostream>
 #include <vector>
 
 namespace physim {
