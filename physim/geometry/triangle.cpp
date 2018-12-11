@@ -17,6 +17,8 @@ inline float triangle_area
 }
 
 namespace physim {
+using namespace math;
+
 namespace geometry {
 
 // LOCAL-DEFINED
@@ -28,7 +30,7 @@ namespace geometry {
 triangle::triangle() : geometry() { }
 
 triangle::triangle
-(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3)
+(const vec3& p1,const vec3& p2,const vec3& p3)
 	: geometry(), pl(plane(p1,p2,p3))
 {
 	__pm3_assign_v(v1, p1);
@@ -49,7 +51,7 @@ triangle::~triangle() { }
 // SETTERS
 
 void triangle::set_points
-(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3)
+(const vec3& p1,const vec3& p2,const vec3& p3)
 {
 	__pm3_assign_v(v1, p1);
 	__pm3_assign_v(v2, p2);
@@ -57,7 +59,7 @@ void triangle::set_points
 	pl = plane(p1,p2,p3);
 }
 
-void triangle::set_position(const math::vec3& v) {
+void triangle::set_position(const vec3& v) {
 	__pm3_add_acc_v(v1, v);
 	__pm3_add_acc_v(v2, v);
 	__pm3_add_acc_v(v3, v);
@@ -70,7 +72,7 @@ const plane& triangle::get_plane() const {
 	return pl;
 }
 
-bool triangle::is_inside(const math::vec3& p, float tol) const {
+bool triangle::is_inside(const vec3& p, float tol) const {
 	// if the point is not inside the plane,
 	// for sure it is not inside the triangle
 	if (not pl.is_inside(p, tol)) {
@@ -94,13 +96,13 @@ geometry_type triangle::get_geom_type() const {
 	return geometry_type::Triangle;
 }
 
-bool triangle::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {
-	math::vec3 intersection;
+bool triangle::intersec_segment(const vec3& p1, const vec3& p2) const {
+	vec3 intersection;
 	return intersec_segment(p1, p2, intersection);
 }
 
 bool triangle::intersec_segment
-(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const
+(const vec3& p1, const vec3& p2, vec3& p_inter) const
 {
 	// if the segment does not intersect the plane
 	// surely it does not intersect the triangle
@@ -125,7 +127,7 @@ bool triangle::intersec_segment
 	l0 = (-b + std::sqrt(b*b - 4.0f*a*c))/(2.0f*a);	\
 	l1 = (-b - std::sqrt(b*b - 4.0f*a*c))/(2.0f*a)
 
-bool triangle::intersec_sphere(const math::vec3& C, float R) const {
+bool triangle::intersec_sphere(const vec3& C, float R) const {
 	/* Update: we should use the method outlined in
 	 * https://www.geometrictools.com/Documentation/IntersectionMovingSphereTriangle.pdf
 	 */
@@ -163,7 +165,7 @@ bool triangle::intersec_sphere(const math::vec3& C, float R) const {
 	//			b = 2*(P - Q)**(Q - C)
 	//			c = (Q - C)**(Q - C) - R*R
 	float a, b, c, l0, l1;
-	math::vec3 pq, qc;
+	vec3 pq, qc;
 
 	lambdas(v1,v2,C,R, pq,qc, a,b,c, l0,l1);
 	if ((0.0f <= l0 and l0 <= 1.0f) or (0.0f <= l1 and l1 <= 1.0f)) {
@@ -184,22 +186,22 @@ bool triangle::intersec_sphere(const math::vec3& C, float R) const {
 // OTHERS
 
 void triangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
 const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }
 
 void triangle::correct_position(
-	const math::vec3& pred_pos, const particles::sized_particle *p,
-	math::vec3& correct_position
+	const vec3& pred_pos, const particles::sized_particle *p,
+	vec3& correct_position
 ) const
 {
 
 }
 
 void triangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
 const
 {
 	// 1. Correct the position of the sized particle
@@ -217,7 +219,7 @@ void triangle::display() const {
 	cout << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
 	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
 	cout << "    and plane equation:" << std::endl;
-	const math::vec3& n = pl.get_normal();
+	const vec3& n = pl.get_normal();
 	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
 		 << pl.get_constant() << " = 0" << std::endl;
 }

@@ -11,6 +11,8 @@ using namespace std;
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
+using namespace math;
+
 namespace geometry {
 
 // PRIVATE
@@ -30,7 +32,7 @@ object::~object() { }
 
 // SETTERS
 
-void object::set_position(const math::vec3& dir) {
+void object::set_position(const vec3& dir) {
 	for (triangle& t : tris) {
 		t.set_position(dir);
 	}
@@ -39,7 +41,7 @@ void object::set_position(const math::vec3& dir) {
 }
 
 void object::set_triangles
-(const std::vector<math::vec3>& vs, const std::vector<size_t>& trs)
+(const std::vector<vec3>& vs, const std::vector<size_t>& trs)
 {
 	assert(trs.size()%3 == 0);
 
@@ -64,41 +66,41 @@ const std::vector<triangle>& object::get_triangles() const {
 	return tris;
 }
 
-bool object::is_inside(const math::vec3& p, float tol) const {
+bool object::is_inside(const vec3& p, float tol) const {
 	return false;
 }
 
-bool object::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {
+bool object::intersec_segment(const vec3& p1, const vec3& p2) const {
 	return false;
 }
 
-bool object::intersec_sphere(const math::vec3& c, float R) const {
+bool object::intersec_sphere(const vec3& c, float R) const {
 	return false;
 }
 
-bool object::intersec_segment(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const {
+bool object::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
 	return false;
 }
 
 // OTHERS
 
 void object::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
 const
 {
 
 }
 
 void object::correct_position(
-	const math::vec3& pred_pos, const particles::sized_particle *p,
-	math::vec3& correct_position
+	const vec3& pred_pos, const particles::sized_particle *p,
+	vec3& correct_position
 ) const
 {
 
 }
 
 void object::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
 const
 {
 

@@ -13,6 +13,8 @@ using namespace std;
 // LOCAL-DEFINED
 
 namespace physim {
+using namespace math;
+
 namespace geometry {
 
 // PRIVATE
@@ -22,9 +24,7 @@ namespace geometry {
 rectangle::rectangle() : geometry() { }
 
 rectangle::rectangle
-(const math::vec3& p1,const math::vec3& p2,
- const math::vec3& p3,const math::vec3& p4
-)
+(const vec3& p1,const vec3& p2, const vec3& p3,const vec3& p4)
 : geometry(), pl(plane(p1,p2,p3))
 {
 	__pm3_assign_v(v1, p1);
@@ -53,7 +53,7 @@ rectangle::~rectangle() { }
 
 // SETTERS
 
-void rectangle::set_position(const math::vec3& v) {
+void rectangle::set_position(const vec3& v) {
 	__pm3_add_acc_v(v1, v);
 	__pm3_add_acc_v(v2, v);
 	__pm3_add_acc_v(v3, v);
@@ -69,7 +69,7 @@ const plane& rectangle::get_plane() const {
 	return pl;
 }
 
-bool rectangle::is_inside(const math::vec3& p, float tol) const {
+bool rectangle::is_inside(const vec3& p, float tol) const {
 	// if the point is not inside the plane,
 	// for sure it is not inside the rectangle
 	if (not pl.is_inside(p, tol)) {
@@ -103,14 +103,14 @@ geometry_type rectangle::get_geom_type() const {
 }
 
 bool rectangle::intersec_segment
-(const math::vec3& p1, const math::vec3& p2) const
+(const vec3& p1, const vec3& p2) const
 {
-	math::vec3 intersection;
+	vec3 intersection;
 	return intersec_segment(p1, p2, intersection);
 }
 
 bool rectangle::intersec_segment
-(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const
+(const vec3& p1, const vec3& p2, vec3& p_inter) const
 {
 	// if the segment does not intersect the plane
 	// surely it does not intersect the rectangle
@@ -126,7 +126,7 @@ bool rectangle::intersec_segment
 	return false;
 }
 
-bool rectangle::intersec_sphere(const math::vec3& c, float R) const {
+bool rectangle::intersec_sphere(const vec3& c, float R) const {
 	cerr << "rectangle::intersec_sphere (" << __LINE__ << ") - Error" << endl;
 	cerr << "    Not implemented yet" << endl;
 	return false;
@@ -135,22 +135,22 @@ bool rectangle::intersec_sphere(const math::vec3& c, float R) const {
 // OTHERS
 
 void rectangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
 const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }
 
 void rectangle::correct_position(
-	const math::vec3& pred_pos, const particles::sized_particle *p,
-	math::vec3& correct_position
+	const vec3& pred_pos, const particles::sized_particle *p,
+	vec3& correct_position
 ) const
 {
 
 }
 
 void rectangle::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
 const
 {
 	cerr << "rectangle::update_particle (" << __LINE__ << ") - Error" << endl;
@@ -165,7 +165,7 @@ void rectangle::display() const {
 	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
 	cout << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << std::endl;
 	cout << "    and plane equation:" << std::endl;
-	const math::vec3& n = pl.get_normal();
+	const vec3& n = pl.get_normal();
 	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
 		 << pl.get_constant() << " = 0" << std::endl;
 }

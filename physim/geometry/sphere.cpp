@@ -12,6 +12,8 @@ using namespace std;
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
+using namespace math;
+
 namespace geometry {
 
 // PRIVATE
@@ -20,7 +22,7 @@ namespace geometry {
 
 sphere::sphere() : geometry() { }
 
-sphere::sphere(const math::vec3& c, float r) : geometry() {
+sphere::sphere(const vec3& c, float r) : geometry() {
 	__pm3_assign_v(C, c);
 	R = r;
 }
@@ -34,7 +36,7 @@ sphere::~sphere() { }
 
 // SETTERS
 
-void sphere::set_position(const math::vec3& p) {
+void sphere::set_position(const vec3& p) {
 	__pm3_assign_v(C, p);
 }
 
@@ -46,7 +48,7 @@ void sphere::set_radius(float r) {
 
 // GETTERS
 
-const math::vec3& sphere::get_centre() const {
+const vec3& sphere::get_centre() const {
 	return C;
 }
 
@@ -54,7 +56,7 @@ float sphere::get_radius() const {
 	return R;
 }
 
-bool sphere::is_inside(const math::vec3& p, float tol) const {
+bool sphere::is_inside(const vec3& p, float tol) const {
 	// compute squared distance from centre to p
 	return ((__pm3_dist2(C,p)) - R*R) <= tol;
 }
@@ -63,13 +65,13 @@ geometry_type sphere::get_geom_type() const {
 	return geometry_type::Sphere;
 }
 
-bool sphere::intersec_segment(const math::vec3& p1, const math::vec3& p2) const {
+bool sphere::intersec_segment(const vec3& p1, const vec3& p2) const {
 	bool p1_in = is_inside(p1);
 	bool p2_in = is_inside(p2);
 	return (p1_in and not p2_in) or (not p1_in and p2_in);
 }
 
-bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::vec3& p_inter) const {
+bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const {
 	if (not intersec_segment(p,q)) {
 		return false;
 	}
@@ -94,10 +96,10 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	 */
 
 	// coefficients of quadratic equation
-	math::vec3 p_minus_C;
+	vec3 p_minus_C;
 	__pm3_sub_v_v(p_minus_C, p, C);
 
-	math::vec3 v;
+	vec3 v;
 	__pm3_sub_v_v(v, q, p);
 
 	float a = __pm3_dot(v,v);
@@ -157,14 +159,14 @@ bool sphere::intersec_segment(const math::vec3& p, const math::vec3& q, math::ve
 	return true;
 }
 
-bool sphere::intersec_sphere(const math::vec3& c, float r) const {
+bool sphere::intersec_sphere(const vec3& c, float r) const {
 	return __pm3_dist2(C, c) - (R + r)*(R + r) <= 0.0f;
 }
 
 // OTHERS
 
 void sphere::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
 const
 {
 	// define a plane tangent to the sphere
@@ -172,11 +174,11 @@ const
 
 	// compute intersection point
 
-	math::vec3 I;
+	vec3 I;
 	intersec_segment(p->cur_pos, pred_pos, I);
 
 	// define the plane
-	math::vec3 normal;
+	vec3 normal;
 	__pm3_sub_v_v(normal, C, I);
 	plane tan_plane(normal,I);
 
@@ -196,8 +198,8 @@ const
 }
 
 void sphere::correct_position(
-	const math::vec3& pred_pos, const particles::sized_particle *p,
-	math::vec3& correct_position
+	const vec3& pred_pos, const particles::sized_particle *p,
+	vec3& correct_position
 ) const
 {
 	/* Let r be the particle's radius.
@@ -219,7 +221,7 @@ void sphere::correct_position(
 }
 
 void sphere::update_particle
-(const math::vec3& pred_pos, const math::vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
 const
 {
 	/* Let r be the particle's radius.
@@ -239,13 +241,13 @@ const
 	 * vector from the center to I.
 	 */
 
-	math::vec3 I;
+	vec3 I;
 
 	float new_R = R + p->R;
 	sphere S(C, new_R);
 	S.intersec_segment(pred_pos, p->cur_pos, I);
 
-	math::vec3 normal;
+	vec3 normal;
 	__pm3_sub_v_v(normal, C, I);
 	plane tan_plane(normal,I);
 
