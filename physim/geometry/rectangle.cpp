@@ -22,8 +22,10 @@ namespace geometry {
 rectangle::rectangle() : geometry() { }
 
 rectangle::rectangle
-(const math::vec3& p1,const math::vec3& p2,const math::vec3& p3,const math::vec3& p4)
-	: geometry(), pl(plane(p1,p2,p3))
+(const math::vec3& p1,const math::vec3& p2,
+ const math::vec3& p3,const math::vec3& p4
+)
+: geometry(), pl(plane(p1,p2,p3))
 {
 	__pm3_assign_v(v1, p1);
 	__pm3_assign_v(v2, p2);
@@ -155,17 +157,17 @@ const
 	cerr << "    Not implemented yet" << endl;
 }
 
-void rectangle::display(std::ostream& os) const {
-	os << "I am a rectangle" << std::endl;
-	os << "    with vertices:" << std::endl;
-	os << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
-	os << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
-	os << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
-	os << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << std::endl;
-	os << "    and plane equation:" << std::endl;
+void rectangle::display() const {
+	cout << "I am a rectangle" << std::endl;
+	cout << "    with vertices:" << std::endl;
+	cout << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
+	cout << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
+	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
+	cout << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << std::endl;
+	cout << "    and plane equation:" << std::endl;
 	const math::vec3& n = pl.get_normal();
-	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-	   << pl.get_constant() << " = 0" << std::endl;
+	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
+		 << pl.get_constant() << " = 0" << std::endl;
 }
 
 } // -- namespace geom

@@ -210,16 +210,16 @@ const
 	// 2. Update the position of the underlying free particle
 }
 
-void triangle::display(std::ostream& os) const {
-	os << "I am a triangle" << std::endl;
-	os << "    with vertices:" << std::endl;
-	os << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
-	os << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
-	os << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
-	os << "    and plane equation:" << std::endl;
+void triangle::display() const {
+	cout << "I am a triangle" << std::endl;
+	cout << "    with vertices:" << std::endl;
+	cout << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
+	cout << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
+	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
+	cout << "    and plane equation:" << std::endl;
 	const math::vec3& n = pl.get_normal();
-	os << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-	   << pl.get_constant() << " = 0" << std::endl;
+	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
+		 << pl.get_constant() << " = 0" << std::endl;
 }
 
 } // -- namespace geom

@@ -1,7 +1,6 @@
 #pragma once
 
 // C++ includes
-#include <iostream>
 #include <vector>
 
 // physim includes
@@ -9,6 +8,7 @@
 #include <physim/geometry/triangle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/math/vec3.hpp>
+#include <physim/structures/object_partition.hpp>
 
 namespace physim {
 namespace geometry {
@@ -23,6 +23,9 @@ class object : public geometry {
 	private:
 		/// The triangles of this object.
 		std::vector<triangle> tris;
+
+		/// Partition of the object for faster intersection tests.
+		structures::object_partition octree;
 
 	public:
 		/// Default constructor.
@@ -39,8 +42,8 @@ class object : public geometry {
 		/**
 		 * @brief Sets the position of this object.
 		 *
-		 * Translates all vertices in @ref verts in the direction of
-		 * vector @e v..
+		 * Translates all triangles in @ref tris in the direction of
+		 * vector @e v.
 		 * @param v Vector.
 		 */
 		void set_position(const math::vec3& v);
@@ -54,16 +57,10 @@ class object : public geometry {
 		geometry_type get_geom_type() const;
 
 		/**
-		 * @brief Returns the vertices of this object.
-		 * @return Returns a constant reference to @ref verts.
-		 */
-		const std::vector<math::vec3>& get_vertices() const;
-
-		/**
 		 * @brief Returns the triangles of this object.
 		 * @return Returns a constant reference to @ref tris.
 		 */
-		const std::vector<size_t>& get_triangles() const;
+		const std::vector<triangle>& get_triangles() const;
 
 		/**
 		 * @brief Returns true if @e p is inside the object.
@@ -97,7 +94,7 @@ class object : public geometry {
 			particles::sized_particle *p
 		) const;
 
-		void display(std::ostream& os = std::cout) const;
+		void display() const;
 };
 
 } // -- namespace geom

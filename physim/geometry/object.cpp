@@ -23,6 +23,7 @@ object::object() : geometry() {
 
 object::object(const object& o) : geometry(o) {
 	tris = o.tris;
+	octree.copy(o.octree);
 }
 
 object::~object() { }
@@ -33,6 +34,8 @@ void object::set_position(const math::vec3& dir) {
 	for (triangle& t : tris) {
 		t.set_position(dir);
 	}
+
+	cerr << "object::set_position (" << __LINE__ << ") Update octree!" << endl;
 }
 
 void object::set_triangles
@@ -47,12 +50,18 @@ void object::set_triangles
 		size_t i3 = trs[3*i + 2];
 		tris[i] = triangle(vs[i1], vs[i2], vs[i3]);
 	}
+
+	octree.init(vs, trs);
 }
 
 // GETTERS
 
 geometry_type object::get_geom_type() const {
 	return geometry_type::Object;
+}
+
+const std::vector<triangle>& object::get_triangles() const {
+	return tris;
 }
 
 bool object::is_inside(const math::vec3& p, float tol) const {
@@ -95,7 +104,7 @@ const
 
 }
 
-void object::display(std::ostream& os) const {
+void object::display() const {
 
 }
 

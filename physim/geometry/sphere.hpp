@@ -1,7 +1,6 @@
 #pragma once
 
 // C++ includes
-#include <iostream>
 
 // physim includes
 #include <physim/geometry/geometry.hpp>
@@ -81,7 +80,7 @@ class sphere : public geometry {
 			particles::sized_particle *p
 		) const;
 
-		void display(std::ostream& os = std::cout) const;
+		void display() const;
 };
 
 } // -- namespace geom

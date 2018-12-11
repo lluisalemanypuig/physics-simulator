@@ -3,6 +3,10 @@
 // C includes
 #include <assert.h>
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/geometry/plane.hpp>
 #include <physim/math/private/math3.hpp>
@@ -250,10 +254,10 @@ const
 	(pred_pos, pred_vel, static_cast<particles::free_particle *>(p));
 }
 
-void sphere::display(std::ostream& os) const {
-	os << "I am a sphere" << std::endl;
-	os << "    with centre: (" << C.x << "," << C.y << "," << C.z << ")" << std::endl;
-	os << "    and radius: " << R << std::endl;
+void sphere::display() const {
+	cout << "I am a sphere" << std::endl;
+	cout << "    with centre: (" << C.x << "," << C.y << "," << C.z << ")" << std::endl;
+	cout << "    and radius: " << R << std::endl;
 }
 
 } // -- namespace geom

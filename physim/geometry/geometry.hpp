@@ -1,7 +1,6 @@
 #pragma once
 
 // C++ includes
-#include <iostream>
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
@@ -182,8 +181,8 @@ class geometry {
 			particles::sized_particle *pred
 		) const = 0;
 
-		/// Output on stream @e os information about this geometry.
-		virtual void display(std::ostream& os = std::cout) const = 0;
+		/// Output on stream @e cout information about this geometry.
+		virtual void display() const = 0;
 };
 
 } // -- namespace geom
