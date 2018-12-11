@@ -68,6 +68,7 @@ HEADERS += \
     geometry/object.hpp \
     input/input.hpp \
     input/soup_reader.hpp \
+    structures/object_partition.hpp \
     math/private/math2/comparison.hpp \
     math/private/math3/comparison.hpp
 
@@ -106,4 +107,5 @@ SOURCES += \
     input/ply_reader.cpp \
     geometry/object.cpp \
     input/input.cpp \
-    input/soup_reader.cpp
+    input/soup_reader.cpp \
+    structures/object_partition.cpp

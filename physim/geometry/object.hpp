@@ -54,6 +54,12 @@ class object : public geometry {
 
 		// GETTERS
 
+		/**
+		 * @brief Returns the underlying structure that partitions this object.
+		 * @return Returns a constant reference to @ref octree.
+		 */
+		const structures::object_partition& get_partition() const;
+
 		geometry_type get_geom_type() const;
 
 		/**

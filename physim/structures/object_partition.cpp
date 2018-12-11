@@ -1,0 +1,399 @@
+#include <physim/structures/object_partition.hpp>
+
+// C includes
+#include <assert.h>
+
+// C++ includes
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <limits>
+using namespace std;
+
+// physim includes
+#include <physim/math/private/math3/add.hpp>
+#include <physim/math/private/math3/div.hpp>
+#include <physim/math/private/math3/comparison.hpp>
+#include <physim/geometry/rectangle.hpp>
+
+namespace physim {
+using namespace math;
+using namespace geometry;
+
+namespace structures {
+
+// PRIVATE
+
+object_partition::node::node() {
+	tris_idxs = nullptr;
+	for (unsigned char i = 0; i < 8; ++i) {
+		children[i] = nullptr;
+	}
+}
+
+object_partition::node::~node() {
+	for (unsigned char i = 0; i < 8; ++i) {
+		if (children[i] != nullptr) {
+			delete children[i];
+			children[i] = nullptr;
+		}
+	}
+
+	if (tris_idxs != nullptr) {
+		tris_idxs->clear();
+		delete tris_idxs;
+		tris_idxs = nullptr;
+	}
+}
+
+bool object_partition::node::is_leaf() const {
+	return tris_idxs != nullptr;
+}
+
+object_partition::node *object_partition::make_tree_at(
+	const vector<vec3>& vertices,
+	const vector<size_t>& triangles,
+	const vector<vector<size_t> >& tris_per_vertex,
+	const vector<size_t>& vertices_idxs,
+	const vector<size_t>& triangle_idxs,
+	const string& tab
+)
+const
+{
+	cout << tab << "partitioning " << vertices_idxs.size() << " vertices "
+				<< "and " << triangle_idxs.size() << " triangles" << endl;
+	cout << tab << "    indices of vertices:";
+	for (size_t v_idx : vertices_idxs) {
+		cout << " " << v_idx;
+	}
+	cout << endl;
+	cout << tab << "    indices of triangles:";
+	for (size_t t_idx : triangle_idxs) {
+		cout << " " << t_idx;
+	}
+	cout << endl;
+
+	node *n = new node();
+
+	// make center, minimum and maximum points
+	static const float inf = numeric_limits<float>::max();
+	vec3 vmin(inf), vmax(-inf);
+	__pm3_assign_s(n->center, 0.0f);
+	for (size_t v_idx : vertices_idxs) {
+		const vec3& v = vertices[v_idx];
+		__pm3_add_acc_v(n->center, v);
+		__pm3_min2(vmin, vmin, v);
+		__pm3_max2(vmax, vmax, v);
+	}
+	__pm3_div_acc_s(n->center, vertices_idxs.size());
+
+	if (vertices_idxs.size() <= 8) {
+		// If there are less than 8 vertices to be partitioned
+		// then we store the triangle indices and stop here.
+		// Note that in the event when there are no vertices
+		// we can't possibly assign a value to the center point.
+		// Let's hope that this will not be an issue.
+
+		n->tris_idxs = new vector<size_t>(triangle_idxs);
+		cout << tab << "    ** store in subspace indices:";
+		for (size_t idx : triangle_idxs) {
+			cout << " " << idx;
+		}
+		cout << endl;
+		return n;
+	}
+
+	// perturb the minimum and maximum points
+	// a little so that they do not have coordinates
+	// equal to the center point
+	__pm3_add_acc_s(vmin, -0.01f);
+	__pm3_add_acc_s(vmax, +0.01f);
+
+	cout << tab << "    midpoint: " << __pm3_out(n->center) << endl;
+	cout << tab << "    minimum: " << __pm3_out(vmin) << endl;
+	cout << tab << "    maximum: " << __pm3_out(vmax) << endl;
+
+	// Points defining the 12 'rectangles' that
+	// partition this subspace.
+	// Meaning of letters:
+	//		m: minimum, c: average, M: maximum
+	// top level: maximum Z
+	const vec3 cmM(n->center.x, vmin.y, vmax.z);
+	const vec3 mcM(vmin.x, n->center.y, vmax.z);
+	const vec3 cMM(n->center.x, vmax.y, vmax.z);
+	const vec3 McM(vmax.x, n->center.y, vmax.z);
+	const vec3 ccM(n->center.x, n->center.y, vmax.z);
+	// mid level: mid Z
+	const vec3 cmc(n->center.x, vmin.y, n->center.z);
+	const vec3 mcc(vmin.x, n->center.y, n->center.z);
+	const vec3 cMc(n->center.x, vmax.y, n->center.z);
+	const vec3 Mcc(vmax.x, n->center.y, n->center.z);
+	const vec3 mMc(vmin.x, vmax.y, n->center.z);
+	const vec3 MMc(vmax.x, vmax.y, n->center.z);
+	const vec3 Mmc(vmax.x, vmin.y, n->center.z);
+	const vec3 mmc(vmin.x, vmin.y, n->center.z);
+	// low level: minimum Z
+	const vec3 cmm(n->center.x, vmin.y, vmin.z);
+	const vec3 mcm(vmin.x, n->center.y, vmin.z);
+	const vec3 cMm(n->center.x, vmax.y, vmin.z);
+	const vec3 Mcm(vmax.x, n->center.y, vmin.z);
+	const vec3 ccm(n->center.x, n->center.y, vmin.z);
+
+	// rectangles at upper half
+	const rectangle rt1(ccM, mcM, mcc, n->center);
+	const rectangle rt2(ccM, cMM, cMc, n->center);
+	const rectangle rt3(ccM, McM, Mcc, n->center);
+	const rectangle rt4(ccM, cmM, cmc, n->center);
+	// rectangles at division plane
+	const rectangle rm1(mcc, mMc, cMc, n->center);
+	const rectangle rm2(cMc, MMc, Mcc, n->center);
+	const rectangle rm3(Mcc, Mmc, cmc, n->center);
+	const rectangle rm4(cmc, mmc, mcc, n->center);
+	// rectangles at lower half
+	const rectangle rb1(ccm, mcm, mcc, n->center);
+	const rectangle rb2(ccm, cMm, cMc, n->center);
+	const rectangle rb3(ccm, Mcm, Mcc, n->center);
+	const rectangle rb4(ccm, cmm, cmc, n->center);
+	auto intersections_rectangle =
+	[&](const rectangle& r, size_t v1, size_t v2, bool i[8]) -> void {
+		if (r.intersec_segment(vertices[v1], vertices[v2])) {
+			unsigned char sub;
+
+			sub = 0;
+			__pm3_lt(sub, vertices[v1], n->center);
+			i[sub] = true;
+			sub = 0;
+			__pm3_lt(sub, vertices[v2], n->center);
+			i[sub] = true;
+		}
+	};
+	auto intersections_all =
+	[&](size_t v1, size_t v2, bool i[8]) -> void {
+		intersections_rectangle(rt1, v1, v2, i);
+		intersections_rectangle(rt2, v1, v2, i);
+		intersections_rectangle(rt3, v1, v2, i);
+		intersections_rectangle(rt4, v1, v2, i);
+		intersections_rectangle(rm1, v1, v2, i);
+		intersections_rectangle(rm2, v1, v2, i);
+		intersections_rectangle(rm3, v1, v2, i);
+		intersections_rectangle(rm4, v1, v2, i);
+		intersections_rectangle(rb1, v1, v2, i);
+		intersections_rectangle(rb2, v1, v2, i);
+		intersections_rectangle(rb3, v1, v2, i);
+		intersections_rectangle(rb4, v1, v2, i);
+	};
+
+	// ----------------------------------------------------
+	// If there are more than 8 vertices then partition the
+	// space into subtrees
+
+	// subspace index per vertex, using '9' as invalid value
+	vector<unsigned char> subspace_per_vertex(vertices.size(), 9);
+	// vert_idxs_space contains indices pointing
+	// to vertices in parameter 'vertices'.
+	// These are the vertices that are put into each
+	// subspace.
+	vector<size_t> vert_idxs_space[8];
+	// tris_idxs_space contains indices pointing
+	// to triangles in parameter 'triangles'
+	// These are the list of triangles incident
+	// to each subspace.
+	vector<size_t> tris_idxs_space[8];
+
+	// 1. Partition the set of points into every subspace.
+	// Also add partial results of the triangles incident
+	// to that subspace.
+
+	for (size_t v_idx : vertices_idxs) {
+		const vec3& v = vertices[v_idx];
+
+		unsigned char s = 0;
+		__pm3_lt(s, v, n->center);
+
+		cout << tab << "    vertex " << v_idx << " in subspace " << int(s) << endl;
+
+		// s contains in its three lowest-weight bits the
+		// result of comparing v < n->center.
+		// This points us to one of the node's children.
+
+		// vertex at position 'v_idx' is
+		// assigned to subspace 's'
+		vert_idxs_space[s].push_back(v_idx);
+		subspace_per_vertex[v_idx] = s;
+
+		// if vertex 'v_idx' goes to subspace 's' then
+		// so do all adjacent triangles
+		tris_idxs_space[s].insert(
+			tris_idxs_space[s].end(),
+			tris_per_vertex[v_idx].begin(),
+			tris_per_vertex[v_idx].end()
+		);
+	}
+
+	// obtain unique indices
+	for (unsigned char s = 0; s < 8; ++s) {
+		sort(tris_idxs_space[s].begin(), tris_idxs_space[s].end());
+		auto last = unique(tris_idxs_space[s].begin(), tris_idxs_space[s].end());
+		tris_idxs_space[s].erase(last, tris_idxs_space[s].end());
+	}
+
+	// 2. Find what subspaces each triangle intersects. Already
+	// existing triangles are not included.
+	for (size_t t_idx : triangle_idxs) {
+		bool intersected1[8] = {false,false,false,false,false,false,false,false};
+		bool intersected2[8] = {false,false,false,false,false,false,false,false};
+		bool intersected3[8] = {false,false,false,false,false,false,false,false};
+
+		// 2.1. get all the subspaces triangle 't_idx' intersects
+		size_t v1 = triangles[t_idx    ];
+		size_t v2 = triangles[t_idx + 1];
+		size_t v3 = triangles[t_idx + 2];
+
+		intersections_all(v1,v2, intersected1);
+		intersections_all(v2,v3, intersected2);
+		intersections_all(v3,v1, intersected3);
+
+		// 2.2. take i-th subspace 's_i'. If any of the
+		// vertices of the triangle belongs to 's_i' then
+		// the triangle was already added to it, so it
+		// should not be added again.
+		for (unsigned char i = 0; i < 8; ++i) {
+			if (
+				(intersected1[i] or intersected2[i] or intersected3[i]) and
+				(not (
+					subspace_per_vertex[v1] == i or
+					subspace_per_vertex[v2] == i or
+					subspace_per_vertex[v3] == i
+				))
+			)
+			{
+				tris_idxs_space[i].push_back(t_idx);
+			}
+		}
+	}
+
+	// free unused memory
+	subspace_per_vertex.clear();
+
+	// 3. Partition the subspaces
+	for (unsigned char i = 0; i < 8; ++i) {
+		n->children[i] =
+		make_tree_at(
+			vertices, triangles, tris_per_vertex,
+			vert_idxs_space[i], tris_idxs_space[i],
+			tab + "    "
+		);
+
+		// free unused memory
+		vert_idxs_space[i].clear();
+		tris_idxs_space[i].clear();
+	}
+
+	return n;
+}
+
+// PUBLIC
+
+object_partition::object_partition() {
+	root = nullptr;
+}
+
+object_partition::~object_partition() {
+	clear();
+}
+
+// MEMORY
+
+void object_partition::init(
+	const vector<math::vec3>& vertices,
+	const vector<size_t>& tris_indices
+)
+{
+	clear();
+	vector<size_t> vert_idxs(vertices.size());
+	vector<size_t> tris_idxs(tris_indices.size()/3);
+
+	size_t vidx = 0;
+	size_t tidx = 0;
+
+	auto vit = vert_idxs.begin();
+	auto tit = tris_idxs.begin();
+	while (vit != vert_idxs.end() and tit != tris_idxs.end()) {
+		*vit = vidx;
+		++vidx;
+
+		*tit = tidx;
+		tidx += 3;
+
+		++vit; ++tit;
+	}
+	for (; vit != vert_idxs.end(); ++vit) {
+		*vit = vidx; ++vidx;
+	}
+	for (; tit != tris_idxs.end(); ++tit) {
+		*tit = tidx; tidx += 3;
+	}
+
+	// Construct the 'tris_per_vertex' table.
+	// The i-th position contains the indices of all the
+	// triangles incident to the i-th vertex.
+	// The indices stored are the indices of the first
+	// corner of every triangle.
+	vector<vector<size_t> > tris_per_vertex(vertices.size());
+	for (size_t i = 0; i < tris_indices.size(); i += 3) {
+		cout << "Triangle " << i/3 << " has corners: "
+			 << tris_indices[i] << " " << tris_indices[i + 1] << " "
+			 << tris_indices[i + 2] << endl;
+		tris_per_vertex[tris_indices[i + 0]].push_back(i);
+		tris_per_vertex[tris_indices[i + 1]].push_back(i);
+		tris_per_vertex[tris_indices[i + 2]].push_back(i);
+	}
+
+	for (size_t v = 0; v < vertices.size(); ++v) {
+		cout << "vertex " << v << " has triangles:";
+		for (size_t t_idx : tris_per_vertex[v]) {
+			cout << " " << t_idx;
+		}
+		cout << endl;
+	}
+
+	root =
+	make_tree_at(vertices, tris_indices, tris_per_vertex, vert_idxs, tris_idxs);
+}
+
+void object_partition::clear() {
+	if (root != nullptr) {
+		delete root;
+		root = nullptr;
+	}
+}
+
+void object_partition::copy(const object_partition& part) {
+	clear();
+
+
+}
+
+// SETTERS
+
+// GETTERS
+
+void object_partition::get_triangles
+(const vec3& p, vector<size_t>& tris_idxs) const
+{
+	assert(root != nullptr);
+
+	node *n = root;
+	while (not n->is_leaf()) {
+		unsigned char s = 0;
+		__pm3_lt(s, p, n->center);
+		n = n->children[s];
+	}
+
+	tris_idxs = *n->tris_idxs;
+}
+
+// OTHERS
+
+} // -- namespace structures
+} // -- namespace physim

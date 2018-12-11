@@ -37,7 +37,8 @@ void object::set_position(const vec3& dir) {
 		t.set_position(dir);
 	}
 
-	cerr << "object::set_position (" << __LINE__ << ") Update octree!" << endl;
+	cerr << "object::set_position (" << __LINE__
+		 << ") - Update octree!" << endl;
 }
 
 void object::set_triangles
@@ -58,6 +59,10 @@ void object::set_triangles
 
 // GETTERS
 
+const structures::object_partition& object::get_partition() const {
+	return octree;
+}
+
 geometry_type object::get_geom_type() const {
 	return geometry_type::Object;
 }
@@ -67,18 +72,26 @@ const std::vector<triangle>& object::get_triangles() const {
 }
 
 bool object::is_inside(const vec3& p, float tol) const {
+	cerr << "object::is_inside (" << __LINE__
+		 << ") - To be implemented!" << endl;
 	return false;
 }
 
 bool object::intersec_segment(const vec3& p1, const vec3& p2) const {
+	cerr << "object::intersec_segment (" << __LINE__
+		 << ") - To be implemented!" << endl;
 	return false;
 }
 
 bool object::intersec_sphere(const vec3& c, float R) const {
+	cerr << "object::intersec_sphere (" << __LINE__
+		 << ") - To be implemented!" << endl;
 	return false;
 }
 
 bool object::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
+	cerr << "object::intersec_segment (" << __LINE__
+		 << ") - To be implemented!" << endl;
 	return false;
 }
 
@@ -88,7 +101,8 @@ void object::update_particle
 (const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
 const
 {
-
+	cerr << "object::update_particle (" << __LINE__
+		 << ") - To be implemented!" << endl;
 }
 
 void object::correct_position(
@@ -96,7 +110,8 @@ void object::correct_position(
 	vec3& correct_position
 ) const
 {
-
+	cerr << "object::correct_position (" << __LINE__
+		 << ") - To be implemented!" << endl;
 }
 
 void object::update_particle
