@@ -8,6 +8,8 @@ using namespace std;
 #include <physim/math/private/math3.hpp>
 #include <physim/geometry/sphere.hpp>
 
+// LOCAL-DEFINED
+
 inline float triangle_area
 (const physim::math::vec3 p1, const physim::math::vec3 p2, const physim::math::vec3 p3)
 {
@@ -20,8 +22,6 @@ namespace physim {
 using namespace math;
 
 namespace geometry {
-
-// LOCAL-DEFINED
 
 // PRIVATE
 
