@@ -14,21 +14,29 @@ using namespace std;
 // physim includes
 #include <physim/input/input.hpp>
 #include <physim/geometry/object.hpp>
+#include <physim/structures/object_partition.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace input;
+using namespace math;
+using namespace geometry;
+using namespace structures;
 
 namespace study_cases {
 
 	void sim_300_usage() {
 		cout << "Input operations:" << endl;
 		cout << endl;
-		cout << "This study case simply reads several files from disk" << endl;
-		cout << "and creates geometrical objects with them" << endl;
+		cout << "This study case simply reads one file from disk" << endl;
+		cout << "and creates a geometrical object with it. Then uses" << endl;
+		cout << "the point passed as parameter to locate the closest" << endl;
+		cout << "triangles of the object closest to the point." << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
 		cout << "    --directory d: specify input directory" << endl;
 		cout << "    --file f: specify input file" << endl;
+		cout << "    --point x y z: specify a 3d point" << endl;
 		cout << endl;
 		cout << "The file read is: d/f" << endl;
 		cout << endl;
@@ -37,6 +45,9 @@ namespace study_cases {
 	void sim_300(int argc, char *argv[]) {
 		string directory = "none";
 		string filename = "none";
+		bool p1_read, p2_read;
+		p1_read = p2_read = false;
+		vec3 p1, p2;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
@@ -51,40 +62,85 @@ namespace study_cases {
 				filename = string(argv[i + 1]);
 				++i;
 			}
+			else if (strcmp(argv[i], "--point") == 0) {
+				if (not p1_read) {
+					p1.x = atof(argv[i + 1]);
+					p1.y = atof(argv[i + 2]);
+					p1.z = atof(argv[i + 3]);
+					p1_read = true;
+				}
+				else {
+					p2.x = atof(argv[i + 1]);
+					p2.y = atof(argv[i + 2]);
+					p2.z = atof(argv[i + 3]);
+					p2_read = true;
+				}
+				i += 4;
+			}
 			else {
 				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
-				cerr << "Use ./command-line 300 --help to see the usage" << endl;
+				cerr << "    Use ./command-line 300 --help to see the usage" << endl;
 				return;
 			}
 		}
 
 		if (directory == "none") {
 			cerr << "Error: directory not specified" << endl;
-			cerr << "Use ./command-line 300 --help to see the usage" << endl;
+			cerr << "    Use ./command-line 300 --help to see the usage" << endl;
 			return;
 		}
 
 		if (filename == "none") {
 			cerr << "Error: filename not specified" << endl;
-			cerr << "Use ./command-line 300 --help to see the usage" << endl;
+			cerr << "    Use ./command-line 300 --help to see the usage" << endl;
+			return;
+		}
+
+		if (not p1_read) {
+			cerr << "Error: you have to specify at least one point!" << endl;
+			cerr << "    Use ./command-line 300 --help to see the usage" << endl;
 			return;
 		}
 
 		cout << "Reading: " << directory + "/" + filename << endl;
 
-		timing::time_point begin_sim = timing::now();
-
-		geometry::object *o = new geometry::object();
+		timing::time_point begin = timing::now();
+		object *o = new object();
 		bool r = input::read_file(directory, filename, o);
 		if (not r) {
 			cerr << "Error: some error occurred while trying to read" << endl;
 			cerr << "    " << directory + "/" + filename << endl;
 		}
+		timing::time_point end = timing::now();
+		double r_sim = timing::elapsed_seconds(begin, end);
 
-		timing::time_point end_sim = timing::now();
-
-		double r_sim = timing::elapsed_seconds(begin_sim, end_sim);
 		cout << "Time spent in reading: " << r_sim << " s" << endl;
+
+		vector<size_t> tris;
+		o->get_partition().get_triangles(p1, tris);
+		cout << "The closest triangles to point ("
+			 << p1.x << "," << p1.y << "," << p1.z
+			 << ") are:";
+		for (size_t t_idx : tris) {
+			cout << ", " << t_idx/3;
+		}
+		cout << endl;
+
+		if (p2_read) {
+			bool i = o->intersec_segment(p1,p2);
+			cout << "Segment from ("
+				 << p1.x << "," << p1.y << "," << p1.z
+				 << ") to ("
+				 << p2.x << "," << p2.y << "," << p2.z
+				 << ")";
+			if (i) {
+				cout << " intersects ";
+			}
+			else {
+				cout << " does NOT intersect ";
+			}
+			cout << "the object" << endl;
+		}
 
 		delete o;
 	}
