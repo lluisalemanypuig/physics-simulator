@@ -30,13 +30,8 @@ plane::plane(const math::vec3& n, float d) : geometry() {
 }
 
 plane::plane(const math::vec3& p0, const math::vec3& p1, const math::vec3& p2) : geometry() {
-	cout << "Constructor with 3 points" << endl;
-	cout << "    (" << __pm3_out(p0) << "),"
-		 << "(" << __pm3_out(p1) << "),"
-		 << "(" << __pm3_out(p2) << ")" << endl;
 	__pm3_cross_diff(normal, p0,p1,p2);
 	__pm3_normalise(normal,normal);
-	cout << "    normal: " << __pm3_out(normal) << endl;
 	dconst = -__pm3_dot(p0, normal);
 }
 
@@ -76,10 +71,6 @@ float plane::get_constant() const {
 // GETTERS
 
 bool plane::is_inside(const math::vec3& p, float tol) const {
-	cout << __pm3_dot(p, normal) + dconst << endl;
-	cout << "    " << __pm3_out(p) << endl;
-	cout << "    " << __pm3_out(normal) << endl;
-	cout << "    " << dconst << endl;
 	if ((__pm3_dot(p, normal) + dconst) <= tol) {
 		return true;
 	}
