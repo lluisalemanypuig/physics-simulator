@@ -11,7 +11,6 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 SOURCES += \
     main.cpp \
     utils.cpp \
-    study_cases.cpp \
     sim_000.cpp \
     sim_001.cpp \
     sim_002.cpp \
@@ -26,8 +25,7 @@ SOURCES += \
     sim_300.cpp
 
 HEADERS += \
-    utils.hpp \
-    study_cases.hpp
+    utils.hpp
 
 DISTFILES += \
     example-models/cropped-cube.obj \

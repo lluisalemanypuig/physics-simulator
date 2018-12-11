@@ -5,8 +5,38 @@
 #include <iostream>
 using namespace std;
 
-// Custom includes
-#include "study_cases.hpp"
+/* -------------- */
+/* FREE PARTICLES */
+
+namespace study_cases {
+	void sim_000(int argc, char *argv[]);
+	void sim_001(int argc, char *argv[]);
+	void sim_002(int argc, char *argv[]);
+	void sim_003(int argc, char *argv[]);
+	void sim_004(int argc, char *argv[]);
+	void sim_005(int argc, char *argv[]);
+
+	/* --------------- */
+	/* SIZED PARTICLES */
+
+	void sim_100(int argc, char *argv[]);
+	void sim_101(int argc, char *argv[]);
+	void sim_102(int argc, char *argv[]);
+
+	/* ------------- */
+	/* SPRING MESHES */
+
+	void sim_200(int argc, char *argv[]);
+	void sim_201(int argc, char *argv[]);
+
+	/* ------------- */
+	/* INPUT/OUTPUT */
+
+	void sim_300(int argc, char *argv[]);
+} // -- namespace study_cases
+
+/* ---------------- */
+/* MAIN's FUNCTIONS */
 
 void list_all_cases() {
 	cout << "The available simulations are:" << endl;
@@ -45,7 +75,30 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	study_cases::choose_case(argc, argv);
+	int id_num = atoi(argv[1]);
+
+	switch (id_num) {
+	// free particles
+	case 000:	study_cases::sim_000(argc, argv); break;
+	case 001:	study_cases::sim_001(argc, argv); break;
+	case 002:	study_cases::sim_002(argc, argv); break;
+	case 003:	study_cases::sim_003(argc, argv); break;
+	case 004:	study_cases::sim_004(argc, argv); break;
+	case 005:	study_cases::sim_005(argc, argv); break;
+	// sized particles
+	case 100:	study_cases::sim_100(argc, argv); break;
+	case 101:	study_cases::sim_101(argc, argv); break;
+	case 102:	study_cases::sim_102(argc, argv); break;
+	// spring meshes
+	case 200:	study_cases::sim_200(argc, argv); break;
+	case 201:	study_cases::sim_201(argc, argv); break;
+	// input/output
+	case 300:	study_cases::sim_300(argc, argv); break;
+	default:
+		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
+		cerr << "    Use './basic_simulations --list' to see all cases" << endl;
+	}
+
 	return 0;
 }
 
