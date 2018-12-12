@@ -1,5 +1,9 @@
 #include "glut_functions.hpp"
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // glm includes
 #include <glm/vec3.hpp>
 #include <glm/gtc/matrix_transform.hpp>

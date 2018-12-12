@@ -5,8 +5,12 @@
 #include <iostream>
 using namespace std;
 
-// custom includes
-#include "study_cases.hpp"
+namespace study_cases {
+	void sim_00(int argc, char *argv[]);
+	void sim_01(int argc, char *argv[]);
+	void sim_02(int argc, char *argv[]);
+
+} // -- namespace study_cases
 
 void list_all_cases() {
 	cout << "Welcome to the Spring-meshes renderer" << endl;
@@ -38,6 +42,16 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	study_cases::choose_case(argc, argv);
+	int id_num = atoi(argv[1]);
+	switch (id_num) {
+	// free particles
+	case  0:	study_cases::sim_00(argc, argv); break;
+	case  1:	study_cases::sim_01(argc, argv); break;
+	case  2:	study_cases::sim_02(argc, argv); break;
+	default:
+		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
+		cerr << "    Use './particles --list' to see all cases" << endl;
+	}
+
 	return 0;
 }

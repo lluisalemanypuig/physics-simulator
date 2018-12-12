@@ -5,8 +5,22 @@
 #include <iostream>
 using namespace std;
 
-// custom includes
-#include "study_cases.hpp"
+namespace study_cases {
+	void sim_00(int argc, char *argv[]);
+	void sim_01(int argc, char *argv[]);
+	void sim_02(int argc, char *argv[]);
+	void sim_03(int argc, char *argv[]);
+	void sim_04(int argc, char *argv[]);
+	void sim_05(int argc, char *argv[]);
+	void sim_06(int argc, char *argv[]);
+	void sim_07(int argc, char *argv[]);
+	void sim_08(int argc, char *argv[]);
+	void sim_09(int argc, char *argv[]);
+	void sim_10(int argc, char *argv[]);
+	void sim_11(int argc, char *argv[]);
+	void sim_12(int argc, char *argv[]);
+
+} // -- namespace study_cases
 
 void list_all_cases() {
 	cout << "Welcome to the particles renderer" << endl;
@@ -65,6 +79,26 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	study_cases::choose_case(argc, argv);
+	int id_num = atoi(argv[1]);
+	switch (id_num) {
+	// free particles
+	case  0:	study_cases::sim_00(argc, argv); break;
+	case  1:	study_cases::sim_01(argc, argv); break;
+	case  2:	study_cases::sim_02(argc, argv); break;
+	case  3:	study_cases::sim_03(argc, argv); break;
+	case  4:	study_cases::sim_04(argc, argv); break;
+	case  5:	study_cases::sim_05(argc, argv); break;
+	case  6:	study_cases::sim_06(argc, argv); break;
+	case  7:	study_cases::sim_07(argc, argv); break;
+	case  8:	study_cases::sim_08(argc, argv); break;
+	case  9:	study_cases::sim_09(argc, argv); break;
+	case 10:	study_cases::sim_10(argc, argv); break;
+	case 11:	study_cases::sim_11(argc, argv); break;
+	case 12:	study_cases::sim_12(argc, argv); break;
+	default:
+		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
+		cerr << "    Use './particles --list' to see all cases" << endl;
+	}
+
 	return 0;
 }
