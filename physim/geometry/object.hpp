@@ -104,15 +104,22 @@ class object : public geometry {
 		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::free_particle*)const
 		 * for details.
 		 *
+		 * Prior to updating the position of @e p, its contents are copied into
+		 * @e u.
+		 *
 		 * @param[in] pp The predicted position of the particle.
 		 * @param[in] pv The predicted velocity of the particle.
-		 * @param[out] p The particle with the result of the collision.
+		 * @param[in] p Original particle. This particle's current position is
+		 * used to construct the segment used in the intersection tests.
+		 * @param[out] u The particle with the result of the collision.
 		 * @param[out] update True if the particle has been updated. False if
 		 * otherwise.
+		 * @return Returns true if there was collision and the particle @e u
+		 * was updated.
 		 */
-		void update_particle(
+		bool update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			particles::free_particle *p, bool& update
+			const particles::free_particle *p, particles::free_particle *u
 		) const;
 
 		void correct_position(
@@ -148,15 +155,22 @@ class object : public geometry {
 		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::sized_particle*)const
 		 * for details.
 		 *
+		 * Prior to updating the position of @e p, its contents are copied into
+		 * @e u.
+		 *
 		 * @param[in] pp The predicted position of the particle.
 		 * @param[in] pv The predicted velocity of the particle.
-		 * @param[out] p The particle with the result of the collision.
+		 * @param[in] p Original particle. This particle's current position is
+		 * used to construct the segment used in the intersection tests.
+		 * @param[out] u The particle with the result of the collision.
 		 * @param[out] update True if the particle has been updated. False if
 		 * otherwise.
+		 * @return Returns true if there was collision and the particle @e u
+		 * was updated.
 		 */
-		void update_particle(
+		bool update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			particles::sized_particle *p, bool& update
+			const particles::sized_particle *p, particles::sized_particle *u
 		) const;
 
 		void display() const;

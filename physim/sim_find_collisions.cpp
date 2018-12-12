@@ -114,12 +114,11 @@ bool simulator::find_update_geom_collision_free
 			const geometry::object *o =
 				static_cast<const geometry::object *>(g);
 
-			bool updated = false;
-			o->update_particle(pred_pos, pred_vel, &coll_pred, updated);
+			bool updated =
+				o->update_particle(pred_pos, pred_vel, p, &coll_pred);
 
 			if (updated) {
 				collision = true;
-				coll_pred = *p;
 
 				if (solver == solver_type::Verlet) {
 					// this solver needs a correct position

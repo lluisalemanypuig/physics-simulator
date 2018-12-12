@@ -143,20 +143,21 @@ const
 	}
 }
 
-void object::update_particle(
+bool object::update_particle(
 	const vec3& pred_pos, const vec3& pred_vel,
-	particles::free_particle *p, bool& updated
+	const particles::free_particle *p, particles::free_particle *u
 ) const
 {
 	vector<size_t> idxs;
 	octree.get_triangles(pred_pos, idxs);
 	for (size_t t_idx : idxs) {
 		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
-			tris[t_idx/3].update_particle(pred_pos, pred_vel, p);
-			updated = true;
-			return;
+			*u = *p;
+			tris[t_idx/3].update_particle(pred_pos, pred_vel, u);
+			return true;
 		}
 	}
+	return false;
 }
 
 void object::correct_position(
@@ -186,9 +187,9 @@ void object::update_particle(
 		 << ") - To be implemented!" << endl;
 }
 
-void object::update_particle(
-	const vec3& pred_pos, const vec3& pred_vel,
-	particles::sized_particle *p, bool& updated
+bool object::update_particle(
+	const math::vec3& pp, const math::vec3& pv,
+	const particles::sized_particle *p, particles::sized_particle *u
 ) const
 {
 	cerr << "object::update_particle (" << __LINE__
