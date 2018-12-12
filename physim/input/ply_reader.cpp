@@ -228,10 +228,6 @@ namespace input_private {
 		}
 		fin.close();
 
-		cout << "object info:" << endl;
-		cout << "    #vertices= " << vertices.size() << endl;
-		cout << "    #triangles= " << triangles.size()/3 << endl;
-
 		o->set_triangles(vertices, triangles);
 		return true;
 	}
