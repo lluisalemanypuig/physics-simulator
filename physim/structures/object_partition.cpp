@@ -372,7 +372,9 @@ void object_partition::get_triangles
 		n = n->children[s];
 	}
 
-	tris_idxs = *n->tris_idxs;
+	tris_idxs.insert(tris_idxs.end(),
+					 n->tris_idxs->begin(),
+					 n->tris_idxs->end());
 }
 
 // OTHERS
