@@ -140,6 +140,18 @@ namespace study_cases {
 			cout << "the object" << endl;
 		}
 
+		object_partition copy;
+		copy.copy(o->get_partition());
+
+		cout << "Repeating query..." << endl;
+		cout << "The closest triangles to point ("
+			 << p1.x << "," << p1.y << "," << p1.z
+			 << ") are:";
+		for (size_t t_idx : tris) {
+			cout << ", " << t_idx/3;
+		}
+		cout << endl;
+
 		delete o;
 	}
 
