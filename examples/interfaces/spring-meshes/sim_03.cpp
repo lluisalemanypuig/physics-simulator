@@ -43,8 +43,8 @@ namespace study_cases {
 		SR.get_simulator().set_solver(glut_functions::solver);
 		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
-		float length = 5.0f;
-		float height = 5.0f;
+		float length = 1.0f;
+		float height = 1.0f;
 
 		// build regular mesh
 		mesh2d_regular *M = new mesh2d_regular();
@@ -60,18 +60,6 @@ namespace study_cases {
 
 		mesh_particle **mp = M->get_particles();
 
-		// make positions
-		for (size_t i = 0; i < n; ++i) {
-			for (size_t j = 0; j < m; ++j) {
-				mp[ M->get_global_index(i,j) ]->cur_pos =
-					math::vec3((length/n)*i, 5.0f, (height/m)*j);
-			}
-		}
-
-		object *O = new object();
-		input::read_file("../../interfaces/models", "pipe-geometric.obj", O);
-		SR.get_simulator().add_geometry(O);
-
 		shared_ptr<rendered_triangle_mesh> model_pipe(new rendered_triangle_mesh);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "pipe-artistic.obj", *model_pipe);
@@ -80,9 +68,30 @@ namespace study_cases {
 		ro->set_model(model_pipe);
 		SR.add_geometry(ro);
 
-		SR.get_box().enlarge_box(glm::vec3(0,0,0));
-		SR.get_box().enlarge_box(glm::vec3(5,5,5));
+		box B;
+		ro->make_box(B);
+		float mx = (B.get_max().x + B.get_min().x)/2.0f;
+		float lx = B.get_max().x - B.get_min().x;
+		float mz = (B.get_max().z + B.get_min().z)/2.0f;
+		float lz = B.get_max().z - B.get_min().z;
+
+		// make positions
+		for (size_t i = 0; i < n; ++i) {
+			for (size_t j = 0; j < m; ++j) {
+				mp[ M->get_global_index(i,j) ]->cur_pos =
+					math::vec3(
+						mx + (length/n)*i,
+						2.0f,
+						mz + lz/2.0f - (height/m)*j);
+			}
+		}
+
+		object *O = new object();
+		input::read_file("../../interfaces/models", "pipe-geometric.obj", O);
+		SR.get_simulator().add_geometry(O);
+
 		SR.get_simulator().add_mesh(M);
+		SR.get_simulator().set_time_step(0.001f);
 
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
@@ -141,7 +150,7 @@ namespace study_cases {
 		cout << "    --stretch, --shear, --bend: activate bend, shear, and stretch forces" << endl;
 		cout << "        Default: stretch=yes, shear,bend=no" << endl;
 		cout << "    --mass m : set mesh's mass to m" << endl;
-		cout << "        Default: 50 Kg" << endl;
+		cout << "        Default: 1 Kg" << endl;
 		cout << "    --ke e, --kd d : set elasticity and damping parameters of the mesh" << endl;
 		cout << "        Default: Ke=150, Kd=0.5" << endl;
 		cout << "    --n #, --m # : number of particles in the x and z dimensions." << endl;
@@ -266,7 +275,7 @@ namespace study_cases {
 
 		n = 25;
 		m = 25;
-		mesh_mass = 50.0f;
+		mesh_mass = 5.0f;
 
 		glut_functions::parse_common_params(argc, argv);
 		for (int i = 2; i < argc; ++i) {

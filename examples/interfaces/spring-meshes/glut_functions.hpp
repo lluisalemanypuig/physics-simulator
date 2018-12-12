@@ -60,6 +60,7 @@ namespace glut_functions {
 	extern bool shear;
 	extern bool bend;
 
+	extern int n_iterations;
 	extern physim::solver_type solver;
 
 	extern physim::math::vec3 bgd_color;

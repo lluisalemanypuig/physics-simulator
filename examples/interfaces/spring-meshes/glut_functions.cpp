@@ -57,6 +57,7 @@ namespace glut_functions {
 	bool shear;
 	bool bend;
 
+	int n_iterations;
 	physim::solver_type solver;
 
 	physim::math::vec3 bgd_color;
@@ -84,6 +85,7 @@ namespace glut_functions {
 		SR.get_simulator().set_solver(physim::solver_type::Verlet);
 		SR.get_simulator().set_time_step(0.001f);
 
+		n_iterations = 10;
 		use_shaders = false;
 
 		sec = timing::now();

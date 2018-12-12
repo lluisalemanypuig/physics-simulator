@@ -121,7 +121,7 @@ namespace glut_functions {
 			no_shader_render();
 		}
 
-		for (int i = 0; i < 10; ++i) {
+		for (int i = 0; i < n_iterations; ++i) {
 			SR.apply_time_step();
 		}
 
