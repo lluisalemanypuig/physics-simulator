@@ -69,9 +69,17 @@ class object_partition {
 			const std::vector<size_t>& triangles,
 			const std::vector<std::vector<size_t> >& tris_per_vertex,
 			const std::vector<size_t>& vertices_idxs,
-			const std::vector<size_t>& triangle_idxs,
-			const std::string& tab = ""
+			const std::vector<size_t>& triangle_idxs
 		) const;
+
+		/**
+		 * @brief Copies a node.
+		 *
+		 * Recursively copies a node @e n.
+		 * @param n Node to be copied.
+		 * @return Reference to a node created in this function, a copy of @e n.
+		 */
+		node *copy_node(const node *n) const;
 
 	public:
 		/// Default constructor.

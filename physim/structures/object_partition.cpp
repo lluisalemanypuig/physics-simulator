@@ -55,8 +55,7 @@ object_partition::node *object_partition::make_tree_at(
 	const vector<size_t>& triangles,
 	const vector<vector<size_t> >& tris_per_vertex,
 	const vector<size_t>& vertices_idxs,
-	const vector<size_t>& triangle_idxs,
-	const string& tab
+	const vector<size_t>& triangle_idxs
 )
 const
 {
@@ -267,6 +266,26 @@ const
 	return n;
 }
 
+object_partition::node *object_partition::copy_node(const node *n) const {
+	if (n == nullptr) {
+		return nullptr;
+	}
+
+	node *c = new node();
+	__pm3_assign_v(c->center, n->center);
+
+	if (n->tris_idxs != nullptr) {
+		// this node is a leaf, so no need to copy the children
+		c->tris_idxs = new vector<size_t>(*(n->tris_idxs));
+		return c;
+	}
+
+	for (unsigned char i = 0; i < 8; ++i) {
+		c->children[i] = copy_node(n->children[i]);
+	}
+	return c;
+}
+
 // PUBLIC
 
 object_partition::object_partition() {
@@ -334,8 +353,7 @@ void object_partition::clear() {
 
 void object_partition::copy(const object_partition& part) {
 	clear();
-
-
+	root = copy_node(part.root);
 }
 
 // SETTERS
