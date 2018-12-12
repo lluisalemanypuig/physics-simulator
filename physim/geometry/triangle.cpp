@@ -36,6 +36,11 @@ triangle::triangle
 	__pm3_assign_v(v1, p1);
 	__pm3_assign_v(v2, p2);
 	__pm3_assign_v(v3, p3);
+
+	__pm3_min3(vmin, v1,v2,v3);
+	__pm3_max3(vmax, v1,v2,v3);
+	__pm3_sub_acc_s(vmin, 0.01f);
+	__pm3_add_acc_s(vmax, 0.01f);
 }
 
 triangle::triangle(const triangle& t)
@@ -57,6 +62,11 @@ void triangle::set_points
 	__pm3_assign_v(v2, p2);
 	__pm3_assign_v(v3, p3);
 	pl = plane(p1,p2,p3);
+
+	__pm3_min3(vmin, v1,v2,v3);
+	__pm3_max3(vmax, v1,v2,v3);
+	__pm3_sub_acc_s(vmin, 0.01f);
+	__pm3_add_acc_s(vmax, 0.01f);
 }
 
 void triangle::set_position(const vec3& v) {
@@ -64,6 +74,11 @@ void triangle::set_position(const vec3& v) {
 	__pm3_add_acc_v(v2, v);
 	__pm3_add_acc_v(v3, v);
 	pl.set_position(v1);
+
+	__pm3_add_acc_v(vmin, v);
+	__pm3_add_acc_v(vmax, v);
+	__pm3_sub_acc_s(vmin, 0.01f);
+	__pm3_add_acc_s(vmax, 0.01f);
 }
 
 // GETTERS
@@ -73,6 +88,11 @@ const plane& triangle::get_plane() const {
 }
 
 bool triangle::is_inside(const vec3& p, float tol) const {
+	// check if point is inside the box
+	if (not __pm3_inside_box(p, vmin,vmax)) {
+		return false;
+	}
+
 	// if the point is not inside the plane,
 	// for sure it is not inside the triangle
 	if (not pl.is_inside(p, tol)) {

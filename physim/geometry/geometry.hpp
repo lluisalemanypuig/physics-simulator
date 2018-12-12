@@ -39,6 +39,11 @@ enum geometry_type {
  */
 class geometry {
 	private:
+	protected:
+		/// Minimum coordinates of the geometry.
+		math::vec3 vmin;
+		/// Maximum coordinates of the geometry.
+		math::vec3 vmax;
 	public:
 		/// Default constructor
 		geometry();

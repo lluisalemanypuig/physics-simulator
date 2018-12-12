@@ -53,6 +53,9 @@ void object::set_triangles
 		size_t i2 = trs[3*i + 1];
 		size_t i3 = trs[3*i + 2];
 		tris[i] = triangle(vs[i1], vs[i2], vs[i3]);
+
+		__pm3_min4(vmin, vmin, vs[i1], vs[i2], vs[i3]);
+		__pm3_max4(vmax, vmax, vs[i1], vs[i2], vs[i3]);
 	}
 
 	octree.init(vs, trs);
@@ -73,6 +76,11 @@ const std::vector<triangle>& object::get_triangles() const {
 }
 
 bool object::is_inside(const vec3& p, float tol) const {
+	// check if point is inside bounding box
+	if (not __pm3_inside_box(p, vmin,vmax)) {
+		return false;
+	}
+
 	vector<size_t> idxs;
 	octree.get_triangles(p, idxs);
 	for (size_t t_idx : idxs) {

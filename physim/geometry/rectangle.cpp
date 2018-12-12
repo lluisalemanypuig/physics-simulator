@@ -35,8 +35,10 @@ rectangle::rectangle
 	// make sure that last vertex is on plane...
 	assert(pl.is_inside(v4));
 
-	__pm3_min4(min, v1,v2,v3,v4);
-	__pm3_max4(max, v1,v2,v3,v4);
+	__pm3_min4(vmin, v1,v2,v3,v4);
+	__pm3_max4(vmax, v1,v2,v3,v4);
+	__pm3_sub_acc_s(vmin, 0.01f);
+	__pm3_add_acc_s(vmax, 0.01f);
 }
 
 rectangle::rectangle(const rectangle& r) : geometry(r) {
@@ -44,9 +46,6 @@ rectangle::rectangle(const rectangle& r) : geometry(r) {
 	__pm3_assign_v(v2, r.v2);
 	__pm3_assign_v(v3, r.v3);
 	__pm3_assign_v(v4, r.v4);
-
-	__pm3_assign_v(min, r.min);
-	__pm3_assign_v(max, r.max);
 }
 
 rectangle::~rectangle() { }
@@ -59,8 +58,10 @@ void rectangle::set_position(const vec3& v) {
 	__pm3_add_acc_v(v3, v);
 	__pm3_add_acc_v(v4, v);
 
-	__pm3_add_acc_v(min, v);
-	__pm3_add_acc_v(max, v);
+	__pm3_add_acc_v(vmin, v);
+	__pm3_add_acc_v(vmax, v);
+	__pm3_sub_acc_s(vmin, 0.01f);
+	__pm3_add_acc_s(vmax, 0.01f);
 }
 
 // GETTERS
@@ -70,31 +71,21 @@ const plane& rectangle::get_plane() const {
 }
 
 bool rectangle::is_inside(const vec3& p, float tol) const {
-	// if the point is not inside the plane,
-	// for sure it is not inside the rectangle
+	// check if the point is inside the bounding box
+	if (not __pm3_inside_box(p, vmin,vmax)) {
+		return false;
+	}
+
+	// If the point is inside the bounding box then it
+	// might be 'inside' the associated plane.
+
 	if (not pl.is_inside(p, tol)) {
 		return false;
 	}
 
 	// If the point is on the associated plane
-	// then it only remains to check that is is
-	// inside the bounding box of the rectangle.
-	// If so then the point is 'inside' the rectangle.
-
-	if (not ((min.x <= p.x) and (p.x <= max.x))) {
-		// outside x
-		return false;
-	}
-	if (not ((min.y <= p.y) and (p.y <= max.y))) {
-		// outside y
-		return false;
-	}
-	if (not ((min.z <= p.z) and (p.z <= max.z))) {
-		// outside z
-		return false;
-	}
-
-	// inside box
+	// and 'inside' the plane then the point
+	// is 'inside' the rectangle.
 	return true;
 }
 

@@ -20,6 +20,14 @@ class sphere : public geometry {
 		/// Radius of the sphere.
 		float R;
 
+	private:
+		/**
+		 * @brief Updates the minimum and maximum coordinates.
+		 *
+		 * See @ref vmin, @ref vamx.
+		 */
+		void update_min_max();
+
 	public:
 		/// Default constructor.
 		sphere();

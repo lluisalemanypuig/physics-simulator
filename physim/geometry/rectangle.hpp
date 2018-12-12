@@ -34,11 +34,6 @@ class rectangle : public geometry {
 		/// The fourth vertex of the rectangle.
 		math::vec3 v4;
 
-		/// Minimum x,y,z-coordinates.
-		math::vec3 min;
-		/// Maximum x,y,z-coordinates.
-		math::vec3 max;
-
 		/// Plane associated to the rectangle.
 		plane pl;
 

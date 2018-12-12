@@ -18,6 +18,15 @@ namespace geometry {
 
 // PRIVATE
 
+void sphere::update_min_max() {
+	__pm3_assign_v(vmin, C);
+	__pm3_assign_v(vmax, C);
+	__pm3_sub_acc_s(vmin, R);
+	__pm3_add_acc_s(vmax, R);
+	__pm3_sub_acc_s(vmin, 0.01f);
+	__pm3_add_acc_s(vmax, 0.01f);
+}
+
 // PUBLIC
 
 sphere::sphere() : geometry() { }
@@ -25,6 +34,8 @@ sphere::sphere() : geometry() { }
 sphere::sphere(const vec3& c, float r) : geometry() {
 	__pm3_assign_v(C, c);
 	R = r;
+
+	update_min_max();
 }
 
 sphere::sphere(const sphere& s) : geometry(s) {
@@ -38,12 +49,14 @@ sphere::~sphere() { }
 
 void sphere::set_position(const vec3& p) {
 	__pm3_assign_v(C, p);
+	update_min_max();
 }
 
 // GETTERS
 
 void sphere::set_radius(float r) {
 	R = r;
+	update_min_max();
 }
 
 // GETTERS
@@ -57,6 +70,11 @@ float sphere::get_radius() const {
 }
 
 bool sphere::is_inside(const vec3& p, float tol) const {
+	// check first whether p is inside the bounding box
+	if (not __pm3_inside_box(p, vmin,vmax)) {
+		return false;
+	}
+
 	// compute squared distance from centre to p
 	return ((__pm3_dist2(C,p)) - R*R) <= tol;
 }
