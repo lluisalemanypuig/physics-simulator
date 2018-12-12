@@ -60,19 +60,6 @@ object_partition::node *object_partition::make_tree_at(
 )
 const
 {
-	cout << tab << "partitioning " << vertices_idxs.size() << " vertices "
-				<< "and " << triangle_idxs.size() << " triangles" << endl;
-	cout << tab << "    indices of vertices:";
-	for (size_t v_idx : vertices_idxs) {
-		cout << " " << v_idx;
-	}
-	cout << endl;
-	cout << tab << "    indices of triangles:";
-	for (size_t t_idx : triangle_idxs) {
-		cout << " " << t_idx;
-	}
-	cout << endl;
-
 	node *n = new node();
 
 	// make center, minimum and maximum points
@@ -95,11 +82,6 @@ const
 		// Let's hope that this will not be an issue.
 
 		n->tris_idxs = new vector<size_t>(triangle_idxs);
-		cout << tab << "    ** store in subspace indices:";
-		for (size_t idx : triangle_idxs) {
-			cout << " " << idx;
-		}
-		cout << endl;
 		return n;
 	}
 
@@ -108,10 +90,6 @@ const
 	// equal to the center point
 	__pm3_add_acc_s(vmin, -0.01f);
 	__pm3_add_acc_s(vmax, +0.01f);
-
-	cout << tab << "    midpoint: " << __pm3_out(n->center) << endl;
-	cout << tab << "    minimum: " << __pm3_out(vmin) << endl;
-	cout << tab << "    maximum: " << __pm3_out(vmax) << endl;
 
 	// Points defining the 12 'rectangles' that
 	// partition this subspace.
@@ -210,8 +188,6 @@ const
 		unsigned char s = 0;
 		__pm3_lt(s, v, n->center);
 
-		cout << tab << "    vertex " << v_idx << " in subspace " << int(s) << endl;
-
 		// s contains in its three lowest-weight bits the
 		// result of comparing v < n->center.
 		// This points us to one of the node's children.
@@ -280,8 +256,7 @@ const
 		n->children[i] =
 		make_tree_at(
 			vertices, triangles, tris_per_vertex,
-			vert_idxs_space[i], tris_idxs_space[i],
-			tab + "    "
+			vert_idxs_space[i], tris_idxs_space[i]
 		);
 
 		// free unused memory
@@ -341,20 +316,9 @@ void object_partition::init(
 	// corner of every triangle.
 	vector<vector<size_t> > tris_per_vertex(vertices.size());
 	for (size_t i = 0; i < tris_indices.size(); i += 3) {
-		cout << "Triangle " << i/3 << " has corners: "
-			 << tris_indices[i] << " " << tris_indices[i + 1] << " "
-			 << tris_indices[i + 2] << endl;
 		tris_per_vertex[tris_indices[i + 0]].push_back(i);
 		tris_per_vertex[tris_indices[i + 1]].push_back(i);
 		tris_per_vertex[tris_indices[i + 2]].push_back(i);
-	}
-
-	for (size_t v = 0; v < vertices.size(); ++v) {
-		cout << "vertex " << v << " has triangles:";
-		for (size_t t_idx : tris_per_vertex[v]) {
-			cout << " " << t_idx;
-		}
-		cout << endl;
 	}
 
 	root =
