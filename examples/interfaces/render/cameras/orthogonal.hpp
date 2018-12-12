@@ -3,7 +3,6 @@
 // render includes
 #include <render/cameras/observer.hpp>
 #include <render/box.hpp>
-using namespace std;
 
 class orthogonal : public observer {
 	private:
