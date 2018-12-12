@@ -13,10 +13,15 @@ namespace geometry {
 /// Enumeration for the type of geometry.
 enum geometry_type {
 	none = -1,
+	/// See @ref geometry::plane for details.
 	Plane,
+	/// See @ref geometry::triangle for details.
 	Triangle,
+	/// See @ref geometry::rectangle for details.
 	Rectangle,
+	/// See @ref geometry::sphere for details.
 	Sphere,
+	/// See @ref geometry::object for details.
 	Object
 };
 
