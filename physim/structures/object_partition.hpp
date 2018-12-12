@@ -49,7 +49,7 @@ class object_partition {
 	private:
 
 		/**
-		 * @brief Builds a tree rooted at @e n that partitions the triangles
+		 * @brief Builds a tree rooted at a node that partitions the triangles
 		 * stored in @e triangles.
 		 * @param[in] vertices The full list of non-repeated vertices of the
 		 * triangles in @e triangles.
@@ -62,7 +62,6 @@ class object_partition {
 		 * @param[in] triangle_idxs The list of triangles to incident to the
 		 * node to be created. The indexes in this list are all multiples of 3
 		 * and point to positions (also multiple of 3) in @e triangles.
-		 * @param[out] n The node that partitions the triangles in @e triangles.
 		 */
 		node *make_tree_at(
 			const std::vector<math::vec3>& vertices,
@@ -96,8 +95,6 @@ class object_partition {
 		 * @param vertices The vertices, without repetitions, of the object.
 		 * @param tris_indices The vertices indices of each triangle. Every
 		 * three integer values we have a triangle.
-		 * @param triangles A triangle soup. The set of vertices in this
-		 * triangle is equal to @e vertices.
 		 */
 		void init(
 			const std::vector<math::vec3>& vertices,

@@ -48,7 +48,15 @@ class object : public geometry {
 		 */
 		void set_position(const math::vec3& v);
 
-		/// Sets the vertices of this object. See @ref verts.
+		/**
+		 * @brief Constructs this object with triangles.
+		 *
+		 * Sets the triangles of this object (see @ref tris), and constructs
+		 * its partition (see @ref octree).
+		 * @param vs Vertices of the object.
+		 * @param trs Triangles of the object. This contains indices pointing
+		 * to vertices in @e vs. Every three values we have a triangle.
+		 */
 		void set_triangles
 		(const std::vector<math::vec3>& vs, const std::vector<size_t>& trs);
 
@@ -89,15 +97,66 @@ class object : public geometry {
 			const math::vec3& pp, const math::vec3& pv,
 			particles::free_particle *p
 		) const;
+		/**
+		 * @brief Updates a particle when its trajectory intersects this object.
+		 *
+		 * See
+		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::free_particle*)const
+		 * for details.
+		 *
+		 * @param[in] pp The predicted position of the particle.
+		 * @param[in] pv The predicted velocity of the particle.
+		 * @param[out] p The particle with the result of the collision.
+		 * @param[out] update True if the particle has been updated. False if
+		 * otherwise.
+		 */
+		void update_particle(
+			const math::vec3& pp, const math::vec3& pv,
+			particles::free_particle *p, bool& update
+		) const;
 
 		void correct_position(
 			const math::vec3& pred_pos, const particles::sized_particle *p,
 			math::vec3& correct_pos
 		) const;
+		/**
+		 * @brief Corrects a sized particle's position.
+		 *
+		 * See
+		 * @ref correct_position(const math::vec3&,const particles::sized_particle*, math::vec3&)const
+		 * for details.
+		 *
+		 * @param[in] pp Position predicted by a solver.
+		 * @param[in] p Current state of the particle.
+		 * @param[out] cp Correction of the particle's position.
+		 * @param[out] corrected True if the position has been corrected. False
+		 * if otherwise.
+		 */
+		void correct_position(
+			const math::vec3& pp, const particles::sized_particle *p,
+			math::vec3& cp, bool& corrected
+		) const;
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
 			particles::sized_particle *p
+		) const;
+		/**
+		 * @brief Updates a particle when its trajectory intersects this object.
+		 *
+		 * See
+		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::sized_particle*)const
+		 * for details.
+		 *
+		 * @param[in] pp The predicted position of the particle.
+		 * @param[in] pv The predicted velocity of the particle.
+		 * @param[out] p The particle with the result of the collision.
+		 * @param[out] update True if the particle has been updated. False if
+		 * otherwise.
+		 */
+		void update_particle(
+			const math::vec3& pp, const math::vec3& pv,
+			particles::sized_particle *p, bool& update
 		) const;
 
 		void display() const;
