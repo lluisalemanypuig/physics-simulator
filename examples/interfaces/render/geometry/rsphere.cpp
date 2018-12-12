@@ -58,7 +58,8 @@ void rsphere::make_box(box& b) const {
 	if (_model != nullptr) {
 		_model->make_box(b);
 	}
-	else {
-		b.set_min_max(C - glm::vec3(R,R,R), C + glm::vec3(R,R,R));
-	}
+
+	box B;
+	B.set_min_max(C - glm::vec3(R,R,R), C + glm::vec3(R,R,R));
+	b.enlarge_box(B);
 }
