@@ -19,6 +19,7 @@ namespace study_cases {
 	void sim_10(int argc, char *argv[]);
 	void sim_11(int argc, char *argv[]);
 	void sim_12(int argc, char *argv[]);
+	void sim_13(int argc, char *argv[]);
 
 } // -- namespace study_cases
 
@@ -63,6 +64,8 @@ void list_all_cases() {
 	cout << "           with gravity. All planes have their normals pointing outwards" << endl;
 	cout << "           quadrilateral." << endl;
 	cout << endl;
+	cout << "    * 13 : (testing) One free particle colliding with an object." << endl;
+	cout << endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -95,6 +98,7 @@ int main(int argc, char *argv[]) {
 	case 10:	study_cases::sim_10(argc, argv); break;
 	case 11:	study_cases::sim_11(argc, argv); break;
 	case 12:	study_cases::sim_12(argc, argv); break;
+	case 13:	study_cases::sim_13(argc, argv); break;
 	default:
 		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 		cerr << "    Use './particles --list' to see all cases" << endl;
