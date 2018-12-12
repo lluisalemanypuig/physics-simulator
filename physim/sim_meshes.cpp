@@ -18,6 +18,7 @@ void simulator::_simulate_meshes() {
 	// to predict the update upon collision with geometry.
 	// Although it is a free particle, the attributes
 	// of the mesh particle will be copied into this one.
+	particles::free_particle current;
 	particles::free_particle coll_pred;
 
 	for (meshes::mesh *m : ms) {
@@ -71,42 +72,11 @@ void simulator::_simulate_meshes() {
 			 * update.
 			 */
 
+			particles::from_mesh_to_free(*mps[p_idx], current);
 			particles::from_mesh_to_free(*mps[p_idx], coll_pred);
 
-			// has there been any collision?
-			bool collision = false;
-
-			// Check collision between the particle and
-			// every fixed geometrical object in the scene.
-
-			for (unsigned int g_idx = 0; g_idx < scene_fixed.size(); ++g_idx) {
-				const geometry::geometry *g = scene_fixed[g_idx];
-
-				// if the particle collides with some geometry
-				// then the geometry is in charge of updating
-				// this particle's position, velocity, ...
-
-				if (g->intersec_segment(mps[p_idx]->cur_pos, pred_pos)) {
-					collision = true;
-
-					particles::from_mesh_to_free(*mps[p_idx], coll_pred);
-
-					// the geometry updates the predicted particle
-					g->update_particle(pred_pos, pred_vel, &coll_pred);
-
-					if (solver == solver_type::Verlet) {
-						// this solver needs a correct position
-						// for the 'previous' position of the
-						// particle after a collision with geometry
-
-						__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
-					}
-
-					// keep track of the predicted particle's position
-					__pm3_assign_v(pred_pos, coll_pred.cur_pos);
-					__pm3_assign_v(pred_vel, coll_pred.cur_vel);
-				}
-			}
+			bool collision =
+			find_update_geom_collision_free(&current, pred_pos, pred_vel, coll_pred);
 
 			// give the particle the proper final state
 			if (collision) {
