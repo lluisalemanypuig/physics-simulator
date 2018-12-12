@@ -39,8 +39,6 @@ void rgeom::set_model(const std::shared_ptr<rendered_triangle_mesh>& _m) {
 
 // GETTERS
 
-bool rgeom::should_render() const { return render; }
-
 rendered_geometry_type rgeom::get_type() const {
 	return t;
 }

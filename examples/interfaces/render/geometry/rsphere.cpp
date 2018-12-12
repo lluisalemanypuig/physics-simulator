@@ -56,9 +56,9 @@ void rsphere::make_model_matrix(glm::mat4& mat) const {
 
 void rsphere::make_box(box& b) const {
 	if (_model != nullptr) {
-		b.set_min_max(C - glm::vec3(R,R,R), C + glm::vec3(R,R,R));
+		_model->make_box(b);
 	}
 	else {
-		_model->make_box(b);
+		b.set_min_max(C - glm::vec3(R,R,R), C + glm::vec3(R,R,R));
 	}
 }

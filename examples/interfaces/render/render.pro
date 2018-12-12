@@ -31,7 +31,8 @@ HEADERS += \
     triangle_mesh/triangle_mesh.hpp \
     triangle_mesh/triangle_mesh_utils.hpp \
     triangle_mesh/rendered_triangle_mesh.hpp \
-    err_war_utils.hpp
+    err_war_utils.hpp \
+    geometry/robject.hpp
 
 SOURCES += \
     obj_reader.cpp \
@@ -51,7 +52,8 @@ SOURCES += \
     shader/shader_helper.cpp \
     triangle_mesh/rendered_triangle_mesh.cpp \
     triangle_mesh/triangle_mesh.cpp \
-    triangle_mesh/triangle_mesh_utils.cpp
+    triangle_mesh/triangle_mesh_utils.cpp \
+    geometry/robject.cpp
 
 # for 'self' includes
 INCLUDEPATH += ..

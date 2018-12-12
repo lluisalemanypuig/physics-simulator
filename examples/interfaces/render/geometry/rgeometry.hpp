@@ -21,7 +21,8 @@ enum class rendered_geometry_type : int8_t {
 	plane,
 	triangle,
 	rectangle,
-	sphere
+	sphere,
+	object
 };
 
 class rgeom {
@@ -63,7 +64,6 @@ class rgeom {
 
 		// GETTERS
 
-		bool should_render() const;
 		rendered_geometry_type get_type() const;
 		std::shared_ptr<rendered_triangle_mesh> get_model();
 		const std::shared_ptr<rendered_triangle_mesh> get_model() const;
