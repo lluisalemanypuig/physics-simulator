@@ -4,6 +4,7 @@
 #include <assert.h>
 
 // C++ includes
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -72,14 +73,28 @@ const std::vector<triangle>& object::get_triangles() const {
 }
 
 bool object::is_inside(const vec3& p, float tol) const {
-	cerr << "object::is_inside (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	vector<size_t> idxs;
+	octree.get_triangles(p, idxs);
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].is_inside(p, tol)) {
+			return true;
+		}
+	}
 	return false;
 }
 
 bool object::intersec_segment(const vec3& p1, const vec3& p2) const {
-	cerr << "object::intersec_segment (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	vector<size_t> idxs;
+	octree.get_triangles(p1, idxs);
+	octree.get_triangles(p2, idxs);
+	sort(idxs.begin(), idxs.end());
+	auto last = unique(idxs.begin(), idxs.end());
+	idxs.erase(last, idxs.end());
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].intersec_segment(p1,p2)) {
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -90,8 +105,17 @@ bool object::intersec_sphere(const vec3& c, float R) const {
 }
 
 bool object::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
-	cerr << "object::intersec_segment (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	vector<size_t> idxs;
+	octree.get_triangles(p1, idxs);
+	octree.get_triangles(p2, idxs);
+	sort(idxs.begin(), idxs.end());
+	auto last = unique(idxs.begin(), idxs.end());
+	idxs.erase(last, idxs.end());
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].intersec_segment(p1,p2,p_inter)) {
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -101,8 +125,14 @@ void object::update_particle
 (const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
 const
 {
-	cerr << "object::update_particle (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	vector<size_t> idxs;
+	octree.get_triangles(pred_pos, idxs);
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
+			tris[t_idx/3].update_particle(pred_pos, pred_vel, p);
+			return;
+		}
+	}
 }
 
 void object::correct_position(
@@ -118,7 +148,8 @@ void object::update_particle
 (const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
 const
 {
-
+	cerr << "object::update_particle (" << __LINE__
+		 << ") - To be implemented!" << endl;
 }
 
 void object::display() const {
