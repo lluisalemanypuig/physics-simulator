@@ -135,6 +135,22 @@ const
 	}
 }
 
+void object::update_particle(
+	const vec3& pred_pos, const vec3& pred_vel,
+	particles::free_particle *p, bool& updated
+) const
+{
+	vector<size_t> idxs;
+	octree.get_triangles(pred_pos, idxs);
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
+			tris[t_idx/3].update_particle(pred_pos, pred_vel, p);
+			updated = true;
+			return;
+		}
+	}
+}
+
 void object::correct_position(
 	const vec3& pred_pos, const particles::sized_particle *p,
 	vec3& correct_position
@@ -144,9 +160,28 @@ void object::correct_position(
 		 << ") - To be implemented!" << endl;
 }
 
-void object::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
-const
+void object::correct_position(
+	const vec3& pred_pos, const particles::sized_particle *p,
+	vec3& correct_position, bool& updated
+) const
+{
+	cerr << "object::correct_position (" << __LINE__
+		 << ") - To be implemented!" << endl;
+}
+
+void object::update_particle(
+	const vec3& pred_pos, const vec3& pred_vel,
+	particles::sized_particle *p
+) const
+{
+	cerr << "object::update_particle (" << __LINE__
+		 << ") - To be implemented!" << endl;
+}
+
+void object::update_particle(
+	const vec3& pred_pos, const vec3& pred_vel,
+	particles::sized_particle *p, bool& updated
+) const
 {
 	cerr << "object::update_particle (" << __LINE__
 		 << ") - To be implemented!" << endl;

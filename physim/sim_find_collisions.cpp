@@ -1,10 +1,17 @@
 #include <physim/simulator.hpp>
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/math/private/math3.hpp>
 #include <physim/geometry/sphere.hpp>
+#include <physim/geometry/object.hpp>
 
 namespace physim {
+using namespace math;
+using namespace particles;
 
 // ------------------------------------------------------
 
@@ -60,9 +67,9 @@ namespace physim {
 
 bool simulator::find_update_geom_collision_free
 (
-	const particles::free_particle *p,
-	math::vec3& pred_pos, math::vec3& pred_vel,
-	particles::free_particle& coll_pred
+	const free_particle *p,
+	vec3& pred_pos, vec3& pred_vel,
+	free_particle& coll_pred
 )
 {
 	// has there been any collision?
@@ -78,26 +85,56 @@ bool simulator::find_update_geom_collision_free
 		// then the geometry is in charge of updating
 		// this particle's position, velocity, ...
 
-		if (g->intersec_segment(p->cur_pos, pred_pos)) {
-			collision = true;
+		if (g->get_geom_type() != geometry::geometry_type::Object) {
+			if (g->intersec_segment(p->cur_pos, pred_pos)) {
+				collision = true;
 
-			coll_pred = *p;
+				coll_pred = *p;
 
-			// the geometry updates the predicted particle
-			g->update_particle(pred_pos, pred_vel, &coll_pred);
+				// the geometry updates the predicted particle
+				g->update_particle(pred_pos, pred_vel, &coll_pred);
 
-			if (solver == solver_type::Verlet) {
-				// this solver needs a correct position
-				// for the 'previous' position of the
-				// particle after a collision with geometry
+				if (solver == solver_type::Verlet) {
+					// this solver needs a correct position
+					// for the 'previous' position of the
+					// particle after a collision with geometry
 
-				__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+					__pm3_sub_v_vs(coll_pred.prev_pos,
+								   coll_pred.cur_pos,
+								   coll_pred.cur_vel, dt);
+				}
+
+				// keep track of the predicted particle's position
+				__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+				__pm3_assign_v(pred_vel, coll_pred.cur_vel);
 			}
-
-			// keep track of the predicted particle's position
-			__pm3_assign_v(pred_pos, coll_pred.cur_pos);
-			__pm3_assign_v(pred_vel, coll_pred.cur_vel);
 		}
+		else {
+			// faster test with geometrical objects
+			const geometry::object *o =
+				static_cast<const geometry::object *>(g);
+
+			bool updated = false;
+			o->update_particle(pred_pos, pred_vel, &coll_pred, updated);
+
+			if (updated) {
+				collision = true;
+				coll_pred = *p;
+
+				if (solver == solver_type::Verlet) {
+					// this solver needs a correct position
+					// for the 'previous' position of the
+					// particle after a collision with geometry
+
+					__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+				}
+
+				// keep track of the predicted particle's position
+				__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+				__pm3_assign_v(pred_vel, coll_pred.cur_vel);
+			}
+		}
+
 	}
 
 	return collision;
@@ -106,9 +143,9 @@ bool simulator::find_update_geom_collision_free
 static geometry::sphere Sj;
 bool simulator::find_update_particle_collision_free
 (
-	const particles::free_particle *p,
-	math::vec3& pred_pos, math::vec3& pred_vel,
-	particles::free_particle& coll_pred
+	const free_particle *p,
+	vec3& pred_pos, vec3& pred_vel,
+	free_particle& coll_pred
 )
 {
 	bool collision = false;
@@ -153,9 +190,9 @@ bool simulator::find_update_particle_collision_free
 
 bool simulator::find_update_geom_collision_sized
 (
-	const particles::sized_particle *in,
-	math::vec3& pred_pos, math::vec3& pred_vel,
-	particles::sized_particle& coll_pred
+	const sized_particle *in,
+	vec3& pred_pos, vec3& pred_vel,
+	sized_particle& coll_pred
 )
 {
 	// has there been any collision?
@@ -200,7 +237,7 @@ bool simulator::find_update_geom_collision_sized
 }
 
 static inline bool spart_spart_collision
-(const particles::sized_particle *in, const particles::sized_particle *out)
+(const sized_particle *in, const sized_particle *out)
 {
 	float center_d2 = __pm3_dist2(in->cur_pos, out->cur_pos);
 	float sum_r = in->R + out->R;
@@ -208,7 +245,7 @@ static inline bool spart_spart_collision
 }
 
 static inline void update_particles_position
-(particles::sized_particle *in, particles::sized_particle *out)
+(sized_particle *in, sized_particle *out)
 {	
 	// distances: from 'in' to 'out', for the others see
 	// http://mathworld.wolfram.com/Circle-CircleIntersection.html
@@ -217,11 +254,11 @@ static inline void update_particles_position
 	//const float d2 = (D*D - in->R*in->R + out->R*out->R)/(2*D);
 
 	// unit vector from 'in' to 'out'
-	math::vec3 u;
+	vec3 u;
 	__pm3_sub_v_v(u, out->cur_pos, in->cur_pos);
-	math::normalise(u, u);
+	normalise(u, u);
 
-	math::vec3 M,A1,A2;
+	vec3 M,A1,A2;
 	__pm3_add_v_vs(M,   in->cur_pos, u,  d1);		//  M := c1 + d1*u
 	__pm3_add_v_vs(A1,  in->cur_pos, u,  in->R);	// A1 := c1 + R1*u
 	__pm3_add_v_vs(A2, out->cur_pos, u,-out->R);	// A2 := c2 - R2*u
@@ -236,7 +273,7 @@ static inline void update_particles_position
 }
 
 static inline void update_particles_velocity
-(particles::sized_particle *in, particles::sized_particle *out)
+(sized_particle *in, sized_particle *out)
 {
 	float norm1 = __pm3_norm(in->cur_vel);
 	float norm2 = __pm3_norm(out->cur_vel);
@@ -245,23 +282,23 @@ static inline void update_particles_velocity
 	// https://www.atmos.illinois.edu/courses/atmos100/userdocs/3Dcollisions.html
 
 	// 1. angles between the two colliders
-	math::vec3 D;
+	vec3 D;
 	__pm3_sub_v_v(D, in->cur_pos, out->cur_pos);
 
-	float xyz1 = math::angle_xyz(D, in->cur_vel);
-	float xyz2 = math::angle_xyz(D, out->cur_vel);
+	float xyz1 = angle_xyz(D, in->cur_vel);
+	float xyz2 = angle_xyz(D, out->cur_vel);
 
 	// 2. force vectors towards each other
-	math::vec3 c1, c2;
+	vec3 c1, c2;
 	__pm3_assign_vs(c1, in->cur_vel,xyz1);
 	__pm3_assign_vs(c2, out->cur_vel,xyz2);
 
 	// 3. decompose this vector into x'-y'-z' components,
 	// where x' is aligned with the center-line
-	float a_xy1 = math::angle_xy(in->cur_vel, in->cur_vel);
-	float a_xz1 = math::angle_xz(in->cur_vel, in->cur_vel);
-	float a_xy2 = math::angle_xy(out->cur_vel, out->cur_vel);
-	float a_xz2 = math::angle_xz(out->cur_vel, out->cur_vel);
+	float a_xy1 = angle_xy(in->cur_vel, in->cur_vel);
+	float a_xz1 = angle_xz(in->cur_vel, in->cur_vel);
+	float a_xy2 = angle_xy(out->cur_vel, out->cur_vel);
+	float a_xz2 = angle_xz(out->cur_vel, out->cur_vel);
 
 	c1.x = c1.x*std::sin(a_xz1)*std::cos(a_xy1);
 	c1.y = c1.y*std::sin(a_xz1)*std::sin(a_xy1);
@@ -272,7 +309,7 @@ static inline void update_particles_velocity
 	c2.z = c2.z*std::cos(a_xz2);
 
 	// 4. determine the force vector normal to the center-line
-	math::vec3 n1, n2;
+	vec3 n1, n2;
 	__pm3_sub_v_v(n1, in->cur_vel, c1);
 	__pm3_sub_v_v(n2, out->cur_vel, c2);
 
@@ -282,15 +319,15 @@ static inline void update_particles_velocity
 
 	// 6. The new velocies must have
 	// the same norm as before
-	math::normalise(in->cur_vel, in->cur_vel);
-	math::normalise(out->cur_vel, out->cur_vel);
+	normalise(in->cur_vel, in->cur_vel);
+	normalise(out->cur_vel, out->cur_vel);
 	__pm3_assign_vs(in->cur_vel, in->cur_vel,norm1);
 	__pm3_assign_vs(out->cur_vel, out->cur_vel,norm2);
 }
 
 // particle 'in' has index 'i'
 void simulator::find_update_particle_collision_sized
-(particles::sized_particle *in, size_t i)
+(sized_particle *in, size_t i)
 {
 	for (size_t j = i + 1; j < sps.size(); ++j) {
 
