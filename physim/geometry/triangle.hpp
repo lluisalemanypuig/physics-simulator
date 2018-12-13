@@ -1,11 +1,10 @@
 #pragma once
 
-// C++ includes
-
 // physim includes
 #include <physim/geometry/geometry.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/particles/free_particle.hpp>
+#include <physim/particles/sized_particle.hpp>
 #include <physim/math/vec2.hpp>
 #include <physim/math/vec3.hpp>
 
@@ -17,8 +16,9 @@ namespace geometry {
  *
  * A triangle is, informally, a polygonal object of three
  * sides of arbitrary length, whose endpoints are
- * defined by three vertices (see @ref p0, @ref p1, @ref p2),
- * in this order: the normal of the triangle is then
+ * defined by three vertices (see @ref p0, @ref p1, @ref p2).
+ *
+ * The normal of a triangle is then
  *
  * \f$ (p_1 - p_0) \times (p_2 - p_0) / || (p_1 - p_0) \times (p_2 - p_0) || \f$
  *

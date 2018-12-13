@@ -41,24 +41,55 @@ region locate
 	const physim::math::vec2 Y
 )
 {
-	if (__pm2_left_aligned(q0,q1, Y) and __pm2_left_aligned(q1,q2, Y) and __pm2_left_aligned(q2,q0, Y)) {
+	// inside triangle
+	if (__pm2_left_aligned(q0,q1, Y) and
+		__pm2_left_aligned(q1,q2, Y) and
+		__pm2_left_aligned(q2,q0, Y)
+	)
+	{
 		return r012;
 	}
-	if (__pm2_left(q0,q0n0, Y) and __pm2_right(q0,q1, Y) and __pm2_right(q1,q1n0, Y)) {
+
+	/* regions Rij */
+	if (__pm2_left(q0,q0n0, Y) and
+		__pm2_right(q0,q1, Y) and
+		__pm2_right(q1,q1n0, Y)
+	)
+	{
 		return r01;
 	}
-	if (__pm2_left(q1,q1n0, Y) and __pm2_right(q1, q1n1, Y)) {
-		return r1;
-	}
-	if (__pm2_left(q1,q1n1, Y) and __pm2_right(q1,q2, Y) and __pm2_right(q2,q2n1, Y)) {
+	if (__pm2_left(q1,q1n1, Y) and
+		__pm2_right(q1,q2, Y) and
+		__pm2_right(q2,q2n1, Y)
+	)
+	{
 		return r12;
 	}
-	if (__pm2_left(q2,q2n1, Y) and __pm2_right(q2,q2n2, Y)) {
-		return r2;
-	}
-	if (__pm2_left(q2,q2n2, Y) and __pm2_right(q2,q0, Y) and __pm2_right(q0,q0n2, Y)) {
+	if (__pm2_left(q2,q2n2, Y) and
+		__pm2_right(q2,q0, Y) and
+		__pm2_right(q0,q0n2, Y)
+	)
+	{
 		return r20;
 	}
+
+	/* regions Ri */
+
+	// in case of ties with Rij regions
+	// (R2 with R12 or R2 with R20) choose Ri
+	if ((__pm2_left(q1,q1n0, Y) and __pm2_right(q1, q1n1, Y)) or
+		__pm2_aligned(q1,q1n0, Y) or __pm2_aligned(q1,q1n1, Y)
+	)
+	{
+		return r1;
+	}
+	if ((__pm2_left(q2,q2n1, Y) and __pm2_right(q2,q2n2, Y)) or
+		__pm2_aligned(q2,q2n1, Y) or __pm2_aligned(q2,q2n2, Y)
+	)
+	{
+		return r2;
+	}
+
 	return r0;
 }
 
@@ -211,11 +242,7 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 	region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
 	switch (R) {
 	case r012:
-		__pm3_add_vs_vs_v(
-			proj,	u0,__pm3_dot(u0,p0X),
-					u1,__pm3_dot(u1,p0X),
-					p0
-		);
+		__pm3_add_vs_vs_v(proj, u0,__pm3_dot(u0,p0X), u1,__pm3_dot(u1,p0X), p0);
 		break;
 	case r0: __pm3_assign_v(proj, p0); return;
 	case r1: __pm3_assign_v(proj, p1); return;
@@ -265,9 +292,9 @@ float triangle::distance(const vec3& X) const {
 	region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
 	switch (R) {
 	case r012: return std::abs(__pm3_dot(u2,p0X));
-	case r0: return __pm2_dist(q0, Y);
-	case r1: return __pm2_dist(q1, Y);
-	case r2: return __pm2_dist(q2, Y);
+	case r0: return __pm3_dist(p0, X);
+	case r1: return __pm3_dist(p1, X);
+	case r2: return __pm3_dist(p2, X);
 	default:
 		;
 	}
@@ -359,7 +386,6 @@ bool triangle::intersec_sphere(const vec3& C, float R) const {
 	// triangle is smaller than the radius we have
 	// intersection
 	float D = distance(C);
-	cout << "point (" << __pm3_out(C) << ") is at distance: " << D << endl;
 	return D <= R;
 }
 
@@ -389,32 +415,21 @@ const
 {
 	// no need to save the position because
 	// the plane will do it for us
-	cout << "Particle" << endl;
-	cout << "    at:       " << __pm3_out(p->cur_pos) << endl;
-	cout << "    with vel: " << __pm3_out(p->cur_vel) << endl;
-	cout << "Prediction:" << endl;
-	cout << "    pos: " << __pm3_out(pred_pos) << endl;
-	cout << "    vel: " << __pm3_out(pred_vel) << endl;
 
 	// 0. Compute projection of predicted position
 	// onto the triangle.
 	vec3 proj;
 	projection(pred_pos, proj);
 
-	cout << "projected point: " << __pm3_out(proj) << endl;
-
 	// 1. Correct the position of the sized particle
 	//    (code copied to avoid recomputation of vectors)
 
 	float D = __pm3_dist(proj, pred_pos);
-	cout << "Sized particle at distance: " << D << endl;
 
 	vec3 vel_normal;
 	normalise(pred_vel, vel_normal);
 	vec3 cor_pos;
 	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, p->R - D);
-
-	cout << "Corrected position: " << __pm3_out(cor_pos) << endl;
 
 	// 2. Update the position of the underlying free particle
 	// 2.1. Compute normal of tangent plane
@@ -422,16 +437,8 @@ const
 	__pm3_sub_v_v(dir, pred_pos, proj);
 	normalise(dir,dir);
 
-	cout << "Position of plane: " << __pm3_out(cor_pos) << endl;
-	cout << "normal of plane: " << __pm3_out(dir) << endl;
-
 	plane T(dir, cor_pos);
 	T.update_particle(pred_pos, pred_vel, static_cast<free_particle *>(p));
-
-	T.display();
-	cout << "Updated particle:" << endl;
-	cout << "    pos: " << __pm3_out(p->cur_pos) << endl;
-	cout << "    vel: " << __pm3_out(p->cur_vel) << endl;
 }
 
 void triangle::display() const {
