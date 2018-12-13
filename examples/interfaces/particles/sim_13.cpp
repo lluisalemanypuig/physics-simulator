@@ -33,11 +33,31 @@ namespace study_cases {
 	typedef math::vec3 pm_vec3;
 
 	void sim_13_initialise_sim() {
+		object *O = new object();
+		input::read_file("../../interfaces/models", "pipe-geometric.obj", O);
+		SR.get_simulator().add_geometry(O);
+
+		float maxx = -numeric_limits<float>::max();
+		float minx =  numeric_limits<float>::max();
+		float maxz = -numeric_limits<float>::max();
+		float minz =  numeric_limits<float>::max();
+		const vector<triangle>& tris = O->get_triangles();
+		for (const triangle& t : tris) {
+			math::vec3 p1,p2,p3;
+			t.get_points(p1, p2, p3);
+			minx = std::min(std::min(minx, p2.x), std::min(p2.x, p3.x));
+			maxx = std::max(std::max(maxx, p2.x), std::max(p2.x, p3.x));
+			minz = std::min(std::min(minz, p2.z), std::min(p2.z, p3.z));
+			maxz = std::max(std::max(maxz, p2.z), std::max(p2.z, p3.z));
+		}
+		float mx = (minx + maxx)/2.0f;
+		float mz = (minz + maxz)/2.0f;
+
 		simulator& S = SR.get_simulator();
 
 		initialiser *I = SR.get_simulator().get_initialiser();
 		I->set_pos_initialiser(
-			[](free_particle *p) { p->cur_pos = math::vec3(3.26f,1.86f,2.12f); }
+			[mx,mz](free_particle *p) { p->cur_pos = math::vec3(mx,1.86f,mz); }
 		);
 		I->set_vel_initialiser(
 			[](free_particle *p) { p->cur_vel = math::vec3(0.0f,0.0f,0.0f); }
@@ -52,10 +72,6 @@ namespace study_cases {
 		S.add_free_particle();
 
 		S.add_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
-
-		object *O = new object();
-		input::read_file("../../interfaces/models", "pipe-geometric.obj", O);
-		SR.get_simulator().add_geometry(O);
 	}
 
 	void sim_13_initialise_sim_rend() {
