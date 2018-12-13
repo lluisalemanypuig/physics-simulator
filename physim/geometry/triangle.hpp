@@ -177,6 +177,11 @@ class triangle : public geometry {
 		 */
 		math::vec2 q2n2;
 
+	private:
+
+		/// Returns the are of this triangle.
+		float get_area() const;
+
 	public:
 		/// Default constructor.
 		triangle();

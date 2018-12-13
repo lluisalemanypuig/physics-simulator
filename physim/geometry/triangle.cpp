@@ -11,14 +11,12 @@ using namespace std;
 
 // LOCAL-DEFINED
 
+typedef physim::math::vec3 pmvec3;
+typedef physim::math::vec2 pmvec2;
+
 static inline
-float triangle_area(
-	const physim::math::vec3& v0,
-	const physim::math::vec3& v1,
-	const physim::math::vec3& v2
-)
-{
-	physim::math::vec3 C;
+float triangle_area(const pmvec3& v0,const pmvec3& v1,const pmvec3& v2) {
+	pmvec3 C;
 	__pm3_cross_diff(C, v0,v1,v2);
 	return __pm3_norm(C)/2.0f;
 }
@@ -33,12 +31,12 @@ enum triangle_region {
 static inline
 triangle_region locate
 (
-	const physim::math::vec2& q0, const physim::math::vec2& q1,
-	const physim::math::vec2& q2,
-	const physim::math::vec2& q0n0, const physim::math::vec2& q0n2,
-	const physim::math::vec2& q1n0, const physim::math::vec2& q1n1,
-	const physim::math::vec2& q2n1, const physim::math::vec2& q2n2,
-	const physim::math::vec2 Y
+	const pmvec2& q0, const pmvec2& q1,
+	const pmvec2& q2,
+	const pmvec2& q0n0, const pmvec2& q0n2,
+	const pmvec2& q1n0, const pmvec2& q1n1,
+	const pmvec2& q2n1, const pmvec2& q2n2,
+	const pmvec2 Y
 )
 {
 	// inside triangle
@@ -100,6 +98,12 @@ using namespace particles;
 namespace geometry {
 
 // PRIVATE
+
+float triangle::get_area() const {
+	pmvec3 C;
+	__pm3_cross_diff(C, p0,p1,p2);
+	return __pm3_norm(C)/2.0f;
+}
 
 // PUBLIC
 
@@ -256,7 +260,7 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 	vec2 Y;
 	__pm2_assign_c(Y, __pm3_dot(u0,p0X), __pm3_dot(u1,p0X));
 
-	cout << "    on the local ref. sys.: " << __pm2_out(Y) << endl;
+	cout << "    on the local ref. sys.: Y= " << __pm2_out(Y) << endl;
 
 	// easy regions: t012 (inside triangle), t0,t1,t2
 	triangle_region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
@@ -264,7 +268,8 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 	case t012:
 		cout << "    t012" << endl;
 		__pm3_add_vs_vs_v(proj, u0,__pm3_dot(u0,p0X), u1,__pm3_dot(u1,p0X), p0);
-		break;
+		cout << "    projection is: " << __pm3_out(proj) << endl;
+		return;
 	case t0: cout << "    t0" << endl; __pm3_assign_v(proj, p0); return;
 	case t1: cout << "    t1" << endl; __pm3_assign_v(proj, p1); return;
 	case t2: cout << "    t2" << endl; __pm3_assign_v(proj, p2); return;
@@ -281,6 +286,7 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 		cout << "    t01" << endl;
 		__pm2_sub_v_v(qY, Y, q0);
 		s = __pm2_dot(e0,qY)/__pm2_dot(e0,e0);
+		cout << "    s= " << s << endl;
 		__pm3_sub_v_v(proj, p1, p0);
 		__pm3_add_v_vs(proj, p0, proj,s);
 		break;
@@ -288,6 +294,7 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 		cout << "    t12" << endl;
 		__pm2_sub_v_v(qY, Y, q1);
 		s = __pm2_dot(e1,qY)/__pm2_dot(e1,e1);
+		cout << "    s= " << s << endl;
 		__pm3_sub_v_v(proj, p2, p1);
 		__pm3_add_v_vs(proj, p1, proj,s);
 		break;
@@ -295,6 +302,7 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 		cout << "    t20" << endl;
 		__pm2_sub_v_v(qY, Y, q2);
 		s = __pm2_dot(e2,qY)/__pm2_dot(e2,e2);
+		cout << "    s= " << s << endl;
 		__pm3_sub_v_v(proj, p0, p2);
 		__pm3_add_v_vs(proj, p2, proj,s);
 		break;
@@ -456,7 +464,10 @@ const
 	vec3 vel_normal;
 	normalise(pred_vel, vel_normal);
 	vec3 cor_pos;
-	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, p->R - D);
+	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, 0.01f + p->R - D);
+
+	cout << "    corrected position: " << __pm3_out(cor_pos) << endl;
+	cout << "        distance corrected to triangle: " << distance(cor_pos) << endl;
 
 	// 2. Update the position of the underlying free particle
 	// 2.1. Compute normal of tangent plane

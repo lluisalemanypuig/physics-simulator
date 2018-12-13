@@ -12,6 +12,9 @@ using namespace std;
 
 // LOCAL-DEFINED
 
+typedef physim::math::vec3 pmvec3;
+typedef physim::math::vec2 pmvec2;
+
 enum rectangle_region {
 	r0123,
 	r0, r1, r2, r3,
@@ -22,13 +25,13 @@ enum rectangle_region {
 static inline
 rectangle_region locate
 (
-	const physim::math::vec2& q0, const physim::math::vec2& q1,
-	const physim::math::vec2& q2, const physim::math::vec2& q3,
-	const physim::math::vec2& q0n0, const physim::math::vec2& q0n3,
-	const physim::math::vec2& q1n0, const physim::math::vec2& q1n1,
-	const physim::math::vec2& q2n1, const physim::math::vec2& q2n2,
-	const physim::math::vec2& q3n2, const physim::math::vec2& q3n3,
-	const physim::math::vec2 Y
+	const pmvec2& q0, const pmvec2& q1,
+	const pmvec2& q2, const pmvec2& q3,
+	const pmvec2& q0n0, const pmvec2& q0n3,
+	const pmvec2& q1n0, const pmvec2& q1n1,
+	const pmvec2& q2n1, const pmvec2& q2n2,
+	const pmvec2& q3n2, const pmvec2& q3n3,
+	const pmvec2 Y
 )
 {
 	// inside rectangle
