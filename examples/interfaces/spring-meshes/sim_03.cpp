@@ -71,7 +71,6 @@ namespace study_cases {
 		box B;
 		ro->make_box(B);
 		float mx = (B.get_max().x + B.get_min().x)/2.0f;
-		float lx = B.get_max().x - B.get_min().x;
 		float mz = (B.get_max().z + B.get_min().z)/2.0f;
 		float lz = B.get_max().z - B.get_min().z;
 
