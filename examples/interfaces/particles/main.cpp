@@ -84,8 +84,6 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	cout << string(argv[1]) << endl;
-
 	if (is_help(argv[1])) {
 		list_all_cases();
 		return 0;

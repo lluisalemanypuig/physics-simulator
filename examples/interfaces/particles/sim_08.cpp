@@ -35,7 +35,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	static float px_08, pz_08;
+	float px_08, py_08, pz_08;
 
 	void sim_08_make_simulation() {
 		draw_sized_particles_wire = true;
@@ -44,14 +44,7 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[&](free_particle *p) {
-				p->cur_pos = math::vec3(0.0f,5.0f,0.0f);
-			}
-		);
-		I.set_pos_initialiser(
-			[&](free_particle *p) {
-				cout << "px= " << px_08 << endl;
-				cout << "pz= " << pz_08 << endl;
-				p->cur_pos = math::vec3(px_08,5.0f,pz_08);
+				p->cur_pos = math::vec3(px_08,py_08,pz_08);
 			}
 		);
 		I.set_lifetime_initialiser(
@@ -75,7 +68,7 @@ namespace study_cases {
 		);
 		SR.get_simulator().add_geometry(pl);
 		triangle *tl = new triangle(
-			math::vec3( 1.0f,2.0f, 2.0f),
+			math::vec3( 1.0f,1.5f, 2.0f),
 			math::vec3( 1.0f,2.0f,-2.0f),
 			math::vec3(-1.0f,2.0f, 0.0f)
 		);
@@ -92,7 +85,7 @@ namespace study_cases {
 		SR.add_geometry(floor);
 		rtriangle *tri = new rtriangle();
 		tri->set_points(
-			glm::vec3( 1.0f,2.0f, 2.0f),
+			glm::vec3( 1.0f,1.5f, 2.0f),
 			glm::vec3( 1.0f,2.0f,-2.0f),
 			glm::vec3(-1.0f,2.0f, 0.0f)
 		);
@@ -130,6 +123,7 @@ namespace study_cases {
 		cout << endl;
 		cout << "Command line parameters:" << endl;
 		cout << "    --x : set initial value of position's x-coordinate" << endl;
+		cout << "    --y : set initial value of position's y-coordinate" << endl;
 		cout << "    --z : set initial value of position's z-coordinate" << endl;
 		cout << endl;
 		cout << "Keys interaction:" << endl;
@@ -224,16 +218,23 @@ namespace study_cases {
 		glut_functions::init_glut_variables();
 		glut_functions::parse_common_params(argc, argv);
 
+		px_08 = 0.0f;
+		py_08 = 3.0f;
+		pz_08 = 0.0f;
+
 		for (int i = 2; i < argc; ++i) {
-			 if (strcmp(argv[i], "--x") == 0) {
-				 px_08 = atof(argv[i + 1]);
-				 ++i;
-			 }
-			 else if (strcmp(argv[i], "--z") == 0) {
-				 pz_08 = atof(argv[i + 1]);
-				 cout << "    z= " << pz_08 << endl;
-				 ++i;
-			 }
+			if (strcmp(argv[i], "--x") == 0) {
+				px_08 = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--y") == 0) {
+				py_08 = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--z") == 0) {
+				pz_08 = atof(argv[i + 1]);
+				++i;
+			}
 		}
 
 		// ---------------- //

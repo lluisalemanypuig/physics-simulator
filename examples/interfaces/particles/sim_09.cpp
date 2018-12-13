@@ -35,7 +35,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	float px_09, py_09;
+	float px_09, py_09, pz_09;
 
 	void sim_09_make_simulation() {
 		draw_sized_particles_wire = true;
@@ -44,7 +44,7 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[&](free_particle *p) {
-				p->cur_pos = math::vec3(px_09,5.0f,py_09);
+				p->cur_pos = math::vec3(px_09,3.5f,pz_09);
 			}
 		);
 		I.set_vel_initialiser(
@@ -73,8 +73,8 @@ namespace study_cases {
 		);
 		SR.get_simulator().add_geometry(pl);
 		rectangle *rl = new rectangle(
-			math::vec3( 2.0f,2.0f, 2.0f), math::vec3( 2.0f,2.0f,-2.0f),
-			math::vec3(-2.0f,2.0f,-2.0f), math::vec3(-2.0f,2.0f, 2.0f)
+			math::vec3( 2.2f,2.4f, 2.0f), math::vec3( 1.3f,2.0f,-2.0f),
+			math::vec3(-2.9f,2.0f,-2.0f), math::vec3(-1.6f,2.4f, 2.0f)
 		);
 		SR.get_simulator().add_geometry(rl);
 		SR.get_simulator().add_gravity_acceleration(
@@ -83,14 +83,14 @@ namespace study_cases {
 
 		rplane *floor = new rplane();
 		floor->set_points(
-			glm::vec3(-5.0f, -0.05f, -5.0f), glm::vec3(-5.0f, -0.05f,  5.0f),
-			glm::vec3( 5.0f, -0.05f,  5.0f), glm::vec3( 5.0f, -0.05f, -5.0f)
+			glm::vec3(-5.0f, -0.0f, -5.0f), glm::vec3(-5.0f, -0.0f,  5.0f),
+			glm::vec3( 5.0f, -0.0f,  5.0f), glm::vec3( 5.0f, -0.0f, -5.0f)
 		);
 		SR.add_geometry(floor);
 		rrectangle *rect = new rrectangle();
 		rect->set_points(
-			glm::vec3( 2.0f,2.0f, 2.0f), glm::vec3( 2.0f,2.0f,-2.0f),
-			glm::vec3(-2.0f,2.0f,-2.0f), glm::vec3(-2.0f,2.0f, 2.0f)
+			glm::vec3( 2.2f,2.4f, 2.0f), glm::vec3( 1.3f,2.0f,-2.0f),
+			glm::vec3(-2.9f,2.0f,-2.0f), glm::vec3(-1.6f,2.4f, 2.0f)
 		);
 		rect->set_color(1.0f, 1.0f, 0.0f, 1.0f);
 		SR.add_geometry(rect);
@@ -120,9 +120,17 @@ namespace study_cases {
 	void sim_09_help() {
 		glut_functions::help();
 
-		cout << "Simulation 09 description:" << endl;
+		cout << "Simulation 09:" << endl;
 		cout << endl;
-		cout << "PENDING" << endl;
+		cout << "Sized particle bouncing on a rectangle." << endl;
+		cout << endl;
+		cout << "Command line parameters:" << endl;
+		cout << "    --x : set initial value of position's x-coordinate" << endl;
+		cout << "    --y : set initial value of position's y-coordinate" << endl;
+		cout << "    --z : set initial value of position's z-coordinate" << endl;
+		cout << endl;
+		cout << "Keys interaction:" << endl;
+		cout << "    CTRL + w: render the sized particles in wireframe" << endl;
 		cout << endl;
 	}
 
@@ -213,15 +221,23 @@ namespace study_cases {
 		glut_functions::init_glut_variables();
 		glut_functions::parse_common_params(argc, argv);
 
+		px_09 = 0.0f;
+		py_09 = 3.0f;
+		pz_09 = 0.0f;
+
 		for (int i = 2; i < argc; ++i) {
-			 if (strcmp(argv[i], "--x") == 0) {
-				 px_09 = atof(argv[i + 1]);
-				 ++i;
-			 }
-			 else if (strcmp(argv[i], "--y") == 0) {
-				 py_09 = atof(argv[i + 1]);
-				 ++i;
-			 }
+			if (strcmp(argv[i], "--x") == 0) {
+				px_09 = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--y") == 0) {
+				py_09 = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--z") == 0) {
+				pz_09 = atof(argv[i + 1]);
+				++i;
+			}
 		}
 
 		// ---------------- //
