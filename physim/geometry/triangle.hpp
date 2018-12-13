@@ -172,7 +172,8 @@ class triangle : public geometry {
 		 * @ref plane::plane(const math::vec3&,const math::vec3&,const math::vec3&)
 		 * to see how the normal is determined.
 		 */
-		triangle(const math::vec3& _v0,const math::vec3& _v1,const math::vec3& _v2);
+		triangle
+		(const math::vec3& _p0,const math::vec3& _p1,const math::vec3& _p2);
 		/// Copy constructor.
 		triangle(const triangle& t);
 		/// Destructor.
@@ -194,7 +195,7 @@ class triangle : public geometry {
 		 * to see how the normal is determined.
 		 */
 		void set_points
-		(const math::vec3& _v0,const math::vec3& _v1,const math::vec3& _v2);
+		(const math::vec3& _p0,const math::vec3& _p1,const math::vec3& _p2);
 
 		/**
 		 * @brief Sets the position of this triangle.
@@ -216,7 +217,8 @@ class triangle : public geometry {
 		 * @param[out] _v1 Second point of the triangle. See @ref p1.
 		 * @param[out] _v2 Third point of the triangle. See @ref p2.
 		 */
-		void get_points(math::vec3& _v0, math::vec3& _v1, math::vec3& _v2) const;
+		void get_points
+		(math::vec3& _p0, math::vec3& _p1, math::vec3& _p2) const;
 
 		/**
 		 * @brief Project a point to this triangle.
@@ -241,9 +243,9 @@ class triangle : public geometry {
 		geometry_type get_geom_type() const;
 
 		bool intersec_segment
-		(const math::vec3& _v0, const math::vec3& _v1) const;
+		(const math::vec3& _p0, const math::vec3& _p1) const;
 		bool intersec_segment
-		(const math::vec3& _v0, const math::vec3& _v1, math::vec3& p_inter) const;
+		(const math::vec3& _p0, const math::vec3& _p1, math::vec3& p_inter) const;
 
 		bool intersec_sphere
 		(const math::vec3& c, float R) const;

@@ -106,10 +106,10 @@ namespace geometry {
 triangle::triangle() : geometry() { }
 
 triangle::triangle
-(const vec3& v0,const vec3& v1,const vec3& v2)
+(const vec3& _p0,const vec3& _p1,const vec3& _p2)
 	: geometry()
 {
-	set_points(v0,v1,v2);
+	set_points(_p0,_p1,_p2);
 }
 
 triangle::triangle(const triangle& t)
@@ -148,12 +148,12 @@ triangle::~triangle() { }
 // SETTERS
 
 void triangle::set_points
-(const vec3& v0,const vec3& v1,const vec3& v2)
+(const vec3& _p0,const vec3& _p1,const vec3& _p2)
 {
 	/* copy vertices */
-	__pm3_assign_v(p0, v0);
-	__pm3_assign_v(p1, v1);
-	__pm3_assign_v(p2, v2);
+	__pm3_assign_v(p0, _p0);
+	__pm3_assign_v(p1, _p1);
+	__pm3_assign_v(p2, _p2);
 
 	/* make box */
 	__pm3_min3(vmin, p0,p1,p2);
@@ -223,10 +223,10 @@ const plane& triangle::get_plane() const {
 	return pl;
 }
 
-void triangle::get_points(vec3& v0, vec3& v1, vec3& v2) const {
-	__pm3_assign_v(v0, p0);
-	__pm3_assign_v(v1, p1);
-	__pm3_assign_v(v2, p2);
+void triangle::get_points(vec3& _p0, vec3& _p1, vec3& _p2) const {
+	__pm3_assign_v(_p0, p0);
+	__pm3_assign_v(_p1, p1);
+	__pm3_assign_v(_p2, p2);
 }
 
 void triangle::projection(const vec3& X, vec3& proj) const {
@@ -359,17 +359,17 @@ geometry_type triangle::get_geom_type() const {
 	return geometry_type::Triangle;
 }
 
-bool triangle::intersec_segment(const vec3& v0, const vec3& v1) const {
+bool triangle::intersec_segment(const vec3& _p0, const vec3& _p1) const {
 	vec3 intersection;
-	return intersec_segment(v0, v1, intersection);
+	return intersec_segment(_p0, _p1, intersection);
 }
 
 bool triangle::intersec_segment
-(const vec3& v0, const vec3& v1, vec3& p_inter) const
+(const vec3& _p0, const vec3& _p1, vec3& p_inter) const
 {
 	// if the segment does not intersect the plane
 	// surely it does not intersect the triangle
-	if (not pl.intersec_segment(v0,v1, p_inter)) {
+	if (not pl.intersec_segment(_p0,_p1, p_inter)) {
 		return false;
 	}
 

@@ -17,7 +17,7 @@ namespace geometry {
  *
  * A rectangle is, informally, a polygonal object of four
  * sides of same opposite length, whose endpoints are
- * defined by four vertices (see @ref v1, @ref v2, @ref v3, @ref v4).
+ * defined by four vertices (see @ref p0, @ref p1, @ref p2, @ref p3).
  *
  * These four vertices all lie on a plane (see @ref pl),
  * the creation of which depends on the order of the first
@@ -26,13 +26,13 @@ namespace geometry {
 class rectangle : public geometry {
 	private:
 		/// The first vertex of the rectangle.
-		math::vec3 v1;
+		math::vec3 p0;
 		/// The second vertex of the rectangle.
-		math::vec3 v2;
+		math::vec3 p1;
 		/// The third vertex of the rectangle.
-		math::vec3 v3;
+		math::vec3 p2;
 		/// The fourth vertex of the rectangle.
-		math::vec3 v4;
+		math::vec3 p3;
 
 		/// Plane associated to the rectangle.
 		plane pl;
@@ -83,14 +83,43 @@ class rectangle : public geometry {
 		/// Returns a constant reference to the assiociated plane (@ref pl).
 		const plane& get_plane() const;
 
+		/**
+		 * @brief Return the points of this rectangle.
+		 * @param[out] _p0 First point of the rectangle. See @ref p0.
+		 * @param[out] _p1 Second point of the rectangle. See @ref p1.
+		 * @param[out] _p2 Third point of the rectangle. See @ref p2.
+		 * @param[out] _p3 Fourth point of the rectangle. See @ref p3.
+		 */
+		void get_points
+		(math::vec3& _p0, math::vec3& _p1, math::vec3& _p2, math::vec3& _p3)
+		const;
+
+		/**
+		 * @brief Project a point to this triangle.
+		 *
+		 * The projected point is the closest point inside the triangle
+		 * to point @e p.
+		 * @param[in] p Point to measure the distance to the triangle.
+		 * @param[out] proj Projection of @e p onto the closest point to it
+		 * inside the triangle.
+		 */
+		void projection(const math::vec3& p, math::vec3& proj) const;
+
+		/**
+		 * @brief Computes the distance between a point and this triangle.
+		 * @param[in] p Point to measure the distance to the triangle.
+		 * @return Returns the distance between @e p and this triangle.
+		 */
+		float distance(const math::vec3& p) const;
+
 		bool is_inside(const math::vec3& p, float tol = 1.e-6f) const;
 
 		geometry_type get_geom_type() const;
 
 		bool intersec_segment
-		(const math::vec3& p1, const math::vec3& p2) const;
+		(const math::vec3& _p1, const math::vec3& _p2) const;
 		bool intersec_segment
-		(const math::vec3& p1, const math::vec3& p2, math::vec3& p_inter) const;
+		(const math::vec3& _p1, const math::vec3& _p2, math::vec3& p_inter) const;
 
 		bool intersec_sphere(const math::vec3& c, float R) const;
 

@@ -25,28 +25,28 @@ namespace geometry {
 rectangle::rectangle() : geometry() { }
 
 rectangle::rectangle
-(const vec3& p1,const vec3& p2, const vec3& p3,const vec3& p4)
-: geometry(), pl(plane(p1,p2,p3))
+(const vec3& _p0,const vec3& _p1, const vec3& _p2,const vec3& _p3)
+: geometry(), pl(plane(_p0,_p1,_p2))
 {
-	__pm3_assign_v(v1, p1);
-	__pm3_assign_v(v2, p2);
-	__pm3_assign_v(v3, p3);
-	__pm3_assign_v(v4, p4);
+	__pm3_assign_v(p0, _p0);
+	__pm3_assign_v(p1, _p1);
+	__pm3_assign_v(p2, _p2);
+	__pm3_assign_v(p3, _p3);
 
 	// make sure that last vertex is on plane...
-	assert(pl.is_inside(v4));
+	assert(pl.is_inside(p3));
 
-	__pm3_min4(vmin, v1,v2,v3,v4);
-	__pm3_max4(vmax, v1,v2,v3,v4);
+	__pm3_min4(vmin, p0,p1,p2,p3);
+	__pm3_max4(vmax, p0,p1,p2,p3);
 	__pm3_sub_acc_s(vmin, 0.01f);
 	__pm3_add_acc_s(vmax, 0.01f);
 }
 
 rectangle::rectangle(const rectangle& r) : geometry(r) {
-	__pm3_assign_v(v1, r.v1);
-	__pm3_assign_v(v2, r.v2);
-	__pm3_assign_v(v3, r.v3);
-	__pm3_assign_v(v4, r.v4);
+	__pm3_assign_v(p0, r.p0);
+	__pm3_assign_v(p1, r.p1);
+	__pm3_assign_v(p2, r.p2);
+	__pm3_assign_v(p3, r.p3);
 }
 
 rectangle::~rectangle() { }
@@ -54,10 +54,10 @@ rectangle::~rectangle() { }
 // SETTERS
 
 void rectangle::set_position(const vec3& v) {
-	__pm3_add_acc_v(v1, v);
-	__pm3_add_acc_v(v2, v);
-	__pm3_add_acc_v(v3, v);
-	__pm3_add_acc_v(v4, v);
+	__pm3_add_acc_v(p0, v);
+	__pm3_add_acc_v(p1, v);
+	__pm3_add_acc_v(p2, v);
+	__pm3_add_acc_v(p3, v);
 
 	__pm3_add_acc_v(vmin, v);
 	__pm3_add_acc_v(vmax, v);
@@ -69,6 +69,24 @@ void rectangle::set_position(const vec3& v) {
 
 const plane& rectangle::get_plane() const {
 	return pl;
+}
+
+void rectangle::get_points
+(math::vec3& _p0, math::vec3& _p1, math::vec3& _p2, math::vec3& _p3)
+const
+{
+	__pm3_assign_v(_p0, p0);
+	__pm3_assign_v(_p1, p1);
+	__pm3_assign_v(_p2, p2);
+	__pm3_assign_v(_p3, p3);
+}
+
+void rectangle::projection(const math::vec3& p, math::vec3& proj) const {
+
+}
+
+float rectangle::distance(const math::vec3& p) const {
+	return 0.0f;
 }
 
 bool rectangle::is_inside(const vec3& p, float tol) const {
@@ -102,11 +120,11 @@ bool rectangle::intersec_segment
 }
 
 bool rectangle::intersec_segment
-(const vec3& p1, const vec3& p2, vec3& p_inter) const
+(const vec3& _p0, const vec3& _p1, vec3& p_inter) const
 {
 	// if the segment does not intersect the plane
 	// surely it does not intersect the rectangle
-	if (not pl.intersec_segment(p1,p2, p_inter)) {
+	if (not pl.intersec_segment(_p0,_p1, p_inter)) {
 		return false;
 	}
 
@@ -152,10 +170,10 @@ const
 void rectangle::display() const {
 	cout << "I am a rectangle" << endl;
 	cout << "    with vertices:" << endl;
-	cout << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << endl;
-	cout << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << endl;
-	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << endl;
-	cout << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << endl;
+	cout << "        - Point({" << p0.x << "," << p0.y << "," << p0.z << "})" << endl;
+	cout << "        - Point({" << p1.x << "," << p1.y << "," << p1.z << "})" << endl;
+	cout << "        - Point({" << p2.x << "," << p2.y << "," << p2.z << "})" << endl;
+	cout << "        - Point({" << p3.x << "," << p3.y << "," << p3.z << "})" << endl;
 	cout << "    and plane equation:" << endl;
 	const vec3& n = pl.get_normal();
 	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
