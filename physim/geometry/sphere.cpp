@@ -13,6 +13,7 @@ using namespace std;
 
 namespace physim {
 using namespace math;
+using namespace particles;
 
 namespace geometry {
 
@@ -132,15 +133,15 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 	if (discr < 0.0f and std::abs(discr) <= 0.01f) {
 		discr = 0.0f;
 		#if defined (DEBUG)
-		std::cerr << "sphere::intersec_segment - corrected discriminant" << std::endl;
+		cerr << "sphere::intersec_segment - corrected discriminant" << endl;
 		#endif
 	}
 
 	#if defined (DEBUG)
 	if (discr < 0.0f) {
-		std::cerr << "sphere::intersec_segment - Error:" << std::endl;
-		std::cerr << "    Negative value for the discriminant: " << discr << std::endl;
-		std::cerr << "    The application will crash" << std::endl;
+		cerr << "sphere::intersec_segment - Error:" << endl;
+		cerr << "    Negative value for the discriminant: " << discr << endl;
+		cerr << "    The application will crash" << endl;
 	}
 	#endif
 
@@ -150,8 +151,8 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 
 	// compute both solutions of the equation and
 	// take the one that is closest to the interval [0,1]
-	float Lp = (-b + std::sqrt(discr))/(2.0f*a);
-	float Lm = (-b - std::sqrt(discr))/(2.0f*a);
+	float Lp = (-b + sqrt(discr))/(2.0f*a);
+	float Lm = (-b - sqrt(discr))/(2.0f*a);
 
 	float L, dp, dm;
 	L = dp = dm = 0.0f;
@@ -163,9 +164,9 @@ bool sphere::intersec_segment(const vec3& p, const vec3& q, vec3& p_inter) const
 	}
 	else {
 		// bit tricks? if Lp is smaller than 0 .., else if Lp is greater than 1 ...
-		dp = (Lp < 0.0f)*std::abs(Lp) + (Lp > 1.0f)*(Lp - 1.0f);
+		dp = (Lp < 0.0f)*abs(Lp) + (Lp > 1.0f)*(Lp - 1.0f);
 		// bit tricks? if Lm is smaller than 0 .., else if Lm is greater than 1 ...
-		dm = (Lm < 0.0f)*std::abs(Lm) + (Lm > 1.0f)*(Lm - 1.0f);
+		dm = (Lm < 0.0f)*abs(Lm) + (Lm > 1.0f)*(Lm - 1.0f);
 		// take value closest to the interval
 		L = (dp < dm ? Lp : Lm);
 		// if L is larger than 1 ... else if smaller than 0 ... else keep L
@@ -184,7 +185,7 @@ bool sphere::intersec_sphere(const vec3& c, float r) const {
 // OTHERS
 
 void sphere::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, free_particle *p)
 const
 {
 	// define a plane tangent to the sphere
@@ -216,7 +217,7 @@ const
 }
 
 void sphere::correct_position(
-	const vec3& pred_pos, const particles::sized_particle *p,
+	const vec3& pred_pos, const sized_particle *p,
 	vec3& correct_position
 ) const
 {
@@ -239,7 +240,7 @@ void sphere::correct_position(
 }
 
 void sphere::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
 const
 {
 	/* Let r be the particle's radius.
@@ -271,13 +272,13 @@ const
 
 	// make the plane update the particle
 	tan_plane.update_particle
-	(pred_pos, pred_vel, static_cast<particles::free_particle *>(p));
+	(pred_pos, pred_vel, static_cast<free_particle *>(p));
 }
 
 void sphere::display() const {
-	cout << "I am a sphere" << std::endl;
-	cout << "    with centre: (" << C.x << "," << C.y << "," << C.z << ")" << std::endl;
-	cout << "    and radius: " << R << std::endl;
+	cout << "I am a sphere" << endl;
+	cout << "    with centre: (" << C.x << "," << C.y << "," << C.z << ")" << endl;
+	cout << "    and radius: " << R << endl;
 }
 
 } // -- namespace geom

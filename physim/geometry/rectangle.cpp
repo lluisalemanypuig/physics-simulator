@@ -14,6 +14,7 @@ using namespace std;
 
 namespace physim {
 using namespace math;
+using namespace particles;
 
 namespace geometry {
 
@@ -126,14 +127,14 @@ bool rectangle::intersec_sphere(const vec3& c, float R) const {
 // OTHERS
 
 void rectangle::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, free_particle *p)
 const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }
 
 void rectangle::correct_position(
-	const vec3& pred_pos, const particles::sized_particle *p,
+	const vec3& pred_pos, const sized_particle *p,
 	vec3& correct_position
 ) const
 {
@@ -141,7 +142,7 @@ void rectangle::correct_position(
 }
 
 void rectangle::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
 const
 {
 	cerr << "rectangle::update_particle (" << __LINE__ << ") - Error" << endl;
@@ -149,16 +150,16 @@ const
 }
 
 void rectangle::display() const {
-	cout << "I am a rectangle" << std::endl;
-	cout << "    with vertices:" << std::endl;
-	cout << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << std::endl;
-	cout << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << std::endl;
-	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << std::endl;
-	cout << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << std::endl;
-	cout << "    and plane equation:" << std::endl;
+	cout << "I am a rectangle" << endl;
+	cout << "    with vertices:" << endl;
+	cout << "        - Point({" << v1.x << "," << v1.y << "," << v1.z << "})" << endl;
+	cout << "        - Point({" << v2.x << "," << v2.y << "," << v2.z << "})" << endl;
+	cout << "        - Point({" << v3.x << "," << v3.y << "," << v3.z << "})" << endl;
+	cout << "        - Point({" << v4.x << "," << v4.y << "," << v4.z << "})" << endl;
+	cout << "    and plane equation:" << endl;
 	const vec3& n = pl.get_normal();
 	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-		 << pl.get_constant() << " = 0" << std::endl;
+		 << pl.get_constant() << " = 0" << endl;
 }
 
 } // -- namespace geom

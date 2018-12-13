@@ -9,6 +9,7 @@ using namespace std;
 
 namespace physim {
 using namespace math;
+using namespace particles;
 
 namespace geometry {
 
@@ -120,7 +121,7 @@ bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) cons
 // OTHERS
 
 void plane::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, free_particle *p)
 const
 {
 	p->save_position();
@@ -157,7 +158,7 @@ const
 }
 
 void plane::correct_position(
-	const vec3& pred_pos, const particles::sized_particle *p,
+	const vec3& pred_pos, const sized_particle *p,
 	vec3& correct_position
 ) const
 {
@@ -186,7 +187,7 @@ void plane::correct_position(
 }
 
 void plane::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
 const
 {
 	p->save_position();
@@ -207,7 +208,7 @@ const
 	 */
 
 	float D = dist_point_plane(pred_pos);
-	float d = (std::signbit(D) ? -1.0f : 1.0f)*(p->R - std::abs(D));
+	float d = (signbit(D) ? -1.0f : 1.0f)*(p->R - std::abs(D));
 
 	vec3 P;
 	__pm3_add_v_vs(P, pred_pos, normal,d);
@@ -215,16 +216,16 @@ const
 	plane Q(normal, P);
 	vec3 I;
 	Q.intersec_segment(p->cur_pos, pred_pos, I);
-	Q.update_particle(I, pred_vel, static_cast<particles::free_particle *>(p));
+	Q.update_particle(I, pred_vel, static_cast<free_particle *>(p));
 }
 
 void plane::display() const {
-	cout << "I am a plane" << std::endl;
-	cout << "    with plane equation:" << std::endl;
+	cout << "I am a plane" << endl;
+	cout << "    with plane equation:" << endl;
 	cout << "        " << normal.x << "*x + "
-					 << normal.y << "*y + "
-					 << normal.z << "*z + "
-					 << dconst << " = 0" << std::endl;
+					   << normal.y << "*y + "
+					   << normal.z << "*z + "
+					   << dconst << " = 0" << endl;
 }
 
 } // -- namespace geom
