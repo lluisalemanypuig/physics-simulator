@@ -156,6 +156,7 @@ class geometry {
 		 * @param[in] pred_pos Position predicted by a solver.
 		 * @param[in] p Current state of the particle.
 		 * @param[out] correct_pos Correction of the particle's position.
+		 * @pre The sized particle intersects the geometry.
 		 */
 		virtual void correct_position
 		(const math::vec3& pred_pos, const particles::sized_particle *p,

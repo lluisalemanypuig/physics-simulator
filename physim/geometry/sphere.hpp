@@ -24,7 +24,7 @@ class sphere : public geometry {
 		/**
 		 * @brief Updates the minimum and maximum coordinates.
 		 *
-		 * See @ref vmin, @ref vamx.
+		 * See @ref vmin, @ref vmax.
 		 */
 		void update_min_max();
 

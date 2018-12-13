@@ -23,15 +23,15 @@ float triangle_area(
 	return __pm3_norm(C)/2.0f;
 }
 
-enum region {
-	r012,
-	r0, r1, r2,
-	r01, r12, r20
+enum triangle_region {
+	t012,
+	t0, t1, t2,
+	t01, t12, t20
 };
 
 // locate point Y in the triangle (q0,q1,q2)
 static inline
-region locate
+triangle_region locate
 (
 	const physim::math::vec2& q0, const physim::math::vec2& q1,
 	const physim::math::vec2& q2,
@@ -47,7 +47,7 @@ region locate
 		__pm2_left_aligned(q2,q0, Y)
 	)
 	{
-		return r012;
+		return triangle_region::t012;
 	}
 
 	/* regions Rij */
@@ -56,21 +56,21 @@ region locate
 		__pm2_right(q1,q1n0, Y)
 	)
 	{
-		return r01;
+		return triangle_region::t01;
 	}
 	if (__pm2_left(q1,q1n1, Y) and
 		__pm2_right(q1,q2, Y) and
 		__pm2_right(q2,q2n1, Y)
 	)
 	{
-		return r12;
+		return triangle_region::t12;
 	}
 	if (__pm2_left(q2,q2n2, Y) and
 		__pm2_right(q2,q0, Y) and
 		__pm2_right(q0,q0n2, Y)
 	)
 	{
-		return r20;
+		return triangle_region::t20;
 	}
 
 	/* regions Ri */
@@ -81,16 +81,16 @@ region locate
 		__pm2_aligned(q1,q1n0, Y) or __pm2_aligned(q1,q1n1, Y)
 	)
 	{
-		return r1;
+		return triangle_region::t1;
 	}
 	if ((__pm2_left(q2,q2n1, Y) and __pm2_right(q2,q2n2, Y)) or
 		__pm2_aligned(q2,q2n1, Y) or __pm2_aligned(q2,q2n2, Y)
 	)
 	{
-		return r2;
+		return triangle_region::t2;
 	}
 
-	return r0;
+	return triangle_region::t0;
 }
 
 namespace physim {
@@ -123,13 +123,13 @@ triangle::triangle(const triangle& t)
 	__pm3_assign_v(u1, t.u1);
 	__pm3_assign_v(u2, t.u2);
 
-	__pm2_assign_v(e0, t.e0);
-	__pm2_assign_v(e1, t.e1);
-	__pm2_assign_v(e2, t.e2);
-
 	__pm2_assign_v(q0, t.q0);
 	__pm2_assign_v(q1, t.q1);
 	__pm2_assign_v(q2, t.q2);
+
+	__pm2_assign_v(e0, t.e0);
+	__pm2_assign_v(e1, t.e1);
+	__pm2_assign_v(e2, t.e2);
 
 	__pm2_assign_v(n0, t.n0);
 	__pm2_assign_v(n1, t.n1);
@@ -192,11 +192,11 @@ void triangle::set_points
 	normalise(n2, n2);
 	// normal edge points
 	__pm2_add_v_v(q0n0, q0, n0);
+	__pm2_add_v_v(q0n2, q0, n2);
 	__pm2_add_v_v(q1n0, q1, n0);
 	__pm2_add_v_v(q1n1, q1, n1);
 	__pm2_add_v_v(q2n1, q2, n1);
 	__pm2_add_v_v(q2n2, q2, n2);
-	__pm2_add_v_v(q0n2, q0, n2);
 
 	// make plane
 	pl = plane(u2, p1);
@@ -238,37 +238,37 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 	vec2 Y;
 	__pm2_assign_c(Y, __pm3_dot(u0,p0X), __pm3_dot(u1,p0X));
 
-	// easy regions: r012 (inside triangle), r0,r1,r2
-	region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
+	// easy regions: t012 (inside triangle), t0,t1,t2
+	triangle_region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
 	switch (R) {
-	case r012:
+	case t012:
 		__pm3_add_vs_vs_v(proj, u0,__pm3_dot(u0,p0X), u1,__pm3_dot(u1,p0X), p0);
 		break;
-	case r0: __pm3_assign_v(proj, p0); return;
-	case r1: __pm3_assign_v(proj, p1); return;
-	case r2: __pm3_assign_v(proj, p2); return;
+	case t0: __pm3_assign_v(proj, p0); return;
+	case t1: __pm3_assign_v(proj, p1); return;
+	case t2: __pm3_assign_v(proj, p2); return;
 	default:
 		;
 	}
 
 	// difficult regions (deimited by edges)
-	// r01, r12, r20
+	// t01, t12, t20
 	float s;
 	vec2 qY;
 	switch (R) {
-	case r01:
+	case t01:
 		__pm2_sub_v_v(qY, Y, q0);
 		s = __pm2_dot(e0,qY)/__pm2_dot(e0,e0);
 		__pm3_sub_v_v(proj, p1, p0);
 		__pm3_add_v_vs(proj, p0, proj,s);
 		break;
-	case r12:
+	case t12:
 		__pm2_sub_v_v(qY, Y, q1);
 		s = __pm2_dot(e1,qY)/__pm2_dot(e1,e1);
 		__pm3_sub_v_v(proj, p2, p1);
 		__pm3_add_v_vs(proj, p1, proj,s);
 		break;
-	case r20:
+	case t20:
 		__pm2_sub_v_v(qY, Y, q2);
 		s = __pm2_dot(e2,qY)/__pm2_dot(e2,e2);
 		__pm3_sub_v_v(proj, p0, p2);
@@ -289,12 +289,12 @@ float triangle::distance(const vec3& X) const {
 	__pm2_assign_c(Y, __pm3_dot(u0,p0X), __pm3_dot(u1,p0X));
 
 	// easy regions: r012 (inside triangle), r0,r1,r2
-	region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
+	triangle_region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
 	switch (R) {
-	case r012: return std::abs(__pm3_dot(u2,p0X));
-	case r0: return __pm3_dist(p0, X);
-	case r1: return __pm3_dist(p1, X);
-	case r2: return __pm3_dist(p2, X);
+	case t012: return std::abs(__pm3_dot(u2,p0X));
+	case t0: return __pm3_dist(p0, X);
+	case t1: return __pm3_dist(p1, X);
+	case t2: return __pm3_dist(p2, X);
 	default:
 		;
 	}
@@ -305,19 +305,19 @@ float triangle::distance(const vec3& X) const {
 	vec2 qY;
 	vec3 proj;
 	switch (R) {
-	case r01:
+	case t01:
 		__pm2_sub_v_v(qY, Y, q0);
 		s = __pm2_dot(e0,qY)/__pm2_dot(e0,e0);
 		__pm3_sub_v_v(proj, p1, p0);
 		__pm3_add_v_vs(proj, p0, proj,s);
 		break;
-	case r12:
+	case t12:
 		__pm2_sub_v_v(qY, Y, q1);
 		s = __pm2_dot(e1,qY)/__pm2_dot(e1,e1);
 		__pm3_sub_v_v(proj, p2, p1);
 		__pm3_add_v_vs(proj, p1, proj,s);
 		break;
-	case r20:
+	case t20:
 		__pm2_sub_v_v(qY, Y, q2);
 		s = __pm2_dot(e2,qY)/__pm2_dot(e2,e2);
 		__pm3_sub_v_v(proj, p0, p2);
@@ -381,12 +381,13 @@ bool triangle::intersec_segment
 	return false;
 }
 
-bool triangle::intersec_sphere(const vec3& C, float R) const {
-	// if the distance between the center and the
-	// triangle is smaller than the radius we have
-	// intersection
-	float D = distance(C);
-	return D <= R;
+bool triangle::intersec_sphere(const vec3& c, float R) const {
+	// if the distance between the projection of
+	// the center onto the triangle and the center
+	// is smaller than the radius we have intersection
+	vec3 proj;
+	projection(c, proj);
+	return __pm3_dist2(c, proj) <= R*R;
 }
 
 // OTHERS
@@ -400,13 +401,15 @@ const
 
 void triangle::correct_position(
 	const vec3& pred_pos, const sized_particle *p,
-	vec3& correct_position
+	vec3& cor_pos
 ) const
 {
 	float D = distance(pred_pos);
 	vec3 vel_normal;
 	normalise(p->cur_vel, vel_normal);
-	__pm3_sub_v_vs(correct_position, pred_pos, vel_normal, D);
+	// the correct position is the predicted position
+	// moved 'backwards' as much distance as the intersection
+	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, p->R - D);
 }
 
 void triangle::update_particle

@@ -112,14 +112,13 @@ class object : public geometry {
 		 * @param[in] p Original particle. This particle's current position is
 		 * used to construct the segment used in the intersection tests.
 		 * @param[out] u The particle with the result of the collision.
-		 * @param[out] update True if the particle has been updated. False if
-		 * otherwise.
 		 * @return Returns true if there was collision and the particle @e u
 		 * was updated.
 		 */
 		bool update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			const particles::free_particle *p, particles::free_particle *u
+			const particles::free_particle *p,
+			particles::free_particle *u
 		) const;
 
 		void correct_position(
@@ -163,14 +162,13 @@ class object : public geometry {
 		 * @param[in] p Original particle. This particle's current position is
 		 * used to construct the segment used in the intersection tests.
 		 * @param[out] u The particle with the result of the collision.
-		 * @param[out] update True if the particle has been updated. False if
-		 * otherwise.
 		 * @return Returns true if there was collision and the particle @e u
 		 * was updated.
 		 */
 		bool update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			const particles::sized_particle *p, particles::sized_particle *u
+			const particles::sized_particle *p,
+			particles::sized_particle *u
 		) const;
 
 		void display() const;
