@@ -68,16 +68,25 @@ void list_all_cases() {
 	cout << endl;
 }
 
+bool is_help(const char *arg) {
+	return (strcmp(arg, "-h") == 0) or
+		   (strcmp(arg, "--h") == 0) or
+		   (strcmp(arg, "--he") == 0) or
+		   (strcmp(arg, "--hel") == 0) or
+		   (strcmp(arg, "--help") == 0);
+}
+
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
 		cerr << "Error: lacking parameter for scene: ./particles case_identifier" << endl;
-		cerr << "    Use './particles --list' or" << endl;
-		cerr << "        './particles --help' or" << endl;
-		cerr << "    to see all scenes available." << endl;
+		cerr << "    Use './particles --help' or" << endl;
+		cerr << "to see all scenes available." << endl;
 		return 1;
 	}
 
-	if (strcmp(argv[1], "--list") == 0 or strcmp(argv[1], "--help") == 0) {
+	cout << string(argv[1]) << endl;
+
+	if (is_help(argv[1])) {
 		list_all_cases();
 		return 0;
 	}
