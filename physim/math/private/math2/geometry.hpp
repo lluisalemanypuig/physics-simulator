@@ -53,12 +53,18 @@
 // signed area of the triangle p,q,r
 #define __pm2_signed_area(p,q, r)		\
 	((q.x - p.x)*(r.y - p.y) - (q.y - p.y)*(r.x - p.x))
-// is the point to the left of the oriented line p,q?
-#define __pm2_left(p,q, r)				\
-	(__pm2_signed_area(p,q, r) > 0.0f)
 // is the point aligned with the oriented line p,q?
 #define __pm2_aligned(p,q, r)			\
 	(__pm2_signed_area(p,q, r) == 0.0f)
+// is the point to the left of the oriented line p,q?
+#define __pm2_left(p,q, r)				\
+	(__pm2_signed_area(p,q, r) > 0.0f)
+// is the point aligned and/or to the left of the oriented line p,q?
+#define __pm2_left_aligned(p,q, r)				\
+	(__pm2_signed_area(p,q, r) >= 0.0f)
 // is the point to the right of the oriented line p,q?
 #define __pm2_right(p,q, r)				\
 	(__pm2_signed_area(p,q, r) < 0.0f)
+// is the point aligned and/or to the right of the oriented line p,q?
+#define __pm2_right_aligned(p,q, r)				\
+	(__pm2_signed_area(p,q, r) <= 0.0f)
