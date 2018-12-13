@@ -122,9 +122,16 @@ namespace study_cases {
 	void sim_08_help() {
 		glut_functions::help();
 
-		cout << "Simulation 08 description:" << endl;
+		cout << "Simulation 08:" << endl;
 		cout << endl;
-		cout << "PENDING" << endl;
+		cout << "Sized particle bouncing on a triangle." << endl;
+		cout << endl;
+		cout << "Command line parameters:" << endl;
+		cout << "    --x : set initial value of position's x-coordinate" << endl;
+		cout << "    --y : set initial value of position's y-coordinate" << endl;
+		cout << endl;
+		cout << "Keys interaction:" << endl;
+		cout << "    CTRL + w: render the sized particles in wireframe" << endl;
 		cout << endl;
 	}
 
@@ -233,8 +240,8 @@ namespace study_cases {
 	}
 
 	void sim_08(int argc, char *argv[]) {
-		sim_08_help();
 		sim_08_initGL(argc, argv);
+		sim_08_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);

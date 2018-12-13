@@ -254,8 +254,8 @@ namespace study_cases {
 	}
 
 	void sim_12(int argc, char *argv[]) {
-		sim_12_help();
 		sim_12_initGL(argc, argv);
+		sim_12_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
