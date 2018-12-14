@@ -256,29 +256,6 @@ const
 }
 
 void rectangle::projection(const vec3& X, vec3& proj) const {
-	cout << "info:" << endl;
-	cout << "    p0: " << __pm3_out(p0) << endl;
-	cout << "    p1: " << __pm3_out(p1) << endl;
-	cout << "    p2: " << __pm3_out(p2) << endl;
-	cout << "    p3: " << __pm3_out(p3) << endl;
-	cout << "    q0: " << __pm2_out(q0) << endl;
-	cout << "    q1: " << __pm2_out(q1) << endl;
-	cout << "    q2: " << __pm2_out(q2) << endl;
-	cout << "    q3: " << __pm2_out(q3) << endl;
-	cout << "    n0: " << __pm2_out(n0) << endl;
-	cout << "    n1: " << __pm2_out(n1) << endl;
-	cout << "    n2: " << __pm2_out(n2) << endl;
-	cout << "    n3: " << __pm2_out(n3) << endl;
-	cout << "    q0n0: " << __pm2_out(q0n0) << endl;
-	cout << "    q0n3: " << __pm2_out(q0n3) << endl;
-	cout << "    q1n0: " << __pm2_out(q1n0) << endl;
-	cout << "    q1n1: " << __pm2_out(q1n1) << endl;
-	cout << "    q2n1: " << __pm2_out(q2n1) << endl;
-	cout << "    q2n2: " << __pm2_out(q2n2) << endl;
-	cout << "    q3n2: " << __pm2_out(q3n2) << endl;
-	cout << "    q3n3: " << __pm2_out(q3n3) << endl;
-	cout << "calculating projection of point: " << __pm3_out(X) << endl;
-
 	vec3 p0X;
 	__pm3_sub_v_v(p0X, X, p0);
 
@@ -287,13 +264,10 @@ void rectangle::projection(const vec3& X, vec3& proj) const {
 	vec2 Y;
 	__pm2_assign_c(Y, __pm3_dot(u0,p0X), __pm3_dot(u1,p0X));
 
-	cout << "    on the local ref. sys.: " << __pm2_out(Y) << endl;
-
 	// easy regions: r012 (inside rectangle), r0,r1,r2
 	rectangle_region R = locate(q0,q1,q2,q3, q0n0,q0n3,q1n0,q1n1,q2n1,q2n2,q3n2,q3n3, Y);
 	switch (R) {
 	case r0123:
-		cout << "    r0123" << endl;
 		__pm3_add_vs_vs_v(proj, u0,__pm3_dot(u0,p0X), u1,__pm3_dot(u1,p0X), p0);
 		break;
 	case r0: cout << "    r0" << endl; __pm3_assign_v(proj, p0); return;
@@ -310,28 +284,24 @@ void rectangle::projection(const vec3& X, vec3& proj) const {
 	vec2 qY;
 	switch (R) {
 	case r01:
-		cout << "    r01" << endl;
 		__pm2_sub_v_v(qY, Y, q0);
 		s = __pm2_dot(e0,qY)/__pm2_dot(e0,e0);
 		__pm3_sub_v_v(proj, p1, p0);
 		__pm3_add_v_vs(proj, p0, proj,s);
 		break;
 	case r12:
-		cout << "    r12" << endl;
 		__pm2_sub_v_v(qY, Y, q1);
 		s = __pm2_dot(e1,qY)/__pm2_dot(e1,e1);
 		__pm3_sub_v_v(proj, p2, p1);
 		__pm3_add_v_vs(proj, p1, proj,s);
 		break;
 	case r23:
-		cout << "    r23" << endl;
 		__pm2_sub_v_v(qY, Y, q2);
 		s = __pm2_dot(e2,qY)/__pm2_dot(e2,e2);
 		__pm3_sub_v_v(proj, p3, p2);
 		__pm3_add_v_vs(proj, p2, proj,s);
 		break;
 	case r30:
-		cout << "    r30" << endl;
 		__pm2_sub_v_v(qY, Y, q3);
 		s = __pm2_dot(e3,qY)/__pm2_dot(e3,e3);
 		__pm3_sub_v_v(proj, p0, p3);
@@ -401,10 +371,6 @@ bool rectangle::intersec_sphere(const vec3& c, float R) const {
 	// is smaller than the radius we have intersection
 	vec3 proj;
 	projection(c, proj);
-
-	cout << "Point " << __pm3_out(c) << " is projected at: "
-		 << __pm3_out(proj) << endl;
-
 	return __pm3_dist2(c, proj) <= R*R;
 }
 

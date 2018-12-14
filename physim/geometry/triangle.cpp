@@ -234,24 +234,6 @@ void triangle::get_points(vec3& _p0, vec3& _p1, vec3& _p2) const {
 }
 
 void triangle::projection(const vec3& X, vec3& proj) const {
-	cout << "info:" << endl;
-	cout << "    p0: " << __pm3_out(p0) << endl;
-	cout << "    p1: " << __pm3_out(p1) << endl;
-	cout << "    p2: " << __pm3_out(p2) << endl;
-	cout << "    q0: " << __pm2_out(q0) << endl;
-	cout << "    q1: " << __pm2_out(q1) << endl;
-	cout << "    q2: " << __pm2_out(q2) << endl;
-	cout << "    n0: " << __pm2_out(n0) << endl;
-	cout << "    n1: " << __pm2_out(n1) << endl;
-	cout << "    n2: " << __pm2_out(n2) << endl;
-	cout << "    q0n0: " << __pm2_out(q0n0) << endl;
-	cout << "    q0n2: " << __pm2_out(q0n2) << endl;
-	cout << "    q1n0: " << __pm2_out(q1n0) << endl;
-	cout << "    q1n1: " << __pm2_out(q1n1) << endl;
-	cout << "    q2n1: " << __pm2_out(q2n1) << endl;
-	cout << "    q2n2: " << __pm2_out(q2n2) << endl;
-	cout << "calculating projection of point: " << __pm3_out(X) << endl;
-
 	vec3 p0X;
 	__pm3_sub_v_v(p0X, X, p0);
 
@@ -260,19 +242,15 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 	vec2 Y;
 	__pm2_assign_c(Y, __pm3_dot(u0,p0X), __pm3_dot(u1,p0X));
 
-	cout << "    on the local ref. sys.: Y= " << __pm2_out(Y) << endl;
-
 	// easy regions: t012 (inside triangle), t0,t1,t2
 	triangle_region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
 	switch (R) {
 	case t012:
-		cout << "    t012" << endl;
 		__pm3_add_vs_vs_v(proj, u0,__pm3_dot(u0,p0X), u1,__pm3_dot(u1,p0X), p0);
-		cout << "    projection is: " << __pm3_out(proj) << endl;
 		return;
-	case t0: cout << "    t0" << endl; __pm3_assign_v(proj, p0); return;
-	case t1: cout << "    t1" << endl; __pm3_assign_v(proj, p1); return;
-	case t2: cout << "    t2" << endl; __pm3_assign_v(proj, p2); return;
+	case t0: __pm3_assign_v(proj, p0); return;
+	case t1: __pm3_assign_v(proj, p1); return;
+	case t2: __pm3_assign_v(proj, p2); return;
 	default:
 		;
 	}
@@ -283,26 +261,20 @@ void triangle::projection(const vec3& X, vec3& proj) const {
 	vec2 qY;
 	switch (R) {
 	case t01:
-		cout << "    t01" << endl;
 		__pm2_sub_v_v(qY, Y, q0);
 		s = __pm2_dot(e0,qY)/__pm2_dot(e0,e0);
-		cout << "    s= " << s << endl;
 		__pm3_sub_v_v(proj, p1, p0);
 		__pm3_add_v_vs(proj, p0, proj,s);
 		break;
 	case t12:
-		cout << "    t12" << endl;
 		__pm2_sub_v_v(qY, Y, q1);
 		s = __pm2_dot(e1,qY)/__pm2_dot(e1,e1);
-		cout << "    s= " << s << endl;
 		__pm3_sub_v_v(proj, p2, p1);
 		__pm3_add_v_vs(proj, p1, proj,s);
 		break;
 	case t20:
-		cout << "    t20" << endl;
 		__pm2_sub_v_v(qY, Y, q2);
 		s = __pm2_dot(e2,qY)/__pm2_dot(e2,e2);
-		cout << "    s= " << s << endl;
 		__pm3_sub_v_v(proj, p0, p2);
 		__pm3_add_v_vs(proj, p2, proj,s);
 		break;
@@ -323,7 +295,7 @@ float triangle::distance(const vec3& X) const {
 	// easy regions: r012 (inside triangle), r0,r1,r2
 	triangle_region R = locate(q0,q1,q2, q0n0,q0n2,q1n0,q1n1,q2n1,q2n2, Y);
 	switch (R) {
-	case t012: return std::abs(__pm3_dot(u2,p0X));
+	case t012: return abs(__pm3_dot(u2,p0X));
 	case t0: return __pm3_dist(p0, X);
 	case t1: return __pm3_dist(p1, X);
 	case t2: return __pm3_dist(p2, X);
@@ -453,31 +425,26 @@ const
 	vec3 cor_pos;
 	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, 0.01f + p->R - D);
 
-	cout << "    corrected position: " << __pm3_out(cor_pos) << endl;
-	cout << "        distance corrected to triangle: " << distance(cor_pos) << endl;
-
 	// 2. Update the position of the underlying free particle
 	// 2.1. Compute normal of tangent plane
 	vec3 dir;
 	__pm3_sub_v_v(dir, pred_pos, proj);
 	normalise(dir,dir);
 
-	cout << "    tangent plane normal: " << __pm3_out(dir) << endl;
-
 	plane T(dir, cor_pos);
 	T.update_particle(pred_pos, pred_vel, static_cast<free_particle *>(p));
 }
 
 void triangle::display() const {
-	cout << "I am a triangle" << std::endl;
-	cout << "    with vertices:" << std::endl;
-	cout << "        - Point({" << p0.x << "," << p0.y << "," << p0.z << "})" << std::endl;
-	cout << "        - Point({" << p1.x << "," << p1.y << "," << p1.z << "})" << std::endl;
-	cout << "        - Point({" << p2.x << "," << p2.y << "," << p2.z << "})" << std::endl;
-	cout << "    and plane equation:" << std::endl;
+	cout << "I am a triangle" << endl;
+	cout << "    with vertices:" << endl;
+	cout << "        - Point({" << p0.x << "," << p0.y << "," << p0.z << "})" << endl;
+	cout << "        - Point({" << p1.x << "," << p1.y << "," << p1.z << "})" << endl;
+	cout << "        - Point({" << p2.x << "," << p2.y << "," << p2.z << "})" << endl;
+	cout << "    and plane equation:" << endl;
 	const vec3& n = pl.get_normal();
 	cout << "        " << n.x << "*x + " << n.y << "*y + " << n.z << "*z + "
-		 << pl.get_constant() << " = 0" << std::endl;
+		 << pl.get_constant() << " = 0" << endl;
 }
 
 } // -- namespace geom
