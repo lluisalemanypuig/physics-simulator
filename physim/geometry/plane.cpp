@@ -18,12 +18,12 @@ namespace geometry {
 // PUBLIC
 
 plane::plane() : geometry() {
-	__pm3_assign_c(normal, 0.0f,0.0f,0.0f);
+	__pm3_assign_s(normal, 0.0f);
 	dconst = 0.0f;
 }
 
 plane::plane(const vec3& n, const vec3& p) : geometry() {
-	__pm3_normalise(normal,n);
+	normalise(n,normal);
 	dconst = -__pm3_dot(p, normal);
 }
 
