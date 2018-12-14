@@ -212,7 +212,7 @@ const
 	if (__pm3_dist2(p->cur_pos, C) < R*R) {
 		__pm3_sub_v_v(normal, p->cur_pos, C);
 		__pm3_normalise(normal, normal);
-		__pm3_add_v_vs(p->cur_pos, C, normal,R + 0.1f);
+		__pm3_add_v_vs(p->cur_pos, C, normal,R + 0.03f);
 	}
 }
 
@@ -223,25 +223,32 @@ const
 	/* Let r be the particle's radius.
 	 *
 	 * The correct position of the particle I is at a distance R + r
-	 * of the sphere's center. This position is the intersection
-	 * between the segment from the particle's current position and
-	 * its predicted position, and the sphere of radius R + r (the
-	 * center does not change). Let S be this sphere.
+	 * away from the sphere's center. This position is the intersection
+	 * between a new sphere of radius R + r and the segment from the
+	 * predicted position to F. Let S be the new sphere.
+	 *	0. Let P = pred_pos.
+	 *	   Let v = pred_vel
+	 *	1. Let u = v/||v||
+	 *	2. Define the parametric line  l(k) : P + k*u
+	 *	3. Let F = l(-2*r)
 	 *
-	 * This intersection is guaranteed to exist because the current
-	 * position of the particle is at a distance greater than R + r
-	 * of the center of the sphere.
+	 * The intersection between S and the segment is guaranteed to exist
+	 * as long as the time step is small.
 	 *
 	 * The updated particle is obtained by updating a free particle
 	 * at a predicted position I using a plane with normal a unit
 	 * vector from the center to I.
 	 */
 
-	vec3 I;
+	vec3 u_pred_vel;
+	normalise(pred_vel, u_pred_vel);
+	vec3 F;
+	__pm3_add_v_vs(F, pred_pos, u_pred_vel,-2.0f*p->R);
 
-	float new_R = R + p->R;
-	sphere S(C, new_R);
-	S.intersec_segment(pred_pos, p->cur_pos, I);
+	sphere S(C, R + p->R);
+
+	vec3 I;
+	S.intersec_segment(pred_pos, F, I);
 
 	vec3 normal;
 	__pm3_sub_v_v(normal, C, I);
