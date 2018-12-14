@@ -175,9 +175,11 @@ const
 	 *		F is a point on the line through P with director vector
 	 *		'pred_pos'. In particular, this point is 'behind' P in this
 	 *		line.
-	 *		4.1. Let u_pred_vel be the vector 'pred_vel' normalised.
-	 *		4.2. Define the parametric line  l(k) : P + k*u_pred_vel
-	 *		4.3. Let F = l(-1)
+	 *		4.0. Let v = pred_vel
+	 *		4.1. Let u = v/||v||
+	 *		4.2. Define the parametric line  l(k) : P + k*u
+	 *		4.3. Let F = l(-1) (there will always be intersection as
+	 *			 long as the time steps are small).
 	 *	5. We only have to update the free particle associated to 'p'
 	 *		with plane 'Q' considering the predicted position to be 'I'.
 	 */
