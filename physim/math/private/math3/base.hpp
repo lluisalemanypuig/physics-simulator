@@ -3,9 +3,6 @@
 // physim includes
 #include <physim/math/private/math2/base.hpp>
 
-namespace physim {
-namespace math {
-
 /* MISCELLANEA */
 
 // output a vec3
@@ -46,6 +43,3 @@ namespace math {
 #define __pm3_vec_eq(u,v)						\
 	(__pm2_vec_eq(u,v) &&						\
 	 ((u).z == (v).z))
-
-} // -- namespace math
-} // -- namespace physim

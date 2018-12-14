@@ -1,8 +1,5 @@
 #pragma once
 
-namespace physim {
-namespace math {
-
 /* MISCELLANEA */
 
 // output a vec3
@@ -34,9 +31,6 @@ namespace math {
 
 // the contents of 'u' and 'v' are
 // component-wise swapped
-#define __pm2_swap_vec(u,v)						\
-	std::swap((u).x,(v).x);						\
+#define __pm2_swap_vec(u,v)			\
+	std::swap((u).x,(v).x);			\
 	std::swap((u).y,(v).y)
-
-} // -- namespace math
-} // -- namespace physim
