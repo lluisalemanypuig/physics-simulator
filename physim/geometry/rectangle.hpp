@@ -320,11 +320,6 @@ class rectangle : public geometry {
 			particles::free_particle *p
 		) const;
 
-		void correct_position(
-			const math::vec3& pred_pos, const particles::sized_particle *p,
-			math::vec3& correct_pos
-		) const;
-
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
 			particles::sized_particle *p

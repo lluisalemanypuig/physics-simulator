@@ -160,24 +160,6 @@ bool object::update_particle(
 	return false;
 }
 
-void object::correct_position(
-	const vec3& pred_pos, const particles::sized_particle *p,
-	vec3& correct_position
-) const
-{
-	cerr << "object::correct_position (" << __LINE__
-		 << ") - To be implemented!" << endl;
-}
-
-void object::correct_position(
-	const vec3& pred_pos, const particles::sized_particle *p,
-	vec3& correct_position, bool& updated
-) const
-{
-	cerr << "object::correct_position (" << __LINE__
-		 << ") - To be implemented!" << endl;
-}
-
 void object::update_particle(
 	const vec3& pred_pos, const vec3& pred_vel,
 	particles::sized_particle *p

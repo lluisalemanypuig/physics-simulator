@@ -121,28 +121,6 @@ class object : public geometry {
 			particles::free_particle *u
 		) const;
 
-		void correct_position(
-			const math::vec3& pred_pos, const particles::sized_particle *p,
-			math::vec3& correct_pos
-		) const;
-		/**
-		 * @brief Corrects a sized particle's position.
-		 *
-		 * See
-		 * @ref correct_position(const math::vec3&,const particles::sized_particle*, math::vec3&)const
-		 * for details.
-		 *
-		 * @param[in] pp Position predicted by a solver.
-		 * @param[in] p Current state of the particle.
-		 * @param[out] cp Correction of the particle's position.
-		 * @param[out] corrected True if the position has been corrected. False
-		 * if otherwise.
-		 */
-		void correct_position(
-			const math::vec3& pp, const particles::sized_particle *p,
-			math::vec3& cp, bool& corrected
-		) const;
-
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
 			particles::sized_particle *p

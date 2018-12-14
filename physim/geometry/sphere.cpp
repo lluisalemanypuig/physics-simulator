@@ -216,29 +216,6 @@ const
 	}
 }
 
-void sphere::correct_position(
-	const vec3& pred_pos, const sized_particle *p,
-	vec3& correct_position
-) const
-{
-	/* Let r be the particle's radius.
-	 *
-	 * The correct position of the particle I is at a distance R + r
-	 * of the sphere's center. This position is the intersection
-	 * between the segment from the particle's current position and
-	 * its predicted position, and the sphere of radius R + r (the
-	 * center does not change). Let S be this sphere.
-	 *
-	 * This intersection is guaranteed to exist because the current
-	 * position of the particle is at a distance greater than R + r
-	 * of the center of the sphere.
-	 */
-
-	float new_R = R + p->R;
-	sphere S(C, new_R);
-	S.intersec_segment(pred_pos, p->cur_pos, correct_position);
-}
-
 void sphere::update_particle
 (const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
 const

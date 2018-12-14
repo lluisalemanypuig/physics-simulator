@@ -420,19 +420,6 @@ const
 	pl.update_particle(pred_pos, pred_vel, p);
 }
 
-void rectangle::correct_position(
-	const vec3& pred_pos, const sized_particle *p,
-	vec3& cor_pos
-) const
-{
-	float D = distance(pred_pos);
-	vec3 vel_normal;
-	normalise(p->cur_vel, vel_normal);
-	// the correct position is the predicted position
-	// moved 'backwards' as much distance as the intersection
-	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, p->R - D);
-}
-
 void rectangle::update_particle
 (const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
 const
