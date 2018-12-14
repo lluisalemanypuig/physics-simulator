@@ -163,17 +163,21 @@ const
 {
 	p->save_position();
 
-	/* updating a sized particle's position when it collides with a plane
-	 * is a bit difficult to explain without drawings...
-	 * However:
-	 *	1. We know that the predicted position is at a certain SIGNED
+	/*	1. We know that the predicted position is at a certain SIGNED
 	 *		distance D from the plane.
-	 *	2. Define a position P = pred_pos + normal*d, where
-	 *		d = p->R - D
+	 *	2. Define a position P = pred_pos + sign(D)*normal*d, where
+	 *		d = p->R - |D|.
+	 *	   Notice P is at a distance R from the plane.
 	 *	3. Define a plane 'Q' with normal 'normal' that goes through P
 	 *	4. The last correct position of the sized particle 'p' is the
-	 *		intersection between the line through pred_pos and p->cur_pos
+	 *		intersection between the line through pred_pos and F
 	 *		and the plane 'Q'. Let 'I' be such position.
+	 *		F is a point on the line through P with director vector
+	 *		'pred_pos'. In particular, this point is 'behind' P in this
+	 *		line.
+	 *		4.1. Let u_pred_vel be the vector 'pred_vel' normalised.
+	 *		4.2. Define the parametric line  l(k) : P + k*u_pred_vel
+	 *		4.3. Let F = l(-1)
 	 *	5. We only have to update the free particle associated to 'p'
 	 *		with plane 'Q' considering the predicted position to be 'I'.
 	 */
@@ -184,9 +188,15 @@ const
 	vec3 P;
 	__pm3_add_v_vs(P, pred_pos, normal,d);
 
+	vec3 u_pred_vel;
+	normalise(pred_vel, u_pred_vel);
+
+	vec3 F;
+	__pm3_add_v_vs(F, P, u_pred_vel,-1.0f);
+
 	plane Q(normal, P);
 	vec3 I;
-	Q.intersec_segment(p->cur_pos, pred_pos, I);
+	Q.intersec_segment(F, pred_pos, I);
 	Q.update_particle(I, pred_vel, static_cast<free_particle *>(p));
 }
 
