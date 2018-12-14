@@ -9,6 +9,8 @@ using namespace std;
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/object.hpp>
 
+static physim::geometry::sphere __physim_Sj;
+
 namespace physim {
 using namespace math;
 using namespace particles;
@@ -139,7 +141,6 @@ bool simulator::find_update_geom_collision_free
 	return collision;
 }
 
-static geometry::sphere Sj;
 bool simulator::find_update_particle_collision_free
 (
 	const free_particle *p,
@@ -157,15 +158,15 @@ bool simulator::find_update_particle_collision_free
 		// prediction
 
 		if (__pm3_dist2(pred_pos, sps[j]->cur_pos) < (sps[j]->R)*(sps[j]->R)) {
-			Sj.set_position(sps[j]->cur_pos);
-			Sj.set_radius(sps[j]->R);
+			__physim_Sj.set_position(sps[j]->cur_pos);
+			__physim_Sj.set_radius(sps[j]->R);
 
 			collision = true;
 
 			coll_pred = *p;
 
 			// the geometry updates the predicted particle
-			Sj.update_particle(pred_pos, pred_vel, &coll_pred);
+			__physim_Sj.update_particle(pred_pos, pred_vel, &coll_pred);
 
 			if (solver == solver_type::Verlet) {
 				// this solver needs a correct position
@@ -256,6 +257,15 @@ static inline void update_particles_position
 	vec3 u;
 	__pm3_sub_v_v(u, out->cur_pos, in->cur_pos);
 	normalise(u, u);
+
+	/* This position correction is somewhat wrong
+	 * since the direction the centers are moved
+	 * need not be parallel to the velocity vectors.
+	 * And I think they should be.
+	 *
+	 * However, with small time steps, this is good
+	 * enough... but I don't like it.
+	 */
 
 	vec3 M,A1,A2;
 	__pm3_add_v_vs(M,   in->cur_pos, u,  d1);		//  M := c1 + d1*u
