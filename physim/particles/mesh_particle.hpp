@@ -12,7 +12,7 @@ namespace physim {
 namespace particles {
 
 /**
- * @brief Class implementing a particle.
+ * @brief Class implementing a mesh particle.
  *
  * A particle is a 0-dimensional object, subject to
  * several forces. It can also collide with other
@@ -54,7 +54,7 @@ class mesh_particle : public base_particle {
 		/// Copy constructor.
 		mesh_particle(const mesh_particle& p);
 		/// Destructor.
-		~mesh_particle();
+		virtual ~mesh_particle();
 
 		// MODIFIERS
 

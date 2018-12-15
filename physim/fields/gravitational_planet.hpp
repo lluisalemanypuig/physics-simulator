@@ -15,13 +15,14 @@ namespace fields {
  * This class implements the gravitational force field
  * typical of a planet.
  *
- * This field is assumed to have some huge mass, at placed
- * at some point near infinity. Therefore, the position
- * to which this field is set is interpreted as the
- * acceleration of the gravity it yields. Thus, the
- * force it applies on a particle of mass \f$m\f$ is:
+ * This field is assumed to have some huge mass, placed
+ * at some point near infinity in a certain direction.
+ * This vector is stored at the position to which this
+ * field is set to, and interpreted as the acceleration
+ * of the gravity it yields. Thus, the force it applies
+ * on a particle of mass \f$m\f$ is:
  *
- * \f$F m\cdot g\f$
+ * \f$\vec{F} = m\cdot \vec{g}\f$
  *
  * Here \f$g\f$ is the vector set in @ref punctual::pos.
  */

@@ -9,6 +9,7 @@
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
 #include <physim/particles/sized_particle.hpp>
+#include <physim/particles/agent_particle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/meshes/mesh.hpp>
 
@@ -89,6 +90,8 @@ class simulator {
 		std::vector<particles::free_particle *> fps;
 		/// The collection of sized particles in the simulation.
 		std::vector<particles::sized_particle *> sps;
+		/// The collection of agent particles in the simulation.
+		std::vector<particles::agent_particle *> aps;
 		/// The collection of meshes in the simulation.
 		std::vector<meshes::mesh *> ms;
 
@@ -189,6 +192,13 @@ class simulator {
 		 * the simulation.
 		 */
 		void _simulate_sized_particles();
+		/**
+		 * @brief Simulate agent particles.
+		 *
+		 * Applies a time step on all the agent particles of
+		 * the simulation.
+		 */
+		void _simulate_agent_particles();
 
 		/**
 		 * @brief Simulate meshes.
@@ -312,7 +322,7 @@ class simulator {
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
-		const particles::free_particle *add_free_particle();
+		particles::free_particle *add_free_particle();
 		/**
 		 * @brief Adds a sized particle to the simulation.
 		 *
@@ -322,7 +332,7 @@ class simulator {
 		 * @post The caller should not free the object, since the simulator
 		 * will take care of that.
 		 */
-		const particles::sized_particle *add_sized_particle();
+		particles::sized_particle *add_sized_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
@@ -351,6 +361,20 @@ class simulator {
 		 */
 		void add_sized_particle(particles::sized_particle *p);
 		/**
+		 * @brief Adds the particle passed as parameter to the simulation.
+		 *
+		 * The initialser function (see @ref global_init) is not called.
+		 * The particle is added to @ref aps.
+		 *
+		 * @param p A non-null pointer to the object.
+		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
+		 * then the step time (see @ref dt) needs to be set to initialise correctly
+		 * the particle's previous position.
+		 * @post The caller should not free the object, since the simulator
+		 * will take care of that.
+		 */
+		void add_agent_particle(particles::agent_particle *p);
+		/**
 		 * @brief Adds @e n free particles to the simulation.
 		 *
 		 * Each of the particles is initialised with the @ref global_init
@@ -375,7 +399,7 @@ class simulator {
 		 * Frees the memory occupied by the particle in the @e i-th
 		 * position of @ref fps. Therefore, any pointer to that particle
 		 * becomes invalid.
-		 * @param i The index of the particle in [0, number of particles).
+		 * @param i The index of the particle in [0, number of free particles).
 		 */
 		void remove_free_particle(size_t i);
 		/**
@@ -384,9 +408,18 @@ class simulator {
 		 * Frees the memory occupied by the particle in the @e i-th
 		 * position of @ref sps. Therefore, any pointer to that particle
 		 * becomes invalid.
-		 * @param i The index of the particle in [0, number of particles).
+		 * @param i The index of the particle in [0, number of sized particles).
 		 */
 		void remove_sized_particle(size_t i);
+		/**
+		 * @brief Removes the @e i-th agent particle.
+		 *
+		 * Frees the memory occupied by the particle in the @e i-th
+		 * position of @ref aps. Therefore, any pointer to that particle
+		 * becomes invalid.
+		 * @param i The index of the particle in [0, number of agent particles).
+		 */
+		void remove_agent_particle(size_t i);
 
 		/**
 		 * @brief Deletes all free particles in this simulator.
@@ -403,10 +436,17 @@ class simulator {
 		 */
 		void clear_sized_particles();
 		/**
+		 * @brief Deletes all agent particles in this simulator.
+		 *
+		 * Deletes all the objects in @ref aps and clears the
+		 * container.
+		 */
+		void clear_agent_particles();
+		/**
 		 * @brief Deletes all particles in this simulator.
 		 *
-		 * Deletes all the objects in @ref fps and @ref sps and clears
-		 * the containers.
+		 * Deletes all the objects in @ref fps, @ref sps and @ref aps,
+		 * and clears the containers.
 		 */
 		void clear_particles();
 
@@ -451,12 +491,12 @@ class simulator {
 		 */
 		void add_field(fields::field *f);
 		/**
-		 * @brief Adds a gravity vector.
+		 * @brief Sets the gravity vector.
 		 *
 		 * Makes a force field of type @ref fields::gravitational_planet
 		 * using vector @e g.
 		 */
-		void add_gravity_acceleration(const math::vec3& g);
+		void set_gravity_acceleration(const math::vec3& g);
 		/**
 		 * @brief Removes the @e i-th force field object.
 		 *

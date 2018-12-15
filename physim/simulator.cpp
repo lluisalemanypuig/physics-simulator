@@ -72,7 +72,7 @@ simulator::~simulator() {
 
 // ----------- particles
 
-const particles::free_particle *simulator::add_free_particle() {
+particles::free_particle *simulator::add_free_particle() {
 	particles::free_particle *p = new particles::free_particle();
 	p->index = fps.size();
 	init_particle(p);
@@ -80,9 +80,9 @@ const particles::free_particle *simulator::add_free_particle() {
 	return p;
 }
 
-const particles::sized_particle *simulator::add_sized_particle() {
+particles::sized_particle *simulator::add_sized_particle() {
 	particles::sized_particle *p = new particles::sized_particle();
-	p->index = fps.size();
+	p->index = sps.size();
 	init_particle(p);
 	sps.push_back(p);
 	return p;
@@ -110,6 +110,17 @@ void simulator::add_sized_particle(particles::sized_particle *p) {
 	}
 }
 
+void simulator::add_agent_particle(particles::agent_particle *p) {
+	assert(p != nullptr);
+	p->index = aps.size();
+	aps.push_back(p);
+
+	if (solver == solver_type::Verlet) {
+		// Update the previous position for Verlet
+		__pm3_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
+	}
+}
+
 void simulator::add_free_particles(size_t n) {
 	for (size_t i = 0; i < n; ++i) {
 		add_free_particle();
@@ -130,6 +141,10 @@ void simulator::remove_sized_particle(size_t i) {
 	remove_from_vector(i, sps);
 }
 
+void simulator::remove_agent_particle(size_t i) {
+	remove_from_vector(i, aps);
+}
+
 void simulator::clear_free_particles() {
 	for (particles::free_particle *p : fps) {
 		delete p;
@@ -144,9 +159,17 @@ void simulator::clear_sized_particles() {
 	sps.clear();
 }
 
+void simulator::clear_agent_particles() {
+	for (particles::agent_particle *p : aps) {
+		delete p;
+	}
+	aps.clear();
+}
+
 void simulator::clear_particles() {
 	clear_free_particles();
 	clear_sized_particles();
+	clear_agent_particles();
 }
 
 // ----------- geometry
@@ -243,7 +266,7 @@ void simulator::apply_time_step() {
 
 // SETTERS
 
-void simulator::add_gravity_acceleration(const math::vec3& g) {
+void simulator::set_gravity_acceleration(const math::vec3& g) {
 	fields::gravitational_planet *f = new fields::gravitational_planet(g);
 	force_fields.push_back(f);
 }

@@ -12,10 +12,12 @@ enum class particle_type : int8_t {
 	base_particle = 0,
 	/// Free particle, see @ref free_particle.
 	free_particle,
-	/// Free particle, see @ref sized_particle.
+	/// Sized particle, see @ref sized_particle.
 	sized_particle,
-	/// Free particle, see @ref mesh_particle.
-	mesh_particle
+	/// Mesh particle, see @ref mesh_particle.
+	mesh_particle,
+	/// Agent particle, see @ref agent_particle.
+	agent_particle
 };
 
 } // -- namespace particles

@@ -47,7 +47,7 @@ class sized_particle : public free_particle {
 		/// Copy constructor.
 		sized_particle(const sized_particle& p);
 		/// Destructor.
-		~sized_particle();
+		virtual ~sized_particle();
 
 		/**
 		 * @brief Initialises all particle's attributes, most of them
