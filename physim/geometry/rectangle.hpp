@@ -4,7 +4,6 @@
 
 // physim includes
 #include <physim/geometry/geometry.hpp>
-#include <physim/geometry/triangle.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/particles/sized_particle.hpp>

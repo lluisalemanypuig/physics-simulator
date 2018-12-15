@@ -270,10 +270,10 @@ void rectangle::projection(const vec3& X, vec3& proj) const {
 	case r0123:
 		__pm3_add_vs_vs_v(proj, u0,__pm3_dot(u0,p0X), u1,__pm3_dot(u1,p0X), p0);
 		break;
-	case r0: cout << "    r0" << endl; __pm3_assign_v(proj, p0); return;
-	case r1: cout << "    r1" << endl; __pm3_assign_v(proj, p1); return;
-	case r2: cout << "    r2" << endl; __pm3_assign_v(proj, p2); return;
-	case r3: cout << "    r3" << endl; __pm3_assign_v(proj, p3); return;
+	case r0: __pm3_assign_v(proj, p0); return;
+	case r1: __pm3_assign_v(proj, p1); return;
+	case r2: __pm3_assign_v(proj, p2); return;
+	case r3: __pm3_assign_v(proj, p3); return;
 	default:
 		;
 	}
