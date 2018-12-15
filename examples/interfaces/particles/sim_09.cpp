@@ -37,6 +37,18 @@ namespace study_cases {
 
 	float px_09, py_09, pz_09;
 
+	void sim_09_add_rectangle
+	(const math::vec3& p1, const math::vec3& p2,
+	 const math::vec3& p3, const math::vec3& p4,
+	 const glm::vec4& col)
+	{
+		SR.get_simulator().add_geometry(new rectangle(p1,p2,p3,p4));
+		rrectangle *rect = new rrectangle();
+		rect->set_points(to_glm(p1), to_glm(p2), to_glm(p3), to_glm(p4));
+		rect->set_color(col[0], col[1], col[2], col[3]);
+		SR.add_geometry(rect);
+	}
+
 	void sim_09_make_simulation() {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
@@ -44,7 +56,7 @@ namespace study_cases {
 		initialiser I;
 		I.set_pos_initialiser(
 			[&](free_particle *p) {
-				p->cur_pos = math::vec3(px_09,3.5f,pz_09);
+				p->cur_pos = math::vec3(px_09,py_09,pz_09);
 			}
 		);
 		I.set_vel_initialiser(
@@ -67,16 +79,37 @@ namespace study_cases {
 		SR.get_simulator().set_initialiser(&I);
 		SR.get_simulator().add_sized_particle();
 
+		sim_09_add_rectangle
+		(math::vec3(-3.464377f, 1.50f, 3.468678f), math::vec3(-1.464377f, 2.00f, 2.778861f),
+		 math::vec3(-1.464377f, 2.50f, 0.778861f), math::vec3(-3.464377f, 2.00f, 1.468678f),
+		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
+		);
+		sim_09_add_rectangle
+		(math::vec3(-4.342228f, 1.50f, -0.034250f), math::vec3(-2.342228f, 2.00f, -0.034250f),
+		 math::vec3(-2.342228f, 2.50f, -2.034250f), math::vec3(-4.342228f, 2.00f, -2.034250f),
+		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
+		);
+		sim_09_add_rectangle
+		(math::vec3(0.457220f, 2.195306f, 2.940865f), math::vec3(2.457220f, 2.195306f, 2.940865f),
+		 math::vec3(3.276015f, 2.760606f, 0.940865f), math::vec3(1.276015f, 2.760606f, 0.940865f),
+		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
+		);
+		sim_09_add_rectangle
+		(math::vec3(2.395275f, 2.195306f, -0.094104f), math::vec3(4.395275f, 2.195306f, -0.094104f),
+		 math::vec3(5.214070f, 2.195306f, -2.094104f), math::vec3(3.214070f, 2.195306f, -2.094104f),
+		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
+		);
+		sim_09_add_rectangle
+		(math::vec3(-0.973277f, 2.195306f, -1.694186f), math::vec3(1.026723f, 2.195306f, -1.694186f),
+		 math::vec3(1.026723f, 2.195306f, -3.694186f), math::vec3(-0.973277f, 2.195306f, -3.694186f),
+		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
+		);
+
 		plane *pl = new plane(
 			math::vec3(0.0f,1.0f,0.0f),
 			math::vec3(0.0f,0.0f,0.0f)
 		);
 		SR.get_simulator().add_geometry(pl);
-		rectangle *rl = new rectangle(
-			math::vec3( 2.2f,2.4f, 2.0f), math::vec3( 1.3f,2.0f,-2.0f),
-			math::vec3(-2.9f,2.0f,-2.0f), math::vec3(-1.6f,2.4f, 2.0f)
-		);
-		SR.get_simulator().add_geometry(rl);
 		SR.get_simulator().add_gravity_acceleration(
 			math::vec3(0.0f,-9.81f,0.0f)
 		);
@@ -87,13 +120,6 @@ namespace study_cases {
 			glm::vec3( 5.0f, -0.0f,  5.0f), glm::vec3( 5.0f, -0.0f, -5.0f)
 		);
 		SR.add_geometry(floor);
-		rrectangle *rect = new rrectangle();
-		rect->set_points(
-			glm::vec3( 2.2f,2.4f, 2.0f), glm::vec3( 1.3f,2.0f,-2.0f),
-			glm::vec3(-2.9f,2.0f,-2.0f), glm::vec3(-1.6f,2.4f, 2.0f)
-		);
-		rect->set_color(1.0f, 1.0f, 0.0f, 1.0f);
-		SR.add_geometry(rect);
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 6.0f, 0.0f));
 		SR.set_window_dims(iw, ih);

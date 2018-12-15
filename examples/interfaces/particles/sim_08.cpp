@@ -37,6 +37,17 @@ namespace study_cases {
 
 	float px_08, py_08, pz_08;
 
+	void sim_08_add_triangle
+	(const math::vec3& p1, const math::vec3& p2, const math::vec3& p3,
+	 const glm::vec4& col)
+	{
+		SR.get_simulator().add_geometry(new triangle(p1,p2,p3));
+		rtriangle *tri = new rtriangle();
+		tri->set_points(to_glm(p1), to_glm(p2), to_glm(p3));
+		tri->set_color(col[0], col[1], col[2], col[3]);
+		SR.add_geometry(tri);
+	}
+
 	void sim_08_make_simulation() {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
@@ -62,17 +73,24 @@ namespace study_cases {
 		SR.get_simulator().set_initialiser(&I);
 		SR.get_simulator().add_sized_particle();
 
+		sim_08_add_triangle
+		(math::vec3(1.73f, 4.45f, -0.25f), math::vec3( 4.35f, 3.33f, -0.92f),
+		 math::vec3(3.73f, 1.75f,  2.55f), glm::vec4(1.0f,0.8f,0.0f,1.0f));
+		sim_08_add_triangle
+		(math::vec3( 2.05f, 2.55f, 1.77f), math::vec3( 1.44f, 2.55f,  4.44f),
+		 math::vec3(-0.56f, 2.55f, 2.44f), glm::vec4(0.8f,1.0f,0.0f,1.0f));
+		sim_08_add_triangle
+		(math::vec3(-2.55f, 2.71f, -0.81f), math::vec3(-1.66f, 2.71f, 1.86f),
+		 math::vec3(-3.70f, 1.94f,  1.41f), glm::vec4(1.0f,1.0f,0.2f,1.0f));
+		sim_08_add_triangle
+		(math::vec3( 1.24f, 3.56f, -3.38f), math::vec3(-1.38f, 2.55f, -2.70f),
+		 math::vec3( 0.62f, 0.46f, -0.70f), glm::vec4(0.3f,0.3f,1.0f,1.0f));
+
 		plane *pl = new plane(
 			math::vec3(0.0f,1.0f,0.0f),
 			math::vec3(0.0f,0.0f,0.0f)
 		);
 		SR.get_simulator().add_geometry(pl);
-		triangle *tl = new triangle(
-			math::vec3( 1.0f,1.5f, 2.0f),
-			math::vec3( 1.0f,2.0f,-2.0f),
-			math::vec3(-1.0f,2.0f, 0.0f)
-		);
-		SR.get_simulator().add_geometry(tl);
 		SR.get_simulator().add_gravity_acceleration(
 			math::vec3(0.0f,-9.81f,0.0f)
 		);
@@ -83,14 +101,6 @@ namespace study_cases {
 			glm::vec3( 5.0f, -0.05f,  5.0f), glm::vec3( 5.0f, -0.05f, -5.0f)
 		);
 		SR.add_geometry(floor);
-		rtriangle *tri = new rtriangle();
-		tri->set_points(
-			glm::vec3( 1.0f,1.5f, 2.0f),
-			glm::vec3( 1.0f,2.0f,-2.0f),
-			glm::vec3(-1.0f,2.0f, 0.0f)
-		);
-		tri->set_color(1.0f, 1.0f, 0.0f, 1.0f);
-		SR.add_geometry(tri);
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 6.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
@@ -219,7 +229,7 @@ namespace study_cases {
 		glut_functions::parse_common_params(argc, argv);
 
 		px_08 = 0.0f;
-		py_08 = 3.0f;
+		py_08 = 3.5f;
 		pz_08 = 0.0f;
 
 		for (int i = 2; i < argc; ++i) {
