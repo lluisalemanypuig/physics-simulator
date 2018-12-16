@@ -30,23 +30,5 @@ namespace particles {
 		m.index = f.index;
 	}
 
-	void from_sized_to_agent(const sized_particle& s, agent_particle& a) {
-		__pm3_assign_v(a.prev_pos, s.prev_pos);
-		__pm3_assign_v(a.cur_pos, s.cur_pos);
-		__pm3_assign_v(a.cur_vel, s.cur_vel);
-		__pm3_assign_v(a.force, s.force);
-
-		a.R = s.R;
-	}
-
-	void from_agent_to_sized(const agent_particle& a, sized_particle& s) {
-		__pm3_assign_v(s.prev_pos, a.prev_pos);
-		__pm3_assign_v(s.cur_pos, a.cur_pos);
-		__pm3_assign_v(s.cur_vel, a.cur_vel);
-		__pm3_assign_v(s.force, a.force);
-
-		s.R = a.R;
-	}
-
 } // -- namespace particles
 } // -- namespace physim

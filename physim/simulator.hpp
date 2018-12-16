@@ -52,9 +52,16 @@ enum class solver_type : int8_t {
 	 \verbatim
 	 xc := current position
 	 xp := previous position
-	 new position = xc + k*(xc - xp) + force * time step * force / particle mass
-	 new velocity = (new position - xc)/time step
+	 new position = xc + k*(xc - xp) + force * dt^2 / mass
+	 new velocity = (new position - xc) / dt
 	 \endverbatim
+	 * where
+	 * - xc    :: current position
+	 * - xp    :: previous position
+	 * - k     :: damping factor (set to 1.0)
+	 * - force :: the force that acts upon the particle
+	 * - dt    :: time step
+	 * - mass  :: particle's mass
 	 */
 	Verlet
 };
@@ -80,8 +87,11 @@ enum class solver_type : int8_t {
 class simulator {
 	private:
 		/**
-		 * @brief The collection of objects whose position
+		 * @brief Collection of fixed geometry.
+		 *
+		 * The collection of objects whose position
 		 * does not depend on the interaction with other objects.
+		 * This position is, then, fixed.
 		 */
 		std::vector<geometry::geometry *> scene_fixed;
 		/// Collection of force fields.
@@ -244,7 +254,7 @@ class simulator {
 		 * @param[out] coll_pred The particle with the updated state.
 		 * @returns Returns true on collision with geometry.
 		 */
-		bool find_update_geom_collision_free
+		bool find_update_geomcoll_free
 		(
 			const particles::free_particle *p,
 			math::vec3& pred_pos, math::vec3& pred_vel,
@@ -252,7 +262,8 @@ class simulator {
 		);
 
 		/**
-		 * @brief Update a free particle that may collide with a sized particle.
+		 * @brief Update a free particle that may collide with a sized
+		 * or an agent particle.
 		 *
 		 * A particle has a predicted position and velocity which needs to be
 		 * changed in the event that it collides with another particle.
@@ -262,7 +273,7 @@ class simulator {
 		 * @param[out] coll_pred The particle with the updated state.
 		 * @returns Returns true on collision with geometry.
 		 */
-		bool find_update_particle_collision_free(
+		bool find_update_partcoll_free(
 			const particles::free_particle *p,
 			math::vec3& pred_pos, math::vec3& pred_vel,
 			particles::free_particle& coll_pred
@@ -274,7 +285,7 @@ class simulator {
 		 * A particle has a predicted position and velocity which needs to be
 		 * changed in the event that it collides with geometry.
 		 *
-		 * The difference between this and @ref find_update_geom_collision_free
+		 * The difference between this and @ref find_update_partcoll_free
 		 * is that there is an extra intersection test.
 		 * @param[in] p Current state of particle to be updated.
 		 * @param[out] pred_pos Predicted position modified to the final position.
@@ -282,7 +293,7 @@ class simulator {
 		 * @param[out] coll_pred The particle with the updated state.
 		 * @returns Returns true on collision with geometry.
 		 */
-		bool find_update_geom_collision_sized
+		bool find_update_geomcoll_sized
 		(
 			const particles::sized_particle *p,
 			math::vec3& pred_pos, math::vec3& pred_vel,
@@ -290,14 +301,34 @@ class simulator {
 		);
 
 		/**
-		 * @brief Update a sized particle that may collide with a sized particle.
+		 * @brief Update a sized particle that may collide with a sized
+		 * or an agent particle.
 		 *
-		 * This method is called after finding a definitive state of a particle
-		 * after colliding with geometry.
+		 * When checking collisions with sized particles, the @e i-th particle
+		 * is ignored.
+		 *
 		 * @param[in] p Current state of particle to be updated.
 		 * @param[in] i Index of the sized particle to ignore.
+		 * @pre This method is called after finding a definitive state of a
+		 * particle after colliding with geometry.
 		 */
-		void find_update_particle_collision_sized(particles::sized_particle *p, size_t i);
+		void find_update_partcoll_sized
+		(particles::sized_particle *p, size_t i);
+
+		/**
+		 * @brief Update an agent particle that may collide with a sized or an
+		 * agent particle.
+		 *
+		 * When checking collisions with agent particles, the @e i-th particle
+		 * is ignored.
+		 *
+		 * @param[in] p Current state of particle to be updated.
+		 * @param[in] i Index of the sized particle to ignore.
+		 * @pre This method is called after finding a definitive state of a
+		 * particle after colliding with geometry.
+		 */
+		void find_update_partcoll_agent
+		(particles::agent_particle *p, size_t i);
 
 	public:
 		/**
@@ -661,9 +692,11 @@ class simulator {
 		 * The behaviour of the modified particles in the simulation
 		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
-		 * containing all particles.
+		 * containing all free particles.
 		 */
 		const std::vector<particles::free_particle *>& get_free_particles() const;
+		/// Returns a reference to i-th free particle.
+		particles::free_particle& get_free_particle(size_t i);
 		/// Returns a constant reference to i-th free particle.
 		const particles::free_particle& get_free_particle(size_t i) const;
 
@@ -677,11 +710,31 @@ class simulator {
 		 * The behaviour of the modified particles in the simulation
 		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
-		 * containing all particles.
+		 * containing all sized particles.
 		 */
 		const std::vector<particles::sized_particle *>& get_sized_particles() const;
+		/// Returns a reference to i-th sized particle.
+		particles::sized_particle& get_sized_particle(size_t i);
 		/// Returns a constant reference to i-th sized particle.
 		const particles::sized_particle& get_sized_particle(size_t i) const;
+
+		/**
+		 * @brief Returns all agent particles in the simulation.
+		 *
+		 * Note that the constant reference is to the container.
+		 * It cannot be added new particles or have deleted any,
+		 * however any particle's attributes may be modified.
+		 *
+		 * The behaviour of the modified particles in the simulation
+		 * will change according to the modifications.
+		 * @return Returns a constant reference to the structure
+		 * containing all agent particles.
+		 */
+		const std::vector<particles::agent_particle *>& get_agent_particles() const;
+		/// Returns a reference to i-th agent particle.
+		particles::agent_particle& get_agent_particle(size_t i);
+		/// Returns a constant reference to i-th agent particle.
+		const particles::agent_particle& get_agent_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all meshes in the simulation.

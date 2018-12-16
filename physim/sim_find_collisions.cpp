@@ -67,7 +67,7 @@ using namespace particles;
 // -----------------------------------------------
 // FREE PARTICLES
 
-bool simulator::find_update_geom_collision_free
+bool simulator::find_update_geomcoll_free
 (
 	const free_particle *p,
 	vec3& pred_pos, vec3& pred_vel,
@@ -141,7 +141,7 @@ bool simulator::find_update_geom_collision_free
 	return collision;
 }
 
-bool simulator::find_update_particle_collision_free
+bool simulator::find_update_partcoll_free
 (
 	const free_particle *p,
 	vec3& pred_pos, vec3& pred_vel,
@@ -182,13 +182,46 @@ bool simulator::find_update_particle_collision_free
 		}
 	}
 
+	// do the same for agent particles
+	for (size_t j = 0; j < aps.size(); ++j) {
+
+		// if segment joining the particle's current position
+		// and the predicted position intersects a sized
+		// particle then we have to update the particle's
+		// prediction
+
+		if (__pm3_dist2(pred_pos, aps[j]->cur_pos) < (aps[j]->R)*(aps[j]->R)) {
+			__physim_Sj.set_position(aps[j]->cur_pos);
+			__physim_Sj.set_radius(aps[j]->R);
+
+			collision = true;
+
+			coll_pred = *p;
+
+			// the geometry updates the predicted particle
+			__physim_Sj.update_particle(pred_pos, pred_vel, &coll_pred);
+
+			if (solver == solver_type::Verlet) {
+				// this solver needs a correct position
+				// for the 'previous' position of the
+				// particle after a collision with geometry
+
+				__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+			}
+
+			// keep track of the predicted particle's position
+			__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+			__pm3_assign_v(pred_vel, coll_pred.cur_vel);
+		}
+	}
+
 	return collision;
 }
 
 // -----------------------------------------------
 // SIZED PARTICLES
 
-bool simulator::find_update_geom_collision_sized
+bool simulator::find_update_geomcoll_sized
 (
 	const sized_particle *in,
 	vec3& pred_pos, vec3& pred_vel,
@@ -334,8 +367,24 @@ static inline void update_particles_velocity
 	__pm3_assign_vs(out->cur_vel, out->cur_vel,norm2);
 }
 
+#define partcoll_sized_core(in, j, v)											\
+	if (spart_spart_collision(in, v[j])) {										\
+		/* update the particle's position before updating velocities */			\
+		update_particles_position(in, v[j]);									\
+		/* collision between particle 'in' and particle 'j' */					\
+		update_particles_velocity(in, v[j]);									\
+		/* compute valid previous positions for Verlet solver */				\
+		if (solver == solver_type::Verlet) {									\
+			/* this solver needs a correct position
+			   for the 'previous' position of the
+			   particle after a collision with geometry */						\
+			__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);			\
+			__pm3_sub_v_vs(v[j]->prev_pos, v[j]->cur_pos, v[j]->cur_vel, dt);	\
+		}																		\
+	}
+
 // particle 'in' has index 'i'
-void simulator::find_update_particle_collision_sized
+void simulator::find_update_partcoll_sized
 (sized_particle *in, size_t i)
 {
 	for (size_t j = i + 1; j < sps.size(); ++j) {
@@ -357,6 +406,83 @@ void simulator::find_update_particle_collision_sized
 
 				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
 				__pm3_sub_v_vs(sps[j]->prev_pos, sps[j]->cur_pos, sps[j]->cur_vel, dt);
+			}
+		}
+	}
+
+	// check collisions with other agent particles
+	for (size_t j = 0; j < aps.size(); ++j) {
+
+		if (spart_spart_collision(in, aps[j])) {
+			// update the particle's position before
+			// updating velocities
+			update_particles_position(in, aps[j]);
+
+			// collision between particle 'in' and particle 'j'
+			update_particles_velocity(in, aps[j]);
+
+			// compute valid previous positions
+			// for Verlet solver
+			if (solver == solver_type::Verlet) {
+				// this solver needs a correct position
+				// for the 'previous' position of the
+				// particle after a collision with geometry
+
+				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
+				__pm3_sub_v_vs(aps[j]->prev_pos, aps[j]->cur_pos, aps[j]->cur_vel, dt);
+			}
+		}
+	}
+}
+
+// particle 'in' has index 'i'
+void simulator::find_update_partcoll_agent
+(agent_particle *in, size_t i)
+{
+	// check collisions with sized particles
+	for (size_t j = 0; j < sps.size(); ++j) {
+
+		if (spart_spart_collision(in, sps[j])) {
+			// update the particle's position before
+			// updating velocities
+			update_particles_position(in, sps[j]);
+
+			// collision between particle 'in' and particle 'j'
+			update_particles_velocity(in, sps[j]);
+
+			// compute valid previous positions
+			// for Verlet solver
+			if (solver == solver_type::Verlet) {
+				// this solver needs a correct position
+				// for the 'previous' position of the
+				// particle after a collision with geometry
+
+				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
+				__pm3_sub_v_vs(sps[j]->prev_pos, sps[j]->cur_pos, sps[j]->cur_vel, dt);
+			}
+		}
+	}
+
+	// check collisions with other agent particles
+	for (size_t j = i + 1; j < aps.size(); ++j) {
+
+		if (spart_spart_collision(in, aps[j])) {
+			// update the particle's position before
+			// updating velocities
+			update_particles_position(in, aps[j]);
+
+			// collision between particle 'in' and particle 'j'
+			update_particles_velocity(in, aps[j]);
+
+			// compute valid previous positions
+			// for Verlet solver
+			if (solver == solver_type::Verlet) {
+				// this solver needs a correct position
+				// for the 'previous' position of the
+				// particle after a collision with geometry
+
+				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
+				__pm3_sub_v_vs(aps[j]->prev_pos, aps[j]->cur_pos, aps[j]->cur_vel, dt);
 			}
 		}
 	}

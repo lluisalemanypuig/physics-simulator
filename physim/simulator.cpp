@@ -3,6 +3,9 @@
 // C includes
 #include <assert.h>
 
+// C++ includes
+using namespace std;
+
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/math/private/math3.hpp>
@@ -24,10 +27,12 @@ inline void remove_from_vector(size_t i, V& v) {
 }
 
 namespace physim {
+using namespace math;
+using namespace particles;
 
 // PRIVATE
 
-void simulator::init_particle(particles::free_particle *p) {
+void simulator::init_particle(free_particle *p) {
 	global_init->initialise_particle(p);
 
 	// Update the previous position so that Verlet
@@ -41,7 +46,7 @@ void simulator::init_particle(particles::free_particle *p) {
 void simulator::init_mesh(meshes::mesh *m) {
 	m->make_initial_state();
 
-	particles::mesh_particle **mps = m->get_particles();
+	mesh_particle **mps = m->get_particles();
 
 	// loop over the mesh's particles and compute
 	// their previous position
@@ -72,23 +77,23 @@ simulator::~simulator() {
 
 // ----------- particles
 
-particles::free_particle *simulator::add_free_particle() {
-	particles::free_particle *p = new particles::free_particle();
+free_particle *simulator::add_free_particle() {
+	free_particle *p = new free_particle();
 	p->index = fps.size();
 	init_particle(p);
 	fps.push_back(p);
 	return p;
 }
 
-particles::sized_particle *simulator::add_sized_particle() {
-	particles::sized_particle *p = new particles::sized_particle();
+sized_particle *simulator::add_sized_particle() {
+	sized_particle *p = new sized_particle();
 	p->index = sps.size();
 	init_particle(p);
 	sps.push_back(p);
 	return p;
 }
 
-void simulator::add_free_particle(particles::free_particle *p) {
+void simulator::add_free_particle(free_particle *p) {
 	assert(p != nullptr);
 	p->index = fps.size();
 	fps.push_back(p);
@@ -99,7 +104,7 @@ void simulator::add_free_particle(particles::free_particle *p) {
 	}
 }
 
-void simulator::add_sized_particle(particles::sized_particle *p) {
+void simulator::add_sized_particle(sized_particle *p) {
 	assert(p != nullptr);
 	p->index = sps.size();
 	sps.push_back(p);
@@ -110,7 +115,7 @@ void simulator::add_sized_particle(particles::sized_particle *p) {
 	}
 }
 
-void simulator::add_agent_particle(particles::agent_particle *p) {
+void simulator::add_agent_particle(agent_particle *p) {
 	assert(p != nullptr);
 	p->index = aps.size();
 	aps.push_back(p);
@@ -146,21 +151,21 @@ void simulator::remove_agent_particle(size_t i) {
 }
 
 void simulator::clear_free_particles() {
-	for (particles::free_particle *p : fps) {
+	for (free_particle *p : fps) {
 		delete p;
 	}
 	fps.clear();
 }
 
 void simulator::clear_sized_particles() {
-	for (particles::sized_particle *p : sps) {
+	for (sized_particle *p : sps) {
 		delete p;
 	}
 	sps.clear();
 }
 
 void simulator::clear_agent_particles() {
-	for (particles::agent_particle *p : aps) {
+	for (agent_particle *p : aps) {
 		delete p;
 	}
 	aps.clear();
@@ -238,7 +243,7 @@ void simulator::clear_simulation() {
 
 void simulator::reset_simulation() {
 	int i = 0;
-	for (particles::free_particle *p : fps) {
+	for (free_particle *p : fps) {
 		if (not p->fixed) {
 			init_particle(p);
 		}
@@ -298,23 +303,43 @@ void simulator::set_particle_particle_collisions(bool a) {
 
 // GETTERS
 
-const std::vector<particles::free_particle *>& simulator::get_free_particles() const {
+const vector<free_particle *>& simulator::get_free_particles() const {
 	return fps;
 }
-const particles::free_particle& simulator::get_free_particle(size_t i) const {
+free_particle& simulator::get_free_particle(size_t i) {
+	assert(i < fps.size());
+	return *fps[i];
+}
+const free_particle& simulator::get_free_particle(size_t i) const {
 	assert(i < fps.size());
 	return *fps[i];
 }
 
-const std::vector<particles::sized_particle *>& simulator::get_sized_particles() const {
+const vector<sized_particle *>& simulator::get_sized_particles() const {
 	return sps;
 }
-const particles::sized_particle& simulator::get_sized_particle(size_t i) const {
+sized_particle& simulator::get_sized_particle(size_t i) {
+	assert(i < sps.size());
+	return *sps[i];
+}
+const sized_particle& simulator::get_sized_particle(size_t i) const {
 	assert(i < sps.size());
 	return *sps[i];
 }
 
-const std::vector<meshes::mesh *>& simulator::get_meshes() const {
+const vector<agent_particle *>& simulator::get_agent_particles() const {
+	return aps;
+}
+agent_particle& simulator::get_agent_particle(size_t i) {
+	assert(i < aps.size());
+	return *aps[i];
+}
+const agent_particle& simulator::get_agent_particle(size_t i) const {
+	assert(i < aps.size());
+	return *aps[i];
+}
+
+const vector<meshes::mesh *>& simulator::get_meshes() const {
 	return ms;
 }
 
@@ -323,7 +348,7 @@ const meshes::mesh& simulator::get_mesh(size_t i) const {
 	return *ms[i];
 }
 
-const std::vector<geometry::geometry *>& simulator::get_fixed_objects() const {
+const vector<geometry::geometry *>& simulator::get_fixed_objects() const {
 	return scene_fixed;
 }
 

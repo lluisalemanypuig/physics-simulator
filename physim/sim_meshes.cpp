@@ -10,6 +10,8 @@
 #include <physim/sim_solver.cpp>
 
 namespace physim {
+using namespace particles;
+using namespace math;
 
 void simulator::_simulate_meshes() {
 
@@ -18,8 +20,8 @@ void simulator::_simulate_meshes() {
 	// to predict the update upon collision with geometry.
 	// Although it is a free particle, the attributes
 	// of the mesh particle will be copied into this one.
-	particles::free_particle current;
-	particles::free_particle coll_pred;
+	free_particle current;
+	free_particle coll_pred;
 
 	for (meshes::mesh *m : ms) {
 
@@ -34,7 +36,7 @@ void simulator::_simulate_meshes() {
 		coll_pred.bouncing = m->get_bouncing();
 
 		/* update a meshe's particles */
-		particles::mesh_particle **mps = m->get_particles();
+		mesh_particle **mps = m->get_particles();
 		size_t N = m->size();
 
 		// set forces to 0
@@ -59,7 +61,7 @@ void simulator::_simulate_meshes() {
 
 			// apply solver to predict next position and
 			// velocity of the particle
-			math::vec3 pred_pos, pred_vel;
+			vec3 pred_pos, pred_vel;
 			apply_solver(mps[p_idx], pred_pos, pred_vel);
 
 			// check if there is any collision between
@@ -72,15 +74,15 @@ void simulator::_simulate_meshes() {
 			 * update.
 			 */
 
-			particles::from_mesh_to_free(*mps[p_idx], current);
-			particles::from_mesh_to_free(*mps[p_idx], coll_pred);
+			from_mesh_to_free(*mps[p_idx], current);
+			from_mesh_to_free(*mps[p_idx], coll_pred);
 
 			bool collision =
-			find_update_geom_collision_free(&current, pred_pos, pred_vel, coll_pred);
+			find_update_geomcoll_free(&current, pred_pos, pred_vel, coll_pred);
 
 			// give the particle the proper final state
 			if (collision) {
-				particles::from_free_to_mesh(coll_pred, *mps[p_idx]);
+				from_free_to_mesh(coll_pred, *mps[p_idx]);
 			}
 			else {
 				mps[p_idx]->save_position();

@@ -10,7 +10,9 @@ using namespace particles;
 
 void simulator::_simulate_agent_particles() {
 
-	for (agent_particle *p : aps) {
+	for (size_t i = 0; i < aps.size(); ++i) {
+		agent_particle *p = aps[i];
+
 		// ignore fixed particles
 		if (p->fixed) {
 			continue;
@@ -48,18 +50,17 @@ void simulator::_simulate_agent_particles() {
 		// collision prediction:
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		sized_particle coll_pred;
+		agent_particle coll_pred;
 
 		// check if there is any collision between
 		// this free particle and a geometrical object
 
 		bool collision =
-		find_update_geom_collision_sized(p, pred_pos, pred_vel, coll_pred);
+		find_update_geomcoll_sized(p, pred_pos, pred_vel, coll_pred);
 
 		// give the particle the proper final state
 		if (collision) {
-			//*p = coll_pred;
-			from_sized_to_agent(coll_pred, *p);
+			*p = coll_pred;
 		}
 		else {
 			p->save_position();
@@ -72,7 +73,7 @@ void simulator::_simulate_agent_particles() {
 		// a linear-time algorithm (for every particle) will be used.
 
 		if (part_part_colls_activated()) {
-			find_update_particle_collision_sized(p, i);
+			find_update_partcoll_agent(p, i);
 		}
 	}
 

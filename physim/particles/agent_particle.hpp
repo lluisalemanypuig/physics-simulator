@@ -17,6 +17,11 @@ namespace particles {
  * An agent particle is useful for defining, using a physically-based
  * model, the movement of an agent (say, a human(oid)) through an
  * environment, in the presence of other agents and obstacles.
+ *
+ * Although it is a type of sized particle (see @ref sized_particle),
+ * which in turn is a type of free_particle (see @ref free_particle),
+ * its starttime (see @ref free_particle::starttime) is ignored.
+ * Its lifetime, however, it is not (see @ref free_particle::lifetime).
  */
 class agent_particle : public sized_particle {
 	private:

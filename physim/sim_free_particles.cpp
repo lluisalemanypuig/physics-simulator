@@ -5,10 +5,11 @@
 #include <physim/sim_solver.cpp>
 
 namespace physim {
+using namespace particles;
 
 void simulator::_simulate_free_particles() {
 
-	for (particles::free_particle *p : fps) {
+	for (free_particle *p : fps) {
 		// ignore fixed particles
 		if (p->fixed) {
 			continue;
@@ -43,16 +44,16 @@ void simulator::_simulate_free_particles() {
 		// collision prediction:
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		particles::free_particle coll_pred;
+		free_particle coll_pred;
 
 		// check if there is any collision between
 		// this free particle and a geometrical object
 
 		bool collision =
-		find_update_geom_collision_free(p, pred_pos, pred_vel, coll_pred);
+		find_update_geomcoll_free(p, pred_pos, pred_vel, coll_pred);
 
 		if (part_part_colls_activated()) {
-			bool r = find_update_particle_collision_free
+			bool r = find_update_partcoll_free
 			(p, pred_pos, pred_vel, coll_pred);
 
 			collision = collision or r;

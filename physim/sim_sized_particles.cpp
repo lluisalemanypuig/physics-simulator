@@ -5,11 +5,12 @@
 #include <physim/sim_solver.cpp>
 
 namespace physim {
+using namespace particles;
 
 void simulator::_simulate_sized_particles() {
 
 	for (size_t i = 0; i < sps.size(); ++i) {
-		particles::sized_particle *p = sps[i];
+		sized_particle *p = sps[i];
 
 		// ignore fixed particles
 		if (p->fixed) {
@@ -45,13 +46,13 @@ void simulator::_simulate_sized_particles() {
 		// collision prediction:
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		particles::sized_particle coll_pred;
+		sized_particle coll_pred;
 
 		// check if there is any collision between
 		// this sized particle and a geometrical object
 
 		bool collision =
-		find_update_geom_collision_sized(p, pred_pos, pred_vel, coll_pred);
+		find_update_geomcoll_sized(p, pred_pos, pred_vel, coll_pred);
 
 		// give the particle the proper final state
 		if (collision) {
@@ -68,7 +69,7 @@ void simulator::_simulate_sized_particles() {
 		// a linear-time algorithm (for every particle) will be used.
 
 		if (part_part_colls_activated()) {
-			find_update_particle_collision_sized(p, i);
+			find_update_partcoll_sized(p, i);
 		}
 	}
 
