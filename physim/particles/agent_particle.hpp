@@ -41,12 +41,14 @@ class agent_particle : public sized_particle {
 		 *
 		 * An attractor is a force field applied only to this particle.
 		 * It uses the @ref attractor_acceleration magnitude to compute the
-		 * force it acts upon the particle. Let \f$f\f$ be this value.
-		 * The force is computed as:
+		 * force it acts upon the particle. Let \f$s\f$ be the position
+		 * of the attractor (sink), \f$p\f$ be the current position of
+		 * this particle, and \f$a\f$ be the attractor acceleration. The
+		 * force is computed as:
 		 *
-		 * \f$\vec{F} = \vec{f} \cdot m\f$
+		 * \f$\vec{F} = a \cdot (s - p)\f$
 		 *
-		 * where \f$m = 1\f$ kilogram.
+		 * the agent is assumed to weigh 1 Kg.
 		 */
 		math::vec3 attractor;
 

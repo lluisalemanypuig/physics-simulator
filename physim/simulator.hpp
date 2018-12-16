@@ -611,6 +611,12 @@ class simulator {
 		 * Calls @ref _simulate_sized_particles.
 		 */
 		void simulate_sized_particles();
+		/**
+		 * @brief Simulate agent particles.
+		 *
+		 * Calls @ref _simulate_agent_particles.
+		 */
+		void simulate_agent_particles();
 
 		/**
 		 * @brief Simulate meshes.

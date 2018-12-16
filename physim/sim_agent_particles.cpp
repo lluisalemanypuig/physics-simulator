@@ -7,8 +7,11 @@
 
 namespace physim {
 using namespace particles;
+using namespace math;
 
 void simulator::_simulate_agent_particles() {
+
+	vec3 dir;
 
 	for (size_t i = 0; i < aps.size(); ++i) {
 		agent_particle *p = aps[i];
@@ -39,13 +42,23 @@ void simulator::_simulate_agent_particles() {
 
 		// clear the current force
 		__pm3_assign_s(p->force, 0.0f);
-		// compute forces for particle p
+		// compute forces for particle p,
+		// using fields and others
 		compute_forces(p);
+		// compute force from its attractor
+		__pm3_sub_v_v(dir, p->attractor, p->cur_pos);
+		__pm3_add_acc_vs(p->force, dir, p->attractor_acceleration);
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		math::vec3 pred_pos, pred_vel;
+		vec3 pred_pos, pred_vel;
 		apply_solver(p, pred_pos, pred_vel);
+
+		// scale velocity down to max_vel
+		float speed2 = __pm3_norm2(pred_vel);
+		if (speed2 >= p->max_vel*p->max_vel) {
+			__pm3_assign_vs(pred_vel, pred_vel, p->max_vel/std::sqrt(speed2));
+		}
 
 		// collision prediction:
 		// copy the particle at its current state and use it

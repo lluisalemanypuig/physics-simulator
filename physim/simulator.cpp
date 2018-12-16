@@ -259,6 +259,10 @@ void simulator::simulate_sized_particles() {
 	_simulate_sized_particles();
 }
 
+void simulator::simulate_agent_particles() {
+	_simulate_agent_particles();
+}
+
 void simulator::simulate_meshes() {
 	_simulate_meshes();
 }
