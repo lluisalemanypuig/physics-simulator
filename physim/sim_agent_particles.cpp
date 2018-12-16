@@ -47,6 +47,7 @@ void simulator::_simulate_agent_particles() {
 		compute_forces(p);
 		// compute force from its attractor
 		__pm3_sub_v_v(dir, p->attractor, p->cur_pos);
+		normalise(dir,dir);
 		__pm3_add_acc_vs(p->force, dir, p->attractor_acceleration);
 
 		// apply solver to predict next position and
@@ -56,14 +57,14 @@ void simulator::_simulate_agent_particles() {
 
 		// scale velocity down to max_vel
 		float speed2 = __pm3_norm2(pred_vel);
-		if (speed2 >= p->max_vel*p->max_vel) {
-			__pm3_assign_vs(pred_vel, pred_vel, p->max_vel/std::sqrt(speed2));
+		if (speed2 >= p->desired_vel*p->desired_vel) {
+			__pm3_assign_vs(pred_vel, pred_vel, p->desired_vel/std::sqrt(speed2));
 		}
 
 		// collision prediction:
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		agent_particle coll_pred;
+		agent_particle coll_pred = *p;
 
 		// check if there is any collision between
 		// this free particle and a geometrical object

@@ -46,7 +46,7 @@ class agent_particle : public sized_particle {
 		 * this particle, and \f$a\f$ be the attractor acceleration. The
 		 * force is computed as:
 		 *
-		 * \f$\vec{F} = a \cdot (s - p)\f$
+		 * \f$\vec{F} = a \cdot \frac{s - p}{||s - p||}\f$
 		 *
 		 * the agent is assumed to weigh 1 Kg.
 		 */
@@ -55,8 +55,8 @@ class agent_particle : public sized_particle {
 		/// Acceleration of the attractor. [m/s^2]
 		float attractor_acceleration;
 
-		/// Maximum magnitude of this particle's velocity. [m/s].
-		float max_vel;
+		/// Mmagnitude of this particle's desired velocity. [m/s].
+		float desired_vel;
 
 	public:
 		/// Default constructor.
