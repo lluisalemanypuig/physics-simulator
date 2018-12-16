@@ -69,7 +69,7 @@ namespace study_cases {
 		SR.get_simulator().add_geometry(pl);
 		sphere *sp = new sphere(math::vec3(0.0f, 2.0f, 0.0f), 1.5f);
 		SR.get_simulator().add_geometry(sp);
-		SR.get_simulator().add_gravity_acceleration(
+		SR.get_simulator().set_gravity_acceleration(
 			math::vec3(0.0f,-9.81f,0.0f)
 		);
 

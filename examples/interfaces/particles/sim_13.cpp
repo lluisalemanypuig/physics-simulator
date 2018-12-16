@@ -71,7 +71,7 @@ namespace study_cases {
 
 		S.add_free_particle();
 
-		S.add_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
+		S.set_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
 	}
 
 	void sim_13_initialise_sim_rend() {

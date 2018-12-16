@@ -107,7 +107,7 @@ namespace study_cases {
 		SR.get_simulator().add_geometry(pl);
 		SR.get_simulator().add_geometry(s);
 		SR.get_simulator().add_geometry(rl);
-		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
+		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 		SR.get_simulator().add_free_particles(9);
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 7.0f, 0.0f));

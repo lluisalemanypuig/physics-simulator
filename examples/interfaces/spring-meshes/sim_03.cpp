@@ -41,7 +41,7 @@ namespace study_cases {
 		SR.set_spring_width(1.0f);
 
 		SR.get_simulator().set_solver(glut_functions::solver);
-		SR.get_simulator().add_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
+		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 		float length = 1.0f;
 		float height = 1.0f;

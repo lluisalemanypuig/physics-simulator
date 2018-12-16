@@ -84,7 +84,7 @@ namespace study_cases {
 		S.add_sized_particle(p2);
 		S.add_sized_particle(p3);
 
-		S.add_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
+		S.set_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
 	}
 
 	void sim_12_initialise_sim_rend() {
