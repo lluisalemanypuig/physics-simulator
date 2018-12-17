@@ -1,5 +1,9 @@
 #include <physim/simulator.hpp>
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 // physim includes
 #include <physim/math/private/math3.hpp>
 #include <physim/particles/conversions.hpp>
@@ -48,7 +52,8 @@ void simulator::_simulate_agent_particles() {
 		// compute force from its attractor
 		__pm3_sub_v_v(dir, p->attractor, p->cur_pos);
 		normalise(dir,dir);
-		__pm3_add_acc_vs(p->force, dir, p->attractor_acceleration);
+		float extra = std::sin(__pm3_angle(dir, p->cur_vel)) + 4.0f;
+		__pm3_add_acc_vs(p->force, dir, p->attractor_acceleration*extra);
 
 		// apply solver to predict next position and
 		// velocity of the particle

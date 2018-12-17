@@ -70,9 +70,13 @@
 // Normalise vector 'g'.
 #define __pm3_normalise(f,g)	physim::math::normalise(g,f)
 
+// The arc cosinus of the angle between u and v
+#define __pm3_arccos_angle(u,v)		\
+	(__pm3_dot(u,v)/(__pm3_norm(u)*__pm3_norm(v)))
+
 // Angle between two non-unit vectors
-#define __pm3_angle(u,v)			\
-	std::acos(__pm3_dot(u,v)/(__pm3_norm(u)*__pm3_norm(v)))
+#define __pm3_angle(u,v)								\
+	std::acos(std::min(1.0f, __pm3_arccos_angle(u,v)))
 
 // Angle between two unit vectors
 #define __pm3_angle_unit(u,v)			\
