@@ -12,7 +12,7 @@ using namespace std;
 // physim includes
 #include <physim/input/input.hpp>
 #include <physim/geometry/object.hpp>
-#include <physim/structures/object_partition.hpp>
+#include <physim/structures/octree.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace input;
@@ -140,7 +140,7 @@ namespace study_cases {
 			cout << "the object" << endl;
 		}
 
-		object_partition copy;
+		octree copy;
 		copy.copy(o->get_partition());
 
 		cout << "Repeating query..." << endl;

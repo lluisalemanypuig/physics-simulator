@@ -148,7 +148,7 @@ namespace study_cases {
 
 		S.add_mesh(M);
 
-		S.add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		timing::time_point begin_sim = timing::now();

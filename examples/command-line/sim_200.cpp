@@ -132,7 +132,7 @@ namespace study_cases {
 		// -- initialise simulator
 		S.add_mesh(m);
 
-		S.add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		// execute simulation

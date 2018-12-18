@@ -128,7 +128,7 @@ namespace study_cases {
 		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 		S.add_geometry(floor);
 
-		S.add_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		// -----------------------------------------
 
 		// execute simulation
