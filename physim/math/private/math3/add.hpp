@@ -96,67 +96,73 @@
 	__pm3_assign_c(h, (f).x*(s1) + (g).x*(s2) + (s3),	\
 					  (f).y*(s1) + (g).y*(s2) + (s3),	\
 					  (f).z*(s1) + (g).z*(s2) + (s3))
+
+
 // f <- f + g
-#define __pm3_add_acc_v(f,g)							\
-	__pm2_add_acc_v(f, g);								\
+#define __pm3_add_acc_v(f,g)						\
+	__pm2_add_acc_v(f, g);							\
 	(f).z += (g).z
+#define __pm3_add_acc_v_v(f, g,h)					\
+	__pm2_add_acc_v_v(f, g,h);						\
+	(f).z += ((g).z + (h).z)
 // f <- f + g + (x,y,z)
-#define __pm3_add_acc_v_c(f,g, x,y,z)					\
-	__pm2_add_acc_v_c(f,g, x,y);						\
+// f <- f + g + (x,y,z)
+#define __pm3_add_acc_v_c(f,g, x,y,z)				\
+	__pm2_add_acc_v_c(f,g, x,y);					\
 	(f).z += ((g).z + (z))
 // f <- f + g + (x,y,z) + (s,s,s)
-#define __pm3_add_acc_v_c_s(f,g, x,y,z, s)				\
-	__pm2_add_acc_v_c_s(f,g, x,y, s);					\
+#define __pm3_add_acc_v_c_s(f,g, x,y,z, s)			\
+	__pm2_add_acc_v_c_s(f,g, x,y, s);				\
 	(f).z += ((g).z + (z) + (s))
 // f <- f + g + (s,s,s)
-#define __pm3_add_acc_v_s(f,g, s)						\
-	__pm2_add_acc_v_s(f,g, s);							\
+#define __pm3_add_acc_v_s(f,g, s)					\
+	__pm2_add_acc_v_s(f,g, s);						\
 	(f).z += ((g).z + (s))
 // f <- f + (x,y,z)
-#define __pm3_add_acc_c(f, x,y,z)						\
-	__pm2_add_acc_c(f, x,y);							\
+#define __pm3_add_acc_c(f, x,y,z)					\
+	__pm2_add_acc_c(f, x,y);						\
 	(f).z += (z)
 // f <- f + (x,y,z) + (s,s,s)
-#define __pm3_add_acc_c_s(f, x,y,z, s)					\
-	__pm2_add_acc_c_s(f, x,y, s);						\
+#define __pm3_add_acc_c_s(f, x,y,z, s)				\
+	__pm2_add_acc_c_s(f, x,y, s);					\
 	(f).z += ((z) + (s))
 // f <- f + (s,s,s)
-#define __pm3_add_acc_s(f,s)							\
-	__pm2_add_acc_s(f, s);								\
+#define __pm3_add_acc_s(f,s)						\
+	__pm2_add_acc_s(f, s);							\
 	(f).z += (s)
 // f <- f + g*(x,y,z)
-#define __pm3_add_acc_vc(f, g,x,y,z)					\
-	__pm2_add_acc_vc(f, g,x,y);							\
+#define __pm3_add_acc_vc(f, g,x,y,z)				\
+	__pm2_add_acc_vc(f, g,x,y);						\
 	(f).z += (g).z*(z)
 // f <- f + g*s
-#define __pm3_add_acc_vs(f, g,s)						\
-	__pm2_add_acc_vs(f, g,s);							\
+#define __pm3_add_acc_vs(f, g,s)					\
+	__pm2_add_acc_vs(f, g,s);						\
 	(f).z += (g).z*(s)
 // f <- f + g*s + h
-#define __pm3_add_acc_vs_v(f, g,s, h)					\
-	__pm2_add_acc_vs_v(f, g,s, h);						\
+#define __pm3_add_acc_vs_v(f, g,s, h)				\
+	__pm2_add_acc_vs_v(f, g,s, h);					\
 	(f).z += ((g).z*(s) + (h).z)
 // f <- f + g*s + (x,y,z)
-#define __pm3_add_acc_vs_c(f, g,s, x,y,z)				\
-	__pm2_add_acc_vs_c(f, g,s, x,y);					\
+#define __pm3_add_acc_vs_c(f, g,s, x,y,z)			\
+	__pm2_add_acc_vs_c(f, g,s, x,y);				\
 	(f).z += ((g).z*(s) + (z))
 // f <- f + g*s1 + (s2,s2,s2)
-#define __pm3_add_acc_vs_s(f, g,s1, s2)					\
-	__pm2_add_acc_vs_s(f, g,s1, s2);					\
+#define __pm3_add_acc_vs_s(f, g,s1, s2)				\
+	__pm2_add_acc_vs_s(f, g,s1, s2);				\
 	(f).z += ((g).z*(s1) + (s2))
 // h <- h + f*s1 + g*s2
-#define __pm3_add_acc_vs_vs(h, f,s1, g,s2)				\
-	__pm2_add_acc_vs_vs(h, f,s1, g,s2);					\
+#define __pm3_add_acc_vs_vs(h, f,s1, g,s2)			\
+	__pm2_add_acc_vs_vs(h, f,s1, g,s2);				\
 	(h).z += ((f).z*(s1) + (g).z*(s2))
 // i <- i + f*s1 + g*s2 + h
-#define __pm3_add_acc_vs_vs_v(i, f,s1, g,s2, h)			\
-	__pm2_add_acc_vs_vs_v(i, f,s1, g,s2, h);			\
+#define __pm3_add_acc_vs_vs_v(i, f,s1, g,s2, h)		\
+	__pm2_add_acc_vs_vs_v(i, f,s1, g,s2, h);		\
 	(i).z += ((f).z*(s1) + (g).z*(s2) + (h).z)
 // h <- h + f*s1 + g*s2 + (x,y,z)
-#define __pm3_add_acc_vs_vs_c(h, f,s1, g,s2, x,y,z)		\
-	__pm2_add_acc_vs_vs_c(h, f,s1, g,s2, x,y);			\
+#define __pm3_add_acc_vs_vs_c(h, f,s1, g,s2, x,y,z)	\
+	__pm2_add_acc_vs_vs_c(h, f,s1, g,s2, x,y);		\
 	(h).z += ((f).z*(s1) + (g).z*(s2) + (z))
 // h <- h + f*s1 + g*s2 + (s3,s3,s3)
-#define __pm3_add_acc_vs_vs_s(h, f,s1, g,s2, s3)		\
-	__pm2_add_acc_vs_vs_s(h, f,s1, g,s2, s3);			\
+#define __pm3_add_acc_vs_vs_s(h, f,s1, g,s2, s3)	\
+	__pm2_add_acc_vs_vs_s(h, f,s1, g,s2, s3);		\
 	(h).z += ((f).z*(s1) + (g).z*(s2) + (s3))

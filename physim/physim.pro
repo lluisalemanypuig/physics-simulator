@@ -68,10 +68,10 @@ HEADERS += \
     geometry/object.hpp \
     input/input.hpp \
     input/soup_reader.hpp \
-    structures/object_partition.hpp \
     math/private/math2/comparison.hpp \
     math/private/math3/comparison.hpp \
-    particles/agent_particle.hpp
+    particles/agent_particle.hpp \
+    structures/octree.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -109,6 +109,6 @@ SOURCES += \
     geometry/object.cpp \
     input/input.cpp \
     input/soup_reader.cpp \
-    structures/object_partition.cpp \
     particles/agent_particle.cpp \
-    sim_agent_particles.cpp
+    sim_agent_particles.cpp \
+    structures/octree.cpp

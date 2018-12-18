@@ -52,7 +52,7 @@ void simulator::_simulate_agent_particles() {
 		// compute force from its attractor
 		__pm3_sub_v_v(dir, p->attractor, p->cur_pos);
 		normalise(dir,dir);
-		float extra = std::sin(__pm3_angle(dir, p->cur_vel)) + 4.0f;
+		float extra = std::sin(__pm3_angle(dir, p->cur_vel)) + 1.0f;
 		__pm3_add_acc_vs(p->force, dir, p->attractor_acceleration*extra);
 
 		// apply solver to predict next position and

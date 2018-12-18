@@ -1,4 +1,4 @@
-#include <physim/structures/object_partition.hpp>
+#include <physim/structures/octree.hpp>
 
 // C includes
 #include <assert.h>
@@ -26,14 +26,14 @@ namespace structures {
 
 // -- node
 
-object_partition::node::node() {
+octree::node::node() {
 	tris_idxs = nullptr;
 	for (unsigned char i = 0; i < 8; ++i) {
 		children[i] = nullptr;
 	}
 }
 
-object_partition::node::~node() {
+octree::node::~node() {
 	for (unsigned char i = 0; i < 8; ++i) {
 		if (children[i] != nullptr) {
 			delete children[i];
@@ -48,7 +48,7 @@ object_partition::node::~node() {
 	}
 }
 
-bool object_partition::node::is_leaf() const {
+bool octree::node::is_leaf() const {
 	return tris_idxs != nullptr;
 }
 
@@ -56,7 +56,7 @@ bool object_partition::node::is_leaf() const {
 
 // -- octree
 
-object_partition::node *object_partition::make_tree_at(
+octree::node *octree::make_octree_triangles(
 	const vec3& vmin, const vec3& vmax,
 	const vector<vec3>& vertices,
 	const vector<size_t>& triangles,
@@ -68,16 +68,12 @@ const
 {
 	node *n = new node();
 
-	// make center, minimum and maximum points
-
+	// set minimum and maximum points
 	__pm3_assign_v(n->vmin, vmin);
 	__pm3_assign_v(n->vmax, vmax);
-	__pm3_assign_s(n->center, 0.0f);
-	for (size_t v_idx : vertices_idxs) {
-		const vec3& v = vertices[v_idx];
-		__pm3_add_acc_v(n->center, v);
-	}
-	__pm3_div_acc_s(n->center, vertices_idxs.size());
+	// make center point
+	__pm3_add_v_v(n->center, n->vmin, n->vmax);
+	__pm3_div_acc_s(n->center, 2.0f);
 
 	if (vertices_idxs.size() <= 8) {
 		// If there are less than 8 vertices to be partitioned
@@ -264,7 +260,7 @@ const
 		else { submax.z = n->center.z; submin.z = n->vmin.z; }
 
 		n->children[i] =
-		make_tree_at(
+		make_octree_triangles(
 			submin, submax,
 			vertices, triangles, tris_per_vertex,
 			vert_idxs_space[i], tris_idxs_space[i]
@@ -278,7 +274,67 @@ const
 	return n;
 }
 
-object_partition::node *object_partition::copy_node(const node *n) const {
+octree::node *octree::make_octree_vertices(
+	const math::vec3& vmin, const math::vec3& vmax,
+	const std::vector<math::vec3>& vertices,
+	const std::vector<size_t>& vertices_idxs
+)
+const
+{
+	node *n = new node();
+
+	// set minimum and maximum points
+	__pm3_assign_v(n->vmin, vmin);
+	__pm3_assign_v(n->vmax, vmax);
+	// make center point
+	__pm3_add_v_v(n->center, n->vmin, n->vmax);
+	__pm3_div_acc_s(n->center, 2.0f);
+
+	// vert_idxs_space contains indices pointing to vertices
+	// in parameter 'vertices'. These are the vertices that
+	// are put into each subspace.
+	vector<size_t> vert_idxs_space[8];
+
+	// partition the vertices
+	for (size_t v_idx : vertices_idxs) {
+		const vec3& v = vertices[v_idx];
+
+		unsigned char s = 0;
+		__pm3_lt(s, v, n->center);
+
+		// s contains in its three lowest-weight bits the
+		// result of comparing v < n->center.
+		// This points us to one of the node's children.
+
+		// vertex at position 'v_idx' is
+		// assigned to subspace 's'
+		vert_idxs_space[s].push_back(v_idx);
+	}
+
+	vec3 submin, submax;
+
+	// 3. Partition the subspaces
+	for (unsigned char i = 0; i < 8; ++i) {
+
+		// make minimum and maximum points for the i-th child
+		if ((i & 0x01) == 0) { submax.x = n->vmax.x; submin.x = n->center.x; }
+		else { submax.x = n->center.x; submin.x = n->vmin.x; }
+		if ((i & 0x02) == 0) { submax.y = n->vmax.y; submin.y = n->center.y; }
+		else { submax.y = n->center.y; submin.y = n->vmin.y; }
+		if ((i & 0x04) == 0) { submax.z = n->vmax.z; submin.z = n->center.z; }
+		else { submax.z = n->center.z; submin.z = n->vmin.z; }
+
+		n->children[i] =
+		make_octree_vertices(submin, submax, vertices, vert_idxs_space[i]);
+
+		// free unused memory
+		vert_idxs_space[i].clear();
+	}
+
+	return n;
+}
+
+octree::node *octree::copy_node(const node *n) const {
 	if (n == nullptr) {
 		return nullptr;
 	}
@@ -300,17 +356,17 @@ object_partition::node *object_partition::copy_node(const node *n) const {
 
 // PUBLIC
 
-object_partition::object_partition() {
+octree::octree() {
 	root = nullptr;
 }
 
-object_partition::~object_partition() {
+octree::~octree() {
 	clear();
 }
 
 // MEMORY
 
-void object_partition::init(
+void octree::init(
 	const vector<math::vec3>& vertices,
 	const vector<size_t>& tris_indices
 )
@@ -340,8 +396,7 @@ void object_partition::init(
 		*tit = tidx; tidx += 3;
 	}
 
-	// construct the maximum and minimum
-	// points of the root.
+	// construct the maximum and minimum points of the root.
 	static const float inf = numeric_limits<float>::max();
 	vec3 vmin, vmax;
 	__pm3_assign_s(vmin, inf);
@@ -374,20 +429,38 @@ void object_partition::init(
 	__pm3_add_acc_s(vmax, +0.01f);
 
 	root =
-	make_tree_at(
+	make_octree_triangles(
 		vmin, vmax, vertices, tris_indices,
 		tris_per_vertex, vert_idxs, tris_idxs
 	);
 }
 
-void object_partition::clear() {
+void octree::init(const vector<vec3>& vertices) {
+	clear();
+
+	static const float inf = numeric_limits<float>::max();
+	vec3 vmin, vmax;
+	__pm3_assign_s(vmin, inf);
+	__pm3_assign_s(vmax, -inf);
+
+	vector<size_t> idxs(vertices.size());
+	for (size_t i = 0; i < vertices.size(); ++i) {
+		__pm3_min2(vmin, vmin, vertices[i]);
+		__pm3_max2(vmax, vmax, vertices[i]);
+		idxs[i] = i;
+	}
+
+	root = make_octree_vertices(vmin, vmax, vertices, idxs);
+}
+
+void octree::clear() {
 	if (root != nullptr) {
 		delete root;
 		root = nullptr;
 	}
 }
 
-void object_partition::copy(const object_partition& part) {
+void octree::copy(const octree& part) {
 	clear();
 	root = copy_node(part.root);
 }
@@ -396,7 +469,7 @@ void object_partition::copy(const object_partition& part) {
 
 // GETTERS
 
-void object_partition::get_triangles
+void octree::get_triangles
 (const vec3& p, vector<size_t>& tris_idxs) const
 {
 	assert(root != nullptr);
@@ -413,8 +486,6 @@ void object_partition::get_triangles
 						 n->tris_idxs->begin(),
 						 n->tris_idxs->end());
 	}
-
-	cout << tris_idxs.size() << endl;
 }
 
 // OTHERS

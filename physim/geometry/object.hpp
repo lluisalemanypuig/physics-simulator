@@ -8,7 +8,7 @@
 #include <physim/geometry/triangle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/math/vec3.hpp>
-#include <physim/structures/object_partition.hpp>
+#include <physim/structures/octree.hpp>
 
 namespace physim {
 namespace geometry {
@@ -25,7 +25,7 @@ class object : public geometry {
 		std::vector<triangle> tris;
 
 		/// Partition of the object for faster intersection tests.
-		structures::object_partition octree;
+		structures::octree octree;
 
 	public:
 		/// Default constructor.
@@ -66,7 +66,7 @@ class object : public geometry {
 		 * @brief Returns the underlying structure that partitions this object.
 		 * @return Returns a constant reference to @ref octree.
 		 */
-		const structures::object_partition& get_partition() const;
+		const structures::octree& get_partition() const;
 
 		geometry_type get_geom_type() const;
 

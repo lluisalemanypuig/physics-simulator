@@ -77,10 +77,16 @@
 #define __pm2_add_vs_vs_s(h, f,s1, g,s2, s3)			\
 	__pm2_assign_c(h,(f).x*(s1) + (g).x*(s2) + (s3),	\
 					(f).y*(s1) + (g).y*(s2) + (s3))
+
+
 // f <- f + g
 #define __pm2_add_acc_v(f,g)						\
 	(f).x += (g).x;									\
 	(f).y += (g).y
+// f <- f + g + h
+#define __pm2_add_acc_v_v(f, g,h)					\
+	(f).x += ((g).x + (h).x);						\
+	(f).y += ((g).y + (h).y)
 // f <- f + g + (x,y,z)
 #define __pm2_add_acc_v_c(f,g, x,y)					\
 	(f).x += ((g).x + (x));							\

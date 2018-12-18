@@ -12,14 +12,18 @@ namespace physim {
 namespace structures {
 
 /**
- * @brief Object partition class.
+ * @brief Octree class.
  *
- * This is basically an implementation of an octree for a set of triangles,
- * forming a connected triangular mesh or not.
+ * This is an implementation of a basic octree for both set of triangles
+ * (see function
+ * @ref init(const std::vector<math::vec3>&, const std::vector<size_t>&)),
+ * and a set of vertices
+ * (see functions
+ * @ref init(const std::vector<math::vec3>&),
  */
-class object_partition {
+class octree {
 	private:
-		/// Nodes of the octree.
+		/// Octree's node definition.
 		struct node {
 			/// Points with the minimum coordinate values of the points within.
 			math::vec3 vmin;
@@ -54,30 +58,50 @@ class object_partition {
 
 		/**
 		 * @brief Builds a tree rooted at a node that partitions the triangles
-		 * stored in @e triangles.
-		 * @param[in] vmin Point with the minimum value coordinates of the
+		 * stored in @e triangles pointed by @e triangle_idxs.
+		 * @param vmin Point with the minimum value coordinates of the
 		 * points in @e vertices.
-		 * @param[in] vmax Point with the maximum value coordinates of the
+		 * @param vmax Point with the maximum value coordinates of the
 		 * points in @e vertices.
-		 * @param[in] vertices The full list of non-repeated vertices of the
+		 * @param vertices The full list of non-repeated vertices of the
 		 * triangles in @e triangles.
-		 * @param[in] triangles The full list of triangles. Every three integer
+		 * @param triangles The full list of triangles. Every three integer
 		 * values we have one triangle.
-		 * @param[in] tris_per_vertex The @e i-th position of this vector
+		 * @param tris_per_vertex The @e i-th position of this vector
 		 * contains the indices of the triangles adjacent to the @e i-th
-		 * vertex.
-		 * @param[in] vertices_idxs The list of vertices to be partitioned.
-		 * @param[in] triangle_idxs The list of triangles to incident to the
+		 * vertex. This is an auxiliary vector for faster tree building.
+		 * @param vertices_idxs The list of vertices to be partitioned.
+		 * @param triangle_idxs The list of triangles to incident to the
 		 * node to be created. The indexes in this list are all multiples of 3
 		 * and point to positions (also multiple of 3) in @e triangles.
+		 * @return Returns the root of an octree that partitions the triangles
+		 * in @e triangle_idxs and the points in @e vertices_idxs.
 		 */
-		node *make_tree_at(
+		node *make_octree_triangles(
 			const math::vec3& vmin, const math::vec3& vmax,
 			const std::vector<math::vec3>& vertices,
 			const std::vector<size_t>& triangles,
 			const std::vector<std::vector<size_t> >& tris_per_vertex,
 			const std::vector<size_t>& vertices_idxs,
 			const std::vector<size_t>& triangle_idxs
+		) const;
+
+		/**
+		 * @brief Builds a tree rooted at a node that partitions the vertices
+		 * stored in @e vertices pointed by @e vertices_idxs.
+		 * @param vmin Point with the minimum value coordinates of the points
+		 * in @e vertices.
+		 * @param vmax Point with the maximum value coordinates of the points
+		 * in @e vertices.
+		 * @param vertices The full list of vertices.
+		 * @param vertices_idxs The list of vertices to be partitioned.
+		 * @return Returns the root of an octree that partitions the points
+		 * in @e vertices_idxs.
+		 */
+		node *make_octree_vertices(
+			const math::vec3& vmin, const math::vec3& vmax,
+			const std::vector<math::vec3>& vertices,
+			const std::vector<size_t>& vertices_idxs
 		) const;
 
 		/**
@@ -91,9 +115,9 @@ class object_partition {
 
 	public:
 		/// Default constructor.
-		object_partition();
+		octree();
 		/// Destructor.
-		~object_partition();
+		~octree();
 
 		// MEMORY
 
@@ -110,6 +134,12 @@ class object_partition {
 			const std::vector<size_t>& tris_indices
 		);
 
+		/**
+		 * @brief Builds the partition of a cloud of points.
+		 * @param vertices The vertices, without repetitions, of the cloud.
+		 */
+		void init(const std::vector<math::vec3>& vertices);
+
 		/// Frees the memory occupied by this object.
 		void clear();
 
@@ -119,7 +149,7 @@ class object_partition {
 		 * The contents of this partition are cleared.
 		 * @param part An object partition.
 		 */
-		void copy(const object_partition& part);
+		void copy(const octree& part);
 
 		// SETTERS
 

@@ -63,7 +63,7 @@ void object::set_triangles
 
 // GETTERS
 
-const structures::object_partition& object::get_partition() const {
+const structures::octree& object::get_partition() const {
 	return octree;
 }
 
