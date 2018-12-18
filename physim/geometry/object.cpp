@@ -176,6 +176,7 @@ bool object::update_particle(
 {
 	cerr << "object::update_particle (" << __LINE__
 		 << ") - To be implemented!" << endl;
+	return false;
 }
 
 void object::display() const {
