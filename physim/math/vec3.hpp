@@ -83,7 +83,7 @@ typedef struct vec3 {
  * @param[in] b Input vector.
  * @param[out] m Minimum of @e a and @e b.
  */
-inline void min(const vec3& a, const vec3& b, vec3& m) {
+static inline void min(const vec3& a, const vec3& b, vec3& m) {
 	m.x = (a.x < b.x ? a.x : b.x);
 	m.y = (a.y < b.y ? a.y : b.y);
 	m.z = (a.z < b.z ? a.z : b.z);
@@ -99,7 +99,7 @@ inline void min(const vec3& a, const vec3& b, vec3& m) {
  * @param[in] b Input vector.
  * @returns Returns the minimum of @e a and @e b.
  */
-inline vec3 min(const vec3& a, const vec3& b) {
+static inline vec3 min(const vec3& a, const vec3& b) {
 	vec3 m;
 	min(a, b, m);
 	return m;
@@ -115,7 +115,7 @@ inline vec3 min(const vec3& a, const vec3& b) {
  * @param[in] b Input vector.
  * @param[out] M Maximum of @e a and @e b.
  */
-inline void max(const vec3& a, const vec3& b, vec3& M) {
+static inline void max(const vec3& a, const vec3& b, vec3& M) {
 	M.x = (a.x > b.x ? a.x : b.x);
 	M.y = (a.y > b.y ? a.y : b.y);
 	M.z = (a.z > b.z ? a.z : b.z);
@@ -131,7 +131,7 @@ inline void max(const vec3& a, const vec3& b, vec3& M) {
  * @param[in] b Input vector.
  * @returns Returns the maximum of @e a and @e b.
  */
-inline vec3 max(const vec3& a, const vec3& b) {
+static inline vec3 max(const vec3& a, const vec3& b) {
 	vec3 M;
 	max(a, b, M);
 	return M;
@@ -140,21 +140,21 @@ inline vec3 max(const vec3& a, const vec3& b) {
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-inline float dot(const vec3& f, const vec3& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z; }
+static inline float dot(const vec3& f, const vec3& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z; }
 
 /// The square of the norm of a vector.
-inline float norm2(const vec3& f) { return dot(f,f); }
+static inline float norm2(const vec3& f) { return dot(f,f); }
 /// The norm of a vector.
-inline float norm(const vec3& f) { return std::sqrt(dot(f,f)); }
+static inline float norm(const vec3& f) { return std::sqrt(dot(f,f)); }
 
 /// The squared distance between two points, given their positional vectors.
-inline float dist2(const vec3& f, const vec3& g) {
+static inline float dist2(const vec3& f, const vec3& g) {
 	return (f.x - g.x)*(f.x - g.x) +
 		   (f.y - g.y)*(f.y - g.y) +
 		   (f.z - g.z)*(f.z - g.z);
 }
 /// The distance between two points, given their positional vectors.
-inline float dist(const vec3& f, const vec3& g) {
+static inline float dist(const vec3& f, const vec3& g) {
 	return std::sqrt(dist2(f,g));
 }
 
@@ -164,7 +164,7 @@ inline float dist(const vec3& f, const vec3& g) {
  * @param[in] f Input vector.
  * @param[in] g Input vector.
  */
-inline void cross(const vec3& f, const vec3& g, vec3& h) {
+static inline void cross(const vec3& f, const vec3& g, vec3& h) {
 	h.x = f.y*g.z - f.z*g.y;
 	h.y = f.z*g.x - f.x*g.z;
 	h.z = f.x*g.y - f.y*g.x;
@@ -175,7 +175,7 @@ inline void cross(const vec3& f, const vec3& g, vec3& h) {
  * @param[in] g Input vector.
  * @returns Returns the cross product of @e f and @e g.
  */
-inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); return h; }
+static inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); return h; }
 
 /**
  * @brief Makes a perpendicular vector to @e f.
@@ -185,7 +185,7 @@ inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); return h
  * @param[out] g A vector perpendicular to @e f.
  * @param[in] f Input vector.
  */
-inline void perpendicular(const vec3& f, vec3& g) {
+static inline void perpendicular(const vec3& f, vec3& g) {
 	g.x = f.y;
 	g.y = -f.x;
 	g.z = 0.0f;
@@ -198,7 +198,9 @@ inline void perpendicular(const vec3& f, vec3& g) {
  * @param f Input vector.
  * @returns Returns a vector perpendicular to @e f.
  */
-inline vec3 perpendicular(const vec3& f) { vec3 g; perpendicular(f,g); return g; }
+static inline vec3 perpendicular(const vec3& f) {
+	vec3 g; perpendicular(f,g); return g;
+}
 
 /**
  * @brief Vector normalisation.
@@ -208,7 +210,7 @@ inline vec3 perpendicular(const vec3& f) { vec3 g; perpendicular(f,g); return g;
  * @param[in] f Vector to be normalised.
  * @param[out] g Where to store the normalised vector.
  */
-inline void normalise(const vec3& f, vec3& g) {
+static inline void normalise(const vec3& f, vec3& g) {
 	float n = norm(f);
 	g.x = f.x*(1.0f/n);
 	g.y = f.y*(1.0f/n);
@@ -221,7 +223,7 @@ inline void normalise(const vec3& f, vec3& g) {
  * @param f Vector to be normalised.
  * @returns Returns the normalisation of vector @e f.
  */
-inline vec3 normalise(const vec3& f) {
+static inline vec3 normalise(const vec3& f) {
 	vec3 out;
 	normalise(f, out);
 	return out;
@@ -233,7 +235,7 @@ inline vec3 normalise(const vec3& f) {
  * @param[in] g 3D vector.
  * @return Returns the angle between the vectors \f$f,g\f$.
  */
-inline float angle_xyz(const vec3& f, const vec3& g) {
+static inline float angle_xyz(const vec3& f, const vec3& g) {
 	float frac = dot(f,g)/(norm(f)*norm(g));
 	// truncate the value of frag so that we don't gent NaNs
 	frac = (frac <= -1.0f)*(-1.0f) +
@@ -249,7 +251,7 @@ inline float angle_xyz(const vec3& f, const vec3& g) {
  * @return Returns the angle between the vectors \f$(f_x,0,0)\f$
  * and \f$(g_x,g_y,0)\f$.
  */
-inline float angle_xy(const vec3& f, const vec3& g) {
+static inline float angle_xy(const vec3& f, const vec3& g) {
 	vec3 fx(f.x,0.0f,0.0f);
 	vec3 gxy(g.x,g.y,0.0f);
 	return angle_xyz(fx,gxy);
@@ -262,9 +264,43 @@ inline float angle_xy(const vec3& f, const vec3& g) {
  * @return Returns the angle between the vectors \f$(f_x,f_y,0)\f$
  * and \f$g\f$.
  */
-inline float angle_xz(const vec3& f, const vec3& g) {
+static inline float angle_xz(const vec3& f, const vec3& g) {
 	vec3 fxy(f.x,f.y,0.0f);
 	return angle_xyz(fxy,g);
+}
+
+/**
+ * @brief Truncates a vector to a given length.
+ *
+ * If the length of @e f is larger than l then \f$g = l*\frac{f}{||f||}\f$.
+ * If not then \f$g = f\f$.
+ * @param[in] f Input vector
+ * @param[in] l Maximum length.
+ * @param[out] g Truncated vector.
+ */
+static inline void truncate(const vec3& f, float l, vec3& g) {
+	g = f;
+	float n2 = norm2(g);
+	if (n2 > l*l) {
+		g = normalise(g)*l;
+	}
+}
+/**
+ * @brief Truncates a vector to a given length.
+ *
+ * If the length of @e f is larger than l then returns \f$l*\frac{f}{||f||}\f$.
+ * If not then returns \f$f\f$.
+ * @param f Input vector
+ * @param l Maximum length.
+ * @return Returns vector @e f truncated to length @e l.
+ */
+static inline vec3 truncate(const vec3& f, float l) {
+	vec3 g = f;
+	float n2 = norm2(g);
+	if (n2 > l*l) {
+		g = normalise(f)*l;
+	}
+	return g;
 }
 
 } // -- namespace math

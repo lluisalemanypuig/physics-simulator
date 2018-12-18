@@ -88,7 +88,7 @@ typedef struct vec4 {
  * @param[in] b Input vector.
  * @param[out] m Minimum of @e a and @e b.
  */
-inline void min(const vec4& a, const vec4& b, vec4& m) {
+static inline void min(const vec4& a, const vec4& b, vec4& m) {
 	m.x = (a.x < b.x ? a.x : b.x);
 	m.y = (a.y < b.y ? a.y : b.y);
 	m.z = (a.z < b.z ? a.z : b.z);
@@ -105,7 +105,7 @@ inline void min(const vec4& a, const vec4& b, vec4& m) {
  * @param[in] b Input vector.
  * @returns Returns the minimum of @e a and @e b.
  */
-inline vec4 min(const vec4& a, const vec4& b) {
+static inline vec4 min(const vec4& a, const vec4& b) {
 	vec4 m;
 	min(a, b, m);
 	return m;
@@ -121,7 +121,7 @@ inline vec4 min(const vec4& a, const vec4& b) {
  * @param[in] b Input vector.
  * @param[out] M Maximum of @e a and @e b.
  */
-inline void max(const vec4& a, const vec4& b, vec4& M) {
+static inline void max(const vec4& a, const vec4& b, vec4& M) {
 	M.x = (a.x > b.x ? a.x : b.x);
 	M.y = (a.y > b.y ? a.y : b.y);
 	M.z = (a.z > b.z ? a.z : b.z);
@@ -138,7 +138,7 @@ inline void max(const vec4& a, const vec4& b, vec4& M) {
  * @param[in] b Input vector.
  * @returns Returns the maximum of @e a and @e b.
  */
-inline vec4 max(const vec4& a, const vec4& b) {
+static inline vec4 max(const vec4& a, const vec4& b) {
 	vec4 M;
 	max(a, b, M);
 	return M;
@@ -147,22 +147,22 @@ inline vec4 max(const vec4& a, const vec4& b) {
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-inline float dot(const vec4& f, const vec4& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u; }
+static inline float dot(const vec4& f, const vec4& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u; }
 
 /// The square of the norm of a vector.
-inline float norm2(const vec4& f) { return dot(f,f); }
+static inline float norm2(const vec4& f) { return dot(f,f); }
 /// The norm of a vector.
-inline float norm(const vec4& f) { return std::sqrt(dot(f,f)); }
+static inline float norm(const vec4& f) { return std::sqrt(dot(f,f)); }
 
 /// The squared distance between two points, given their positional vectors.
-inline float dist2(const vec4& f, const vec4& g) {
+static inline float dist2(const vec4& f, const vec4& g) {
 	return (f.x - g.x)*(f.x - g.x) +
 		   (f.y - g.y)*(f.y - g.y) +
 		   (f.z - g.z)*(f.z - g.z) +
 		   (f.u - g.u)*(f.u - g.u);
 }
 /// The distance between two points, given their positional vectors.
-inline float dist(const vec4& f, const vec4& g) {
+static inline float dist(const vec4& f, const vec4& g) {
 	return std::sqrt(dist2(f,g));
 }
 
@@ -174,7 +174,7 @@ inline float dist(const vec4& f, const vec4& g) {
  * @param[in] f Input vector.
  * @param[out] g A vector perpendicular to @e f.
  */
-inline void perpendicular(const vec4& f, vec4& g) {
+static inline void perpendicular(const vec4& f, vec4& g) {
 	g.x = f.y;
 	g.y = -f.x;
 	g.z = 0.0f;
@@ -188,7 +188,9 @@ inline void perpendicular(const vec4& f, vec4& g) {
  * @param f Input vector.
  * @returns Returns a vector perpendicular to @e f.
  */
-inline vec4 perpendicular(const vec4& f) { vec4 g; perpendicular(f,g); return g; }
+static inline vec4 perpendicular(const vec4& f) {
+	vec4 g; perpendicular(f,g); return g;
+}
 
 /**
  * @brief Vector normalisation.
@@ -198,7 +200,7 @@ inline vec4 perpendicular(const vec4& f) { vec4 g; perpendicular(f,g); return g;
  * @param[in] f Vector to be normalised.
  * @param[out] g Where to store the normalised vector.
  */
-inline void normalise(const vec4& f, vec4& g) {
+static inline void normalise(const vec4& f, vec4& g) {
 	float n = norm(f);
 	g.x = f.x*(1.0f/n);
 	g.y = f.y*(1.0f/n);
@@ -212,10 +214,44 @@ inline void normalise(const vec4& f, vec4& g) {
  * @param f Vector to be normalised.
  * @returns Returns the normalisation of vector @e f.
  */
-inline vec4 normalise(const vec4& f) {
+static inline vec4 normalise(const vec4& f) {
 	vec4 out;
 	normalise(f, out);
 	return out;
+}
+
+/**
+ * @brief Truncates a vector to a given length.
+ *
+ * If the length of @e f is larger than l then \f$g = l*\frac{f}{||f||}\f$.
+ * If not then \f$g = f\f$.
+ * @param[in] f Input vector
+ * @param[in] l Maximum length.
+ * @param[out] g Truncated vector.
+ */
+static inline void truncate(const vec4& f, float l, vec4& g) {
+	g = f;
+	float n2 = norm2(g);
+	if (n2 > l*l) {
+		g = normalise(f)*l;
+	}
+}
+/**
+ * @brief Truncates a vector to a given length.
+ *
+ * If the length of @e f is larger than l then returns \f$l*\frac{f}{||f||}\f$.
+ * If not then returns \f$f\f$.
+ * @param f Input vector
+ * @param l Maximum length.
+ * @return Returns vector @e f truncated to length @e l.
+ */
+static inline vec4 truncate(const vec4& f, float l) {
+	vec4 g = f;
+	float n2 = norm2(g);
+	if (n2 > l*l) {
+		g = normalise(f)*l;
+	}
+	return g;
 }
 
 } // -- namespace math
