@@ -11,7 +11,8 @@ namespace particles {
 void agent_particle::partial_init() {
 	__pm3_assign_s(attractor, 0.0f);
 	attractor_acceleration = 0.0f;
-	desired_vel = 1.0f;
+	max_speed = 1.0f;
+	max_force = 1.0f;
 }
 
 // PUBLIC
@@ -23,7 +24,8 @@ agent_particle::agent_particle() {
 agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	__pm3_assign_v(attractor, p.attractor);
 	attractor_acceleration = p.attractor_acceleration;
-	desired_vel = p.desired_vel;
+	max_speed = p.max_speed;
+	max_force = p.max_force;
 }
 
 agent_particle::~agent_particle() {

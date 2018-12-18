@@ -31,7 +31,8 @@ class agent_particle : public sized_particle {
 		 * The attributes of the class take the following values:
 		 * - @ref attractor : vec3(0,0,0)
 		 * - @ref attractor_acceleration : 0.0
-		 * - @ref max_vel : 1.0
+		 * - @ref max_speed : 1.0
+		 * - @ref max_force : 1.0
 		 */
 		void partial_init();
 
@@ -55,8 +56,20 @@ class agent_particle : public sized_particle {
 		/// Acceleration of the attractor. [m/s^2]
 		float attractor_acceleration;
 
-		/// Mmagnitude of this particle's desired velocity. [m/s].
-		float desired_vel;
+		/**
+		 * @brief Maximum speed allowed. [m/s].
+		 *
+		 * This particle can move at a velocity with
+		 * maximum magnitude stored in this value.
+		 */
+		float max_speed;
+		/**
+		 * @brief Maximum force allowed. [m/s].
+		 *
+		 * This particle can move at a velocity with
+		 * maximum magnitude stored in this value.
+		 */
+		float max_force;
 
 	public:
 		/// Default constructor.
@@ -86,7 +99,8 @@ class agent_particle : public sized_particle {
 		 * - @ref R : 1.0
 		 * - @ref attractor : vec3(0,0,0)
 		 * - @ref attractor_acceleration : 0.0
-		 * - @ref max_vel : 1.0
+		 * - @ref max_speed : 1.0
+		 * - @ref max_force : 1.0
 		 */
 		void init();
 
