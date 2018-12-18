@@ -21,6 +21,10 @@ class object_partition {
 	private:
 		/// Nodes of the octree.
 		struct node {
+			/// Points with the minimum coordinate values of the points within.
+			math::vec3 vmin;
+			/// Points with the maximum coordinate values of the points within.
+			math::vec3 vmax;
 			/// Point at the center of the region this node partitions.
 			math::vec3 center;
 			/// Indices to an object's triangles.
@@ -51,6 +55,10 @@ class object_partition {
 		/**
 		 * @brief Builds a tree rooted at a node that partitions the triangles
 		 * stored in @e triangles.
+		 * @param[in] vmin Point with the minimum value coordinates of the
+		 * points in @e vertices.
+		 * @param[in] vmax Point with the maximum value coordinates of the
+		 * points in @e vertices.
 		 * @param[in] vertices The full list of non-repeated vertices of the
 		 * triangles in @e triangles.
 		 * @param[in] triangles The full list of triangles. Every three integer
@@ -64,6 +72,7 @@ class object_partition {
 		 * and point to positions (also multiple of 3) in @e triangles.
 		 */
 		node *make_tree_at(
+			const math::vec3& vmin, const math::vec3& vmax,
 			const std::vector<math::vec3>& vertices,
 			const std::vector<size_t>& triangles,
 			const std::vector<std::vector<size_t> >& tris_per_vertex,

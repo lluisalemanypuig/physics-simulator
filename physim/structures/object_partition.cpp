@@ -24,6 +24,8 @@ namespace structures {
 
 // PRIVATE
 
+// -- node
+
 object_partition::node::node() {
 	tris_idxs = nullptr;
 	for (unsigned char i = 0; i < 8; ++i) {
@@ -50,7 +52,12 @@ bool object_partition::node::is_leaf() const {
 	return tris_idxs != nullptr;
 }
 
+// PRIVATE
+
+// -- octree
+
 object_partition::node *object_partition::make_tree_at(
+	const vec3& vmin, const vec3& vmax,
 	const vector<vec3>& vertices,
 	const vector<size_t>& triangles,
 	const vector<vector<size_t> >& tris_per_vertex,
@@ -62,14 +69,13 @@ const
 	node *n = new node();
 
 	// make center, minimum and maximum points
-	static const float inf = numeric_limits<float>::max();
-	vec3 vmin(inf), vmax(-inf);
+
+	__pm3_assign_v(n->vmin, vmin);
+	__pm3_assign_v(n->vmax, vmax);
 	__pm3_assign_s(n->center, 0.0f);
 	for (size_t v_idx : vertices_idxs) {
 		const vec3& v = vertices[v_idx];
 		__pm3_add_acc_v(n->center, v);
-		__pm3_min2(vmin, vmin, v);
-		__pm3_max2(vmax, vmax, v);
 	}
 	__pm3_div_acc_s(n->center, vertices_idxs.size());
 
@@ -83,12 +89,6 @@ const
 		n->tris_idxs = new vector<size_t>(triangle_idxs);
 		return n;
 	}
-
-	// perturb the minimum and maximum points
-	// a little so that they do not have coordinates
-	// equal to the center point
-	__pm3_add_acc_s(vmin, -0.01f);
-	__pm3_add_acc_s(vmax, +0.01f);
 
 	// Points defining the 12 'rectangles' that
 	// partition this subspace.
@@ -250,10 +250,22 @@ const
 	// free unused memory
 	subspace_per_vertex.clear();
 
+	vec3 submin, submax;
+
 	// 3. Partition the subspaces
 	for (unsigned char i = 0; i < 8; ++i) {
+
+		// make minimum and maximum points for the i-th child
+		if ((i & 0x01) == 0) { submax.x = n->vmax.x; submin.x = n->center.x; }
+		else { submax.x = n->center.x; submin.x = n->vmin.x; }
+		if ((i & 0x02) == 0) { submax.y = n->vmax.y; submin.y = n->center.y; }
+		else { submax.y = n->center.y; submin.y = n->vmin.y; }
+		if ((i & 0x04) == 0) { submax.z = n->vmax.z; submin.z = n->center.z; }
+		else { submax.z = n->center.z; submin.z = n->vmin.z; }
+
 		n->children[i] =
 		make_tree_at(
+			submin, submax,
 			vertices, triangles, tris_per_vertex,
 			vert_idxs_space[i], tris_idxs_space[i]
 		);
@@ -328,6 +340,13 @@ void object_partition::init(
 		*tit = tidx; tidx += 3;
 	}
 
+	// construct the maximum and minimum
+	// points of the root.
+	static const float inf = numeric_limits<float>::max();
+	vec3 vmin, vmax;
+	__pm3_assign_s(vmin, inf);
+	__pm3_assign_s(vmax, -inf);
+
 	// Construct the 'tris_per_vertex' table.
 	// The i-th position contains the indices of all the
 	// triangles incident to the i-th vertex.
@@ -338,10 +357,27 @@ void object_partition::init(
 		tris_per_vertex[tris_indices[i + 0]].push_back(i);
 		tris_per_vertex[tris_indices[i + 1]].push_back(i);
 		tris_per_vertex[tris_indices[i + 2]].push_back(i);
+
+		// compute minimum and maximum
+		__pm3_min2(vmin, vmin, vertices[tris_indices[i + 0]]);
+		__pm3_max2(vmax, vmax, vertices[tris_indices[i + 0]]);
+		__pm3_min2(vmin, vmin, vertices[tris_indices[i + 1]]);
+		__pm3_max2(vmax, vmax, vertices[tris_indices[i + 1]]);
+		__pm3_min2(vmin, vmin, vertices[tris_indices[i + 2]]);
+		__pm3_max2(vmax, vmax, vertices[tris_indices[i + 2]]);
 	}
 
+	// perturb the minimum and maximum points
+	// a little so that they do not have coordinates
+	// equal to the center point
+	__pm3_add_acc_s(vmin, -0.01f);
+	__pm3_add_acc_s(vmax, +0.01f);
+
 	root =
-	make_tree_at(vertices, tris_indices, tris_per_vertex, vert_idxs, tris_idxs);
+	make_tree_at(
+		vmin, vmax, vertices, tris_indices,
+		tris_per_vertex, vert_idxs, tris_idxs
+	);
 }
 
 void object_partition::clear() {
@@ -372,9 +408,13 @@ void object_partition::get_triangles
 		n = n->children[s];
 	}
 
-	tris_idxs.insert(tris_idxs.end(),
-					 n->tris_idxs->begin(),
-					 n->tris_idxs->end());
+	if (__pm3_inside_box(p, n->vmin, n->vmax)) {
+		tris_idxs.insert(tris_idxs.end(),
+						 n->tris_idxs->begin(),
+						 n->tris_idxs->end());
+	}
+
+	cout << tris_idxs.size() << endl;
 }
 
 // OTHERS
