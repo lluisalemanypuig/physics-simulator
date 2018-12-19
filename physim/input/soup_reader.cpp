@@ -14,7 +14,7 @@ namespace physim {
 namespace input {
 
 	bool soup_read_file
-	(const std::string& dir, const std::string& fname, geometry::object *o)
+	(const std::string& dir, const std::string& fname, geometric::object *o)
 	{
 		assert(o != nullptr);
 

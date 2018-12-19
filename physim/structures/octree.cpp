@@ -18,7 +18,7 @@ using namespace std;
 
 namespace physim {
 using namespace math;
-using namespace geometry;
+using namespace geometric;
 
 namespace structures {
 
@@ -354,6 +354,23 @@ octree::node *octree::copy_node(const node *n) const {
 	return c;
 }
 
+void octree::get_boxes_node
+(const node *n, std::vector<std::pair<math::vec3, math::vec3> >& boxes)
+const
+{
+	if (n == nullptr) {
+		return;
+	}
+	if (n->is_leaf()) {
+		boxes.push_back(make_pair(n->vmin, n->vmax));
+		return;
+	}
+
+	for (unsigned char c = 0; c < 8; ++c) {
+		get_boxes_node(n->children[c], boxes);
+	}
+}
+
 // PUBLIC
 
 octree::octree() {
@@ -469,7 +486,7 @@ void octree::copy(const octree& part) {
 
 // GETTERS
 
-void octree::get_triangles
+void octree::get_indices
 (const vec3& p, vector<size_t>& tris_idxs) const
 {
 	assert(root != nullptr);
@@ -486,6 +503,10 @@ void octree::get_triangles
 						 n->tris_idxs->begin(),
 						 n->tris_idxs->end());
 	}
+}
+
+void octree::get_boxes(vector<pair<vec3, vec3> >& boxes) const {
+	get_boxes_node(root, boxes);
 }
 
 // OTHERS

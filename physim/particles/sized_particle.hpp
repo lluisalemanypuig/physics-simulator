@@ -15,7 +15,7 @@ namespace particles {
  * to several forces but not to any other particle's
  * direct interaction through them. It can collide with
  * other objects in the scene (geometrical objects, see
- * namespace @ref physim::geometry) and also with other
+ * namespace @ref physim::geometric) and also with other
  * paricles.
  *
  * A sized particle is, then, a particle with some size

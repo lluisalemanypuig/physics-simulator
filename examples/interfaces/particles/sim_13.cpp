@@ -20,7 +20,7 @@ using namespace std;
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace particles;
-using namespace geometry;
+using namespace geometric;
 using namespace init;
 
 // custom includes
@@ -57,10 +57,10 @@ namespace study_cases {
 
 		initialiser *I = SR.get_simulator().get_initialiser();
 		I->set_pos_initialiser(
-			[mx,mz](free_particle *p) { p->cur_pos = math::vec3(mx,1.86f,mz); }
+			[mx,mz](free_particle *p) { p->cur_pos = pm_vec3(mx,1.86f,mz); }
 		);
 		I->set_vel_initialiser(
-			[](free_particle *p) { p->cur_vel = math::vec3(0.0f,0.0f,0.0f); }
+			[](free_particle *p) { p->cur_vel = pm_vec3(0.0f,0.0f,0.0f); }
 		);
 		I->set_friction_initialiser(
 			[](free_particle *p) { p->friction = 0.2f; }
@@ -71,7 +71,7 @@ namespace study_cases {
 
 		S.add_free_particle();
 
-		S.set_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
+		S.set_gravity_acceleration(pm_vec3(0.0f, -2.0f, 0.0f));
 	}
 
 	void sim_13_initialise_sim_rend() {
@@ -79,14 +79,25 @@ namespace study_cases {
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "pipe-artistic.obj", *model_pipe);
 
+		const geometry *G = SR.get_simulator().get_fixed_objects()[0];
+		const object *O = static_cast<const object *>(G);
+
+		vector<pair<pm_vec3,pm_vec3> > boxes;
+		O->get_partition().get_boxes(boxes);
+
 		robject *ro = new robject();
 		ro->set_model(model_pipe);
+		ro->set_boxes(boxes);
+
 		SR.add_geometry(ro);
 
 		model_pipe->load_textures();
 		if (use_shaders) {
 			glut_functions::init_shaders();
+
 			SR.get_box().make_buffers();
+			ro->make_boxes_buffers();
+
 			model_pipe->make_buffers_materials_textures();
 			shader& ts = texture_shader;
 			ts.bind();
@@ -211,6 +222,8 @@ namespace study_cases {
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
 		glut_functions::parse_common_params(argc, argv);
+
+		glut_variables::draw_boxes_octree = true;
 
 		// ---------------- //
 		/* build simulation */

@@ -15,12 +15,12 @@ namespace physim {
 	 * fixed on the same place throughout the simulation.
 	 *
 	 * Some of the geometrical objects are parametrised by their points,
-	 * like @ref geometry::triangle, @ref geometry::sphere, @ref geometry::plane,
-	 * @ref geometry::rectangle, but more general objects, see @ref geometry::object,
+	 * like @ref geometric::triangle, @ref geometric::sphere, @ref geometric::plane,
+	 * @ref geometric::rectangle, but more general objects, see @ref geometric::object,
 	 * are supported. These general objects must be read from a file,
 	 * see namespace @ref physim::input.
      */
-    namespace geometry { }
+    namespace geometric { }
     
     /**
      * @brief Particle initialiser classes.
@@ -87,16 +87,16 @@ namespace physim {
      * extension: .ply.
      * - Triangle Soup Format. File extension: .soup.
      * 
-     * These are meant for constructing triangular meshes for geometry
+     * These are meant for constructing triangular meshes for geometric
      * that cannot be parametrised.
      * 
      * The function used for reading a file should be
-     * @ref read_file(const std::string&,const std::string&,geometry::object *),
+     * @ref read_file(const std::string&,const std::string&,geometric::object *),
      * however, if the extension of the file is known then the user can
      * call the corresponding function:
-     * - @ref obj_read_file(const std::string&,const std::string&,geometry::object *) 
-     * - @ref ply_read_file(const std::string&,const std::string&,geometry::object *)
-     * - @ref soup_read_file(const std::string&,const std::string&,geometry::object *)
+     * - @ref obj_read_file(const std::string&,const std::string&,geometric::object *) 
+     * - @ref ply_read_file(const std::string&,const std::string&,geometric::object *)
+     * - @ref soup_read_file(const std::string&,const std::string&,geometric::object *)
      */
     namespace input {
 		
@@ -108,5 +108,10 @@ namespace physim {
 		namespace input_private {}
 		
 	} // -- namespace input
+	
+	/**
+	 * @brief Space partition data structures.
+	 */
+	namespace structures {}
 
 } // -- namespace sim

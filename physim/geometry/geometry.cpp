@@ -8,7 +8,7 @@ using namespace std;
 #include <physim/math/private/math3/base.hpp>
 
 namespace physim {
-namespace geometry {
+namespace geometric {
 
 // PUBLIC
 

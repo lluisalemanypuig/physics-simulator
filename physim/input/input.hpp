@@ -32,7 +32,7 @@ namespace input {
 	(
 		const std::string& directory,
 		const std::string& filename,
-		geometry::object *mesh
+		geometric::object *mesh
 	);
 
 } // -- namespace io

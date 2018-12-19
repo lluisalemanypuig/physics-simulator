@@ -10,7 +10,7 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace geometry {
+namespace geometric {
 
 /**
  * @brief Class that implements a rectangle.

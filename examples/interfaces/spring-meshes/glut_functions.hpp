@@ -46,6 +46,7 @@ namespace glut_functions {
 	extern point regular_key_pressed;
 
 	extern bool draw_box;
+	extern bool draw_boxes_octree;
 
 	extern bool display_fps;
 	extern int FPS;

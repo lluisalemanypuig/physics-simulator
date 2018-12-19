@@ -7,6 +7,7 @@ using namespace std;
 // glm inlcudes
 #include <glm/gtc/matrix_transform.hpp>
 
+
 // render includes
 #include <render/include_gl.hpp>
 
@@ -17,9 +18,37 @@ robject::~robject() {}
 
 // SETTERS
 
-// GETETRS
+void robject::set_boxes(const physim_boxes_set& pbs) {
+	for (const pair<physim::math::vec3,physim::math::vec3>& p : pbs) {
+		glm::vec3 vmin, vmax;
+		vmin.x = p.first.x;
+		vmin.y = p.first.y;
+		vmin.z = p.first.z;
+
+		vmax.x = p.second.x;
+		vmax.y = p.second.y;
+		vmax.z = p.second.z;
+
+		box B;
+		B.set_min_max(vmin, vmax);
+
+		boxes.push_back(B);
+	}
+}
+
+// GETTERS
+
+const vector<box>& robject::get_boxes() const {
+	return boxes;
+}
 
 // OTHERS
+
+void robject::make_boxes_buffers() {
+	for (box& b : boxes) {
+		b.make_buffers();
+	}
+}
 
 void robject::draw_geometry() const {
 	cerr << "robject::draw_geometry() - Error!" << endl;

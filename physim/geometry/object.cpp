@@ -14,7 +14,7 @@ using namespace std;
 namespace physim {
 using namespace math;
 
-namespace geometry {
+namespace geometric {
 
 // PRIVATE
 
@@ -82,7 +82,7 @@ bool object::is_inside(const vec3& p, float tol) const {
 	}
 
 	vector<size_t> idxs;
-	octree.get_triangles(p, idxs);
+	octree.get_indices(p, idxs);
 	for (size_t t_idx : idxs) {
 		if (tris[t_idx/3].is_inside(p, tol)) {
 			return true;
@@ -93,8 +93,8 @@ bool object::is_inside(const vec3& p, float tol) const {
 
 bool object::intersec_segment(const vec3& p1, const vec3& p2) const {
 	vector<size_t> idxs;
-	octree.get_triangles(p1, idxs);
-	octree.get_triangles(p2, idxs);
+	octree.get_indices(p1, idxs);
+	octree.get_indices(p2, idxs);
 	sort(idxs.begin(), idxs.end());
 	auto last = unique(idxs.begin(), idxs.end());
 	idxs.erase(last, idxs.end());
@@ -114,8 +114,8 @@ bool object::intersec_sphere(const vec3& c, float R) const {
 
 bool object::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) const {
 	vector<size_t> idxs;
-	octree.get_triangles(p1, idxs);
-	octree.get_triangles(p2, idxs);
+	octree.get_indices(p1, idxs);
+	octree.get_indices(p2, idxs);
 	sort(idxs.begin(), idxs.end());
 	auto last = unique(idxs.begin(), idxs.end());
 	idxs.erase(last, idxs.end());
@@ -134,7 +134,7 @@ void object::update_particle
 const
 {
 	vector<size_t> idxs;
-	octree.get_triangles(pred_pos, idxs);
+	octree.get_indices(pred_pos, idxs);
 	for (size_t t_idx : idxs) {
 		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
 			tris[t_idx/3].update_particle(pred_pos, pred_vel, p);
@@ -149,7 +149,7 @@ bool object::update_particle(
 ) const
 {
 	vector<size_t> idxs;
-	octree.get_triangles(pred_pos, idxs);
+	octree.get_indices(pred_pos, idxs);
 	for (size_t t_idx : idxs) {
 		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
 			*u = *p;

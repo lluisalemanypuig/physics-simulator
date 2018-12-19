@@ -93,7 +93,7 @@ class simulator {
 		 * does not depend on the interaction with other objects.
 		 * This position is, then, fixed.
 		 */
-		std::vector<geometry::geometry *> scene_fixed;
+		std::vector<geometric::geometry *> scene_fixed;
 		/// Collection of force fields.
 		std::vector<fields::field *> force_fields;
 		/// The collection of free particles in the simulation.
@@ -492,7 +492,7 @@ class simulator {
 		 * will take care of that.
 		 * @param g A non-null pointer to the object.
 		 */
-		void add_geometry(geometry::geometry *g);
+		void add_geometry(geometric::geometry *g);
 		/**
 		 * @brief Removes the @e i-th fixed geometrical object.
 		 *
@@ -616,7 +616,7 @@ class simulator {
 		 * @ref global_init).
 		 *
 		 * Free particles collide with the geometrical objects added via method
-		 * @ref add_geometry(geometry::geometry *), and are moved depending on
+		 * @ref add_geometry(geometric::geometry *), and are moved depending on
 		 * that geometry.
 		 *
 		 * When activated, collisions of free particles against sized particles
@@ -657,7 +657,7 @@ class simulator {
 		 * Calls @ref _simulate_meshes.
 		 *
 		 * Each mesh has each of its particle's force updated according to
-		 * the definition provided in method @ref mesh::update_forces. This
+		 * the definition provided in method @ref meshes::mesh::update_forces. This
 		 * method defines the model implemented in that mesh. Then, each mesh
 		 * is considered as a free particle and simulated accordingly.
 		 */
@@ -797,7 +797,7 @@ class simulator {
 		/// Returns a constant reference to i-th mesh.
 		const meshes::mesh& get_mesh(size_t i) const;
 		/// Returns all fixed objects of the scene.
-		const std::vector<geometry::geometry *>& get_fixed_objects() const;
+		const std::vector<geometric::geometry *>& get_fixed_objects() const;
 		/// Returns the gravity of the scene.
 		const math::vec3& get_gravity() const;
 		/// Returns the number of particles.

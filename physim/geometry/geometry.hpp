@@ -8,20 +8,20 @@
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace geometry {
+namespace geometric {
 
 /// Enumeration for the type of geometry.
 enum geometry_type {
 	none = -1,
-	/// See @ref geometry::plane for details.
+	/// See @ref geometric::plane for details.
 	Plane,
-	/// See @ref geometry::triangle for details.
+	/// See @ref geometric::triangle for details.
 	Triangle,
-	/// See @ref geometry::rectangle for details.
+	/// See @ref geometric::rectangle for details.
 	Rectangle,
-	/// See @ref geometry::sphere for details.
+	/// See @ref geometric::sphere for details.
 	Sphere,
-	/// See @ref geometry::object for details.
+	/// See @ref geometric::object for details.
 	Object
 };
 

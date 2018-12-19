@@ -13,6 +13,9 @@ using namespace std;
 #include <physim/particles/sized_particle.hpp>
 typedef physim::particles::sized_particle SP;
 
+// render includes
+#include <render/geometry/robject.hpp>
+
 // custom includes
 #include "conversion_helper.hpp"
 
@@ -86,22 +89,34 @@ namespace glut_functions {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 
-		if (draw_box) {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glm::mat4 model(1.0f);
-			glm::mat4 modelview = model*view;
-			glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glm::mat4 model(1.0f);
+		glm::mat4 modelview = model*view;
+		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
 
-			flat_shader.set_bool("wireframe", true);
-			flat_shader.set_mat4("modelview", modelview);
-			flat_shader.set_mat3("normal_matrix", normal_matrix);
+		flat_shader.set_bool("wireframe", true);
+		flat_shader.set_mat4("modelview", modelview);
+		flat_shader.set_mat3("normal_matrix", normal_matrix);
+		if (draw_box) {
 			flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
 			SR.get_box().fast_render();
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
+		if (draw_boxes_octree) {
+			flat_shader.set_vec4("colour", glm::vec4(1.0f,1.0f,0.0f,1.0f));
+			for (const rgeom *r : SR.get_geometry()) {
+				if (r->get_type() == rendered_geometry_type::object) {
+					const robject *ro = static_cast<const robject *>(r);
+					const vector<box>& bs = ro->get_boxes();
+					for (const box& B : bs) {
+						B.fast_render();
+					}
+				}
+			}
+		}
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 		flat_shader.release();
 		/* FLAT RELEASE */
-
 
 		// draw flat geometry
 		glMatrixMode(GL_PROJECTION);
@@ -159,10 +174,22 @@ namespace glut_functions {
 			}
 		}
 
+		glDisable(GL_LIGHTING);
 		if (draw_box) {
-			glDisable(GL_LIGHTING);
 			glColor3f(1.0f,0.0f,0.0f);
 			SR.get_box().slow_render();
+		}
+		if (draw_boxes_octree) {
+			glColor3f(1.0f,1.0f,0.0f);
+			for (const rgeom *r : SR.get_geometry()) {
+				if (r->get_type() == rendered_geometry_type::object) {
+					const robject *ro = static_cast<const robject *>(r);
+					const vector<box>& bs = ro->get_boxes();
+					for (const box& B : bs) {
+						B.slow_render();
+					}
+				}
+			}
 		}
 
 		const vector<SP *>& ps =
@@ -170,7 +197,6 @@ namespace glut_functions {
 
 		if (draw_sized_particles_wire) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glDisable(GL_LIGHTING);
 			glColor3f(0.0f,0.0f,1.0f);
 
 			for (const SP *p : ps) {
@@ -185,6 +211,7 @@ namespace glut_functions {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 		else if (ps.size() > 0) {
+			glEnable(GL_LIGHTING);
 			glPointSize(particle_size);
 			glBegin(GL_POINTS);
 			glColor3f(0.0f,0.0f,1.0f);

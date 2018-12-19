@@ -113,6 +113,16 @@ class octree {
 		 */
 		node *copy_node(const node *n) const;
 
+		/**
+		 * @brief Returns the bounding boxes of the cells in this octree.
+		 * @param[in] n Node to obtain the boxes from.
+		 * @param[out] boxes The vector contains pairs of elements with points
+		 * the minimum and maximum coordinate values.
+		 */
+		void get_boxes_node
+		(const node *n, std::vector<std::pair<math::vec3, math::vec3> >& boxes)
+		const;
+
 	public:
 		/// Default constructor.
 		octree();
@@ -165,8 +175,15 @@ class octree {
 		 * @param[out] tris_idxs The triangles incident to the subspace where
 		 * @e p is located at.
 		 */
-		void get_triangles
+		void get_indices
 		(const math::vec3& p, std::vector<size_t>& tris_idxs) const;
+
+		/**
+		 * @brief Returns the bounding boxes of the cells in this octree.
+		 * @param[out] boxes The vector contains pairs of elements with points
+		 * the minimum and maximum coordinate values.
+		 */
+		void get_boxes(std::vector<std::pair<math::vec3, math::vec3> >& boxes) const;
 
 		// OTHERS
 };

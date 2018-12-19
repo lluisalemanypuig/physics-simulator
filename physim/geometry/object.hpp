@@ -11,7 +11,7 @@
 #include <physim/structures/octree.hpp>
 
 namespace physim {
-namespace geometry {
+namespace geometric {
 
 /**
  * @brief Class that implements a triangular object.

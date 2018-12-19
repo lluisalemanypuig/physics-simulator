@@ -15,7 +15,7 @@ namespace physim {
 using namespace math;
 using namespace particles;
 
-namespace geometry {
+namespace geometric {
 
 // PRIVATE
 

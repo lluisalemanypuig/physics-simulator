@@ -13,6 +13,9 @@ using namespace std;
 #include <physim/particles/sized_particle.hpp>
 typedef physim::particles::sized_particle SP;
 
+// render includes
+#include <render/geometry/robject.hpp>
+
 // custom includes
 #include "conversion_helper.hpp"
 
@@ -53,6 +56,38 @@ namespace glut_functions {
 		}
 		texture_shader.release();
 
+		/* FLAT BIND */
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		flat_shader.bind();
+		flat_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
+		flat_shader.set_mat4("projection", projection);
+
+		glm::mat4 model(1.0f);
+		glm::mat4 modelview = model*view;
+		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
+		flat_shader.set_bool("wireframe", true);
+		flat_shader.set_mat4("modelview", modelview);
+		flat_shader.set_mat3("normal_matrix", normal_matrix);
+		if (draw_box) {
+			flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
+			SR.get_box().fast_render();
+		}
+		if (draw_boxes_octree) {
+			flat_shader.set_vec4("colour", glm::vec4(1.0f,1.0f,0.0f,1.0f));
+			for (const rgeom *r : SR.get_geometry()) {
+				if (r->get_type() == rendered_geometry_type::object) {
+					const robject *ro = static_cast<const robject *>(r);
+					const vector<box>& bs = ro->get_boxes();
+					for (const box& B : bs) {
+						B.fast_render();
+					}
+				}
+			}
+		}
+		flat_shader.release();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		/* FLAT RELEASE */
+
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		SR.apply_projection();
@@ -68,12 +103,6 @@ namespace glut_functions {
 			if (r->get_model() == nullptr) {
 				r->draw_geometry();
 			}
-		}
-
-		if (draw_box) {
-			glDisable(GL_LIGHTING);
-			glColor3f(1.0f,0.0f,0.0f);
-			SR.get_box().slow_render();
 		}
 	}
 
@@ -103,10 +132,22 @@ namespace glut_functions {
 			}
 		}
 
+		glDisable(GL_LIGHTING);
 		if (draw_box) {
-			glDisable(GL_LIGHTING);
 			glColor3f(1.0f,0.0f,0.0f);
 			SR.get_box().slow_render();
+		}
+		if (draw_boxes_octree) {
+			glColor3f(1.0f,1.0f,0.0f);
+			for (const rgeom *r : SR.get_geometry()) {
+				if (r->get_type() == rendered_geometry_type::object) {
+					const robject *ro = static_cast<const robject *>(r);
+					const vector<box>& bs = ro->get_boxes();
+					for (const box& B : bs) {
+						B.slow_render();
+					}
+				}
+			}
 		}
 	}
 

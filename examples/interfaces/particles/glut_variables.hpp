@@ -39,6 +39,7 @@ namespace glut_variables {
 	extern float time_step;
 	extern float particle_size;
 	extern bool draw_box;
+	extern bool draw_boxes_octree;
 	extern bool draw_sized_particles_wire;
 
 	extern bool display_fps;

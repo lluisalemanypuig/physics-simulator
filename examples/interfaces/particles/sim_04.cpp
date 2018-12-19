@@ -20,7 +20,7 @@ using namespace std;
 #include <physim/math/math.hpp>
 using namespace physim;
 using namespace particles;
-using namespace geometry;
+using namespace geometric;
 using namespace init;
 
 // custom includes

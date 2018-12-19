@@ -17,7 +17,7 @@ using namespace std;
 using namespace physim;
 using namespace input;
 using namespace math;
-using namespace geometry;
+using namespace geometric;
 using namespace structures;
 
 namespace study_cases {
@@ -115,7 +115,7 @@ namespace study_cases {
 		cout << "Time spent in reading: " << r_sim << " s" << endl;
 
 		vector<size_t> tris;
-		o->get_partition().get_triangles(p1, tris);
+		o->get_partition().get_indices(p1, tris);
 		cout << "The closest triangles to point ("
 			 << p1.x << "," << p1.y << "," << p1.z
 			 << ") are:";

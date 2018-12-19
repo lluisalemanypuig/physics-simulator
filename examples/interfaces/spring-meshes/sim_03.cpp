@@ -25,7 +25,7 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace meshes;
-using namespace geometry;
+using namespace geometric;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -95,10 +95,17 @@ namespace study_cases {
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
 
+		vector<pair<math::vec3, math::vec3> > pmboxes;
+		O->get_partition().get_boxes(pmboxes);
+		ro->set_boxes(pmboxes);
+
 		model_pipe->load_textures();
 		if (use_shaders) {
 			glut_functions::init_shaders();
+
 			SR.get_box().make_buffers();
+			ro->make_boxes_buffers();
+
 			model_pipe->make_buffers_materials_textures();
 			shader& ts = glut_functions::texture_shader;
 			ts.bind();
@@ -271,6 +278,8 @@ namespace study_cases {
 
 		glut_functions::elasticity = 100.0f;
 		glut_functions::damping = 0.5f;
+
+		glut_functions::draw_boxes_octree = true;
 
 		n = 25;
 		m = 25;

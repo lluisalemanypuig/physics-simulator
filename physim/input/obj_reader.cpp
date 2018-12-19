@@ -138,7 +138,7 @@ namespace input_private {
 } // -- namespace io_private
 
 	bool obj_read_file
-	(const std::string& dir, const std::string& fname, geometry::object *o)
+	(const std::string& dir, const std::string& fname, geometric::object *o)
 	{
 		assert(o != nullptr);
 

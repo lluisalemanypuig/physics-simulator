@@ -24,6 +24,7 @@ namespace glut_variables {
 	float time_step;
 	float particle_size;
 	bool draw_box;
+	bool draw_boxes_octree;
 	bool draw_sized_particles_wire;
 
 	bool display_fps;

@@ -9,7 +9,7 @@ using namespace std;
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/object.hpp>
 
-static physim::geometry::sphere __physim_Sj;
+static physim::geometric::sphere __physim_Sj;
 
 namespace physim {
 using namespace math;
@@ -81,13 +81,13 @@ bool simulator::find_update_geomcoll_free
 	// every fixed geometrical object in the scene.
 
 	for (size_t i = 0; i < scene_fixed.size(); ++i) {
-		const geometry::geometry *g = scene_fixed[i];
+		const geometric::geometry *g = scene_fixed[i];
 
 		// if the particle collides with some geometry
 		// then the geometry is in charge of updating
 		// this particle's position, velocity, ...
 
-		if (g->get_geom_type() != geometry::geometry_type::Object) {
+		if (g->get_geom_type() != geometric::geometry_type::Object) {
 			if (g->intersec_segment(p->cur_pos, pred_pos)) {
 				collision = true;
 
@@ -113,8 +113,8 @@ bool simulator::find_update_geomcoll_free
 		}
 		else {
 			// faster test with geometrical objects
-			const geometry::object *o =
-				static_cast<const geometry::object *>(g);
+			const geometric::object *o =
+				static_cast<const geometric::object *>(g);
 
 			bool updated =
 				o->update_particle(pred_pos, pred_vel, p, &coll_pred);
@@ -235,7 +235,7 @@ bool simulator::find_update_geomcoll_sized
 	// every fixed geometrical object in the scene.
 
 	for (size_t i = 0; i < scene_fixed.size(); ++i) {
-		const geometry::geometry *g = scene_fixed[i];
+		const geometric::geometry *g = scene_fixed[i];
 
 		// if the particle collides with some geometry
 		// then the geometry is in charge of updating

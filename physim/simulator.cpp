@@ -179,7 +179,7 @@ void simulator::clear_particles() {
 
 // ----------- geometry
 
-void simulator::add_geometry(geometry::geometry *g) {
+void simulator::add_geometry(geometric::geometry *g) {
 	assert(g != nullptr);
 	scene_fixed.push_back(g);
 }
@@ -189,7 +189,7 @@ void simulator::remove_geometry(size_t i) {
 }
 
 void simulator::clear_geometry() {
-	for (geometry::geometry *g : scene_fixed) {
+	for (geometric::geometry *g : scene_fixed) {
 		delete g;
 	}
 	scene_fixed.clear();
@@ -353,7 +353,7 @@ const meshes::mesh& simulator::get_mesh(size_t i) const {
 	return *ms[i];
 }
 
-const vector<geometry::geometry *>& simulator::get_fixed_objects() const {
+const vector<geometric::geometry *>& simulator::get_fixed_objects() const {
 	return scene_fixed;
 }
 

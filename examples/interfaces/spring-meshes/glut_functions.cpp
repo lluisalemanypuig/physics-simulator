@@ -43,6 +43,7 @@ namespace glut_functions {
 	point regular_key_pressed;
 
 	bool draw_box;
+	bool draw_boxes_octree;
 
 	bool display_fps;
 	int FPS;
@@ -69,6 +70,7 @@ namespace glut_functions {
 		lock_mouse = false;
 
 		draw_box = true;
+		draw_boxes_octree = false;
 
 		display_fps = false;
 		FPS = 60;
@@ -280,7 +282,7 @@ namespace glut_functions {
 		case 'o': SR.switch_to_orthogonal(); break;
 		case 'b': draw_box = not draw_box; break;
 		case 'z': display_fps = not display_fps; break;
-		case 'i':
+		/*case 'i':
 			if (inside_window(x, y)) {
 				SR.switch_to_inspection();
 				lock_mouse = false;
@@ -314,6 +316,9 @@ namespace glut_functions {
 			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
 				SR.camera_sideways_right(0.1f);
 			}
+			break;*/
+		case 'w':
+			draw_boxes_octree = not draw_boxes_octree;
 			break;
 		case '+':
 			if (FPS < 60) {
@@ -412,14 +417,14 @@ namespace glut_functions {
 		cout << "    p: switch to perspective camera." << endl;
 		cout << "    b: turn on/off drawing the bounding box of the scene." << endl;
 		cout << "    z: display fps count." << endl;
-		cout << "    i: switch to inspect mode." << endl;
+		/*cout << "    i: switch to inspect mode." << endl;
 		cout << "        Click and drag with:" << endl;
 		cout << "        - left mouse button to rotate the scene." << endl;
 		cout << "        - right mouse button to zoom in/out." << endl;
 		cout << "    f: switch to flight mode." << endl;
 		cout << "        Move the cursor to orient the movement of the camera." << endl;
 		cout << "        Use the letters 'w','a','s','d' to move the camera." << endl;
-		cout << "        When clicking 'f' the mouse becomes locked: left click to unlock." << endl;
+		cout << "        When clicking 'f' the mouse becomes locked: left click to unlock." << endl;*/
 		cout << "    g: change simulation solver." << endl;
 		cout << "        A message will be displayed 'Enter solver: '" << endl;
 		cout << "        Then, write one of the following strings and press enter" << endl;
@@ -438,10 +443,11 @@ namespace glut_functions {
 		cout << "            bouncing b: change bouncing coefficient of all meshes." << endl;
 		cout << "                b is a floating point value. Default: 0.8" << endl;
 		cout << "    r: reset simulation to its initial state" << endl;
-		cout << "    h: display the options available" << endl;
 		cout << "    t: turn on/off stretch" << endl;
 		cout << "    y: turn on/off shear" << endl;
 		cout << "    u: turn on/off bend" << endl;
+		cout << "    w: display the octrees for the objects" << endl;
+		cout << "    h: display the options available" << endl;
 		cout << "    +: increase FPS limit by one (up to at most 60)" << endl;
 		cout << "    -: decrease FPS limit by one (down to at least 1)" << endl;
 		cout << endl;
