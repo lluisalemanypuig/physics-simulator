@@ -94,13 +94,18 @@ void simulator::_simulate_agent_particles() {
 			find_update_partcoll_agent(p, i);
 		}
 
-		// here we should compute a bit more steering:
+		/* ------------------- */
+		/* STEERING BEHAVIOURS */
 
 		vec3 desired_vel;
 		vec3 steer_dir;
 
+		vec3 target_offset;
+		float dist_target, clipped_speed;
+
 		switch (p->behaviour) {
-		/* seek steering */
+
+		/* seek */
 		case agent_behaviour_type::seek:
 			// unit velocity vector towards target
 			__pm3_sub_v_v(desired_vel, p->target, p->cur_pos);
@@ -112,6 +117,7 @@ void simulator::_simulate_agent_particles() {
 			__pm3_add_acc_v(p->cur_vel, steer_dir);
 			break;
 
+		/* flee */
 		case agent_behaviour_type::flee:
 			// unit velocity vector towards target
 			__pm3_sub_v_v(desired_vel, p->cur_pos, p->target);
@@ -119,6 +125,18 @@ void simulator::_simulate_agent_particles() {
 			// make velocity have magnitude equal to max_speed
 			__pm3_mul_acc_s(desired_vel, p->max_speed);
 			// modify agent's velocity
+			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
+			__pm3_add_acc_v(p->cur_vel, steer_dir);
+			break;
+
+		/* arrival */
+		case agent_behaviour_type::arrival:
+			// unit velocity vector towards target
+			__pm3_sub_v_v(target_offset, p->target, p->cur_pos);
+			dist_target = __pm3_norm(target_offset);
+			clipped_speed = std::min
+			(p->max_speed*dist_target/p->slowing_distance,p->max_speed);
+			__pm3_assign_vs(desired_vel, target_offset, clipped_speed/dist_target);
 			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
 			__pm3_add_acc_v(p->cur_vel, steer_dir);
 			break;

@@ -12,6 +12,7 @@ void agent_particle::partial_init() {
 	__pm3_assign_s(target, 0.0f);
 	max_speed = 1.0f;
 	max_force = 1.0f;
+	slowing_distance = 0.0f;
 	behaviour = agent_behaviour_type::seek;
 }
 
@@ -25,6 +26,7 @@ agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	__pm3_assign_v(target, p.target);
 	max_speed = p.max_speed;
 	max_force = p.max_force;
+	slowing_distance = p.slowing_distance;
 	behaviour = p.behaviour;
 }
 

@@ -19,6 +19,8 @@ namespace particles {
  * @ref free_particle::fixed attribute to 'true'.
  *
  * The different behaviour types are formally defined in [1].
+ * All of them are strongly dependent on the particle's target
+ * (see @ref agent_particle::target).
  *
  * [1]: Steering Behaviors For Autonomous Characters.\n
  *		Craig W. Reynolds, Sony Computer Entertainment America\n
@@ -28,10 +30,17 @@ namespace particles {
  *		https://www.red3d.com/cwr/papers/1999/gdc99steer.html
  */
 enum class agent_behaviour_type : int8_t {
-	/// Seek. The agent moves towards its @ref agent_particle::target.
+	/// Seek. The agent moves towards its target.
 	seek = 0,
-	/// Flee. The agent moves away from its @ref agent_particle::target.
-	flee
+	/// Flee. The agent moves away from its target.
+	flee,
+	/**
+	 * @brief Arrival. The agent slows down as it approaches its target.
+	 *
+	 * The distance at which the agent starts to slow down is defined in
+	 * @ref agent_particle::slowing_distance.
+	 */
+	arrival
 };
 
 /**
@@ -57,6 +66,7 @@ class agent_particle : public sized_particle {
 		 * - @ref target : vec3(0,0,0)
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
+		 * - @ref slowing_distance : 0.0
 		 * - @ref behaviour : @ref agent_behaviour_type::seek
 		 */
 		void partial_init();
@@ -85,6 +95,16 @@ class agent_particle : public sized_particle {
 		 * maximum magnitude stored in this value.
 		 */
 		float max_force;
+
+		/**
+		 * @brief Distance from the target to start slowing down at.
+		 *
+		 * When the agent is in behaviour arrival (see
+		 * @ref agent_behaviour_type::arrival) it starts slow down. This
+		 * attribute encodes the distance from its target at which this
+		 * happens.
+		 */
+		float slowing_distance;
 
 		/// Behaviour of this agent.
 		agent_behaviour_type behaviour;
@@ -118,6 +138,7 @@ class agent_particle : public sized_particle {
 		 * - @ref target : vec3(0,0,0)
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
+		 * - @ref slowing_distance : 0.0
 		 * - @ref behaviour : @ref agent_behaviour_type::seek
 		 */
 		void init();
