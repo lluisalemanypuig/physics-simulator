@@ -80,6 +80,13 @@ void simulator::_simulate_meshes() {
 			bool collision =
 			find_update_geomcoll_free(&current, pred_pos, pred_vel, coll_pred);
 
+			if (part_part_colls_activated()) {
+				bool r = find_update_partcoll_free
+				(&current, pred_pos, pred_vel, coll_pred);
+
+				collision = collision or r;
+			}
+
 			// give the particle the proper final state
 			if (collision) {
 				from_free_to_mesh(coll_pred, *mps[p_idx]);

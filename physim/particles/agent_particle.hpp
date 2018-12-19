@@ -12,16 +12,41 @@ namespace physim {
 namespace particles {
 
 /**
+ * @brief The different types of behaviours for an agent.
+ *
+ * All of these types define types of movement. To make a
+ * particle stay put (i.e., not to move at all) set its
+ * @ref free_particle::fixed attribute to 'true'.
+ *
+ * The different behaviour types are formally defined in [1].
+ *
+ * [1]: Steering Behaviors For Autonomous Characters.\n
+ *		Craig W. Reynolds, Sony Computer Entertainment America\n
+ *		919 East Hillsdale Boulevard\n
+ *		Foster City, California 94404\n
+ * Available online at:\n
+ *		https://www.red3d.com/cwr/papers/1999/gdc99steer.html
+ */
+enum class agent_behaviour_type : int8_t {
+	/// Seek. The agent moves towards its @ref agent_particle::target.
+	seek = 0,
+	/// Flee. The agent moves away from its @ref agent_particle::target.
+	flee
+};
+
+/**
  * @brief Class implementing an agent particle.
  *
  * An agent particle is useful for defining, using a physically-based
- * model, the movement of an agent (say, a human(oid)) through an
- * environment, in the presence of other agents and obstacles.
+ * model, the movement of an agent (say, a human(oid), car, ...) through
+ * an environment, in the presence of other agents and obstacles.
  *
  * Although it is a type of sized particle (see @ref sized_particle),
- * which in turn is a type of free_particle (see @ref free_particle),
- * its starttime (see @ref free_particle::starttime) is ignored.
+ * which in turn is a type of free particle (see @ref free_particle),
+ * its starting time (see @ref free_particle::starttime) is ignored.
  * Its lifetime, however, it is not (see @ref free_particle::lifetime).
+ * The simulation of an agent particle depend on its behaviour
+ * (see @ref agent_particle::behaviour).
  */
 class agent_particle : public sized_particle {
 	private:
@@ -29,32 +54,22 @@ class agent_particle : public sized_particle {
 		 * @brief Initialises this class's attributes.
 		 *
 		 * The attributes of the class take the following values:
-		 * - @ref attractor : vec3(0,0,0)
-		 * - @ref attractor_acceleration : 0.0
+		 * - @ref target : vec3(0,0,0)
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
+		 * - @ref behaviour : @ref agent_behaviour_type::seek
 		 */
 		void partial_init();
 
 	public:
 		/**
-		 * @brief Position of the attractor.
+		 * @brief Target position of this particle.
 		 *
-		 * An attractor is a force field applied only to this particle.
-		 * It uses the @ref attractor_acceleration magnitude to compute the
-		 * force it acts upon the particle. Let \f$s\f$ be the position
-		 * of the attractor (sink), \f$p\f$ be the current position of
-		 * this particle, and \f$a\f$ be the attractor acceleration. The
-		 * force is computed as:
-		 *
-		 * \f$\vec{F} = a \cdot \frac{s - p}{||s - p||}\f$
-		 *
-		 * the agent is assumed to weigh 1 Kg.
+		 * A target is a position this agent particle will want to move
+		 * to or away from. This will depend on the behaviour of this
+		 * particle. See @ref behaviour.
 		 */
-		math::vec3 attractor;
-
-		/// Acceleration of the attractor. [m/s^2]
-		float attractor_acceleration;
+		math::vec3 target;
 
 		/**
 		 * @brief Maximum speed allowed. [m/s].
@@ -70,6 +85,9 @@ class agent_particle : public sized_particle {
 		 * maximum magnitude stored in this value.
 		 */
 		float max_force;
+
+		/// Behaviour of this agent.
+		agent_behaviour_type behaviour;
 
 	public:
 		/// Default constructor.
@@ -97,10 +115,10 @@ class agent_particle : public sized_particle {
 		 * - @ref starttime : 0
 		 * - @ref fixed : false
 		 * - @ref R : 1.0
-		 * - @ref attractor : vec3(0,0,0)
-		 * - @ref attractor_acceleration : 0.0
+		 * - @ref target : vec3(0,0,0)
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
+		 * - @ref behaviour : @ref agent_behaviour_type::seek
 		 */
 		void init();
 

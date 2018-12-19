@@ -275,9 +275,9 @@ const
 }
 
 octree::node *octree::make_octree_vertices(
-	const math::vec3& vmin, const math::vec3& vmax,
-	const std::vector<math::vec3>& vertices,
-	const std::vector<size_t>& vertices_idxs
+	const vec3& vmin, const vec3& vmax,
+	const vector<vec3>& vertices,
+	const vector<size_t>& vertices_idxs
 )
 const
 {
@@ -367,7 +367,7 @@ octree::~octree() {
 // MEMORY
 
 void octree::init(
-	const vector<math::vec3>& vertices,
+	const vector<vec3>& vertices,
 	const vector<size_t>& tris_indices
 )
 {

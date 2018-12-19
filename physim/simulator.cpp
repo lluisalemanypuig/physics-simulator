@@ -268,8 +268,9 @@ void simulator::simulate_meshes() {
 }
 
 void simulator::apply_time_step() {
-	_simulate_free_particles();
 	_simulate_sized_particles();
+	_simulate_agent_particles();
+	_simulate_free_particles();
 	_simulate_meshes();
 }
 

@@ -1,9 +1,5 @@
 #include <physim/simulator.hpp>
 
-// C++ includes
-#include <iostream>
-using namespace std;
-
 // physim includes
 #include <physim/math/private/math3.hpp>
 #include <physim/particles/conversions.hpp>
@@ -51,7 +47,7 @@ void simulator::_simulate_agent_particles() {
 		// particle agents are not affected by force fields -.-'
 
 		// compute steering force
-		__pm3_sub_v_v(p->force, p->attractor, p->cur_pos);
+		__pm3_sub_v_v(p->force, p->target, p->cur_pos);
 		truncate(p->force, p->max_force, p->force);
 
 		/* -------------------------- */
@@ -100,16 +96,36 @@ void simulator::_simulate_agent_particles() {
 
 		// here we should compute a bit more steering:
 
-		/* seek steering */
 		vec3 desired_vel;
-		__pm3_sub_v_v(desired_vel, p->attractor, p->cur_pos);
-		normalise(desired_vel, desired_vel);
-		__pm3_mul_acc_s(desired_vel, p->max_speed);
 		vec3 steer_dir;
-		__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
 
-		/* modify agent's velocity */
-		__pm3_add_acc_v(p->cur_vel, steer_dir);
+		switch (p->behaviour) {
+		/* seek steering */
+		case agent_behaviour_type::seek:
+			// unit velocity vector towards target
+			__pm3_sub_v_v(desired_vel, p->target, p->cur_pos);
+			normalise(desired_vel, desired_vel);
+			// make velocity have magnitude equal to max_speed
+			__pm3_mul_acc_s(desired_vel, p->max_speed);
+			// modify agent's velocity
+			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
+			__pm3_add_acc_v(p->cur_vel, steer_dir);
+			break;
+
+		case agent_behaviour_type::flee:
+			// unit velocity vector towards target
+			__pm3_sub_v_v(desired_vel, p->cur_pos, p->target);
+			normalise(desired_vel, desired_vel);
+			// make velocity have magnitude equal to max_speed
+			__pm3_mul_acc_s(desired_vel, p->max_speed);
+			// modify agent's velocity
+			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
+			__pm3_add_acc_v(p->cur_vel, steer_dir);
+			break;
+
+		default:
+			;
+		}
 
 		// finally, truncate velocity again
 		truncate(p->cur_vel, p->max_speed, p->cur_vel);

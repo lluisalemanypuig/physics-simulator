@@ -69,7 +69,7 @@ enum class solver_type : int8_t {
 /**
  * @brief Simulator class.
  *
- * This class contains the algorihm used to simulate the
+ * This class contains the algorihms used to simulate the
  * movement of particles and systems of particles (like
  * springs systems).
  *
@@ -603,18 +603,51 @@ class simulator {
 		 * @brief Simulate free particles.
 		 *
 		 * Calls @ref _simulate_free_particles.
+		 *
+		 * A free particle will only start 'living', i.e., moving in the
+		 * environment, when its starting time (see @ref free_particle::starttime)
+		 * is equal or less than 0. Also, as long as @ref free_particle::fixed
+		 * is set to false. At every time step, the starting time of each particle
+		 * is decreased by an amount equal to the time step (see @ref dt).
+		 *
+		 * The lifetime of each particle (see @ref free_particle::lifetime) is
+		 * also decreased by the exact same amount. Whenever this value reaches
+		 * 0 the particle is reinitialised using the global initialiser (see
+		 * @ref global_init).
+		 *
+		 * Free particles collide with the geometrical objects added via method
+		 * @ref add_geometry(geometry::geometry *), and are moved depending on
+		 * that geometry.
+		 *
+		 * When activated, collisions of free particles against sized particles
+		 * are checked.
 		 */
 		void simulate_free_particles();
 		/**
 		 * @brief Simulate sized particles.
 		 *
 		 * Calls @ref _simulate_sized_particles.
+		 *
+		 * The simulation of sized particles follows exactly the same rules as
+		 * those for the simulation of free particles. The only difference is
+		 * that collisions with geometrical object are copmuted considering
+		 * that these particles have a certain size (see @ref sized_particle::R).
+		 *
+		 * When activated, collisions of free particles against sized particles
+		 * are checked.
 		 */
 		void simulate_sized_particles();
 		/**
 		 * @brief Simulate agent particles.
 		 *
 		 * Calls @ref _simulate_agent_particles.
+		 *
+		 * That function applies the steering behaviour set to every agent
+		 * particle in its attribute @ref agent_particle::behaviour.
+		 *
+		 * The simulation of an agent particle, regarding collisions with
+		 * geometry, if any, is done similarly as in the simulation of sized
+		 * particles.
 		 */
 		void simulate_agent_particles();
 
@@ -622,6 +655,11 @@ class simulator {
 		 * @brief Simulate meshes.
 		 *
 		 * Calls @ref _simulate_meshes.
+		 *
+		 * Each mesh has each of its particle's force updated according to
+		 * the definition provided in method @ref mesh::update_forces. This
+		 * method defines the model implemented in that mesh. Then, each mesh
+		 * is considered as a free particle and simulated accordingly.
 		 */
 		void simulate_meshes();
 
@@ -629,8 +667,9 @@ class simulator {
 		 * @brief Apply a time step to the simulation.
 		 *
 		 * Calls the following functions:
-		 * - @ref _simulate_free_particles
 		 * - @ref _simulate_sized_particles
+		 * - @ref _simulate_agent_particles.
+		 * - @ref _simulate_free_particles
 		 * - @ref _simulate_meshes.
 		 * Parameter @e dt (set via method @ref set_time_step(float))
 		 * indicates how much time has passed since the last time step.
