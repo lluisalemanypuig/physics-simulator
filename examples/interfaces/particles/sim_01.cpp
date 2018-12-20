@@ -52,7 +52,7 @@ namespace study_cases {
 		rrectangle *ramp = new rrectangle();
 		ramp->set_points(
 			glm::vec3(-2.0f, 2.0f,  1.0f), glm::vec3(-2.0f, 2.0f, -1.0f),
-			glm::vec3(-4.0f, 4.0f, -1.0f), glm::vec3(-4.0f, 4.0f,  1.0f)
+			glm::vec3(-4.0f, 4.0f, -1.0f), glm::vec3(-4.0f, 4.0f,  0.0f)
 		);
 		ramp->set_color(1.0f, 1.0f, 0.0f, 1.0f);
 
