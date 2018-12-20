@@ -6,6 +6,7 @@
 // physim includes
 #include <physim/particles/particle_types.hpp>
 #include <physim/particles/sized_particle.hpp>
+#include <physim/geometry/geometry.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
@@ -22,6 +23,8 @@ namespace particles {
  * All of them are strongly dependent on the particle's target
  * (see @ref agent_particle::target).
  *
+ * Behaviours can be compined using the bit-wise or operator.
+ *
  * [1]: Steering Behaviors For Autonomous Characters.\n
  *		Craig W. Reynolds, Sony Computer Entertainment America\n
  *		919 East Hillsdale Boulevard\n
@@ -29,18 +32,26 @@ namespace particles {
  * Available online at:\n
  *		https://www.red3d.com/cwr/papers/1999/gdc99steer.html
  */
-enum class agent_behaviour_type : int8_t {
+enum agent_behaviour_type {
+	/// No behaviour active.
+	none				= 1 << 0,
 	/// Seek. The agent moves towards its target.
-	seek = 0,
+	seek				= 1 << 1,
 	/// Flee. The agent moves away from its target.
-	flee,
+	flee				= 1 << 2,
 	/**
 	 * @brief Arrival. The agent slows down as it approaches its target.
 	 *
 	 * The distance at which the agent starts to slow down is defined in
 	 * @ref agent_particle::slowing_distance.
 	 */
-	arrival
+	arrival				= 1 << 3,
+	/**
+	 * @brief Collision avoidance.
+	 *
+	 * The agent will try to move away from an obstacle as it moves.
+	 */
+	collision_avoidance	= 1 << 4
 };
 
 /**
@@ -64,10 +75,14 @@ class agent_particle : public sized_particle {
 		 *
 		 * The attributes of the class take the following values:
 		 * - @ref target : vec3(0,0,0)
+		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
 		 * - @ref slowing_distance : 0.0
-		 * - @ref behaviour : @ref agent_behaviour_type::seek
+		 * - @ref seek_weight : 1.0
+		 * - @ref flee_weight : 1.0
+		 * - @ref arrival_weight : 1.0
+		 * - @ref coll_avoid_weight : 1.0
 		 */
 		void partial_init();
 
@@ -80,6 +95,9 @@ class agent_particle : public sized_particle {
 		 * particle. See @ref behaviour.
 		 */
 		math::vec3 target;
+
+		/// Behaviour of this agent.
+		agent_behaviour_type behaviour;
 
 		/**
 		 * @brief Maximum speed allowed. [m/s].
@@ -106,8 +124,14 @@ class agent_particle : public sized_particle {
 		 */
 		float slowing_distance;
 
-		/// Behaviour of this agent.
-		agent_behaviour_type behaviour;
+		/// Weight for seek behaviour.
+		float seek_weight;
+		/// Weight for flee behaviour.
+		float flee_weight;
+		/// Weight for arrival behaviour.
+		float arrival_weight;
+		/// Weight for collision avoidance behaviour.
+		float coll_avoid_weight;
 
 	public:
 		/// Default constructor.
@@ -136,16 +160,148 @@ class agent_particle : public sized_particle {
 		 * - @ref fixed : false
 		 * - @ref R : 1.0
 		 * - @ref target : vec3(0,0,0)
+		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
 		 * - @ref slowing_distance : 0.0
-		 * - @ref behaviour : @ref agent_behaviour_type::seek
+		 * - @ref seek_weight : 1.0
+		 * - @ref flee_weight : 1.0
+		 * - @ref arrival_weight : 1.0
+		 * - @ref coll_avoid_weight : 1.0
 		 */
 		void init();
 
 		// GETTERS
 
 		virtual particle_type get_particle_type() const;
+
+		/// Returns whether behaviour @e b is activated or not.
+		bool is_behaviour_set(const agent_behaviour_type& b) const;
+
+		// SETTERS
+
+		/**
+		 * @brief Sets a type of behaviour.
+		 *
+		 * Attribute @ref behaviour is modified so that the evaluation of
+		 \verbatim
+		 behaviour | b
+		 \endverbatim
+		 * results to a value different from 0, where @e b is the behaviour
+		 * type passed as parameter.
+		 * @param b Type of behaviour.
+		 */
+		void set_behaviour(const agent_behaviour_type& b);
+		/**
+		 * @brief Sets a type of behaviour.
+		 *
+		 * Attribute @ref behaviour is modified so that the evaluation of
+		 \verbatim
+		 behaviour | b
+		 \endverbatim
+		 * results to a value equal to 0, where @e b is the behaviour
+		 * type passed as parameter.
+		 * @param b Type of behaviour.
+		 */
+		void unset_behaviour(const agent_behaviour_type& b);
+
+		/**
+		 * @brief Unsets all behavours of the agent.
+		 *
+		 * Sets its behaviour to @ref agent_behaviour_type::none.
+		 */
+		void unset_all_behaviours();
+
+		// OTHERS
+
+		/**
+		 * @brief Computes a weighted steering vector force.
+		 *
+		 * This vector is the weighted average over the different steering
+		 * vectors obtained by the different behaviours activated.
+		 *
+		 * The behaviours considered in this function are:
+		 * - @ref agent_behaviour_type::seek
+		 * - @ref agent_behaviour_type::flee
+		 * - @ref agent_behaviour_type::arrival
+		 *
+		 * The resulting vector will be accumulated to an internal vector
+		 * "as is" to make a new velocity vector.
+		 *
+		 * Recall that the target is stored in @ref target.
+		 * @param[out] weighted_steering Weighted steering vector.
+		 */
+		void apply_behaviours(math::vec3& weighted_steering) const;
+
+		/**
+		 * @brief Computes a weighted steering vector force.
+		 *
+		 * This vector is the weighted average over the different steering
+		 * vectors obtained by the different behaviours activated.
+		 *
+		 * The behaviours considered in this function are:
+		 * - @ref agent_behaviour_type::collision_avoidance.
+		 *
+		 * This function is called for every geometrical object in the
+		 * scene. It is up to the user to decide what is a "most threatening"
+		 * geometrical object.
+		 *
+		 * The resulting vector will be accumulated to an internal vector
+		 * "as is" to make a new velocity vector.
+		 *
+		 * Recall that the target is stored in @ref target.
+		 * @param[in] g Most threatening geometry.
+		 * @param[out] weighted_steering Weighted steering vector.
+		 */
+		void apply_behaviours
+		(const geometric::geometry *g, math::vec3& weighted_steering) const;
+
+		/* steering behaviours */
+
+		/**
+		 * @brief Computes the seek steering force.
+		 *
+		 * This function must compute a velocity vector multiplied
+		 * by a certain weight. The result must be assigned to @e v.
+		 *
+		 * @param[out] v Seek steering vector.
+		 * @pre Vector @e v may not be initialised to 0.
+		 */
+		virtual void seek_behaviour(math::vec3& v) const;
+		/**
+		 * @brief Computes the flee steering force.
+		 *
+		 * This function must compute a velocity vector multiplied
+		 * by a certain weight. The result must be assigned to @e v.
+		 *
+		 * @param[out] v Seek steering vector.
+		 * @pre Vector @e v may not be initialised to 0.
+		 */
+		virtual void flee_behaviour(math::vec3& v) const;
+		/**
+		 * @brief Computes the arrival steering force.
+		 *
+		 * This function must compute a velocity vector multiplied
+		 * by a certain weight. The result must be assigned to @e v.
+		 *
+		 * Recall that the slowing distance considered is stored
+		 * in @ref v.
+		 *
+		 * @param[out] weighted_steering Seek steering vector.
+		 * @pre Vector @e v may not be initialised to 0.
+		 */
+		virtual void arrival_behaviour(math::vec3& v) const;
+		/**
+		 * @brief Computes the collision avoidance steering force.
+		 *
+		 * This function must compute a velocity vector multiplied
+		 * by a certain weight. The result must be assigned to @e v.
+		 *
+		 * @param[out] v Seek steering vector.
+		 * @pre Vector @e v may not be initialised to 0.
+		 */
+		virtual void collision_avoidance_behaviour
+		(const geometric::geometry *g, math::vec3& v) const;
 };
 
 } // -- namespace particles

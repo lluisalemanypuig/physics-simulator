@@ -38,27 +38,30 @@ void simulator::_simulate_agent_particles() {
 		// Particles age: reduce their lifetime.
 		p->reduce_lifetime(dt);
 
-		/* ------------------ */
-		/*   compute forces   */
+		/* ------------------- */
+		/* STEERING BEHAVIOURS */
 
-		// clear the current force
-		__pm3_assign_s(p->force, 0.0f);
+		vec3 steer_force;
+		__pm3_assign_s(steer_force, 0.0f);
 
-		// particle agents are not affected by force fields -.-'
+		p->apply_behaviours(steer_force);
+		for (const geometric::geometry *g : scene_fixed) {
+			p->apply_behaviours(g, steer_force);
+		}
 
-		// compute steering force
-		__pm3_sub_v_v(p->force, p->target, p->cur_pos);
-		truncate(p->force, p->max_force, p->force);
+		truncate(steer_force, p->max_force, steer_force);
+		vec3 accel;
+		__pm3_div_v_s(accel, steer_force, p->mass);
 
-		/* -------------------------- */
-		/*   apply Euler integration  */
-		/*  to calculate new velocity */
-		/*         and position       */
+		vec3 pred_vel;
+		__pm3_add_v_vs(pred_vel, p->cur_vel, accel, dt);
 
-		vec3 pred_vel, pred_pos;
-		// compute new velocity
-		__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt/p->mass);
-		truncate(pred_vel, p->max_speed, pred_vel);
+		/* ------------------------- */
+		/* apply Euler integration   */
+		/* to calculate new velocity */
+		/* and position              */
+
+		vec3 pred_pos;
 		// compute new position
 		__pm3_add_v_vs(pred_pos, p->cur_pos, pred_vel, dt);
 
@@ -93,60 +96,6 @@ void simulator::_simulate_agent_particles() {
 		if (part_part_colls_activated()) {
 			find_update_partcoll_agent(p, i);
 		}
-
-		/* ------------------- */
-		/* STEERING BEHAVIOURS */
-
-		vec3 desired_vel;
-		vec3 steer_dir;
-
-		vec3 target_offset;
-		float dist_target, clipped_speed;
-
-		switch (p->behaviour) {
-
-		/* seek */
-		case agent_behaviour_type::seek:
-			// unit velocity vector towards target
-			__pm3_sub_v_v(desired_vel, p->target, p->cur_pos);
-			normalise(desired_vel, desired_vel);
-			// make velocity have magnitude equal to max_speed
-			__pm3_mul_acc_s(desired_vel, p->max_speed);
-			// modify agent's velocity
-			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
-			__pm3_add_acc_v(p->cur_vel, steer_dir);
-			break;
-
-		/* flee */
-		case agent_behaviour_type::flee:
-			// unit velocity vector towards target
-			__pm3_sub_v_v(desired_vel, p->cur_pos, p->target);
-			normalise(desired_vel, desired_vel);
-			// make velocity have magnitude equal to max_speed
-			__pm3_mul_acc_s(desired_vel, p->max_speed);
-			// modify agent's velocity
-			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
-			__pm3_add_acc_v(p->cur_vel, steer_dir);
-			break;
-
-		/* arrival */
-		case agent_behaviour_type::arrival:
-			// unit velocity vector towards target
-			__pm3_sub_v_v(target_offset, p->target, p->cur_pos);
-			dist_target = __pm3_norm(target_offset);
-			clipped_speed = std::min
-			(p->max_speed*dist_target/p->slowing_distance,p->max_speed);
-			__pm3_assign_vs(desired_vel, target_offset, clipped_speed/dist_target);
-			__pm3_sub_v_v(steer_dir, desired_vel, p->cur_vel);
-			__pm3_add_acc_v(p->cur_vel, steer_dir);
-			break;
-
-		default:
-			;
-		}
-
-		// finally, truncate velocity again
-		truncate(p->cur_vel, p->max_speed, p->cur_vel);
 	}
 
 }

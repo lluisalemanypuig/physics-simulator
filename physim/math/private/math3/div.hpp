@@ -14,8 +14,8 @@
 // h <- f/s
 #define __pm3_div_v_s(h, f,s)				\
 	__pm3_assign_c(h,(f).x*(1.0f/(s)),		\
-					(f).y*(1.0f/(s)),		\
-					(f).z*(1.0f/(s)))
+					 (f).y*(1.0f/(s)),		\
+					 (f).z*(1.0f/(s)))
 // g <- g/f
 #define __pm3_div_acc_v(g, f)				\
 	__pm2_div_acc_v(g, f);					\
