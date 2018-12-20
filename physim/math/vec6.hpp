@@ -3,6 +3,9 @@
 // C++ includes
 #include <cmath>
 
+// physim includes
+#include <physim/math/vec_templates.hpp>
+
 namespace physim {
 namespace math {
 
@@ -97,22 +100,6 @@ static inline void min(const vec6& a, const vec6& b, vec6& m) {
 }
 
 /**
- * @brief Computes the minimum of two vectors.
- *
- * The first component of the result is the minimum value of the
- * first components of the inputs, the second component of the result
- * is the minimum value of the second components of the inputs, ...
- * @param[in] a Input vector.
- * @param[in] b Input vector.
- * @returns Returns the minimum of @e a and @e b.
- */
-static inline vec6 min(const vec6& a, const vec6& b) {
-	vec6 m;
-	min(a, b, m);
-	return m;
-}
-
-/**
  * @brief Computes the maximum of two vectors.
  *
  * The first component of the result is the maximum value of the
@@ -131,26 +118,11 @@ static inline void max(const vec6& a, const vec6& b, vec6& M) {
 	M.w = (a.w > b.w ? a.w : b.w);
 }
 
-/**
- * @brief Computes the maximum of two vectors.
- *
- * The first component of the result is the maximum value of the
- * first components of the inputs, the second component of the result
- * is the maximum value of the second components of the inputs, ...
- * @param[in] a Input vector.
- * @param[in] b Input vector.
- * @returns Returns the maximum of @e a and @e b.
- */
-static inline vec6 max(const vec6& a, const vec6& b) {
-	vec6 M;
-	max(a, b, M);
-	return M;
-}
-
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-static inline float dot(const vec6& f, const vec6& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u + f.v*g.v + f.w*g.w; }
+static inline float dot(const vec6& f, const vec6& g)
+{ return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u + f.v*g.v + f.w*g.w; }
 
 /// The square of the norm of a vector.
 static inline float norm2(const vec6& f) { return dot(f,f); }
@@ -165,10 +137,6 @@ static inline float dist2(const vec6& f, const vec6& g) {
 		   (f.u - g.u)*(f.u - g.u) +
 		   (f.v - g.v)*(f.v - g.v) +
 		   (f.w - g.w)*(f.w - g.w);
-}
-/// The distance between two points, given their positional vectors.
-static inline float dist(const vec6& f, const vec6& g) {
-	return std::sqrt(dist2(f,g));
 }
 
 /**
@@ -187,52 +155,6 @@ static inline void normalise(const vec6& f, vec6& g) {
 	g.u = f.u*(1.0f/n);
 	g.v = f.v*(1.0f/n);
 	g.w = f.w*(1.0f/n);
-}
-/**
- * @brief Vector normalisation.
- *
- * Each component of vector @e f is divided by its norm.
- * @param f Vector to be normalised.
- * @returns Returns the normalisation of vector @e f.
- */
-static inline vec6 normalise(const vec6& f) {
-	vec6 out;
-	normalise(f, out);
-	return out;
-}
-
-/**
- * @brief Truncates a vector to a given length.
- *
- * If the length of @e f is larger than l then \f$g = l*\frac{f}{||f||}\f$.
- * If not then \f$g = f\f$.
- * @param[in] f Input vector
- * @param[in] l Maximum length.
- * @param[out] g Truncated vector.
- */
-static inline void truncate(const vec6& f, float l, vec6& g) {
-	g = f;
-	float n2 = norm2(g);
-	if (n2 > l*l) {
-		g = normalise(f)*l;
-	}
-}
-/**
- * @brief Truncates a vector to a given length.
- *
- * If the length of @e f is larger than l then returns \f$l*\frac{f}{||f||}\f$.
- * If not then returns \f$f\f$.
- * @param f Input vector
- * @param l Maximum length.
- * @return Returns vector @e f truncated to length @e l.
- */
-static inline vec6 truncate(const vec6& f, float l) {
-	vec6 g = f;
-	float n2 = norm2(g);
-	if (n2 > l*l) {
-		g = normalise(f)*l;
-	}
-	return g;
 }
 
 } // -- namespace math

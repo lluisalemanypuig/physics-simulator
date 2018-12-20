@@ -71,7 +71,8 @@ HEADERS += \
     math/private/math2/comparison.hpp \
     math/private/math3/comparison.hpp \
     particles/agent_particle.hpp \
-    structures/octree.hpp
+    structures/octree.hpp \
+    math/vec_templates.hpp
 
 SOURCES += \
     simulator.cpp \
