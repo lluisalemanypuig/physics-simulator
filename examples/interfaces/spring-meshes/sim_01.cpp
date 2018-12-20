@@ -9,21 +9,15 @@ using namespace std;
 #include <glm/vec3.hpp>
 
 // render includes
-#include <render/geometry/rsphere.hpp>
-#include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
 // physim includes
 #include <physim/meshes/mesh2d_regular.hpp>
-#include <physim/geometry/plane.hpp>
-#include <physim/geometry/rectangle.hpp>
-#include <physim/geometry/sphere.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace meshes;
-using namespace geometric;
 
 // custom includes
 #include "glut_functions.hpp"

@@ -17,11 +17,9 @@ using namespace std;
 
 // physim includes
 #include <physim/meshes/mesh2d_regular.hpp>
-#include <physim/geometry/plane.hpp>
-#include <physim/geometry/rectangle.hpp>
 #include <physim/geometry/object.hpp>
 #include <physim/input/input.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace meshes;

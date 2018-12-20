@@ -15,9 +15,9 @@ using namespace std;
 
 // physim includes
 #include <physim/geometry/object.hpp>
-#include <physim/initialiser/rect_shower.hpp>
+#include <physim/initialiser/initialiser.hpp>
 #include <physim/input/input.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;

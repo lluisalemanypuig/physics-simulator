@@ -8,18 +8,14 @@ using namespace std;
 
 // render includes
 #include <render/geometry/rplane.hpp>
-#include <render/geometry/rsphere.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
-#include <render/shader/shader_helper.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
 // physim includes
 #include <physim/geometry/plane.hpp>
-#include <physim/geometry/rectangle.hpp>
-#include <physim/geometry/sphere.hpp>
 #include <physim/initialiser/rect_shower.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;

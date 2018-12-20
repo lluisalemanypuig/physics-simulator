@@ -20,7 +20,7 @@ using namespace std;
 #include <physim/geometry/plane.hpp>
 #include <physim/geometry/rectangle.hpp>
 #include <physim/geometry/sphere.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace meshes;

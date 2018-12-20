@@ -13,7 +13,6 @@ using namespace std;
 #include <render/geometry/rplane.hpp>
 #include <render/geometry/rrectangle.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
-#include <render/shader/shader_helper.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
@@ -22,7 +21,7 @@ using namespace std;
 #include <physim/geometry/rectangle.hpp>
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/sized_particle.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;
@@ -35,7 +34,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	float px_09, py_09, pz_09;
+	static float px_09, py_09, pz_09;
 
 	void sim_09_add_rectangle
 	(const math::vec3& p1, const math::vec3& p2,

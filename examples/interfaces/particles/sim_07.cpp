@@ -19,7 +19,7 @@ using namespace std;
 #include <physim/geometry/sphere.hpp>
 #include <physim/initialiser/initialiser.hpp>
 #include <physim/particles/sized_particle.hpp>
-#include <physim/math/math.hpp>
+#include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;
