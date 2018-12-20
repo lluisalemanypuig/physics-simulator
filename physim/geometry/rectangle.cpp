@@ -15,6 +15,13 @@ using namespace std;
 typedef physim::math::vec3 pmvec3;
 typedef physim::math::vec2 pmvec2;
 
+static inline
+float triangle_area(const pmvec3& v0,const pmvec3& v1,const pmvec3& v2) {
+	pmvec3 C;
+	__pm3_cross_diff(C, v0,v1,v2);
+	return __pm3_norm(C)/2.0f;
+}
+
 enum rectangle_region {
 	r0123,
 	r0, r1, r2, r3,
@@ -332,9 +339,32 @@ bool rectangle::is_inside(const vec3& p, float tol) const {
 	}
 
 	// If the point is on the associated plane
-	// and 'inside' the plane then the point
-	// is 'inside' the rectangle.
-	return true;
+	// and 'inside' any of the two triangles
+	// then the point is in the rectangle
+
+	// compute areas of the triangles (1)
+	float a0 = triangle_area(p,  p1, p2);
+	float a1 = triangle_area(p0,  p, p2);
+	float a2 = triangle_area(p0, p1,  p);
+	float  A = triangle_area(p0, p1, p2);
+
+	// test inside/outside
+	if ((a0 + a1 + a2 - A) <= tol) {
+		return true;
+	}
+
+	// compute areas of the triangles (2)
+	a0 = triangle_area(p,  p2, p3);
+	a1 = triangle_area(p0,  p, p3);
+	a2 = triangle_area(p0, p2,  p);
+	 A = triangle_area(p0, p2, p3);
+
+	// test inside/outside
+	if ((a0 + a1 + a2 - A) <= tol) {
+		return true;
+	}
+
+	return false;
 }
 
 geometry_type rectangle::get_geom_type() const {
