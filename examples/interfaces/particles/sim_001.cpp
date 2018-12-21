@@ -46,7 +46,7 @@ namespace study_cases {
 			[&](free_particle *p) { p->bouncing = bouncing; }
 		);
 		w.set_friction_initialiser(
-			[&](free_particle *p) { p->lifetime = friction; }
+			[&](free_particle *p) { p->friction = friction; }
 		);
 		SR.get_simulator().set_free_emitter(&w);
 
@@ -168,7 +168,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 01");
+		window_id = glutCreateWindow("Particles - Simulation 001");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);

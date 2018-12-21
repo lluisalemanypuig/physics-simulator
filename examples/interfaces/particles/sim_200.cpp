@@ -8,22 +8,22 @@ using namespace std;
 
 // render includes
 #include <render/geometry/rplane.hpp>
-#include <render/geometry/rsphere.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
-#include <render/shader/shader_helper.hpp>
 #include <render/include_gl.hpp>
 #include <render/obj_reader.hpp>
 
 // physim includes
 #include <physim/geometry/plane.hpp>
-#include <physim/geometry/sphere.hpp>
-#include <physim/emitter/sized_emitter.hpp>
+#include <physim/emitter/free_emitters/rect_shower.hpp>
+#include <physim/particles/free_particle.hpp>
 #include <physim/particles/sized_particle.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
+using namespace math;
 using namespace particles;
 using namespace geometric;
 using namespace emitters;
+using namespace free_emitters;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -32,46 +32,52 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	void sim_101_make_simulation() {
-		draw_sized_particles_wire = true;
-		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
+	void sim_200_make_simulation() {
+		// these parts of the emitter_free are scene-dependent
 
-		sized_emitter I;
-		I.set_pos_initialiser(
-			[&](base_particle *p) {
-				p->cur_pos = math::vec3(0.2f,5.0f,0.0f);
+		rect_shower w;
+		w.set_straight_source(vec3(-3.0f,10.0f,-3.0f), 6.0f,6.0f);
+		w.set_mass_initialiser(
+			[](base_particle *p) { p->mass = 1.0f; }
+		);
+		w.set_starttime_initialiser(
+			[](free_particle *p) {
+				p->starttime = p->index/1000.0f;
 			}
 		);
-		I.set_vel_initialiser(
-			[](base_particle *p) {
-				p->cur_vel = math::vec3(0.0f,0.0f,0.0f);
-			}
+		w.set_charge_initialiser(
+			[](free_particle *p) { p->charge = 1.0f; }
 		);
-		I.set_lifetime_initialiser(
+		w.set_lifetime_initialiser(
 			[&](free_particle *p) { p->lifetime = lifetime; }
 		);
-		I.set_bounce_initialiser(
+		w.set_bounce_initialiser(
 			[&](free_particle *p) { p->bouncing = bouncing; }
 		);
-		I.set_friction_initialiser(
+		w.set_friction_initialiser(
 			[&](free_particle *p) { p->friction = friction; }
 		);
-		I.set_radius_initialiser(
-			[&](sized_particle *p) { p->R = 1.0f; }
-		);
-		SR.get_simulator().set_sized_emitter(&I);
-		SR.get_simulator().add_sized_particle();
+		SR.get_simulator().set_free_emitter(&w);
 
 		plane *pl = new plane(
-			math::vec3(0.0f,1.0f,0.0f),
-			math::vec3(0.0f,0.0f,0.0f)
+			vec3(0.0f,1.0f,0.0f),
+			vec3(0.0f,0.0f,0.0f)
 		);
 		SR.get_simulator().add_geometry(pl);
-		sphere *sp = new sphere(math::vec3(0.0f, 2.0f, 0.0f), 1.5f);
-		SR.get_simulator().add_geometry(sp);
 		SR.get_simulator().set_gravity_acceleration(
-			math::vec3(0.0f,-9.81f,0.0f)
+			vec3(0.0f,-9.81f,0.0f)
 		);
+		SR.get_simulator().add_free_particles(1000);
+
+		SR.get_simulator().set_particle_particle_collisions(true);
+
+		sized_particle *sp = new sized_particle();
+		sp->lifetime = 99999.0f; // immortal
+		sp->R = 1.0f;
+		sp->cur_pos = vec3(0.0f, 1.5f, 0.0f);
+		sp->prev_pos = sp->cur_pos - 1.0f;
+		sp->mass = 2.0f;
+		SR.get_simulator().add_sized_particle(sp);
 
 		rplane *floor = new rplane();
 		floor->set_points(
@@ -80,56 +86,39 @@ namespace study_cases {
 		);
 		SR.add_geometry(floor);
 
-		OBJ_reader obj;
-		shared_ptr<rendered_triangle_mesh> sim_ball(new rendered_triangle_mesh);
-		obj.load_object("../../interfaces/models", "sphere.obj", *sim_ball);
-
-		rsphere *sphere = new rsphere();
-		sphere->set_center( to_glm(sp->get_centre()) );
-		sphere->set_radius( sp->get_radius() );
-		sphere->set_model(sim_ball);
-		SR.add_geometry(sphere);
-
-		SR.get_box().enlarge_box(glm::vec3(0.0f, 6.0f, 0.0f));
+		SR.get_box().enlarge_box(glm::vec3(0.0f, 12.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
+		n_iterations = 1;
+		SR.get_simulator().set_time_step(time_step);
 
 		wireframe_sphere = new rendered_triangle_mesh();
+		OBJ_reader obj;
 		obj.load_object
 		("../../interfaces/models", "sphere_fsmooth.obj", *wireframe_sphere);
 
-		sim_ball->load_textures();
 		if (use_shaders) {
 			glut_functions::init_shaders();
 			SR.get_box().make_buffers();
 			wireframe_sphere->make_buffers();
-			sim_ball->make_buffers_materials_textures();
-			texture_shader.bind();
-			shader_helper::activate_materials_textures(*sim_ball, texture_shader);
-			texture_shader.release();
 		}
 		else {
 			wireframe_sphere->compile();
-			sim_ball->compile();
 		}
-
-		n_iterations = 1;
-		SR.get_simulator().set_time_step(time_step);
 	}
 
-	void sim_101_help() {
+	void sim_200_help() {
 		glut_functions::help();
 
-		cout << "Simulation 101 description:" << endl;
+		cout << "Simulation 200 description:" << endl;
 		cout << endl;
-		cout << "Sized particle bouncing on a sphere." << endl;
-		cout << endl;
-		cout << "Options of this simulation:" << endl;
-		cout << "    CTRL + w: activate/deactivate wireframe spheres for sized particles" << endl;
+		cout << "Exactly 1000 particles bouncing on top of a plane." << endl;
+		cout << "These particles are generated with a rectangular source." << endl;
+		cout << "Just right above the plane is a sized particle" << endl;
 		cout << endl;
 	}
 
-	void sim_101_reset() {
+	void sim_200_reset() {
 		clear_simulation();
 		if (use_shaders) {
 			clear_shaders();
@@ -147,7 +136,8 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		sim_101_make_simulation();
+		use_shaders = true;
+		sim_200_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -159,38 +149,27 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_101_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_200_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_101_help();
+			sim_200_help();
 			break;
 		case 'r':
-			sim_101_reset();
+			sim_200_reset();
 			break;
-		}
-
-		if (GLUT_ACTIVE_CTRL) {
-			c = c + 'a' - 1;
-			// If 'p' is pressed then c = 1 + actual_char - 'a'
-			// So: actual_char = c + 'a' - 1
-			switch(c) {
-			case 'w':
-				draw_sized_particles_wire = not draw_sized_particles_wire;
-				break;
-			}
 		}
 	}
 
-	int sim_101_initGL(int argc, char *argv[]) {
+	int sim_200_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 101");
+		window_id = glutCreateWindow("Particles - Simulation 200");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -215,16 +194,18 @@ namespace study_cases {
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
 		glut_functions::parse_common_params(argc, argv);
+		use_shaders = true;
+		draw_sized_particles_wire = true;
 
 		// ---------------- //
 		/* build simulation */
-		sim_101_make_simulation();
+		sim_200_make_simulation();
 		return 0;
 	}
 
-	void sim_101(int argc, char *argv[]) {
-		sim_101_initGL(argc, argv);
-		sim_101_help();
+	void sim_200(int argc, char *argv[]) {
+		sim_200_initGL(argc, argv);
+		sim_200_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -232,7 +213,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_101_regular_keys_keyboard);
+		glutKeyboardFunc(sim_200_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

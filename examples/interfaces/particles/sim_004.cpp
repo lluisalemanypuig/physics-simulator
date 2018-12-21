@@ -27,7 +27,7 @@ using namespace glut_functions;
 namespace study_cases {
 
 	void sim_004_make_simulation() {
-		free_emitter *I = SR.get_simulator().get_initialiser();
+		free_emitter *I = SR.get_simulator().get_free_emitter();
 		I->set_pos_initialiser(
 			[](base_particle *p) {
 				float z = -4.0f + p->index*0.8f;
@@ -40,14 +40,10 @@ namespace study_cases {
 			}
 		);
 		I->set_friction_initialiser(
-			[](free_particle *p) {
-				p->friction = p->index/10.0f;
-			}
+			[](free_particle *p) { p->friction = p->index/10.0f; }
 		);
 		I->set_bounce_initialiser(
-			[](free_particle *p) {
-				p->bouncing = 1.0f;
-			}
+			[](free_particle *p) { p->bouncing = 1.0f; }
 		);
 
 		glm::vec3 A( -5.0f, -0.25f,-5.0f);
@@ -139,7 +135,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 04");
+		window_id = glutCreateWindow("Particles - Simulation 004");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);

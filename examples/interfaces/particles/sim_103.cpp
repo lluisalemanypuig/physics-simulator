@@ -220,7 +220,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 09");
+		window_id = glutCreateWindow("Particles - Simulation 103");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);

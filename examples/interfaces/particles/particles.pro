@@ -33,7 +33,9 @@ SOURCES += main.cpp \
     sim_104.cpp \
     sim_105.cpp \
     sim_106.cpp \
-    sim_006.cpp
+    sim_006.cpp \
+    sim_200.cpp \
+    sim_201.cpp
 
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender

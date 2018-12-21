@@ -13,6 +13,7 @@ namespace study_cases {
 	void sim_004(int argc, char *argv[]);
 	void sim_005(int argc, char *argv[]);
 	void sim_006(int argc, char *argv[]);
+
 	void sim_100(int argc, char *argv[]);
 	void sim_101(int argc, char *argv[]);
 	void sim_102(int argc, char *argv[]);
@@ -20,6 +21,9 @@ namespace study_cases {
 	void sim_104(int argc, char *argv[]);
 	void sim_105(int argc, char *argv[]);
 	void sim_106(int argc, char *argv[]);
+
+	void sim_200(int argc, char *argv[]);
+	void sim_201(int argc, char *argv[]);
 
 } // -- namespace study_cases
 
@@ -68,6 +72,11 @@ void list_all_cases() {
 	cout << "          with gravity. All planes have their normals pointing outwards" << endl;
 	cout << "          quadrilateral." << endl;
 	cout << endl;
+	cout << "Mixed particles:" << endl;
+	cout << "    200 : A shower of free particles on a sized particle." << endl;
+	cout << endl;
+	cout << "    201 : A sized particle going through a shower of free particles." << endl;
+	cout << endl;
 }
 
 bool is_help(const char *arg) {
@@ -102,6 +111,7 @@ int main(int argc, char *argv[]) {
 	case 004:	study_cases::sim_004(argc, argv); break;
 	case 005:	study_cases::sim_005(argc, argv); break;
 	case 006:	study_cases::sim_006(argc, argv); break;
+
 	case 100:	study_cases::sim_100(argc, argv); break;
 	case 101:	study_cases::sim_101(argc, argv); break;
 	case 102:	study_cases::sim_102(argc, argv); break;
@@ -109,6 +119,9 @@ int main(int argc, char *argv[]) {
 	case 104:	study_cases::sim_104(argc, argv); break;
 	case 105:	study_cases::sim_105(argc, argv); break;
 	case 106:	study_cases::sim_106(argc, argv); break;
+
+	case 200:	study_cases::sim_200(argc, argv); break;
+	case 201:	study_cases::sim_201(argc, argv); break;
 	default:
 		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 		cerr << "    Use './particles --list' to see all cases" << endl;

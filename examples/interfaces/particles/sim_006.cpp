@@ -55,7 +55,7 @@ namespace study_cases {
 
 		simulator& S = SR.get_simulator();
 
-		free_emitter *I = SR.get_simulator().get_initialiser();
+		free_emitter *I = SR.get_simulator().get_free_emitter();
 		I->set_pos_initialiser(
 			[mx,mz](base_particle *p) { p->cur_pos = pm_vec3(mx,1.86f,mz); }
 		);
@@ -197,7 +197,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 13");
+		window_id = glutCreateWindow("Particles - Simulation 006");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
