@@ -112,7 +112,7 @@ void agent_particle::apply_behaviours(vec3& weighted_steering) const {
 }
 
 void agent_particle::apply_behaviours
-(const vector<geometry *>& scene, vec3& weighted_steering)
+(const std::vector<geometric::geometry *>& scene, vec3& weighted_steering)
 const
 {
 	if (behaviour == agent_behaviour_type::none) {

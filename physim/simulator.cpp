@@ -387,12 +387,20 @@ size_t simulator::n_geometry() const {
 	return scene_fixed.size();
 }
 
-emitters::free_emitter *simulator::get_initialiser() {
+emitters::free_emitter *simulator::get_free_emitter() {
 	return free_global_emit;
 }
 
-const emitters::free_emitter *simulator::get_initialiser() const {
+const emitters::free_emitter *simulator::get_free_emitter() const {
 	return free_global_emit;
+}
+
+emitters::sized_emitter *simulator::get_sized_emitter() {
+	return sized_global_emit;
+}
+
+const emitters::sized_emitter *simulator::get_sized_emitter() const {
+	return sized_global_emit;
 }
 
 float simulator::get_time_step() const {

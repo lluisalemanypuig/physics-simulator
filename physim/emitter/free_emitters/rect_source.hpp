@@ -11,9 +11,9 @@ namespace emitters {
 namespace free_emitters {
 
 /**
- * @brief A rectangular source class emitter_free.
+ * @brief A rectangular emitter.
  *
- * Provides a position emitter_free function so that particles
+ * Provides a position initialiser function so that particles
  * are generated within a rectangle of specific dimensions.
  *
  * Need to set the source size through @ref set_rectangular_source
@@ -87,7 +87,7 @@ class rect_source : public free_emitter {
 		/**
 		 * @brief Copy constructor.
 		 *
-		 * The function @ref emitter_free::pos is not copied.
+		 * The function @ref free_emitter::pos is not copied.
 		 * Instead, it is remade (function @ref make_pos_init is
 		 * called again).
 		 */

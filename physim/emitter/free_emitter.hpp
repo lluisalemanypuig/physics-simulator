@@ -10,7 +10,7 @@
 namespace physim {
 namespace emitters {
 
-/// Shortcut for the free particle emitter_free function type.
+/// Shortcut for the free particle initialiser function type.
 typedef std::function<void (particles::free_particle *)> free_emit;
 
 /**
@@ -31,7 +31,6 @@ typedef std::function<void (particles::free_particle *)> free_emit;
  * - @ref lifetime : function used to initialise the lifetime of a particle.
  * - @ref starttime : function used to initialise the starting time of a particle.
  * - @ref fixed : function used to initialise the fixed attribute of a particle.
- * - @ref radius : for the case of sized particles (see @ref particles::sized_particle,
  * this function is used to initialse the radius attribute of the particle).
  *
  * By default, all these function's behaviour is to initialise a particle
@@ -77,35 +76,35 @@ class free_emitter : public base_emitter {
 
 		// SETTERS
 
-		/// Sets the charge emitter_free. See @ref charge.
+		/// Sets the charge initialiser. See @ref charge.
 		void set_charge_initialiser(const free_emit& f);
-		/// Sets the bouncing coefficient emitter_free. See @ref bounce.
+		/// Sets the bouncing coefficient initialiser. See @ref bounce.
 		void set_bounce_initialiser(const free_emit& f);
-		/// Sets the friction coefficient emitter_free. See @ref friction.
+		/// Sets the friction coefficient initialiser. See @ref friction.
 		void set_friction_initialiser(const free_emit& f);
-		/// Sets the lifetime emitter_free. See @ref lifetime.
+		/// Sets the lifetime initialiser. See @ref lifetime.
 		void set_lifetime_initialiser(const free_emit& f);
-		/// Sets the starttime emitter_free. See @ref starttime.
+		/// Sets the starttime initialiser. See @ref starttime.
 		void set_starttime_initialiser(const free_emit& f);
-		/// Sets the fixed emitter_free. See @ref fixed.
+		/// Sets the fixed initialiser. See @ref fixed.
 		void set_fixed_initialiser(const free_emit& f);
 
 		// GETTERS
 
-		/// Returns a reference to a copy of this emitter_free.
+		/// Returns a reference to a copy of this emitter.
 		virtual free_emitter *clone() const;
 
-		/// Returns the charge emitter_free. See @ref charge.
+		/// Returns the charge initialiser. See @ref charge.
 		const free_emit& get_charge_initialiser() const;
-		/// Returns the bouncing coefficient emitter_free. See @ref bounce.
+		/// Returns the bouncing coefficient initialiser. See @ref bounce.
 		const free_emit& get_bounce_initialiser() const;
-		/// Returns the friction coefficient emitter_free. See @ref friction.
+		/// Returns the friction coefficient initialiser. See @ref friction.
 		const free_emit& get_friction_initialiser() const;
-		/// Returns the lifetime emitter_free. See @ref lifetime.
+		/// Returns the lifetime initialiser. See @ref lifetime.
 		const free_emit& get_lifetime_initialiser() const;
-		/// Returns the starttime emitter_free. See @ref starttime.
+		/// Returns the starttime initialiser. See @ref starttime.
 		const free_emit& get_starttime_initialiser() const;
-		/// Returns the fixed emitter_free. See @ref fixed.
+		/// Returns the fixed initialiser. See @ref fixed.
 		const free_emit& get_fixed_initialiser() const;
 
 		// INITIALISE A PARTICLE

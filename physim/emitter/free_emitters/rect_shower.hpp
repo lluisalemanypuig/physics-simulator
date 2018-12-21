@@ -11,9 +11,9 @@ namespace emitters {
 namespace free_emitters {
 
 /**
- * @brief A shower class emitter_free.
+ * @brief A shower emitter.
  *
- * Provides a position emitter_free function so that generated
+ * Provides a position initialiser function so that generated
  * particles behave like a shower: their velocity is set to
  * negative values of y, and null values of x and z.
  *

@@ -83,8 +83,8 @@ enum class solver_type : int8_t {
  * particles may collide with.
  *
  * Function @ref reset_simulation resets all particle to
- * their original state using the emitter_free function
- * (see @ref global_init).
+ * their original state using the initialiser objects
+ * (see @ref free_global_emit, @ref sized_global_emit).
  */
 class simulator {
 	private:
@@ -167,7 +167,7 @@ class simulator {
 		 * that is, the attribtues of the particle are not modified
 		 * at all.
 		 */
-		emitters::free_emitter *sized_global_emit;
+		emitters::sized_emitter *sized_global_emit;
 
 		/**
 		 * @brief Are particle-particle collisions activated?
@@ -369,7 +369,7 @@ class simulator {
 		/**
 		 * @brief Adds a free particle to the simulation.
 		 *
-		 * The particle is initialised using @ref global_init.
+		 * The particle is initialised using @ref free_global_emit.
 		 * @pre For this initialisation to be completely correct, the step
 		 * time (see @ref dt) needs to be set.
 		 * @post The caller should not free the object, since the simulator
@@ -379,7 +379,7 @@ class simulator {
 		/**
 		 * @brief Adds a sized particle to the simulation.
 		 *
-		 * The particle is initialised using @ref global_init.
+		 * The particle is initialised using @ref sized_global_emit.
 		 * @pre For this initialisation to be completely correct, the step
 		 * time (see @ref dt) needs to be set.
 		 * @post The caller should not free the object, since the simulator
@@ -389,7 +389,7 @@ class simulator {
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
-		 * The initialser function (see @ref global_init) is not called.
+		 * The initialser function (see @ref free_global_emit) is not called.
 		 * The particle is added to @ref fps.
 		 * @param p A non-null pointer to the object.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
@@ -402,7 +402,7 @@ class simulator {
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
-		 * The initialser function (see @ref global_init) is not called.
+		 * The initialiser object (see @ref sized_global_emit) is not called.
 		 * The particle is added to @ref sps.
 		 *
 		 * @param p A non-null pointer to the object.
@@ -416,8 +416,8 @@ class simulator {
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
-		 * The initialser function (see @ref global_init) is not called.
-		 * The particle is added to @ref aps.
+		 * None of the initialiser objects are used. The particle is added
+		 * to @ref aps.
 		 *
 		 * @param p A non-null pointer to the object.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
@@ -430,7 +430,7 @@ class simulator {
 		/**
 		 * @brief Adds @e n free particles to the simulation.
 		 *
-		 * Each of the particles is initialised with the @ref global_init
+		 * Each of the particles is initialised with the @ref free_global_emit
 		 * object used at the moment of calling this method. The particle
 		 * is added to @ref fps.
 		 * @param n Number of particles.
@@ -439,7 +439,7 @@ class simulator {
 		/**
 		 * @brief Adds @e n sized particles to the simulation.
 		 *
-		 * Each of the particles is initialised with the @ref global_init
+		 * Each of the particles is initialised with the @ref sized_global_emit
 		 * object used at the moment of calling this method. The particle
 		 * is added to @ref sps.
 		 * @param n Number of particles.
@@ -614,8 +614,8 @@ class simulator {
 		/**
 		 * @brief Resets the simulation to its initial state.
 		 *
-		 * Initialises all particles with the emitter_free function
-		 * @ref global_init.
+		 * Initialises all particles with the initialiser objects
+		 * (using the appropriate objects for each type of particle).
 		 */
 		void reset_simulation();
 
@@ -634,8 +634,8 @@ class simulator {
 		 *
 		 * The lifetime of each particle (see @ref free_particle::lifetime) is
 		 * also decreased by the exact same amount. Whenever this value reaches
-		 * 0 the particle is reinitialised using the global emitter_free (see
-		 * @ref global_init).
+		 * 0 the particle is reinitialised using the emitter for free particles
+		 * (see @ref free_global_emit).
 		 *
 		 * Free particles collide with the geometrical objects added via method
 		 * @ref add_geometry(geometric::geometry *), and are moved depending on
@@ -721,7 +721,7 @@ class simulator {
 		 * object should be freed by the user. Since the simulator
 		 * keeps its own copy, the parameter may be freed any time.
 		 *
-		 * The previous emitter_free is destroyed by the class.
+		 * The previous emitter is destroyed by the class.
 		 * @param f Free particle emitter object.
 		 * @pre @e f can not be null.
 		 */
@@ -735,7 +735,7 @@ class simulator {
 		 * object should be freed by the user. Since the simulator
 		 * keeps its own copy, the parameter may be freed any time.
 		 *
-		 * The previous emitter_free is destroyed by the class.
+		 * The previous emitter is destroyed by the class.
 		 * @param s Sized particle emitter object.
 		 * @pre @e s can not be null.
 		 */
@@ -837,10 +837,14 @@ class simulator {
 		size_t n_particles() const;
 		/// Returns the number of fixed geometrical objects.
 		size_t n_geometry() const;
-		/// Returns the emitter_free functions.
-		emitters::free_emitter *get_initialiser();
-		/// Returns a constant reference to the emitter_free functions.
-		const emitters::free_emitter *get_initialiser() const;
+		/// Returns the free emitter object.
+		emitters::free_emitter *get_free_emitter();
+		/// Returns a constant reference to the free emitter object.
+		const emitters::free_emitter *get_free_emitter() const;
+		/// Returns the sized emitter object.
+		emitters::sized_emitter *get_sized_emitter();
+		/// Returns a constant reference to the sized emitter object.
+		const emitters::sized_emitter *get_sized_emitter() const;
 
 		/// Returns the time step of the simulation (see @ref dt).
 		float get_time_step() const;

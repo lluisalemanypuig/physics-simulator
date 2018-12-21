@@ -44,7 +44,7 @@ class base_particle {
 		 * The indexes start at 0.
 		 *
 		 * It can be used to initialise its attributes through
-		 * the @ref init::emitter_free class.
+		 * the different initialiser functions.
 		 */
 		size_t index;
 

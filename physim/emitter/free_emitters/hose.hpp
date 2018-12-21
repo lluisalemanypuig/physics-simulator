@@ -12,10 +12,10 @@ namespace emitters {
 namespace free_emitters {
 
 /**
- * @brief A hose source class emitter_free.
+ * @brief A hose emitter.
  *
- * This emitter_free tries to make the particles have the
- * same behaviour as he water coming out of a hose. This
+ * This emitter tries to make the particles have the
+ * same behaviour as the water coming out of a hose. This
  * so-called hose has been abstracted as a cone.
  *
  * The cone is parametrised with a source, the vertex at the
@@ -97,7 +97,7 @@ class hose : public free_emitter {
 		/**
 		 * @brief Copy constructor.
 		 *
-		 * The functions @ref emitter_free::pos and @ref emitter_free::vel
+		 * The functions @ref base_emitter::pos and @ref base_emitter::vel
 		 * are not copied. Instead, they are remade (functions
 		 * @ref make_pos_init and @ref make_vel_init are called again).
 		 */

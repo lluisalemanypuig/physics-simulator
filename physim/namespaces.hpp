@@ -25,7 +25,7 @@ namespace physim {
     /**
      * @brief Particle emitter classes.
      * 
-     * This namespace contains a 'main' class, the @ref emitter::emitter_base
+     * This namespace contains a 'main' class, the @ref emitters::base_emitter
      * class that contains several, modifiable functions used to initialise
      * the different attributes of particles.
      * 

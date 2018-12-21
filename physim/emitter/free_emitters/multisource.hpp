@@ -12,9 +12,9 @@ namespace emitters {
 namespace free_emitters {
 
 /**
- * @brief Multiple source emitter_free.
+ * @brief Emitter from multiple sources.
  *
- * This class implements an emitter_free that uses multiple
+ * This class implements a @ref free_emitter that uses multiple
  * initialisers of the same type.
  *
  * This can be used, for example, to have several hoses in
@@ -47,14 +47,15 @@ namespace free_emitters {
  * of particles will have to be remade in the copy constructor.
  * The functions to be remade are indicated by calling the
  * use_*_init functions. Notice that when using the @ref hose
- * emitter_free the position and velocity init must be remade.
+ * the initialisers for the position and velocity init must be
+ * remade.
  */
 template<class T>
 class multisource : public free_emitter {
 	private:
 		/// Number of particles in the simulation.
 		size_t P;
-		/// Collection of sources for this multiple source emitter_free.
+		/// Collection of sources for this multiple source emitter.
 		std::vector<T> sources;
 
 		/**
@@ -89,63 +90,63 @@ class multisource : public free_emitter {
 		// MODIFIERS
 
 		/**
-		 * @brief The position emitter_free will be remade when copying.
+		 * @brief The position initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 0 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_position_init(bool u = true);
 		/**
-		 * @brief The velocity emitter_free will be remade when copying.
+		 * @brief The velocity initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 1 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_velocity_init(bool u = true);
 		/**
-		 * @brief The mass emitter_free will be remade when copying.
+		 * @brief The mass initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 2 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_mass_init(bool u = true);
 		/**
-		 * @brief The charge emitter_free will be remade when copying.
+		 * @brief The charge initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 3 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_charge_init(bool u = true);
 		/**
-		 * @brief The bouncing coefficient emitter_free will be remade when copying.
+		 * @brief The bouncing coefficient initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 4 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_bounce_init(bool u = true);
 		/**
-		 * @brief The friction coefficient emitter_free will be remade when copying.
+		 * @brief The friction coefficient initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 5 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_friction_init(bool u = true);
 		/**
-		 * @brief The lifetime emitter_free will be remade when copying.
+		 * @brief The lifetime initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 6 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_lifetime_init(bool u = true);
 		/**
-		 * @brief The starttime emitter_free will be remade when copying.
+		 * @brief The starttime initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 7 bit of @ref use_functions;
 		 * @param u Either true or false.
 		 */
 		void use_starttime_init(bool u = true);
 		/**
-		 * @brief The fixed attribute emitter_free will be remade when copying.
+		 * @brief The fixed attribute initialiser will be remade when copying.
 		 *
 		 * Sets or unsets the 8 bit of @ref use_functions;
 		 * @param u Either true or false.
@@ -153,7 +154,7 @@ class multisource : public free_emitter {
 		void use_fixed_init(bool u = true);
 
 		/**
-		 * @brief Make position emitter_free. See @ref emitter_free::pos.
+		 * @brief Make position initialiser. See @ref free_emitter::pos.
 		 *
 		 * The @e i-th particle is assigned its position using
 		 * the @e k-th source. See description of the class for details
@@ -161,7 +162,7 @@ class multisource : public free_emitter {
 		 */
 		void make_position_init();
 		/**
-		 * @brief Make velocity emitter_free. See @ref emitter_free::vel.
+		 * @brief Make velocity initialiser. See @ref free_emitter::vel.
 		 *
 		 * The @e i-th particle is assigned its velocity using
 		 * the @e k-th source. See description of the class for details
@@ -169,7 +170,7 @@ class multisource : public free_emitter {
 		 */
 		void make_velocity_init();
 		/**
-		 * @brief Make mass emitter_free. See @ref emitter_free::mass.
+		 * @brief Make mass initialiser. See @ref free_emitter::mass.
 		 *
 		 * The @e i-th particle is assigned its mass using
 		 * the @e k-th source. See description of the class for details
@@ -177,7 +178,7 @@ class multisource : public free_emitter {
 		 */
 		void make_mass_init();
 		/**
-		 * @brief Make charge emitter_free. See @ref emitter_free::charge.
+		 * @brief Make charge initialiser. See @ref free_emitter::charge.
 		 *
 		 * The @e i-th particle is assigned its charge using
 		 * the @e k-th source. See description of the class for details
@@ -185,7 +186,7 @@ class multisource : public free_emitter {
 		 */
 		void make_charge_init();
 		/**
-		 * @brief Make bounce emitter_free. See @ref emitter_free::bounce.
+		 * @brief Make bounce initialiser. See @ref free_emitter::bounce.
 		 *
 		 * The @e i-th particle is assigned its bouncing coefficient using
 		 * the @e k-th source. See description of the class for details
@@ -193,7 +194,7 @@ class multisource : public free_emitter {
 		 */
 		void make_bounce_init();
 		/**
-		 * @brief Make friction emitter_free. See @ref emitter_free::friction.
+		 * @brief Make friction initialiser. See @ref free_emitter::friction.
 		 *
 		 * The @e i-th particle is assigned its position using
 		 * the @e k-th source. See description of the class for details
@@ -201,7 +202,7 @@ class multisource : public free_emitter {
 		 */
 		void make_friction_init();
 		/**
-		 * @brief Make lifetime emitter_free. See @ref emitter_free::lifetime.
+		 * @brief Make lifetime initialiser. See @ref free_emitter::lifetime.
 		 *
 		 * The @e i-th particle is assigned its lifetime using
 		 * the @e k-th source. See description of the class for details
@@ -209,7 +210,7 @@ class multisource : public free_emitter {
 		 */
 		void make_lifetime_init();
 		/**
-		 * @brief Make starttime emitter_free. See @ref emitter_free::starttime.
+		 * @brief Make starttime initialiser. See @ref free_emitter::starttime.
 		 *
 		 * The @e i-th particle is assigned its starttime using
 		 * the @e k-th source. See description of the class for details
@@ -217,7 +218,7 @@ class multisource : public free_emitter {
 		 */
 		void make_starttime_init();
 		/**
-		 * @brief Make fixed emitter_free. See @ref emitter_free::fixed.
+		 * @brief Make fixed initialiser. See @ref free_emitter::fixed.
 		 *
 		 * The @e i-th particle is assigned its 'fixed' attribute using
 		 * the @e k-th source. See description of the class for details
@@ -230,7 +231,7 @@ class multisource : public free_emitter {
 
 		// GETTERS
 
-		/// Returns the amount of sources of this emitter_free.
+		/// Returns the amount of sources of this mutlisource emitter.
 		size_t size() const;
 
 		/// Returns a reference to the sources.
