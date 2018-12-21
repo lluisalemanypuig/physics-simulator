@@ -35,24 +35,36 @@ namespace particles {
  * Available online at:\n
  *		https://www.red3d.com/cwr/papers/1999/gdc99steer.html
  */
-enum agent_behaviour_type {
+enum class agent_behaviour_type : int8_t {
 	/// No behaviour active.
 	none				= 1 << 0,
-	/// Seek. The agent moves towards its target.
-	seek				= 1 << 1,
-	/// Flee. The agent moves away from its target.
+	/**
+	 * @brief Seek. The agent moves towards its target.
+	 *
+	 * Its weight is @ref agent_particle::seek_weight.
+	 */
+	seek,
+	/**
+	 * @brief Flee. The agent moves away from its target.
+	 *
+	 * Its weight is @ref agent_particle::flee_weight.
+	 */
 	flee				= 1 << 2,
 	/**
 	 * @brief Arrival. The agent slows down as it approaches its target.
 	 *
 	 * The distance at which the agent starts to slow down is defined in
 	 * @ref agent_particle::slowing_distance.
+	 *
+	 * Its weight is @ref agent_particle::arrival_weight.
 	 */
 	arrival				= 1 << 3,
 	/**
 	 * @brief Collision avoidance.
 	 *
 	 * The agent will try to move away from an obstacle as it moves.
+	 *
+	 * Its weight is @ref agent_particle::coll_avoid_weight.
 	 */
 	collision_avoidance	= 1 << 4
 };
@@ -289,9 +301,9 @@ class agent_particle : public sized_particle {
 		 * by a certain weight. The result must be assigned to @e v.
 		 *
 		 * Recall that the slowing distance considered is stored
-		 * in @ref v.
+		 * in @e v.
 		 *
-		 * @param[out] weighted_steering Seek steering vector.
+		 * @param[out] v Seek steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void arrival_behaviour(math::vec3& v) const;

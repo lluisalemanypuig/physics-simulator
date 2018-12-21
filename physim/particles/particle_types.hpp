@@ -16,9 +16,11 @@ enum class particle_type : int8_t {
 	sized_particle,
 	/// Mesh particle, see @ref mesh_particle.
 	mesh_particle,
+	/// Fluid particle, see @ref fluid_particle.
+	fluid_particle,
 	/// Agent particle, see @ref agent_particle.
 	agent_particle
 };
 
 } // -- namespace particles
-} // -- namespace sim
+} // -- namespace physim

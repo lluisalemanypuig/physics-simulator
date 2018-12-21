@@ -1,16 +1,19 @@
-#include <physim/initialiser/rect_shower.hpp>
+#include <physim/emitter/free_emitters/rect_shower.hpp>
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
-namespace init {
+using namespace particles;
+
+namespace emitters {
+namespace free_emitters {
 
 // PROTECTED
 
 void rect_shower::make_vel_init() {
-	vel = [](particles::free_particle *p) {
+	vel = [](base_particle *p) {
 		__pm3_assign_s(p->cur_vel, 0.0f);
 	};
 }
@@ -27,9 +30,10 @@ rect_shower::~rect_shower() { }
 
 // GETTERS
 
-initialiser *rect_shower::clone() const {
+free_emitter *rect_shower::clone() const {
 	return new rect_shower(*this);
 }
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

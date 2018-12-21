@@ -4,15 +4,16 @@
 #include <random>
 
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
+#include <physim/emitter/free_emitter.hpp>
 
 namespace physim {
-namespace init {
+namespace emitters {
+namespace free_emitters {
 
 /**
- * @brief A rectangular source class initialiser.
+ * @brief A rectangular source class emitter_free.
  *
- * Provides a position initialiser function so that particles
+ * Provides a position emitter_free function so that particles
  * are generated within a rectangle of specific dimensions.
  *
  * Need to set the source size through @ref set_rectangular_source
@@ -33,7 +34,7 @@ namespace init {
  * However, the word 'rectangle' will be used regardless of how
  * misleading it might be.
  */
-class rect_source : public initialiser {
+class rect_source : public free_emitter {
 	protected:
 		/// Engine used in the uniform distribution @ref U01.
 		std::default_random_engine E;
@@ -86,7 +87,7 @@ class rect_source : public initialiser {
 		/**
 		 * @brief Copy constructor.
 		 *
-		 * The function @ref initialiser::pos is not copied.
+		 * The function @ref emitter_free::pos is not copied.
 		 * Instead, it is remade (function @ref make_pos_init is
 		 * called again).
 		 */
@@ -132,9 +133,10 @@ class rect_source : public initialiser {
 
 		// GETTERS
 
-		virtual initialiser *clone() const = 0;
+		virtual free_emitter *clone() const = 0;
 
 };
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

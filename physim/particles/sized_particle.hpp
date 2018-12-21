@@ -21,7 +21,7 @@ namespace particles {
  * A sized particle is, then, a particle with some size
  * (the radius, see @ref R) along the three axis. The loci
  * of point defined by the sphere centered at the current
- * position of the particle (see @ref free_particle::cur_pos)
+ * position of the particle (see @ref base_particle::cur_pos)
  * and radius @e R are part of the particle. Notice,
  * however, that this is not a sphere.
  *

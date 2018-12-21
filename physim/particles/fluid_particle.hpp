@@ -12,7 +12,7 @@ namespace physim {
 namespace particles {
 
 /**
- * @brief Class implementing a mesh particle.
+ * @brief Class implementing a fluid particle.
  *
  * A particle is a 0-dimensional object, subject to
  * several forces. It can also collide with other
@@ -20,37 +20,30 @@ namespace particles {
  * namespace @ref physim::geometric) but not with other
  * particles.
  */
-class mesh_particle : public base_particle {
+class fluid_particle : public base_particle {
 	private:
 		/**
 		 * @brief Initialises this class's attributes.
 		 *
 		 * The attributes of the class take the following values:
-		 * - @ref charge : 0
-		 * - @ref fixed : false
+		 * - @ref density : 0.0
+		 * - @ref pressure : 0.0
 		 */
 		void partial_init();
 
 	public:
-		/// Electrical charge of the particle [C].
-		float charge;
-
-		/**
-		 * @brief Is this particle fixed?
-		 *
-		 * If the particle, it will be ignored by the solver, therefore
-		 * not taken into account in the simulation (gravity nor any
-		 * other force will have any effect on it).
-		 */
-		bool fixed;
+		/// Density of the particle [Kg/m^3].
+		float density;
+		/// Pressure of the particle [N/m^2].
+		float pressure;
 
 	public:
 		/// Default constructor.
-		mesh_particle();
+		fluid_particle();
 		/// Copy constructor.
-		mesh_particle(const mesh_particle& p);
+		fluid_particle(const fluid_particle& p);
 		/// Destructor.
-		virtual ~mesh_particle();
+		virtual ~fluid_particle();
 
 		// MODIFIERS
 
@@ -65,8 +58,8 @@ class mesh_particle : public base_particle {
 		 * - @ref mass : 1
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
-		 * - @ref charge : 0
-		 * - @ref fixed : false
+		 * - @ref density : 0.0
+		 * - @ref pressure : 0.0
 		 */
 		virtual void init();
 

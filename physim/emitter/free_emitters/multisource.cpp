@@ -1,12 +1,13 @@
-#include <physim/initialiser/multisource.hpp>
+#include <physim/emitter/free_emitters/multisource.hpp>
 
 namespace physim {
-namespace init {
+namespace emitters {
+namespace free_emitters {
 
 // PUBLIC
 
 template<class T>
-multisource<T>::multisource() : initialiser() {
+multisource<T>::multisource() : free_emitter() {
 	P = 0;
 	use_functions = 0;
 }
@@ -78,7 +79,7 @@ void multisource<T>:: use_fixed_init(bool u) {
 
 template<class T>
 void multisource<T>::make_position_init() {
-	pos = [this](particles::free_particle *p) {
+	pos = [this](particles::base_particle *p) {
 		size_t c = P/sources.size();
 		size_t k = p->index/c;
 		if (k >= sources.size()) {
@@ -90,7 +91,7 @@ void multisource<T>::make_position_init() {
 
 template<class T>
 void multisource<T>::make_velocity_init() {
-	vel = [this](particles::free_particle *p) {
+	vel = [this](particles::base_particle *p) {
 		size_t c = P/sources.size();
 		size_t k = p->index/c;
 		if (k >= sources.size()) {
@@ -102,7 +103,7 @@ void multisource<T>::make_velocity_init() {
 
 template<class T>
 void multisource<T>::make_mass_init() {
-	mass = [this](particles::free_particle *p) {
+	mass = [this](particles::base_particle *p) {
 		size_t c = P/sources.size();
 		size_t k = p->index/c;
 		if (k >= this->sources.size()) {
@@ -217,7 +218,7 @@ const std::vector<T>& multisource<T>::get_sources() const {
 // OTHERS
 
 template<class T>
-initialiser *multisource<T>::clone() const {
+free_emitter *multisource<T>::clone() const {
 	multisource<T> *ms= new multisource();
 
 	ms->P = P;
@@ -258,5 +259,6 @@ initialiser *multisource<T>::clone() const {
 	return ms;
 }
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

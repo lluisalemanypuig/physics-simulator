@@ -19,8 +19,6 @@ namespace particles {
  * collide with other objects in the scene (geometrical objects,
  * see namespace @ref physim::geometric) and maybe with other
  * particles, depending on the subclass.
- *
- * All this class' attributes are public.
  */
 class base_particle {
 	private:
@@ -46,7 +44,7 @@ class base_particle {
 		 * The indexes start at 0.
 		 *
 		 * It can be used to initialise its attributes through
-		 * the @ref init::initialiser class.
+		 * the @ref init::emitter_free class.
 		 */
 		size_t index;
 

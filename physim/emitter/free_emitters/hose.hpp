@@ -4,16 +4,17 @@
 #include <random>
 
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
+#include <physim/emitter/free_emitter.hpp>
 #include <physim/math/vec3.hpp>
 
 namespace physim {
-namespace init {
+namespace emitters {
+namespace free_emitters {
 
 /**
- * @brief A hose source class initialiser.
+ * @brief A hose source class emitter_free.
  *
- * This initialiser tries to make the particles have the
+ * This emitter_free tries to make the particles have the
  * same behaviour as he water coming out of a hose. This
  * so-called hose has been abstracted as a cone.
  *
@@ -41,7 +42,7 @@ namespace init {
  * - \f$\sqrt{h^2 + r^2}\f$ (in case the point generated lies
  * on the circumference of the base).
  */
-class hose : public initialiser {
+class hose : public free_emitter {
 	protected:
 		/// Engine used in the uniform distribution @ref U01.
 		std::default_random_engine E;
@@ -96,7 +97,7 @@ class hose : public initialiser {
 		/**
 		 * @brief Copy constructor.
 		 *
-		 * The functions @ref initialiser::pos and @ref initialiser::vel
+		 * The functions @ref emitter_free::pos and @ref emitter_free::vel
 		 * are not copied. Instead, they are remade (functions
 		 * @ref make_pos_init and @ref make_vel_init are called again).
 		 */
@@ -120,9 +121,10 @@ class hose : public initialiser {
 
 		// GETTERS
 
-		initialiser *clone() const;
+		free_emitter *clone() const;
 
 };
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

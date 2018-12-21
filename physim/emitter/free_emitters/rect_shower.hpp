@@ -4,15 +4,16 @@
 #include <random>
 
 // physim includes
-#include <physim/initialiser/rect_source.hpp>
+#include <physim/emitter/free_emitters/rect_source.hpp>
 
 namespace physim {
-namespace init {
+namespace emitters {
+namespace free_emitters {
 
 /**
- * @brief A shower class initialiser.
+ * @brief A shower class emitter_free.
  *
- * Provides a position initialiser function so that generated
+ * Provides a position emitter_free function so that generated
  * particles behave like a shower: their velocity is set to
  * negative values of y, and null values of x and z.
  *
@@ -40,9 +41,10 @@ class rect_shower : public rect_source {
 
 		// GETTERS
 
-		initialiser *clone() const;
+		free_emitter *clone() const;
 
 };
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

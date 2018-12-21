@@ -32,8 +32,17 @@ using namespace particles;
 
 // PRIVATE
 
-void simulator::init_particle(free_particle *p) {
-	global_init->initialise_particle(p);
+void simulator::init_particle(base_particle *p) {
+	switch (p->get_particle_type()) {
+	case particle_type::free_particle:
+		free_global_emit->initialise_particle(static_cast<free_particle *>(p));
+		break;
+	case particle_type::sized_particle:
+		sized_global_emit->initialise_particle(static_cast<sized_particle *>(p));
+		break;
+	default:
+		;
+	}
 
 	// Update the previous position so that Verlet
 	// solver can use it correcly. The other solvers
@@ -64,13 +73,15 @@ simulator::simulator(const solver_type& s, float t) {
 	dt = t;
 	solver = s;
 	visc_drag = 0.05f;
-	global_init = new init::initialiser();
+	free_global_emit = new emitters::free_emitter();
+	sized_global_emit = new emitters::sized_emitter();
 	part_part_collisions = false;
 }
 
 simulator::~simulator() {
 	clear_simulation();
-	delete global_init;
+	delete free_global_emit;
+	delete sized_global_emit;
 }
 
 // BUILD SIMULATION'S CONTENTS
@@ -291,11 +302,18 @@ void simulator::set_viscous_drag(float d) {
 	visc_drag = d;
 }
 
-void simulator::set_initialiser(const init::initialiser *f) {
+void simulator::set_free_emitter(const emitters::free_emitter *f) {
 	assert(f != nullptr);
 
-	delete global_init;
-	global_init = f->clone();
+	delete free_global_emit;
+	free_global_emit = f->clone();
+}
+
+void simulator::set_sized_emitter(const emitters::sized_emitter *s) {
+	assert(s != nullptr);
+
+	delete sized_global_emit;
+	sized_global_emit = s->clone();
 }
 
 void simulator::set_solver(const solver_type& s) {
@@ -369,12 +387,12 @@ size_t simulator::n_geometry() const {
 	return scene_fixed.size();
 }
 
-init::initialiser *simulator::get_initialiser() {
-	return global_init;
+emitters::free_emitter *simulator::get_initialiser() {
+	return free_global_emit;
 }
 
-const init::initialiser *simulator::get_initialiser() const {
-	return global_init;
+const emitters::free_emitter *simulator::get_initialiser() const {
+	return free_global_emit;
 }
 
 float simulator::get_time_step() const {

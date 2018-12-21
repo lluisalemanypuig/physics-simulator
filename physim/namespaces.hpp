@@ -23,9 +23,9 @@ namespace physim {
     namespace geometric { }
     
     /**
-     * @brief Particle initialiser classes.
+     * @brief Particle emitter classes.
      * 
-     * This namespace contains a 'main' class, the @ref init::initialiser
+     * This namespace contains a 'main' class, the @ref emitter::emitter_base
      * class that contains several, modifiable functions used to initialise
      * the different attributes of particles.
      * 
@@ -33,7 +33,16 @@ namespace physim {
      * the 'main' class. Each of these classes implement some of the
      * 'main' class attributes to offer nice-looking particle systems.
      */
-    namespace init { }
+    namespace emitters {
+		
+		/**
+		 * @brief Emitters of free particles.
+		 * 
+		 * All the emitters in this namespace inherit from the class
+		 * @ref free_emitter.
+		 */
+		namespace free_emitters { }
+	}
     
     /**
      * @brief Mathematical operations namespace.

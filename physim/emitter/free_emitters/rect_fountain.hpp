@@ -4,15 +4,16 @@
 #include <random>
 
 // physim includes
-#include <physim/initialiser/rect_source.hpp>
+#include <physim/emitter/free_emitters/rect_source.hpp>
 
 namespace physim {
-namespace init {
+namespace emitters {
+namespace free_emitters {
 
 /**
- * @brief A fountain class initialiser.
+ * @brief A fountain class emitter_free.
  *
- * Provides a position initialiser function so that generated
+ * Provides a position emitter_free function so that generated
  * particles behave like a fountain: their velocity is set to
  * positive values of the normal to the plane, and values of x
  * and z set as a function of their distance to the center plus
@@ -43,7 +44,7 @@ class rect_fountain : public rect_source {
 		/**
 		 * @brief Copy constructor.
 		 *
-		 * The function @ref initialiser::pos is not copied.
+		 * The function @ref emitter_free::pos is not copied.
 		 * Instead, it is remade (function @ref make_vel_init is
 		 * called again).
 		 */
@@ -53,5 +54,6 @@ class rect_fountain : public rect_source {
 
 };
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

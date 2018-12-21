@@ -1,16 +1,20 @@
-#include <physim/initialiser/rect_source.hpp>
+#include <physim/emitter/free_emitters/rect_source.hpp>
 
 // physim includes
 #include <physim/particles/free_particle.hpp>
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
-namespace init {
+using namespace particles;
+using namespace math;
+
+namespace emitters {
+namespace free_emitters {
 
 // PROTECTED
 
 void rect_source::make_pos_init() {
-	pos = [this](particles::free_particle *p) {
+	pos = [this](base_particle *p) {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
 
@@ -24,13 +28,13 @@ void rect_source::make_pos_init() {
 
 // PUBLIC
 
-rect_source::rect_source() : initialiser() {
+rect_source::rect_source() : free_emitter() {
 	std::random_device r;
 	E = std::default_random_engine(r());
 	U01 = std::uniform_real_distribution<float>(0.0f, 1.0f);
 }
 
-rect_source::rect_source(const rect_source& rs) : initialiser(rs) {
+rect_source::rect_source(const rect_source& rs) : free_emitter(rs) {
 	E = rs.E;
 	U01 = rs.U01;
 
@@ -58,7 +62,7 @@ rect_source::~rect_source() { }
 // SETTERS
 
 void rect_source::set_rectangular_source
-(const math::vec3& _S, const math::vec3& _u,const math::vec3& _v, float _w,float _h)
+(const vec3& _S, const vec3& _u,const vec3& _v, float _w,float _h)
 {
 	__pm3_assign_v(u, _u);
 	__pm3_assign_v(v, _v);
@@ -76,7 +80,7 @@ void rect_source::set_rectangular_source
 	make_vel_init();
 }
 
-void rect_source::set_straight_source(const math::vec3& _S, float _w,float _h) {
+void rect_source::set_straight_source(const vec3& _S, float _w,float _h) {
 	__pm3_assign_c(u, 1.0f,0.0f,0.0f);
 	__pm3_assign_c(v, 0.0f,0.0f,1.0f);
 	__pm3_assign_c(n, 0.0f,1.0f,0.0f);
@@ -92,5 +96,6 @@ void rect_source::set_straight_source(const math::vec3& _S, float _w,float _h) {
 	make_vel_init();
 }
 
-} // -- namespace init
+} // -- namespace free_emitters
+} // -- namespace emitters
 } // -- namespace physim

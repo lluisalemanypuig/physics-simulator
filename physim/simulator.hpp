@@ -5,7 +5,9 @@
 #include <vector>
 
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
+#include <physim/emitter/free_emitter.hpp>
+#include <physim/emitter/sized_emitter.hpp>
+//#include <physim/emitter/emitter_agent.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
 #include <physim/particles/sized_particle.hpp>
@@ -81,7 +83,7 @@ enum class solver_type : int8_t {
  * particles may collide with.
  *
  * Function @ref reset_simulation resets all particle to
- * their original state using the initialiser function
+ * their original state using the emitter_free function
  * (see @ref global_init).
  */
 class simulator {
@@ -133,12 +135,11 @@ class simulator {
 		solver_type solver;
 
 		/**
-		 * @brief Initialiser applied to all added particles.
+		 * @brief Initialiser applied to all free particles.
 		 *
-		 * Whenever @ref add_free_particle(), @ref add_free_particles(size_t),
-		 * @ref add_sized_particle() or @ref add_sized_particles()
-		 * are called, the attributes of the particles are initialised
-		 * using @ref global_init.
+		 * Whenever @ref add_free_particle() or @ref add_free_particles(size_t)
+		 * are called, the attributes of the particles are initialised using
+		 * this object.
 		 *
 		 * This initialisation is also done whenever the lifetime of a
 		 * particle goes below 0. Note that, in this case, some attributes
@@ -149,7 +150,24 @@ class simulator {
 		 * that is, the attribtues of the particle are not modified
 		 * at all.
 		 */
-		init::initialiser *global_init;
+		emitters::free_emitter *free_global_emit;
+		/**
+		 * @brief Initialiser applied to all sized particles.
+		 *
+		 * Whenever @ref add_sized_particle() or @ref add_sized_particles(size_t)
+		 * are called, the attributes of the particles are initialised using
+		 * this object.
+		 *
+		 * This initialisation is also done whenever the lifetime of a
+		 * particle goes below 0. Note that, in this case, some attributes
+		 * like the velocity and position may not be zero, as a result
+		 * of running the simulation.
+		 *
+		 * The default behaviour of the function is to not do anything,
+		 * that is, the attribtues of the particle are not modified
+		 * at all.
+		 */
+		emitters::free_emitter *sized_global_emit;
 
 		/**
 		 * @brief Are particle-particle collisions activated?
@@ -167,15 +185,19 @@ class simulator {
 	private:
 
 		/**
-		 * @brief Initialises a particle using @ref global_init and computes
-		 * an initial previous position.
+		 * @brief Initialises a particle using its corresponding emitter.
 		 *
-		 * Calls @ref global_init to initialise the rest of its
-		 * attributes and updates its previous position so that the Verlet
-		 * solver can corectly (see @ref solver_type).
+		 * Calls one of
+		 * - @ref free_global_emit
+		 * - @ref sized_global_emit
+		 * to initialise its attributes, according to the type of particle.
+		 *
+		 * This function also updates the particle's previous position
+		 * so that the Verlet solver can be correctly used (see
+		 * @ref solver_type::Verlet).
 		 * @param p The particle to be initialsed.
 		 */
-		void init_particle(particles::free_particle *p);
+		void init_particle(particles::base_particle *p);
 
 		/**
 		 * @brief Initialises a mesh.
@@ -592,7 +614,7 @@ class simulator {
 		/**
 		 * @brief Resets the simulation to its initial state.
 		 *
-		 * Initialises all particles with the initialiser function
+		 * Initialises all particles with the emitter_free function
 		 * @ref global_init.
 		 */
 		void reset_simulation();
@@ -612,7 +634,7 @@ class simulator {
 		 *
 		 * The lifetime of each particle (see @ref free_particle::lifetime) is
 		 * also decreased by the exact same amount. Whenever this value reaches
-		 * 0 the particle is reinitialised using the global initialiser (see
+		 * 0 the particle is reinitialised using the global emitter_free (see
 		 * @ref global_init).
 		 *
 		 * Free particles collide with the geometrical objects added via method
@@ -691,22 +713,33 @@ class simulator {
 		void set_viscous_drag(float d);
 
 		/**
-		 * @brief Sets the particle initialiser function.
+		 * @brief Sets the free particle emitter object.
+		 *
+		 * See @ref free_global_emit.
 		 *
 		 * The simulator copies the object, therefore the intialiser
 		 * object should be freed by the user. Since the simulator
 		 * keeps its own copy, the parameter may be freed any time.
 		 *
-		 * The previous initialiser is destroyed by the class.
-		 * @param f This function need not return any value. The
-		 * pointer passed as parameter is always guaranteed to
-		 * be non-null.\n
-		 * This function will be called the first time the lifetime
-		 * of the particle has reached a value equal to or smaller
-		 * than 0.\n
-		 * The parameter cannot be null.
+		 * The previous emitter_free is destroyed by the class.
+		 * @param f Free particle emitter object.
+		 * @pre @e f can not be null.
 		 */
-		void set_initialiser(const init::initialiser *f);
+		void set_free_emitter(const emitters::free_emitter *f);
+		/**
+		 * @brief Sets the sized particle emitter object.
+		 *
+		 * See @ref sized_global_emit.
+		 *
+		 * The simulator copies the object, therefore the intialiser
+		 * object should be freed by the user. Since the simulator
+		 * keeps its own copy, the parameter may be freed any time.
+		 *
+		 * The previous emitter_free is destroyed by the class.
+		 * @param s Sized particle emitter object.
+		 * @pre @e s can not be null.
+		 */
+		void set_sized_emitter(const emitters::sized_emitter *s);
 
 		/**
 		 * @brief Sets the type of solver.
@@ -804,10 +837,10 @@ class simulator {
 		size_t n_particles() const;
 		/// Returns the number of fixed geometrical objects.
 		size_t n_geometry() const;
-		/// Returns the initialiser functions.
-		init::initialiser *get_initialiser();
-		/// Returns a constant reference to the initialiser functions.
-		const init::initialiser *get_initialiser() const;
+		/// Returns the emitter_free functions.
+		emitters::free_emitter *get_initialiser();
+		/// Returns a constant reference to the emitter_free functions.
+		const emitters::free_emitter *get_initialiser() const;
 
 		/// Returns the time step of the simulation (see @ref dt).
 		float get_time_step() const;

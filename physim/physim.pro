@@ -22,13 +22,6 @@ HEADERS += \
     geometry/sphere.hpp \
     geometry/plane.hpp \
     geometry/rectangle.hpp \
-    initialiser/initialiser.hpp \
-    initialiser/rect_fountain.hpp \
-    initialiser/rect_source.hpp \
-    initialiser/rect_shower.hpp \
-    initialiser/hose.hpp \
-    initialiser/multisource.hpp \
-    initialiser/multisource.cpp \
     fields/field.hpp \
     fields/punctual.hpp \
     fields/magnetic.hpp \
@@ -72,7 +65,17 @@ HEADERS += \
     math/private/math3/comparison.hpp \
     particles/agent_particle.hpp \
     structures/octree.hpp \
-    math/vec_templates.hpp
+    math/vec_templates.hpp \
+    particles/fluid_particle.hpp \
+    emitter/base_emitter.hpp \
+    emitter/free_emitter.hpp \
+    emitter/sized_emitter.hpp \
+    emitter/free_emitters/rect_fountain.hpp \
+    emitter/free_emitters/rect_shower.hpp \
+    emitter/free_emitters/rect_source.hpp \
+	emitter/free_emitters/multisource.hpp \
+	emitter/free_emitters/multisource.cpp \
+    emitter/free_emitters/hose.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -89,11 +92,6 @@ SOURCES += \
     geometry/sphere.cpp \
     geometry/plane.cpp \
     geometry/rectangle.cpp \
-    initialiser/initialiser.cpp \
-    initialiser/rect_fountain.cpp \
-    initialiser/rect_source.cpp \
-    initialiser/rect_shower.cpp \
-    initialiser/hose.cpp \
     fields/field.cpp \
     fields/magnetic_B.cpp \
     fields/magnetic.cpp \
@@ -112,4 +110,12 @@ SOURCES += \
     input/soup_reader.cpp \
     particles/agent_particle.cpp \
     sim_agent_particles.cpp \
-    structures/octree.cpp
+    structures/octree.cpp \
+    particles/fluid_particle.cpp \
+    emitter/base_emitter.cpp \
+    emitter/free_emitter.cpp \
+    emitter/sized_emitter.cpp \
+    emitter/free_emitters/rect_fountain.cpp \
+    emitter/free_emitters/rect_shower.cpp \
+	emitter/free_emitters/rect_source.cpp \
+    emitter/free_emitters/hose.cpp
