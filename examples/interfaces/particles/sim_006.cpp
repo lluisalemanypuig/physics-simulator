@@ -15,13 +15,13 @@ using namespace std;
 
 // physim includes
 #include <physim/geometry/object.hpp>
-#include <physim/initialiser/initialiser.hpp>
+#include <physim/emitter/free_emitter.hpp>
 #include <physim/input/input.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;
-using namespace init;
+using namespace emitters;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -32,7 +32,7 @@ namespace study_cases {
 
 	typedef math::vec3 pm_vec3;
 
-	void sim_13_initialise_sim() {
+	void sim_006_initialise_sim() {
 		object *O = new object();
 		input::read_file("../../interfaces/models", "pipe-geometric.obj", O);
 		SR.get_simulator().add_geometry(O);
@@ -55,12 +55,12 @@ namespace study_cases {
 
 		simulator& S = SR.get_simulator();
 
-		initialiser *I = SR.get_simulator().get_initialiser();
+		free_emitter *I = SR.get_simulator().get_initialiser();
 		I->set_pos_initialiser(
-			[mx,mz](free_particle *p) { p->cur_pos = pm_vec3(mx,1.86f,mz); }
+			[mx,mz](base_particle *p) { p->cur_pos = pm_vec3(mx,1.86f,mz); }
 		);
 		I->set_vel_initialiser(
-			[](free_particle *p) { p->cur_vel = pm_vec3(0.0f,0.0f,0.0f); }
+			[](base_particle *p) { p->cur_vel = pm_vec3(0.0f,0.0f,0.0f); }
 		);
 		I->set_friction_initialiser(
 			[](free_particle *p) { p->friction = 0.2f; }
@@ -74,7 +74,7 @@ namespace study_cases {
 		S.set_gravity_acceleration(pm_vec3(0.0f, -2.0f, 0.0f));
 	}
 
-	void sim_13_initialise_sim_rend() {
+	void sim_006_initialise_sim_rend() {
 		shared_ptr<rendered_triangle_mesh> model_pipe(new rendered_triangle_mesh);
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "pipe-artistic.obj", *model_pipe);
@@ -109,7 +109,7 @@ namespace study_cases {
 		}
 	}
 
-	void sim_13_make_simulation() {
+	void sim_006_make_simulation() {
 		n_iterations = 10;
 		time_step = 0.01f;
 		SR.get_simulator().set_time_step(time_step);
@@ -117,8 +117,8 @@ namespace study_cases {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.0f,0.0f,0.0f);
 
-		sim_13_initialise_sim();
-		sim_13_initialise_sim_rend();
+		sim_006_initialise_sim();
+		sim_006_initialise_sim_rend();
 
 		SR.set_window_dims(iw, ih);
 		SR.init_cameras();
@@ -126,16 +126,16 @@ namespace study_cases {
 		n_iterations = 1;
 	}
 
-	void sim_13_help() {
+	void sim_006_help() {
 		glut_functions::help();
 
-		cout << "Simulation 13 description:" << endl;
+		cout << "Simulation 006 description:" << endl;
 		cout << endl;
 		cout << "PENDING" << endl;
 		cout << endl;
 	}
 
-	void sim_13_reset() {
+	void sim_006_reset() {
 		clear_simulation();
 		if (use_shaders) {
 			clear_shaders();
@@ -154,7 +154,7 @@ namespace study_cases {
 		float pitch = SR.get_pitch();
 
 		use_shaders = false;
-		sim_13_make_simulation();
+		sim_006_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -166,15 +166,15 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_13_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_006_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_13_help();
+			sim_006_help();
 			break;
 		case 'r':
-			sim_13_reset();
+			sim_006_reset();
 			break;
 		}
 
@@ -190,7 +190,7 @@ namespace study_cases {
 		}
 	}
 
-	int sim_13_initGL(int argc, char *argv[]) {
+	int sim_006_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -227,13 +227,13 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim_13_make_simulation();
+		sim_006_make_simulation();
 		return 0;
 	}
 
-	void sim_13(int argc, char *argv[]) {
-		sim_13_initGL(argc, argv);
-		sim_13_help();
+	void sim_006(int argc, char *argv[]) {
+		sim_006_initGL(argc, argv);
+		sim_006_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -241,7 +241,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_13_regular_keys_keyboard);
+		glutKeyboardFunc(sim_006_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

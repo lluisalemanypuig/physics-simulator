@@ -16,8 +16,8 @@ using namespace std;
 #include <render/obj_reader.hpp>
 
 // physim includes
-#include <physim/initialiser/multisource.hpp>
-#include <physim/initialiser/hose.hpp>
+#include <physim/emitter/free_emitters/multisource.hpp>
+#include <physim/emitter/free_emitters/hose.hpp>
 #include <physim/geometry/triangle.hpp>
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/plane.hpp>
@@ -25,7 +25,8 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace geometric;
-using namespace init;
+using namespace emitters;
+using namespace free_emitters;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -34,7 +35,7 @@ using namespace glut_functions;
 
 namespace study_cases {
 
-	void sim_03_make_simulation() {
+	void sim_003_make_simulation() {
 
 		glm::vec3 A(-3.0f, 0.0f,-3.0f);
 		glm::vec3 D(-5.0f,-0.5f,-5.0f);
@@ -91,7 +92,7 @@ namespace study_cases {
 		ms.set_friction_initialiser(
 			[&](free_particle *p) { p->lifetime = friction; }
 		);
-		SR.get_simulator().set_initialiser(&ms);
+		SR.get_simulator().set_free_emitter(&ms);
 
 		rplane *floor = new rplane();
 		floor->set_points(E, G, F, D);
@@ -180,10 +181,10 @@ namespace study_cases {
 		SR.get_simulator().set_time_step(time_step);
 	}
 
-	void sim_03_help() {
+	void sim_003_help() {
 		glut_functions::help();
 
-		cout << "Simulation 03 description:" << endl;
+		cout << "Simulation 003 description:" << endl;
 		cout << endl;
 		cout << "This is a simulation of 16000 particles randonmly shot" << endl;
 		cout << "into a quadrilateral in which there are 2 spheres and a triangle." << endl;
@@ -192,7 +193,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim_03_reset() {
+	void sim_003_reset() {
 		clear_simulation();
 		if (use_shaders) {
 			clear_shaders();
@@ -210,7 +211,7 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		sim_03_make_simulation();
+		sim_003_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -222,20 +223,20 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_03_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_003_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_03_help();
+			sim_003_help();
 			break;
 		case 'r':
-			sim_03_reset();
+			sim_003_reset();
 			break;
 		}
 	}
 
-	void sim_03_initGL(int argc, char *argv[]) {
+	void sim_003_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -270,12 +271,12 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim_03_make_simulation();
+		sim_003_make_simulation();
 	}
 
-	void sim_03(int argc, char *argv[]) {
-		sim_03_initGL(argc, argv);
-		sim_03_help();
+	void sim_003(int argc, char *argv[]) {
+		sim_003_initGL(argc, argv);
+		sim_003_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -283,7 +284,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_03_regular_keys_keyboard);
+		glutKeyboardFunc(sim_003_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

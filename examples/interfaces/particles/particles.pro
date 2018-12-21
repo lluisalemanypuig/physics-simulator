@@ -18,22 +18,22 @@ HEADERS += \
 SOURCES += main.cpp \
     glut_functions.cpp \
     utils.cpp \
-    sim_00.cpp \
-    sim_01.cpp \
-    sim_02.cpp \
-    sim_03.cpp \
-    sim_04.cpp \
-    sim_05.cpp \
-    sim_06.cpp \
-    sim_07.cpp \
-    sim_08.cpp \
-    sim_09.cpp \
-    sim_10.cpp \
     glut_variables.cpp \
     glut_render.cpp \
-    sim_11.cpp \
-    sim_12.cpp \
-    sim_13.cpp
+    sim_000.cpp \
+    sim_001.cpp \
+    sim_002.cpp \
+    sim_003.cpp \
+    sim_004.cpp \
+    sim_005.cpp \
+    sim_100.cpp \
+    sim_101.cpp \
+    sim_102.cpp \
+    sim_103.cpp \
+    sim_104.cpp \
+    sim_105.cpp \
+    sim_106.cpp \
+    sim_006.cpp
 
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender

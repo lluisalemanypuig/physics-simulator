@@ -41,21 +41,28 @@ namespace study_cases {
 void list_all_cases() {
 	cout << "The available simulations are:" << endl;
 	cout << endl;
+	cout << "Free particles:" << endl;
 	cout << "    000 : particle bouncing on a floor." << endl;
-	cout << "    100 : sized particle bouncing on a floor." << endl;
 	cout << "    001 : particle rolling on a floor." << endl;
-	cout << "    101 : sized particle rolling on a floor." << endl;
 	cout << "    002 : particle bouncing on a sphere." << endl;
-	cout << "    102 : sized particle bouncing on a sphere." << endl;
 	cout << "    003 : two triangles on a floor. The particle" << endl;
 	cout << "          falls directly on a triangle and bounces." << endl;
 	cout << "    004 : a particle that rolls on a plane then collides" << endl;
 	cout << "          with a sphere at the bottom of the plane." << endl;
 	cout << "    005 : several geometrical objects. Intended for" << endl;
 	cout << "          efficiency measuring." << endl;
+	cout << endl;
+	cout << "Sized particles:" << endl;
+	cout << "    100 : sized particle bouncing on a floor." << endl;
+	cout << "    101 : sized particle rolling on a floor." << endl;
+	cout << "    102 : sized particle bouncing on a sphere." << endl;
+	cout << endl;
+	cout << "Spring meshes:" << endl;
 	cout << "    200 : simulate a very simple 1-dimensional mesh" << endl;
 	cout << "          of three particles" << endl;
 	cout << "    201 : simulate a two-dimensional regular mesh" << endl;
+	cout << endl;
+	cout << "Input testing:" << endl;
 	cout << "    300 : read two models from a file and create a" << endl;
 	cout << "          geometrical object from it" << endl;
 }

@@ -10,8 +10,8 @@ using namespace std;
 #include "utils.hpp"
 
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
-#include <physim/particles/free_particle.hpp>
+#include <physim/emitter/sized_emitter.hpp>
+#include <physim/particles/sized_particle.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/geometry/sphere.hpp>
 #include <physim/simulator.hpp>
@@ -19,7 +19,7 @@ using namespace physim;
 using namespace particles;
 using namespace math;
 using namespace geometric;
-using namespace init;
+using namespace emitters;
 
 namespace study_cases {
 
@@ -96,14 +96,14 @@ namespace study_cases {
 			}
 		}
 
-		initialiser I;
+		sized_emitter I;
 		I.set_pos_initialiser(
-			[&](free_particle *p) {
+			[&](base_particle *p) {
 				p->cur_pos = vec3(ix,5.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
-			[](free_particle *p) {
+			[](base_particle *p) {
 				p->cur_vel = vec3(0.0f,0.0f,0.0f);
 			}
 		);
@@ -125,7 +125,7 @@ namespace study_cases {
 		// -----------------------------------------
 		// -- Iialise simulator
 
-		S.set_initialiser(&I);
+		S.set_sized_emitter(&I);
 
 		// the only particle bouncing up and down,
 		// Iialised using the function.

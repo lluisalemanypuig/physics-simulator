@@ -14,10 +14,13 @@ using namespace std;
 
 // physim includes
 #include <physim/geometry/plane.hpp>
+#include <physim/emitter/free_emitters/rect_shower.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;
+using namespace emitters;
+using namespace free_emitters;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -28,24 +31,18 @@ namespace study_cases {
 
 	typedef math::vec3 pm_vec3;
 
-	void sim_12_initialise_sim() {
-		simulator& S = SR.get_simulator();
-
-		plane *floor = new plane( pm_vec3(0.0f,-1.0f,0.0f), pm_vec3(0.0f, 0.0f,0.0f) );
-		S.add_geometry(floor);
-
-		plane *wall1 = new plane( pm_vec3(-1.0f, 0.0f, 0.0f), pm_vec3( 0.0f, 0.0f, 0.0f) );
-		plane *wall2 = new plane( pm_vec3( 1.0f, 0.0f, 0.0f), pm_vec3(20.0f, 0.0f, 0.0f) );
-		plane *wall3 = new plane( pm_vec3( 0.0f, 0.0f,-1.0f), pm_vec3( 0.0f, 0.0f, 0.0f) );
-		plane *wall4 = new plane( pm_vec3( 0.0f, 0.0f, 1.0f), pm_vec3( 0.0f, 0.0f,20.0f) );
-		S.add_geometry(wall1);
-		S.add_geometry(wall2);
-		S.add_geometry(wall3);
-		S.add_geometry(wall4);
+	void sim_104_initialise_sim() {
+		plane *wall1 = new plane( pm_vec3( 1.0f, 0.0f,  0.0f), pm_vec3( 0.0f, 0.0f,  0.0f) );
+		plane *wall2 = new plane( pm_vec3(-1.0f, 0.0f,  0.0f), pm_vec3(20.0f, 0.0f,  0.0f) );
+		plane *wall3 = new plane( pm_vec3( 0.0f, 0.0f,  1.0f), pm_vec3( 0.0f, 0.0f,  0.0f) );
+		plane *wall4 = new plane( pm_vec3( 0.0f, 0.0f, -1.0f), pm_vec3( 0.0f, 0.0f, 20.0f) );
+		SR.get_simulator().add_geometry(wall1);
+		SR.get_simulator().add_geometry(wall2);
+		SR.get_simulator().add_geometry(wall3);
+		SR.get_simulator().add_geometry(wall4);
 
 		sized_particle *p1 = new sized_particle();
 		sized_particle *p2 = new sized_particle();
-		sized_particle *p3 = new sized_particle();
 
 		p1->lifetime = 99999999.0f;
 		p1->bouncing = 1.0f;
@@ -55,33 +52,22 @@ namespace study_cases {
 		p2->bouncing = 1.0f;
 		p2->friction = 0.0f;
 
-		p3->lifetime = 99999999.0f;
-		p3->bouncing = 1.0f;
-		p3->friction = 0.0f;
-
-		p1->cur_pos = math::vec3(2.0f, 5.0f, 2.0f);
-		p1->cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
+		p1->cur_pos = math::vec3(2.3f, 0.0f, 2.0f);
+		p1->cur_vel = math::vec3(0.8f, 0.0f, 1.0f);
 		p1->R = 1.0f;
 
-		p2->cur_pos = math::vec3(18.0f, 5.0f, 18.0f);
-		p2->cur_vel = math::vec3(-1.0f, 0.0f, -1.0f);
+		p2->cur_pos = math::vec3(18.2f, 0.0f, 18.0f);
+		p2->cur_vel = math::vec3(-1.5f, 0.0f, -1.0f);
 		p2->R = 1.0f;
 
-		p3->cur_pos = math::vec3(16.0f, 5.0f, 4.0f);
-		p3->cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
-		p3->R = 2.0f;
+		SR.get_simulator().set_particle_particle_collisions(true);
+		SR.get_simulator().set_viscous_drag(0.0f);
 
-		S.set_particle_particle_collisions(true);
-		S.set_viscous_drag(0.0f);
-
-		S.add_sized_particle(p1);
-		S.add_sized_particle(p2);
-		S.add_sized_particle(p3);
-
-		S.set_gravity_acceleration(math::vec3(0.0f, -2.0f, 0.0f));
+		SR.get_simulator().add_sized_particle(p1);
+		SR.get_simulator().add_sized_particle(p2);
 	}
 
-	void sim_12_initialise_sim_rend() {
+	void sim_104_initialise_rend() {
 		glm::vec3 A(  0.0f,  0.0f,  0.0f);
 		glm::vec3 B(  0.0f,  5.0f,  0.0f);
 		glm::vec3 C(  0.0f,  0.0f, 20.0f);
@@ -90,11 +76,6 @@ namespace study_cases {
 		glm::vec3 F( 20.0f,  5.0f, 20.0f);
 		glm::vec3 G( 20.0f,  0.0f,  0.0f);
 		glm::vec3 H( 20.0f,  5.0f,  0.0f);
-
-		rplane *floor = new rplane();
-		floor->set_points(A,G,E,C);
-		floor->set_color(0.2f,0.0f,0.2f,1.0f);
-		SR.add_geometry(floor);
 
 		rplane *wall1 = new rplane();
 		wall1->set_points(A,B,D,C);
@@ -108,13 +89,14 @@ namespace study_cases {
 		rplane *wall4 = new rplane();
 		wall4->set_points(G,H,B,A);
 		wall4->set_color(0.8f,0.0f,0.2f,1.0f);
+
 		SR.add_geometry(wall1);
 		SR.add_geometry(wall2);
 		SR.add_geometry(wall3);
 		SR.add_geometry(wall4);
 	}
 
-	void sim_12_make_simulation() {
+	void sim_104_make_simulation() {
 		n_iterations = 10;
 		time_step = 0.01f;
 		SR.get_simulator().set_time_step(time_step);
@@ -122,8 +104,8 @@ namespace study_cases {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
 
-		sim_12_initialise_sim();
-		sim_12_initialise_sim_rend();
+		sim_104_initialise_sim();
+		sim_104_initialise_rend();
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 12.0f, 0.0f));
 		SR.set_window_dims(iw, ih);
@@ -144,16 +126,16 @@ namespace study_cases {
 		}
 	}
 
-	void sim_12_help() {
+	void sim_104_help() {
 		glut_functions::help();
 
-		cout << "Simulation 12 description:" << endl;
+		cout << "Simulation 104 description:" << endl;
 		cout << endl;
 		cout << "PENDING" << endl;
 		cout << endl;
 	}
 
-	void sim_12_reset() {
+	void sim_104_reset() {
 		clear_simulation();
 		if (use_shaders) {
 			clear_shaders();
@@ -172,7 +154,7 @@ namespace study_cases {
 		float pitch = SR.get_pitch();
 
 		use_shaders = false;
-		sim_12_make_simulation();
+		sim_104_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -184,15 +166,15 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_12_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_104_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_12_help();
+			sim_104_help();
 			break;
 		case 'r':
-			sim_12_reset();
+			sim_104_reset();
 			break;
 		}
 
@@ -208,14 +190,14 @@ namespace study_cases {
 		}
 	}
 
-	int sim_12_initGL(int argc, char *argv[]) {
+	int sim_104_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(iw, ih);
-		window_id = glutCreateWindow("Particles - Simulation 12");
+		window_id = glutCreateWindow("Particles - Simulation 10");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -243,13 +225,13 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim_12_make_simulation();
+		sim_104_make_simulation();
 		return 0;
 	}
 
-	void sim_12(int argc, char *argv[]) {
-		sim_12_initGL(argc, argv);
-		sim_12_help();
+	void sim_104(int argc, char *argv[]) {
+		sim_104_initGL(argc, argv);
+		sim_104_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -257,7 +239,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_12_regular_keys_keyboard);
+		glutKeyboardFunc(sim_104_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

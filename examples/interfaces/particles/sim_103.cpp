@@ -19,13 +19,13 @@ using namespace std;
 // physim includes
 #include <physim/geometry/plane.hpp>
 #include <physim/geometry/rectangle.hpp>
-#include <physim/initialiser/initialiser.hpp>
+#include <physim/emitter/sized_emitter.hpp>
 #include <physim/particles/sized_particle.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
 using namespace geometric;
-using namespace init;
+using namespace emitters;
 
 // custom includes
 #include "glut_functions.hpp"
@@ -36,7 +36,7 @@ namespace study_cases {
 
 	static float px_09, py_09, pz_09;
 
-	void sim_09_add_rectangle
+	void sim_103_add_rectangle
 	(const math::vec3& p1, const math::vec3& p2,
 	 const math::vec3& p3, const math::vec3& p4,
 	 const glm::vec4& col)
@@ -48,18 +48,18 @@ namespace study_cases {
 		SR.add_geometry(rect);
 	}
 
-	void sim_09_make_simulation() {
+	void sim_103_make_simulation() {
 		draw_sized_particles_wire = true;
 		bgd_color = glm::vec3(0.8f,0.8f,0.8f);
 
-		initialiser I;
+		sized_emitter I;
 		I.set_pos_initialiser(
-			[&](free_particle *p) {
+			[&](base_particle *p) {
 				p->cur_pos = math::vec3(px_09,py_09,pz_09);
 			}
 		);
 		I.set_vel_initialiser(
-			[](free_particle *p) {
+			[](base_particle *p) {
 				p->cur_vel = math::vec3(0.0f,0.0f,0.0f);
 			}
 		);
@@ -75,30 +75,30 @@ namespace study_cases {
 		I.set_radius_initialiser(
 			[&](sized_particle *p) { p->R = 1.0f; }
 		);
-		SR.get_simulator().set_initialiser(&I);
+		SR.get_simulator().set_sized_emitter(&I);
 		SR.get_simulator().add_sized_particle();
 
-		sim_09_add_rectangle
+		sim_103_add_rectangle
 		(math::vec3(-3.464377f, 1.50f, 3.468678f), math::vec3(-1.464377f, 2.00f, 2.778861f),
 		 math::vec3(-1.464377f, 2.50f, 0.778861f), math::vec3(-3.464377f, 2.00f, 1.468678f),
 		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
 		);
-		sim_09_add_rectangle
+		sim_103_add_rectangle
 		(math::vec3(-4.342228f, 1.50f, -0.034250f), math::vec3(-2.342228f, 2.00f, -0.034250f),
 		 math::vec3(-2.342228f, 2.50f, -2.034250f), math::vec3(-4.342228f, 2.00f, -2.034250f),
 		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
 		);
-		sim_09_add_rectangle
+		sim_103_add_rectangle
 		(math::vec3(0.457220f, 2.195306f, 2.940865f), math::vec3(2.457220f, 2.195306f, 2.940865f),
 		 math::vec3(3.276015f, 2.760606f, 0.940865f), math::vec3(1.276015f, 2.760606f, 0.940865f),
 		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
 		);
-		sim_09_add_rectangle
+		sim_103_add_rectangle
 		(math::vec3(2.395275f, 2.195306f, -0.094104f), math::vec3(4.395275f, 2.195306f, -0.094104f),
 		 math::vec3(5.214070f, 2.195306f, -2.094104f), math::vec3(3.214070f, 2.195306f, -2.094104f),
 		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
 		);
-		sim_09_add_rectangle
+		sim_103_add_rectangle
 		(math::vec3(-0.973277f, 2.195306f, -1.694186f), math::vec3(1.026723f, 2.195306f, -1.694186f),
 		 math::vec3(1.026723f, 2.195306f, -3.694186f), math::vec3(-0.973277f, 2.195306f, -3.694186f),
 		 glm::vec4(1.0f,1.0f,0.0f,1.0f)
@@ -142,10 +142,10 @@ namespace study_cases {
 		SR.get_simulator().set_time_step(time_step);
 	}
 
-	void sim_09_help() {
+	void sim_103_help() {
 		glut_functions::help();
 
-		cout << "Simulation 09:" << endl;
+		cout << "Simulation 103:" << endl;
 		cout << endl;
 		cout << "Sized particle bouncing on a rectangle." << endl;
 		cout << endl;
@@ -159,7 +159,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim_09_reset() {
+	void sim_103_reset() {
 		clear_simulation();
 		if (use_shaders) {
 			clear_shaders();
@@ -177,7 +177,7 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		sim_09_make_simulation();
+		sim_103_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -189,15 +189,15 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_09_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_103_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_09_help();
+			sim_103_help();
 			break;
 		case 'r':
-			sim_09_reset();
+			sim_103_reset();
 			break;
 		}
 
@@ -213,7 +213,7 @@ namespace study_cases {
 		}
 	}
 
-	int sim_09_initGL(int argc, char *argv[]) {
+	int sim_103_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -267,13 +267,13 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim_09_make_simulation();
+		sim_103_make_simulation();
 		return 0;
 	}
 
-	void sim_09(int argc, char *argv[]) {
-		sim_09_initGL(argc, argv);
-		sim_09_help();
+	void sim_103(int argc, char *argv[]) {
+		sim_103_initGL(argc, argv);
+		sim_103_help();
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -281,7 +281,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_09_regular_keys_keyboard);
+		glutKeyboardFunc(sim_103_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);

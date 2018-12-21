@@ -10,8 +10,9 @@ using namespace std;
 #include "utils.hpp"
 
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
-#include <physim/initialiser/hose.hpp>
+#include <physim/emitter/free_emitter.hpp>
+#include <physim/emitter/free_emitters/hose.hpp>
+#include <physim/particles/base_particle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/geometry/plane.hpp>
 #include <physim/geometry/sphere.hpp>
@@ -21,7 +22,8 @@ using namespace physim;
 using namespace particles;
 using namespace math;
 using namespace geometric;
-using namespace init;
+using namespace emitters;
+using namespace free_emitters;
 
 namespace study_cases {
 
@@ -152,7 +154,7 @@ namespace study_cases {
 			[&](free_particle *p) { p->friction = friction; }
 		);
 
-		SIM.set_initialiser(&h);
+		SIM.set_free_emitter(&h);
 
 		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), E);
 		plane *pl1 = new plane(vec3(0.0f,0.0f,-1.0f), K);

@@ -10,8 +10,6 @@ using namespace std;
 #include "utils.hpp"
 
 // physim includes
-#include <physim/initialiser/initialiser.hpp>
-#include <physim/particles/free_particle.hpp>
 #include <physim/meshes/mesh2d.hpp>
 #include <physim/meshes/mesh2d_regular.hpp>
 #include <physim/geometry/plane.hpp>
@@ -20,7 +18,7 @@ using namespace physim;
 using namespace particles;
 using namespace math;
 using namespace geometric;
-using namespace init;
+using namespace emitters;
 using namespace meshes;
 
 namespace study_cases {
