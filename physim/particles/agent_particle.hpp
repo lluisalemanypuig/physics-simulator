@@ -3,6 +3,9 @@
 // C inlcudes
 #include <stddef.h>
 
+// C++ includes
+#include <vector>
+
 // physim includes
 #include <physim/particles/particle_types.hpp>
 #include <physim/particles/sized_particle.hpp>
@@ -250,11 +253,12 @@ class agent_particle : public sized_particle {
 		 * "as is" to make a new velocity vector.
 		 *
 		 * Recall that the target is stored in @ref target.
-		 * @param[in] g Most threatening geometry.
+		 * @param[in] scene The geometry in the simulation.
 		 * @param[out] weighted_steering Weighted steering vector.
 		 */
 		void apply_behaviours
-		(const geometric::geometry *g, math::vec3& weighted_steering) const;
+		(const std::vector<geometric::geometry *>& scene,
+		 math::vec3& weighted_steering) const;
 
 		/* steering behaviours */
 
@@ -297,11 +301,13 @@ class agent_particle : public sized_particle {
 		 * This function must compute a velocity vector multiplied
 		 * by a certain weight. The result must be assigned to @e v.
 		 *
+		 * @param[in] scene The geometry in the simulation.
 		 * @param[out] v Seek steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void collision_avoidance_behaviour
-		(const geometric::geometry *g, math::vec3& v) const;
+		(const std::vector<geometric::geometry *>& scene,
+		 math::vec3& v) const;
 };
 
 } // -- namespace particles

@@ -2,7 +2,7 @@
 
 // C++ includes
 #include <algorithm>
-#include <iostream>
+#include <vector>
 using namespace std;
 
 // physim includes
@@ -12,6 +12,7 @@ using namespace std;
 
 namespace physim {
 using namespace math;
+using namespace geometric;
 
 namespace particles {
 
@@ -101,17 +102,17 @@ void agent_particle::apply_behaviours(vec3& weighted_steering) const {
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 	if (is_behaviour_set(agent_behaviour_type::flee)) {
-		flee_behaviour(weighted_steering);
+		flee_behaviour(v);
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 	if (is_behaviour_set(agent_behaviour_type::arrival)) {
-		arrival_behaviour(weighted_steering);
+		arrival_behaviour(v);
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 }
 
 void agent_particle::apply_behaviours
-(const geometric::geometry *g, vec3& weighted_steering)
+(const vector<geometry *>& scene, vec3& weighted_steering)
 const
 {
 	if (behaviour == agent_behaviour_type::none) {
@@ -121,7 +122,7 @@ const
 	vec3 v;
 
 	if (is_behaviour_set(agent_behaviour_type::collision_avoidance)) {
-		collision_avoidance_behaviour(g, weighted_steering);
+		collision_avoidance_behaviour(scene, weighted_steering);
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 }
@@ -132,10 +133,12 @@ void agent_particle::seek_behaviour(vec3& v) const {
 	normalise(des_vel, des_vel);
 	__pm3_mul_acc_s(des_vel, max_speed);
 
+	/*
 	vec3 steer;
 	__pm3_sub_v_v(steer, des_vel, cur_vel);
-	__pm3_mul_acc_s(steer, seek_weight);
-	__pm3_assign_v(v, steer);
+	__pm3_assign_vs(v, steer, seek_weight);
+	*/
+	__pm3_sub_v_v_mul_s(v, des_vel, cur_vel, seek_weight);
 }
 
 void agent_particle::flee_behaviour(vec3& v) const {
@@ -144,10 +147,12 @@ void agent_particle::flee_behaviour(vec3& v) const {
 	normalise(des_vel, des_vel);
 	__pm3_mul_acc_s(des_vel, max_speed);
 
+	/*
 	vec3 steer;
 	__pm3_sub_v_v(steer, des_vel, cur_vel);
-	__pm3_mul_acc_s(steer, seek_weight);
-	__pm3_assign_v(v, steer);
+	__pm3_assign_vs(v, steer, flee_weight);
+	*/
+	__pm3_sub_v_v_mul_s(v, des_vel, cur_vel, flee_weight);
 }
 
 void agent_particle::arrival_behaviour(vec3& v) const {
@@ -160,14 +165,16 @@ void agent_particle::arrival_behaviour(vec3& v) const {
 	vec3 des_vel;
 	__pm3_assign_vs(des_vel, offset_target, clipped_speed/dist_target);
 
+	/*
 	vec3 steer;
-	__pm3_sub_v_v(steer, cur_vel, des_vel);
-	__pm3_mul_acc_s(steer, flee_weight);
-	__pm3_assign_v(v, steer);
+	__pm3_sub_v_v(steer, des_vel, cur_vel);
+	__pm3_assign_vs(v, steer, arrival_weight);
+	*/
+	__pm3_sub_v_v_mul_s(v, des_vel, cur_vel, arrival_weight);
 }
 
 void agent_particle::collision_avoidance_behaviour
-(const geometric::geometry *g, vec3& v)
+(const vector<geometry *>& scene, vec3& v)
 const
 {
 

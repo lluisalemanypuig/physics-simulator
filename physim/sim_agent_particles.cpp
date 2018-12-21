@@ -45,9 +45,7 @@ void simulator::_simulate_agent_particles() {
 		__pm3_assign_s(steer_force, 0.0f);
 
 		p->apply_behaviours(steer_force);
-		for (const geometric::geometry *g : scene_fixed) {
-			p->apply_behaviours(g, steer_force);
-		}
+		p->apply_behaviours(scene_fixed, steer_force);
 
 		truncate(steer_force, p->max_force, steer_force);
 		vec3 accel;
