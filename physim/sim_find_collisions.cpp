@@ -127,7 +127,9 @@ bool simulator::find_update_geomcoll_free
 					// for the 'previous' position of the
 					// particle after a collision with geometry
 
-					__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+					__pm3_sub_v_vs(coll_pred.prev_pos,
+								   coll_pred.cur_pos,
+								   coll_pred.cur_vel, dt);
 				}
 
 				// keep track of the predicted particle's position
@@ -141,6 +143,14 @@ bool simulator::find_update_geomcoll_free
 	return collision;
 }
 
+#define free_pos_correction													\
+	if (__physim_Sj.is_inside(coll_pred.cur_pos)) {							\
+		__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j]->cur_pos);	\
+		float l = __pm3_norm(centre_particle);								\
+		__pm3_add_acc_vs													\
+		(coll_pred.cur_pos, centre_particle, sps[j]->R*(1.0f/l) + 0.001f);	\
+	}
+
 bool simulator::find_update_partcoll_free
 (
 	const free_particle *p,
@@ -148,6 +158,7 @@ bool simulator::find_update_partcoll_free
 	free_particle& coll_pred
 )
 {
+	vec3 centre_particle;
 	bool collision = false;
 
 	for (size_t j = 0; j < sps.size(); ++j) {
@@ -157,13 +168,21 @@ bool simulator::find_update_partcoll_free
 		// particle then we have to update the particle's
 		// prediction
 
-		if (__pm3_dist2(pred_pos, sps[j]->cur_pos) < (sps[j]->R)*(sps[j]->R)) {
+		float r2 = (sps[j]->R)*(sps[j]->R);
+		if (__pm3_dist2(pred_pos, sps[j]->cur_pos) < r2) {
 			__physim_Sj.set_position(sps[j]->cur_pos);
 			__physim_Sj.set_radius(sps[j]->R);
 
 			collision = true;
 
+			// update position of particle using collision method
+
 			coll_pred = *p;
+
+			// First, check whether the current position is inside
+			// the sphere. If so, change it to the closest point
+			// on the surface of the surface, plus some epsillon
+			free_pos_correction
 
 			// the geometry updates the predicted particle
 			__physim_Sj.update_particle(pred_pos, pred_vel, &coll_pred);
@@ -173,7 +192,9 @@ bool simulator::find_update_partcoll_free
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+				__pm3_sub_v_vs(coll_pred.prev_pos,
+							   coll_pred.cur_pos,
+							   coll_pred.cur_vel, dt);
 			}
 
 			// keep track of the predicted particle's position
@@ -190,13 +211,19 @@ bool simulator::find_update_partcoll_free
 		// particle then we have to update the particle's
 		// prediction
 
-		if (__pm3_dist2(pred_pos, aps[j]->cur_pos) < (aps[j]->R)*(aps[j]->R)) {
+		float r2 = (aps[j]->R)*(aps[j]->R);
+		if (__pm3_dist2(pred_pos, aps[j]->cur_pos) < r2) {
 			__physim_Sj.set_position(aps[j]->cur_pos);
 			__physim_Sj.set_radius(aps[j]->R);
 
 			collision = true;
 
 			coll_pred = *p;
+
+			// First, check whether the current position is inside
+			// the sphere. If so, change it to the closest point
+			// on the surface of the surface, plus some epsillon
+			free_pos_correction
 
 			// the geometry updates the predicted particle
 			__physim_Sj.update_particle(pred_pos, pred_vel, &coll_pred);
@@ -206,7 +233,9 @@ bool simulator::find_update_partcoll_free
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+				__pm3_sub_v_vs(coll_pred.prev_pos,
+							   coll_pred.cur_pos,
+							   coll_pred.cur_vel, dt);
 			}
 
 			// keep track of the predicted particle's position
