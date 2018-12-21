@@ -75,7 +75,10 @@ HEADERS += \
     emitter/free_emitters/rect_source.hpp \
 	emitter/free_emitters/multisource.hpp \
 	emitter/free_emitters/multisource.cpp \
-    emitter/free_emitters/hose.hpp
+    emitter/free_emitters/hose.hpp \
+    fluids/fluid.hpp \
+    fluids/kernel_function.hpp \
+    fluids/kernel_pair.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -118,4 +121,5 @@ SOURCES += \
     emitter/free_emitters/rect_fountain.cpp \
     emitter/free_emitters/rect_shower.cpp \
 	emitter/free_emitters/rect_source.cpp \
-    emitter/free_emitters/hose.cpp
+    emitter/free_emitters/hose.cpp \
+    fluids/fluid.cpp

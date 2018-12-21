@@ -26,12 +26,12 @@ void simulator::apply_solver(const P *p, math::vec3& pred_pos, math::vec3& pred_
 			// pred_pos <- pos + vel*dt
 			__pm3_add_v_vs(pred_pos, p->cur_pos, p->cur_vel, dt);
 			// pred_vel <- vel + force*dt/mass
-			__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
+			__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt*(1.0f/mass));
 			break;
 
 		case solver_type::EulerSemi:
 			// pred_vel <- vel + force*dt/mass
-			__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt/mass);
+			__pm3_add_v_vs(pred_vel, p->cur_vel, p->force, dt*(1.0f/mass));
 			// pred_pos <- pos + pred_vel*dt
 			__pm3_add_v_vs(pred_pos, p->cur_pos, pred_vel, dt);
 			break;

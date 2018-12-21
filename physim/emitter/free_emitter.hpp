@@ -14,9 +14,9 @@ namespace emitters {
 typedef std::function<void (particles::free_particle *)> free_emit;
 
 /**
- * @brief Class for particle initialisation.
+ * @brief Class for free particle initialisation.
  *
- * This class is used to initialise the attributes of a particle.
+ * This class is used to initialise the attributes of a free particle.
  *
  * This class has several functions as attributes, each of which
  * initialises an attribute of the particle.
