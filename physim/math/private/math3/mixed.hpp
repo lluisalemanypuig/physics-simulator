@@ -31,6 +31,17 @@
 					  ((f).y*(g).y)*(1.0f/(s)),		\
 					  ((f).z*(g).z)*(1.0f/(s)))
 
+// h <- (f - g)*(x,y,z)
+#define __pm3_sub_v_v_mul_c(h, f,g, x,y,z)	\
+	__pm3_assign_c(h, ((f).x - (g).x)*(x),	\
+					  ((f).y - (g).y)*(y),	\
+					  ((f).z - (g).z)*(z))
+// h <- (f - g)*s
+#define __pm3_sub_v_v_mul_s(h, f,g, s)		\
+	__pm3_assign_c(h, ((f).x - (g).x)*(s),	\
+					  ((f).y - (g).y)*(s),	\
+					  ((f).z - (g).z)*(s))
+
 // h <- (f - g)/(x,y,z)
 #define __pm3_sub_v_v_div_c(h, f,g, x,y,z)			\
 	__pm3_assign_c(h, ((f).x - (g).x)*(1.0f/(x)),	\
