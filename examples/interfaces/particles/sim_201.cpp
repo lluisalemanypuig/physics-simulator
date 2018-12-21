@@ -71,7 +71,7 @@ namespace study_cases {
 		);
 		s_em.set_vel_initialiser(
 			[](base_particle *p) {
-				p->cur_vel = vec3(10.0f, 8.0f, 0.0f);
+				p->cur_vel = vec3(15.0f, 10.0f, 0.0f);
 			}
 		);
 		s_em.set_lifetime_initialiser(
