@@ -29,6 +29,8 @@ inline void remove_from_vector(size_t i, V& v) {
 namespace physim {
 using namespace math;
 using namespace particles;
+using namespace meshes;
+using namespace fluids;
 
 // PRIVATE
 
@@ -52,7 +54,7 @@ void simulator::init_particle(base_particle *p) {
 	__pm3_sub_v_vs(p->prev_pos, p->cur_pos, p->cur_vel, dt);
 }
 
-void simulator::init_mesh(meshes::mesh *m) {
+void simulator::init_mesh(mesh *m) {
 	m->make_initial_state();
 
 	mesh_particle **mps = m->get_particles();
@@ -63,6 +65,20 @@ void simulator::init_mesh(meshes::mesh *m) {
 	for (size_t i = 0; i < m->size(); ++i) {
 		// prev_pos <- pos - vel*dt
 		__pm3_sub_v_vs(mps[i]->prev_pos, mps[i]->cur_pos, mps[i]->cur_vel, dt);
+	}
+}
+
+void simulator::init_fluid(fluid *f) {
+	f->make_initial_state();
+
+	fluid_particle **fps = f->get_particles();
+
+	// loop over the mesh's particles and compute
+	// their previous position
+
+	for (size_t i = 0; i < f->size(); ++i) {
+		// prev_pos <- pos - vel*dt
+		__pm3_sub_v_vs(fps[i]->prev_pos, fps[i]->cur_pos, fps[i]->cur_vel, dt);
 	}
 }
 
@@ -226,7 +242,7 @@ void simulator::clear_fields() {
 
 // ----------- meshes
 
-void simulator::add_mesh(meshes::mesh *m) {
+void simulator::add_mesh(mesh *m) {
 	assert(m != nullptr);
 	ms.push_back(m);
 	init_mesh(m);
@@ -237,10 +253,29 @@ void simulator::remove_mesh(size_t i) {
 }
 
 void simulator::clear_meshes() {
-	for (meshes::mesh *m : ms) {
+	for (mesh *m : ms) {
 		delete m;
 	}
 	ms.clear();
+}
+
+// ----------- fluids
+
+void simulator::add_fluid(fluid *f) {
+	assert(f != nullptr);
+	fs.push_back(f);
+	init_fluid(f);
+}
+
+void simulator::remove_fluid(size_t i) {
+	remove_from_vector(i, fs);
+}
+
+void simulator::clear_fluids() {
+	for (fluid *f : fs) {
+		delete f;
+	}
+	fs.clear();
 }
 
 // MODIFIERS
@@ -250,6 +285,7 @@ void simulator::clear_simulation() {
 	clear_particles();
 	clear_fields();
 	clear_meshes();
+	clear_fluids();
 }
 
 void simulator::reset_simulation() {
@@ -278,10 +314,15 @@ void simulator::simulate_meshes() {
 	_simulate_meshes();
 }
 
+void simulator::simulate_fluids() {
+	_simulate_fluids();
+}
+
 void simulator::apply_time_step() {
 	_simulate_free_particles();
 	_simulate_agent_particles();
 	_simulate_meshes();
+	_simulate_fluids();
 	_simulate_sized_particles();
 }
 
@@ -329,46 +370,53 @@ void simulator::set_particle_particle_collisions(bool a) {
 const vector<free_particle *>& simulator::get_free_particles() const {
 	return fps;
 }
-free_particle& simulator::get_free_particle(size_t i) {
+free_particle *simulator::get_free_particle(size_t i) {
 	assert(i < fps.size());
-	return *fps[i];
+	return fps[i];
 }
-const free_particle& simulator::get_free_particle(size_t i) const {
+const free_particle *simulator::get_free_particle(size_t i) const {
 	assert(i < fps.size());
-	return *fps[i];
+	return fps[i];
 }
 
 const vector<sized_particle *>& simulator::get_sized_particles() const {
 	return sps;
 }
-sized_particle& simulator::get_sized_particle(size_t i) {
+sized_particle *simulator::get_sized_particle(size_t i) {
 	assert(i < sps.size());
-	return *sps[i];
+	return sps[i];
 }
-const sized_particle& simulator::get_sized_particle(size_t i) const {
+const sized_particle *simulator::get_sized_particle(size_t i) const {
 	assert(i < sps.size());
-	return *sps[i];
+	return sps[i];
 }
 
 const vector<agent_particle *>& simulator::get_agent_particles() const {
 	return aps;
 }
-agent_particle& simulator::get_agent_particle(size_t i) {
+agent_particle *simulator::get_agent_particle(size_t i) {
 	assert(i < aps.size());
-	return *aps[i];
+	return aps[i];
 }
-const agent_particle& simulator::get_agent_particle(size_t i) const {
+const agent_particle *simulator::get_agent_particle(size_t i) const {
 	assert(i < aps.size());
-	return *aps[i];
+	return aps[i];
 }
 
-const vector<meshes::mesh *>& simulator::get_meshes() const {
+const vector<mesh *>& simulator::get_meshes() const {
 	return ms;
 }
-
-const meshes::mesh& simulator::get_mesh(size_t i) const {
+const mesh *simulator::get_mesh(size_t i) const {
 	assert(i < ms.size());
-	return *ms[i];
+	return ms[i];
+}
+
+const vector<fluid *>& simulator::get_fluids() const {
+	return fs;
+}
+const fluid *simulator::get_fluid(size_t i) const {
+	assert(i < fs.size());
+	return fs[i];
 }
 
 const vector<geometric::geometry *>& simulator::get_fixed_objects() const {
@@ -379,8 +427,20 @@ const math::vec3& simulator::get_gravity() const {
 	return gravity;
 }
 
-size_t simulator::n_particles() const {
+size_t simulator::n_free_particles() const {
 	return fps.size();
+}
+size_t simulator::n_sized_particles() const {
+	return sps.size();
+}
+size_t simulator::n_agent_particles() const {
+	return aps.size();
+}
+size_t simulator::n_meshes() const {
+	return ms.size();
+}
+size_t simulator::n_fluids() const {
+	return fs.size();
 }
 
 size_t simulator::n_geometry() const {

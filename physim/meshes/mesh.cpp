@@ -34,12 +34,12 @@ mesh::~mesh() {
 
 // OPERATORS
 
-particles::mesh_particle *mesh::operator[] (size_t i) {
+mesh_particle *mesh::operator[] (size_t i) {
 	assert(i < N);
 	return ps[i];
 }
 
-const particles::mesh_particle *mesh::operator[] (size_t i) const {
+const mesh_particle *mesh::operator[] (size_t i) const {
 	assert(i < N);
 	return ps[i];
 }
@@ -144,8 +144,7 @@ const mesh_type& mesh::get_type() const {
 mesh_particle **mesh::get_particles() {
 	return ps;
 }
-
-particles::mesh_particle *const *mesh::get_particles() const {
+mesh_particle *const *mesh::get_particles() const {
 	return ps;
 }
 

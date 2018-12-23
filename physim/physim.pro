@@ -122,4 +122,5 @@ SOURCES += \
     emitter/free_emitters/rect_shower.cpp \
 	emitter/free_emitters/rect_source.cpp \
     emitter/free_emitters/hose.cpp \
-    fluids/fluid.cpp
+    fluids/fluid.cpp \
+    sim_fluids.cpp

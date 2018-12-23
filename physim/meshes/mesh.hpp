@@ -135,16 +135,16 @@ class mesh {
 		/**
 		 * @brief Builds the initial state of the mesh.
 		 *
-		 * After initialising the mesh's particles, some
-		 * initial state may be needed for proper simulation.
+		 * After assigning each of this mesh's particles a position,
+		 * the initial state needed for proper simulation is computed.
 		 *
-		 * For example, the initial positions of the particles
-		 * may have to be stored.
+		 * This may include the initial distances between the particles
+		 * at each end of every simulated spring.
 		 *
 		 * Each type of mesh has to implement this method
 		 * for a proper simulation of that type of mesh.
 		 * @pre In general, all this mesh's particles must have
-		 * been initialised.
+		 * been initialised (say, given an initial current position).
 		 */
 		virtual void make_initial_state() = 0;
 
@@ -157,11 +157,11 @@ class mesh {
 		 *
 		 * This method does not update positions or velocities.
 		 *
-		 * @pre The modification of the particles' force should
-		 * not assume that particles start with null force (force
-		 * equal to 0 in the three axes). However, it has to assume
-		 * that this method is called before computing the force
-		 * due to the force fields.
+		 * @pre The modification of a particles' force may assume
+		 * that all particles start with null force (force
+		 * equal to 0 in the three axes).
+		 * @pre This method is called before computing the forces
+		 * acting on the particles due to force fields.
 		 */
 		virtual void update_forces() = 0;
 
@@ -206,7 +206,6 @@ class mesh {
 
 		/// Returns a reference to this mesh's particles.
 		particles::mesh_particle **get_particles();
-
 		/// Returns a constant reference to this mesh's particles.
 		particles::mesh_particle *const *get_particles() const;
 };

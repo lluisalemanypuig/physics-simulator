@@ -5,6 +5,7 @@
 
 namespace physim {
 using namespace particles;
+using namespace structures;
 
 namespace fluids {
 
@@ -22,7 +23,20 @@ fluid::~fluid() {
 	clear();
 }
 
-void fluid::init(size_t n, float vol, float dens, float visc) {
+// OPERATORS
+
+particles::fluid_particle *fluid::operator[] (size_t i) {
+	return ps[i];
+}
+
+const particles::fluid_particle *fluid::operator[] (size_t i) const {
+	return ps[i];
+}
+
+// MODIFIERS
+
+void fluid::allocate(size_t n, float vol, float dens, float visc) {
+	tree = new octree();
 	volume = vol;
 	density = dens;
 	viscosity = visc;
@@ -71,6 +85,18 @@ void fluid::clear() {
 	}
 }
 
+void fluid::make_initial_state() {
+
+}
+
+void fluid::update_forces() {
+
+}
+
+void fluid::make_partition() {
+
+}
+
 // SETTERS
 
 void fluid::set_pressure_kernel(const kernel_pair& kp) {
@@ -97,6 +123,13 @@ float fluid::get_density() const {
 
 float fluid::get_viscosity() const {
 	return viscosity;
+}
+
+fluid_particle **fluid::get_particles() {
+	return ps;
+}
+fluid_particle *const *fluid::get_particles() const {
+	return ps;
 }
 
 } // -- namespace fluids

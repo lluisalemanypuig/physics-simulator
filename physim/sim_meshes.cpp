@@ -11,6 +11,7 @@
 
 namespace physim {
 using namespace particles;
+using namespace meshes;
 using namespace math;
 
 void simulator::_simulate_meshes() {
@@ -23,7 +24,7 @@ void simulator::_simulate_meshes() {
 	free_particle current;
 	free_particle coll_pred;
 
-	for (meshes::mesh *m : ms) {
+	for (mesh *m : ms) {
 
 		/* check mesh start time and lifetime
 		 * of mesh

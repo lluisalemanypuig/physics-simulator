@@ -7,13 +7,13 @@
 // physim includes
 #include <physim/emitter/free_emitter.hpp>
 #include <physim/emitter/sized_emitter.hpp>
-//#include <physim/emitter/emitter_agent.hpp>
 #include <physim/geometry/geometry.hpp>
 #include <physim/fields/field.hpp>
 #include <physim/particles/sized_particle.hpp>
 #include <physim/particles/agent_particle.hpp>
 #include <physim/particles/free_particle.hpp>
 #include <physim/meshes/mesh.hpp>
+#include <physim/fluids/fluid.hpp>
 
 namespace physim {
 
@@ -106,6 +106,8 @@ class simulator {
 		std::vector<particles::agent_particle *> aps;
 		/// The collection of meshes in the simulation.
 		std::vector<meshes::mesh *> ms;
+		/// The collection of fluids in the simulation.
+		std::vector<fluids::fluid *> fs;
 
 		/// Gravity of the simulation. [m/s^2].
 		math::vec3 gravity;
@@ -211,6 +213,17 @@ class simulator {
 		void init_mesh(meshes::mesh *m);
 
 		/**
+		 * @brief Initialises a fluid.
+		 *
+		 * Builds the initial state of the fluid (see @ref fluids::make_initial_state).
+		 * Computes an initial previous position for each particle of
+		 * the mesh so that the Verlet solver can work correctly
+		 * (see @ref solver_type).
+		 * @param f The fluid to be initialsed.
+		 */
+		void init_fluid(fluids::fluid *f);
+
+		/**
 		 * @brief Simulate free particles.
 		 *
 		 * Applies a time step on all the free particles of
@@ -236,12 +249,23 @@ class simulator {
 		 * @brief Simulate meshes.
 		 *
 		 * Applies a time step on all the particles that make
-		 * up the 1-dimensional meshes of the simulation.
+		 * up the meshes of the simulation.
 		 *
 		 * The forces due to the presence of force fields are
-		 * computed after the internal forces in each mesh.
+		 * computed after the internal forces.
 		 */
 		void _simulate_meshes();
+
+		/**
+		 * @brief Simulate fluids.
+		 *
+		 * Applies a time step on all the particles that make
+		 * up the fluids of the simulation.
+		 *
+		 * The forces due to the presence of force fields are
+		 * computed after the internal forces.
+		 */
+		void _simulate_fluids();
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
@@ -576,9 +600,8 @@ class simulator {
 		 * The caller should not free the object since the simulator
 		 * will take care of that.
 		 *
-		 * This call must be called after initialising the mesh (that is,
-		 * after initialising the positions and making its initial state).
 		 * @param m A non-null pointer to the object.
+		 * @pre All meshe's particles must have been given a position.
 		 */
 		void add_mesh(meshes::mesh *m);
 		/**
@@ -596,6 +619,35 @@ class simulator {
 		 */
 		void clear_meshes();
 
+		// ----------- fluids
+
+		/**
+		 * @brief Adds a fluids to the scene.
+		 *
+		 * The fluid is added to @ref fs.
+		 *
+		 * The caller should not free the object since the simulator
+		 * will take care of that.
+		 *
+		 * @param m A non-null pointer to the object.
+		 * @pre All fluid's particles must have been given a position.
+		 */
+		void add_fluid(fluids::fluid *f);
+		/**
+		 * @brief Removes the @e i-th fluid object.
+		 *
+		 * Frees the memory occupied by the object in the @e i-th position from
+		 * @ref fs. Therefore, any pointer to that object becomes invalid.
+		 * @param i The index of the object in [0, number of fluids).
+		 */
+		void remove_fluid(size_t i);
+		/**
+		 * @brief Deletes all fluids in this simulator.
+		 *
+		 * Deletes all the objects in @ref fs and clears the container.
+		 */
+		void clear_fluids();
+
 		// MODIFIERS
 
 		/**
@@ -608,6 +660,7 @@ class simulator {
 		 * - @ref clear_geometry,
 		 * - @ref clear_fields,
 		 * - @ref clear_meshes.
+		 * - @ref clear_fluids.
 		 */
 		void clear_simulation();
 
@@ -679,11 +732,25 @@ class simulator {
 		 * Calls @ref _simulate_meshes.
 		 *
 		 * Each mesh has each of its particle's force updated according to
-		 * the definition provided in method @ref meshes::mesh::update_forces. This
-		 * method defines the model implemented in that mesh. Then, each mesh
-		 * is considered as a free particle and simulated accordingly.
+		 * the definition provided in method @ref meshes::mesh::update_forces.
+		 * This method defines the model implemented in that mesh. Then, each
+		 * particle of the mesh is considered as a free particle and simulated
+		 * accordingly.
 		 */
 		void simulate_meshes();
+
+		/**
+		 * @brief Simulate fluids.
+		 *
+		 * Calls @ref _simulate_fluids.
+		 *
+		 * Each mesh has each of its particle's force updated according to
+		 * the definition provided in method @ref fluids::update_forces. This
+		 * method defines the model implemented in that fluid. Then, each
+		 * particle of the fluid is considered as a free particle and simulated
+		 * accordingly.
+		 */
+		void simulate_fluids();
 
 		/**
 		 * @brief Apply a time step to the simulation.
@@ -693,6 +760,7 @@ class simulator {
 		 * - @ref _simulate_agent_particles.
 		 * - @ref _simulate_free_particles
 		 * - @ref _simulate_meshes.
+		 * - @ref _simulate_fluids.
 		 * Parameter @e dt (set via method @ref set_time_step(float))
 		 * indicates how much time has passed since the last time step.
 		 */
@@ -774,9 +842,9 @@ class simulator {
 		 */
 		const std::vector<particles::free_particle *>& get_free_particles() const;
 		/// Returns a reference to i-th free particle.
-		particles::free_particle& get_free_particle(size_t i);
+		particles::free_particle *get_free_particle(size_t i);
 		/// Returns a constant reference to i-th free particle.
-		const particles::free_particle& get_free_particle(size_t i) const;
+		const particles::free_particle *get_free_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all sized particles in the simulation.
@@ -792,9 +860,9 @@ class simulator {
 		 */
 		const std::vector<particles::sized_particle *>& get_sized_particles() const;
 		/// Returns a reference to i-th sized particle.
-		particles::sized_particle& get_sized_particle(size_t i);
+		particles::sized_particle *get_sized_particle(size_t i);
 		/// Returns a constant reference to i-th sized particle.
-		const particles::sized_particle& get_sized_particle(size_t i) const;
+		const particles::sized_particle *get_sized_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all agent particles in the simulation.
@@ -810,9 +878,9 @@ class simulator {
 		 */
 		const std::vector<particles::agent_particle *>& get_agent_particles() const;
 		/// Returns a reference to i-th agent particle.
-		particles::agent_particle& get_agent_particle(size_t i);
+		particles::agent_particle *get_agent_particle(size_t i);
 		/// Returns a constant reference to i-th agent particle.
-		const particles::agent_particle& get_agent_particle(size_t i) const;
+		const particles::agent_particle *get_agent_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all meshes in the simulation.
@@ -828,13 +896,40 @@ class simulator {
 		 */
 		const std::vector<meshes::mesh *>& get_meshes() const;
 		/// Returns a constant reference to i-th mesh.
-		const meshes::mesh& get_mesh(size_t i) const;
+		const meshes::mesh *get_mesh(size_t i) const;
+
+		/**
+		 * @brief Returns all fluids in the simulation.
+		 *
+		 * Note that the constant reference is to the container.
+		 * It cannot be added new fluids or have deleted any,
+		 * however any fluid's attributes may be modified.
+		 *
+		 * The behaviour of the modified particles in the simulation
+		 * will change according to the modifications.
+		 * @return Returns a constant reference to the structure
+		 * containing all particles.
+		 */
+		const std::vector<fluids::fluid *>& get_fluids() const;
+		/// Returns a constant reference to i-th mesh.
+		const fluids::fluid *get_fluid(size_t i) const;
+
 		/// Returns all fixed objects of the scene.
 		const std::vector<geometric::geometry *>& get_fixed_objects() const;
 		/// Returns the gravity of the scene.
 		const math::vec3& get_gravity() const;
-		/// Returns the number of particles.
-		size_t n_particles() const;
+
+		/// Returns the number of free particles.
+		size_t n_free_particles() const;
+		/// Returns the number of sized particles.
+		size_t n_sized_particles() const;
+		/// Returns the number of agent particles.
+		size_t n_agent_particles() const;
+		/// Returns the number of meshes.
+		size_t n_meshes() const;
+		/// Returns the number of meshes.
+		size_t n_fluids() const;
+
 		/// Returns the number of fixed geometrical objects.
 		size_t n_geometry() const;
 		/// Returns the free emitter object.
