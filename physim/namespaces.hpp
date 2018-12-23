@@ -114,13 +114,21 @@ namespace physim {
 		 * 
 		 * There is no need to call any of these functions.
 		 */
-		namespace input_private {}
+		namespace input_private { }
 		
 	} // -- namespace input
 	
 	/**
+	 * @brief All classes needed for fluid simulation.
+	 * 
+	 * This namespace contains the definition of what a fluid is,
+	 * and the kernel functions for simulating a fluid's behaviour.
+	 */
+	namespace fluids { }
+	
+	/**
 	 * @brief Space partition data structures.
 	 */
-	namespace structures {}
+	namespace structures { }
 
 } // -- namespace sim
