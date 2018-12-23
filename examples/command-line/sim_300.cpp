@@ -62,15 +62,15 @@ namespace study_cases {
 			}
 			else if (strcmp(argv[i], "--point") == 0) {
 				if (not p1_read) {
-					p1.x = atof(argv[i + 1]);
-					p1.y = atof(argv[i + 2]);
-					p1.z = atof(argv[i + 3]);
+					p1.x = static_cast<float>(atof(argv[i + 1]));
+					p1.y = static_cast<float>(atof(argv[i + 2]));
+					p1.z = static_cast<float>(atof(argv[i + 3]));
 					p1_read = true;
 				}
 				else {
-					p2.x = atof(argv[i + 1]);
-					p2.y = atof(argv[i + 2]);
-					p2.z = atof(argv[i + 3]);
+					p2.x = static_cast<float>(atof(argv[i + 1]));
+					p2.y = static_cast<float>(atof(argv[i + 2]));
+					p2.z = static_cast<float>(atof(argv[i + 3]));
 					p2_read = true;
 				}
 				i += 4;
@@ -108,6 +108,7 @@ namespace study_cases {
 		if (not r) {
 			cerr << "Error: some error occurred while trying to read" << endl;
 			cerr << "    " << directory + "/" + filename << endl;
+			return;
 		}
 		timing::time_point end = timing::now();
 		double r_sim = timing::elapsed_seconds(begin, end);
@@ -140,10 +141,13 @@ namespace study_cases {
 			cout << "the object" << endl;
 		}
 
-		octree copy;
-		copy.copy(o->get_partition());
+		octree tree_copy;
+		tree_copy.copy(o->get_partition());
 
 		cout << "Repeating query..." << endl;
+		tris.clear();
+		o->get_partition().get_indices(p1, tris);
+
 		cout << "The closest triangles to point ("
 			 << p1.x << "," << p1.y << "," << p1.z
 			 << ") are:";

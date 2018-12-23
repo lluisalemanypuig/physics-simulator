@@ -69,11 +69,7 @@ void list_all_cases() {
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
-		cerr << "Error: lacking parameter for scene" << endl;
-		cerr << "    ./basic_simulations case_identifier" << endl;
-		cerr << "    Use './basic_simulations --list' or" << endl;
-		cerr << "        './basic_simulations --help' or" << endl;
-		cerr << "    to see all cases." << endl;
+		list_all_cases();
 		return 1;
 	}
 

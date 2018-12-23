@@ -21,6 +21,7 @@ namespace study_cases {
 	void sim_104(int argc, char *argv[]);
 	void sim_105(int argc, char *argv[]);
 	void sim_106(int argc, char *argv[]);
+	void sim_107(int argc, char *argv[]);
 
 	void sim_200(int argc, char *argv[]);
 	void sim_201(int argc, char *argv[]);
@@ -72,6 +73,8 @@ void list_all_cases() {
 	cout << "          with gravity. All planes have their normals pointing outwards" << endl;
 	cout << "          quadrilateral." << endl;
 	cout << endl;
+	cout << "    107 : (testing) One sized particle colliding with an object." << endl;
+	cout << endl;
 	cout << "Mixed particles:" << endl;
 	cout << "    200 : A shower of free particles on a sized particle." << endl;
 	cout << endl;
@@ -119,6 +122,7 @@ int main(int argc, char *argv[]) {
 	case 104:	study_cases::sim_104(argc, argv); break;
 	case 105:	study_cases::sim_105(argc, argv); break;
 	case 106:	study_cases::sim_106(argc, argv); break;
+	case 107:	study_cases::sim_107(argc, argv); break;
 
 	case 200:	study_cases::sim_200(argc, argv); break;
 	case 201:	study_cases::sim_201(argc, argv); break;
