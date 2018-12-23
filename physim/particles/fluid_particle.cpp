@@ -14,8 +14,6 @@ namespace particles {
 void fluid_particle::partial_init() {
 	density = 0.0f;
 	pressure = 0.0f;
-	lifetime = 10.0f;
-	starttime = 0.0f;
 }
 
 // PUBLIC
@@ -27,8 +25,6 @@ fluid_particle::fluid_particle() : base_particle() {
 fluid_particle::fluid_particle(const fluid_particle& p) : base_particle(p) {
 	density = p.density;
 	pressure = p.pressure;
-	lifetime = p.lifetime;
-	starttime = p.starttime;
 }
 
 fluid_particle::~fluid_particle() { }

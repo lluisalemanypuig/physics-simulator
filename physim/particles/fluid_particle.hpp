@@ -28,8 +28,6 @@ class fluid_particle : public base_particle {
 		 * The attributes of the class take the following values:
 		 * - @ref density : 0.0
 		 * - @ref pressure : 0.0
-		 * - @ref lifetime : 10.0
-		 * - @ref starttime : 0.0
 		 */
 		void partial_init();
 
@@ -38,22 +36,6 @@ class fluid_particle : public base_particle {
 		float density;
 		/// Pressure of the particle [N/m^2].
 		float pressure;
-		/**
-		 * @brief Lifetime of the particle [s].
-		 *
-		 * Once the simulation has run for a time larger than
-		 * @ref lifetime the particle must be reset.
-		 */
-		float lifetime;
-		/**
-		 * @brief Starting time of a particle [s].
-		 *
-		 * The amount of time that has to pass for this particle
-		 * to start 'living'. In the simulation, this particle
-		 * will not start moving until this value is equal to or
-		 * less than 0.
-		 */
-		float starttime;
 
 	public:
 		/// Default constructor.
