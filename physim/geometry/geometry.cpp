@@ -8,6 +8,8 @@ using namespace std;
 #include <physim/math/private/math3/base.hpp>
 
 namespace physim {
+using namespace math;
+
 namespace geometric {
 
 // PUBLIC
@@ -22,9 +24,18 @@ geometry::geometry(const geometry& g) {
 }
 geometry::~geometry() { }
 
+// GETTERS
+
 geometry_type geometry::get_geom_type() const {
 	return geometry_type::none;
 }
 
-} // -- namespace geom
-} // -- namespace sim
+const vec3& geometry::get_min() const {
+	return vmin;
+}
+const vec3& geometry::get_max() const {
+	return vmax;
+}
+
+} // -- namespace geometric
+} // -- namespace physim

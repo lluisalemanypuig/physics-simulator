@@ -69,6 +69,11 @@ class geometry {
 		/// Returns the type of geometry of this object.
 		virtual geometry_type get_geom_type() const;
 
+		/// Returns point with mininum coordinate values.
+		const math::vec3& get_min() const;
+		/// Returns point with maxinum coordinate values.
+		const math::vec3& get_max() const;
+
 		/**
 		 * @brief Returns whether a point is inside the geometry.
 		 * @param p The point to check whether it is inside the geometry.
