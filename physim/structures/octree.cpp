@@ -66,10 +66,6 @@ octree::node *octree::make_octree_triangles(
 )
 const
 {
-	if (vertices_idxs.size() == 0) {
-		return nullptr;
-	}
-
 	node *n = new node();
 
 	// set minimum and maximum points
@@ -89,10 +85,6 @@ const
 		n->tris_idxs = new vector<size_t>(triangle_idxs);
 		return n;
 	}
-
-	// --------------------------------------
-	// If there are more than 8 vertices then
-	// partition the space into subtrees
 
 	// Points defining the 12 'rectangles' that
 	// partition this subspace.
@@ -136,27 +128,37 @@ const
 	const rectangle rb3(ccm, Mcm, Mcc, n->center);
 	const rectangle rb4(ccm, cmm, cmc, n->center);
 	auto intersections_rectangle =
-	[&](const rectangle& r, size_t v1, size_t v2, size_t a, size_t b, bool i[8]) ->
-	void {
+	[&](const rectangle& r, size_t v1, size_t v2, bool i[8]) -> void {
 		if (r.intersec_segment(vertices[v1], vertices[v2])) {
-			i[a] = i[b] = true;
+			unsigned char sub;
+
+			sub = 0;
+			__pm3_lt(sub, vertices[v1], n->center);
+			i[sub] = true;
+			sub = 0;
+			__pm3_lt(sub, vertices[v2], n->center);
+			i[sub] = true;
 		}
 	};
 	auto intersections_all =
 	[&](size_t v1, size_t v2, bool i[8]) -> void {
-		intersections_rectangle(rt1, v1, v2, 4, 6, i);
-		intersections_rectangle(rt2, v1, v2, 0, 4, i);
-		intersections_rectangle(rt3, v1, v2, 0, 2, i);
-		intersections_rectangle(rt4, v1, v2, 2, 6, i);
-		intersections_rectangle(rm1, v1, v2, 4, 5, i);
-		intersections_rectangle(rm2, v1, v2, 0, 1, i);
-		intersections_rectangle(rm3, v1, v2, 2, 3, i);
-		intersections_rectangle(rm4, v1, v2, 6, 7, i);
-		intersections_rectangle(rb1, v1, v2, 5, 7, i);
-		intersections_rectangle(rb2, v1, v2, 1, 5, i);
-		intersections_rectangle(rb3, v1, v2, 1, 3, i);
-		intersections_rectangle(rb4, v1, v2, 3, 7, i);
+		intersections_rectangle(rt1, v1, v2, i);
+		intersections_rectangle(rt2, v1, v2, i);
+		intersections_rectangle(rt3, v1, v2, i);
+		intersections_rectangle(rt4, v1, v2, i);
+		intersections_rectangle(rm1, v1, v2, i);
+		intersections_rectangle(rm2, v1, v2, i);
+		intersections_rectangle(rm3, v1, v2, i);
+		intersections_rectangle(rm4, v1, v2, i);
+		intersections_rectangle(rb1, v1, v2, i);
+		intersections_rectangle(rb2, v1, v2, i);
+		intersections_rectangle(rb3, v1, v2, i);
+		intersections_rectangle(rb4, v1, v2, i);
 	};
+
+	// ----------------------------------------------------
+	// If there are more than 8 vertices then partition the
+	// space into subtrees
 
 	// subspace index per vertex, using '9' as invalid value
 	vector<unsigned char> subspace_per_vertex(vertices.size(), 9);
@@ -250,12 +252,12 @@ const
 	for (unsigned char i = 0; i < 8; ++i) {
 
 		// make minimum and maximum points for the i-th child
-		if ((i & 0x01) == 0) { submax.x = n->vmax.x;	submin.x = n->center.x; }
-		else				 { submax.x = n->center.x;	submin.x = n->vmin.x; }
-		if ((i & 0x02) == 0) { submax.y = n->vmax.y;	submin.y = n->center.y; }
-		else				 { submax.y = n->center.y;	submin.y = n->vmin.y; }
-		if ((i & 0x04) == 0) { submax.z = n->vmax.z;	submin.z = n->center.z; }
-		else				 { submax.z = n->center.z;	submin.z = n->vmin.z; }
+		if ((i & 0x01) == 0) { submax.x = n->vmax.x; submin.x = n->center.x; }
+		else { submax.x = n->center.x; submin.x = n->vmin.x; }
+		if ((i & 0x02) == 0) { submax.y = n->vmax.y; submin.y = n->center.y; }
+		else { submax.y = n->center.y; submin.y = n->vmin.y; }
+		if ((i & 0x04) == 0) { submax.z = n->vmax.z; submin.z = n->center.z; }
+		else { submax.z = n->center.z; submin.z = n->vmin.z; }
 
 		n->children[i] =
 		make_octree_triangles(
@@ -279,10 +281,6 @@ octree::node *octree::make_octree_vertices(
 )
 const
 {
-	if (vertices_idxs.size() == 0) {
-		return nullptr;
-	}
-
 	node *n = new node();
 
 	// set minimum and maximum points
@@ -491,14 +489,13 @@ void octree::copy(const octree& part) {
 void octree::get_indices
 (const vec3& p, vector<size_t>& tris_idxs) const
 {
+	assert(root != nullptr);
+
 	node *n = root;
-	while (n != nullptr and not n->is_leaf()) {
+	while (not n->is_leaf()) {
 		unsigned char s = 0;
 		__pm3_lt(s, p, n->center);
 		n = n->children[s];
-	}
-	if (n == nullptr) {
-		return;
 	}
 
 	if (__pm3_inside_box(p, n->vmin, n->vmax)) {
