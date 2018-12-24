@@ -31,6 +31,11 @@ typedef pair<pmvec3, pmvec3> pmbox;
 
 static vector<pmbox> tree_boxes;
 static vector<pmvec3> file_points;
+static vector<size_t> query_indices;
+static physim::structures::octree tree;
+static pmvec3 query_point;
+static bool valid_query;
+static float query_radius;
 
 static viewer SR;
 
@@ -163,7 +168,7 @@ void initGL(int argc, char *argv[]) {
 	last_mouse = point(0,0);
 	lock_mouse = false;
 
-	display_fps_count = true;
+	display_fps_count = false;
 	FPS = 60;
 	fps_count = 0;
 
@@ -176,23 +181,18 @@ void initGL(int argc, char *argv[]) {
 
 	cout << "# points: " << file_points.size() << endl;
 
-	physim::structures::octree tree;
 	tree.init(file_points);
 
 	tree.get_boxes(tree_boxes);
 	pmvec3 allmin, allmax;
-	cout << "    : " << allmin.x << "," << allmin.y << "," << allmin.z << endl;
-	cout << "    : " << allmax.x << "," << allmax.y << "," << allmax.z << endl;
-
 	allmin = file_points[0];
 	allmax = file_points[0];
-	cout << "    : " << allmin.x << "," << allmin.y << "," << allmin.z << endl;
-	cout << "    : " << allmax.x << "," << allmax.y << "," << allmax.z << endl;
-
 	for (size_t i = 1; i < file_points.size(); ++i) {
 		physim::math::min(allmin, file_points[i], allmin);
 		physim::math::max(allmax, file_points[i], allmax);
 	}
+
+	valid_query = false;
 
 	cout << "Minimum: " << allmin.x << "," << allmin.y << "," << allmin.z << endl;
 	cout << "Maximum: " << allmax.x << "," << allmax.y << "," << allmax.z << endl;
@@ -204,6 +204,8 @@ void initGL(int argc, char *argv[]) {
 		glm::vec3(allmax.x,allmax.y,allmax.z)
 	);
 	SR.init_cameras();
+
+	glDisable(GL_LIGHTING);
 
 	sec = timing::now();
 }
@@ -228,11 +230,9 @@ void refresh() {
 
 	SR.apply_view();
 
-	glDisable(GL_LIGHTING);
-
 	if (file_points.size() > 0) {
+		glPointSize(5);
 		glColor3f(1,0,0);
-		glPointSize(10);
 		glBegin(GL_POINTS);
 		for (const pmvec3& p : file_points) {
 			glVertex3f(p.x, p.y, p.z);
@@ -245,6 +245,20 @@ void refresh() {
 		for (const pmbox& B : tree_boxes) {
 			draw_box(B);
 		}
+	}
+
+	if (valid_query) {
+		glColor3f(1,1,1);
+		glBegin(GL_POINTS);
+		if (query_indices.size() > 0) {
+			glPointSize(10);
+			for (size_t idx : query_indices) {
+				const pmvec3& p = file_points[idx];
+				glVertex3f(p.x + 0.01f, p.y + 0.01f, p.z + 0.01f);
+			}
+		}
+		glVertex3f(query_point.x, query_point.y, query_point.z);
+		glEnd();
 	}
 
 	glDisable(GL_LIGHTING);
@@ -398,6 +412,24 @@ void keyboard_event(unsigned char c, int x, int y) {
 	}
 	else if (c == 'x') {
 		display_fps_count = not display_fps_count;
+	}
+	else if (c == 'q') {
+		cout << "Enter query point:" << endl;
+		cin >> query_point.x >> query_point.y >> query_point.z;
+		cout << "Enter radius:" << endl;
+		cin >> query_radius;
+		valid_query = true;
+
+		query_indices.clear();
+		tree.get_indices(query_point, query_radius, query_indices);
+
+		cout << "Result of query:" << endl;
+		cout << "    # indices retrieved: " << query_indices.size() << endl;
+		cout << "    indices:";
+		for (size_t idx : query_indices) {
+			cout << " " << idx;
+		}
+		cout << endl;
 	}
 	else {
 		if (SR.is_flying()) {
