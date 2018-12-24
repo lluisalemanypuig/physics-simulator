@@ -2,6 +2,7 @@
 
 // C++ includes
 #include <iostream>
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -10,8 +11,11 @@ using namespace std;
 #include <physim/input/ply_reader.hpp>
 #include <physim/input/obj_reader.hpp>
 #include <physim/input/soup_reader.hpp>
+#include <physim/math/vec3.hpp>
 
 namespace physim {
+using namespace math;
+
 namespace input {
 
 	bool read_file
@@ -57,6 +61,60 @@ namespace input {
 		#endif
 
 		return false;
+	}
+
+	bool read_file
+	(const string& dir, const string& fname, vector<vec2>& points) {
+		string full_name = dir + "/" + fname;
+
+		ifstream fin;
+		fin.open(full_name.c_str());
+		if (not fin.is_open()) {
+			#if defined(DEBUG)
+			cerr << "physim::input::input_private::obj_read_file - Error:" << endl;
+			cerr << "    Could not open file " << endl;
+			cerr << "        " << fname << endl;
+			cerr << "    in directory" << endl;
+			cerr << "        " << dir << endl;
+			#endif
+			return false;
+		}
+
+		float x, y;
+		while (fin >> x >> y) {
+			vec2 v(x,y);
+			points.push_back(v);
+		}
+
+		fin.close();
+		return true;
+	}
+
+	bool read_file
+	(const string& dir, const string& fname, vector<vec3>& points) {
+		string full_name = dir + "/" + fname;
+
+		ifstream fin;
+		fin.open(full_name.c_str());
+		if (not fin.is_open()) {
+			#if defined(DEBUG)
+			cerr << "physim::input::input_private::obj_read_file - Error:" << endl;
+			cerr << "    Could not open file " << endl;
+			cerr << "        " << fname << endl;
+			cerr << "    in directory" << endl;
+			cerr << "        " << dir << endl;
+			#endif
+			return false;
+		}
+
+		float x, y, z;
+		while (fin >> x >> y >> z) {
+			vec3 v(x,y,z);
+			points.push_back(v);
+		}
+
+		fin.close();
+		return true;
 	}
 
 } // -- namespace io

@@ -90,7 +90,7 @@ namespace physim {
     /**
      * @brief Namespace for file reading.
      * 
-     * It supports two formats:
+     * It supports the following formats:
      * - Wavefront. File extension: .obj.
      * - Polygon File Format (a.k.a. Stanford Triangle Format). File
      * extension: .ply.
