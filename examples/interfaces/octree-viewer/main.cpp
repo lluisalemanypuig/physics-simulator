@@ -6,9 +6,10 @@
 #include <utility>
 using namespace std;
 
-// glm includes
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_inverse.hpp>
+// physim includes
+#include <physim/math/vec3.hpp>
+#include <physim/input/input.hpp>
+#include <physim/structures/octree.hpp>
 
 // render includes
 #include <render/include_gl.hpp>
@@ -18,24 +19,22 @@ using namespace std;
 #include <render/scene/viewer.hpp>
 #include <render/obj_reader.hpp>
 
-// custom includes
-#include <basic-viewer/utils.hpp>
+#include <octree-viewer/utils.hpp>
 
 typedef pair<int,int> point;
+typedef physim::math::vec3 pmvec3;
+typedef pair<pmvec3, pmvec3> pmbox;
 
 // ------------------
 // global variables
 // ------------------
 
-static rendered_triangle_mesh *m;
+static vector<pmbox> tree_boxes;
+static vector<pmvec3> file_points;
 
-static shader model_shader;
-static shader flat_shader;
 static viewer SR;
-static bool use_shader = false;
 
 static timing::time_point sec;
-
 static int FPS;
 static int fps_count;
 static bool display_fps_count;
@@ -66,13 +65,59 @@ bool inside_window(int x, int y) {
 	   and ((0 <= y) and (y <= SR.window_height()));
 }
 
+inline static
+void draw_box(const pmbox& B) {
+	const pmvec3& min = B.first;
+	const pmvec3& max = B.second;
+
+	glBegin(GL_LINES);
+		// -----------------------------
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(max.x, min.y, min.z);
+
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(max.x, min.y, max.z);
+
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		glVertex3f(min.x, min.y, max.z);
+		glVertex3f(min.x, min.y, min.z);
+
+		// -----------------------------
+		glVertex3f(min.x, max.y, min.z);
+		glVertex3f(max.x, max.y, min.z);
+
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(max.x, max.y, max.z);
+		glVertex3f(min.x, max.y, max.z);
+
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(min.x, max.y, min.z);
+
+		// -----------------------------
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(min.x, max.y, min.z);
+
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(max.x, max.y, min.z);
+
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(min.x, min.y, max.z);
+		glVertex3f(min.x, max.y, max.z);
+	glEnd();
+}
+
 // -----------
 // Exit viewer
 // -----------
 
 void exit_func() {
-	m->clear();
-	delete m;
+
 }
 
 // -----------------
@@ -80,20 +125,6 @@ void exit_func() {
 // -----------------
 
 void initGL(int argc, char *argv[]) {
-	if (argc > 1) {
-		if (strcmp(argv[1], "--use-shaders") == 0) {
-			use_shader = true;
-		}
-		else if (strcmp(argv[1], "--use-shader") == 0) {
-			use_shader = true;
-		}
-		else if (strcmp(argv[1], "--use-shade") == 0) {
-			use_shader = true;
-		}
-		else if (strcmp(argv[1], "--use-shad") == 0) {
-			use_shader = true;
-		}
-	}
 
 	// initial window size
 	int iw = 640;
@@ -126,72 +157,55 @@ void initGL(int argc, char *argv[]) {
 	float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
-	// ------------ //
-	/* load shaders */
-	if (use_shader) {
-		bool r;
-		r = model_shader.init
-			("../../interfaces/shaders", "textures.vert", "textures.frag");
-		if (not r) {
-			exit(1);
-		}
-		r = flat_shader.init
-			("../../interfaces/shaders", "flat.vert", "flat.frag");
-		if (not r) {
-			exit(1);
-		}
-
-		model_shader.bind();
-		model_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
-		model_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
-		model_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
-		model_shader.release();
-	}
-
 	// --------------------------- //
 	/* initialise global variables */
 	pressed_button = 0;
 	last_mouse = point(0,0);
 	lock_mouse = false;
 
-	sec = timing::now();
 	display_fps_count = true;
 	FPS = 60;
 	fps_count = 0;
 
-	// ------------------------ //
-	/* load models for geometry */
-	m = new rendered_triangle_mesh();
+	bool r = physim::input::read_file
+			 ("../../command-line/scenes", "points.obj", file_points);
+	if (not r) {
+		cerr << "Error in reading file." << endl;
+		return;
+	}
 
-	OBJ_reader obj;
-	obj.load_object("../../interfaces/models" , "sphere.obj", *m);
-	m->display_mesh_info();
+	cout << "# points: " << file_points.size() << endl;
 
-	box model_box;
-	m->make_box(model_box);
-	SR.get_box().set_min_max(model_box.get_min(), model_box.get_max());
+	physim::structures::octree tree;
+	tree.init(file_points);
+
+	tree.get_boxes(tree_boxes);
+	pmvec3 allmin, allmax;
+	cout << "    : " << allmin.x << "," << allmin.y << "," << allmin.z << endl;
+	cout << "    : " << allmax.x << "," << allmax.y << "," << allmax.z << endl;
+
+	allmin = file_points[0];
+	allmax = file_points[0];
+	cout << "    : " << allmin.x << "," << allmin.y << "," << allmin.z << endl;
+	cout << "    : " << allmax.x << "," << allmax.y << "," << allmax.z << endl;
+
+	for (size_t i = 1; i < file_points.size(); ++i) {
+		physim::math::min(allmin, file_points[i], allmin);
+		physim::math::max(allmax, file_points[i], allmax);
+	}
+
+	cout << "Minimum: " << allmin.x << "," << allmin.y << "," << allmin.z << endl;
+	cout << "Maximum: " << allmax.x << "," << allmax.y << "," << allmax.z << endl;
 
 	SR.set_window_dims(iw, ih);
+	SR.get_box().set_min_max
+	(
+		glm::vec3(allmin.x,allmin.y,allmin.z),
+		glm::vec3(allmax.x,allmax.y,allmax.z)
+	);
 	SR.init_cameras();
 
-	// ---------------------------------- //
-	/* compile or make buffers for models */
-
-	if (use_shader) {
-		cout << "Making buffers for models..." << endl;
-		SR.get_box().make_buffers();
-		m->load_textures();
-		m->make_buffers_materials_textures();
-
-		model_shader.bind();
-		shader_helper::activate_textures(*m, model_shader);
-		model_shader.release();
-	}
-	else {
-		cout << "Compiling models..." << endl;
-		m->load_textures();
-		m->compile();
-	}
+	sec = timing::now();
 }
 
 // ------------
@@ -204,51 +218,38 @@ void refresh() {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (use_shader) {
-		glm::mat4 projection(1.0f), view(1.0f);
-		SR.make_projection_matrix(projection);
-		SR.make_view_matrix(view);
-		glm::mat3 normal_matrix = glm::inverseTranspose(glm::mat3(view));
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
-		model_shader.bind();
-		model_shader.set_mat4("projection", projection);
-		model_shader.set_mat4("modelview", view);
-		model_shader.set_mat3("normal_matrix", normal_matrix);
-		model_shader.set_vec3("view_pos", glm::vec3(0.f,0.f,0.f));
-		shader_helper::set_materials_shader(*m, model_shader);
-		m->render();
-		model_shader.release();
+	SR.apply_projection();
 
-		flat_shader.bind();
-		flat_shader.set_bool("wireframe", true);
-		flat_shader.set_vec4("colour", glm::vec4(1.0f,0.0f,0.0f,1.0f));
-		flat_shader.set_mat4("projection", projection);
-		flat_shader.set_mat4("modelview", view);
-		flat_shader.set_mat3("normal_matrix", normal_matrix);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		SR.get_box().fast_render();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		flat_shader.release();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	SR.apply_view();
+
+	glDisable(GL_LIGHTING);
+
+	if (file_points.size() > 0) {
+		glColor3f(1,0,0);
+		glPointSize(10);
+		glBegin(GL_POINTS);
+		for (const pmvec3& p : file_points) {
+			glVertex3f(p.x, p.y, p.z);
+		}
+		glEnd();
 	}
-	else {
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
 
-		SR.apply_projection();
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-
-		SR.apply_view();
-
-		glEnable(GL_LIGHTING);
-
-		m->slow_render();
-
-		glDisable(GL_LIGHTING);
-		glColor3f(1.0f,0.0f,0.0f);
-		SR.get_box().slow_render();
+	if (tree_boxes.size() > 0) {
+		glColor3f(1,0,1);
+		for (const pmbox& B : tree_boxes) {
+			draw_box(B);
+		}
 	}
+
+	glDisable(GL_LIGHTING);
+	glColor3f(1.0f,0.0f,0.0f);
+	SR.get_box().slow_render();
 
 	glutSwapBuffers();
 }
