@@ -31,8 +31,8 @@ class octree {
 			math::vec3 vmax;
 			/// Point at the center of the region this node partitions.
 			math::vec3 center;
-			/// Indices to an object's triangles.
-			std::vector<size_t> *tris_idxs;
+			/// Indices to the objects' indices.
+			std::vector<size_t> *idxs;
 			/// Pointers to the children of this node.
 			node *children[8];
 
@@ -123,6 +123,19 @@ class octree {
 		(const node *n, std::vector<std::pair<math::vec3, math::vec3> >& boxes)
 		const;
 
+		/**
+		 * @brief Retrieves the indices stored at those cells intersecting
+		 * a sphere of radius @e R centered at @e p.
+		 * @param[in] p Center of sphere.
+		 * @param[in] R Radius of sphere.
+		 * @param[in] n Node of the tree
+		 * @param[out] idxs List of indices (need not be unique).
+		 */
+		void get_indices_node(
+			const math::vec3& p, float R,
+			const node *n, std::vector<size_t>& idxs
+		) const;
+
 	public:
 		/// Default constructor.
 		octree();
@@ -166,24 +179,42 @@ class octree {
 		// GETTERS
 
 		/**
-		 * @brief Finds the indices of the triangles in the subspace of a point.
+		 * @brief Retrieves the indices of the objects incident to
+		 * the cell of a point.
 		 *
-		 * Point @e p is located inside the octree at some subspace. In
-		 * parameter @e tris_idxs are stored the indices of those triangles
+		 * Point @e p is located inside the octree at some cell. In
+		 * parameter @e tris_idxs are stored the indices of those objects
+		 * incident to that cell.
 		 *
 		 * @param[in] p Point to be located.
-		 * @param[out] tris_idxs The triangles incident to the subspace where
-		 * @e p is located at.
+		 * @param[out] idxs The unique indices of the objectes incident to the
+		 * cell where @e p is located at.
 		 */
 		void get_indices
-		(const math::vec3& p, std::vector<size_t>& tris_idxs) const;
+		(const math::vec3& p, std::vector<size_t>& idxs) const;
+
+		/**
+		 * @brief Retrieves the indices of the objects incident to
+		 * the cells intersecting a sphere.
+		 *
+		 * Sphere has center at @e p and radius @e R, Parameter @e tris_idxs
+		 * stores the indices of those objects incident to the cells
+		 *
+		 * @param[in] p Center of the sphere.
+		 * @param[in] R Radious of the sphere.
+		 * @param[out] idxs The unique indices of the objectes incident to the
+		 * cell that intersect the sphere.
+		 */
+		void get_indices
+		(const math::vec3& p, float R, std::vector<size_t>& idxs) const;
 
 		/**
 		 * @brief Returns the bounding boxes of the cells in this octree.
 		 * @param[out] boxes The vector contains pairs of elements with points
 		 * the minimum and maximum coordinate values.
 		 */
-		void get_boxes(std::vector<std::pair<math::vec3, math::vec3> >& boxes) const;
+		void get_boxes
+		(std::vector<std::pair<math::vec3, math::vec3> >& boxes) const;
 
 		// OTHERS
 };

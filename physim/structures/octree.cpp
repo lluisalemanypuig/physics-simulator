@@ -13,8 +13,51 @@ using namespace std;
 // physim includes
 #include <physim/math/private/math3/add.hpp>
 #include <physim/math/private/math3/div.hpp>
+#include <physim/math/private/math3/mixed.hpp>
 #include <physim/math/private/math3/comparison.hpp>
 #include <physim/geometry/rectangle.hpp>
+
+static string tab = "";
+
+// aab_intersects_s = "Axis-Aligned Box intersects Sphere"
+inline
+bool aab_intersects_s
+(const physim::math::vec3& p, float R,
+ const physim::math::vec3& vmin, const physim::math::vec3& vmax)
+{
+	cout << tab << "min: " << __pm3_out(vmin) << endl;
+	cout << tab << "max: " << __pm3_out(vmax) << endl;
+	cout << "p - R: " << p.x - R << "," << p.y - R << "," << p.z - R << endl;
+	cout << "p + R: " << p.x + R << "," << p.y + R << "," << p.z + R << endl;
+	cout << "is P inside? " << (__pm3_inside_box(p, vmin,vmax) ? "Yes" : "No")
+		 << endl;
+
+	if (__pm3_inside_box(p, vmin,vmax)) {
+		return true;
+	}
+
+	bool in_x = false;
+	bool in_y = false;
+	bool in_z = false;
+
+	if (p.x <= vmin.x)	{ in_x = (p.x + R >= vmin.x); }	// point to the left
+	else				{ in_x = (p.x - R <= vmax.x); }	// point to the left
+
+	if (p.y <= vmin.y)	{ in_y = (p.y + R >= vmin.y); }	// point to the left
+	else				{ in_y = (p.y - R <= vmax.y); }	// point to the left
+
+	if (p.z <= vmin.z)	{ in_z = (p.z + R >= vmin.z); }	// point to the left
+	else				{ in_z = (p.z - R <= vmax.z); }	// point to the left
+
+	return in_x and in_y and in_z;
+}
+
+template<class T>
+void make_unique(vector<T>& v) {
+	std::sort(v.begin(), v.end());
+	auto last = std::unique(v.begin(), v.end());
+	v.erase(last, v.end());
+}
 
 namespace physim {
 using namespace math;
@@ -27,7 +70,7 @@ namespace structures {
 // -- node
 
 octree::node::node() {
-	tris_idxs = nullptr;
+	idxs = nullptr;
 	for (unsigned char i = 0; i < 8; ++i) {
 		children[i] = nullptr;
 	}
@@ -41,15 +84,15 @@ octree::node::~node() {
 		}
 	}
 
-	if (tris_idxs != nullptr) {
-		tris_idxs->clear();
-		delete tris_idxs;
-		tris_idxs = nullptr;
+	if (idxs != nullptr) {
+		idxs->clear();
+		delete idxs;
+		idxs = nullptr;
 	}
 }
 
 bool octree::node::is_leaf() const {
-	return tris_idxs != nullptr;
+	return idxs != nullptr;
 }
 
 // PRIVATE
@@ -72,8 +115,7 @@ const
 	__pm3_assign_v(n->vmin, vmin);
 	__pm3_assign_v(n->vmax, vmax);
 	// make center point
-	__pm3_add_v_v(n->center, n->vmin, n->vmax);
-	__pm3_div_acc_s(n->center, 2.0f);
+	__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
 
 	if (vertices_idxs.size() <= 8) {
 		// If there are less than 8 vertices to be partitioned
@@ -82,7 +124,7 @@ const
 		// we can't possibly assign a value to the center point.
 		// Let's hope that this will not be an issue.
 
-		n->tris_idxs = new vector<size_t>(triangle_idxs);
+		n->idxs = new vector<size_t>(triangle_idxs);
 		return n;
 	}
 
@@ -203,9 +245,7 @@ const
 
 	// obtain unique indices
 	for (unsigned char s = 0; s < 8; ++s) {
-		sort(tris_idxs_space[s].begin(), tris_idxs_space[s].end());
-		auto last = unique(tris_idxs_space[s].begin(), tris_idxs_space[s].end());
-		tris_idxs_space[s].erase(last, tris_idxs_space[s].end());
+		make_unique(tris_idxs_space[s]);
 	}
 
 	// 2. Find what subspaces each triangle intersects. Already
@@ -287,8 +327,12 @@ const
 	__pm3_assign_v(n->vmin, vmin);
 	__pm3_assign_v(n->vmax, vmax);
 	// make center point
-	__pm3_add_v_v(n->center, n->vmin, n->vmax);
-	__pm3_div_acc_s(n->center, 2.0f);
+	__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
+
+	if (vertices_idxs.size() <= 8) {
+		n->idxs = new vector<size_t>(vertices_idxs);
+		return n;
+	}
 
 	// vert_idxs_space contains indices pointing to vertices
 	// in parameter 'vertices'. These are the vertices that
@@ -342,9 +386,9 @@ octree::node *octree::copy_node(const node *n) const {
 	node *c = new node();
 	__pm3_assign_v(c->center, n->center);
 
-	if (n->tris_idxs != nullptr) {
+	if (n->idxs != nullptr) {
 		// this node is a leaf, so no need to copy the children
-		c->tris_idxs = new vector<size_t>(*(n->tris_idxs));
+		c->idxs = new vector<size_t>(*(n->idxs));
 		return c;
 	}
 
@@ -355,7 +399,7 @@ octree::node *octree::copy_node(const node *n) const {
 }
 
 void octree::get_boxes_node
-(const node *n, std::vector<std::pair<math::vec3, math::vec3> >& boxes)
+(const node *n, vector<std::pair<vec3, vec3> >& boxes)
 const
 {
 	if (n == nullptr) {
@@ -368,6 +412,40 @@ const
 
 	for (unsigned char c = 0; c < 8; ++c) {
 		get_boxes_node(n->children[c], boxes);
+	}
+}
+
+void octree::get_indices_node
+(const vec3& p, float R, const node *n, vector<size_t>& idxs) const
+{
+	if (n == nullptr) {
+		return;
+	}
+
+	cout << tab << "Checking node with box:" << endl;
+	cout << tab << "    " << __pm3_out(n->vmin) << " ,, " << __pm3_out(n->vmax) << endl;
+
+	if (n->is_leaf()) {
+		cout << tab << "node is leaf!" << endl;
+
+		idxs.insert(idxs.end(), n->idxs->begin(), n->idxs->end());
+		return;
+	}
+
+	for (unsigned char c = 0; c < 8; ++c) {
+		const node *child = n->children[c];
+		cout << tab << "    Cheking intersection with child's box" << endl;
+		cout << tab << "    " << __pm3_out(child->vmin) << " ,, "
+			 << __pm3_out(child->vmax) << endl;
+
+		string copy_tab = tab;
+		if (aab_intersects_s(p,R, child->vmin, child->vmax)) {
+
+			tab = copy_tab + "    ";
+
+			cout << tab << "    sphere intersects child " << int(c) << endl;
+			get_indices_node(p, R, child, idxs);
+		}
 	}
 }
 
@@ -487,22 +565,38 @@ void octree::copy(const octree& part) {
 // GETTERS
 
 void octree::get_indices
-(const vec3& p, vector<size_t>& tris_idxs) const
+(const vec3& p, vector<size_t>& idxs) const
 {
 	assert(root != nullptr);
 
 	node *n = root;
-	while (not n->is_leaf()) {
+	while (not n->is_leaf() and __pm3_inside_box(p, n->vmin, n->vmax)) {
 		unsigned char s = 0;
 		__pm3_lt(s, p, n->center);
 		n = n->children[s];
 	}
 
 	if (__pm3_inside_box(p, n->vmin, n->vmax)) {
-		tris_idxs.insert(tris_idxs.end(),
-						 n->tris_idxs->begin(),
-						 n->tris_idxs->end());
+		idxs.insert(idxs.end(),
+						 n->idxs->begin(),
+						 n->idxs->end());
 	}
+
+	// indices are extracted from a single cell,
+	// which are guaranteed to contain unique indices.
+}
+
+void octree::get_indices
+(const vec3& p, float R, vector<size_t>& idxs) const
+{
+	cout << __pm3_out(p) << " " << R << endl;
+
+	tab = "";
+	get_indices_node(p, R, root, idxs);
+
+	cout << "# indices: " << idxs.size() << endl;
+
+	make_unique(idxs);
 }
 
 void octree::get_boxes(vector<pair<vec3, vec3> >& boxes) const {
