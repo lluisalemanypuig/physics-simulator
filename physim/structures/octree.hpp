@@ -31,24 +31,32 @@ class octree {
 			math::vec3 vmax;
 			/// Point at the center of the region this node partitions.
 			math::vec3 center;
+
 			/// Indices to the objects' indices.
-			std::vector<size_t> *idxs;
+			size_t *idxs;
+			/// Amount of indices stored.
+			size_t count;
+			/// Is this node a leaf?
+			bool leaf;
+
 			/// Pointers to the children of this node.
 			node *children[8];
+
+			// Functions
 
 			/// Default constructor. Initialises pointers to null.
 			node();
 			/// Destructor.
 			~node();
 
-			/**
-			 * @brief Is this node a leaf
-			 *
-			 * A node is a leaf if it stores triangle indices.
-			 * @return Returns true if this node is a leaf. Returns false
-			 * otherwise.
-			 */
-			bool is_leaf() const;
+			/// Returns a pointer to the beginning of @ref idxs.
+			size_t *begin_idxs();
+			/// Returns a constant pointer to the beginning of @ref idxs.
+			const size_t *begin_idxs() const;
+			/// Returns a pointer to the ending of @ref idxs.
+			size_t *end_idxs();
+			/// Returns a constant pointer to the ending of @ref idxs.
+			const size_t *end_idxs() const;
 		};
 
 		/// Root of the octree.
@@ -78,6 +86,7 @@ class octree {
 		 * in @e triangle_idxs and the points in @e vertices_idxs.
 		 */
 		node *make_octree_triangles(
+			size_t lod,
 			const math::vec3& vmin, const math::vec3& vmax,
 			const std::vector<math::vec3>& vertices,
 			const std::vector<size_t>& triangles,
@@ -99,6 +108,7 @@ class octree {
 		 * in @e vertices_idxs.
 		 */
 		node *make_octree_vertices(
+			size_t lod,
 			const math::vec3& vmin, const math::vec3& vmax,
 			const std::vector<math::vec3>& vertices,
 			const std::vector<size_t>& vertices_idxs
@@ -154,14 +164,18 @@ class octree {
 		 */
 		void init(
 			const std::vector<math::vec3>& vertices,
-			const std::vector<size_t>& tris_indices
+			const std::vector<size_t>& tris_indices,
+			size_t lod = 8
 		);
 
 		/**
 		 * @brief Builds the partition of a cloud of points.
 		 * @param vertices The vertices, without repetitions, of the cloud.
 		 */
-		void init(const std::vector<math::vec3>& vertices);
+		void init(
+			const std::vector<math::vec3>& vertices,
+			size_t lod = 8
+		);
 
 		/// Frees the memory occupied by this object.
 		void clear();

@@ -2,6 +2,7 @@
 
 // C includes
 #include <assert.h>
+#include <string.h>
 
 // C++ includes
 #include <algorithm>
@@ -71,6 +72,8 @@ namespace structures {
 
 octree::node::node() {
 	idxs = nullptr;
+	count = 0;
+	leaf = false;
 	for (unsigned char i = 0; i < 8; ++i) {
 		children[i] = nullptr;
 	}
@@ -85,14 +88,23 @@ octree::node::~node() {
 	}
 
 	if (idxs != nullptr) {
-		idxs->clear();
-		delete idxs;
+		free(idxs);
 		idxs = nullptr;
+		count = 0;
 	}
 }
 
-bool octree::node::is_leaf() const {
-	return idxs != nullptr;
+size_t *octree::node::begin_idxs() {
+	return &idxs[0];
+}
+const size_t *octree::node::begin_idxs() const {
+	return &idxs[0];
+}
+size_t *octree::node::end_idxs() {
+	return &idxs[count - 1] + 1;
+}
+const size_t *octree::node::end_idxs() const {
+	return &idxs[count - 1] + 1;
 }
 
 // PRIVATE
@@ -100,12 +112,13 @@ bool octree::node::is_leaf() const {
 // -- octree
 
 octree::node *octree::make_octree_triangles(
+	size_t lod,
 	const vec3& vmin, const vec3& vmax,
 	const vector<vec3>& vertices,
 	const vector<size_t>& triangles,
 	const vector<vector<size_t> >& tris_per_vertex,
-	const vector<size_t>& vertices_idxs,
-	const vector<size_t>& triangle_idxs
+	const vector<size_t>& v_idxs,
+	const vector<size_t>& t_idxs
 )
 const
 {
@@ -117,14 +130,17 @@ const
 	// make center point
 	__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
 
-	if (vertices_idxs.size() <= 8) {
-		// If there are less than 8 vertices to be partitioned
-		// then we store the triangle indices and stop here.
-		// Note that in the event when there are no vertices
-		// we can't possibly assign a value to the center point.
-		// Let's hope that this will not be an issue.
+	// If there are less than 8 vertices to be partitioned
+	// then we store the triangle indices and stop here.
+	if (v_idxs.size() <= lod) {
+		n->leaf = true;
+		n->count = t_idxs.size();
+		if (n->count > 0) {
+			size_t bytes = n->count*sizeof(size_t);
+			n->idxs = static_cast<size_t *>(malloc(bytes));
+			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &t_idxs[0], bytes));
+		}
 
-		n->idxs = new vector<size_t>(triangle_idxs);
 		return n;
 	}
 
@@ -219,7 +235,7 @@ const
 	// Also add partial results of the triangles incident
 	// to that subspace.
 
-	for (size_t v_idx : vertices_idxs) {
+	for (size_t v_idx : v_idxs) {
 		const vec3& v = vertices[v_idx];
 
 		unsigned char s = 0;
@@ -250,7 +266,7 @@ const
 
 	// 2. Find what subspaces each triangle intersects. Already
 	// existing triangles are not included.
-	for (size_t t_idx : triangle_idxs) {
+	for (size_t t_idx : t_idxs) {
 		bool intersected1[8] = {false,false,false,false,false,false,false,false};
 		bool intersected2[8] = {false,false,false,false,false,false,false,false};
 		bool intersected3[8] = {false,false,false,false,false,false,false,false};
@@ -293,15 +309,15 @@ const
 
 		// make minimum and maximum points for the i-th child
 		if ((i & 0x01) == 0) { submax.x = n->vmax.x; submin.x = n->center.x; }
-		else { submax.x = n->center.x; submin.x = n->vmin.x; }
+		else				 { submax.x = n->center.x; submin.x = n->vmin.x; }
 		if ((i & 0x02) == 0) { submax.y = n->vmax.y; submin.y = n->center.y; }
-		else { submax.y = n->center.y; submin.y = n->vmin.y; }
+		else				 { submax.y = n->center.y; submin.y = n->vmin.y; }
 		if ((i & 0x04) == 0) { submax.z = n->vmax.z; submin.z = n->center.z; }
-		else { submax.z = n->center.z; submin.z = n->vmin.z; }
+		else				 { submax.z = n->center.z; submin.z = n->vmin.z; }
 
 		n->children[i] =
 		make_octree_triangles(
-			submin, submax,
+			lod, submin, submax,
 			vertices, triangles, tris_per_vertex,
 			vert_idxs_space[i], tris_idxs_space[i]
 		);
@@ -315,9 +331,10 @@ const
 }
 
 octree::node *octree::make_octree_vertices(
+	size_t lod,
 	const vec3& vmin, const vec3& vmax,
 	const vector<vec3>& vertices,
-	const vector<size_t>& vertices_idxs
+	const vector<size_t>& v_idxs
 )
 const
 {
@@ -329,8 +346,16 @@ const
 	// make center point
 	__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
 
-	if (vertices_idxs.size() <= 8) {
-		n->idxs = new vector<size_t>(vertices_idxs);
+	// If there are less than 8 vertices to be partitioned
+	// then we store the vertex indices and stop here.
+	if (v_idxs.size() <= lod) {
+		n->leaf = true;
+		n->count = v_idxs.size();
+		if (n->count > 0) {
+			size_t bytes = n->count*sizeof(size_t);
+			n->idxs = static_cast<size_t *>(malloc(bytes));
+			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &v_idxs[0], bytes));
+		}
 		return n;
 	}
 
@@ -340,7 +365,7 @@ const
 	vector<size_t> vert_idxs_space[8];
 
 	// partition the vertices
-	for (size_t v_idx : vertices_idxs) {
+	for (size_t v_idx : v_idxs) {
 		const vec3& v = vertices[v_idx];
 
 		unsigned char s = 0;
@@ -362,14 +387,14 @@ const
 
 		// make minimum and maximum points for the i-th child
 		if ((i & 0x01) == 0) { submax.x = n->vmax.x; submin.x = n->center.x; }
-		else { submax.x = n->center.x; submin.x = n->vmin.x; }
+		else				 { submax.x = n->center.x; submin.x = n->vmin.x; }
 		if ((i & 0x02) == 0) { submax.y = n->vmax.y; submin.y = n->center.y; }
-		else { submax.y = n->center.y; submin.y = n->vmin.y; }
+		else				 { submax.y = n->center.y; submin.y = n->vmin.y; }
 		if ((i & 0x04) == 0) { submax.z = n->vmax.z; submin.z = n->center.z; }
-		else { submax.z = n->center.z; submin.z = n->vmin.z; }
+		else				 { submax.z = n->center.z; submin.z = n->vmin.z; }
 
-		n->children[i] =
-		make_octree_vertices(submin, submax, vertices, vert_idxs_space[i]);
+		n->children[i] = make_octree_vertices
+		(lod, submin, submax, vertices, vert_idxs_space[i]);
 
 		// free unused memory
 		vert_idxs_space[i].clear();
@@ -383,19 +408,28 @@ octree::node *octree::copy_node(const node *n) const {
 		return nullptr;
 	}
 
-	node *c = new node();
-	__pm3_assign_v(c->center, n->center);
+	node *copy = new node();
+	__pm3_assign_v(copy->center, n->center);
+	__pm3_assign_v(copy->vmin, n->vmin);
+	__pm3_assign_v(copy->vmax, n->vmax);
 
-	if (n->idxs != nullptr) {
+	if (n->leaf) {
 		// this node is a leaf, so no need to copy the children
-		c->idxs = new vector<size_t>(*(n->idxs));
-		return c;
+
+		copy->count = n->count;
+		if (copy->count > 0) {
+			size_t bytes = n->count*sizeof(size_t);
+			copy->idxs = static_cast<size_t *>(malloc(bytes));
+			copy->idxs = static_cast<size_t *>
+					(memcpy(copy->idxs, n->begin_idxs(), bytes));
+		}
+		return copy;
 	}
 
 	for (unsigned char i = 0; i < 8; ++i) {
-		c->children[i] = copy_node(n->children[i]);
+		copy->children[i] = copy_node(n->children[i]);
 	}
-	return c;
+	return copy;
 }
 
 void octree::get_boxes_node
@@ -405,7 +439,7 @@ const
 	if (n == nullptr) {
 		return;
 	}
-	if (n->is_leaf()) {
+	if (n->leaf) {
 		boxes.push_back(make_pair(n->vmin, n->vmax));
 		return;
 	}
@@ -425,10 +459,11 @@ void octree::get_indices_node
 	cout << tab << "Checking node with box:" << endl;
 	cout << tab << "    " << __pm3_out(n->vmin) << " ,, " << __pm3_out(n->vmax) << endl;
 
-	if (n->is_leaf()) {
+	if (n->leaf) {
 		cout << tab << "node is leaf!" << endl;
-
-		idxs.insert(idxs.end(), n->idxs->begin(), n->idxs->end());
+		if (n->count > 0) {
+			idxs.insert(idxs.end(), n->begin_idxs(), n->end_idxs());
+		}
 		return;
 	}
 
@@ -463,7 +498,8 @@ octree::~octree() {
 
 void octree::init(
 	const vector<vec3>& vertices,
-	const vector<size_t>& tris_indices
+	const vector<size_t>& tris_indices,
+	size_t lod
 )
 {
 	clear();
@@ -525,12 +561,13 @@ void octree::init(
 
 	root =
 	make_octree_triangles(
+		lod,
 		vmin, vmax, vertices, tris_indices,
 		tris_per_vertex, vert_idxs, tris_idxs
 	);
 }
 
-void octree::init(const vector<vec3>& vertices) {
+void octree::init(const vector<vec3>& vertices, size_t lod) {
 	clear();
 
 	static const float inf = numeric_limits<float>::max();
@@ -545,7 +582,7 @@ void octree::init(const vector<vec3>& vertices) {
 		idxs[i] = i;
 	}
 
-	root = make_octree_vertices(vmin, vmax, vertices, idxs);
+	root = make_octree_vertices(lod, vmin, vmax, vertices, idxs);
 }
 
 void octree::clear() {
@@ -570,16 +607,16 @@ void octree::get_indices
 	assert(root != nullptr);
 
 	node *n = root;
-	while (not n->is_leaf() and __pm3_inside_box(p, n->vmin, n->vmax)) {
+	while (not n->leaf and __pm3_inside_box(p, n->vmin, n->vmax)) {
 		unsigned char s = 0;
 		__pm3_lt(s, p, n->center);
 		n = n->children[s];
 	}
 
-	if (__pm3_inside_box(p, n->vmin, n->vmax)) {
+	if (__pm3_inside_box(p, n->vmin, n->vmax) and n->count > 0) {
 		idxs.insert(idxs.end(),
-						 n->idxs->begin(),
-						 n->idxs->end());
+					n->begin_idxs(),
+					n->end_idxs());
 	}
 
 	// indices are extracted from a single cell,
