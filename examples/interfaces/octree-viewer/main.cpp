@@ -181,7 +181,7 @@ void initGL(int argc, char *argv[]) {
 
 	cout << "# points: " << file_points.size() << endl;
 
-	tree.init(file_points);
+	tree.init(file_points, 1);
 
 	tree.get_boxes(tree_boxes);
 	pmvec3 allmin, allmax;
@@ -257,13 +257,15 @@ void refresh() {
 				glVertex3f(p.x + 0.01f, p.y + 0.01f, p.z + 0.01f);
 			}
 		}
+		glColor3f(1,1,0);
 		glVertex3f(query_point.x, query_point.y, query_point.z);
 		glEnd();
-	}
 
-	glDisable(GL_LIGHTING);
-	glColor3f(1.0f,0.0f,0.0f);
-	SR.get_box().slow_render();
+		glPushMatrix();
+			glTranslatef(query_point.x, query_point.y, query_point.z);
+			glutWireSphere(query_radius, 10, 10);
+		glPopMatrix();
+	}
 
 	glutSwapBuffers();
 }
