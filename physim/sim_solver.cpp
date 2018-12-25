@@ -14,11 +14,13 @@
 // C++ includes
 #include <iostream>
 #include <vector>
+using namespace std;
 
 namespace physim {
+using namespace math;
 
 template<class P>
-void simulator::apply_solver(const P *p, math::vec3& pred_pos, math::vec3& pred_vel) {
+void simulator::apply_solver(const P *p, vec3& pred_pos, vec3& pred_vel) {
 	const float mass = p->mass;
 
 	switch (solver) {
@@ -46,7 +48,7 @@ void simulator::apply_solver(const P *p, math::vec3& pred_pos, math::vec3& pred_
 			break;
 
 		default:
-			std::cerr << "Warning: solver not implemented" << std::endl;
+			cerr << "Warning: solver not implemented" << endl;
 	}
 }
 
@@ -54,7 +56,7 @@ template<class P>
 void simulator::compute_forces(P *p) {
 	// compute the force every force field
 	// makes on every particle
-	math::vec3 F;
+	vec3 F;
 	for (fields::field *f : force_fields) {
 		f->compute_force(p, F);
 		__pm3_add_acc_v(p->force, F);

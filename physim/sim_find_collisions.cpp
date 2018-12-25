@@ -1,7 +1,6 @@
 #include <physim/simulator.hpp>
 
 // C++ includes
-#include <iostream>
 using namespace std;
 
 // physim includes

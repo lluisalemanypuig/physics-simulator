@@ -1,11 +1,12 @@
 #include <physim/simulator.hpp>
 
 // physim includes
-#include <physim/math/private/math3.hpp>
+#include <physim/math/private/math3/base.hpp>
 #include <physim/sim_solver.cpp>
 
 namespace physim {
 using namespace particles;
+using namespace math;
 
 void simulator::_simulate_sized_particles() {
 
@@ -40,7 +41,7 @@ void simulator::_simulate_sized_particles() {
 
 		// apply solver to predict next position and
 		// velocity of the particle
-		math::vec3 pred_pos, pred_vel;
+		vec3 pred_pos, pred_vel;
 		apply_solver(p, pred_pos, pred_vel);
 
 		// collision prediction:

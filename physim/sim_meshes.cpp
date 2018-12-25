@@ -6,7 +6,7 @@
 // physim includes
 #include <physim/fields/gravitational_planet.hpp>
 #include <physim/particles/conversions.hpp>
-#include <physim/math/private/math3.hpp>
+#include <physim/math/private/math3/base.hpp>
 #include <physim/sim_solver.cpp>
 
 namespace physim {
