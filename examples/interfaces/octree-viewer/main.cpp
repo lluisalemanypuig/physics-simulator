@@ -241,7 +241,7 @@ void refresh() {
 	}
 
 	if (tree_boxes.size() > 0) {
-		glColor3f(1,0,1);
+		glColor3f(0.3f,0.3f,1.0f);
 		for (const pmbox& B : tree_boxes) {
 			draw_box(B);
 		}
