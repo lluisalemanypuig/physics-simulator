@@ -15,10 +15,9 @@ using namespace std;
 #include <physim/math/private/math3/add.hpp>
 #include <physim/math/private/math3/div.hpp>
 #include <physim/math/private/math3/mixed.hpp>
+#include <physim/math/private/math3/geometry.hpp>
 #include <physim/math/private/math3/comparison.hpp>
 #include <physim/geometry/rectangle.hpp>
-
-static string tab = "";
 
 // aab_intersects_s = "Axis-Aligned Box intersects Sphere"
 inline
@@ -26,31 +25,40 @@ bool aab_intersects_s
 (const physim::math::vec3& p, float R,
  const physim::math::vec3& vmin, const physim::math::vec3& vmax)
 {
-	cout << tab << "min: " << __pm3_out(vmin) << endl;
-	cout << tab << "max: " << __pm3_out(vmax) << endl;
-	cout << "p - R: " << p.x - R << "," << p.y - R << "," << p.z - R << endl;
-	cout << "p + R: " << p.x + R << "," << p.y + R << "," << p.z + R << endl;
-	cout << "is P inside? " << (__pm3_inside_box(p, vmin,vmax) ? "Yes" : "No")
-		 << endl;
+	bool intersect = false;
 
-	if (__pm3_inside_box(p, vmin,vmax)) {
+	// poles of the sphere
+	physim::math::vec3 ps[6];
+	__pm3_assign_c(ps[0], p.x + R, p.y, p.z);
+	__pm3_assign_c(ps[1], p.x - R, p.y, p.z);
+	__pm3_assign_c(ps[2], p.x, p.y + R, p.z);
+	__pm3_assign_c(ps[3], p.x, p.y - R, p.z);
+	__pm3_assign_c(ps[4], p.x, p.y, p.z + R);
+	__pm3_assign_c(ps[5], p.x, p.y, p.z - R);
+	for (size_t i = 0; i < 6 and not intersect; ++i) {
+		intersect = intersect or __pm3_inside_box(ps[i], vmin,vmax);
+	}
+
+	// laziest evaluation
+	if (intersect) {
 		return true;
 	}
 
-	bool in_x = false;
-	bool in_y = false;
-	bool in_z = false;
+	// vertices of the box
+	physim::math::vec3 v[8];
+	__pm3_assign_c(v[0], vmin.x, vmin.y, vmin.z);
+	__pm3_assign_c(v[1], vmax.x, vmin.y, vmin.z);
+	__pm3_assign_c(v[2], vmin.x, vmax.y, vmin.z);
+	__pm3_assign_c(v[3], vmax.x, vmax.y, vmin.z);
+	__pm3_assign_c(v[4], vmin.x, vmin.y, vmax.z);
+	__pm3_assign_c(v[5], vmax.x, vmin.y, vmax.z);
+	__pm3_assign_c(v[6], vmin.x, vmax.y, vmax.z);
+	__pm3_assign_c(v[7], vmax.x, vmax.y, vmax.z);
+	for (size_t i = 0; i < 8 and not intersect; ++i) {
+		intersect = intersect or (__pm3_dist2(v[i], p) <= R*R);
+	}
 
-	if (p.x <= vmin.x)	{ in_x = (p.x + R >= vmin.x); }	// point to the left
-	else				{ in_x = (p.x - R <= vmax.x); }	// point to the left
-
-	if (p.y <= vmin.y)	{ in_y = (p.y + R >= vmin.y); }	// point to the left
-	else				{ in_y = (p.y - R <= vmax.y); }	// point to the left
-
-	if (p.z <= vmin.z)	{ in_z = (p.z + R >= vmin.z); }	// point to the left
-	else				{ in_z = (p.z - R <= vmax.z); }	// point to the left
-
-	return in_x and in_y and in_z;
+	return intersect;
 }
 
 template<class T>
@@ -456,29 +464,21 @@ void octree::get_indices_node
 		return;
 	}
 
-	cout << tab << "Checking node with box:" << endl;
-	cout << tab << "    " << __pm3_out(n->vmin) << " ,, " << __pm3_out(n->vmax) << endl;
+	// if the sphere does not intersect the larger box it
+	// certainly won't intersect the smaller boxes
+	if (not aab_intersects_s(p,R, n->vmin, n->vmax)) {
+		return;
+	}
 
 	if (n->leaf) {
-		cout << tab << "node is leaf!" << endl;
 		if (n->count > 0) {
 			idxs.insert(idxs.end(), n->begin_idxs(), n->end_idxs());
 		}
 		return;
 	}
-
 	for (unsigned char c = 0; c < 8; ++c) {
 		const node *child = n->children[c];
-		cout << tab << "    Cheking intersection with child's box" << endl;
-		cout << tab << "    " << __pm3_out(child->vmin) << " ,, "
-			 << __pm3_out(child->vmax) << endl;
-
-		string copy_tab = tab;
 		if (aab_intersects_s(p,R, child->vmin, child->vmax)) {
-
-			tab = copy_tab + "    ";
-
-			cout << tab << "    sphere intersects child " << int(c) << endl;
 			get_indices_node(p, R, child, idxs);
 		}
 	}
@@ -626,13 +626,7 @@ void octree::get_indices
 void octree::get_indices
 (const vec3& p, float R, vector<size_t>& idxs) const
 {
-	cout << __pm3_out(p) << " " << R << endl;
-
-	tab = "";
 	get_indices_node(p, R, root, idxs);
-
-	cout << "# indices: " << idxs.size() << endl;
-
 	make_unique(idxs);
 }
 
