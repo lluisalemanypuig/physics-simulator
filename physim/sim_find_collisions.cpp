@@ -269,29 +269,58 @@ bool simulator::find_update_geomcoll_sized
 		// then the geometry is in charge of updating
 		// this particle's position, velocity, ...
 
-		bool inter = false;
-		inter = inter or g->intersec_segment(in->cur_pos, pred_pos);
-		inter = inter or g->intersec_sphere(pred_pos, in->R);
-		if (inter) {
-			collision = true;
+		if (g->get_geom_type() != geometric::geometry_type::Object) {
+			bool inter = false;
+			inter = inter or g->intersec_segment(in->cur_pos, pred_pos);
+			inter = inter or g->intersec_sphere(pred_pos, in->R);
+			if (inter) {
+				collision = true;
 
-			coll_pred = *in;
+				coll_pred = *in;
 
-			// the geometry updates the predicted particle
-			g->update_particle(pred_pos, pred_vel, &coll_pred);
+				// the geometry updates the predicted particle
+				g->update_particle(pred_pos, pred_vel, &coll_pred);
 
-			if (solver == solver_type::Verlet) {
-				// this solver needs a correct position
-				// for the 'previous' position of the
-				// particle after a collision with geometry
+				if (solver == solver_type::Verlet) {
+					// this solver needs a correct position
+					// for the 'previous' position of the
+					// particle after a collision with geometry
 
-				__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+					__pm3_sub_v_vs(coll_pred.prev_pos, coll_pred.cur_pos, coll_pred.cur_vel, dt);
+				}
+
+				// keep track of the predicted particle's position
+				__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+				__pm3_assign_v(pred_vel, coll_pred.cur_vel);
 			}
-
-			// keep track of the predicted particle's position
-			__pm3_assign_v(pred_pos, coll_pred.cur_pos);
-			__pm3_assign_v(pred_vel, coll_pred.cur_vel);
 		}
+		else {
+			// faster test with geometrical objects
+			const geometric::object *o =
+				static_cast<const geometric::object *>(g);
+
+			bool updated =
+				o->update_particle(pred_pos, pred_vel, in, &coll_pred);
+
+			if (updated) {
+				collision = true;
+
+				if (solver == solver_type::Verlet) {
+					// this solver needs a correct position
+					// for the 'previous' position of the
+					// particle after a collision with geometry
+
+					__pm3_sub_v_vs(coll_pred.prev_pos,
+								   coll_pred.cur_pos,
+								   coll_pred.cur_vel, dt);
+				}
+
+				// keep track of the predicted particle's position
+				__pm3_assign_v(pred_pos, coll_pred.cur_pos);
+				__pm3_assign_v(pred_vel, coll_pred.cur_vel);
+			}
+		}
+
 	}
 
 	return collision;

@@ -111,8 +111,13 @@ bool object::intersec_segment(const vec3& p1, const vec3& p2) const {
 }
 
 bool object::intersec_sphere(const vec3& c, float R) const {
-	cerr << "object::intersec_sphere (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	vector<size_t> idxs;
+	octree.get_indices(c, idxs);
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].intersec_sphere(c,R)) {
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -166,17 +171,23 @@ void object::update_particle(
 	particles::sized_particle *p
 ) const
 {
-	cerr << "object::update_particle (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	update_particle(pred_pos, pred_vel, p, p);
 }
 
 bool object::update_particle(
-	const math::vec3& pp, const math::vec3& pv,
+	const math::vec3& pred_pos, const math::vec3& pred_vel,
 	const particles::sized_particle *p, particles::sized_particle *u
 ) const
 {
-	cerr << "object::update_particle (" << __LINE__
-		 << ") - To be implemented!" << endl;
+	vector<size_t> idxs;
+	octree.get_indices(pred_pos, p->R, idxs);
+	for (size_t t_idx : idxs) {
+		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
+			*u = *p;
+			tris[t_idx/3].update_particle(pred_pos, pred_vel, u);
+			return true;
+		}
+	}
 	return false;
 }
 
