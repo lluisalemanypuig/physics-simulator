@@ -7,6 +7,7 @@
 using namespace std;
 
 // glm includes
+#define GLM_FORCE_RADIANS
 #include <glm/gtc/type_ptr.hpp>
 
 // render includes

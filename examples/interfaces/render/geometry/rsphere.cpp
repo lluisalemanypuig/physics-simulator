@@ -5,6 +5,7 @@
 using namespace std;
 
 // glm inlcudes
+#define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 
 // render includes

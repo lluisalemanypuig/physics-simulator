@@ -34,16 +34,21 @@ void list_all_cases() {
 	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
 }
 
-int main(int argc, char *argv[]) {
-	if (argc == 1) {
-		cerr << "Error: lacking parameter for scene: ./spring-meshes case_identifier" << endl;
-		cerr << "    Use './spring-meshes --list' or" << endl;
-		cerr << "        './spring-meshes --help' or" << endl;
-		cerr << "    to see all scenes available." << endl;
-		return 1;
-	}
+bool is_help(const char *arg) {
+	return (strcmp(arg, "-h") == 0) or
+		   (strcmp(arg, "--h") == 0) or
+		   (strcmp(arg, "--he") == 0) or
+		   (strcmp(arg, "--hel") == 0) or
+		   (strcmp(arg, "--help") == 0) or
+		   (strcmp(arg, "-l") == 0) or
+		   (strcmp(arg, "--l") == 0) or
+		   (strcmp(arg, "--li") == 0) or
+		   (strcmp(arg, "--lis") == 0) or
+		   (strcmp(arg, "--list") == 0);
+}
 
-	if (strcmp(argv[1], "--list") == 0 or strcmp(argv[1], "--help") == 0) {
+int main(int argc, char *argv[]) {
+	if (argc == 1 or is_help(argv[1])) {
 		list_all_cases();
 		return 0;
 	}
