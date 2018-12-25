@@ -25,40 +25,55 @@ bool aab_intersects_s
 (const physim::math::vec3& p, float R,
  const physim::math::vec3& vmin, const physim::math::vec3& vmax)
 {
-	bool intersect = false;
-
-	// poles of the sphere
-	physim::math::vec3 ps[6];
-	__pm3_assign_c(ps[0], p.x + R, p.y, p.z);
-	__pm3_assign_c(ps[1], p.x - R, p.y, p.z);
-	__pm3_assign_c(ps[2], p.x, p.y + R, p.z);
-	__pm3_assign_c(ps[3], p.x, p.y - R, p.z);
-	__pm3_assign_c(ps[4], p.x, p.y, p.z + R);
-	__pm3_assign_c(ps[5], p.x, p.y, p.z - R);
-	for (size_t i = 0; i < 6 and not intersect; ++i) {
-		intersect = intersect or __pm3_inside_box(ps[i], vmin,vmax);
-	}
-
-	// laziest evaluation
-	if (intersect) {
+	if (__pm3_inside_box(p, vmin, vmax)) {
 		return true;
 	}
 
-	// vertices of the box
-	physim::math::vec3 v[8];
-	__pm3_assign_c(v[0], vmin.x, vmin.y, vmin.z);
-	__pm3_assign_c(v[1], vmax.x, vmin.y, vmin.z);
-	__pm3_assign_c(v[2], vmin.x, vmax.y, vmin.z);
-	__pm3_assign_c(v[3], vmax.x, vmax.y, vmin.z);
-	__pm3_assign_c(v[4], vmin.x, vmin.y, vmax.z);
-	__pm3_assign_c(v[5], vmax.x, vmin.y, vmax.z);
-	__pm3_assign_c(v[6], vmin.x, vmax.y, vmax.z);
-	__pm3_assign_c(v[7], vmax.x, vmax.y, vmax.z);
-	for (size_t i = 0; i < 8 and not intersect; ++i) {
-		intersect = intersect or (__pm3_dist2(v[i], p) <= R*R);
+#define classify_dim(c, cm, cM)			\
+	(c < cm ? 0 : ( cm <= c and c <= cM ? 1 : 2 ))
+
+	char cx = classify_dim(p.x, vmin.x, vmax.x);
+	char cy = classify_dim(p.y, vmin.y, vmax.y);
+	char cz = classify_dim(p.z, vmin.z, vmax.z);
+
+	physim::math::vec3 closest;
+	char region = cx*9 + cy*3 + cz;
+	switch (region) {
+	case  0: __pm3_assign_c(closest, vmin.x, vmin.y, vmin.z); break;	// 000
+	case  1: __pm3_assign_c(closest, vmin.x, vmin.y, p.z); break;		// 001
+	case  2: __pm3_assign_c(closest, vmin.x, vmin.y, vmax.z); break;	// 002
+	case  3: __pm3_assign_c(closest, vmin.x, p.y, vmin.z); break;		// 010
+	case  4: __pm3_assign_c(closest, vmin.x, p.y, p.z); break;			// 011
+	case  5: __pm3_assign_c(closest, vmin.x, p.y, vmax.z); break;		// 012
+	case  6: __pm3_assign_c(closest, vmin.x, vmax.y, vmin.z); break;	// 020
+	case  7: __pm3_assign_c(closest, vmin.x, vmax.y, p.z); break;		// 021
+	case  8: __pm3_assign_c(closest, vmin.x, vmax.y, vmax.z); break;	// 022
+	case  9: __pm3_assign_c(closest, p.x, vmin.y, vmin.z); break;		// 100
+	case 10: __pm3_assign_c(closest, p.x, vmin.y, p.z); break;			// 101
+	case 11: __pm3_assign_c(closest, p.x, vmin.y, vmax.z); break;		// 102
+	case 12: __pm3_assign_c(closest, p.x, p.y, vmin.z); break;			// 110
+	case 13: __pm3_assign_c(closest, p.x, p.y, p.z); break;				// 111
+	case 14: __pm3_assign_c(closest, p.x, p.y, vmax.z); break;			// 112
+	case 15: __pm3_assign_c(closest, p.x, vmax.y, vmin.z); break;		// 120
+	case 16: __pm3_assign_c(closest, p.x, vmax.y, p.z); break;			// 121
+	case 17: __pm3_assign_c(closest, p.x, vmax.y, vmax.z); break;		// 122
+	case 18: __pm3_assign_c(closest, vmax.x, vmin.y, vmin.z); break;	// 200
+	case 19: __pm3_assign_c(closest, vmax.x, vmin.y, p.z); break;		// 201
+	case 20: __pm3_assign_c(closest, vmax.x, vmin.y, vmax.z); break;	// 202
+	case 21: __pm3_assign_c(closest, vmax.x, p.y, vmin.z); break;		// 210
+	case 22: __pm3_assign_c(closest, vmax.x, p.y, p.z); break;			// 211
+	case 23: __pm3_assign_c(closest, vmax.x, p.y, vmax.z); break;		// 212
+	case 24: __pm3_assign_c(closest, vmax.x, vmax.y, vmin.z); break;	// 220
+	case 25: __pm3_assign_c(closest, vmax.x, vmax.y, p.z); break;		// 221
+	case 26: __pm3_assign_c(closest, vmax.x, vmax.y, vmax.z); break;	// 222
+	default:
+		cerr << "Error in file octree.cpp (" << __LINE__ << "): " << endl;
+		cerr << "    Unhandled value '" << int(region) << "' for AABB-Sphere "
+			 << "intersection test" << endl;
+		return false;
 	}
 
-	return intersect;
+	return __pm3_dist2(closest, p) <= R*R;
 }
 
 template<class T>
