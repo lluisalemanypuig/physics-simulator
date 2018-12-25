@@ -1,3 +1,6 @@
 docs/
+
 physim-debug/
 physim-release/
+
+*.pro.user
