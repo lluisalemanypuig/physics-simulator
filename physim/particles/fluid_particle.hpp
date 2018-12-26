@@ -36,6 +36,8 @@ class fluid_particle : public base_particle {
 		float density;
 		/// Pressure of the particle [N/m^2].
 		float pressure;
+		/// Viscosity of the particle [N/m^2].
+		float viscosity;
 
 	public:
 		/// Default constructor.
@@ -60,8 +62,6 @@ class fluid_particle : public base_particle {
 		 * overwritten by the simulator.
 		 * - @ref density : 0.0
 		 * - @ref pressure : 0.0
-		 * - @ref lifetime : 10.0
-		 * - @ref starttime : 0.0
 		 */
 		virtual void init();
 

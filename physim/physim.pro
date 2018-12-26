@@ -77,8 +77,7 @@ HEADERS += \
 	emitter/free_emitters/multisource.cpp \
     emitter/free_emitters/hose.hpp \
     fluids/fluid.hpp \
-    fluids/kernel_function.hpp \
-    fluids/kernel_pair.hpp
+    fluids/kernel_function.hpp
 
 SOURCES += \
     simulator.cpp \

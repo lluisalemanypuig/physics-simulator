@@ -69,7 +69,6 @@ void simulator::init_mesh(mesh *m) {
 }
 
 void simulator::init_fluid(fluid *f) {
-	f->make_initial_state();
 
 	fluid_particle **fps = f->get_particles();
 

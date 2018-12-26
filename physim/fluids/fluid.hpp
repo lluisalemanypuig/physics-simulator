@@ -5,7 +5,7 @@
 
 // physim includes
 #include <physim/particles/fluid_particle.hpp>
-#include <physim/fluids/kernel_pair.hpp>
+#include <physim/fluids/kernel_function.hpp>
 #include <physim/structures/octree.hpp>
 
 namespace physim {
@@ -16,34 +16,101 @@ namespace fluids {
  *
  * A fluid is characterised by its @ref volume, @ref density and @ref viscosity.
  *
- * It is also characterised by several kernel functions for
- * - pressure: @ref kernel_pressure
- * - viscosity: @ref kernel_viscosity
+ * It is also characterised by a kernel function and its gradients (see
+ * @ref kernel, @ref kernel_gr, @ref kernel_gr2).
  */
 class fluid {
 	protected:
-		/// Number of particles of the fluid
+		/// Number of particles of the fluid.
 		size_t N;
-		/// Total volume of the fluid [m^3].
+		/// Total volume of the fluid. [m^3]
 		float volume;
-		/// Density of the fluid [Kg/m^3].
+		/// Density of the fluid at rest. [Kg/m^3]
 		float density;
-		/**
-		 * @brief Density of the particles at rest.
-		 *
-		 * Used to calculate every particle's initial density.
-		 */
-		float rest_density;
-		/// Viscosity of the fluid.
+		/// Viscosity of the fluid. [Kg/(m*s)].
 		float viscosity;
 
 		/// Particles of this fluid.
 		particles::fluid_particle **ps;
 
-		/// Kernel function for pressure.
-		kernel_pair kernel_pressure;
-		/// Kernel function for viscosity.
-		kernel_pair kernel_viscosity;
+		/// Neighbourhood size.
+		float R;
+		/**
+		 * @brief Kernel function. \f$W\f$
+		 *
+		 * This function is used to compute the initial density of the
+		 * particles:
+		 *
+		 * \f$
+		 * \rho_i = \sum_j m_j \cdot W(r_{ij})
+		 * \f$,
+		 *
+		 * for all particles \f$1 \le i \le N\f$,
+		 * - \f$W(r_{ij})\f$ denotes the kernel function evaluated at the distance
+		 * between the @e i-th and the @e j-th particle,
+		 * - \f$m_j\f$ is the mass of the @e j-th particle.
+		 */
+		kernel_function kernel;
+		/**
+		 * @brief Kernel function. \f$\nabla W\f$
+		 *
+		 * This function is used to evaluate the new pressure values:
+		 *
+		 * \f$
+		 * \left\langle -\frac{1}{\rho}\nabla \right\rangle_i
+		 * \approx
+		 * \sum_j P_{ij} \cdot \nabla W_\rho(r_{ij})
+		 * \f$
+		 *
+		 * where
+		 *
+		 * \f$
+		 * P_{ij} = -m_j
+		 *		\left(
+		 *			\frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2}
+		 *		\right)
+		 * \f$,
+		 *
+		 * for all particles \f$1 \le i,j \le N\f$,
+		 * - \f$\nabla W(r_{ij})\f$ denotes the gradient of the kernel function
+		 * evaluated at the distance between the @e i-th and the @e j-th particles
+		 * \f$r_{ij}\f$,
+		 * - \f$m_j\f$ is the mass of the @e j-th particle,
+		 * - \f$p_i, p_j\f$ denote the pressure,
+		 * - \f$\rho_i, \rho_j\f$ denote the densities at particles @e i and @e j.
+		 */
+		kernel_function kernel_gr;
+		/**
+		 * @brief Kernel function. \f$\nabla^2 W\f$
+		 *
+		 * This is evaluated for the approximation of
+		 *
+		 * \f$
+		 * \left\langle \frac{\mu}{\rho}\nabla^2 v\right\rangle_i
+		 * \approx
+		 * \sum_j V_{ij} \cdot \nabla^2 W_\mu(r_{ij})
+		 * \f$
+		 *
+		 * where
+		 *
+		 * \f$
+		 * V_{ij} = \mu \cdot m_j
+		 *		\left(
+		 *			\frac{v_j - v_i}{\rho_i \rho_j}
+		 *		\right)
+		 * \f$
+		 *
+		 * for all particles \f$1 \le i,j \le N\f$, where
+		 * - \f$\nabla^2 W(r_{ij})\f$ denotes the gradient of the kernel function
+		 * evaluated at the distance between the @e i-th and the @e j-th particles
+		 * \f$r_{ij}\f$,
+		 * - \f$\mu\f$ is the fluid's reference viscosity (see @ref viscosity).
+		 * - \f$m_j\f$ is the mass of the @e j-th particle,
+		 * - \f$p_i, p_j\f$ denote the pressures,
+		 * - \f$\rho_i, \rho_j\f$ denote the densities,
+		 * - \f$v_i, v_j\f$ denote the viscosity at particles @e i and @e j.
+		 */
+		kernel_function kernel_gr2;
 
 		/**
 		 * @brief Space partition of this fluid's particles.
@@ -82,36 +149,14 @@ class fluid {
 		 * @param vol Volume of the fluid (see @ref volume).
 		 * @param dens Density of the fluid (see @ref density).
 		 * @param visc Viscosity of the fluid (see @ref viscosity).
+		 * @param r Neighbourhood size. Radius of the largest sphere around
+		 * a particle. This sphere defines the neighbourhood's size of a
+		 * particle.
 		 */
-		void allocate(size_t n, float vol, float dens, float visc);
+		void allocate(size_t n, float vol, float dens, float visc, float r);
 
 		/// Deallocates the memory occupied by this fluid.
 		virtual void clear();
-
-		/**
-		 * @brief Builds the initial state of the fluid.
-		 *
-		 * After assigning each of this fluid's particles a position,
-		 * the initial state needed for proper simulation is computed.
-		 *
-		 * This may include the computation of the initial density
-		 * for each of this fluid's particles:
-		 *
-		 * \f$\rho_i = \sum_j m_j \cdot W(r_{ij})\f$
-		 *
-		 * and the initial pressure:
-		 *
-		 * \f$p_i = c_s^2(\rho_i - \rho_0)\f$
-		 *
-		 * where \f$c_s\f$ is the speed of sound, \f$\rho_0\f$ is the fluid's
-		 * density at rest (see @ref rest_density), and \f$r_{ij}\f$ is the
-		 * distance between @e i-th and @e j-th particles (hence the need of
-		 * the initialisation of every particle's position).
-		 *
-		 * @pre In general, all this mesh's particles must have
-		 * been initialised following the description above.
-		 */
-		virtual void make_initial_state();
 
 		/**
 		 * @brief Update the forces generated within the fluid.
@@ -141,60 +186,15 @@ class fluid {
 		// SETTERS
 
 		/**
-		 * @brief Sets the pressure kernel function.
-		 *
-		 * This is evaluated for the approximation of
-		 *
-		 * \f$
-		 * \left\langle -\frac{1}{\rho}\nabla \right\rangle_i
-		 * \approx
-		 * \sum_j P_{ij} \cdot \nabla W(r_{ij})
-		 * \f$
-		 *
-		 * where
-		 *
-		 * \f$
-		 * P_{ij} = -m_j
-		 *		\left(
-		 *			\frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2}
-		 *		\right)
-		 * \f$
-		 *
-		 * and \f$W(r_{ij})\f$ denotes the kernel function evaluated at the
-		 * distance between the @e i-th and the @e j-th particles \f$r_{ij}\f$,
-		 * \f$m_j\f$ is the @e j-th particle's mass, \f$p_i, \rho_i\f$ denote
-		 * the @e i-th particle's pressure and density.
-		 *
-		 * @param kp Kernel function for pressure.
+		 * @brief Sets the kernel functions.
+		 * @param W \f$W\f$, see @ref kernel.
+		 * @param nW \f$\nabla W\f$, see @ref kernel_gr.
+		 * @param n2W \f$\nabla^2 W\f$, see @ref kernel_gr2.
 		 */
-		void set_pressure_kernel(const kernel_pair& kp);
-		/**
-		 * @brief Sets the viscosity kernel function.
-		 *
-		 * This is evaluated for the approximation of
-		 *
-		 * \f$
-		 * \left\langle \frac{\mu}{\rho}\nabla^2 v\right\rangle_i
-		 * \approx
-		 * \sum_j V_{ij} \cdot \nabla^2 W(r_{ij})
-		 * \f$
-		 *
-		 * where
-		 *
-		 * \f$
-		 * V_{ij} = \mu \cdot m_j
-		 *		\left(
-		 *			\frac{v_j - v_i}{\rho_i \rho_j}
-		 *		\right)
-		 * \f$
-		 *
-		 * and \f$W(r_{ij})\f$ denotes the kernel function evaluated at the
-		 * distance between the @e i-th and the @e j-th particles \f$r_{ij}\f$,
-		 * \f$m_j\f$ is the @e j-th particle's mass, \f$\mu\f$ is the fluid's
-		 * viscosity (see @ref viscosity).
-		 * @param kp Kernel function for pressure.
-		 */
-		void set_viscosity_kernel(const kernel_pair& kp);
+		void set_kernel(
+			const kernel_function& W, const kernel_function& nW,
+			const kernel_function& n2W
+		);
 
 		// GETTERS
 

@@ -63,8 +63,12 @@ namespace input {
 		return false;
 	}
 
-	bool read_file
-	(const string& dir, const string& fname, vector<vec2>& points) {
+	bool read_file(
+		const std::string& dir,
+		const std::string& fname,
+		std::vector<math::vec2>& points
+	)
+	{
 		string full_name = dir + "/" + fname;
 
 		ifstream fin;
@@ -90,8 +94,12 @@ namespace input {
 		return true;
 	}
 
-	bool read_file
-	(const string& dir, const string& fname, vector<vec3>& points) {
+	bool read_file(
+		const std::string& dir,
+		const std::string& fname,
+		std::vector<math::vec3>& points
+	)
+	{
 		string full_name = dir + "/" + fname;
 
 		ifstream fin;

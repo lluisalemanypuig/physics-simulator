@@ -20,8 +20,7 @@ using namespace std;
 #include <physim/geometry/rectangle.hpp>
 
 // aab_intersects_s = "Axis-Aligned Box intersects Sphere"
-inline
-bool aab_intersects_s
+inline bool aab_intersects_s
 (const physim::math::vec3& p, float R,
  const physim::math::vec3& vmin, const physim::math::vec3& vmax)
 {
@@ -76,7 +75,7 @@ bool aab_intersects_s
 }
 
 template<class T>
-void make_unique(vector<T>& v) {
+inline void make_unique(vector<T>& v) {
 	std::sort(v.begin(), v.end());
 	auto last = std::unique(v.begin(), v.end());
 	v.erase(last, v.end());
@@ -584,7 +583,7 @@ void octree::init(
 	);
 }
 
-void octree::init(const vector<vec3>& vertices, size_t lod) {
+void octree::init(const std::vector<math::vec3>& vertices, size_t lod) {
 	clear();
 
 	static const float inf = numeric_limits<float>::max();

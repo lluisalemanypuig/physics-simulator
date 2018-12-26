@@ -16,10 +16,12 @@ namespace structures {
  *
  * This is an implementation of a basic octree for both set of triangles
  * (see function
- * @ref init(const std::vector<math::vec3>&, const std::vector<size_t>&)),
+ * @ref init(const std::vector<math::vec3>&, const std::vector<size_t>&, size_t)
+ * ),
+ *
  * and a set of vertices
- * (see functions
- * @ref init(const std::vector<math::vec3>&),
+ * (see function
+ * @ref init(const std::vector<math::vec3>&, size_t) ).
  */
 class octree {
 	private:

@@ -3,6 +3,13 @@
 // C includes
 #include <stdlib.h>
 
+// C++ includes
+#include <vector>
+using namespace std;
+
+#define speed_sound 343.0f
+#define speed_sound2 speed_sound*speed_sound
+
 namespace physim {
 using namespace particles;
 using namespace structures;
@@ -35,8 +42,15 @@ const particles::fluid_particle *fluid::operator[] (size_t i) const {
 
 // MODIFIERS
 
-void fluid::allocate(size_t n, float vol, float dens, float visc) {
-	tree = new octree();
+void fluid::allocate(size_t n, float vol, float dens, float visc, float r) {
+	if (tree == nullptr) {
+		tree = new octree();
+	}
+	else {
+		tree->clear();
+	}
+
+	R = r;
 	volume = vol;
 	density = dens;
 	viscosity = visc;
@@ -56,13 +70,13 @@ void fluid::allocate(size_t n, float vol, float dens, float visc) {
 		else {
 			clear();
 			N = n;
-			ps = (fluid_particle **)malloc(N*sizeof(fluid_particle *));
+			ps = static_cast<fluid_particle **>(malloc(N*sizeof(fluid_particle *)));
 			new_particles = true;
 		}
 	}
 	else {
 		N = n;
-		ps = (fluid_particle **)malloc(N*sizeof(fluid_particle *));
+		ps = static_cast<fluid_particle **>(malloc(N*sizeof(fluid_particle *)));
 		new_particles = true;
 	}
 
@@ -85,10 +99,6 @@ void fluid::clear() {
 	}
 }
 
-void fluid::make_initial_state() {
-
-}
-
 void fluid::update_forces() {
 
 }
@@ -99,12 +109,12 @@ void fluid::make_partition() {
 
 // SETTERS
 
-void fluid::set_pressure_kernel(const kernel_pair& kp) {
-	kernel_pressure = kp;
-}
-
-void fluid::set_viscosity_kernel(const kernel_pair& kp) {
-	kernel_viscosity = kp;
+void fluid::set_kernel
+(const kernel_function& W, const kernel_function& nW, const kernel_function& n2W)
+{
+	kernel = W;
+	kernel_gr = nW;
+	kernel_gr2 = n2W;
 }
 
 // GETTERS

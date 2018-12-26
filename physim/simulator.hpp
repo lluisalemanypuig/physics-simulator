@@ -215,7 +215,6 @@ class simulator {
 		/**
 		 * @brief Initialises a fluid.
 		 *
-		 * Builds the initial state of the fluid (see @ref fluids::make_initial_state).
 		 * Computes an initial previous position for each particle of
 		 * the mesh so that the Verlet solver can work correctly
 		 * (see @ref solver_type).
@@ -629,7 +628,7 @@ class simulator {
 		 * The caller should not free the object since the simulator
 		 * will take care of that.
 		 *
-		 * @param m A non-null pointer to the object.
+		 * @param f A non-null pointer to the object.
 		 * @pre All fluid's particles must have been given a position.
 		 */
 		void add_fluid(fluids::fluid *f);
@@ -745,7 +744,7 @@ class simulator {
 		 * Calls @ref _simulate_fluids.
 		 *
 		 * Each mesh has each of its particle's force updated according to
-		 * the definition provided in method @ref fluids::update_forces. This
+		 * the definition provided in method @ref fluid::update_forces. This
 		 * method defines the model implemented in that fluid. Then, each
 		 * particle of the fluid is considered as a free particle and simulated
 		 * accordingly.
