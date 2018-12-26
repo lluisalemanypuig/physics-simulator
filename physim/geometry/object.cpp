@@ -182,7 +182,7 @@ bool object::update_particle(
 	vector<size_t> idxs;
 	octree.get_indices(pred_pos, p->R, idxs);
 	for (size_t t_idx : idxs) {
-		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
+		if (tris[t_idx/3].intersec_sphere(pred_pos, p->R)) {
 			*u = *p;
 			tris[t_idx/3].update_particle(pred_pos, pred_vel, u);
 			return true;
