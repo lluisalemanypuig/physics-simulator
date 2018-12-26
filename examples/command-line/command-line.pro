@@ -23,7 +23,8 @@ SOURCES += \
     sim_200.cpp \
     sim_201.cpp \
     sim_300.cpp \
-    sim_301.cpp
+    sim_301.cpp \
+    sim_302.cpp
 
 HEADERS += \
     utils.hpp

@@ -34,6 +34,7 @@ namespace study_cases {
 
 	void sim_300(int argc, char *argv[]);
 	void sim_301(int argc, char *argv[]);
+	void sim_302(int argc, char *argv[]);
 
 } // -- namespace study_cases
 
@@ -66,9 +67,12 @@ void list_all_cases() {
 	cout << endl;
 	cout << "Input testing:" << endl;
 	cout << "    300 : reads a model from a file and create a geometrical" << endl;
-	cout << "          object from it. Query of closest triangles" << endl;
-	cout << "    301 : reads a model from a file and create a geometrical" << endl;
+	cout << "          object from it. Query of closest triangles." << endl;
+	cout << "    301 : reads a point list from a file and queries the closest" << endl;
+	cout << "          points within a certain radius." << endl;
+	cout << "    302 : reads a model from a file and create a geometrical" << endl;
 	cout << "          geometrical object from it. Query of closest triangles" << endl;
+	cout << "          within radius." << endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -102,6 +106,7 @@ int main(int argc, char *argv[]) {
 	// input/output
 	case 300:	study_cases::sim_300(argc, argv); break;
 	case 301:	study_cases::sim_301(argc, argv); break;
+	case 302:	study_cases::sim_302(argc, argv); break;
 	default:
 		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 		cerr << "    Use './basic_simulations --list' to see all cases" << endl;

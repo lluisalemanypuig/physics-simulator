@@ -47,6 +47,11 @@ namespace study_cases {
 		p1_read = p2_read = false;
 		vec3 p1, p2;
 
+		if (argc == 2) {
+			sim_300_usage();
+			return;
+		}
+
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
 				sim_300_usage();
