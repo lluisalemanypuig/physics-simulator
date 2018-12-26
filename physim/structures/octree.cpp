@@ -29,8 +29,7 @@ bool aab_intersects_s
 		return true;
 	}
 
-#define classify_dim(c, cm, cM)			\
-	(c < cm ? 0 : ( cm <= c and c <= cM ? 1 : 2 ))
+#define classify_dim(c, cm, cM)	(c < cm ? 0 : ( cm <= c and c <= cM ? 1 : 2 ))
 
 	char cx = classify_dim(p.x, vmin.x, vmax.x);
 	char cy = classify_dim(p.y, vmin.y, vmax.y);
@@ -163,7 +162,6 @@ const
 			n->idxs = static_cast<size_t *>(malloc(bytes));
 			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &t_idxs[0], bytes));
 		}
-
 		return n;
 	}
 
@@ -485,17 +483,21 @@ void octree::get_indices_node
 		return;
 	}
 
+	// this cell is intersected by the sphere
+
+	// if this node is a leaf, 'return' the indices stored in it
 	if (n->leaf) {
 		if (n->count > 0) {
 			idxs.insert(idxs.end(), n->begin_idxs(), n->end_idxs());
 		}
 		return;
 	}
+
+	// if the node is not a leaf, check the children
 	for (unsigned char c = 0; c < 8; ++c) {
-		const node *child = n->children[c];
-		if (aab_intersects_s(p,R, child->vmin, child->vmax)) {
-			get_indices_node(p, R, child, idxs);
-		}
+		// the intersection with each child's box will be
+		// tested in the call for each child
+		get_indices_node(p, R, n->children[c], idxs);
 	}
 }
 
@@ -616,9 +618,7 @@ void octree::copy(const octree& part) {
 
 // GETTERS
 
-void octree::get_indices
-(const vec3& p, vector<size_t>& idxs) const
-{
+void octree::get_indices(const vec3& p, vector<size_t>& idxs) const {
 	assert(root != nullptr);
 
 	node *n = root;
@@ -638,9 +638,7 @@ void octree::get_indices
 	// which are guaranteed to contain unique indices.
 }
 
-void octree::get_indices
-(const vec3& p, float R, vector<size_t>& idxs) const
-{
+void octree::get_indices (const vec3& p, float R, vector<size_t>& idxs) const {
 	get_indices_node(p, R, root, idxs);
 	make_unique(idxs);
 }

@@ -124,11 +124,13 @@ namespace study_cases {
 		}
 		timing::time_point end = timing::now();
 		double r_sim = timing::elapsed_seconds(begin, end);
-
 		cout << "Time spent in reading: " << r_sim << " s" << endl;
 
 		vector<size_t> tris;
+		begin = timing::now();
 		o->get_partition().get_indices(point, R, tris);
+		end = timing::now();
+
 		cout << "The triangles within radius " << R << " from point ("
 			 << point.x << "," << point.y << "," << point.z
 			 << ") are:";
@@ -136,6 +138,9 @@ namespace study_cases {
 			cout << ", " << t_idx/3;
 		}
 		cout << endl;
+
+		r_sim = timing::elapsed_seconds(begin, end);
+		cout << "Time spent in querying: " << r_sim << " s" << endl;
 
 		delete o;
 	}

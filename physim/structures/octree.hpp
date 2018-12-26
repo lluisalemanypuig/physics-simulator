@@ -67,6 +67,8 @@ class octree {
 		/**
 		 * @brief Builds a tree rooted at a node that partitions the triangles
 		 * stored in @e triangles pointed by @e triangle_idxs.
+		 * @param lod Threshold value for vertex partition. Below this amount,
+		 * vertices will not be partitioned anymore.
 		 * @param vmin Point with the minimum value coordinates of the
 		 * points in @e vertices.
 		 * @param vmax Point with the maximum value coordinates of the
@@ -98,6 +100,8 @@ class octree {
 		/**
 		 * @brief Builds a tree rooted at a node that partitions the vertices
 		 * stored in @e vertices pointed by @e vertices_idxs.
+		 * @param lod Threshold value for vertex partition. Below this amount,
+		 * vertices will not be partitioned anymore.
 		 * @param vmin Point with the minimum value coordinates of the points
 		 * in @e vertices.
 		 * @param vmax Point with the maximum value coordinates of the points
