@@ -20,12 +20,14 @@ namespace particles {
 
 void agent_particle::partial_init() {
 	__pm3_assign_s(target, 0.0f);
+	__pm3_assign_s(orientation, 0.0f);
 	behaviour = agent_behaviour_type::none;
 	max_speed = 1.0f;
 	max_force = 1.0f;
 	slowing_distance = 0.0f;
 
-	float w = 1.0f/4.0f;
+	float w = 1.0f/5.0f;
+	align_weight = w;
 	seek_weight = w;
 	flee_weight = w;
 	arrival_weight = w;

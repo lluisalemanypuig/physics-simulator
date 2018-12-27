@@ -90,14 +90,16 @@ class agent_particle : public sized_particle {
 		 *
 		 * The attributes of the class take the following values:
 		 * - @ref target : vec3(0,0,0)
+		 * - @ref orientation : vec3(0,0,0)
 		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
 		 * - @ref slowing_distance : 0.0
-		 * - @ref seek_weight : 1.0
-		 * - @ref flee_weight : 1.0
-		 * - @ref arrival_weight : 1.0
-		 * - @ref coll_avoid_weight : 1.0
+		 * - @ref align_weight : 1.0/5.0
+		 * - @ref seek_weight : 1.0/5.0
+		 * - @ref flee_weight : 1.0/5.0
+		 * - @ref arrival_weight : 1.0/5.0
+		 * - @ref coll_avoid_weight : 1.0/5.0
 		 */
 		void partial_init();
 
@@ -110,6 +112,15 @@ class agent_particle : public sized_particle {
 		 * particle. See @ref behaviour.
 		 */
 		math::vec3 target;
+
+		/**
+		 * @brief Vector indicating the orientation of the particle.
+		 *
+		 * This need not be equal to the @ref cur_velocity vector,
+		 * but it should be initialised with a value equal to the
+		 * velocity.
+		 */
+		math::vec3 orientation;
 
 		/// Behaviour of this agent.
 		agent_behaviour_type behaviour;
@@ -139,6 +150,8 @@ class agent_particle : public sized_particle {
 		 */
 		float slowing_distance;
 
+		/// Weight for aligning orientation with velocity.
+		float align_weight;
 		/// Weight for seek behaviour.
 		float seek_weight;
 		/// Weight for flee behaviour.
@@ -175,14 +188,16 @@ class agent_particle : public sized_particle {
 		 * - @ref fixed : false
 		 * - @ref R : 1.0
 		 * - @ref target : vec3(0,0,0)
+		 * - @ref orientation : vec3(0,0,0)
 		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
 		 * - @ref slowing_distance : 0.0
-		 * - @ref seek_weight : 1.0
-		 * - @ref flee_weight : 1.0
-		 * - @ref arrival_weight : 1.0
-		 * - @ref coll_avoid_weight : 1.0
+		 * - @ref align_weight : 1.0/5.0
+		 * - @ref seek_weight : 1.0/5.0
+		 * - @ref flee_weight : 1.0/5.0
+		 * - @ref arrival_weight : 1.0/5.0
+		 * - @ref coll_avoid_weight : 1.0/5.0
 		 */
 		void init();
 
@@ -290,7 +305,7 @@ class agent_particle : public sized_particle {
 		 * This function must compute a velocity vector multiplied
 		 * by a certain weight. The result must be assigned to @e v.
 		 *
-		 * @param[out] v Seek steering vector.
+		 * @param[out] v Flee steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void flee_behaviour(math::vec3& v) const;
@@ -303,7 +318,7 @@ class agent_particle : public sized_particle {
 		 * Recall that the slowing distance considered is stored
 		 * in @e v.
 		 *
-		 * @param[out] v Seek steering vector.
+		 * @param[out] v Arrival steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void arrival_behaviour(math::vec3& v) const;
@@ -314,7 +329,7 @@ class agent_particle : public sized_particle {
 		 * by a certain weight. The result must be assigned to @e v.
 		 *
 		 * @param[in] scene The geometry in the simulation.
-		 * @param[out] v Seek steering vector.
+		 * @param[out] v Collision avoidance steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void collision_avoidance_behaviour

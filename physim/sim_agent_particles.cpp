@@ -11,6 +11,7 @@ using namespace math;
 
 void simulator::_simulate_agent_particles() {
 
+	// first compute forces ...
 	for (size_t i = 0; i < aps.size(); ++i) {
 		agent_particle *p = aps[i];
 
@@ -18,22 +19,6 @@ void simulator::_simulate_agent_particles() {
 		if (p->fixed) {
 			continue;
 		}
-
-		/*
-		// Reset a particle when it dies.
-		// Do not smiulate this particle
-		// until the next step
-		if (p->lifetime <= 0.0f) {
-			init_particle(p);
-			continue;
-		}
-		// is this particle allowed to move?
-		// if not, ignore it
-		p->reduce_starttime(dt);
-		if (p->starttime > 0.0f) {
-			continue;
-		}
-		*/
 
 		// Particles age: reduce their lifetime.
 		p->reduce_lifetime(dt);
@@ -47,9 +32,23 @@ void simulator::_simulate_agent_particles() {
 		p->apply_behaviours(steer_force);
 		p->apply_behaviours(scene_fixed, steer_force);
 
-		truncate(steer_force, p->max_force, steer_force);
+		// p->apply_behaviours(aps, steer_force)
+
+		// store force
+		truncate(steer_force, p->max_force, p->force);
+	}
+
+	// ... then update velocities and positions
+	for (size_t i = 0; i < aps.size(); ++i) {
+		agent_particle *p = aps[i];
+
+		// ignore fixed particles
+		if (p->fixed) {
+			continue;
+		}
+
 		vec3 accel;
-		__pm3_div_v_s(accel, steer_force, p->mass);
+		__pm3_div_v_s(accel, p->force, p->mass);
 
 		vec3 pred_vel;
 		__pm3_add_v_vs(pred_vel, p->cur_vel, accel, dt);
@@ -94,6 +93,11 @@ void simulator::_simulate_agent_particles() {
 		if (part_part_colls_activated()) {
 			find_update_partcoll_agent(p, i);
 		}
+
+		// compute new orientation
+		vec3 alignment;
+		__pm3_sub_v_v(alignment, p->cur_vel, p->orientation);
+		__pm3_add_acc_vs(p->orientation, alignment, p->align_weight);
 	}
 
 }
