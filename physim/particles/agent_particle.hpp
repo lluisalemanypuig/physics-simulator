@@ -100,6 +100,7 @@ class agent_particle : public sized_particle {
 		 * - @ref flee_weight : 1.0/5.0
 		 * - @ref arrival_weight : 1.0/5.0
 		 * - @ref coll_avoid_weight : 1.0/5.0
+		 * - @ref ahead_distance : 5.0
 		 */
 		void partial_init();
 
@@ -160,6 +161,8 @@ class agent_particle : public sized_particle {
 		float arrival_weight;
 		/// Weight for collision avoidance behaviour.
 		float coll_avoid_weight;
+		/// Distance ahead of the agent for collision detection.
+		float ahead_distance;
 
 	public:
 		/// Default constructor.
@@ -198,6 +201,7 @@ class agent_particle : public sized_particle {
 		 * - @ref flee_weight : 1.0/5.0
 		 * - @ref arrival_weight : 1.0/5.0
 		 * - @ref coll_avoid_weight : 1.0/5.0
+		 * - @ref ahead_distance : 5.0
 		 */
 		void init();
 
@@ -327,6 +331,9 @@ class agent_particle : public sized_particle {
 		 *
 		 * This function must compute a velocity vector multiplied
 		 * by a certain weight. The result must be assigned to @e v.
+		 *
+		 * Rectangles are considered walls. The rest of the geometry
+		 * is approximated with spheres.
 		 *
 		 * @param[in] scene The geometry in the simulation.
 		 * @param[out] v Collision avoidance steering vector.

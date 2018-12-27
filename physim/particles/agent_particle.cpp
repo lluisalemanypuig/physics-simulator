@@ -2,11 +2,13 @@
 
 // C++ includes
 #include <algorithm>
+#include <iostream>
 #include <vector>
 using namespace std;
 
 // physim includes
 #include <physim/math/private/math3.hpp>
+#include <physim/geometry/rectangle.hpp>
 
 #define FULL_MASK static_cast<int>(0xffffffff)
 
@@ -32,6 +34,8 @@ void agent_particle::partial_init() {
 	flee_weight = w;
 	arrival_weight = w;
 	coll_avoid_weight = w;
+
+	ahead_distance = 5.0f;
 }
 
 // PUBLIC
@@ -179,7 +183,90 @@ void agent_particle::collision_avoidance_behaviour
 (const vector<geometry *>& scene, vec3& v)
 const
 {
+	for (const geometry *g : scene) {
+		// skip distant objects
+		vec3 geom_pos = g->get_box_center();
+		float dist2;
+		if (g->get_geom_type() == geometry_type::Rectangle) {
+			// consider distance to object
+			const rectangle *r = static_cast<const rectangle *>(g);
+			dist2 = r->distance(cur_pos);
+			dist2 = dist2*dist2;
+		}
+		else if (g->get_geom_type() == geometry_type::Plane) {
+			// consider distance to object
+			const plane *p = static_cast<const plane *>(g);
+			dist2 = p->dist_point_plane(cur_pos);
+			dist2 = dist2*dist2;
+		}
+		else {
+			dist2 = __pm3_dist2(cur_pos, geom_pos);
+		}
+		if (dist2 > ahead_distance*ahead_distance) {
+			continue;
+		}
 
+		bool skip = false;
+
+		// decide, using a second criteria, whether
+		// this geometry should be skipped or not
+		vec3 repulsion;
+		if (g->get_geom_type() == geometry_type::Rectangle) {
+			// this is a wall
+			const plane& p = static_cast<const rectangle *>(g)->get_plane();
+			__pm3_assign_v(repulsion, p.get_normal());
+			if (p.dist_point_plane(cur_pos) < 0.0f) {
+				__pm3_invert(repulsion, repulsion);
+			}
+			float angle = __pm3_angle(repulsion, cur_vel);
+			if (angle < 1.571f) {
+				// the '< 1.571' is counterintuitive, but just
+				// do a little drawing and you will know why
+				skip = true;
+			}
+		}
+		else if (g->get_geom_type() == geometry_type::Plane) {
+			// this is a wall
+			const plane *p = static_cast<const plane *>(g);
+			__pm3_assign_v(repulsion, p->get_normal());
+			if (p->dist_point_plane(cur_pos) < 0.0f) {
+				__pm3_invert(repulsion, repulsion);
+			}
+			float angle = __pm3_angle(repulsion, cur_vel);
+			if (angle < 1.571f) {
+				// the '< 1.571' is counterintuitive, but just
+				// do a little drawing and you will know why
+				skip = true;
+			}
+		}
+		else {
+			// project 'geom_pos' onto line through current
+			// position and director vector current velocity
+			vec3 agent_to_object = geom_pos - cur_pos;
+			float angle = __pm3_angle(agent_to_object, cur_vel);
+			if (angle < 1.571f) {
+				// the '< 1.571' is counterintuitive, but just
+				// do a little drawing and you will know why
+				skip = true;
+			}
+
+			// use cross products to obtain repulsion vector
+			// (only if not skip)
+			if (not skip) {
+				vec3 c;
+				__pm3_cross(c, cur_vel, agent_to_object);
+				__pm3_cross(repulsion, cur_vel, c);
+				normalise(repulsion, repulsion);
+			}
+		}
+
+		if (skip) {
+			continue;
+		}
+
+		// compute contribution
+		__pm3_add_v_vs(v, cur_vel, repulsion, coll_avoid_weight);
+	}
 }
 
 } // -- namespace particles

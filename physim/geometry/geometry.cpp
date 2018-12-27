@@ -37,5 +37,9 @@ const vec3& geometry::get_max() const {
 	return vmax;
 }
 
+vec3 geometry::get_box_center() const {
+	return (vmin + vmax)/2;
+}
+
 } // -- namespace geometric
 } // -- namespace physim
