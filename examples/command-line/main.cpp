@@ -29,12 +29,17 @@ namespace study_cases {
 	void sim_200(int argc, char *argv[]);
 	void sim_201(int argc, char *argv[]);
 
+	/* ------ */
+	/* FLUIDS */
+
+	void sim_300(int argc, char *argv[]);
+
 	/* ------------ */
 	/* INPUT/OUTPUT */
 
-	void sim_300(int argc, char *argv[]);
-	void sim_301(int argc, char *argv[]);
-	void sim_302(int argc, char *argv[]);
+	void sim_800(int argc, char *argv[]);
+	void sim_801(int argc, char *argv[]);
+	void sim_802(int argc, char *argv[]);
 
 	/* ---------------------------------------------- */
 	/* STANDALONE SIMULATIONS FOR MEMORY LEAK TESTING */
@@ -70,12 +75,15 @@ void list_all_cases() {
 	cout << "          of three particles" << endl;
 	cout << "    201 : simulate a two-dimensional regular mesh" << endl;
 	cout << endl;
+	cout << "Fluids:" << endl;
+	cout << "    300 : simulate a very small and simple fluid" << endl;
+	cout << endl;
 	cout << "Input testing:" << endl;
-	cout << "    300 : reads a model from a file and create a geometrical" << endl;
+	cout << "    800 : reads a model from a file and create a geometrical" << endl;
 	cout << "          object from it. Query of closest triangles." << endl;
-	cout << "    301 : reads a point list from a file and queries the closest" << endl;
+	cout << "    801 : reads a point list from a file and queries the closest" << endl;
 	cout << "          points within a certain radius." << endl;
-	cout << "    302 : reads a model from a file and create a geometrical" << endl;
+	cout << "    802 : reads a model from a file and create a geometrical" << endl;
 	cout << "          geometrical object from it. Query of closest triangles" << endl;
 	cout << "          within radius." << endl;
 	cout << endl;
@@ -112,10 +120,12 @@ int main(int argc, char *argv[]) {
 	// spring meshes
 	case 200:	study_cases::sim_200(argc, argv); break;
 	case 201:	study_cases::sim_201(argc, argv); break;
-	// input/output
+	// fluids
 	case 300:	study_cases::sim_300(argc, argv); break;
-	case 301:	study_cases::sim_301(argc, argv); break;
-	case 302:	study_cases::sim_302(argc, argv); break;
+	// input/output
+	case 800:	study_cases::sim_800(argc, argv); break;
+	case 801:	study_cases::sim_801(argc, argv); break;
+	case 802:	study_cases::sim_802(argc, argv); break;
 	// memory
 	case 900:	study_cases::sim_900(argc, argv); break;
 	default:

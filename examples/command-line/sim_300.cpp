@@ -10,159 +10,124 @@ using namespace std;
 #include "utils.hpp"
 
 // physim includes
-#include <physim/input/input.hpp>
-#include <physim/geometry/object.hpp>
-#include <physim/structures/octree.hpp>
-#include <physim/math/vec3.hpp>
+#include <physim/simulator.hpp>
+#include <physim/particles/fluid_particle.hpp>
+#include <physim/fluids/fluid.hpp>
 using namespace physim;
-using namespace input;
+using namespace particles;
 using namespace math;
 using namespace geometric;
-using namespace structures;
+using namespace fluids;
 
 namespace study_cases {
 
 	void sim_300_usage() {
-		cout << "Input operations:" << endl;
-		cout << endl;
-		cout << "This study case simply reads one file from disk" << endl;
-		cout << "and creates a geometrical object with it. Then uses" << endl;
-		cout << "the point passed as parameter to locate the closest" << endl;
-		cout << "triangles of the object closest to the point." << endl;
+		cout << "Simulation of a simple fluid" << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
-		cout << "    --directory d: specify input directory" << endl;
-		cout << "    --file f: specify input file" << endl;
-		cout << "    --point x y z: specify a 3d point" << endl;
-		cout << endl;
-		cout << "The file read is: d/f" << endl;
-		cout << endl;
+		cout << "    --total-time t: total time of the simulation.         Default: 2.0" << endl;
+		cout << "    --step t:       time step of the simulation.          Default: 0.01" << endl;
+		cout << "    --solver s:     numerical solver to use.              Default: 'semi-euler'" << endl;
+		cout << "        euler:      Euler integration method.." << endl;
+		cout << "        semi-euler: Euler semi-implicit integration method." << endl;
+		cout << "        verlet:     Verlet integration method." << endl;
+		cout << "    --R r:			 Size of the neighbourhood.            Default: 0.01" << endl;
+		cout << "    --vol v:		 Volume of the fluid.                  Default: 1.0" << endl;
+		cout << "    --vis v:		 Viscosity of the fluid.               Default: 1.0" << endl;
+		cout << "    --D d:			 Density at rest of the fluid.         Default: 1.0" << endl;
 	}
 
 	void sim_300(int argc, char *argv[]) {
-		string directory = "none";
-		string filename = "none";
-		bool p1_read, p2_read;
-		p1_read = p2_read = false;
-		vec3 p1, p2;
-
-		if (argc == 2) {
-			sim_300_usage();
-			return;
-		}
+		float dt = 0.01f;
+		float total_time = 5.0f;
+		solver_type solv = solver_type::EulerSemi;
+		// number of particles
+		size_t N = 1000;
+		// neighbourhood size
+		float R = 0.01f;
+		// volume
+		float vol = 1.0f;
+		// viscosity
+		float vis = 1.0f;
+		// density
+		float D = 1.0f;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
 				sim_300_usage();
 				return;
 			}
-			else if (strcmp(argv[i], "--directory") == 0) {
-				directory = string(argv[i + 1]);
+			else if (strcmp(argv[i], "--total-time") == 0) {
+				total_time = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--file") == 0) {
-				filename = string(argv[i + 1]);
+			else if (strcmp(argv[i], "--step") == 0) {
+				dt = atof(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--point") == 0) {
-				if (not p1_read) {
-					p1.x = static_cast<float>(atof(argv[i + 1]));
-					p1.y = static_cast<float>(atof(argv[i + 2]));
-					p1.z = static_cast<float>(atof(argv[i + 3]));
-					p1_read = true;
+			else if (strcmp(argv[i], "--N") == 0) {
+				N = atoi(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--R") == 0) {
+				R = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--vol") == 0) {
+				vol = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--vis") == 0) {
+				vis = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--D") == 0) {
+				D = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--solver") == 0) {
+				string solv_name = string(argv[i + 1]);
+				if (solv_name == "euler") {
+					solv = solver_type::EulerOrig;
+				}
+				else if (solv_name == "semi-euler") {
+					solv = solver_type::EulerSemi;
+				}
+				else if (solv_name == "verlet") {
+					solv = solver_type::Verlet;
 				}
 				else {
-					p2.x = static_cast<float>(atof(argv[i + 1]));
-					p2.y = static_cast<float>(atof(argv[i + 2]));
-					p2.z = static_cast<float>(atof(argv[i + 3]));
-					p2_read = true;
+					cerr << "Error: invalid value for solver." << endl;
+					return;
 				}
-				i += 4;
+				++i;
 			}
 			else {
 				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
-				cerr << "    Use ./command-line 300 --help to see the usage" << endl;
 				return;
 			}
 		}
 
-		if (directory == "none") {
-			cerr << "Error: directory not specified" << endl;
-			cerr << "    Use ./command-line 300 --help to see the usage" << endl;
-			return;
+		cout << "Fluid characteristics:" << endl;
+		cout << "    Number of particles: " << N << endl;
+		cout << "Simulation:" << endl;
+		cout << "    total time: " << total_time << endl;
+		cout << "    step time: " << dt << endl,
+		cout << "    solver: ";
+		if (solv == solver_type::EulerOrig) {
+			cout << " Euler" << endl;
+		}
+		else if (solv == solver_type::EulerSemi) {
+			cout << " Semi-Euler" << endl;
+		}
+		else if (solv == solver_type::Verlet) {
+			cout << " Verlet" << endl;
 		}
 
-		if (filename == "none") {
-			cerr << "Error: filename not specified" << endl;
-			cerr << "    Use ./command-line 300 --help to see the usage" << endl;
-			return;
-		}
+		fluid F;
+		F.allocate(N, vol, D, vis, R);
 
-		if (not p1_read) {
-			cerr << "Error: you have to specify at least one point!" << endl;
-			cerr << "    Use ./command-line 300 --help to see the usage" << endl;
-			return;
-		}
-
-		cout << "Reading: " << directory + "/" + filename << endl;
-
-		timing::time_point begin = timing::now();
-		object *o = new object();
-		bool r = input::read_file(directory, filename, o);
-		if (not r) {
-			cerr << "Error: some error occurred while trying to read" << endl;
-			cerr << "    " << directory + "/" + filename << endl;
-			return;
-		}
-		timing::time_point end = timing::now();
-		double r_sim = timing::elapsed_seconds(begin, end);
-
-		cout << "Time spent in reading: " << r_sim << " s" << endl;
-
-		vector<size_t> tris;
-		o->get_partition().get_indices(p1, tris);
-		cout << "The closest triangles to point ("
-			 << p1.x << "," << p1.y << "," << p1.z
-			 << ") are:";
-		for (size_t t_idx : tris) {
-			cout << ", " << t_idx/3;
-		}
-		cout << endl;
-
-		if (p2_read) {
-			bool i = o->intersec_segment(p1,p2);
-			cout << "Segment from ("
-				 << p1.x << "," << p1.y << "," << p1.z
-				 << ") to ("
-				 << p2.x << "," << p2.y << "," << p2.z
-				 << ")";
-			if (i) {
-				cout << " intersects ";
-			}
-			else {
-				cout << " does NOT intersect ";
-			}
-			cout << "the object" << endl;
-		}
-
-		octree tree_copy;
-		tree_copy.copy(o->get_partition());
-
-		cout << "Repeating query..." << endl;
-		tris.clear();
-		o->get_partition().get_indices(p1, tris);
-
-		cout << "The closest triangles to point ("
-			 << p1.x << "," << p1.y << "," << p1.z
-			 << ") are:";
-		for (size_t t_idx : tris) {
-			cout << ", " << t_idx/3;
-		}
-		cout << endl;
-
-		delete o;
 	}
 
 } // -- namespace study_cases
-

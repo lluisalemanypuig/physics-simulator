@@ -17,7 +17,6 @@ using namespace physim;
 using namespace particles;
 using namespace math;
 using namespace geometric;
-using namespace emitters;
 using namespace meshes;
 
 namespace study_cases {

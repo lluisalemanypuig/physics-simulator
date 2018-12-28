@@ -18,7 +18,6 @@ using namespace physim;
 using namespace particles;
 using namespace math;
 using namespace geometric;
-using namespace emitters;
 using namespace meshes;
 
 namespace study_cases {
@@ -107,8 +106,27 @@ namespace study_cases {
 			}
 		}
 
-		float length = 10.0f;
-		float height = 10.0f;
+		cout << "Mesh characteristics:" << endl;
+		cout << "    dimensions: " << n << "x" << m << endl;
+		cout << "Simulation:" << endl;
+		cout << "    total time: " << total_time << endl;
+		cout << "    step time: " << dt << endl,
+		cout << "    solver: ";
+		if (solv == solver_type::EulerOrig) {
+			cout << " Euler" << endl;
+		}
+		else if (solv == solver_type::EulerSemi) {
+			cout << " Semi-Euler" << endl;
+		}
+		else if (solv == solver_type::Verlet) {
+			cout << " Verlet" << endl;
+		}
+		cout << "    bending? " << (bend ? "Yes" : "No") << endl;
+		cout << "    shear? " << (shear ? "Yes" : "No") << endl;
+		cout << "    stretch? " << (stretch ? "Yes" : "No") << endl;
+
+		const float length = 10.0f;
+		const float height = 10.0f;
 
 		timing::time_point begin_build = timing::now();
 
@@ -159,25 +177,6 @@ namespace study_cases {
 		}
 
 		timing::time_point end_sim = timing::now();
-
-		cout << "Mesh characteristics:" << endl;
-		cout << "    dimensions: " << n << "x" << m << endl;
-		cout << "Simulation:" << endl;
-		cout << "    total time: " << total_time << endl;
-		cout << "    step time: " << dt << endl,
-		cout << "    solver: ";
-		if (solv == solver_type::EulerOrig) {
-			cout << " Euler" << endl;
-		}
-		else if (solv == solver_type::EulerSemi) {
-			cout << " Semi-Euler" << endl;
-		}
-		else if (solv == solver_type::Verlet) {
-			cout << " Verlet" << endl;
-		}
-		cout << "    bending? " << (bend ? "Yes" : "No") << endl;
-		cout << "    shear? " << (shear ? "Yes" : "No") << endl;
-		cout << "    stretch? " << (stretch ? "Yes" : "No") << endl;
 
 		double t_build = timing::elapsed_seconds(begin_build, end_build);
 		double t_sim = timing::elapsed_seconds(begin_sim, end_sim);

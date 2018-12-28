@@ -35,7 +35,7 @@ namespace study_cases {
 		}
 	}
 
-	void sim_301_usage() {
+	void sim_801_usage() {
 		cout << "Input operations:" << endl;
 		cout << endl;
 		cout << "This study case reads a file containing a list of points from" << endl;
@@ -54,7 +54,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim_301(int argc, char *argv[]) {
+	void sim_801(int argc, char *argv[]) {
 		string directory = "none";
 		string filename = "none";
 		bool point_read = false;
@@ -63,13 +63,13 @@ namespace study_cases {
 		float R;
 
 		if (argc == 2) {
-			sim_301_usage();
+			sim_801_usage();
 			return;
 		}
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				sim_301_usage();
+				sim_801_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--directory") == 0) {
@@ -98,31 +98,31 @@ namespace study_cases {
 			}
 			else {
 				cerr << "Error: unknown option '" << string(argv[i]) << "'" << endl;
-				cerr << "    Use ./command-line 301 --help to see the usage" << endl;
+				cerr << "    Use ./command-line 801 --help to see the usage" << endl;
 				return;
 			}
 		}
 
 		if (directory == "none") {
 			cerr << "Error: directory not specified" << endl;
-			cerr << "    Use ./command-line 301 --help to see the usage" << endl;
+			cerr << "    Use ./command-line 801 --help to see the usage" << endl;
 			return;
 		}
 
 		if (filename == "none") {
 			cerr << "Error: filename not specified" << endl;
-			cerr << "    Use ./command-line 301 --help to see the usage" << endl;
+			cerr << "    Use ./command-line 801 --help to see the usage" << endl;
 			return;
 		}
 
 		if (not point_read) {
 			cerr << "Error: you have to specify one point!" << endl;
-			cerr << "    Use ./command-line 301 --help to see the usage" << endl;
+			cerr << "    Use ./command-line 801 --help to see the usage" << endl;
 			return;
 		}
 		if (not radius_read) {
 			cerr << "Error: you have to specify radius of query!" << endl;
-			cerr << "    Use ./command-line 301 --help to see the usage" << endl;
+			cerr << "    Use ./command-line 801 --help to see the usage" << endl;
 			return;
 		}
 
