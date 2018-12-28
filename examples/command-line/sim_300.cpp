@@ -19,6 +19,10 @@ using namespace math;
 using namespace geometric;
 using namespace fluids;
 
+#define side__ 64
+#define slice__ (side__*side__)
+#define total__ (side__*side__*side__)
+
 namespace study_cases {
 
 	void sim_300_usage() {
@@ -36,6 +40,7 @@ namespace study_cases {
 		cout << "    --vol v:		 Volume of the fluid.                  Default: 1.0" << endl;
 		cout << "    --vis v:		 Viscosity of the fluid.               Default: 1.0" << endl;
 		cout << "    --D d:			 Density at rest of the fluid.         Default: 1.0" << endl;
+		cout << "    --threads n:    Number of threads.                    Default: 1" << endl;
 	}
 
 	void sim_300(int argc, char *argv[]) {
@@ -43,7 +48,7 @@ namespace study_cases {
 		float total_time = 5.0f;
 		solver_type solv = solver_type::EulerSemi;
 		// number of particles
-		size_t N = 1000;
+		size_t N = total__;
 		// neighbourhood size
 		float R = 0.01f;
 		// volume
@@ -52,6 +57,8 @@ namespace study_cases {
 		float vis = 1.0f;
 		// density
 		float D = 1.0f;
+		// number of threads
+		size_t nt = 1;
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
@@ -64,10 +71,6 @@ namespace study_cases {
 			}
 			else if (strcmp(argv[i], "--step") == 0) {
 				dt = atof(argv[i + 1]);
-				++i;
-			}
-			else if (strcmp(argv[i], "--N") == 0) {
-				N = atoi(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--R") == 0) {
@@ -84,6 +87,10 @@ namespace study_cases {
 			}
 			else if (strcmp(argv[i], "--D") == 0) {
 				D = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--threads") == 0) {
+				nt = atoi(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--solver") == 0) {
@@ -109,8 +116,14 @@ namespace study_cases {
 			}
 		}
 
+		timing::time_point begin, end;
+
 		cout << "Fluid characteristics:" << endl;
 		cout << "    Number of particles: " << N << endl;
+		cout << "    Volume: " << vol << endl;
+		cout << "    Viscosity: " << vis << endl;
+		cout << "    Density: " << D << endl;
+		cout << "    Neighbourhood size: " << R << endl;
 		cout << "Simulation:" << endl;
 		cout << "    total time: " << total_time << endl;
 		cout << "    step time: " << dt << endl,
@@ -125,9 +138,42 @@ namespace study_cases {
 			cout << " Verlet" << endl;
 		}
 
+		cout << "Allocating..." << endl;
+		begin = timing::now();
 		fluid F;
 		F.allocate(N, vol, D, vis, R);
+		end = timing::now();
+		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
+		// assign initial positions
+		cout << "Assigning initial positions..." << endl;
+		begin = timing::now();
+		for (size_t i = 0; i < N; ++i) {
+			size_t slice = i/slice__;
+			size_t __i = i%slice__;
+			size_t row = __i/side__;
+			size_t col = __i%side__;
+
+			F.get_particles()[i].cur_pos = vec3(
+				row*0.05f, col*0.05f, slice*0.05f
+			);
+		}
+		end = timing::now();
+		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
+
+		cout << "Updating forces..." << endl;
+		begin = timing::now();
+		F.update_forces(nt);
+		end = timing::now();
+		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
+
+		// output forces
+		const fluid_particle *ps = F.get_particles();
+		for (size_t i = 0; i < N; ++i) {
+			cout << i << ": "
+				 << ps[i].force.x << " " << ps[i].force.y << " " << ps[i].force.z
+				 << endl;
+		}
 	}
 
 } // -- namespace study_cases

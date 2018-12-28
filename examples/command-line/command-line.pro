@@ -5,8 +5,10 @@ CONFIG += c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
+QMAKE_CXXFLAGS += -fopenmp
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
+LIBS += -fopenmp
 
 SOURCES += \
     main.cpp \
