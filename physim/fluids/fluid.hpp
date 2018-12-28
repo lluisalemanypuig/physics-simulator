@@ -180,6 +180,23 @@ class fluid {
 		 * acting on the particles due to force fields.
 		 */
 		virtual void update_forces();
+		/**
+		 * @brief Update the forces generated within the fluid.
+		 *
+		 * This method updates the forces acting on all particles.
+		 * This update depends on the neighbouring information
+		 * determined by the kernel functions.
+		 *
+		 * This method does not update positions or velocities.
+		 *
+		 * @param n Number of threads
+		 * @pre The modification of a particles' force may assume
+		 * that all particles start with null force (force
+		 * equal to 0 in the three axes).
+		 * @pre This method is called before computing the forces
+		 * acting on the particles due to force fields.
+		 */
+		virtual void update_forces(size_t n);
 
 		/**
 		 * @brief Builds the space partition of this fluid's particles.

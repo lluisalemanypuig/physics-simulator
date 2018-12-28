@@ -6,9 +6,11 @@ CONFIG += staticlib
 CONFIG -= app_bundle
 CONFIG -= qt
 
+QMAKE_CXXFLAGS += -fopenmp
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 INCLUDEPATH += ..
+LIBS += -fopenmp
 
 HEADERS += \
     simulator.hpp \

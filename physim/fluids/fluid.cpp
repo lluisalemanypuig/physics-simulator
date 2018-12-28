@@ -2,6 +2,7 @@
 
 // C includes
 #include <stdlib.h>
+#include <omp.h>
 
 // C++ includes
 #include <iostream>
@@ -94,7 +95,9 @@ void fluid::allocate(size_t n, float vol, float dens, float visc, float r) {
 
 	if (ps == nullptr) {
 		cerr << "fluid::allocate (" << __LINE__ << ") - Error:" << endl;
-		cerr << "    Memory could not be allocated." << endl;
+		cerr << "    Could not allocate memory for "
+			 << N << " particles (" << N*sizeof(fluid_particle) << " bytes)"
+			 << endl;
 		return;
 	}
 
@@ -123,12 +126,38 @@ void fluid::update_forces() {
 	// between a particle and its neighbours.
 	// We need a dynamic list for the neighbours, but a
 	// fixed-size list of these lists will suffice.
-	vector<size_t> neighs[N];
-	vector<float> d2s[N];
+	vector<vector<size_t> > neighs(N);
+	vector<vector<float> > d2s(N);
 
 	for (size_t i = 0; i < N; ++i) {
 		tree->get_indices(ps[i].cur_pos, R, neighs[i]);
 		d2s[i] = vector<float>(neighs[i].size());
+
+		// resort by distances: put those farther than R
+		// at the back of the vector
+		size_t lim = neighs[i].size();
+		size_t j_it = 0;
+		while (j_it < lim) {
+
+			size_t j = neighs[i][j_it];
+			d2s[i][j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
+
+			if (d2s[i][j_it] > R2 or ps[j].index == ps[i].index) {
+				// Put this element at the end.
+				// Do not advance 'j_it'
+				std::swap(neighs[i][j_it], neighs[i][lim - 1]);
+				std::swap(d2s[i][j_it], d2s[i][lim - 1]);
+				--lim;
+			}
+			else {
+				// this element is OK. Move forward.
+				++j_it;
+			}
+		}
+
+		// remove last elements
+		neighs[i].erase( neighs[i].begin() + lim, neighs[i].end() );
+		d2s[i].erase( d2s[i].begin() + lim, d2s[i].end() );
 	}
 
 	// compute density and pressure of each particle,
@@ -140,11 +169,7 @@ void fluid::update_forces() {
 		// initialise density, pressure, and store squared distance
 		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
 			size_t j = neighs[i][j_it];
-
-			d2s[i][j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
-			if (d2s[i][j_it] <= R2) {
-				ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
-			}
+			ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
 		}
 
 		ps[i].pressure = speed_sound2*(ps[i].density - density);
@@ -156,20 +181,94 @@ void fluid::update_forces() {
 		float aP = 0.0f;	// acceleration from pressure
 		float aV = 0.0f;	// acceleration from viscosity
 
-		for (size_t i = 0; i < N; ++i) {
-			ps[i].density = 0.0f;
-
-			for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
-				size_t j = neighs[i][j_it];
-
-				if (d2s[i][j_it] <= R2) {
-					aP += Pij(i,j)*kernel_pressure(ps[i], ps[j], d2s[i][j_it]);
-					aV += Pij(i,j)*kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
-				}
-			}
-
-			ps[i].force += (aP + aV)*ps[i].mass;
+		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
+			size_t j = neighs[i][j_it];
+			aP += Pij(i,j)*kernel_pressure(ps[i], ps[j], d2s[i][j_it]);
+			aV += Pij(i,j)*kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
 		}
+
+		ps[i].force += (aP + aV)*ps[i].mass;
+	}
+}
+
+void fluid::update_forces(size_t n) {
+	if (n == 1) {
+		update_forces();
+		return;
+	}
+
+	make_partition();
+
+	const float R2 = R*R;
+
+	// Compute neighbour lists, and squared distances
+	// between a particle and its neighbours.
+	// We need a dynamic list for the neighbours, but a
+	// fixed-size list of these lists will suffice.
+	vector<vector<size_t> > neighs(N);
+	vector<vector<float> > d2s(N);
+
+	#pragma omp parallel for num_threads(n)
+	for (size_t i = 0; i < N; ++i) {
+		tree->get_indices(ps[i].cur_pos, R, neighs[i]);
+		d2s[i] = vector<float>(neighs[i].size());
+
+		// resort by distances: put those farther than R
+		// at the back of the vector
+		size_t lim = neighs[i].size();
+		size_t j_it = 0;
+		while (j_it < lim) {
+
+			size_t j = neighs[i][j_it];
+			d2s[i][j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
+
+			if (d2s[i][j_it] > R2 or ps[j].index == ps[i].index) {
+				// Put this element at the end.
+				// Do not advance 'j_it'
+				std::swap(neighs[i][j_it], neighs[i][lim - 1]);
+				std::swap(d2s[i][j_it], d2s[i][lim - 1]);
+				--lim;
+			}
+			else {
+				// this element is OK. Move forward.
+				++j_it;
+			}
+		}
+
+		// remove last elements
+		neighs[i].erase( neighs[i].begin() + lim, neighs[i].end() );
+		d2s[i].erase( d2s[i].begin() + lim, d2s[i].end() );
+	}
+
+	// compute density and pressure of each particle
+	#pragma omp parallel for num_threads(n)
+	for (size_t i = 0; i < N; ++i) {
+		ps[i].density = 0.0f;
+
+		// iterate over the list of neighbours.
+		// initialise density, pressure, and store squared distance
+		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
+			size_t j = neighs[i][j_it];
+			ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
+		}
+
+		ps[i].pressure = speed_sound2*(ps[i].density - density);
+	}
+
+	// compute forces of the fluid (due to pressure and viscosity)
+	#pragma omp parallel for num_threads(n)
+	for (size_t i = 0; i < N; ++i) {
+
+		float aP = 0.0f;	// acceleration from pressure
+		float aV = 0.0f;	// acceleration from viscosity
+
+		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
+			size_t j = neighs[i][j_it];
+			aP += Pij(i,j)*kernel_pressure(ps[i], ps[j], d2s[i][j_it]);
+			aV += Pij(i,j)*kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
+		}
+
+		ps[i].force += (aP + aV)*ps[i].mass;
 	}
 }
 
