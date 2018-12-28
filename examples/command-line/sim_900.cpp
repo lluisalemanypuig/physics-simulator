@@ -16,6 +16,8 @@ using namespace physim;
 using namespace math;
 using namespace structures;
 
+#define N 4
+
 class big {
 	public:
 		big() {}
@@ -49,8 +51,8 @@ namespace study_cases {
 	}
 
 	void sim_900_test_vectors() {
-		vector<big> v1(512);
-		for (size_t i = 0; i < 512; ++i) {
+		vector<big> v1(N);
+		for (size_t i = 0; i < N; ++i) {
 			v1[i].p1 = vec3( i*12 + 0.0f, i*12 +  1.0f, i*12 +  2.0f );
 			v1[i].p2 = vec3( i*12 + 3.0f, i*12 +  4.0f, i*12 +  5.0f );
 			v1[i].p3 = vec3( i*12 + 6.0f, i*12 +  7.0f, i*12 +  8.0f );
@@ -61,33 +63,41 @@ namespace study_cases {
 
 		cout << "Filling from vectors:" << endl;
 
-		cout << "    1" << endl;
-		tree.init(&v1[0], 512, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    TEST 1" << endl;
+		tree.init(&v1[0], N, 3, sizeof(big), offsetof(big, p1), 8);
 		tree.clear();
 
-		cout << "    2" << endl;
-		tree.init(&v1[0], 512, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    TEST 2" << endl;
+		tree.init(&v1[0], N, 1, sizeof(big), offsetof(big, p4), 8);
 		tree.clear();
 
-		cout << "    3" << endl;
-		tree.init(&v1[256], 256, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    TEST 3" << endl;
+		tree.init(&v1[0], N/2, 3, sizeof(big), offsetof(big, p1), 8);
 		tree.clear();
 
-		cout << "    4" << endl;
-		tree.init(&v1[256], 256, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    TEST 4" << endl;
+		tree.init(&v1[0], N/2, 1, sizeof(big), offsetof(big, p4), 8);
 		tree.clear();
 
-		vector<bigger> v2(512);
-		for (size_t i = 0; i < 512; ++i) {
-			v2[i].p1 = vec3( i*27 +  0.0f, i*12 +  1.0f, i*12 +  2.0f );
-			v2[i].p2 = vec3( i*27 +  3.0f, i*12 +  4.0f, i*12 +  5.0f );
-			v2[i].p3 = vec3( i*27 +  6.0f, i*12 +  7.0f, i*12 +  8.0f );
-			v2[i].p4 = vec3( i*27 +  9.0f, i*12 + 10.0f, i*12 + 11.0f );
-			v2[i].p5 = vec3( i*27 + 12.0f, i*12 + 13.0f, i*12 + 14.0f );
-			v2[i].p6 = vec3( i*27 + 15.0f, i*12 + 16.0f, i*12 + 17.0f );
-			v2[i].p7 = vec3( i*27 + 18.0f, i*12 + 19.0f, i*12 + 20.0f );
-			v2[i].p8 = vec3( i*27 + 21.0f, i*12 + 22.0f, i*12 + 23.0f );
-			v2[i].p9 = vec3( i*27 + 24.0f, i*12 + 25.0f, i*12 + 26.0f );
+		cout << "    TEST 5" << endl;
+		tree.init(&v1[N/2], N/2, 3, sizeof(big), offsetof(big, p1), 8);
+		tree.clear();
+
+		cout << "    TEST 6" << endl;
+		tree.init(&v1[N/2], N/2, 1, sizeof(big), offsetof(big, p4), 8);
+		tree.clear();
+
+		vector<bigger> v2(N);
+		for (size_t i = 0; i < N; ++i) {
+			v2[i].p1 = vec3( i*27 +  0.0f, i*27 +  1.0f, i*27 +  2.0f );
+			v2[i].p2 = vec3( i*27 +  3.0f, i*27 +  4.0f, i*27 +  5.0f );
+			v2[i].p3 = vec3( i*27 +  6.0f, i*27 +  7.0f, i*27 +  8.0f );
+			v2[i].p4 = vec3( i*27 +  9.0f, i*27 + 10.0f, i*27 + 11.0f );
+			v2[i].p5 = vec3( i*27 + 12.0f, i*27 + 13.0f, i*27 + 14.0f );
+			v2[i].p6 = vec3( i*27 + 15.0f, i*27 + 16.0f, i*27 + 17.0f );
+			v2[i].p7 = vec3( i*27 + 18.0f, i*27 + 19.0f, i*27 + 20.0f );
+			v2[i].p8 = vec3( i*27 + 21.0f, i*27 + 22.0f, i*27 + 23.0f );
+			v2[i].p9 = vec3( i*27 + 24.0f, i*27 + 25.0f, i*27 + 26.0f );
 		}
 
 		size_t base = reinterpret_cast<size_t>( &v2[0] );
@@ -96,26 +106,34 @@ namespace study_cases {
 		size_t member_p5 = reinterpret_cast<size_t>( &v2[0].p5 );
 		size_t offset_p5 = member_p5 - base;
 
-		cout << "    5" << endl;
-		tree.init(&v2[0], 512, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    TEST 7" << endl;
+		tree.init(&v2[0], N, 3, sizeof(bigger), offset_p1, 8);
 		tree.clear();
 
-		cout << "    6" << endl;
-		tree.init(&v2[0], 512, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    TEST 8" << endl;
+		tree.init(&v2[0], N, 5, sizeof(bigger), offset_p5, 8);
 		tree.clear();
 
-		cout << "    7" << endl;
-		tree.init(&v2[256], 256, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    TEST 9" << endl;
+		tree.init(&v2[0], N/2, 3, sizeof(bigger), offset_p1, 8);
 		tree.clear();
 
-		cout << "    8" << endl;
-		tree.init(&v2[256], 256, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    TEST 10" << endl;
+		tree.init(&v2[0], N/2, 5, sizeof(bigger), offset_p5, 8);
+		tree.clear();
+
+		cout << "    TEST 11" << endl;
+		tree.init(&v2[N/2], N/2, 3, sizeof(bigger), offset_p1, 8);
+		tree.clear();
+
+		cout << "    TEST 12" << endl;
+		tree.init(&v2[N/2], N/2, 5, sizeof(bigger), offset_p5, 8);
 		tree.clear();
 	}
 
 	void sim_900_test_arrays() {
-		big v[512];
-		for (size_t i = 0; i < 512; ++i) {
+		big v[N];
+		for (size_t i = 0; i < N; ++i) {
 			v[i].p1 = vec3( i*12 + 0.0f, i*12 +  1.0f, i*12 +  2.0f );
 			v[i].p2 = vec3( i*12 + 3.0f, i*12 +  4.0f, i*12 +  5.0f );
 			v[i].p3 = vec3( i*12 + 6.0f, i*12 +  7.0f, i*12 +  8.0f );
@@ -126,33 +144,41 @@ namespace study_cases {
 
 		cout << "Filling from arrays:" << endl;
 
-		cout << "    1" << endl;
-		tree.init(&v[0], 512, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    TEST 1" << endl;
+		tree.init(&v[0], N, 3, sizeof(big), offsetof(big, p1), 8);
 		tree.clear();
 
-		cout << "    2" << endl;
-		tree.init(&v[0], 512, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    TEST 2" << endl;
+		tree.init(&v[0], N, 1, sizeof(big), offsetof(big, p4), 8);
 		tree.clear();
 
-		cout << "    3" << endl;
-		tree.init(&v[256], 256, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    TEST 3" << endl;
+		tree.init(&v[0], N/2, 3, sizeof(big), offsetof(big, p1), 8);
 		tree.clear();
 
-		cout << "    4" << endl;
-		tree.init(&v[256], 256, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    TEST 4" << endl;
+		tree.init(&v[0], N/2, 1, sizeof(big), offsetof(big, p4), 8);
 		tree.clear();
 
-		bigger v2[512];
-		for (size_t i = 0; i < 512; ++i) {
-			v2[i].p1 = vec3( i*27 +  0.0f, i*12 +  1.0f, i*12 +  2.0f );
-			v2[i].p2 = vec3( i*27 +  3.0f, i*12 +  4.0f, i*12 +  5.0f );
-			v2[i].p3 = vec3( i*27 +  6.0f, i*12 +  7.0f, i*12 +  8.0f );
-			v2[i].p4 = vec3( i*27 +  9.0f, i*12 + 10.0f, i*12 + 11.0f );
-			v2[i].p5 = vec3( i*27 + 12.0f, i*12 + 13.0f, i*12 + 14.0f );
-			v2[i].p6 = vec3( i*27 + 15.0f, i*12 + 16.0f, i*12 + 17.0f );
-			v2[i].p7 = vec3( i*27 + 18.0f, i*12 + 19.0f, i*12 + 20.0f );
-			v2[i].p8 = vec3( i*27 + 21.0f, i*12 + 22.0f, i*12 + 23.0f );
-			v2[i].p9 = vec3( i*27 + 24.0f, i*12 + 25.0f, i*12 + 26.0f );
+		cout << "    TEST 5" << endl;
+		tree.init(&v[N/2], N/2, 3, sizeof(big), offsetof(big, p1), 8);
+		tree.clear();
+
+		cout << "    TEST 6" << endl;
+		tree.init(&v[N/2], N/2, 1, sizeof(big), offsetof(big, p4), 8);
+		tree.clear();
+
+		bigger v2[N];
+		for (size_t i = 0; i < N; ++i) {
+			v2[i].p1 = vec3( i*27 +  0.0f, i*27 +  1.0f, i*27 +  2.0f );
+			v2[i].p2 = vec3( i*27 +  3.0f, i*27 +  4.0f, i*27 +  5.0f );
+			v2[i].p3 = vec3( i*27 +  6.0f, i*27 +  7.0f, i*27 +  8.0f );
+			v2[i].p4 = vec3( i*27 +  9.0f, i*27 + 10.0f, i*27 + 11.0f );
+			v2[i].p5 = vec3( i*27 + 12.0f, i*27 + 13.0f, i*27 + 14.0f );
+			v2[i].p6 = vec3( i*27 + 15.0f, i*27 + 16.0f, i*27 + 17.0f );
+			v2[i].p7 = vec3( i*27 + 18.0f, i*27 + 19.0f, i*27 + 20.0f );
+			v2[i].p8 = vec3( i*27 + 21.0f, i*27 + 22.0f, i*27 + 23.0f );
+			v2[i].p9 = vec3( i*27 + 24.0f, i*27 + 25.0f, i*27 + 26.0f );
 		}
 
 		size_t base = reinterpret_cast<size_t>( &v2[0] );
@@ -161,20 +187,28 @@ namespace study_cases {
 		size_t member_p5 = reinterpret_cast<size_t>( &v2[0].p5 );
 		size_t offset_p5 = member_p5 - base;
 
-		cout << "    5" << endl;
-		tree.init(&v2[0], 512, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    TEST 7" << endl;
+		tree.init(&v2[0], N, 3, sizeof(bigger), offset_p1, 8);
 		tree.clear();
 
-		cout << "    6" << endl;
-		tree.init(&v2[0], 512, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    TEST 8" << endl;
+		tree.init(&v2[0], N, 5, sizeof(bigger), offset_p5, 8);
 		tree.clear();
 
-		cout << "    7" << endl;
-		tree.init(&v2[256], 256, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    TEST 9" << endl;
+		tree.init(&v2[0], N/2, 3, sizeof(bigger), offset_p1, 8);
 		tree.clear();
 
-		cout << "    8" << endl;
-		tree.init(&v2[256], 256, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    TEST 10" << endl;
+		tree.init(&v2[0], N/2, 5, sizeof(bigger), offset_p5, 8);
+		tree.clear();
+
+		cout << "    TEST 11" << endl;
+		tree.init(&v2[N/2], N/2, 3, sizeof(bigger), offset_p1, 8);
+		tree.clear();
+
+		cout << "    TEST 12" << endl;
+		tree.init(&v2[N/2], N/2, 5, sizeof(bigger), offset_p5, 8);
 		tree.clear();
 	}
 
@@ -194,18 +228,16 @@ namespace study_cases {
 		timing::time_point begin, end;
 
 		begin = timing::now();
-		sim_900_test_vectors();
-		end = timing::now();
-		cout << "Tested with vectors in "
-			 << timing::elapsed_seconds(begin, end) << " seconds" << endl;
-
-		begin = timing::now();
 		sim_900_test_arrays();
 		end = timing::now();
 		cout << "Tested with arrays in "
 			 << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
-
+		begin = timing::now();
+		sim_900_test_vectors();
+		end = timing::now();
+		cout << "Tested with vectors in "
+			 << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 	}
 
 } // -- namespace study_cases
