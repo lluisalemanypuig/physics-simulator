@@ -128,7 +128,7 @@ const
 	vec3 v;
 
 	if (is_behaviour_set(agent_behaviour_type::collision_avoidance)) {
-		collision_avoidance_behaviour(scene, weighted_steering);
+		collision_avoidance_behaviour(scene, v);
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 }
@@ -244,9 +244,7 @@ const
 			// position and director vector current velocity
 			vec3 agent_to_object = geom_pos - cur_pos;
 			float angle = __pm3_angle(agent_to_object, cur_vel);
-			if (angle < 1.571f) {
-				// the '< 1.571' is counterintuitive, but just
-				// do a little drawing and you will know why
+			if (angle > 1.571f) {
 				skip = true;
 			}
 
@@ -265,7 +263,7 @@ const
 		}
 
 		// compute contribution
-		__pm3_add_v_vs(v, cur_vel, repulsion, coll_avoid_weight);
+		__pm3_assign_vs(v, repulsion, coll_avoid_weight);
 	}
 }
 
