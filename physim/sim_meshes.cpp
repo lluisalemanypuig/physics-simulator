@@ -63,7 +63,7 @@ void simulator::_simulate_meshes() {
 			// apply solver to predict next position and
 			// velocity of the particle
 			vec3 pred_pos, pred_vel;
-			apply_solver(mps[p_idx], pred_pos, pred_vel);
+			apply_solver_ptr(mps[p_idx], pred_pos, pred_vel);
 
 			// check if there is any collision between
 			// this mesh particle and a geometrical object

@@ -42,7 +42,7 @@ void simulator::_simulate_sized_particles() {
 		// apply solver to predict next position and
 		// velocity of the particle
 		vec3 pred_pos, pred_vel;
-		apply_solver(p, pred_pos, pred_vel);
+		apply_solver_ptr(p, pred_pos, pred_vel);
 
 		// collision prediction:
 		// copy the particle at its current state and use it

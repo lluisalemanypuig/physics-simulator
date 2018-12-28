@@ -272,8 +272,16 @@ class simulator {
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
 		 */
-		template<class P> void apply_solver
+		template<class P> void apply_solver_ptr
 		(const P *p, math::vec3& pos, math::vec3& vel);
+		/**
+		 * @brief Predicts a particle's next position and velocity.
+		 * @param p Particle to apply the solver on.
+		 * @param[out] pos The predicted position.
+		 * @param[out] vel The predicted velocity.
+		 */
+		template<class P> void apply_solver_ref
+		(const P& p, math::vec3& pos, math::vec3& vel);
 
 		/**
 		 * @brief Computes the forces acting in the simulation.
@@ -287,6 +295,18 @@ class simulator {
 		 * @param[out] p The particle whose force attribute is to be modified.
 		 */
 		template<class P> void compute_forces(P *p);
+		/**
+		 * @brief Computes the forces acting in the simulation.
+		 *
+		 * These forces are defined in the different focuses added
+		 * to the simulator. Each force vector is added to the particle's
+		 * force accumulator. The force accumulator, however, is not
+		 * initialised to 0.
+		 *
+		 * The result is set to the force acting on particle @e p.
+		 * @param[out] p The particle whose force attribute is to be modified.
+		 */
+		template<class P> void compute_forces(P& p);
 
 		/**
 		 * @brief Update a free particle that may collide with geometry.
