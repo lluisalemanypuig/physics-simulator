@@ -25,13 +25,13 @@ class fluid {
 		size_t N;
 		/// Total volume of the fluid. [m^3]
 		float volume;
-		/// Density of the fluid at rest. [Kg/m^3]
+		/// Fluid reference density \f$\rho_0\f$. [Kg/m^3]
 		float density;
 		/// Viscosity of the fluid. [Kg/(m*s)].
 		float viscosity;
 
 		/// Particles of this fluid.
-		particles::fluid_particle **ps;
+		particles::fluid_particle *ps;
 
 		/// Neighbourhood size.
 		float R;
@@ -49,6 +49,8 @@ class fluid {
 		 * - \f$W(r_{ij})\f$ denotes the kernel function evaluated at the distance
 		 * between the @e i-th and the @e j-th particle,
 		 * - \f$m_j\f$ is the mass of the @e j-th particle.
+		 *
+		 * By default, this function returns 1;
 		 */
 		kernel_function kernel;
 		/**
@@ -78,8 +80,10 @@ class fluid {
 		 * - \f$m_j\f$ is the mass of the @e j-th particle,
 		 * - \f$p_i, p_j\f$ denote the pressure,
 		 * - \f$\rho_i, \rho_j\f$ denote the densities at particles @e i and @e j.
+		 *
+		 * By default, this function returns 1;
 		 */
-		kernel_function kernel_gr;
+		kernel_function kernel_pressure;
 		/**
 		 * @brief Kernel function. \f$\nabla^2 W\f$
 		 *
@@ -108,9 +112,11 @@ class fluid {
 		 * - \f$m_j\f$ is the mass of the @e j-th particle,
 		 * - \f$p_i, p_j\f$ denote the pressures,
 		 * - \f$\rho_i, \rho_j\f$ denote the densities,
-		 * - \f$v_i, v_j\f$ denote the viscosity at particles @e i and @e j.
+		 * - \f$v_i, v_j\f$ denote the velocities of particles @e i and @e j.
+		 *
+		 * By default, this function returns 1;
 		 */
-		kernel_function kernel_gr2;
+		kernel_function kernel_viscosity;
 
 		/**
 		 * @brief Space partition of this fluid's particles.
@@ -188,12 +194,12 @@ class fluid {
 		/**
 		 * @brief Sets the kernel functions.
 		 * @param W \f$W\f$, see @ref kernel.
-		 * @param nW \f$\nabla W\f$, see @ref kernel_gr.
-		 * @param n2W \f$\nabla^2 W\f$, see @ref kernel_gr2.
+		 * @param W_p \f$\nabla W\f$, see @ref kernel_pressure.
+		 * @param W_v \f$\nabla^2 W\f$, see @ref kernel_viscosity.
 		 */
 		void set_kernel(
-			const kernel_function& W, const kernel_function& nW,
-			const kernel_function& n2W
+			const kernel_function& W, const kernel_function& W_p,
+			const kernel_function& W_v
 		);
 
 		// GETTERS

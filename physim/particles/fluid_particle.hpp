@@ -32,12 +32,10 @@ class fluid_particle : public base_particle {
 		void partial_init();
 
 	public:
-		/// Density of the particle [Kg/m^3].
+		/// Density of the particle \f$\rho_i\f$. [Kg/m^3]
 		float density;
-		/// Pressure of the particle [N/m^2].
+		/// Pressure of the particle \f$p_i\f$. [N/m^2], [Kg/(m*s^2)]
 		float pressure;
-		/// Viscosity of the particle [N/m^2].
-		float viscosity;
 
 	public:
 		/// Default constructor.
