@@ -214,9 +214,9 @@ class fluid {
 		float get_viscosity() const;
 
 		/// Returns a reference to this fluid's particles.
-		particles::fluid_particle **get_particles();
+		particles::fluid_particle *get_particles();
 		/// Returns a constant reference to this fluid's particles.
-		particles::fluid_particle *const *get_particles() const;
+		const particles::fluid_particle *get_particles() const;
 };
 
 } // -- namespace fluids

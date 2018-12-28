@@ -213,11 +213,11 @@ float fluid::get_viscosity() const {
 	return viscosity;
 }
 
-fluid_particle **fluid::get_particles() {
-	return &ps;
+fluid_particle *fluid::get_particles() {
+	return ps;
 }
-fluid_particle *const *fluid::get_particles() const {
-	return &ps;
+const fluid_particle *fluid::get_particles() const {
+	return ps;
 }
 
 } // -- namespace fluids

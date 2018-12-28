@@ -70,14 +70,14 @@ void simulator::init_mesh(mesh *m) {
 
 void simulator::init_fluid(fluid *f) {
 
-	fluid_particle **fps = f->get_particles();
+	fluid_particle *fps = f->get_particles();
 
 	// loop over the mesh's particles and compute
 	// their previous position
 
 	for (size_t i = 0; i < f->size(); ++i) {
 		// prev_pos <- pos - vel*dt
-		__pm3_sub_v_vs(fps[i]->prev_pos, fps[i]->cur_pos, fps[i]->cur_vel, dt);
+		__pm3_sub_v_vs(fps[i].prev_pos, fps[i].cur_pos, fps[i].cur_vel, dt);
 	}
 }
 
