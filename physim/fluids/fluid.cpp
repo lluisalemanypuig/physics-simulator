@@ -11,21 +11,21 @@ using namespace std;
 
 // physim includes
 #include <physim/math/private/math3.hpp>
+#include <physim/math/vec3.hpp>
 
 #define sq(x) (x*x)
 
-#define speed_sound 343.0f
-#define speed_sound2 sq(speed_sound)
-
 #define Pij(i,j) -ps[j].mass*(					\
 	ps[i].pressure*(1.0f/sq(ps[i].density)) +	\
-	ps[j].pressure*(1.0f/sq(ps[j].density)))
+	ps[j].pressure*(1.0f/sq(ps[j].density))		\
+	)
 
 #define Vij(i,j) viscosity*ps[j].mass*(			\
 	(ps[i].cur_vel - ps[j].cur_vel)*			\
 	(1.0f/(ps[i].density*ps[j].density)))
 
 namespace physim {
+using namespace math;
 using namespace particles;
 using namespace structures;
 
@@ -70,11 +70,14 @@ const particles::fluid_particle *fluid::operator[] (size_t i) const {
 
 // MODIFIERS
 
-void fluid::allocate(size_t n, float vol, float dens, float visc, float r) {
+void fluid::allocate
+(size_t n, float vol, float dens, float visc, float r, float cs)
+{
 	if (tree == nullptr) {
 		tree = new octree();
 	}
 
+	speed_sound = cs;
 	R = r;
 	volume = vol;
 	density = dens;
@@ -142,7 +145,7 @@ void fluid::update_forces() {
 			size_t j = neighs[i][j_it];
 			d2s[i][j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
 
-			if (d2s[i][j_it] > R2 or ps[j].index == ps[i].index) {
+			if (d2s[i][j_it] > R2) {
 				// Put this element at the end.
 				// Do not advance 'j_it'
 				std::swap(neighs[i][j_it], neighs[i][lim - 1]);
@@ -172,22 +175,31 @@ void fluid::update_forces() {
 			ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
 		}
 
-		ps[i].pressure = speed_sound2*(ps[i].density - density);
+		ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
 	}
 
 	// compute forces of the fluid (due to pressure and viscosity)
 	for (size_t i = 0; i < N; ++i) {
 
 		float aP = 0.0f;	// acceleration from pressure
-		float aV = 0.0f;	// acceleration from viscosity
+		vec3 aV;	// acceleration from viscosity
 
 		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
 			size_t j = neighs[i][j_it];
+
+			float Pij = -ps[j].mass*(
+				ps[i].pressure*(1.0f/sq(ps[i].density)) +
+				ps[j].pressure*(1.0f/sq(ps[j].density))
+			);
 			aP += Pij(i,j)*kernel_pressure(ps[i], ps[j], d2s[i][j_it]);
-			aV += Pij(i,j)*kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
+
+			float visc_coef = ps[i].density*ps[j].density;
+			visc_coef *= viscosity*ps[j].mass*(1.0f/visc_coef);
+			visc_coef *= kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
+			__pm3_sub_v_v_mul_s(aV, ps[i].cur_vel, ps[j].cur_vel, visc_coef);
 		}
 
-		ps[i].force += (aP + aV)*ps[i].mass;
+		__pm3_add_acc_v(ps[i].force, aV);
 	}
 }
 
@@ -252,7 +264,7 @@ void fluid::update_forces(size_t n) {
 			ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
 		}
 
-		ps[i].pressure = speed_sound2*(ps[i].density - density);
+		ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
 	}
 
 	// compute forces of the fluid (due to pressure and viscosity)

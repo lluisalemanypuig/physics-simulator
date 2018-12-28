@@ -29,6 +29,8 @@ class fluid {
 		float density;
 		/// Viscosity of the fluid. [Kg/(m*s)].
 		float viscosity;
+		/// The speed of sound through this fluid. [m/s]
+		float speed_sound;
 
 		/// Particles of this fluid.
 		particles::fluid_particle *ps;
@@ -157,9 +159,10 @@ class fluid {
 		 * @param visc Viscosity of the fluid (see @ref viscosity).
 		 * @param r Neighbourhood size. Radius of the largest sphere around
 		 * a particle. This sphere defines the neighbourhood's size of a
-		 * particle.
+		 * particle (see @ref R).
+		 * @param cs Speed of sound in this fluid (see @ref speed_sound).
 		 */
-		void allocate(size_t n, float vol, float dens, float visc, float r);
+		void allocate(size_t n, float vol, float dens, float visc, float r, float cs);
 
 		/// Deallocates the memory occupied by the particles of this fluid.
 		virtual void clear();
