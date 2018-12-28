@@ -635,7 +635,6 @@ void octree::init(
 	size_t index = 0;
 
 	for (size_t i = 0; i < n; ++i) {
-		//cout << "Looking at pack: " << i << endl;
 		const float *v_it = static_cast<const float *>(it);
 
 		// read pack of vec3's
@@ -646,7 +645,6 @@ void octree::init(
 			__pm3_min2(vmin, vmin, *mem_it);
 			__pm3_max2(vmax, vmax, *mem_it);
 			idxs[index] = index;
-			//cout << "    index: " << index << ", " << "(" << __pm3_out(*mem_it) << ")" << endl;
 		}
 
 		// move iterator to the next vec3
