@@ -161,7 +161,7 @@ class fluid {
 		 */
 		void allocate(size_t n, float vol, float dens, float visc, float r);
 
-		/// Deallocates the memory occupied by this fluid.
+		/// Deallocates the memory occupied by the particles of this fluid.
 		virtual void clear();
 
 		/**

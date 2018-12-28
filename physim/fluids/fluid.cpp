@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 // C++ includes
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -33,10 +34,8 @@ namespace fluids {
 
 fluid::fluid() {
 	N = 0;
-	volume = 0.0f;
-	density = 0.0f;
-	viscosity = 0.0f;
 	ps = nullptr;
+	tree = nullptr;
 
 	kernel_function empty =
 	[](const fluid_particle&, const fluid_particle&, float) -> float
@@ -46,11 +45,16 @@ fluid::fluid() {
 	// faults and things like these
 	kernel = empty;
 	kernel_pressure = empty;
-	kernel = empty;
+	kernel_viscosity = empty;
 }
 
 fluid::~fluid() {
 	clear();
+
+	if (tree != nullptr) {
+		delete tree;
+		tree = nullptr;
+	}
 }
 
 // OPERATORS
@@ -69,9 +73,6 @@ void fluid::allocate(size_t n, float vol, float dens, float visc, float r) {
 	if (tree == nullptr) {
 		tree = new octree();
 	}
-	else {
-		tree->clear();
-	}
 
 	R = r;
 	volume = vol;
@@ -80,21 +81,27 @@ void fluid::allocate(size_t n, float vol, float dens, float visc, float r) {
 
 	float mass_per_particle = (density*volume)/n;
 
-	if (ps != nullptr) {
+	if (ps != nullptr and n != N) {
 		// clear and allocate only if necessary
-		if (n != N) {
-			clear();
-			N = n;
-			ps = static_cast<fluid_particle *>(malloc(N*sizeof(fluid_particle)));
-		}
+		clear();
+		N = n;
+		ps = static_cast<fluid_particle *>(malloc(N*sizeof(fluid_particle)));
 	}
 	else {
 		N = n;
 		ps = static_cast<fluid_particle *>(malloc(N*sizeof(fluid_particle)));
 	}
 
+	if (ps == nullptr) {
+		cerr << "fluid::allocate (" << __LINE__ << ") - Error:" << endl;
+		cerr << "    Memory could not be allocated." << endl;
+		return;
+	}
+
 	for (size_t i = 0; i < N; ++i) {
-		ps[i].init();
+		// Oh, Lord... I didn't know that I had to do this...
+		new (&(ps[i])) fluid_particle();
+
 		ps[i].index = i;
 		ps[i].mass = mass_per_particle;
 	}
