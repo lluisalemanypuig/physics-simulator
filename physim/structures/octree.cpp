@@ -353,7 +353,7 @@ const
 octree::node *octree::make_octree_vertices(
 	size_t lod,
 	const vec3& vmin, const vec3& vmax,
-	const vector<vec3>& vertices,
+	const vec3 *vertices,
 	const vector<size_t>& v_idxs
 )
 const
@@ -586,6 +586,7 @@ void octree::init(
 void octree::init(const std::vector<math::vec3>& vertices, size_t lod) {
 	clear();
 
+	// axis-aligned bounding box of root
 	static const float inf = numeric_limits<float>::max();
 	vec3 vmin, vmax;
 	__pm3_assign_s(vmin, inf);
@@ -598,7 +599,65 @@ void octree::init(const std::vector<math::vec3>& vertices, size_t lod) {
 		idxs[i] = i;
 	}
 
-	root = make_octree_vertices(lod, vmin, vmax, vertices, idxs);
+	root = make_octree_vertices(lod, vmin, vmax, &vertices[0], idxs);
+}
+
+void octree::init(
+	const void *it, size_t n, size_t ps, size_t size, size_t offset,
+	size_t lod
+)
+{
+	clear();
+
+	// do not use vectors to allocate as
+	// tightly as possible
+	vec3 *mem = static_cast<vec3 *>(malloc(n*ps*sizeof(vec3)));
+	if (mem == nullptr) {
+		cerr << "octree::init (" << __LINE__ << ") - Error:" << endl;
+		cerr << "    Could not allocate memory for " << n*ps << " vec3" << endl;
+		return;
+	}
+
+	// axis-aligned bounding box of root
+	static const float inf = numeric_limits<float>::max();
+	vec3 vmin, vmax;
+	__pm3_assign_s(vmin, inf);
+	__pm3_assign_s(vmax, -inf);
+
+	// iterator over 'mem'
+	vec3 *mem_it = &mem[0];
+
+	// place iterator at the first vec3
+	it = static_cast<const void *>
+		(static_cast<const char *>(it) + offset);
+
+	vector<size_t> idxs(n*ps);
+	size_t index = 0;
+
+	for (size_t i = 0; i < n; ++i) {
+		//cout << "Looking at pack: " << i << endl;
+		const float *v_it = static_cast<const float *>(it);
+
+		// read pack of vec3's
+		for (size_t p = 0; p < ps; ++p, ++mem_it, ++index) {
+			mem_it->x = *(v_it++);
+			mem_it->y = *(v_it++);
+			mem_it->z = *(v_it++);
+			__pm3_min2(vmin, vmin, *mem_it);
+			__pm3_max2(vmax, vmax, *mem_it);
+			idxs[index] = index;
+			//cout << "    index: " << index << ", " << "(" << __pm3_out(*mem_it) << ")" << endl;
+		}
+
+		// move iterator to the next vec3
+		it = static_cast<const void *>
+			(static_cast<const char *>(it) + size);
+	}
+
+	// make octree
+	root = make_octree_vertices(lod, vmin, vmax, mem, idxs);
+
+	free(mem);
 }
 
 void octree::clear() {

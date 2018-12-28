@@ -116,7 +116,7 @@ class octree {
 		node *make_octree_vertices(
 			size_t lod,
 			const math::vec3& vmin, const math::vec3& vmax,
-			const std::vector<math::vec3>& vertices,
+			const math::vec3 *vertices,
 			const std::vector<size_t>& vertices_idxs
 		) const;
 
@@ -167,6 +167,8 @@ class octree {
 		 * @param vertices The vertices, without repetitions, of the object.
 		 * @param tris_indices The vertices indices of each triangle. Every
 		 * three integer values we have a triangle.
+		 * @param lod Level Of Detail: minimum number of vertices needed to
+		 * subdivide a cell.
 		 */
 		void init(
 			const std::vector<math::vec3>& vertices,
@@ -177,9 +179,50 @@ class octree {
 		/**
 		 * @brief Builds the partition of a cloud of points.
 		 * @param vertices The vertices, without repetitions, of the cloud.
+		 * @param lod Level Of Detail: minimum number of vertices per cell.
 		 */
 		void init(
 			const std::vector<math::vec3>& vertices,
+			size_t lod = 8
+		);
+
+		/**
+		 * @brief Builds the partition of a cloud of points.
+		 *
+		 * The points are stored in packs of vec3. A pack is a set of
+		 * tightly allocated vec3's.
+		 *
+		 * For example, we may have a struct like this:
+		 *
+		 \verbatim
+		 struct big {
+			float a,b,c;
+			char k;
+			vec3 p1, p2, p3;
+			char q;
+			vec3 p4;
+		 };
+		 \endverbatim
+		 *
+		 * If one wanted to construct an octree using the vec3's
+		 * p1,p2,p3, in the array
+		 *
+		 \verbatim
+		 big b[512]
+		 \endverbatim
+		 *
+		 * one would have to call this function as follows:
+		 *
+		 * init(&b[0], 512, 3, sizeof(big), offsetof(big, p1))
+		 *
+		 * @param p Pointer to the first element in which the vec3 is allocated.
+		 * @param n Number of packs of vec3.
+		 * @param ps Pack size.
+		 * @param offset Byte offset of the first vec3.
+		 * @param vertices The vertices, without repetitions, of the cloud.
+		 */
+		void init(
+			const void *p, size_t n, size_t ps, size_t size, size_t offset,
 			size_t lod = 8
 		);
 
