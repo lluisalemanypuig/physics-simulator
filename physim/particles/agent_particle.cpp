@@ -200,7 +200,7 @@ const
 			dist2 = dist2*dist2;
 		}
 		else {
-			dist2 = __pm3_dist2(cur_pos, geom_pos);
+			dist2 = __pm3_dist2(cur_pos, geom_pos) - g->approx_radius();
 		}
 		if (dist2 > ahead_distance*ahead_distance) {
 			continue;

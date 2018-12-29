@@ -75,6 +75,12 @@ class geometry {
 		const math::vec3& get_max() const;
 		/// Returns the center of the bounding box.
 		math::vec3 get_box_center() const;
+		/**
+		 * @brief Returns the radius of the bounding sphere.
+		 * @return Returns the length between the center of the box
+		 * and one of its vertices.
+		 */
+		float approx_radius() const;
 
 		/**
 		 * @brief Returns whether a point is inside the geometry.

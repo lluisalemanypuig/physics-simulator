@@ -6,6 +6,7 @@ using namespace std;
 
 // physim includes
 #include <physim/math/private/math3/base.hpp>
+#include <physim/math/private/math3/geometry.hpp>
 
 namespace physim {
 using namespace math;
@@ -39,6 +40,10 @@ const vec3& geometry::get_max() const {
 
 vec3 geometry::get_box_center() const {
 	return (vmin + vmax)/2;
+}
+
+float geometry::approx_radius() const {
+	return __pm3_dist(get_box_center(), vmax);
 }
 
 } // -- namespace geometric
