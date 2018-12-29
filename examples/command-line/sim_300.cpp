@@ -164,23 +164,26 @@ namespace study_cases {
 
 		cout << "Mass per particle: " << F.get_particles()[0].mass << endl;
 
-		kernel_function W =
-		[R](const fluid_particle&, const fluid_particle&, float r2) -> float
+		kernel_scalar_function W =
+		[R](float r2) -> float
 		{
 			float k = R*R - r2;
 			float PI = static_cast<float>(M_PI);
 			return (315.0f/(64.0f*PI*std::pow(R, 9.0f)))*k*k*k;
 		};
-		kernel_function gW =
-		[R](const fluid_particle&, const fluid_particle&, float r2) -> float
+		kernel_vectorial_function gW =
+		[R](const vec3& r, float r2, vec3& res) -> void
 		{
-			float r = std::sqrt(r2);
+			static const float PI = static_cast<float>(M_PI);
+
 			float k = R*R - r2;
-			float PI = static_cast<float>(M_PI);
-			return (-945.0f/(32.0f*PI*std::pow(R, 9.0f)))*k*k*r;
+			cout << "        k= " << k << endl;
+			float s = (-945.0f/(32.0f*PI*std::pow(R, 9.0f)))*k*k;
+			cout << "        s= " << s << endl;
+			res = r*s;
 		};
-		kernel_function g2W =
-		[R](const fluid_particle&, const fluid_particle&, float r2) -> float
+		kernel_scalar_function g2W =
+		[R](float r2) -> float
 		{
 			float k = R*R - r2;
 			float PI = static_cast<float>(M_PI);
