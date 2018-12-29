@@ -38,15 +38,16 @@ fluid::fluid() {
 	ps = nullptr;
 	tree = nullptr;
 
-	kernel_function empty =
-	[](const fluid_particle&, const fluid_particle&, float) -> float
-	{ return 1.0f; };
+	kernel_scalar_function emptyS =
+	[](float) { return 1.0f; };
+	kernel_vectorial_function emptyV =
+	[](const vec3&, float, vec3&) -> void { };
 
 	// use empty kernels, to avoid segmentation
 	// faults and things like these
-	kernel = empty;
-	kernel_pressure = empty;
-	kernel_viscosity = empty;
+	kernel = emptyS;
+	kernel_pressure = emptyV;
+	kernel_viscosity = emptyS;
 }
 
 fluid::~fluid() {
@@ -123,8 +124,6 @@ void fluid::clear() {
 void fluid::update_forces() {
 	make_partition();
 
-	const float R2 = R*R;
-
 	// Compute neighbour lists, and squared distances
 	// between a particle and its neighbours.
 	// We need a dynamic list for the neighbours, but a
@@ -145,8 +144,8 @@ void fluid::update_forces() {
 			size_t j = neighs[i][j_it];
 			d2s[i][j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
 
-			if (d2s[i][j_it] > R2) {
-				// Put this element at the end.
+			if (d2s[i][j_it] > sq(R)) {
+				// Put this element at the end. (to be removed)
 				// Do not advance 'j_it'
 				std::swap(neighs[i][j_it], neighs[i][lim - 1]);
 				std::swap(d2s[i][j_it], d2s[i][lim - 1]);
@@ -163,8 +162,7 @@ void fluid::update_forces() {
 		d2s[i].erase( d2s[i].begin() + lim, d2s[i].end() );
 	}
 
-	// compute density and pressure of each particle,
-	// store squared distance
+	// compute density and pressure of each particle
 	for (size_t i = 0; i < N; ++i) {
 		ps[i].density = 0.0f;
 
@@ -172,7 +170,7 @@ void fluid::update_forces() {
 		// initialise density, pressure, and store squared distance
 		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
 			size_t j = neighs[i][j_it];
-			ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
+			ps[i].density += ps[j].mass*kernel(d2s[i][j_it]);
 		}
 
 		ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
@@ -180,26 +178,30 @@ void fluid::update_forces() {
 
 	// compute forces of the fluid (due to pressure and viscosity)
 	for (size_t i = 0; i < N; ++i) {
-
-		float aP = 0.0f;	// acceleration from pressure
-		vec3 aV;	// acceleration from viscosity
+		vec3 dir;
+		vec3 aux;
+		vec3 acc;	// all accelerations
 
 		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
 			size_t j = neighs[i][j_it];
+			__pm3_sub_v_v(dir, ps[j].cur_pos, ps[i].cur_pos);
 
 			float Pij = -ps[j].mass*(
 				ps[i].pressure*(1.0f/sq(ps[i].density)) +
 				ps[j].pressure*(1.0f/sq(ps[j].density))
 			);
-			aP += Pij(i,j)*kernel_pressure(ps[i], ps[j], d2s[i][j_it]);
+
+			kernel_pressure(dir, d2s[i][j_it], aux);
+			__pm3_add_acc_vs(acc, aux, Pij);
 
 			float visc_coef = ps[i].density*ps[j].density;
 			visc_coef *= viscosity*ps[j].mass*(1.0f/visc_coef);
-			visc_coef *= kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
-			__pm3_sub_v_v_mul_s(aV, ps[i].cur_vel, ps[j].cur_vel, visc_coef);
+			visc_coef *= kernel_viscosity(d2s[i][j_it]);
+			__pm3_sub_v_v_mul_s(aux, ps[i].cur_vel, ps[j].cur_vel, visc_coef);
+			__pm3_add_acc_v(acc, aux);
 		}
 
-		__pm3_add_acc_v(ps[i].force, aV);
+		__pm3_add_acc_vs(ps[i].force, acc, ps[i].mass);
 	}
 }
 
@@ -208,10 +210,6 @@ void fluid::update_forces(size_t n) {
 		update_forces();
 		return;
 	}
-
-	make_partition();
-
-	const float R2 = R*R;
 
 	// Compute neighbour lists, and squared distances
 	// between a particle and its neighbours.
@@ -234,8 +232,8 @@ void fluid::update_forces(size_t n) {
 			size_t j = neighs[i][j_it];
 			d2s[i][j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
 
-			if (d2s[i][j_it] > R2 or ps[j].index == ps[i].index) {
-				// Put this element at the end.
+			if (d2s[i][j_it] > sq(R)) {
+				// Put this element at the end. (to be removed)
 				// Do not advance 'j_it'
 				std::swap(neighs[i][j_it], neighs[i][lim - 1]);
 				std::swap(d2s[i][j_it], d2s[i][lim - 1]);
@@ -261,7 +259,7 @@ void fluid::update_forces(size_t n) {
 		// initialise density, pressure, and store squared distance
 		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
 			size_t j = neighs[i][j_it];
-			ps[i].density += ps[j].mass*kernel(ps[i], ps[j], d2s[i][j_it]);
+			ps[i].density += ps[j].mass*kernel(d2s[i][j_it]);
 		}
 
 		ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
@@ -270,17 +268,30 @@ void fluid::update_forces(size_t n) {
 	// compute forces of the fluid (due to pressure and viscosity)
 	#pragma omp parallel for num_threads(n)
 	for (size_t i = 0; i < N; ++i) {
-
-		float aP = 0.0f;	// acceleration from pressure
-		float aV = 0.0f;	// acceleration from viscosity
+		vec3 dir;
+		vec3 aux;
+		vec3 acc;	// all accelerations
 
 		for (size_t j_it = 0; j_it < neighs[i].size(); ++j_it) {
 			size_t j = neighs[i][j_it];
-			aP += Pij(i,j)*kernel_pressure(ps[i], ps[j], d2s[i][j_it]);
-			aV += Pij(i,j)*kernel_viscosity(ps[i], ps[j], d2s[i][j_it]);
+			__pm3_sub_v_v(dir, ps[j].cur_pos, ps[i].cur_pos);
+
+			float Pij = -ps[j].mass*(
+				ps[i].pressure*(1.0f/sq(ps[i].density)) +
+				ps[j].pressure*(1.0f/sq(ps[j].density))
+			);
+
+			kernel_pressure(dir, d2s[i][j_it], aux);
+			__pm3_add_acc_vs(acc, aux, Pij);
+
+			float visc_coef = ps[i].density*ps[j].density;
+			visc_coef *= viscosity*ps[j].mass*(1.0f/visc_coef);
+			visc_coef *= kernel_viscosity(d2s[i][j_it]);
+			__pm3_sub_v_v_mul_s(aux, ps[i].cur_vel, ps[j].cur_vel, visc_coef);
+			__pm3_add_acc_v(acc, aux);
 		}
 
-		ps[i].force += (aP + aV)*ps[i].mass;
+		__pm3_add_acc_vs(ps[i].force, acc, ps[i].mass);
 	}
 }
 
@@ -298,8 +309,11 @@ void fluid::make_partition() {
 
 // SETTERS
 
-void fluid::set_kernel
-(const kernel_function& W, const kernel_function& W_p, const kernel_function& W_v)
+void fluid::set_kernel(
+	const kernel_scalar_function& W,
+	const kernel_vectorial_function& W_p,
+	const kernel_scalar_function& W_v
+)
 {
 	kernel = W;
 	kernel_pressure = W_p;

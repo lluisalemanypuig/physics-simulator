@@ -54,7 +54,7 @@ class fluid {
 		 *
 		 * By default, this function returns 1;
 		 */
-		kernel_function kernel;
+		kernel_scalar_function kernel;
 		/**
 		 * @brief Kernel function. \f$\nabla W\f$
 		 *
@@ -85,7 +85,7 @@ class fluid {
 		 *
 		 * By default, this function returns 1;
 		 */
-		kernel_function kernel_pressure;
+		kernel_vectorial_function kernel_pressure;
 		/**
 		 * @brief Kernel function. \f$\nabla^2 W\f$
 		 *
@@ -118,7 +118,7 @@ class fluid {
 		 *
 		 * By default, this function returns 1;
 		 */
-		kernel_function kernel_viscosity;
+		kernel_scalar_function kernel_viscosity;
 
 		/**
 		 * @brief Space partition of this fluid's particles.
@@ -218,8 +218,9 @@ class fluid {
 		 * @param W_v \f$\nabla^2 W\f$, see @ref kernel_viscosity.
 		 */
 		void set_kernel(
-			const kernel_function& W, const kernel_function& W_p,
-			const kernel_function& W_v
+			const kernel_scalar_function& W,
+			const kernel_vectorial_function& W_p,
+			const kernel_scalar_function& W_v
 		);
 
 		// GETTERS
