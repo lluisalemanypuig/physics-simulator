@@ -9,12 +9,9 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
-HEADERS += \
-    utils.hpp
-
-SOURCES += \
-    main.cpp \
-    utils.cpp
+# OpenMP
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
 
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender
@@ -36,10 +33,18 @@ DEPENDPATH += ../../..
 
 LIBS += -lglut -lGLU -lGLEW
 unix {
-	exists(/usr/lib/nvidia-304/) {
+    exists(/usr/lib/nvidia-304/) {
         LIBS += -L/usr/lib/nvidia-304/ -lGL
-	}
-	else {
+    }
+    else {
         LIBS += -lGL
-	}
+    }
 }
+
+# Files
+HEADERS += \
+    utils.hpp
+
+SOURCES += \
+    main.cpp \
+    utils.cpp

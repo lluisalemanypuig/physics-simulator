@@ -6,12 +6,17 @@ CONFIG += staticlib
 CONFIG -= app_bundle
 CONFIG -= qt
 
-QMAKE_CXXFLAGS += -fopenmp
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
+
+# self-includes
 INCLUDEPATH += ..
+
+# OpenMP
+QMAKE_CXXFLAGS += -fopenmp
 LIBS += -fopenmp
 
+# Files
 HEADERS += \
     simulator.hpp \
     sim_solver.cpp \

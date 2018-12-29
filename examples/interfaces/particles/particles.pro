@@ -9,6 +9,40 @@ CONFIG -= qt
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 
+# OpenMP
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
+
+# render (model, obj reader, ...)
+LIBS += -L../render/ -lrender
+PRE_TARGETDEPS += ../render/librender.a
+INCLUDEPATH += ..
+DEPENDPATH += ..
+
+# physim library
+CONFIG(debug, debug|release) {
+    LIBS += -L../../../physim-debug/ -lphysim
+    PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
+}
+CONFIG(release, debug|release) {
+    LIBS += -L../../../physim-release/ -lphysim
+    PRE_TARGETDEPS += ../../../physim-release/libphysim.a
+}
+INCLUDEPATH += ../../..
+DEPENDPATH += ../../..
+
+# OpenGL
+LIBS += -lglut -lGLU -lGLEW
+unix {
+    exists(/usr/lib/nvidia-304/) {
+        LIBS += -L/usr/lib/nvidia-304/ -lGL
+    }
+    else {
+        LIBS += -lGL
+    }
+}
+
+# Files
 HEADERS += \
     glut_functions.hpp \
     utils.hpp \
@@ -37,31 +71,3 @@ SOURCES += main.cpp \
     sim_200.cpp \
     sim_201.cpp \
     sim_107.cpp
-
-# render (model, obj reader, ...)
-LIBS += -L../render/ -lrender
-PRE_TARGETDEPS += ../render/librender.a
-INCLUDEPATH += ..
-DEPENDPATH += ..
-
-# physim library
-CONFIG(debug, debug|release) {
-    LIBS += -L../../../physim-debug/ -lphysim
-    PRE_TARGETDEPS += ../../../physim-debug/libphysim.a
-}
-CONFIG(release, debug|release) {
-    LIBS += -L../../../physim-release/ -lphysim
-    PRE_TARGETDEPS += ../../../physim-release/libphysim.a
-}
-INCLUDEPATH += ../../..
-DEPENDPATH += ../../..
-
-LIBS += -lglut -lGLU -lGLEW
-unix {
-    exists(/usr/lib/nvidia-304/) {
-        LIBS += -L/usr/lib/nvidia-304/ -lGL
-    }
-    else {
-        LIBS += -lGL
-    }
-}
