@@ -21,11 +21,17 @@ using namespace fluids;
 
 namespace study_cases {
 
-	void sim_300_usage() {
+	void sim_301_usage() {
 		cout << "Simulation of a simple fluid" << endl;
 		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
+		cout << "    --total-time t: total time of the simulation.  Default: 2.0" << endl;
+		cout << "    --step t:       time step of the simulation.   Default: 0.0001" << endl;
+		cout << "    --solver s:     numerical solver to use.       Default: 'semi-euler'" << endl;
+		cout << "        euler:      Euler integration method.." << endl;
+		cout << "        semi-euler: Euler semi-implicit integration method." << endl;
+		cout << "        verlet:     Verlet integration method." << endl;
 		cout << "    --R r:			 Size of the neighbourhood.     Default: 0.015" << endl;
 		cout << "    --vol v:		 Volume of the fluid.           Default: 10.0" << endl;
 		cout << "    --vis v:		 Viscosity of the fluid.        Default: 0.001" << endl;
@@ -36,8 +42,9 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim_300(int argc, char *argv[]) {
+	void sim_301(int argc, char *argv[]) {
 		float dt = 0.0001f;
+		float total_time = 5.0f;
 		solver_type solv = solver_type::EulerSemi;
 		// number of particles per side
 		size_t side__ = 16;
@@ -56,8 +63,16 @@ namespace study_cases {
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				sim_300_usage();
+				sim_301_usage();
 				return;
+			}
+			else if (strcmp(argv[i], "--total-time") == 0) {
+				total_time = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--step") == 0) {
+				dt = atof(argv[i + 1]);
+				++i;
 			}
 			else if (strcmp(argv[i], "--R") == 0) {
 				h = atof(argv[i + 1]);
@@ -127,7 +142,18 @@ namespace study_cases {
 		cout << "    Initial shape:" << endl;
 		cout << "        0.2 x 0.2 x 0.1" << endl;
 		cout << "Simulation:" << endl;
+		cout << "    total time: " << total_time << endl;
 		cout << "    step time: " << dt << endl,
+		cout << "    solver: ";
+		if (solv == solver_type::EulerOrig) {
+			cout << " Euler" << endl;
+		}
+		else if (solv == solver_type::EulerSemi) {
+			cout << " Semi-Euler" << endl;
+		}
+		else if (solv == solver_type::Verlet) {
+			cout << " Verlet" << endl;
+		}
 
 		cout << "Allocating..." << endl;
 		begin = timing::now();
@@ -183,28 +209,24 @@ namespace study_cases {
 		end = timing::now();
 		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
+		float sim_time = 0.0f;
+		double total_exe_secs = 0.0f;
+
 		cout << "Updating forces..." << endl;
-		begin = timing::now();
-		F.update_forces(nt);
-		end = timing::now();
-		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
+		while (sim_time <= total_time) {
+			begin = timing::now();
+			F.update_forces(nt);
+			end = timing::now();
+			double elapsed_exe_secs = timing::elapsed_seconds(begin, end);
+			total_exe_secs += elapsed_exe_secs;
 
-		const fluid_particle *ps = F.get_particles();
-
-		// output forces
-		cout << "FORCES" << endl;
-		for (size_t i = 0; i < N; ++i) {
-			cout << i << ": "
-				 << ps[i].force.x << " " << ps[i].force.y << " " << ps[i].force.z
-				 << endl;
+			cout << "    Total execution time: " << total_exe_secs << endl;
+			cout << "        Simulation time: " << sim_time << " seconds" << endl;
+			sim_time += dt;
 		}
 
-		// compute velocities
-		cout << "VELOCITIES" << endl;
-		for (size_t i = 0; i < N; ++i) {
-			vec3 vel = ps[i].force*dt*(1.0f/ps[i].mass);
-			cout << i << ": " << vel.x << " " << vel.y << " " << vel.z << endl;
-		}
+		cout << "Average execution time per update: "
+			 << total_exe_secs/(sim_time/dt) << " seconds" << endl;
 	}
 
 } // -- namespace study_cases
