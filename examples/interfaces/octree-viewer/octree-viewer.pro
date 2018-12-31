@@ -47,8 +47,12 @@ unix {
 
 # Files
 HEADERS += \
-    utils.hpp
+    utils.hpp \
+    point_set_viewer.hpp \
+    fluid_viewer.hpp
 
 SOURCES += \
+    utils.cpp \
+    point_set_viewer.cpp \
     main.cpp \
-    utils.cpp
+    fluid_viewer.cpp

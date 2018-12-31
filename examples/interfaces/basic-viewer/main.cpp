@@ -70,7 +70,7 @@ bool inside_window(int x, int y) {
 // Exit viewer
 // -----------
 
-void exit_func() {
+void __psv_exit_func() {
 	m->clear();
 	delete m;
 }
@@ -79,7 +79,7 @@ void exit_func() {
 // INITIALISE OpenGL
 // -----------------
 
-void initGL(int argc, char *argv[]) {
+void __psv_initGL(int argc, char *argv[]) {
 	if (argc > 1) {
 		if (strcmp(argv[1], "--use-shaders") == 0) {
 			use_shader = true;
@@ -198,7 +198,7 @@ void initGL(int argc, char *argv[]) {
 // RENDER SCENE
 // ------------
 
-void refresh() {
+void __psv_refresh() {
 	++fps_count;
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -253,10 +253,10 @@ void refresh() {
 	glutSwapBuffers();
 }
 
-void timed_refresh(int value) {
+void __psv_timed_refresh(int value) {
 	UNUSED(value);
 
-	refresh();
+	__psv_refresh();
 
 	timing::time_point here = timing::now();
 	double elapsed = timing::elapsed_seconds(sec, here);
@@ -268,14 +268,14 @@ void timed_refresh(int value) {
 		sec = timing::now();
 	}
 
-	glutTimerFunc(1000.0f/FPS, timed_refresh, 0);
+	glutTimerFunc(1000.0f/FPS, __psv_timed_refresh, 0);
 }
 
 // ---------------
 // RESIZE viewport
 // ---------------
 
-void reshape(int w, int h) {
+void __psv_reshape(int w, int h) {
 	float pzoom = SR.get_perspective_camera().get_zoom();
 	float ozoom = SR.get_orthogonal_camera().get_zoom();
 
@@ -296,7 +296,7 @@ void reshape(int w, int h) {
 // MOUSE HANDLER
 // -------------
 
-void mouse_click_event(int button, int state, int x, int y) {
+void __psv_mouse_click_event(int button, int state, int x, int y) {
 	UNUSED(x);
 	UNUSED(y);
 
@@ -321,7 +321,7 @@ void mouse_click_event(int button, int state, int x, int y) {
 	pressed_button = button;
 }
 
-void mouse_movement(int x, int y) {
+void __psv_mouse_movement(int x, int y) {
 	int dx = x - last_mouse.first;
 	int dy = y - last_mouse.second;
 	last_mouse = point(x,y);
@@ -335,7 +335,7 @@ void mouse_movement(int x, int y) {
 	}
 }
 
-void mouse_drag_event(int x, int y) {
+void __psv_mouse_drag_event(int x, int y) {
 	int dx = x - last_mouse.first;
 	int dy = y - last_mouse.second;
 	last_mouse = point(x,y);
@@ -355,13 +355,13 @@ void mouse_drag_event(int x, int y) {
 // KEYBOARD HANDLER
 // ----------------
 
-void special_keys(int key, int x, int y) {
+void __psv_special_keys(int key, int x, int y) {
 	UNUSED(key);
 	UNUSED(x);
 	UNUSED(y);
 }
 
-void keyboard_event(unsigned char c, int x, int y) {
+void __psv_keyboard_event(unsigned char c, int x, int y) {
 	UNUSED(x);
 	UNUSED(y);
 
@@ -417,20 +417,20 @@ void keyboard_event(unsigned char c, int x, int y) {
 }
 
 int main(int argc, char* argv[]) {
-	initGL(argc, argv);
+	__psv_initGL(argc, argv);
 
-	atexit(exit_func);
+	atexit(__psv_exit_func);
 
-	glutDisplayFunc(refresh);
-	glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyboard_event);
-	glutSpecialFunc(special_keys);
-	glutMouseFunc(mouse_click_event);
-	glutPassiveMotionFunc(mouse_movement);
-	glutMotionFunc(mouse_drag_event);
+	glutDisplayFunc(__psv_refresh);
+	glutReshapeFunc(__psv_reshape);
+	glutKeyboardFunc(__psv_keyboard_event);
+	glutSpecialFunc(__psv_special_keys);
+	glutMouseFunc(__psv_mouse_click_event);
+	glutPassiveMotionFunc(__psv_mouse_movement);
+	glutMotionFunc(__psv_mouse_drag_event);
 
 	//glutIdleFunc(refresh);
-	glutTimerFunc(1000.0f/FPS, timed_refresh, 0);
+	glutTimerFunc(1000.0f/FPS, __psv_timed_refresh, 0);
 
 	glutMainLoop();
 }
