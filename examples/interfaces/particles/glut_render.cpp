@@ -20,8 +20,6 @@ typedef physim::particles::sized_particle SP;
 // custom includes
 #include "conversion_helper.hpp"
 
-#include <png.h>
-
 namespace glut_functions {
 
 	// ---------------
