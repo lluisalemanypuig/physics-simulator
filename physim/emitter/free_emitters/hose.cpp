@@ -17,17 +17,17 @@ namespace free_emitters {
 // PROTECTED
 
 void hose::make_pos_init() {
-	pos = [this](base_particle *p) {
-		__pm3_assign_v(p->cur_pos, this->source);
+	pos = [this](base_particle& p) {
+		__pm3_assign_v(p.cur_pos, this->source);
 
 		// copy the current position to the previous
 		// position so that Verlet's solver works properly.
-		p->save_position();
+		p.save_position();
 	};
 }
 
 void hose::make_vel_init() {
-	vel = [this](base_particle *p) {
+	vel = [this](base_particle& p) {
 		const float x = (this->r)*this->U01(this->E);
 		const float y = (this->r)*this->U01(this->E);
 		const float phi = 2.0f*3.1415926535f*this->U01(this->E);
@@ -39,7 +39,7 @@ void hose::make_vel_init() {
 			this->w,(y*std::sin(phi)),
 			this->cc
 		);
-		__pm3_sub_v_v(p->cur_vel, base_point, this->source);
+		__pm3_sub_v_v(p.cur_vel, base_point, this->source);
 	};
 }
 

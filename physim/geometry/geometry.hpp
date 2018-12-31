@@ -155,7 +155,7 @@ class geometry {
 		 */
 		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
-			particles::free_particle *pred
+			particles::free_particle& pred
 		) const = 0;
 
 		/**
@@ -185,7 +185,7 @@ class geometry {
 		 */
 		virtual void update_particle(
 			const math::vec3& pred_pos, const math::vec3& pred_vel,
-			particles::sized_particle *pred
+			particles::sized_particle& pred
 		) const = 0;
 
 		/// Output on stream @e cout information about this geometry.

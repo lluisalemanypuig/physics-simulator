@@ -17,7 +17,7 @@ namespace emitters {
 // PUBLIC
 
 sized_emitter::sized_emitter() : free_emitter() {
-	radius = [](spart *p) { p->R = 1.0f; };
+	radius = [](spart& p) { p.R = 1.0f; };
 }
 
 sized_emitter::sized_emitter(const sized_emitter& i) : free_emitter(i) {
@@ -44,7 +44,7 @@ const sized_emit& sized_emitter::get_radius_initialiser() const {
 
 // INITIALISE A PARTICLE
 
-void sized_emitter::initialise_particle(particles::sized_particle *p) const {
+void sized_emitter::initialise_particle(particles::sized_particle& p) const {
 	free_emitter::initialise_particle(p);
 	radius(p);
 }

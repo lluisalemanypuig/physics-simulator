@@ -14,15 +14,15 @@ namespace free_emitters {
 // PROTECTED
 
 void rect_source::make_pos_init() {
-	pos = [this](base_particle *p) {
+	pos = [this](base_particle& p) {
 		const float l = this->U01(this->E);
 		const float m = this->U01(this->E);
 
-		__pm3_add_vs_vs_v(p->cur_pos, this->u,(l*this->w), this->v,(m*this->h), this->S);
+		__pm3_add_vs_vs_v(p.cur_pos, this->u,(l*this->w), this->v,(m*this->h), this->S);
 
 		// copy the current position to the previous
 		// position so that Verlet's solver works properly.
-		p->save_position();
+		p.save_position();
 	};
 }
 

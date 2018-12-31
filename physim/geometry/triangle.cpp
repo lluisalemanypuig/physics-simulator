@@ -397,14 +397,14 @@ bool triangle::intersec_sphere(const vec3& c, float R) const {
 // OTHERS
 
 void triangle::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, free_particle& p)
 const
 {
 	pl.update_particle(pred_pos, pred_vel, p);
 }
 
 void triangle::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, sized_particle& p)
 const
 {
 	// no need to save the position because
@@ -423,7 +423,7 @@ const
 	vec3 vel_normal;
 	normalise(pred_vel, vel_normal);
 	vec3 cor_pos;
-	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, 0.01f + p->R - D);
+	__pm3_sub_v_vs(cor_pos, pred_pos, vel_normal, 0.01f + p.R - D);
 
 	// 2. Update the position of the underlying free particle
 	// 2.1. Compute normal of tangent plane
@@ -432,7 +432,7 @@ const
 	normalise(dir,dir);
 
 	plane T(dir, cor_pos);
-	T.update_particle(pred_pos, pred_vel, static_cast<free_particle *>(p));
+	T.update_particle(pred_pos, pred_vel, static_cast<free_particle&>(p));
 }
 
 void triangle::display() const {

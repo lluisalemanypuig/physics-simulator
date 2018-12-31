@@ -10,7 +10,7 @@ namespace physim {
 namespace emitters {
 
 /// Shortcut for the free particle emitter_base function type.
-typedef std::function<void (particles::base_particle *)> base_emit;
+typedef std::function<void (particles::base_particle& )> base_emit;
 
 /**
  * @brief Class for particle initialisation.
@@ -92,7 +92,7 @@ class base_emitter {
 		 * see the description of this class.
 		 * @param p The particle to be initialised.
 		 */
-		void initialise_particle(particles::base_particle *p) const;
+		void initialise_particle(particles::base_particle& p) const;
 };
 
 } // -- namespace emitters

@@ -121,10 +121,10 @@ bool plane::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) cons
 // OTHERS
 
 void plane::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, free_particle& p)
 const
 {
-	p->save_position();
+	p.save_position();
 
 	// Wn is a vector normal to the plane with
 	// direction towards the intersection point
@@ -135,8 +135,8 @@ const
 
 	// --- update position --- (with bouncing coefficient)
 
-	float bounce = p->bouncing;
-	__pm3_sub_v_vs(p->cur_pos, pred_pos, Wn, 1.0f + bounce);
+	float bounce = p.bouncing;
+	__pm3_sub_v_vs(p.cur_pos, pred_pos, Wn, 1.0f + bounce);
 
 	// --- update velocity (1) --- (with bouncing coefficient)
 
@@ -144,29 +144,29 @@ const
 	// for the 'friction operation'. A constant reference is not used because
 	// we need to keep this value after update.
 	vec3 vt;
-	__pm3_assign_v(vt, p->cur_vel);
+	__pm3_assign_v(vt, p.cur_vel);
 
 	// first update of the velociy (with bouncing)
-	__pm3_sub_v_vs(p->cur_vel, pred_vel, normal,(1.0f + bounce)*__pm3_dot(normal, pred_vel));
+	__pm3_sub_v_vs(p.cur_vel, pred_vel, normal,(1.0f + bounce)*__pm3_dot(normal, pred_vel));
 
 	// --- update velocity (2) --- (with friction coefficient)
 
 	// Use 'vt', the velocity at time t
 	vec3 vT;
 	__pm3_sub_v_vs(vT, vt, normal,__pm3_dot(normal,vt));
-	__pm3_sub_acc_vs(p->cur_vel, vT, p->friction);
+	__pm3_sub_acc_vs(p.cur_vel, vT, p.friction);
 }
 
 void plane::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, sized_particle& p)
 const
 {
-	p->save_position();
+	p.save_position();
 
 	/*	1. We know that the predicted position is at a certain SIGNED
 	 *		distance D from the plane.
 	 *	2. Define a position P = pred_pos + sign(D)*normal*d, where
-	 *		d = p->R - |D|.
+	 *		d = p.R - |D|.
 	 *	   Notice P is at a distance R from the plane.
 	 *	3. Define a plane 'Q' with normal 'normal' that goes through P
 	 *	4. The last correct position of the sized particle 'p' is the
@@ -185,7 +185,7 @@ const
 	 */
 
 	float D = dist_point_plane(pred_pos);
-	float d = (signbit(D) ? -1.0f : 1.0f)*(p->R - std::abs(D));
+	float d = (signbit(D) ? -1.0f : 1.0f)*(p.R - std::abs(D));
 
 	vec3 P;
 	__pm3_add_v_vs(P, pred_pos, normal,d);
@@ -199,7 +199,7 @@ const
 	plane Q(normal, P);
 	vec3 I;
 	Q.intersec_segment(F, pred_pos, I);
-	Q.update_particle(I, pred_vel, static_cast<free_particle *>(p));
+	Q.update_particle(I, pred_vel, static_cast<free_particle&>(p));
 }
 
 void plane::display() const {

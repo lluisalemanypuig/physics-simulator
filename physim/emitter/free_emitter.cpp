@@ -17,12 +17,12 @@ namespace emitters {
 // PUBLIC
 
 free_emitter::free_emitter() : base_emitter() {
-	charge		= [](fpart *p) { p->charge = 0.0f; };
-	bounce		= [](fpart *p) { p->bouncing = 0.8f; };
-	friction	= [](fpart *p) { p->friction = 0.2f; };
-	lifetime	= [](fpart *p) { p->lifetime = 10.0f; };
-	starttime	= [](fpart *p) { p->starttime = 0.0f; };
-	fixed		= [](fpart *p) { p->fixed = false; };
+	charge		= [](fpart& p) { p.charge = 0.0f; };
+	bounce		= [](fpart& p) { p.bouncing = 0.8f; };
+	friction	= [](fpart& p) { p.friction = 0.2f; };
+	lifetime	= [](fpart& p) { p.lifetime = 10.0f; };
+	starttime	= [](fpart& p) { p.starttime = 0.0f; };
+	fixed		= [](fpart& p) { p.fixed = false; };
 }
 
 free_emitter::free_emitter(const free_emitter& i) : base_emitter(i) {
@@ -94,7 +94,7 @@ const free_emit& free_emitter::get_fixed_initialiser() const {
 
 // INITIALISE A PARTICLE
 
-void free_emitter::initialise_particle(free_particle *p) const {
+void free_emitter::initialise_particle(free_particle& p) const {
 	base_emitter::initialise_particle(p);
 	charge(p);
 	bounce(p);

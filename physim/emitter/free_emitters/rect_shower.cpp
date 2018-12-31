@@ -13,8 +13,8 @@ namespace free_emitters {
 // PROTECTED
 
 void rect_shower::make_vel_init() {
-	vel = [](base_particle *p) {
-		__pm3_assign_s(p->cur_vel, 0.0f);
+	vel = [](base_particle& p) {
+		__pm3_assign_s(p.cur_vel, 0.0f);
 	};
 }
 

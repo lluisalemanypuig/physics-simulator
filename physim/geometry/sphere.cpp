@@ -185,7 +185,7 @@ bool sphere::intersec_sphere(const vec3& c, float r) const {
 // OTHERS
 
 void sphere::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, free_particle& p)
 const
 {
 	// define a plane tangent to the sphere
@@ -194,7 +194,7 @@ const
 	// compute intersection point
 
 	vec3 I;
-	intersec_segment(p->cur_pos, pred_pos, I);
+	intersec_segment(p.cur_pos, pred_pos, I);
 
 	// define the plane
 	vec3 normal;
@@ -209,15 +209,15 @@ const
 	// it means that the particle has pierced through
 	// the sphere's surface. If this happens, move the
 	// position to the surface (and a bit farther).
-	if (__pm3_dist2(p->cur_pos, C) < R*R) {
-		__pm3_sub_v_v(normal, p->cur_pos, C);
+	if (__pm3_dist2(p.cur_pos, C) < R*R) {
+		__pm3_sub_v_v(normal, p.cur_pos, C);
 		__pm3_normalise(normal, normal);
-		__pm3_add_v_vs(p->cur_pos, C, normal,R + 0.03f);
+		__pm3_add_v_vs(p.cur_pos, C, normal,R + 0.03f);
 	}
 }
 
 void sphere::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, sized_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, sized_particle& p)
 const
 {
 	/* Let r be the particle's radius.
@@ -243,9 +243,9 @@ const
 	vec3 u_pred_vel;
 	normalise(pred_vel, u_pred_vel);
 	vec3 F;
-	__pm3_add_v_vs(F, pred_pos, u_pred_vel,-2.0f*p->R);
+	__pm3_add_v_vs(F, pred_pos, u_pred_vel,-2.0f*p.R);
 
-	sphere S(C, R + p->R);
+	sphere S(C, R + p.R);
 
 	vec3 I;
 	S.intersec_segment(pred_pos, F, I);
@@ -256,7 +256,7 @@ const
 
 	// make the plane update the particle
 	tan_plane.update_particle
-	(pred_pos, pred_vel, static_cast<free_particle *>(p));
+	(pred_pos, pred_vel, static_cast<free_particle&>(p));
 }
 
 void sphere::display() const {

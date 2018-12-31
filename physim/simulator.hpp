@@ -99,11 +99,11 @@ class simulator {
 		/// Collection of force fields.
 		std::vector<fields::field *> force_fields;
 		/// The collection of free particles in the simulation.
-		std::vector<particles::free_particle *> fps;
+		std::vector<particles::free_particle> fps;
 		/// The collection of sized particles in the simulation.
-		std::vector<particles::sized_particle *> sps;
+		std::vector<particles::sized_particle> sps;
 		/// The collection of agent particles in the simulation.
-		std::vector<particles::agent_particle *> aps;
+		std::vector<particles::agent_particle> aps;
 		/// The collection of meshes in the simulation.
 		std::vector<meshes::mesh *> ms;
 		/// The collection of fluids in the simulation.
@@ -199,7 +199,7 @@ class simulator {
 		 * @ref solver_type::Verlet).
 		 * @param p The particle to be initialsed.
 		 */
-		void init_particle(particles::base_particle *p);
+		void init_particle(particles::base_particle& p);
 
 		/**
 		 * @brief Initialises a mesh.
@@ -272,29 +272,9 @@ class simulator {
 		 * @param[out] pos The predicted position.
 		 * @param[out] vel The predicted velocity.
 		 */
-		template<class P> void apply_solver_ptr
-		(const P *p, math::vec3& pos, math::vec3& vel);
-		/**
-		 * @brief Predicts a particle's next position and velocity.
-		 * @param p Particle to apply the solver on.
-		 * @param[out] pos The predicted position.
-		 * @param[out] vel The predicted velocity.
-		 */
-		template<class P> void apply_solver_ref
+		template<class P> void apply_solver
 		(const P& p, math::vec3& pos, math::vec3& vel);
 
-		/**
-		 * @brief Computes the forces acting in the simulation.
-		 *
-		 * These forces are defined in the different focuses added
-		 * to the simulator. Each force vector is added to the particle's
-		 * force accumulator. The force accumulator, however, is not
-		 * initialised to 0.
-		 *
-		 * The result is set to the force acting on particle @e p.
-		 * @param[out] p The particle whose force attribute is to be modified.
-		 */
-		template<class P> void compute_forces(P *p);
 		/**
 		 * @brief Computes the forces acting in the simulation.
 		 *
@@ -321,7 +301,7 @@ class simulator {
 		 */
 		bool find_update_geomcoll_free
 		(
-			const particles::free_particle *p,
+			const particles::free_particle& p,
 			math::vec3& pred_pos, math::vec3& pred_vel,
 			particles::free_particle& coll_pred
 		);
@@ -339,7 +319,7 @@ class simulator {
 		 * @returns Returns true on collision with geometry.
 		 */
 		bool find_update_partcoll_free(
-			const particles::free_particle *p,
+			const particles::free_particle& p,
 			math::vec3& pred_pos, math::vec3& pred_vel,
 			particles::free_particle& coll_pred
 		);
@@ -360,7 +340,7 @@ class simulator {
 		 */
 		bool find_update_geomcoll_sized
 		(
-			const particles::sized_particle *p,
+			const particles::sized_particle& p,
 			math::vec3& pred_pos, math::vec3& pred_vel,
 			particles::sized_particle& coll_pred
 		);
@@ -378,7 +358,7 @@ class simulator {
 		 * particle after colliding with geometry.
 		 */
 		void find_update_partcoll_sized
-		(particles::sized_particle *p, size_t i);
+		(particles::sized_particle& p, size_t i);
 
 		/**
 		 * @brief Update an agent particle that may collide with a sized or an
@@ -393,7 +373,7 @@ class simulator {
 		 * particle after colliding with geometry.
 		 */
 		void find_update_partcoll_agent
-		(particles::agent_particle *p, size_t i);
+		(particles::agent_particle& p, size_t i);
 
 	public:
 		/**
@@ -415,61 +395,51 @@ class simulator {
 		 * The particle is initialised using @ref free_global_emit.
 		 * @pre For this initialisation to be completely correct, the step
 		 * time (see @ref dt) needs to be set.
-		 * @post The caller should not free the object, since the simulator
-		 * will take care of that.
 		 */
-		particles::free_particle *add_free_particle();
+		size_t add_free_particle();
 		/**
 		 * @brief Adds a sized particle to the simulation.
 		 *
 		 * The particle is initialised using @ref sized_global_emit.
 		 * @pre For this initialisation to be completely correct, the step
 		 * time (see @ref dt) needs to be set.
-		 * @post The caller should not free the object, since the simulator
-		 * will take care of that.
 		 */
-		particles::sized_particle *add_sized_particle();
+		size_t add_sized_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialser function (see @ref free_global_emit) is not called.
 		 * The particle is added to @ref fps.
-		 * @param p A non-null pointer to the object.
+		 * @param p A free particle.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
 		 * then the step time (see @ref dt) needs to be set to initialise correctly
 		 * the particle's previous position.
-		 * @post The caller should not free the object, since the simulator
-		 * will take care of that.
 		 */
-		void add_free_particle(particles::free_particle *p);
+		size_t add_free_particle(const particles::free_particle& p);
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialiser object (see @ref sized_global_emit) is not called.
 		 * The particle is added to @ref sps.
 		 *
-		 * @param p A non-null pointer to the object.
+		 * @param p A sized particle.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
 		 * then the step time (see @ref dt) needs to be set to initialise correctly
 		 * the particle's previous position.
-		 * @post The caller should not free the object, since the simulator
-		 * will take care of that.
 		 */
-		void add_sized_particle(particles::sized_particle *p);
+		size_t add_sized_particle(const particles::sized_particle& p);
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * None of the initialiser objects are used. The particle is added
 		 * to @ref aps.
 		 *
-		 * @param p A non-null pointer to the object.
+		 * @param p An agent particle.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
 		 * then the step time (see @ref dt) needs to be set to initialise correctly
 		 * the particle's previous position.
-		 * @post The caller should not free the object, since the simulator
-		 * will take care of that.
 		 */
-		void add_agent_particle(particles::agent_particle *p);
+		size_t add_agent_particle(const particles::agent_particle& p);
 		/**
 		 * @brief Adds @e n free particles to the simulation.
 		 *
@@ -488,34 +458,6 @@ class simulator {
 		 * @param n Number of particles.
 		 */
 		void add_sized_particles(size_t n);
-
-		/**
-		 * @brief Removes the @e i-th free particle.
-		 *
-		 * Frees the memory occupied by the particle in the @e i-th
-		 * position of @ref fps. Therefore, any pointer to that particle
-		 * becomes invalid.
-		 * @param i The index of the particle in [0, number of free particles).
-		 */
-		void remove_free_particle(size_t i);
-		/**
-		 * @brief Removes the @e i-th sized particle.
-		 *
-		 * Frees the memory occupied by the particle in the @e i-th
-		 * position of @ref sps. Therefore, any pointer to that particle
-		 * becomes invalid.
-		 * @param i The index of the particle in [0, number of sized particles).
-		 */
-		void remove_sized_particle(size_t i);
-		/**
-		 * @brief Removes the @e i-th agent particle.
-		 *
-		 * Frees the memory occupied by the particle in the @e i-th
-		 * position of @ref aps. Therefore, any pointer to that particle
-		 * becomes invalid.
-		 * @param i The index of the particle in [0, number of agent particles).
-		 */
-		void remove_agent_particle(size_t i);
 
 		/**
 		 * @brief Deletes all free particles in this simulator.
@@ -557,15 +499,7 @@ class simulator {
 		 * will take care of that.
 		 * @param g A non-null pointer to the object.
 		 */
-		void add_geometry(geometric::geometry *g);
-		/**
-		 * @brief Removes the @e i-th fixed geometrical object.
-		 *
-		 * Frees the memory occupied by the object in the @e i-th position from
-		 * @ref scene_fixed. Therefore, any pointer to that object becomes invalid.
-		 * @param i The index of the object in [0, number of geometrical objects).
-		 */
-		void remove_geometry(size_t i);
+		size_t add_geometry(geometric::geometry *g);
 		/**
 		 * @brief Deletes all geometry in this simulator.
 		 *
@@ -585,7 +519,7 @@ class simulator {
 		 * will take care of that.
 		 * @param f A non-null pointer to the object.
 		 */
-		void add_field(fields::field *f);
+		size_t add_field(fields::field *f);
 		/**
 		 * @brief Sets the gravity vector.
 		 *
@@ -593,14 +527,6 @@ class simulator {
 		 * using vector @e g.
 		 */
 		void set_gravity_acceleration(const math::vec3& g);
-		/**
-		 * @brief Removes the @e i-th force field object.
-		 *
-		 * Frees the memory occupied by the object in the @e i-th position from
-		 * @ref force_fields. Therefore, any pointer to that object becomes invalid.
-		 * @param i The index of the object in [0, number of force fields).
-		 */
-		void remove_field(size_t i);
 		/**
 		 * @brief Deletes all force fields in this simulator.
 		 *
@@ -614,23 +540,10 @@ class simulator {
 		/**
 		 * @brief Adds a mesh to the scene.
 		 *
-		 * The mesh is added to @ref ms.
-		 *
-		 * The caller should not free the object since the simulator
-		 * will take care of that.
-		 *
-		 * @param m A non-null pointer to the object.
-		 * @pre All meshe's particles must have been given a position.
+		 * The mesh added is copied.
+		 * @returns Returns the index of the mesh.
 		 */
-		void add_mesh(meshes::mesh *m);
-		/**
-		 * @brief Removes the @e i-th mesh object.
-		 *
-		 * Frees the memory occupied by the object in the @e i-th position from
-		 * @ref ms. Therefore, any pointer to that object becomes invalid.
-		 * @param i The index of the object in [0, number of meshes).
-		 */
-		void remove_mesh(size_t i);
+		size_t add_mesh(meshes::mesh *m);
 		/**
 		 * @brief Deletes all meshes in this simulator.
 		 *
@@ -643,23 +556,10 @@ class simulator {
 		/**
 		 * @brief Adds a fluids to the scene.
 		 *
-		 * The fluid is added to @ref fs.
-		 *
-		 * The caller should not free the object since the simulator
-		 * will take care of that.
-		 *
-		 * @param f A non-null pointer to the object.
-		 * @pre All fluid's particles must have been given a position.
+		 * The fluid is not initialised.
+		 * @returns Returns the index of the fluid.
 		 */
-		void add_fluid(fluids::fluid *f);
-		/**
-		 * @brief Removes the @e i-th fluid object.
-		 *
-		 * Frees the memory occupied by the object in the @e i-th position from
-		 * @ref fs. Therefore, any pointer to that object becomes invalid.
-		 * @param i The index of the object in [0, number of fluids).
-		 */
-		void remove_fluid(size_t i);
+		size_t add_fluid(fluids::fluid *f);
 		/**
 		 * @brief Deletes all fluids in this simulator.
 		 *
@@ -849,67 +749,39 @@ class simulator {
 
 		/**
 		 * @brief Returns all free particles in the simulation.
-		 *
-		 * Note that the constant reference is to the container.
-		 * It cannot be added new particles or have deleted any,
-		 * however any particle's attributes may be modified.
-		 *
-		 * The behaviour of the modified particles in the simulation
-		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
 		 * containing all free particles.
 		 */
-		const std::vector<particles::free_particle *>& get_free_particles() const;
+		const std::vector<particles::free_particle>& get_free_particles() const;
 		/// Returns a reference to i-th free particle.
-		particles::free_particle *get_free_particle(size_t i);
+		particles::free_particle& get_free_particle(size_t i);
 		/// Returns a constant reference to i-th free particle.
-		const particles::free_particle *get_free_particle(size_t i) const;
+		const particles::free_particle& get_free_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all sized particles in the simulation.
-		 *
-		 * Note that the constant reference is to the container.
-		 * It cannot be added new particles or have deleted any,
-		 * however any particle's attributes may be modified.
-		 *
-		 * The behaviour of the modified particles in the simulation
-		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
 		 * containing all sized particles.
 		 */
-		const std::vector<particles::sized_particle *>& get_sized_particles() const;
+		const std::vector<particles::sized_particle>& get_sized_particles() const;
 		/// Returns a reference to i-th sized particle.
-		particles::sized_particle *get_sized_particle(size_t i);
+		particles::sized_particle& get_sized_particle(size_t i);
 		/// Returns a constant reference to i-th sized particle.
-		const particles::sized_particle *get_sized_particle(size_t i) const;
+		const particles::sized_particle& get_sized_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all agent particles in the simulation.
-		 *
-		 * Note that the constant reference is to the container.
-		 * It cannot be added new particles or have deleted any,
-		 * however any particle's attributes may be modified.
-		 *
-		 * The behaviour of the modified particles in the simulation
-		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
 		 * containing all agent particles.
 		 */
-		const std::vector<particles::agent_particle *>& get_agent_particles() const;
+		const std::vector<particles::agent_particle>& get_agent_particles() const;
 		/// Returns a reference to i-th agent particle.
-		particles::agent_particle *get_agent_particle(size_t i);
+		particles::agent_particle& get_agent_particle(size_t i);
 		/// Returns a constant reference to i-th agent particle.
-		const particles::agent_particle *get_agent_particle(size_t i) const;
+		const particles::agent_particle& get_agent_particle(size_t i) const;
 
 		/**
 		 * @brief Returns all meshes in the simulation.
-		 *
-		 * Note that the constant reference is to the container.
-		 * It cannot be added new meshes or have deleted any,
-		 * however any meshe's attributes may be modified.
-		 *
-		 * The behaviour of the modified particles in the simulation
-		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
 		 * containing all particles.
 		 */
@@ -919,13 +791,6 @@ class simulator {
 
 		/**
 		 * @brief Returns all fluids in the simulation.
-		 *
-		 * Note that the constant reference is to the container.
-		 * It cannot be added new fluids or have deleted any,
-		 * however any fluid's attributes may be modified.
-		 *
-		 * The behaviour of the modified particles in the simulation
-		 * will change according to the modifications.
 		 * @return Returns a constant reference to the structure
 		 * containing all particles.
 		 */

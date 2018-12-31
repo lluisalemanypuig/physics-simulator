@@ -13,15 +13,15 @@ void simulator::_simulate_agent_particles() {
 
 	// first compute forces ...
 	for (size_t i = 0; i < aps.size(); ++i) {
-		agent_particle *p = aps[i];
+		agent_particle& p = aps[i];
 
 		// ignore fixed particles
-		if (p->fixed) {
+		if (p.fixed) {
 			continue;
 		}
 
 		// Particles age: reduce their lifetime.
-		p->reduce_lifetime(dt);
+		p.reduce_lifetime(dt);
 
 		/* ------------------- */
 		/* STEERING BEHAVIOURS */
@@ -29,29 +29,29 @@ void simulator::_simulate_agent_particles() {
 		vec3 steer_force;
 		__pm3_assign_s(steer_force, 0.0f);
 
-		p->apply_behaviours(steer_force);
-		p->apply_behaviours(scene_fixed, steer_force);
+		p.apply_behaviours(steer_force);
+		p.apply_behaviours(scene_fixed, steer_force);
 
-		// p->apply_behaviours(aps, steer_force)
+		// p.apply_behaviours(aps, steer_force)
 
 		// store force
-		truncate(steer_force, p->max_force, p->force);
+		truncate(steer_force, p.max_force, p.force);
 	}
 
 	// ... then update velocities and positions
 	for (size_t i = 0; i < aps.size(); ++i) {
-		agent_particle *p = aps[i];
+		agent_particle& p = aps[i];
 
 		// ignore fixed particles
-		if (p->fixed) {
+		if (p.fixed) {
 			continue;
 		}
 
 		vec3 accel;
-		__pm3_div_v_s(accel, p->force, p->mass);
+		__pm3_div_v_s(accel, p.force, p.mass);
 
 		vec3 pred_vel;
-		__pm3_add_v_vs(pred_vel, p->cur_vel, accel, dt);
+		__pm3_add_v_vs(pred_vel, p.cur_vel, accel, dt);
 
 		/* ------------------------- */
 		/* apply Euler integration   */
@@ -60,7 +60,7 @@ void simulator::_simulate_agent_particles() {
 
 		vec3 pred_pos;
 		// compute new position
-		__pm3_add_v_vs(pred_pos, p->cur_pos, pred_vel, dt);
+		__pm3_add_v_vs(pred_pos, p.cur_pos, pred_vel, dt);
 
 		/* --------------------------- */
 		/*   apply Euler integration   */
@@ -68,7 +68,7 @@ void simulator::_simulate_agent_particles() {
 		// collision prediction:
 		// copy the particle at its current state and use it
 		// to predict the update upon collision with geometry
-		agent_particle coll_pred = *p;
+		agent_particle coll_pred = p;
 
 		// check if there is any collision between
 		// this free particle and a geometrical object
@@ -78,12 +78,12 @@ void simulator::_simulate_agent_particles() {
 
 		// give the particle the proper final state
 		if (collision) {
-			*p = coll_pred;
+			p = coll_pred;
 		}
 		else {
-			p->save_position();
-			__pm3_assign_v(p->cur_pos, pred_pos);
-			__pm3_assign_v(p->cur_vel, pred_vel);
+			p.save_position();
+			__pm3_assign_v(p.cur_pos, pred_pos);
+			__pm3_assign_v(p.cur_vel, pred_vel);
 		}
 
 		// Now it is time to perform collisions between particles.
@@ -96,8 +96,8 @@ void simulator::_simulate_agent_particles() {
 
 		// compute new orientation
 		vec3 alignment;
-		__pm3_sub_v_v(alignment, p->cur_vel, p->orientation);
-		__pm3_add_acc_vs(p->orientation, alignment, p->align_weight);
+		__pm3_sub_v_v(alignment, p.cur_vel, p.orientation);
+		__pm3_add_acc_vs(p.orientation, alignment, p.align_weight);
 	}
 
 }

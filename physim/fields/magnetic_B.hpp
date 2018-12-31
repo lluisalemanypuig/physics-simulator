@@ -32,7 +32,7 @@ class magnetic_B : public magnetic {
 		 * @ref particles::mesh_particle.
 		 */
 		template<class P>
-		void __compute_force(const P *p, math::vec3& F);
+		void __compute_force(const P& p, math::vec3& F);
 
 	protected:
 
@@ -48,8 +48,9 @@ class magnetic_B : public magnetic {
 
 		// OTHERS
 
-		void compute_force(const particles::free_particle *p, math::vec3& F);
-		void compute_force(const particles::mesh_particle *p, math::vec3& F);
+		void compute_force(const particles::free_particle& p, math::vec3& F);
+		void compute_force(const particles::mesh_particle& p, math::vec3& F);
+		void compute_force(const particles::fluid_particle& p, math::vec3& F);
 };
 
 } // -- namespace fields

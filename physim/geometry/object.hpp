@@ -95,7 +95,7 @@ class object : public geometry {
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			particles::free_particle *p
+			particles::free_particle& p
 		) const;
 		/**
 		 * @brief Updates a particle when its trajectory intersects this object.
@@ -117,13 +117,13 @@ class object : public geometry {
 		 */
 		bool update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			const particles::free_particle *p,
-			particles::free_particle *u
+			const particles::free_particle& p,
+			particles::free_particle& u
 		) const;
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			particles::sized_particle *p
+			particles::sized_particle& p
 		) const;
 		/**
 		 * @brief Updates a particle when its trajectory intersects this object.
@@ -145,8 +145,8 @@ class object : public geometry {
 		 */
 		bool update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			const particles::sized_particle *p,
-			particles::sized_particle *u
+			const particles::sized_particle& p,
+			particles::sized_particle& u
 		) const;
 
 		void display() const;

@@ -79,9 +79,9 @@ void multisource<T>:: use_fixed_init(bool u) {
 
 template<class T>
 void multisource<T>::make_position_init() {
-	pos = [this](particles::base_particle *p) {
+	pos = [this](particles::base_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -91,9 +91,9 @@ void multisource<T>::make_position_init() {
 
 template<class T>
 void multisource<T>::make_velocity_init() {
-	vel = [this](particles::base_particle *p) {
+	vel = [this](particles::base_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -103,9 +103,9 @@ void multisource<T>::make_velocity_init() {
 
 template<class T>
 void multisource<T>::make_mass_init() {
-	mass = [this](particles::base_particle *p) {
+	mass = [this](particles::base_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= this->sources.size()) {
 			k = this->sources.size() - 1;
 		}
@@ -115,9 +115,9 @@ void multisource<T>::make_mass_init() {
 
 template<class T>
 void multisource<T>::make_charge_init() {
-	charge = [this](particles::free_particle *p) {
+	charge = [this](particles::free_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -127,9 +127,9 @@ void multisource<T>::make_charge_init() {
 
 template<class T>
 void multisource<T>::make_friction_init() {
-	friction = [this](particles::free_particle *p) {
+	friction = [this](particles::free_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -139,9 +139,9 @@ void multisource<T>::make_friction_init() {
 
 template<class T>
 void multisource<T>::make_bounce_init() {
-	bounce = [this](particles::free_particle *p) {
+	bounce = [this](particles::free_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -151,9 +151,9 @@ void multisource<T>::make_bounce_init() {
 
 template<class T>
 void multisource<T>::make_lifetime_init() {
-	lifetime = [this](particles::free_particle *p) {
+	lifetime = [this](particles::free_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -163,9 +163,9 @@ void multisource<T>::make_lifetime_init() {
 
 template<class T>
 void multisource<T>::make_starttime_init() {
-	starttime = [this](particles::free_particle *p) {
+	starttime = [this](particles::free_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}
@@ -175,9 +175,9 @@ void multisource<T>::make_starttime_init() {
 
 template<class T>
 void multisource<T>::make_fixed_init() {
-	fixed = [this](particles::free_particle *p) {
+	fixed = [this](particles::free_particle& p) {
 		size_t c = P/sources.size();
-		size_t k = p->index/c;
+		size_t k = p.index/c;
 		if (k >= sources.size()) {
 			k = sources.size() - 1;
 		}

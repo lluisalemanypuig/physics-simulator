@@ -143,7 +143,7 @@ bool object::intersec_segment(const vec3& p1, const vec3& p2, vec3& p_inter) con
 // OTHERS
 
 void object::update_particle
-(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle *p)
+(const vec3& pred_pos, const vec3& pred_vel, particles::free_particle& p)
 const
 {
 	update_particle(pred_pos, pred_vel, p, p);
@@ -151,14 +151,14 @@ const
 
 bool object::update_particle(
 	const vec3& pred_pos, const vec3& pred_vel,
-	const particles::free_particle *p, particles::free_particle *u
+	const particles::free_particle& p, particles::free_particle& u
 ) const
 {
 	vector<size_t> idxs;
 	octree.get_indices(pred_pos, idxs);
 	for (size_t t_idx : idxs) {
-		if (tris[t_idx/3].intersec_segment(p->cur_pos, pred_pos)) {
-			*u = *p;
+		if (tris[t_idx/3].intersec_segment(p.cur_pos, pred_pos)) {
+			u = p;
 			tris[t_idx/3].update_particle(pred_pos, pred_vel, u);
 			return true;
 		}
@@ -168,7 +168,7 @@ bool object::update_particle(
 
 void object::update_particle(
 	const vec3& pred_pos, const vec3& pred_vel,
-	particles::sized_particle *p
+	particles::sized_particle& p
 ) const
 {
 	update_particle(pred_pos, pred_vel, p, p);
@@ -176,14 +176,14 @@ void object::update_particle(
 
 bool object::update_particle(
 	const math::vec3& pred_pos, const math::vec3& pred_vel,
-	const particles::sized_particle *p, particles::sized_particle *u
+	const particles::sized_particle& p, particles::sized_particle& u
 ) const
 {
 	vector<size_t> idxs;
-	octree.get_indices(pred_pos, p->R, idxs);
+	octree.get_indices(pred_pos, p.R, idxs);
 	for (size_t t_idx : idxs) {
-		if (tris[t_idx/3].intersec_sphere(pred_pos, p->R)) {
-			*u = *p;
+		if (tris[t_idx/3].intersec_sphere(pred_pos, p.R)) {
+			u = p;
 			tris[t_idx/3].update_particle(pred_pos, pred_vel, u);
 			return true;
 		}

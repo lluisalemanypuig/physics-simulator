@@ -17,9 +17,9 @@ namespace emitters {
 // PUBLIC
 
 base_emitter::base_emitter() {
-	pos	 = [](spart *p) { __pm3_assign_s(p->cur_pos, 0.0f); };
-	vel	 = [](spart *p) { __pm3_assign_s(p->cur_vel, 0.0f); };
-	mass = [](spart *p) { p->mass = 1.0f; };
+	pos	 = [](spart p) { __pm3_assign_s(p.cur_pos, 0.0f); };
+	vel	 = [](spart p) { __pm3_assign_s(p.cur_vel, 0.0f); };
+	mass = [](spart p) { p.mass = 1.0f; };
 }
 
 base_emitter::base_emitter(const base_emitter& i) {
@@ -64,7 +64,7 @@ const base_emit& base_emitter::get_mass_initialiser() const {
 
 // INITIALISE A PARTICLE
 
-void base_emitter::initialise_particle(base_particle *p) const {
+void base_emitter::initialise_particle(base_particle& p) const {
 	pos(p);
 	vel(p);
 	mass(p);

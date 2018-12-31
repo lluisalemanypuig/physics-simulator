@@ -123,12 +123,12 @@ class plane : public geometry {
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			particles::free_particle *p
+			particles::free_particle& p
 		) const;
 
 		void update_particle(
 			const math::vec3& pp, const math::vec3& pv,
-			particles::sized_particle *p
+			particles::sized_particle& p
 		) const;
 
 		void display() const;

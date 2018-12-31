@@ -4,7 +4,6 @@
 #include <assert.h>
 
 // physim includes
-#include <physim/fields/gravitational_planet.hpp>
 #include <physim/particles/conversions.hpp>
 #include <physim/math/private/math3/base.hpp>
 #include <physim/sim_solver.cpp>
@@ -58,12 +57,12 @@ void simulator::_simulate_meshes() {
 			// compute forces for particle p that are
 			// originated by the force fields of the
 			// simulation
-			compute_forces(mps[p_idx]);
+			compute_forces(*mps[p_idx]);
 
 			// apply solver to predict next position and
 			// velocity of the particle
 			vec3 pred_pos, pred_vel;
-			apply_solver_ptr(mps[p_idx], pred_pos, pred_vel);
+			apply_solver(*mps[p_idx], pred_pos, pred_vel);
 
 			// check if there is any collision between
 			// this mesh particle and a geometrical object
@@ -79,11 +78,11 @@ void simulator::_simulate_meshes() {
 			from_mesh_to_free(*mps[p_idx], coll_pred);
 
 			bool collision =
-			find_update_geomcoll_free(&current, pred_pos, pred_vel, coll_pred);
+			find_update_geomcoll_free(current, pred_pos, pred_vel, coll_pred);
 
 			if (part_part_colls_activated()) {
 				bool r = find_update_partcoll_free
-				(&current, pred_pos, pred_vel, coll_pred);
+				(current, pred_pos, pred_vel, coll_pred);
 
 				collision = collision or r;
 			}

@@ -9,37 +9,37 @@ using namespace particles;
 
 void simulator::_simulate_free_particles() {
 
-	for (free_particle *p : fps) {
+	for (free_particle& p : fps) {
 		// ignore fixed particles
-		if (p->fixed) {
+		if (p.fixed) {
 			continue;
 		}
 		// Reset a particle when it dies.
 		// Do not smiulate this particle
 		// until the next step
-		if (p->lifetime <= 0.0f) {
+		if (p.lifetime <= 0.0f) {
 			init_particle(p);
 			continue;
 		}
 		// is this particle allowed to move?
 		// if not, ignore it
-		p->reduce_starttime(dt);
-		if (p->starttime > 0.0f) {
+		p.reduce_starttime(dt);
+		if (p.starttime > 0.0f) {
 			continue;
 		}
 
 		// clear the current force
-		__pm3_assign_s(p->force, 0.0f);
+		__pm3_assign_s(p.force, 0.0f);
 		// compute forces for particle p
 		compute_forces(p);
 
 		// Particles age: reduce their lifetime.
-		p->reduce_lifetime(dt);
+		p.reduce_lifetime(dt);
 
 		// apply solver to predict next position and
 		// velocity of the particle
 		math::vec3 pred_pos, pred_vel;
-		apply_solver_ptr(p, pred_pos, pred_vel);
+		apply_solver(p, pred_pos, pred_vel);
 
 		// collision prediction:
 		// copy the particle at its current state and use it
@@ -61,12 +61,12 @@ void simulator::_simulate_free_particles() {
 
 		// give the particle the proper final state
 		if (collision) {
-			*p = coll_pred;
+			p = coll_pred;
 		}
 		else {
-			p->save_position();
-			__pm3_assign_v(p->cur_pos, pred_pos);
-			__pm3_assign_v(p->cur_vel, pred_vel);
+			p.save_position();
+			__pm3_assign_v(p.cur_pos, pred_pos);
+			__pm3_assign_v(p.cur_vel, pred_vel);
 		}
 	}
 

@@ -11,7 +11,7 @@ namespace physim {
 namespace emitters {
 
 /// Shortcut for the sized particle emitter_sized function type.
-typedef std::function<void (particles::sized_particle *)> sized_emit;
+typedef std::function<void (particles::sized_particle& )> sized_emit;
 
 /**
  * @brief Class for sized particle initialisation.
@@ -88,7 +88,7 @@ class sized_emitter : public free_emitter {
 		 * see the description of this class.
 		 * @param p The particle to be initialised.
 		 */
-		void initialise_particle(particles::sized_particle *p) const;
+		void initialise_particle(particles::sized_particle& p) const;
 };
 
 } // -- namespace emitters

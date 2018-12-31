@@ -68,7 +68,7 @@ using namespace particles;
 
 bool simulator::find_update_geomcoll_free
 (
-	const free_particle *p,
+	const free_particle& p,
 	vec3& pred_pos, vec3& pred_vel,
 	free_particle& coll_pred
 )
@@ -87,13 +87,13 @@ bool simulator::find_update_geomcoll_free
 		// this particle's position, velocity, ...
 
 		if (g->get_geom_type() != geometric::geometry_type::Object) {
-			if (g->intersec_segment(p->cur_pos, pred_pos)) {
+			if (g->intersec_segment(p.cur_pos, pred_pos)) {
 				collision = true;
 
-				coll_pred = *p;
+				coll_pred = p;
 
 				// the geometry updates the predicted particle
-				g->update_particle(pred_pos, pred_vel, &coll_pred);
+				g->update_particle(pred_pos, pred_vel, coll_pred);
 
 				if (solver == solver_type::Verlet) {
 					// this solver needs a correct position
@@ -116,7 +116,7 @@ bool simulator::find_update_geomcoll_free
 				static_cast<const geometric::object *>(g);
 
 			bool updated =
-				o->update_particle(pred_pos, pred_vel, p, &coll_pred);
+				o->update_particle(pred_pos, pred_vel, p, coll_pred);
 
 			if (updated) {
 				collision = true;
@@ -144,15 +144,15 @@ bool simulator::find_update_geomcoll_free
 
 #define free_pos_correction													\
 	if (__physim_Sj.is_inside(coll_pred.cur_pos)) {							\
-		__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j]->cur_pos);	\
+		__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j].cur_pos);	\
 		float l = __pm3_norm(centre_particle);								\
 		__pm3_add_acc_vs													\
-		(coll_pred.cur_pos, centre_particle, sps[j]->R*(1.0f/l) + 0.001f);	\
+		(coll_pred.cur_pos, centre_particle, sps[j].R*(1.0f/l) + 0.001f);	\
 	}
 
 bool simulator::find_update_partcoll_free
 (
-	const free_particle *p,
+	const free_particle& p,
 	vec3& pred_pos, vec3& pred_vel,
 	free_particle& coll_pred
 )
@@ -167,16 +167,16 @@ bool simulator::find_update_partcoll_free
 		// particle then we have to update the particle's
 		// prediction
 
-		float r2 = (sps[j]->R)*(sps[j]->R);
-		if (__pm3_dist2(pred_pos, sps[j]->cur_pos) < r2) {
-			__physim_Sj.set_position(sps[j]->cur_pos);
-			__physim_Sj.set_radius(sps[j]->R);
+		float r2 = (sps[j].R)*(sps[j].R);
+		if (__pm3_dist2(pred_pos, sps[j].cur_pos) < r2) {
+			__physim_Sj.set_position(sps[j].cur_pos);
+			__physim_Sj.set_radius(sps[j].R);
 
 			collision = true;
 
 			// update position of particle using collision method
 
-			coll_pred = *p;
+			coll_pred = p;
 
 			// First, check whether the current position is inside
 			// the sphere. If so, change it to the closest point
@@ -184,7 +184,7 @@ bool simulator::find_update_partcoll_free
 			free_pos_correction
 
 			// the geometry updates the predicted particle
-			__physim_Sj.update_particle(pred_pos, pred_vel, &coll_pred);
+			__physim_Sj.update_particle(pred_pos, pred_vel, coll_pred);
 
 			if (solver == solver_type::Verlet) {
 				// this solver needs a correct position
@@ -210,14 +210,14 @@ bool simulator::find_update_partcoll_free
 		// particle then we have to update the particle's
 		// prediction
 
-		float r2 = (aps[j]->R)*(aps[j]->R);
-		if (__pm3_dist2(pred_pos, aps[j]->cur_pos) < r2) {
-			__physim_Sj.set_position(aps[j]->cur_pos);
-			__physim_Sj.set_radius(aps[j]->R);
+		float r2 = (aps[j].R)*(aps[j].R);
+		if (__pm3_dist2(pred_pos, aps[j].cur_pos) < r2) {
+			__physim_Sj.set_position(aps[j].cur_pos);
+			__physim_Sj.set_radius(aps[j].R);
 
 			collision = true;
 
-			coll_pred = *p;
+			coll_pred = p;
 
 			// First, check whether the current position is inside
 			// the sphere. If so, change it to the closest point
@@ -225,7 +225,7 @@ bool simulator::find_update_partcoll_free
 			free_pos_correction
 
 			// the geometry updates the predicted particle
-			__physim_Sj.update_particle(pred_pos, pred_vel, &coll_pred);
+			__physim_Sj.update_particle(pred_pos, pred_vel, coll_pred);
 
 			if (solver == solver_type::Verlet) {
 				// this solver needs a correct position
@@ -251,7 +251,7 @@ bool simulator::find_update_partcoll_free
 
 bool simulator::find_update_geomcoll_sized
 (
-	const sized_particle *in,
+	const sized_particle& in,
 	vec3& pred_pos, vec3& pred_vel,
 	sized_particle& coll_pred
 )
@@ -271,15 +271,15 @@ bool simulator::find_update_geomcoll_sized
 
 		if (g->get_geom_type() != geometric::geometry_type::Object) {
 			bool inter = false;
-			inter = inter or g->intersec_segment(in->cur_pos, pred_pos);
-			inter = inter or g->intersec_sphere(pred_pos, in->R);
+			inter = inter or g->intersec_segment(in.cur_pos, pred_pos);
+			inter = inter or g->intersec_sphere(pred_pos, in.R);
 			if (inter) {
 				collision = true;
 
-				coll_pred = *in;
+				coll_pred = in;
 
 				// the geometry updates the predicted particle
-				g->update_particle(pred_pos, pred_vel, &coll_pred);
+				g->update_particle(pred_pos, pred_vel, coll_pred);
 
 				if (solver == solver_type::Verlet) {
 					// this solver needs a correct position
@@ -300,7 +300,7 @@ bool simulator::find_update_geomcoll_sized
 				static_cast<const geometric::object *>(g);
 
 			bool updated =
-				o->update_particle(pred_pos, pred_vel, in, &coll_pred);
+				o->update_particle(pred_pos, pred_vel, in, coll_pred);
 
 			if (updated) {
 				collision = true;
@@ -327,25 +327,25 @@ bool simulator::find_update_geomcoll_sized
 }
 
 static inline bool spart_spart_collision
-(const sized_particle *in, const sized_particle *out)
+(const sized_particle& in, const sized_particle& out)
 {
-	float center_d2 = __pm3_dist2(in->cur_pos, out->cur_pos);
-	float sum_r = in->R + out->R;
+	float center_d2 = __pm3_dist2(in.cur_pos, out.cur_pos);
+	float sum_r = in.R + out.R;
 	return center_d2 <= sum_r*sum_r;
 }
 
 static inline void update_particles_position
-(sized_particle *in, sized_particle *out)
+(sized_particle& in, sized_particle& out)
 {	
 	// distances: from 'in' to 'out', for the others see
 	// http://mathworld.wolfram.com/Circle-CircleIntersection.html
-	const float D = __pm3_dist(in->cur_pos, out->cur_pos);
-	const float d1 = (D*D + in->R*in->R - out->R*out->R)/(2*D);
-	//const float d2 = (D*D - in->R*in->R + out->R*out->R)/(2*D);
+	const float D = __pm3_dist(in.cur_pos, out.cur_pos);
+	const float d1 = (D*D + in.R*in.R - out.R*out.R)/(2*D);
+	//const float d2 = (D*D - in.R*in.R + out.R*out.R)/(2*D);
 
 	// unit vector from 'in' to 'out'
 	vec3 u;
-	__pm3_sub_v_v(u, out->cur_pos, in->cur_pos);
+	__pm3_sub_v_v(u, out.cur_pos, in.cur_pos);
 	normalise(u, u);
 
 	/* This position correction is somewhat wrong
@@ -358,46 +358,46 @@ static inline void update_particles_position
 	 */
 
 	vec3 M,A1,A2;
-	__pm3_add_v_vs(M,   in->cur_pos, u,  d1);		//  M := c1 + d1*u
-	__pm3_add_v_vs(A1,  in->cur_pos, u,  in->R);	// A1 := c1 + R1*u
-	__pm3_add_v_vs(A2, out->cur_pos, u,-out->R);	// A2 := c2 - R2*u
+	__pm3_add_v_vs(M,   in.cur_pos, u,  d1);		//  M := c1 + d1*u
+	__pm3_add_v_vs(A1,  in.cur_pos, u,  in.R);	// A1 := c1 + R1*u
+	__pm3_add_v_vs(A2, out.cur_pos, u,-out.R);	// A2 := c2 - R2*u
 
 	// distances to move particle 'in' and 'out'
 	// to correct positions
 	float m_in  = __pm3_dist(M, A1);
 	float m_out = __pm3_dist(M, A2);
 
-	__pm3_add_v_vs( in->cur_pos,  in->cur_pos, u, -m_in);
-	__pm3_add_v_vs(out->cur_pos, out->cur_pos, u, m_out);
+	__pm3_add_v_vs( in.cur_pos,  in.cur_pos, u, -m_in);
+	__pm3_add_v_vs(out.cur_pos, out.cur_pos, u, m_out);
 }
 
 static inline void update_particles_velocity
-(sized_particle *in, sized_particle *out)
+(sized_particle& in, sized_particle& out)
 {
-	float norm1 = __pm3_norm(in->cur_vel);
-	float norm2 = __pm3_norm(out->cur_vel);
+	float norm1 = __pm3_norm(in.cur_vel);
+	float norm2 = __pm3_norm(out.cur_vel);
 
 	// following the steps in
 	// https://www.atmos.illinois.edu/courses/atmos100/userdocs/3Dcollisions.html
 
 	// 1. angles between the two colliders
 	vec3 D;
-	__pm3_sub_v_v(D, in->cur_pos, out->cur_pos);
+	__pm3_sub_v_v(D, in.cur_pos, out.cur_pos);
 
-	float xyz1 = angle_xyz(D, in->cur_vel);
-	float xyz2 = angle_xyz(D, out->cur_vel);
+	float xyz1 = angle_xyz(D, in.cur_vel);
+	float xyz2 = angle_xyz(D, out.cur_vel);
 
 	// 2. force vectors towards each other
 	vec3 c1, c2;
-	__pm3_assign_vs(c1, in->cur_vel,xyz1);
-	__pm3_assign_vs(c2, out->cur_vel,xyz2);
+	__pm3_assign_vs(c1, in.cur_vel,xyz1);
+	__pm3_assign_vs(c2, out.cur_vel,xyz2);
 
 	// 3. decompose this vector into x'-y'-z' components,
 	// where x' is aligned with the center-line
-	float a_xy1 = angle_xy(in->cur_vel, in->cur_vel);
-	float a_xz1 = angle_xz(in->cur_vel, in->cur_vel);
-	float a_xy2 = angle_xy(out->cur_vel, out->cur_vel);
-	float a_xz2 = angle_xz(out->cur_vel, out->cur_vel);
+	float a_xy1 = angle_xy(in.cur_vel, in.cur_vel);
+	float a_xz1 = angle_xz(in.cur_vel, in.cur_vel);
+	float a_xy2 = angle_xy(out.cur_vel, out.cur_vel);
+	float a_xz2 = angle_xz(out.cur_vel, out.cur_vel);
 
 	c1.x = c1.x*std::sin(a_xz1)*std::cos(a_xy1);
 	c1.y = c1.y*std::sin(a_xz1)*std::sin(a_xy1);
@@ -409,19 +409,19 @@ static inline void update_particles_velocity
 
 	// 4. determine the force vector normal to the center-line
 	vec3 n1, n2;
-	__pm3_sub_v_v(n1, in->cur_vel, c1);
-	__pm3_sub_v_v(n2, out->cur_vel, c2);
+	__pm3_sub_v_v(n1, in.cur_vel, c1);
+	__pm3_sub_v_v(n2, out.cur_vel, c2);
 
 	// 5. compose the new vectors into a new velocity
-	__pm3_add_v_v(in->cur_vel, c2, n1);
-	__pm3_add_v_v(out->cur_vel, c1, n2);
+	__pm3_add_v_v(in.cur_vel, c2, n1);
+	__pm3_add_v_v(out.cur_vel, c1, n2);
 
 	// 6. The new velocies must have
 	// the same norm as before
-	normalise(in->cur_vel, in->cur_vel);
-	normalise(out->cur_vel, out->cur_vel);
-	__pm3_assign_vs(in->cur_vel, in->cur_vel,norm1);
-	__pm3_assign_vs(out->cur_vel, out->cur_vel,norm2);
+	normalise(in.cur_vel, in.cur_vel);
+	normalise(out.cur_vel, out.cur_vel);
+	__pm3_assign_vs(in.cur_vel, in.cur_vel,norm1);
+	__pm3_assign_vs(out.cur_vel, out.cur_vel,norm2);
 }
 
 #define partcoll_sized_core(in, j, v)											\
@@ -435,14 +435,14 @@ static inline void update_particles_velocity
 			/* this solver needs a correct position
 			   for the 'previous' position of the
 			   particle after a collision with geometry */						\
-			__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);			\
+			__pm3_sub_v_vs(in.prev_pos, in.cur_pos, in.cur_vel, dt);			\
 			__pm3_sub_v_vs(v[j]->prev_pos, v[j]->cur_pos, v[j]->cur_vel, dt);	\
 		}																		\
 	}
 
 // particle 'in' has index 'i'
 void simulator::find_update_partcoll_sized
-(sized_particle *in, size_t i)
+(sized_particle& in, size_t i)
 {
 	for (size_t j = i + 1; j < sps.size(); ++j) {
 
@@ -461,8 +461,8 @@ void simulator::find_update_partcoll_sized
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
-				__pm3_sub_v_vs(sps[j]->prev_pos, sps[j]->cur_pos, sps[j]->cur_vel, dt);
+				__pm3_sub_v_vs(in.prev_pos, in.cur_pos, in.cur_vel, dt);
+				__pm3_sub_v_vs(sps[j].prev_pos, sps[j].cur_pos, sps[j].cur_vel, dt);
 			}
 		}
 	}
@@ -485,8 +485,8 @@ void simulator::find_update_partcoll_sized
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
-				__pm3_sub_v_vs(aps[j]->prev_pos, aps[j]->cur_pos, aps[j]->cur_vel, dt);
+				__pm3_sub_v_vs(in.prev_pos, in.cur_pos, in.cur_vel, dt);
+				__pm3_sub_v_vs(aps[j].prev_pos, aps[j].cur_pos, aps[j].cur_vel, dt);
 			}
 		}
 	}
@@ -494,7 +494,7 @@ void simulator::find_update_partcoll_sized
 
 // particle 'in' has index 'i'
 void simulator::find_update_partcoll_agent
-(agent_particle *in, size_t i)
+(agent_particle& in, size_t i)
 {
 	// check collisions with sized particles
 	for (size_t j = 0; j < sps.size(); ++j) {
@@ -514,8 +514,8 @@ void simulator::find_update_partcoll_agent
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
-				__pm3_sub_v_vs(sps[j]->prev_pos, sps[j]->cur_pos, sps[j]->cur_vel, dt);
+				__pm3_sub_v_vs(in.prev_pos, in.cur_pos, in.cur_vel, dt);
+				__pm3_sub_v_vs(sps[j].prev_pos, sps[j].cur_pos, sps[j].cur_vel, dt);
 			}
 		}
 	}
@@ -538,8 +538,8 @@ void simulator::find_update_partcoll_agent
 				// for the 'previous' position of the
 				// particle after a collision with geometry
 
-				__pm3_sub_v_vs(in->prev_pos, in->cur_pos, in->cur_vel, dt);
-				__pm3_sub_v_vs(aps[j]->prev_pos, aps[j]->cur_pos, aps[j]->cur_vel, dt);
+				__pm3_sub_v_vs(in.prev_pos, in.cur_pos, in.cur_vel, dt);
+				__pm3_sub_v_vs(aps[j].prev_pos, aps[j].cur_pos, aps[j].cur_vel, dt);
 			}
 		}
 	}
