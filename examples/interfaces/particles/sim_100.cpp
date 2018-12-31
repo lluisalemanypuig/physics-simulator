@@ -77,7 +77,7 @@ namespace study_cases {
 		SR.add_geometry(floor);
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 6.0f, 0.0f));
-		SR.set_window_dims(iw, ih);
+		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
 		wireframe_sphere = new rendered_triangle_mesh();
@@ -169,7 +169,7 @@ namespace study_cases {
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
-		glutInitWindowSize(iw, ih);
+		glutInitWindowSize(window_width, window_height);
 		window_id = glutCreateWindow("Particles - Simulation 100");
 
 		glEnable(GL_DEPTH_TEST);

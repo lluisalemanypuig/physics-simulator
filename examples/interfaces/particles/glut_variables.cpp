@@ -9,6 +9,8 @@ namespace glut_variables {
 
 	sim_renderer SR;
 	int window_id;
+	int window_width = 640;
+	int window_height = 480;
 	timing::time_point sec;
 
 	int special_key;

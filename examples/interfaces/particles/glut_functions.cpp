@@ -35,6 +35,9 @@ namespace glut_functions {
 		draw_boxes_octree = false;
 		draw_sized_particles_wire = false;
 
+		window_width = iw;
+		window_height = ih;
+
 		display_fps = false;
 		FPS = 60;
 		fps_count = 0;
@@ -144,6 +147,9 @@ namespace glut_functions {
 		SR.get_orthogonal_camera().set_zoom(ozoom);
 
 		glViewport(0, 0, w, h);
+
+		window_width = w;
+		window_height = h;
 	}
 
 	// -------------

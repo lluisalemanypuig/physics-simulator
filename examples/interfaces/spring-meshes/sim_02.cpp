@@ -88,7 +88,7 @@ namespace study_cases {
 		SR.get_box().enlarge_box(glm::vec3(15,15,15));
 		SR.get_simulator().add_mesh(M);
 
-		SR.set_window_dims(iw, ih);
+		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
 		model_ball->load_textures();
@@ -237,7 +237,7 @@ namespace study_cases {
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
-		glutInitWindowSize(iw, ih);
+		glutInitWindowSize(window_width, window_height);
 		window_id = glutCreateWindow("Spring meshes - Simulation 02");
 
 		glEnable(GL_DEPTH_TEST);

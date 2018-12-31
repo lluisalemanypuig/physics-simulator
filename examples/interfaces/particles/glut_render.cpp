@@ -20,6 +20,8 @@ typedef physim::particles::sized_particle SP;
 // custom includes
 #include "conversion_helper.hpp"
 
+#include <png.h>
+
 namespace glut_functions {
 
 	// ---------------
@@ -237,6 +239,7 @@ namespace glut_functions {
 		for (int i = 0; i < n_iterations; ++i) {
 			SR.apply_time_step();
 		}
+
 		glutSwapBuffers();
 	}
 

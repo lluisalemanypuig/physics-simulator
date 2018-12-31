@@ -160,7 +160,7 @@ namespace study_cases {
 		SR.get_simulator().add_free_particles(16000);
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 7.0f, 0.0f));
-		SR.set_window_dims(iw, ih);
+		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
 		sim_ball->load_textures();
@@ -242,7 +242,7 @@ namespace study_cases {
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
-		glutInitWindowSize(iw, ih);
+		glutInitWindowSize(window_width, window_height);
 		window_id = glutCreateWindow("Particles - Simulation 003");
 
 		glEnable(GL_DEPTH_TEST);

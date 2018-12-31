@@ -24,6 +24,8 @@ namespace glut_variables {
 
 	extern sim_renderer SR;
 	extern int window_id;
+	extern int window_width;
+	extern int window_height;
 	extern timing::time_point sec;
 
 	extern int special_key;
