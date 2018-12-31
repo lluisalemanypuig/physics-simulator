@@ -49,7 +49,7 @@ namespace study_cases {
 		// number of particles per side
 		size_t side__ = 16;
 		// neighbourhood size
-		float R = 0.06f;
+		float h = 0.06f;
 		// volume
 		float vol = 10.0f;
 		// viscosity
@@ -75,7 +75,7 @@ namespace study_cases {
 				++i;
 			}
 			else if (strcmp(argv[i], "--R") == 0) {
-				R = atof(argv[i + 1]);
+				h = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--vol") == 0) {
@@ -129,9 +129,7 @@ namespace study_cases {
 			}
 		}
 
-		size_t slice__ = side__*side__;
-		size_t total__ = side__*side__*side__;
-		size_t N = total__;
+		size_t N = side__*side__*side__;
 
 		timing::time_point begin, end;
 
@@ -140,7 +138,7 @@ namespace study_cases {
 		cout << "    Volume: " << vol << endl;
 		cout << "    Viscosity: " << vis << endl;
 		cout << "    Density: " << dens << endl;
-		cout << "    Neighbourhood size: " << R << endl;
+		cout << "    Neighbourhood size: " << h << endl;
 		cout << "Simulation:" << endl;
 		cout << "    total time: " << total_time << endl;
 		cout << "    step time: " << dt << endl,
@@ -158,52 +156,54 @@ namespace study_cases {
 		cout << "Allocating..." << endl;
 		begin = timing::now();
 		fluid F;
-		F.allocate(N, vol, dens, vis, R, cs);
+		F.allocate(N, vol, dens, vis, h, cs);
 		end = timing::now();
 		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
 		cout << "Mass per particle: " << F.get_particles()[0].mass << endl;
 
+
+
 		kernel_scalar_function W =
-		[R](float r2) -> float
+		[h](float r2) -> float
 		{
-			float k = R*R - r2;
+			float k = 1.0f - r2/(h*h);
 			float PI = static_cast<float>(M_PI);
-			return (315.0f/(64.0f*PI*std::pow(R, 9.0f)))*k*k*k;
+			return (315.0f/(64.0f*PI*std::pow(h, 3.0f)))*k*k*k;
 		};
 		kernel_vectorial_function gW =
-		[R](const vec3& r, float r2, vec3& res) -> void
+		[h](const vec3& r, float r2, vec3& res) -> void
 		{
 			static const float PI = static_cast<float>(M_PI);
 
-			float k = R*R - r2;
-			cout << "        k= " << k << endl;
-			float s = (-945.0f/(32.0f*PI*std::pow(R, 9.0f)))*k*k;
-			cout << "        s= " << s << endl;
+			float k = 1.0f - r2/(h*h);
+			float s = (-945.0f/(32.0f*PI*std::pow(h, 3.0f)))*k*k;
 			res = r*s;
 		};
 		kernel_scalar_function g2W =
-		[R](float r2) -> float
+		[h](float r2) -> float
 		{
-			float k = R*R - r2;
+			float k = 1.0f - r2/(h*h);
 			float PI = static_cast<float>(M_PI);
-			return (945.0f/(8.0f*PI*std::pow(R, 9.0f)))*k*(r2 - 0.75f*k);
+			return (945.0f/(8.0f*PI*std::pow(h, 7.0f)))*k*(r2/(h*h) - 0.75f*k);
 		};
 		F.set_kernel(W, gW, g2W);
+
+
 
 		// assign initial positions
 		cout << "Assigning initial positions..." << endl;
 		begin = timing::now();
-		for (size_t i = 0; i < N; ++i) {
-			size_t slice = i/slice__;
-			size_t __i = i%slice__;
-			size_t row = __i/side__;
-			size_t col = __i%side__;
-
-			F.get_particles()[i].cur_pos = vec3(
-				row*(0.5f/side__), col*(0.5f/side__), slice*(0.5f/side__)
-			);
+		for (size_t i = 0; i < side__; ++i) {
+			for (size_t j = 0; j < side__; ++j) {
+				for (size_t k = 0; k < side__; ++k) {
+					vec3 pos(i*(0.2f/side__), j*(0.2f/side__), k*(0.1f/side__));
+					size_t idx = i*side__*side__ + j*side__ + k;
+					F.get_particles()[idx].cur_pos = pos;
+				}
+			}
 		}
+
 		end = timing::now();
 		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
