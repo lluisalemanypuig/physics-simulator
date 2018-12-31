@@ -44,19 +44,19 @@ namespace study_cases {
 
 		sized_emitter *I = SR.get_simulator().get_sized_emitter();
 		I->set_pos_initialiser(
-			[mx,mz](base_particle *p) { p->cur_pos = pm_vec3(mx + 0.5f,1.86f,mz); }
+			[mx,mz](base_particle& p) { p.cur_pos = pm_vec3(mx + 0.5f,1.86f,mz); }
 		);
 		I->set_vel_initialiser(
-			[](base_particle *p) { p->cur_vel = pm_vec3(0.0f,0.0f,0.0f); }
+			[](base_particle& p) { p.cur_vel = pm_vec3(0.0f,0.0f,0.0f); }
 		);
 		I->set_friction_initialiser(
-			[](free_particle *p) { p->friction = 0.2f; }
+			[](free_particle& p) { p.friction = 0.2f; }
 		);
 		I->set_bounce_initialiser(
-			[](free_particle *p) { p->bouncing = 1.0f; }
+			[](free_particle& p) { p.bouncing = 1.0f; }
 		);
 		I->set_radius_initialiser(
-			[](sized_particle *p) { p->R = 0.25f; }
+			[](sized_particle& p) { p.R = 0.25f; }
 		);
 
 		S.add_sized_particle();

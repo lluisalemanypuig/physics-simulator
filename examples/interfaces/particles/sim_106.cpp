@@ -43,33 +43,33 @@ namespace study_cases {
 		S.add_geometry(wall3);
 		S.add_geometry(wall4);
 
-		sized_particle *p1 = new sized_particle();
-		sized_particle *p2 = new sized_particle();
-		sized_particle *p3 = new sized_particle();
+		sized_particle p1;
+		sized_particle p2;
+		sized_particle p3;
 
-		p1->lifetime = 99999999.0f;
-		p1->bouncing = 1.0f;
-		p1->friction = 0.0f;
+		p1.lifetime = 99999999.0f;
+		p1.bouncing = 1.0f;
+		p1.friction = 0.0f;
 
-		p2->lifetime = 99999999.0f;
-		p2->bouncing = 1.0f;
-		p2->friction = 0.0f;
+		p2.lifetime = 99999999.0f;
+		p2.bouncing = 1.0f;
+		p2.friction = 0.0f;
 
-		p3->lifetime = 99999999.0f;
-		p3->bouncing = 1.0f;
-		p3->friction = 0.0f;
+		p3.lifetime = 99999999.0f;
+		p3.bouncing = 1.0f;
+		p3.friction = 0.0f;
 
-		p1->cur_pos = math::vec3(2.0f, 5.0f, 2.0f);
-		p1->cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
-		p1->R = 1.0f;
+		p1.cur_pos = math::vec3(2.0f, 5.0f, 2.0f);
+		p1.cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
+		p1.R = 1.0f;
 
-		p2->cur_pos = math::vec3(18.0f, 5.0f, 18.0f);
-		p2->cur_vel = math::vec3(-1.0f, 0.0f, -1.0f);
-		p2->R = 1.0f;
+		p2.cur_pos = math::vec3(18.0f, 5.0f, 18.0f);
+		p2.cur_vel = math::vec3(-1.0f, 0.0f, -1.0f);
+		p2.R = 1.0f;
 
-		p3->cur_pos = math::vec3(16.0f, 5.0f, 4.0f);
-		p3->cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
-		p3->R = 2.0f;
+		p3.cur_pos = math::vec3(16.0f, 5.0f, 4.0f);
+		p3.cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
+		p3.R = 2.0f;
 
 		S.set_particle_particle_collisions(true);
 		S.set_viscous_drag(0.0f);

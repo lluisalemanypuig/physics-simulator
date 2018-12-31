@@ -19,6 +19,8 @@ class sim_renderer : public viewer {
 		physim::simulator S;
 		/// Geometry in the simulation.
 		std::vector<rgeom *> geometry;
+		/// Indices of the particles to be rendered
+		std::vector<uint> indices;
 
 	public:
 		/// Default constructor.
@@ -31,6 +33,8 @@ class sim_renderer : public viewer {
 		void set_particle_size(float s);
 		void set_spring_width(float w);
 		void add_geometry(rgeom *r);
+
+		void make_free_particle_indices();
 
 		const std::vector<rgeom *>& get_geometry() const;
 

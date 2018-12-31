@@ -38,24 +38,24 @@ namespace study_cases {
 		rect_shower w;
 		w.set_straight_source(vec3(-3.0f,10.0f,-3.0f), 6.0f,6.0f);
 		w.set_mass_initialiser(
-			[](base_particle *p) { p->mass = 1.0f; }
+			[](base_particle& p) { p.mass = 1.0f; }
 		);
 		w.set_starttime_initialiser(
-			[](free_particle *p) {
-				p->starttime = p->index/1000.0f;
+			[](free_particle& p) {
+				p.starttime = p.index/1000.0f;
 			}
 		);
 		w.set_charge_initialiser(
-			[](free_particle *p) { p->charge = 1.0f; }
+			[](free_particle& p) { p.charge = 1.0f; }
 		);
 		w.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
+			[&](free_particle& p) { p.lifetime = lifetime; }
 		);
 		w.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bouncing; }
+			[&](free_particle& p) { p.bouncing = bouncing; }
 		);
 		w.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
+			[&](free_particle& p) { p.friction = friction; }
 		);
 		SR.get_simulator().set_free_emitter(&w);
 
@@ -68,15 +68,16 @@ namespace study_cases {
 			vec3(0.0f,-9.81f,0.0f)
 		);
 		SR.get_simulator().add_free_particles(1000);
+		SR.make_free_particle_indices();
 
 		SR.get_simulator().set_particle_particle_collisions(true);
 
-		sized_particle *sp = new sized_particle();
-		sp->lifetime = 99999.0f; // immortal
-		sp->R = 1.0f;
-		sp->cur_pos = vec3(0.0f, 1.5f, 0.0f);
-		sp->prev_pos = sp->cur_pos - 1.0f;
-		sp->mass = 2.0f;
+		sized_particle sp;
+		sp.lifetime = 99999.0f; // immortal
+		sp.R = 1.0f;
+		sp.cur_pos = vec3(0.0f, 1.5f, 0.0f);
+		sp.prev_pos = sp.cur_pos - 1.0f;
+		sp.mass = 2.0f;
 		SR.get_simulator().add_sized_particle(sp);
 
 		rplane *floor = new rplane();

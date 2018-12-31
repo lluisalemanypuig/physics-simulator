@@ -29,21 +29,21 @@ namespace study_cases {
 	void sim_005_make_simulation() {
 		free_emitter *I = SR.get_simulator().get_free_emitter();
 		I->set_pos_initialiser(
-			[](base_particle *p) {
-				float z = -4.0f + p->index*0.8f;
-				p->cur_pos = math::vec3(-5.0f,1.0f,z);
+			[](base_particle& p) {
+				float z = -4.0f + p.index*0.8f;
+				p.cur_pos = math::vec3(-5.0f,1.0f,z);
 			}
 		);
 		I->set_vel_initialiser(
-			[](base_particle *p) {
-				p->cur_vel = math::vec3(5.0f,0.0f,0.0f);
+			[](base_particle& p) {
+				p.cur_vel = math::vec3(5.0f,0.0f,0.0f);
 			}
 		);
 		I->set_bounce_initialiser(
-			[](free_particle *p) { p->bouncing = p->index/10.0f; }
+			[](free_particle& p) { p.bouncing = p.index/10.0f; }
 		);
 		I->set_friction_initialiser(
-			[](free_particle *p) { p->friction = 0.0f; }
+			[](free_particle& p) { p.friction = 0.0f; }
 		);
 
 		glm::vec3 A( -5.0f, -0.25f,-5.0f);
@@ -62,6 +62,7 @@ namespace study_cases {
 		SR.get_simulator().add_geometry(pl);
 		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 		SR.get_simulator().add_free_particles(11);
+		SR.make_free_particle_indices();
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 5.0f, 0.0f));
 		SR.set_window_dims(window_width, window_height);

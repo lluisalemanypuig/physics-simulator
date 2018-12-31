@@ -35,18 +35,18 @@ namespace study_cases {
 		rect_shower w;
 		w.set_straight_source(math::vec3(-4.5f,10.0f,-1.5f), 3.0f,3.0f);
 		w.set_starttime_initialiser(
-			[](free_particle *p) {
-				p->starttime = p->index/300.0f;
+			[](free_particle& p) {
+				p.starttime = p.index/300.0f;
 			}
 		);
 		w.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
+			[&](free_particle& p) { p.lifetime = lifetime; }
 		);
 		w.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bouncing; }
+			[&](free_particle& p) { p.bouncing = bouncing; }
 		);
 		w.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
+			[&](free_particle& p) { p.friction = friction; }
 		);
 		SR.get_simulator().set_free_emitter(&w);
 
@@ -94,6 +94,7 @@ namespace study_cases {
 		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 
 		SR.get_simulator().add_free_particles(300);
+		SR.make_free_particle_indices();
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 12.0f, 0.0f));
 		SR.set_window_dims(window_width, window_height);

@@ -56,7 +56,7 @@ namespace glut_functions {
 		texture_shader.release();
 		/* TEXTURE RELEASE */
 
-		const vector<SP *>& ps =
+		const vector<SP>& ps =
 			SR.get_simulator().get_sized_particles();
 
 		/* FLAT BIND */
@@ -74,11 +74,11 @@ namespace glut_functions {
 			flat_shader.set_bool("wireframe", true);
 			flat_shader.set_vec4("colour", glm::vec4(0.0f,0.0f,1.0f,1.0f));
 
-			for (const SP *p : ps) {
-				float R = 2.0f*p->R;
+			for (const SP& p : ps) {
+				float R = 2.0f*p.R;
 
 				model = glm::mat4(1.0f);
-				model = glm::translate(model, to_glm(p->cur_pos));
+				model = glm::translate(model, to_glm(p.cur_pos));
 				model = glm::scale(model, glm::vec3(R,R,R));
 				modelview = view*model;
 				normal_matrix = glm::inverseTranspose(glm::mat3(modelview));
@@ -142,8 +142,8 @@ namespace glut_functions {
 			glPointSize(particle_size);
 			glColor3f(0.0f,0.0f,1.0f);
 			glBegin(GL_POINTS);
-			for (const SP *p : ps) {
-				glVertex3f(p->cur_pos.x, p->cur_pos.y, p->cur_pos.z);
+			for (const SP& p : ps) {
+				glVertex3f(p.cur_pos.x, p.cur_pos.y, p.cur_pos.z);
 			}
 			glEnd();
 		}
@@ -193,18 +193,18 @@ namespace glut_functions {
 			}
 		}
 
-		const vector<SP *>& ps =
+		const vector<SP>& ps =
 			SR.get_simulator().get_sized_particles();
 
 		if (draw_sized_particles_wire) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			glColor3f(0.0f,0.0f,1.0f);
 
-			for (const SP *p : ps) {
-				float R = 2.0f*p->R;
+			for (const SP& p : ps) {
+				float R = 2.0f*p.R;
 
 				glPushMatrix();
-					glTranslatef(p->cur_pos.x, p->cur_pos.y, p->cur_pos.z);
+					glTranslatef(p.cur_pos.x, p.cur_pos.y, p.cur_pos.z);
 					glScalef(R,R,R);
 					wireframe_sphere->render();
 				glPopMatrix();
@@ -216,8 +216,8 @@ namespace glut_functions {
 			glPointSize(particle_size);
 			glBegin(GL_POINTS);
 			glColor3f(0.0f,0.0f,1.0f);
-			for (const SP *p : ps) {
-				glVertex3f(p->cur_pos.x, p->cur_pos.y, p->cur_pos.z);
+			for (const SP& p : ps) {
+				glVertex3f(p.cur_pos.x, p.cur_pos.y, p.cur_pos.z);
 			}
 			glEnd();
 		}

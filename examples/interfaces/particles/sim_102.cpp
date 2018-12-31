@@ -53,21 +53,21 @@ namespace study_cases {
 
 		sized_emitter I;
 		I.set_pos_initialiser(
-			[&](base_particle *p) {
-				p->cur_pos = math::vec3(px_08,py_08,pz_08);
+			[&](base_particle& p) {
+				p.cur_pos = math::vec3(px_08,py_08,pz_08);
 			}
 		);
 		I.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
+			[&](free_particle& p) { p.lifetime = lifetime; }
 		);
 		I.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bouncing; }
+			[&](free_particle& p) { p.bouncing = bouncing; }
 		);
 		I.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
+			[&](free_particle& p) { p.friction = friction; }
 		);
 		I.set_radius_initialiser(
-			[&](sized_particle *p) { p->R = 1.0f; }
+			[&](sized_particle& p) { p.R = 1.0f; }
 		);
 		SR.get_simulator().set_sized_emitter(&I);
 		SR.get_simulator().add_sized_particle();

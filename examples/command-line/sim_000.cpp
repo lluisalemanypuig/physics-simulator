@@ -108,23 +108,23 @@ namespace study_cases {
 
 		free_emitter I;
 		I.set_pos_initialiser(
-			[](base_particle *p) {
-				p->cur_pos = vec3(0.0f,10.0f,0.0f);
+			[](base_particle& p) {
+				p.cur_pos = vec3(0.0f,10.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
-			[](base_particle *p) {
-				p->cur_vel = vec3(0.0f,0.0f,0.0f);
+			[](base_particle& p) {
+				p.cur_vel = vec3(0.0f,0.0f,0.0f);
 			}
 		);
 		I.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
+			[&](free_particle& p) { p.lifetime = lifetime; }
 		);
 		I.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bounce; }
+			[&](free_particle& p) { p.bouncing = bounce; }
 		);
 		I.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
+			[&](free_particle& p) { p.friction = friction; }
 		);
 
 		simulator S(solv, dt);
@@ -135,7 +135,8 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// initialised using the function.
-		const free_particle *p = S.add_free_particle();
+		size_t idx = S.add_free_particle();
+		const free_particle& p = S.get_free_particle(idx);
 
 		plane *floor = new plane(vec3(0.0f,1.0f,0.0f), vec3(0.0f,0.0f,0.0f));
 		S.add_geometry(floor);
@@ -149,7 +150,7 @@ namespace study_cases {
 		float sim_time = 0.0f;
 
 		while (sim_time <= total_time) {
-			vec3 cur_pos = p->cur_pos;
+			vec3 cur_pos = p.cur_pos;
 			trajectory.push_back(cur_pos);
 			S.apply_time_step();
 			sim_time += dt;

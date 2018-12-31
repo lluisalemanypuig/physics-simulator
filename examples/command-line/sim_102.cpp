@@ -98,26 +98,26 @@ namespace study_cases {
 
 		sized_emitter I;
 		I.set_pos_initialiser(
-			[&](base_particle *p) {
-				p->cur_pos = vec3(ix,5.0f,0.0f);
+			[&](base_particle& p) {
+				p.cur_pos = vec3(ix,5.0f,0.0f);
 			}
 		);
 		I.set_vel_initialiser(
-			[](base_particle *p) {
-				p->cur_vel = vec3(0.0f,0.0f,0.0f);
+			[](base_particle& p) {
+				p.cur_vel = vec3(0.0f,0.0f,0.0f);
 			}
 		);
 		I.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
+			[&](free_particle& p) { p.lifetime = lifetime; }
 		);
 		I.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bounce; }
+			[&](free_particle& p) { p.bouncing = bounce; }
 		);
 		I.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
+			[&](free_particle& p) { p.friction = friction; }
 		);
 		I.set_radius_initialiser(
-			[&](sized_particle *p) { p->R = radius; }
+			[&](sized_particle& p) { p.R = radius; }
 		);
 
 		simulator S(solver_type::EulerSemi, dt);
@@ -129,7 +129,8 @@ namespace study_cases {
 
 		// the only particle bouncing up and down,
 		// Iialised using the function.
-		const sized_particle *p = S.add_sized_particle();
+		size_t idx = S.add_sized_particle();
+		const sized_particle &p = S.get_sized_particle(idx);
 
 		sphere *ball = new sphere(vec3(0.0f,2.0f,0.0f), 1.0f);
 		S.add_geometry(ball);
@@ -146,7 +147,7 @@ namespace study_cases {
 		float sim_time = 0.0f;
 
 		while (sim_time <= total_time) {
-			vec3 cur_pos = p->cur_pos;
+			vec3 cur_pos = p.cur_pos;
 			trajectory.push_back(cur_pos);
 			S.apply_time_step();
 			sim_time += dt;

@@ -36,9 +36,9 @@ namespace study_cases {
 	void sim_002_make_simulation() {
 		free_emitter i;
 		i.set_pos_initialiser(
-			[&](base_particle *p) {
+			[&](base_particle& p) {
 
-				size_t idx = p->index;
+				size_t idx = p.index;
 				float iz = 0.0;
 				if (idx == 0)		{ iz = -1.00f; }
 				else if (idx == 1)	{ iz = -0.75f; }
@@ -49,22 +49,22 @@ namespace study_cases {
 				else if (idx == 6)	{ iz =  0.50f; }
 				else if (idx == 7)	{ iz =  0.75f; }
 				else if (idx == 8)	{ iz =  1.00f; }
-				p->cur_pos = math::vec3(-2.0f,4.5f,iz);
+				p.cur_pos = math::vec3(-2.0f,4.5f,iz);
 			}
 		);
 		i.set_vel_initialiser(
-			[](base_particle *p) {
-				p->cur_vel = math::vec3(0.0f,0.0f,0.0f);
+			[](base_particle& p) {
+				p.cur_vel = math::vec3(0.0f,0.0f,0.0f);
 			}
 		);
 		i.set_lifetime_initialiser(
-			[&](free_particle *p) { p->lifetime = lifetime; }
+			[&](free_particle& p) { p.lifetime = lifetime; }
 		);
 		i.set_bounce_initialiser(
-			[&](free_particle *p) { p->bouncing = bouncing; }
+			[&](free_particle& p) { p.bouncing = bouncing; }
 		);
 		i.set_friction_initialiser(
-			[&](free_particle *p) { p->friction = friction; }
+			[&](free_particle& p) { p.friction = friction; }
 		);
 		SR.get_simulator().set_free_emitter(&i);
 

@@ -3,6 +3,10 @@
 // C includes
 #include <assert.h>
 
+// C++ includes
+#include <numeric>
+using namespace std;
+
 // render includes
 #include <render/include_gl.hpp>
 
@@ -73,7 +77,7 @@ void rainbow(float v, float m, float M, float& r, float& g, float& b) {
 }
 
 void render_mesh1d(const mesh1d *m) {
-	particles::mesh_particle *const *ps = m->get_particles();
+	mesh_particle *const *ps = m->get_particles();
 
 	float r, g, b;
 	glBegin(GL_LINES);
@@ -90,7 +94,7 @@ void render_mesh1d(const mesh1d *m) {
 }
 
 void render_mesh2d_regular(const mesh2d_regular *m) {
-	particles::mesh_particle *const *ps = m->get_particles();
+	mesh_particle *const *ps = m->get_particles();
 
 	size_t N,M;
 	m->get_dimensions(N,M);
@@ -153,7 +157,13 @@ void sim_renderer::add_geometry(rgeom *r) {
 	B.enlarge_box(b);
 }
 
-const std::vector<rgeom *>& sim_renderer::get_geometry() const {
+void sim_renderer::make_free_particle_indices() {
+	const vector<free_particle>& ps = S.get_free_particles();
+	indices.resize(ps.size());
+	iota(indices.begin(), indices.end(), 0);
+}
+
+const vector<rgeom *>& sim_renderer::get_geometry() const {
 	return geometry;
 }
 
@@ -173,22 +183,17 @@ void sim_renderer::render_geometry() const {
 
 void sim_renderer::render_simulation() const {
 	// render particles
-	glBegin(GL_POINTS);
-	const std::vector<free_particle *>& ps = S.get_free_particles();
-	for (const free_particle *p : ps) {
-		if (p->lifetime < 0.2f) {
-			glColor3f(0.0f,0.0f,0.0f);
-		}
-		else {
-			glColor3f(1.0f,1.0f,1.0f);
-		}
-		glVertex3f(p->cur_pos.x, p->cur_pos.y, p->cur_pos.z);
-	}
-	glEnd();
+	const vector<free_particle>& ps = S.get_free_particles();
+
+	glColor3f(1.0f,1.0f,1.0f);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, sizeof(free_particle), &ps[0].cur_pos.x);
+	glDrawElements(GL_POINTS, indices.size(), GL_UNSIGNED_INT, &indices[0]);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	// render springs
 
-	const std::vector<mesh *>& mss = S.get_meshes();
+	const vector<mesh *>& mss = S.get_meshes();
 	for (const mesh *m : mss) {
 
 		if (m->get_type() == mesh_type::d1) {

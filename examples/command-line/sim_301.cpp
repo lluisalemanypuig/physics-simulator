@@ -24,6 +24,8 @@ namespace study_cases {
 	void sim_301_usage() {
 		cout << "Simulation of a simple fluid" << endl;
 		cout << endl;
+		cout << "Used for measuring efficiency of fluid simulation." << endl;
+		cout << endl;
 		cout << "Options:" << endl;
 		cout << endl;
 		cout << "    --total-time t: total time of the simulation.  Default: 2.0" << endl;
