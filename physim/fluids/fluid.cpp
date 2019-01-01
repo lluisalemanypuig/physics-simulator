@@ -34,7 +34,7 @@ namespace fluids {
 	while (j_it < lim) {										\
 		size_t j = neighs[j_it];								\
 		d2s[j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);	\
-		if (d2s[j_it] > sq(R)) {								\
+		if (d2s[j_it] > sq(R) or j == i) {						\
 			/* Put this element at the end. (to be removed)
 			 * Do not advance 'j_it' */							\
 			swap(neighs[j_it], neighs[lim - 1]);				\
@@ -59,6 +59,7 @@ namespace fluids {
 		size_t j = neighs[j_it];								\
 		ps[i].density += ps[j].mass*kernel(d2s[j_it]);			\
 	}															\
+	ps[i].density += ps[i].mass*kernel(0.0f);					\
 	ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
 
 #define update_force(i, neighs, d2s)							\
@@ -157,7 +158,7 @@ void fluid::allocate
 	}
 
 	for (size_t i = 0; i < N; ++i) {
-		// ATENTION! This needs the <iostream> header included
+		// ATTENTION! This needs the <iostream> header included
 		new (&(ps[i])) fluid_particle();
 
 		ps[i].index = i;
@@ -181,6 +182,8 @@ void fluid::update_forces() {
 	// fixed-size list of these lists will suffice.
 	vector<vector<size_t> > neighs(N);
 	vector<vector<float> > d2s(N);
+
+	cout << "----------------" << endl;
 
 	// Obtain neighbours list. Then filter them to have only
 	// the closest neighbours.
