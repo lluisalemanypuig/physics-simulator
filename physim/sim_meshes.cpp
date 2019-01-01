@@ -25,10 +25,6 @@ void simulator::_simulate_meshes() {
 
 	for (mesh *m : ms) {
 
-		/* check mesh start time and lifetime
-		 * of mesh
-		 */
-
 		// some of the meshe's attributes are needed
 		// in the collision prediction particle for...
 		// collision prediction

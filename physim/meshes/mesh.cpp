@@ -72,7 +72,7 @@ void mesh::allocate(size_t n, float Kg) {
 	}
 
 	for (size_t i = 0; i < N; ++i) {
-		// ATENTION! This needs the <iostream> header included
+		// ATTENTION! This needs the <iostream> header included
 		new (&(ps[i])) mesh_particle();
 
 		ps[i].index = i;
