@@ -8,44 +8,46 @@
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
+using namespace math;
+
 namespace meshes {
 
 // variable C is a class member
 #define idx(i,j) ((i)*C + (j))
 
 // this macro requires some local variables to be defined:
-//     math::vec3 F1_m1;
-//     math::vec3 dir;
-//     math::vec3 dvel;
+//     vec3 F1_m1;
+//     vec3 dir;
+//     vec3 dvel;
 //     float elastic_term, damping_term, dist;
 // Other values are class members:
 //     Ke, Kd
 /*
 	// direction vector
-	__pm3_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
+	__pm3_sub_v_v(dir, ps[i + 1].cur_pos, ps[i].cur_pos);
 	dist = __pm3_norm(dir);
 	__pm3_normalise(dir, dir);
 	// difference of velocities
-	__pm3_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
+	__pm3_sub_v_v(dvel, ps[i + 1].cur_vel, ps[i].cur_vel);
 	// compute terms
 	elastic_term = Ke*(dist - ds[i]);
 	damping_term = Kd*__pm3_dot(dvel, dir);
 	// compute forces
 	__pm3_assign_vs(F1_m1, dir, elastic_term + damping_term);
-	__pm3_add_acc_v(ps[i]->force, F1_m1);
+	__pm3_add_acc_v(ps[i].force, F1_m1);
 	__pm3_invert(F1_m1, F1_m1);
-	__pm3_add_acc_v(ps[i + 1]->force, F1_m1);
+	__pm3_add_acc_v(ps[i + 1].force, F1_m1);
 */
 // d: original distance between particles i and j
 #define compute_forces(i,j, d)											\
-	__pm3_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
+	__pm3_sub_v_v(dir, ps[j].cur_pos, ps[i].cur_pos);					\
 	dist = __pm3_norm(dir);												\
 	__pm3_normalise(dir, dir);											\
-	__pm3_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
+	__pm3_sub_v_v(dvel, ps[j].cur_vel, ps[i].cur_vel);					\
 	__pm3_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm3_dot(dvel, dir));	\
-	__pm3_add_acc_v(ps[i]->force, F1_m1);								\
+	__pm3_add_acc_v(ps[i].force, F1_m1);								\
 	__pm3_invert(F1_m1, F1_m1);											\
-	__pm3_add_acc_v(ps[j]->force, F1_m1)
+	__pm3_add_acc_v(ps[j].force, F1_m1)
 
 // PUBLIC
 
@@ -79,7 +81,7 @@ void mesh2d_regular::make_initial_state() {
 	if (sb_ds != nullptr) {
 		free(sb_ds);
 	}
-	sb_ds = (math::vec6 *)malloc(R*C*sizeof(math::vec6));
+	sb_ds = static_cast<vec6 *>(malloc(R*C*sizeof(vec6)));
 
 	/*
 	 * Since this is done only once, 'if' statements
@@ -93,27 +95,27 @@ void mesh2d_regular::make_initial_state() {
 
 			// stretch forces
 			if (j + 1 < C) {
-				sb_ds[idx(i,j)].x = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+1)]->cur_pos);
+				sb_ds[idx(i,j)].x = __pm3_dist(ps[idx(i,j)].cur_pos, ps[idx(i,j+1)].cur_pos);
 			}
 			if (i + 1 < R) {
-				sb_ds[idx(i,j)].y = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j)]->cur_pos);
+				sb_ds[idx(i,j)].y = __pm3_dist(ps[idx(i,j)].cur_pos, ps[idx(i+1,j)].cur_pos);
 			}
 
 			// bend forces
 			if (j + 2 < C) {
-				sb_ds[idx(i,j)].z = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i,j+2)]->cur_pos);
+				sb_ds[idx(i,j)].z = __pm3_dist(ps[idx(i,j)].cur_pos, ps[idx(i,j+2)].cur_pos);
 			}
 			if (i + 2 < R) {
-				sb_ds[idx(i,j)].u = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+2,j)]->cur_pos);
+				sb_ds[idx(i,j)].u = __pm3_dist(ps[idx(i,j)].cur_pos, ps[idx(i+2,j)].cur_pos);
 			}
 
 			// shear forces
 			if (j + 1 < C) {
 				if (i > 0 ) {
-					sb_ds[idx(i,j)].v = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i-1,j+1)]->cur_pos);
+					sb_ds[idx(i,j)].v = __pm3_dist(ps[idx(i,j)].cur_pos, ps[idx(i-1,j+1)].cur_pos);
 				}
 				if (i + 1 < R) {
-					sb_ds[idx(i,j)].w = __pm3_dist(ps[idx(i,j)]->cur_pos, ps[idx(i+1,j+1)]->cur_pos);
+					sb_ds[idx(i,j)].w = __pm3_dist(ps[idx(i,j)].cur_pos, ps[idx(i+1,j+1)].cur_pos);
 				}
 			}
 		}
@@ -123,9 +125,9 @@ void mesh2d_regular::make_initial_state() {
 void mesh2d_regular::update_forces() {
 	assert(sb_ds != nullptr);
 
-	math::vec3 F1_m1;
-	math::vec3 dir;
-	math::vec3 dvel;
+	vec3 F1_m1;
+	vec3 dir;
+	vec3 dvel;
 	float dist;
 
 	for (size_t i = 0; i < R; ++i) {

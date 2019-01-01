@@ -4,6 +4,10 @@
 #include <assert.h>
 #include <stdlib.h>
 
+// C++ includes
+#include <iostream>
+using namespace std;
+
 namespace physim {
 using namespace particles;
 
@@ -34,12 +38,12 @@ mesh::~mesh() {
 
 // OPERATORS
 
-mesh_particle *mesh::operator[] (size_t i) {
+mesh_particle& mesh::operator[] (size_t i) {
 	assert(i < N);
 	return ps[i];
 }
 
-const mesh_particle *mesh::operator[] (size_t i) const {
+const mesh_particle& mesh::operator[] (size_t i) const {
 	assert(i < N);
 	return ps[i];
 }
@@ -47,50 +51,40 @@ const mesh_particle *mesh::operator[] (size_t i) const {
 // MODIFIERS
 
 void mesh::allocate(size_t n, float Kg) {
-	// particles in the array should be
-	// initialised only, or reallocated?
-	bool new_particles;
 
-	if (ps != nullptr) {
+	if (ps != nullptr and n != N) {
 		// clear and allocate only if necessary
-		if (n == N) {
-			new_particles = false;
-		}
-		else {
-			clear();
-			N = n;
-			ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
-			new_particles = true;
-		}
+		clear();
+		N = n;
+		ps = static_cast<mesh_particle *>(malloc(N*sizeof(mesh_particle)));
 	}
 	else {
 		N = n;
-		ps = (mesh_particle **)malloc(N*sizeof(mesh_particle *));
-		new_particles = true;
+		ps = static_cast<mesh_particle *>(malloc(N*sizeof(mesh_particle)));
 	}
 
-	for (size_t i = 0; i < N; ++i) {
-		if (new_particles) {
-			ps[i] = new mesh_particle();
-		}
-		else {
-			ps[i]->init();
-		}
-		ps[i]->index = i;
-		ps[i]->mass = Kg/N;
-	}
-}
-
-void mesh::clear() {
 	if (ps == nullptr) {
+		cerr << "mesh::allocate (" << __LINE__ << ") - Error:" << endl;
+		cerr << "    Could not allocate memory for "
+			 << N << " particles (" << N*sizeof(mesh_particle) << " bytes)"
+			 << endl;
 		return;
 	}
 
 	for (size_t i = 0; i < N; ++i) {
-		delete ps[i];
+		// ATENTION! This needs the <iostream> header included
+		new (&(ps[i])) mesh_particle();
+
+		ps[i].index = i;
+		ps[i].mass = Kg/N;
 	}
-	free(ps);
-	ps = nullptr;
+}
+
+void mesh::clear() {
+	if (ps != nullptr) {
+		free(ps);
+		ps = nullptr;
+	}
 }
 
 // SETTERS
@@ -129,7 +123,7 @@ void mesh::set_mass(float Kg) {
 	assert(ps != nullptr);
 
 	for (size_t i = 0; i < N; ++i) {
-		ps[i]->mass = Kg/N;
+		ps[i].mass = Kg/N;
 	}
 }
 
@@ -141,10 +135,10 @@ const mesh_type& mesh::get_type() const {
 	return mt;
 }
 
-mesh_particle **mesh::get_particles() {
+mesh_particle *mesh::get_particles() {
 	return ps;
 }
-mesh_particle *const *mesh::get_particles() const {
+const mesh_particle *mesh::get_particles() const {
 	return ps;
 }
 

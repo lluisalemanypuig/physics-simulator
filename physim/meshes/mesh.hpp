@@ -63,7 +63,7 @@ class mesh {
 		/// Total number of particles of the mesh.
 		size_t N;
 		/// The particles of this mesh.
-		particles::mesh_particle **ps;
+		particles::mesh_particle *ps;
 
 		/// Elasticity coefficient of each spring.
 		float Ke;
@@ -101,9 +101,9 @@ class mesh {
 		// OPERATORS
 
 		/// Returns a reference to the @e i-th particle.
-		particles::mesh_particle *operator[] (size_t i);
+		particles::mesh_particle& operator[] (size_t i);
 		/// Returns a constant reference to the @e i-th particle.
-		const particles::mesh_particle *operator[] (size_t i) const;
+		const particles::mesh_particle& operator[] (size_t i) const;
 
 		// MODIFIERS
 
@@ -205,9 +205,9 @@ class mesh {
 		const mesh_type& get_type() const;
 
 		/// Returns a reference to this mesh's particles.
-		particles::mesh_particle **get_particles();
+		particles::mesh_particle *get_particles();
 		/// Returns a constant reference to this mesh's particles.
-		particles::mesh_particle *const *get_particles() const;
+		const particles::mesh_particle *get_particles() const;
 };
 
 } // -- namespace meshes

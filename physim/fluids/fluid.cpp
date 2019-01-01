@@ -157,7 +157,7 @@ void fluid::allocate
 	}
 
 	for (size_t i = 0; i < N; ++i) {
-		// Oh, Lord... I didn't know that I had to do this...
+		// ATENTION! This needs the <iostream> header included
 		new (&(ps[i])) fluid_particle();
 
 		ps[i].index = i;

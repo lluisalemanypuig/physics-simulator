@@ -36,12 +36,12 @@ void simulator::_simulate_meshes() {
 		coll_pred.bouncing = m->get_bouncing();
 
 		/* update a meshe's particles */
-		mesh_particle **mps = m->get_particles();
+		mesh_particle *mps = m->get_particles();
 		size_t N = m->size();
 
 		// set forces to 0
 		for (size_t i = 0; i < N; ++i) {
-			__pm3_assign_s(mps[i]->force, 0.0f);
+			__pm3_assign_s(mps[i].force, 0.0f);
 		}
 
 		// compute forces for particle p that are
@@ -50,19 +50,19 @@ void simulator::_simulate_meshes() {
 
 		for (size_t p_idx = 0; p_idx < N; ++p_idx) {
 			// ignore fixed particles
-			if (mps[p_idx]->fixed) {
+			if (mps[p_idx].fixed) {
 				continue;
 			}
 
 			// compute forces for particle p that are
 			// originated by the force fields of the
 			// simulation
-			compute_forces(*mps[p_idx]);
+			compute_forces(mps[p_idx]);
 
 			// apply solver to predict next position and
 			// velocity of the particle
 			vec3 pred_pos, pred_vel;
-			apply_solver(*mps[p_idx], pred_pos, pred_vel);
+			apply_solver(mps[p_idx], pred_pos, pred_vel);
 
 			// check if there is any collision between
 			// this mesh particle and a geometrical object
@@ -74,8 +74,8 @@ void simulator::_simulate_meshes() {
 			 * update.
 			 */
 
-			from_mesh_to_free(*mps[p_idx], current);
-			from_mesh_to_free(*mps[p_idx], coll_pred);
+			from_mesh_to_free(mps[p_idx], current);
+			from_mesh_to_free(mps[p_idx], coll_pred);
 
 			bool collision =
 			find_update_geomcoll_free(current, pred_pos, pred_vel, coll_pred);
@@ -89,17 +89,17 @@ void simulator::_simulate_meshes() {
 
 			// give the particle the proper final state
 			if (collision) {
-				from_free_to_mesh(coll_pred, *mps[p_idx]);
+				from_free_to_mesh(coll_pred, mps[p_idx]);
 			}
 			else {
-				mps[p_idx]->save_position();
-				__pm3_assign_v(mps[p_idx]->cur_pos, pred_pos);
-				__pm3_assign_v(mps[p_idx]->cur_vel, pred_vel);
+				mps[p_idx].save_position();
+				__pm3_assign_v(mps[p_idx].cur_pos, pred_pos);
+				__pm3_assign_v(mps[p_idx].cur_vel, pred_vel);
 			}
 
 			// clear the force so that in the next iteration
 			// for the mesh, the forces can be computed
-			__pm3_assign_s(mps[p_idx]->force, 0.0f);
+			__pm3_assign_s(mps[p_idx].force, 0.0f);
 		}
 	}
 }

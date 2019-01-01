@@ -43,14 +43,14 @@ void simulator::init_particle(base_particle& p) {
 void simulator::init_mesh(mesh *m) {
 	m->make_initial_state();
 
-	mesh_particle **mps = m->get_particles();
+	mesh_particle *mps = m->get_particles();
 
 	// loop over the mesh's particles and compute
 	// their previous position
 
 	for (size_t i = 0; i < m->size(); ++i) {
 		// prev_pos <- pos - vel*dt
-		__pm3_sub_v_vs(mps[i]->prev_pos, mps[i]->cur_pos, mps[i]->cur_vel, dt);
+		__pm3_sub_v_vs(mps[i].prev_pos, mps[i].cur_pos, mps[i].cur_vel, dt);
 	}
 }
 
@@ -179,6 +179,9 @@ size_t simulator::add_geometry(geometry *g) {
 }
 
 void simulator::clear_geometry() {
+	for (geometry *g : scene_fixed) {
+		delete g;
+	}
 	scene_fixed.clear();
 }
 
@@ -190,6 +193,9 @@ size_t simulator::add_field(field *f) {
 }
 
 void simulator::clear_fields() {
+	for (field *f : force_fields) {
+		delete f;
+	}
 	force_fields.clear();
 }
 

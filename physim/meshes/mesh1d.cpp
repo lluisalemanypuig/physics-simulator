@@ -8,41 +8,43 @@
 #include <physim/math/private/math3.hpp>
 
 namespace physim {
+using namespace math;
+
 namespace meshes {
 
 // this macro requires some local variables to be defined:
-//     math::vec3 F1_m1;
-//     math::vec3 dir;
-//     math::vec3 dvel;
+//     vec3 F1_m1;
+//     vec3 dir;
+//     vec3 dvel;
 //     float elastic_term, damping_term, dist;
 // Other values are class members:
 //     Ke, Kd
 /*
 	// direction vector
-	__pm3_sub_v_v(dir, ps[i + 1]->cur_pos, ps[i]->cur_pos);
+	__pm3_sub_v_v(dir, ps[i + 1].cur_pos, ps[i].cur_pos);
 	dist = __pm3_norm(dir);
 	__pm3_normalise(dir, dir);
 	// difference of velocities
-	__pm3_sub_v_v(dvel, ps[i + 1]->cur_vel, ps[i]->cur_vel);
+	__pm3_sub_v_v(dvel, ps[i + 1].cur_vel, ps[i].cur_vel);
 	// compute terms
 	elastic_term = Ke*(dist - ds[i]);
 	damping_term = Kd*__pm3_dot(dvel, dir);
 	// compute forces
 	__pm3_assign_vs(F1_m1, dir, elastic_term + damping_term);
-	__pm3_add_acc_v(ps[i]->force, F1_m1);
+	__pm3_add_acc_v(ps[i].force, F1_m1);
 	__pm3_invert(F1_m1, F1_m1);
-	__pm3_add_acc_v(ps[i + 1]->force, F1_m1);
+	__pm3_add_acc_v(ps[i + 1].force, F1_m1);
 */
 // d is the distance between particles i and j
 #define compute_forces(i,j, d)											\
-	__pm3_sub_v_v(dir, ps[j]->cur_pos, ps[i]->cur_pos);					\
+	__pm3_sub_v_v(dir, ps[j].cur_pos, ps[i].cur_pos);					\
 	dist = __pm3_norm(dir);												\
 	__pm3_normalise(dir, dir);											\
-	__pm3_sub_v_v(dvel, ps[j]->cur_vel, ps[i]->cur_vel);					\
+	__pm3_sub_v_v(dvel, ps[j].cur_vel, ps[i].cur_vel);					\
 	__pm3_assign_vs(F1_m1, dir, Ke*(dist - d) + Kd*__pm3_dot(dvel, dir));	\
-	__pm3_add_acc_v(ps[i]->force, F1_m1);								\
+	__pm3_add_acc_v(ps[i].force, F1_m1);								\
 	__pm3_invert(F1_m1, F1_m1);											\
-	__pm3_add_acc_v(ps[j]->force, F1_m1)
+	__pm3_add_acc_v(ps[j].force, F1_m1)
 
 // PUBLIC
 
@@ -69,21 +71,21 @@ void mesh1d::make_initial_state() {
 	if (ds != nullptr) {
 		free(ds);
 	}
-	ds = (math::vec2 *)malloc((N - 1)*sizeof(math::vec2));
+	ds = static_cast<vec2 *>(malloc((N - 1)*sizeof(vec2)));
 
 	for (size_t i = 0; i < N - 2; ++i) {
-		ds[i].x = __pm3_dist(ps[i]->cur_pos, ps[i + 1]->cur_pos);
-		ds[i].y = __pm3_dist(ps[i]->cur_pos, ps[i + 2]->cur_pos);
+		ds[i].x = __pm3_dist(ps[i].cur_pos, ps[i + 1].cur_pos);
+		ds[i].y = __pm3_dist(ps[i].cur_pos, ps[i + 2].cur_pos);
 	}
-	ds[N - 2].x = __pm3_dist(ps[N - 2]->cur_pos, ps[N - 1]->cur_pos);
+	ds[N - 2].x = __pm3_dist(ps[N - 2].cur_pos, ps[N - 1].cur_pos);
 }
 
 void mesh1d::update_forces() {
 	assert(ds != nullptr);
 
-	math::vec3 F1_m1;
-	math::vec3 dir;
-	math::vec3 dvel;
+	vec3 F1_m1;
+	vec3 dir;
+	vec3 dvel;
 	float dist;
 
 	// compute the bending forces for all particles
