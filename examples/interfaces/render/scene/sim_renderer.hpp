@@ -20,7 +20,9 @@ class sim_renderer : public viewer {
 		/// Geometry in the simulation.
 		std::vector<rgeom *> geometry;
 		/// Indices of the particles to be rendered
-		std::vector<uint> indices;
+		std::vector<uint> free_indices;
+		/// Indices of the particles to be rendered
+		std::vector<std::vector<uint> > per_fluid_indices;
 
 	public:
 		/// Default constructor.
@@ -35,12 +37,11 @@ class sim_renderer : public viewer {
 		void add_geometry(rgeom *r);
 
 		void make_free_particle_indices();
+		void make_fluid_particle_indices();
 
 		const std::vector<rgeom *>& get_geometry() const;
 
-		/// Returns a reference to the renderer's simulator.
 		physim::simulator& get_simulator();
 
-		void render_geometry() const;
 		void render_simulation() const;
 };

@@ -5,7 +5,8 @@ SUBDIRS += \
     basic-viewer \
 	particles \
     spring-meshes \
-    octree-viewer
+    octree-viewer \
+    fluids
 
 DISTFILES += \
     models/sphere_fsmooth.obj \

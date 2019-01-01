@@ -19,6 +19,7 @@ using namespace std;
 using namespace physim;
 using namespace meshes;
 using namespace particles;
+using namespace fluids;
 typedef physim::math::vec3 pm_vec3;
 
 inline
@@ -159,8 +160,22 @@ void sim_renderer::add_geometry(rgeom *r) {
 
 void sim_renderer::make_free_particle_indices() {
 	const vector<free_particle>& ps = S.get_free_particles();
-	indices.resize(ps.size());
-	iota(indices.begin(), indices.end(), 0);
+	free_indices.resize(ps.size());
+	iota(free_indices.begin(), free_indices.end(), 0);
+}
+
+void sim_renderer::make_fluid_particle_indices() {
+	const vector<fluid *>& fs = S.get_fluids();
+
+	size_t nF = fs.size();
+	per_fluid_indices.resize(nF);
+	for (size_t i = 0; i < nF; ++i) {
+		const fluid *F = fs[i];
+		vector<uint>& fluid_ids = per_fluid_indices[i];
+
+		fluid_ids.resize(F->size());
+		iota(fluid_ids.begin(), fluid_ids.end(), 0);
+	}
 }
 
 const vector<rgeom *>& sim_renderer::get_geometry() const {
@@ -171,24 +186,19 @@ physim::simulator& sim_renderer::get_simulator() {
 	return S;
 }
 
-void sim_renderer::render_geometry() const {
-	for (rgeom *r : geometry) {
-		r->draw();
-	}
-}
-
 void sim_renderer::render_simulation() const {
-	// render particles
-	const vector<free_particle>& ps = S.get_free_particles();
+	// render free particles
+	if (S.get_free_particles().size() > 0) {
+		const vector<free_particle>& ps = S.get_free_particles();
 
-	glColor3f(1.0f,1.0f,1.0f);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(free_particle), &ps[0].cur_pos.x);
-	glDrawElements(GL_POINTS, indices.size(), GL_UNSIGNED_INT, &indices[0]);
-	glDisableClientState(GL_VERTEX_ARRAY);
+		glColor3f(1.0f,1.0f,1.0f);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, sizeof(free_particle), &ps[0].cur_pos.x);
+		glDrawElements(GL_POINTS, free_indices.size(), GL_UNSIGNED_INT, &free_indices[0]);
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
 
 	// render springs
-
 	const vector<mesh *>& mss = S.get_meshes();
 	for (const mesh *m : mss) {
 
@@ -198,5 +208,21 @@ void sim_renderer::render_simulation() const {
 		else if (m->get_type() == mesh_type::d2_regular) {
 			render_mesh2d_regular(static_cast<const mesh2d_regular *>(m));
 		}
+	}
+
+	// render fluids
+	const vector<fluid *>& fs = S.get_fluids();
+	size_t nF = fs.size();
+	for (size_t i = 0; i < nF; ++i) {
+		const fluid *F = fs[i];
+
+		const fluid_particle *ps = F->get_particles();
+		const vector<uint>& fluid_idxs = per_fluid_indices[i];
+
+		glColor3f(0.0f,0.0f,1.0f);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, sizeof(fluid_particle), &ps[0].cur_pos.x);
+		glDrawElements(GL_POINTS, fluid_idxs.size(), GL_UNSIGNED_INT, &fluid_idxs[0]);
+		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 }
