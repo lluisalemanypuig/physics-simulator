@@ -89,6 +89,7 @@ namespace study_cases {
 		ts.bind();
 		shader_helper::activate_materials_textures(*model_pipe, ts);
 		ts.release();
+		SR.get_box().make_buffers();
 	}
 
 	void sim_006_make_simulation() {

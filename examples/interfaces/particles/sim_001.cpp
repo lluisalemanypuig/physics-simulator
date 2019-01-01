@@ -104,6 +104,7 @@ namespace study_cases {
 		SR.get_simulator().set_time_step(time_step);
 
 		glut_functions::init_shaders();
+		SR.get_box().make_buffers();
 	}
 
 	void sim_001_help() {

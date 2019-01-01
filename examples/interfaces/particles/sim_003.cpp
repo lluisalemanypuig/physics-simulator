@@ -175,6 +175,7 @@ namespace study_cases {
 
 		n_iterations = 1;
 		SR.get_simulator().set_time_step(time_step);
+		SR.get_box().make_buffers();
 	}
 
 	void sim_003_help() {
