@@ -40,15 +40,15 @@ namespace study_cases {
 
 				size_t idx = p.index;
 				float iz = 0.0;
-				if (idx == 0)		{ iz = -1.00f; }
-				else if (idx == 1)	{ iz = -0.75f; }
-				else if (idx == 2)	{ iz = -0.50f; }
-				else if (idx == 3)	{ iz = -0.25f; }
+				if (idx == 8)		{ iz = -1.00f; }
+				else if (idx == 7)	{ iz = -0.75f; }
+				else if (idx == 6)	{ iz = -0.50f; }
+				else if (idx == 5)	{ iz = -0.25f; }
 				else if (idx == 4)	{ iz =  0.00f; }
-				else if (idx == 5)	{ iz =  0.25f; }
-				else if (idx == 6)	{ iz =  0.50f; }
-				else if (idx == 7)	{ iz =  0.75f; }
-				else if (idx == 8)	{ iz =  1.00f; }
+				else if (idx == 3)	{ iz =  0.25f; }
+				else if (idx == 2)	{ iz =  0.50f; }
+				else if (idx == 1)	{ iz =  0.75f; }
+				else if (idx == 0)	{ iz =  1.00f; }
 				p.cur_pos = math::vec3(-2.0f,4.5f,iz);
 			}
 		);
@@ -102,13 +102,14 @@ namespace study_cases {
 		sphere *s = new sphere(to_physim(rball->center()), 1.0f);
 		rectangle *rl = new rectangle(
 			to_physim(ramp->p1()), to_physim(ramp->p2()),
-			to_physim(ramp->p3()), to_physim(ramp->p3())
+			to_physim(ramp->p3()), to_physim(ramp->p4())
 		);
 		SR.get_simulator().add_geometry(pl);
 		SR.get_simulator().add_geometry(s);
 		SR.get_simulator().add_geometry(rl);
 		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
 		SR.get_simulator().add_free_particles(9);
+		SR.make_free_particle_indices();
 
 		SR.get_box().enlarge_box(glm::vec3(0.0f, 7.0f, 0.0f));
 		SR.set_window_dims(window_width, window_height);
