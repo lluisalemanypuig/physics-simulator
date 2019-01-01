@@ -325,16 +325,16 @@ float rectangle::distance(const vec3& p) const {
 	return __pm3_dist(p, proj);
 }
 
-bool rectangle::is_inside(const vec3& p, float tol) const {
+bool rectangle::is_inside(const vec3& x, float tol) const {
 	// check if the point is inside the bounding box
-	if (not __pm3_inside_box(p, vmin,vmax)) {
+	if (not __pm3_inside_box(x, vmin,vmax)) {
 		return false;
 	}
 
 	// If the point is inside the bounding box then it
 	// might be 'inside' the associated plane.
 
-	if (not pl.is_inside(p, tol)) {
+	if (not pl.is_inside(x, tol)) {
 		return false;
 	}
 
@@ -342,11 +342,17 @@ bool rectangle::is_inside(const vec3& p, float tol) const {
 	// and 'inside' any of the two triangles
 	// then the point is in the rectangle
 
+	float a0, a1, a2, A;
+
 	// compute areas of the triangles (1)
-	float a0 = triangle_area(p,  p1, p2);
-	float a1 = triangle_area(p0,  p, p2);
-	float a2 = triangle_area(p0, p1,  p);
-	float  A = triangle_area(p0, p1, p2);
+	a0 = triangle_area(x,  p1, p2);
+	a1 = triangle_area(p0,  x, p2);
+	a2 = triangle_area(p0, p1,  x);
+	if (a0 <= tol or a1 <= tol or a2 <= tol) {
+		// collinearities
+		return true;
+	}
+	A = triangle_area(p0, p1, p2);
 
 	// test inside/outside
 	if ((a0 + a1 + a2 - A) <= tol) {
@@ -354,16 +360,19 @@ bool rectangle::is_inside(const vec3& p, float tol) const {
 	}
 
 	// compute areas of the triangles (2)
-	a0 = triangle_area(p,  p2, p3);
-	a1 = triangle_area(p0,  p, p3);
-	a2 = triangle_area(p0, p2,  p);
-	 A = triangle_area(p0, p2, p3);
+	a0 = triangle_area(x,  p2, p3);
+	a1 = triangle_area(p0,  x, p3);
+	a2 = triangle_area(p0, p2,  x);
+	if (a0 <= tol or a1 <= tol or a2 <= tol) {
+		// collinearities
+		return true;
+	}
+	A = triangle_area(p0, p2, p3);
 
 	// test inside/outside
 	if ((a0 + a1 + a2 - A) <= tol) {
 		return true;
 	}
-
 	return false;
 }
 
@@ -383,7 +392,8 @@ bool rectangle::intersec_segment
 {
 	// if the segment does not intersect the plane
 	// surely it does not intersect the rectangle
-	if (not pl.intersec_segment(_p0,_p1, p_inter)) {
+	bool inter = pl.intersec_segment(_p0,_p1, p_inter);
+	if (not inter) {
 		return false;
 	}
 
