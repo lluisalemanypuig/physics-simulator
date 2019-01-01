@@ -32,10 +32,14 @@ using namespace glut_variables;
 namespace study_cases {
 
 	void sim_00_make_simulation() {
+		simulator& S = SR.get_simulator();
+
 		SR.set_particle_size(2.0f);
 
-		SR.get_simulator().set_solver(solver_type::EulerSemi);
-		SR.get_simulator().set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		S.set_solver(solver_type::EulerSemi);
+		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
+		S.set_time_step(0.01f);
+		n_iterations = 1;
 
 		size_t side__ = 16;
 		size_t N = side__*side__*side__;
@@ -70,17 +74,46 @@ namespace study_cases {
 		};
 		F->set_kernel(W, gW, g2W);
 
+		fluid_particle *Fs = F->get_particles();
 		for (size_t i = 0; i < side__; ++i) {
 			for (size_t j = 0; j < side__; ++j) {
 				for (size_t k = 0; k < side__; ++k) {
-					vec3 pos(i*(0.2f/side__), j*(0.2f/side__), k*(0.1f/side__));
+					vec3 pos(i*(0.5f/side__), j*(0.5f/side__), k*(0.5f/side__));
 					size_t idx = i*side__*side__ + j*side__ + k;
-					F->get_particles()[idx].cur_pos = pos;
+					Fs[idx].cur_pos = pos;
+					Fs[idx].cur_vel = vec3(0.0f);
 				}
 			}
 		}
 
-		SR.get_simulator().add_fluid(F);
+		S.add_fluid(F);
+		SR.make_fluid_particle_indices();
+
+		glut_functions::init_shaders();
+
+		SR.get_box().set_min_max(glm::vec3(-1,-1,-1), glm::vec3(1,1,1));
+		SR.set_window_dims(window_width, window_height);
+		SR.init_cameras();
+
+		plane *base = new plane(vec3(0,1,0), vec3(0,-0.25,0));
+		plane *w1 = new plane(vec3(1,0,0), vec3(-0.25,0,0));
+		plane *w2 = new plane(vec3(-1,0,0), vec3(0.75,0,0));
+		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,-0.25));
+		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.75));
+		S.add_geometry(base);
+		S.add_geometry(w1);
+		S.add_geometry(w2);
+		S.add_geometry(w3);
+		S.add_geometry(w4);
+
+		cout << "Fluid characteristics:" << endl;
+		cout << "    Number of particles: " << N << endl;
+		cout << "    Volume: " << volume << endl;
+		cout << "    Viscosity: " << viscosity << endl;
+		cout << "    Density: " << density << endl;
+		cout << "    Neighbourhood size: " << h << endl;
+		cout << "    Initial shape:" << endl;
+		cout << "        0.2 x 0.2 x 0.1" << endl;
 	}
 
 	void sim_00_help() {
@@ -134,6 +167,9 @@ namespace study_cases {
 	}
 
 	void sim_00_initGL(int argc, char *argv[]) {
+		window_width = 640;
+		window_height = 480;
+
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
@@ -164,6 +200,13 @@ namespace study_cases {
 		// --------------------------- //
 		/* initialise global variables */
 		glut_functions::init_glut_variables();
+
+		h = 0.03f;
+		volume = 0.01f;
+		viscosity = 0.001f;
+		density = 1000.0f;
+		cs = 1500.0f;
+
 		glut_functions::parse_common_params(argc, argv);
 
 		// ---------------- //

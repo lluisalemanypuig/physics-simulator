@@ -31,7 +31,10 @@ namespace glut_functions {
 	// SCENE RENDERING
 	// ---------------
 
-	void shader_render() {
+	void refresh() {
+		glClearColor(bgd_color.x, bgd_color.y, bgd_color.z, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		// texture shader for geometry
 		glm::mat4 projection(1.0f), view(1.0f);
 		SR.make_projection_matrix(projection);
@@ -78,16 +81,9 @@ namespace glut_functions {
 				r->draw_geometry();
 			}
 		}
-	}
-
-	void refresh() {
-		glClearColor(bgd_color.x, bgd_color.y, bgd_color.z, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		shader_render();
 
 		for (int i = 0; i < n_iterations; ++i) {
-			SR.get_simulator().apply_time_step();
+			SR.get_simulator().simulate_fluids();
 		}
 
 		glutSwapBuffers();

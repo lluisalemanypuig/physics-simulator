@@ -42,10 +42,10 @@ namespace glut_functions {
 
 		bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
 
-		SR.get_simulator().set_solver(physim::solver_type::Verlet);
-		SR.get_simulator().set_time_step(0.001f);
-
 		n_iterations = 10;
+
+		window_width = 640;
+		window_height = 480;
 
 		sec = timing::now();
 	}
@@ -87,6 +87,26 @@ namespace glut_functions {
 				num_threads = atoi(argv[i + 1]);
 				++i;
 			}
+			else if (strcmp(argv[i], "--volume") == 0) {
+				volume = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--density") == 0) {
+				density = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--viscosity") == 0) {
+				viscosity = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--radius") == 0) {
+				h = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--speed-sound") == 0) {
+				cs = atof(argv[i + 1]);
+				++i;
+			}
 			else if (strcmp(argv[i], "--solver") == 0) {
 				string s = string(argv[i + 1]);
 				if (s == "exp-euler") {
@@ -122,6 +142,9 @@ namespace glut_functions {
 		SR.get_orthogonal_camera().set_zoom(ozoom);
 
 		glViewport(0, 0, w, h);
+
+		window_width = w;
+		window_height = h;
 	}
 
 	// -------------

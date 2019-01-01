@@ -40,8 +40,6 @@ namespace glut_functions {
 	void parse_common_params(int argc, char *argv[]);
 
 	/* scene rendering */
-	void shader_render();
-	void no_shader_render();
 	void refresh();
 	void timed_refresh(int value);
 
