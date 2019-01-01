@@ -41,6 +41,7 @@ namespace glut_functions {
 		display_fps = false;
 		FPS = 60;
 		fps_count = 0;
+		num_threads = 1;
 
 		solver = physim::solver_type::Verlet;
 
@@ -111,6 +112,10 @@ namespace glut_functions {
 			}
 			else if (strcmp(argv[i], "--lifetime") == 0) {
 				lifetime = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--threads") == 0) {
+				num_threads = atoi(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--solver") == 0) {

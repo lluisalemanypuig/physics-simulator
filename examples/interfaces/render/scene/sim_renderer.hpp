@@ -41,7 +41,6 @@ class sim_renderer : public viewer {
 		/// Returns a reference to the renderer's simulator.
 		physim::simulator& get_simulator();
 
-		void apply_time_step();
 		void render_geometry() const;
 		void render_simulation() const;
 };

@@ -36,6 +36,7 @@ namespace study_cases {
 		cout << "Options:" << endl;
 		cout << endl;
 		cout << "    [-lt, --lifetime] t:    the lifetime of the particle.  Default: 2.0" << endl;
+		cout << "    --threads n:            number of threads.             Default: 1" << endl;
 		cout << "    [-tt, --total-time] t:  total time of the simulation.  Default: 2.0" << endl;
 		cout << "    [-dt, --step] t:        time step of the simulation.   Default: 0.01" << endl;
 		cout << "    --bounce b:      bouncing coefficient of the particle. Default: 0.8" << endl;
@@ -50,6 +51,8 @@ namespace study_cases {
 	}
 
 	void sim_005(int argc, char *argv[]) {
+		size_t threads = 1;
+
 		float dt = 0.01f;
 		float total_time = 2.0f;
 		float lifetime = 2.0f;
@@ -65,6 +68,10 @@ namespace study_cases {
 			}
 			else if (strcmp(argv[i], "-lt") == 0 or strcmp(argv[i], "--lifetime") == 0) {
 				lifetime = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--threads") == 0) {
+				threads = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "-tt") == 0 or strcmp(argv[i], "--total-time") == 0) {
@@ -184,7 +191,7 @@ namespace study_cases {
 		timing::time_point begin = timing::now();
 		float sim_time = 0.0f;
 		while (sim_time <= total_time) {
-			SIM.apply_time_step();
+			SIM.apply_time_step(threads);
 			sim_time += dt;
 		}
 		timing::time_point end = timing::now();

@@ -171,10 +171,6 @@ physim::simulator& sim_renderer::get_simulator() {
 	return S;
 }
 
-void sim_renderer::apply_time_step() {
-	S.apply_time_step();
-}
-
 void sim_renderer::render_geometry() const {
 	for (rgeom *r : geometry) {
 		r->draw();

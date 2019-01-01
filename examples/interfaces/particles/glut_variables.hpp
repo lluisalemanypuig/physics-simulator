@@ -47,6 +47,7 @@ namespace glut_variables {
 	extern bool display_fps;
 	extern int FPS;
 	extern int fps_count;
+	extern size_t num_threads;
 
 	// particle attributes
 	extern float lifetime;

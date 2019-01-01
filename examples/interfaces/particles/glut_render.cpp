@@ -235,7 +235,7 @@ namespace glut_functions {
 		}
 
 		for (int i = 0; i < n_iterations; ++i) {
-			SR.apply_time_step();
+			SR.get_simulator().apply_time_step(num_threads);
 		}
 
 		glutSwapBuffers();

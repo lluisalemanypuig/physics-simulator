@@ -27,7 +27,7 @@ namespace study_cases {
 		cout << "Options:" << endl;
 		cout << endl;
 		cout << "    --R r:			 Size of the neighbourhood.     Default: 0.015" << endl;
-		cout << "    --vol v:		 Volume of the fluid.           Default: 10.0" << endl;
+		cout << "    --vol v:		 Volume of the fluid.           Default: 0.01" << endl;
 		cout << "    --vis v:		 Viscosity of the fluid.        Default: 0.001" << endl;
 		cout << "    --dens d:       Density at rest of the fluid.  Default: 1000.0" << endl;
 		cout << "    --c v:			 Speed of sound.                Default: 1500.0" << endl;
@@ -44,7 +44,7 @@ namespace study_cases {
 		// neighbourhood size
 		float h = 0.015f;
 		// volume
-		float vol = 10.0f;
+		float vol = 0.01f;
 		// viscosity
 		float vis = 0.001f;
 		// density

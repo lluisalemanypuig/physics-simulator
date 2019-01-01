@@ -32,6 +32,7 @@ namespace glut_variables {
 	bool display_fps;
 	int FPS;
 	int fps_count;
+	size_t num_threads;
 
 	float lifetime;
 	float friction;

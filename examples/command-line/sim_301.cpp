@@ -35,7 +35,7 @@ namespace study_cases {
 		cout << "        semi-euler: Euler semi-implicit integration method." << endl;
 		cout << "        verlet:     Verlet integration method." << endl;
 		cout << "    --R r:			 Size of the neighbourhood.     Default: 0.015" << endl;
-		cout << "    --vol v:		 Volume of the fluid.           Default: 10.0" << endl;
+		cout << "    --vol v:		 Volume of the fluid.           Default: 0.01" << endl;
 		cout << "    --vis v:		 Viscosity of the fluid.        Default: 0.001" << endl;
 		cout << "    --dens d:       Density at rest of the fluid.  Default: 1000.0" << endl;
 		cout << "    --c v:			 Speed of sound.                Default: 1500.0" << endl;
@@ -53,7 +53,7 @@ namespace study_cases {
 		// neighbourhood size
 		float h = 0.015f;
 		// volume
-		float vol = 10.0f;
+		float vol = 0.01f;
 		// viscosity
 		float vis = 0.001f;
 		// density
@@ -159,12 +159,12 @@ namespace study_cases {
 
 		cout << "Allocating..." << endl;
 		begin = timing::now();
-		fluid F;
-		F.allocate(N, vol, dens, vis, h, cs);
+		fluid *F = new fluid();
+		F->allocate(N, vol, dens, vis, h, cs);
 		end = timing::now();
 		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
-		cout << "Mass per particle: " << F.get_particles()[0].mass << endl;
+		cout << "Mass per particle: " << F->get_particles()[0].mass << endl;
 
 
 
@@ -191,9 +191,7 @@ namespace study_cases {
 			float PI = static_cast<float>(M_PI);
 			return (945.0f/(8.0f*PI*std::pow(h, 7.0f)))*k*(r2/(h*h) - 0.75f*k);
 		};
-		F.set_kernel(W, gW, g2W);
-
-
+		F->set_kernel(W, gW, g2W);
 
 		// assign initial positions
 		cout << "Assigning initial positions..." << endl;
@@ -203,7 +201,7 @@ namespace study_cases {
 				for (size_t k = 0; k < side__; ++k) {
 					vec3 pos(i*(0.2f/side__), j*(0.2f/side__), k*(0.1f/side__));
 					size_t idx = i*side__*side__ + j*side__ + k;
-					F.get_particles()[idx].cur_pos = pos;
+					F->get_particles()[idx].cur_pos = pos;
 				}
 			}
 		}
@@ -211,22 +209,25 @@ namespace study_cases {
 		end = timing::now();
 		cout << "    in " << timing::elapsed_seconds(begin, end) << " seconds" << endl;
 
+		simulator S(solv, dt);
+		S.add_fluid(F);
+
 		float sim_time = 0.0f;
 		double total_exe_secs = 0.0f;
 
-		cout << "Updating forces..." << endl;
+		cout << "Simulating..." << endl;
 		while (sim_time <= total_time) {
 			begin = timing::now();
-			F.update_forces(nt);
+			S.simulate_fluids(nt);
 			end = timing::now();
 			double elapsed_exe_secs = timing::elapsed_seconds(begin, end);
 			total_exe_secs += elapsed_exe_secs;
 
-			cout << "    Total execution time: " << total_exe_secs << endl;
-			cout << "        Simulation time: " << sim_time << " seconds" << endl;
 			sim_time += dt;
 		}
 
+		cout << "Total execution time: " << total_exe_secs << endl;
+		cout << "Simulation time: " << total_time << " seconds" << endl;
 		cout << "Average execution time per update: "
 			 << total_exe_secs/(sim_time/dt) << " seconds" << endl;
 	}
