@@ -18,7 +18,11 @@ typedef physim::particles::sized_particle SP;
 #include <render/geometry/robject.hpp>
 
 // custom includes
+#include "glut_functions.hpp"
+#include "glut_variables.hpp"
 #include "conversion_helper.hpp"
+using namespace glut_functions;
+using namespace glut_variables;
 
 namespace glut_functions {
 
@@ -156,12 +160,7 @@ namespace glut_functions {
 		glClearColor(bgd_color.x, bgd_color.y, bgd_color.z, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (use_shaders) {
-			shader_render();
-		}
-		else {
-			no_shader_render();
-		}
+		shader_render();
 
 		for (int i = 0; i < n_iterations; ++i) {
 			SR.get_simulator().apply_time_step();

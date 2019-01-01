@@ -46,7 +46,8 @@ unix {
 HEADERS += \
     glut_functions.hpp \
     utils.hpp \
-    conversion_helper.hpp
+    conversion_helper.hpp \
+    glut_variables.hpp
 
 SOURCES += main.cpp \
     glut_functions.cpp \
@@ -55,4 +56,5 @@ SOURCES += main.cpp \
     sim_01.cpp \
     sim_02.cpp \
     glut_render.cpp \
-    sim_03.cpp
+    sim_03.cpp \
+    glut_variables.cpp

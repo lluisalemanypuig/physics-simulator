@@ -79,21 +79,16 @@ namespace study_cases {
 		SR.add_geometry(ro);
 
 		model_pipe->load_textures();
-		if (use_shaders) {
-			glut_functions::init_shaders();
+		glut_functions::init_shaders();
 
-			SR.get_box().make_buffers();
-			ro->make_boxes_buffers();
+		SR.get_box().make_buffers();
+		ro->make_boxes_buffers();
 
-			model_pipe->make_buffers_materials_textures();
-			shader& ts = texture_shader;
-			ts.bind();
-			shader_helper::activate_materials_textures(*model_pipe, ts);
-			ts.release();
-		}
-		else {
-			model_pipe->compile();
-		}
+		model_pipe->make_buffers_materials_textures();
+		shader& ts = texture_shader;
+		ts.bind();
+		shader_helper::activate_materials_textures(*model_pipe, ts);
+		ts.release();
 	}
 
 	void sim_006_make_simulation() {
@@ -124,9 +119,7 @@ namespace study_cases {
 
 	void sim_006_reset() {
 		clear_simulation();
-		if (use_shaders) {
-			clear_shaders();
-		}
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -140,7 +133,6 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		use_shaders = false;
 		sim_006_make_simulation();
 
 		SR.set_perspective(old_p);

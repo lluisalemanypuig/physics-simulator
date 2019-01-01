@@ -149,90 +149,11 @@ namespace glut_functions {
 		}
 	}
 
-	void no_shader_render() {
-		// no shader for all
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		SR.apply_projection();
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		SR.apply_view();
-
-		glDisable(GL_LIGHTING);
-		SR.render_simulation();
-
-		glDisable(GL_LIGHTING);
-		for (const rgeom *r : SR.get_geometry()) {
-			if (r->get_model() == nullptr) {
-				r->draw_geometry();
-			}
-		}
-		glEnable(GL_LIGHTING);
-		for (const rgeom *r : SR.get_geometry()) {
-			if (r->get_model() != nullptr) {
-				r->draw();
-			}
-		}
-
-		glDisable(GL_LIGHTING);
-		if (draw_box) {
-			glColor3f(1.0f,0.0f,0.0f);
-			SR.get_box().slow_render();
-		}
-		if (draw_boxes_octree) {
-			glColor3f(1.0f,1.0f,0.0f);
-			for (const rgeom *r : SR.get_geometry()) {
-				if (r->get_type() == rendered_geometry_type::object) {
-					const robject *ro = static_cast<const robject *>(r);
-					const vector<box>& bs = ro->get_boxes();
-					for (const box& B : bs) {
-						B.slow_render();
-					}
-				}
-			}
-		}
-
-		const vector<SP>& ps =
-			SR.get_simulator().get_sized_particles();
-
-		if (draw_sized_particles_wire) {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glColor3f(0.0f,0.0f,1.0f);
-
-			for (const SP& p : ps) {
-				float R = 2.0f*p.R;
-
-				glPushMatrix();
-					glTranslatef(p.cur_pos.x, p.cur_pos.y, p.cur_pos.z);
-					glScalef(R,R,R);
-					wireframe_sphere->render();
-				glPopMatrix();
-			}
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		}
-		else if (ps.size() > 0) {
-			glEnable(GL_LIGHTING);
-			glPointSize(particle_size);
-			glBegin(GL_POINTS);
-			glColor3f(0.0f,0.0f,1.0f);
-			for (const SP& p : ps) {
-				glVertex3f(p.cur_pos.x, p.cur_pos.y, p.cur_pos.z);
-			}
-			glEnd();
-		}
-	}
-
 	void refresh() {
 		glClearColor(bgd_color.x, bgd_color.y, bgd_color.z, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (use_shaders) {
-			shader_render();
-		}
-		else {
-			no_shader_render();
-		}
+		shader_render();
 
 		for (int i = 0; i < n_iterations; ++i) {
 			SR.get_simulator().apply_time_step(num_threads);

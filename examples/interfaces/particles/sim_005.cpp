@@ -70,6 +70,8 @@ namespace study_cases {
 
 		n_iterations = 1;
 		SR.get_simulator().set_time_step(time_step);
+
+		glut_functions::init_shaders();
 	}
 
 	void sim_005_help() {
@@ -89,9 +91,7 @@ namespace study_cases {
 
 	void sim_005_reset() {
 		clear_simulation();
-		if (use_shaders) {
-			clear_shaders();
-		}
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -165,7 +165,6 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		use_shaders = false;
 		sim_005_make_simulation();
 	}
 

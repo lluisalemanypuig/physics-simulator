@@ -123,14 +123,9 @@ namespace study_cases {
 		obj.load_object
 		("../../interfaces/models", "sphere_fsmooth.obj", *wireframe_sphere);
 
-		if (use_shaders) {
-			glut_functions::init_shaders();
-			SR.get_box().make_buffers();
-			wireframe_sphere->make_buffers();
-		}
-		else {
-			wireframe_sphere->compile();
-		}
+		glut_functions::init_shaders();
+		SR.get_box().make_buffers();
+		wireframe_sphere->make_buffers();
 	}
 
 	void sim_105_help() {
@@ -144,9 +139,7 @@ namespace study_cases {
 
 	void sim_105_reset() {
 		clear_simulation();
-		if (use_shaders) {
-			clear_shaders();
-		}
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -160,7 +153,6 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		use_shaders = false;
 		sim_105_make_simulation();
 
 		SR.set_perspective(old_p);

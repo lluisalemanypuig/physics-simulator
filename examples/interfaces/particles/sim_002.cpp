@@ -115,17 +115,12 @@ namespace study_cases {
 		SR.init_cameras();
 
 		sim_ball->load_textures();
-		if (use_shaders) {
-			glut_functions::init_shaders();
-			SR.get_box().make_buffers();
-			sim_ball->make_buffers_materials_textures();
-			texture_shader.bind();
-			shader_helper::activate_materials_textures(*sim_ball, texture_shader);
-			texture_shader.release();
-		}
-		else {
-			sim_ball->compile();
-		}
+		glut_functions::init_shaders();
+		SR.get_box().make_buffers();
+		sim_ball->make_buffers_materials_textures();
+		texture_shader.bind();
+		shader_helper::activate_materials_textures(*sim_ball, texture_shader);
+		texture_shader.release();
 
 		n_iterations = 1;
 		SR.get_simulator().set_time_step(time_step);
@@ -148,9 +143,7 @@ namespace study_cases {
 
 	void sim_002_reset() {
 		clear_simulation();
-		if (use_shaders) {
-			clear_shaders();
-		}
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();

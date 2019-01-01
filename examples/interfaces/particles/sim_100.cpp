@@ -84,14 +84,9 @@ namespace study_cases {
 		OBJ_reader obj;
 		obj.load_object("../../interfaces/models", "sphere_fsmooth.obj", *wireframe_sphere);
 
-		if (use_shaders) {
-			glut_functions::init_shaders();
-			SR.get_box().make_buffers();
-			wireframe_sphere->make_buffers();
-		}
-		else {
-			wireframe_sphere->compile();
-		}
+		glut_functions::init_shaders();
+		SR.get_box().make_buffers();
+		wireframe_sphere->make_buffers();
 
 		n_iterations = 1;
 		SR.get_simulator().set_time_step(time_step);
@@ -111,9 +106,7 @@ namespace study_cases {
 
 	void sim_100_reset() {
 		clear_simulation();
-		if (use_shaders) {
-			clear_shaders();
-		}
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();

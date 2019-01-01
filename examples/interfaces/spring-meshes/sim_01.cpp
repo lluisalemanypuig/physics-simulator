@@ -18,10 +18,14 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace meshes;
+using namespace math;
 
 // custom includes
 #include "glut_functions.hpp"
+#include "glut_variables.hpp"
+#include "conversion_helper.hpp"
 using namespace glut_functions;
+using namespace glut_variables;
 
 namespace study_cases {
 
@@ -33,22 +37,22 @@ namespace study_cases {
 		SR.set_spring_width(1.5f);
 
 		SR.get_simulator().set_solver(solver_type::EulerSemi);
-		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
+		SR.get_simulator().set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
 		float length = 10.0f;
 		float height = 10.0f;
 
 		// build regular mesh
 		mesh2d_regular *M = new mesh2d_regular();
-		M->simulate_bend(glut_functions::bend);
-		M->simulate_shear(glut_functions::shear);
-		M->simulate_stretch(glut_functions::stretch);
+		M->simulate_bend(bend);
+		M->simulate_shear(shear);
+		M->simulate_stretch(stretch);
 
 		M->allocate(n*m, mesh_mass);
 		M->set_dimensions(n, m);
 
-		M->set_elasticity(glut_functions::elasticity);
-		M->set_damping(glut_functions::damping);
+		M->set_elasticity(elasticity);
+		M->set_damping(damping);
 
 		mesh_particle *mp = M->get_particles();
 
@@ -60,7 +64,7 @@ namespace study_cases {
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ].cur_pos =
-					math::vec3((length/n)*i, (height/m)*j, 0.0f);
+					vec3((length/n)*i, (height/m)*j, 0.0f);
 			}
 		}
 		SR.get_simulator().add_mesh(M);
@@ -71,26 +75,29 @@ namespace study_cases {
 
 		cout << "Initialised simulation 01:" << endl;
 		cout << "    mesh mass: " << mesh_mass << endl;
-		cout << "    Ke: " << glut_functions::elasticity << endl;
-		cout << "    Kd: " << glut_functions::damping << endl;
+		cout << "    Ke: " << elasticity << endl;
+		cout << "    Kd: " << damping << endl;
 		cout << "    stretch? " << (stretch ? "Yes" : "No") << endl;
 		cout << "    shear? " << (shear ? "Yes" : "No") << endl;
 		cout << "    bend? " << (bend ? "Yes" : "No") << endl;
 		cout << "    dimensions: " << n << "x" << m << endl;
 		cout << "    solver: ";
-		if (glut_functions::solver == physim::solver_type::EulerOrig) {
+		if (solver == physim::solver_type::EulerOrig) {
 			cout << "Euler explicit" << endl;
 		}
-		else if (glut_functions::solver == physim::solver_type::EulerSemi) {
+		else if (solver == physim::solver_type::EulerSemi) {
 			cout << "Euler semi-implicit" << endl;
 		}
-		else if (glut_functions::solver == physim::solver_type::Verlet) {
+		else if (solver == physim::solver_type::Verlet) {
 			cout << "Verlet" << endl;
 		}
+
+		init_shaders();
+		SR.get_box().make_buffers();
 	}
 
 	void sim_01_help() {
-		glut_functions::help();
+		help();
 
 		cout << "Simulation 2 description:" << endl;
 		cout << endl;
@@ -111,14 +118,11 @@ namespace study_cases {
 		cout << "        Either 'exp-euler', 'semi-euler', 'verlet'" << endl;
 		cout << "        Default: Verlet" << endl;
 		cout << endl;
-		cout << "    Options to manipulate the rendering:" << endl;
-		cout << "    --use-shaders: use GLSL shaders to render objects" << endl;
-		cout << "        Default: false" << endl;
 	}
 
 	void sim_01_reset() {
 		SR.clear();
-		glut_functions::clear_shaders();
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -207,22 +211,29 @@ namespace study_cases {
 		float amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 		glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
+		GLenum err = glewInit();
+		if (err != 0) {
+			cerr << "initGL - Error:" << endl;
+			cerr << "    when initialising glew: " << err << endl;
+			exit(1);
+		}
+
 		// --------------------------- //
 		/* initialise global variables */
-		glut_functions::init_glut_variables();
+		init_glut_variables();
 
-		glut_functions::stretch = true;
-		glut_functions::shear = false;
-		glut_functions::bend = false;
+		stretch = true;
+		shear = false;
+		bend = false;
 
-		glut_functions::elasticity = 100.0f;
-		glut_functions::damping = 0.5f;
+		elasticity = 100.0f;
+		damping = 0.5f;
 
 		n = 25;
 		m = 25;
 		mesh_mass = 25.0f;
 
-		glut_functions::parse_common_params(argc, argv);
+		parse_common_params(argc, argv);
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "--n") == 0) {
@@ -248,16 +259,16 @@ namespace study_cases {
 		sim_01_initGL(argc, argv);
 		sim_01_help();
 
-		glutDisplayFunc(glut_functions::refresh);
-		glutReshapeFunc(glut_functions::resize);
-		glutMouseFunc(glut_functions::mouse_click_event);
-		glutPassiveMotionFunc(glut_functions::mouse_movement);
-		glutMotionFunc(glut_functions::mouse_drag_event);
-		glutSpecialFunc(glut_functions::special_keys_keyboard);
+		glutDisplayFunc(refresh);
+		glutReshapeFunc(resize);
+		glutMouseFunc(mouse_click_event);
+		glutPassiveMotionFunc(mouse_movement);
+		glutMotionFunc(mouse_drag_event);
+		glutSpecialFunc(special_keys_keyboard);
 		glutKeyboardFunc(sim_01_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
-		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);
+		glutTimerFunc(1000.0f/FPS, timed_refresh, 0);
 
 		glutMainLoop();
 	}

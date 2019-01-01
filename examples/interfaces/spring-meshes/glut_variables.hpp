@@ -17,7 +17,6 @@ namespace glut_variables {
 
 	// 'global' variables
 
-	extern rendered_triangle_mesh *wireframe_sphere;
 	extern shader texture_shader;
 	extern shader flat_shader;
 
@@ -36,24 +35,25 @@ namespace glut_variables {
 	extern point special_key_pressed;
 	extern point regular_key_pressed;
 
-	extern int n_iterations;
-	extern float time_step;
-	extern float particle_size;
 	extern bool draw_box;
 	extern bool draw_boxes_octree;
-	extern bool draw_sized_particles_wire;
 
 	extern bool display_fps;
 	extern int FPS;
 	extern int fps_count;
-	extern size_t num_threads;
 
-	// particle attributes
-	extern float lifetime;
 	extern float friction;
 	extern float bouncing;
+	extern float damping;
+	extern float elasticity;
 
+	extern bool stretch;
+	extern bool shear;
+	extern bool bend;
+
+	extern int n_iterations;
 	extern physim::solver_type solver;
-	extern glm::vec3 bgd_color;
+
+	extern physim::math::vec3 bgd_color;
 
 } // -- namespace glut_variables

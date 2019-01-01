@@ -23,47 +23,10 @@ using namespace std;
 #include <physim/meshes/mesh1d.hpp>
 #include <physim/meshes/mesh2d_regular.hpp>
 
+#include "glut_variables.hpp"
+using namespace glut_variables;
+
 namespace glut_functions {
-
-	shader texture_shader;
-	shader flat_shader;
-	bool use_shaders;
-
-	sim_renderer SR;
-	int window_id;
-	int window_width = 640;
-	int window_height = 480;
-	timing::time_point sec;
-
-	int special_key;
-	int pressed_button;
-	bool lock_mouse;
-
-	point last_mouse_moved;
-	point last_mouse_click;
-	point special_key_pressed;
-	point regular_key_pressed;
-
-	bool draw_box;
-	bool draw_boxes_octree;
-
-	bool display_fps;
-	int FPS;
-	int fps_count;
-
-	float friction = 0.2f;
-	float bouncing = 0.8f;
-	float damping = 0.5f;
-	float elasticity = 500.0f;
-
-	bool stretch;
-	bool shear;
-	bool bend;
-
-	int n_iterations;
-	physim::solver_type solver;
-
-	physim::math::vec3 bgd_color;
 
 	void init_glut_variables() {
 		special_key = 0;
@@ -90,38 +53,34 @@ namespace glut_functions {
 		SR.get_simulator().set_time_step(0.001f);
 
 		n_iterations = 10;
-		use_shaders = false;
 
 		sec = timing::now();
 	}
 
 	void init_shaders() {
-		if (use_shaders) {
-			bool r;
-			r = texture_shader.init
-				("../../interfaces/shaders", "textures.vert", "textures.frag");
-			if (not r) {
-				exit(1);
-			}
-			r = flat_shader.init
-				("../../interfaces/shaders", "flat.vert", "flat.frag");
-			if (not r) {
-				exit(1);
-			}
-
-			texture_shader.bind();
-			texture_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
-			texture_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
-			texture_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
-			texture_shader.release();
+		bool r;
+		r = flat_shader.init
+			("../../interfaces/shaders", "flat.vert", "flat.frag");
+		if (not r) {
+			exit(1);
 		}
+
+		r = texture_shader.init
+			("../../interfaces/shaders", "textures.vert", "textures.frag");
+		if (not r) {
+			exit(1);
+		}
+
+		texture_shader.bind();
+		texture_shader.set_vec3("light.diffuse", glm::vec3(1.0f,1.0f,1.0f));
+		texture_shader.set_vec3("light.ambient", glm::vec3(0.2f,0.2f,0.2f));
+		texture_shader.set_vec3("light.position", glm::vec3(0.f,0.f,0.f));
+		texture_shader.release();
 	}
 
 	void clear_shaders() {
-		if (use_shaders) {
-			flat_shader.clear();
-			texture_shader.clear();
-		}
+		flat_shader.clear();
+		texture_shader.clear();
 	}
 
 	void finish_simulation() {
@@ -133,35 +92,32 @@ namespace glut_functions {
 	void parse_common_params(int argc, char *argv[]) {
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "--bend") == 0) {
-				glut_functions::bend = true;
+				bend = true;
 			}
 			else if (strcmp(argv[i], "--shear") == 0) {
-				glut_functions::shear = true;
+				shear = true;
 			}
 			else if (strcmp(argv[i], "--stretch") == 0) {
-				glut_functions::stretch = true;
+				stretch = true;
 			}
 			else if (strcmp(argv[i], "--Ke") == 0) {
-				glut_functions::elasticity = atof(argv[i + 1]);
+				elasticity = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--Kd") == 0) {
-				glut_functions::damping = atof(argv[i + 1]);
+				damping = atof(argv[i + 1]);
 				++i;
-			}
-			else if (strcmp(argv[i], "--use-shaders") == 0) {
-				use_shaders = true;
 			}
 			else if (strcmp(argv[i], "--solver") == 0) {
 				string s = string(argv[i + 1]);
 				if (s == "exp-euler") {
-					glut_functions::solver = physim::solver_type::EulerOrig;
+					solver = physim::solver_type::EulerOrig;
 				}
 				else if (s == "semi-euler") {
-					glut_functions::solver = physim::solver_type::EulerSemi;
+					solver = physim::solver_type::EulerSemi;
 				}
 				else if (s == "verlet") {
-					glut_functions::solver = physim::solver_type::Verlet;
+					solver = physim::solver_type::Verlet;
 				}
 				else {
 					cout << "Error: invalid value for solver: '" << s << "'"
@@ -214,20 +170,6 @@ namespace glut_functions {
 	// -------------
 
 	void mouse_click_event(int button, int state, int x, int y) {
-		if (inside_window(x,y) and SR.is_flying()) {
-			if (button == GLUT_LEFT_BUTTON and state == 0) {
-				if (lock_mouse) {
-					lock_mouse = false;
-					glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
-				}
-				else {
-					lock_mouse = true;
-					glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
-					glutSetCursor(GLUT_CURSOR_NONE);
-				}
-			}
-		}
-
 		pressed_button = button;
 		last_mouse_click = point(x,y);
 	}
@@ -236,14 +178,6 @@ namespace glut_functions {
 		int dx = x - last_mouse_moved.first;
 		int dy = y - last_mouse_moved.second;
 		last_mouse_moved = point(x,y);
-
-		if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
-			SR.increment_yaw(-0.2f*dx);
-			SR.increment_pitch(-0.2f*dy);
-
-			glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
-			last_mouse_moved = point(SR.window_width()/2,SR.window_height()/2);
-		}
 	}
 
 	void mouse_drag_event(int x, int y) {
@@ -284,41 +218,6 @@ namespace glut_functions {
 		case 'o': SR.switch_to_orthogonal(); break;
 		case 'b': draw_box = not draw_box; break;
 		case 'z': display_fps = not display_fps; break;
-		/*case 'i':
-			if (inside_window(x, y)) {
-				SR.switch_to_inspection();
-				lock_mouse = false;
-				glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
-			}
-			break;
-		case 'f':
-			if (inside_window(x, y)) {
-				SR.switch_to_flight();
-				lock_mouse = true;
-				glutWarpPointer(SR.window_width()/2,SR.window_height()/2);
-				glutSetCursor(GLUT_CURSOR_NONE);
-			}
-			break;
-		case 'w':
-			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
-				SR.camera_forwards(0.1f);
-			}
-			break;
-		case 'a':
-			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
-				SR.camera_sideways_left(0.1f);
-			}
-			break;
-		case 's':
-			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
-				SR.camera_backwards(0.1f);
-			}
-			break;
-		case 'd':
-			if (inside_window(x, y) and SR.is_flying() and lock_mouse) {
-				SR.camera_sideways_right(0.1f);
-			}
-			break;*/
 		case 'w':
 			draw_boxes_octree = not draw_boxes_octree;
 			break;
@@ -419,14 +318,6 @@ namespace glut_functions {
 		cout << "    p: switch to perspective camera." << endl;
 		cout << "    b: turn on/off drawing the bounding box of the scene." << endl;
 		cout << "    z: display fps count." << endl;
-		/*cout << "    i: switch to inspect mode." << endl;
-		cout << "        Click and drag with:" << endl;
-		cout << "        - left mouse button to rotate the scene." << endl;
-		cout << "        - right mouse button to zoom in/out." << endl;
-		cout << "    f: switch to flight mode." << endl;
-		cout << "        Move the cursor to orient the movement of the camera." << endl;
-		cout << "        Use the letters 'w','a','s','d' to move the camera." << endl;
-		cout << "        When clicking 'f' the mouse becomes locked: left click to unlock." << endl;*/
 		cout << "    g: change simulation solver." << endl;
 		cout << "        A message will be displayed 'Enter solver: '" << endl;
 		cout << "        Then, write one of the following strings and press enter" << endl;

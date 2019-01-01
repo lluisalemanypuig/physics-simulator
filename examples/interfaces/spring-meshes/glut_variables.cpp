@@ -2,7 +2,6 @@
 
 namespace glut_variables {
 
-	rendered_triangle_mesh *wireframe_sphere;
 	shader texture_shader;
 	shader flat_shader;
 
@@ -21,23 +20,26 @@ namespace glut_variables {
 	point special_key_pressed;
 	point regular_key_pressed;
 
-	int n_iterations;
-	float time_step;
-	float particle_size;
 	bool draw_box;
 	bool draw_boxes_octree;
-	bool draw_sized_particles_wire;
 
 	bool display_fps;
 	int FPS;
 	int fps_count;
-	size_t num_threads;
 
-	float lifetime;
-	float friction;
-	float bouncing;
+	float friction = 0.2f;
+	float bouncing = 0.8f;
+	float damping = 0.5f;
+	float elasticity = 500.0f;
 
+	bool stretch;
+	bool shear;
+	bool bend;
+
+	int n_iterations;
 	physim::solver_type solver;
-	glm::vec3 bgd_color;
+
+	physim::math::vec3 bgd_color;
+
 
 } // -- namespace glut_variables

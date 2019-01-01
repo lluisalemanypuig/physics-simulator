@@ -25,19 +25,9 @@ using namespace glut_variables;
 #define SHIFT_KEY 112
 
 namespace glut_functions {
-	/* ---------------- */
-	/* helper functions */
 
-	static inline
-	bool inside_window(int x, int y) {
-		int w = SR.window_width();
-		int h = SR.window_height();
-		return ((0 <= x) and (x <= w))
-		   and ((0 <= y) and (y <= h));
-	}
-
-	/* --------------------- */
-	/* actual glut functions */
+	/* -------------- */
+	/* glut functions */
 
 	void init_glut_variables();
 	void init_shaders();
@@ -49,7 +39,6 @@ namespace glut_functions {
 
 	/* scene rendering */
 	void shader_render();
-	void no_shader_render();
 	void refresh();
 	void timed_refresh(int value);
 

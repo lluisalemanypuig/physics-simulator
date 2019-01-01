@@ -22,12 +22,15 @@ using namespace std;
 using namespace physim;
 using namespace particles;
 using namespace meshes;
+using namespace math;
 using namespace geometric;
 
 // custom includes
 #include "glut_functions.hpp"
+#include "glut_variables.hpp"
 #include "conversion_helper.hpp"
 using namespace glut_functions;
+using namespace glut_variables;
 
 namespace study_cases {
 
@@ -36,7 +39,7 @@ namespace study_cases {
 		SR.set_spring_width(1.5f);
 
 		SR.get_simulator().set_solver(solver_type::EulerSemi);
-		SR.get_simulator().set_gravity_acceleration(math::vec3(0.0f,-9.81f,0.0f));
+		SR.get_simulator().set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 
 		float sx;
 
@@ -49,18 +52,18 @@ namespace study_cases {
 			int j = 5*i;
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
-			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_bend(glut_functions::bend);
-			m->set_elasticity(glut_functions::elasticity/i);
-			m->set_damping(glut_functions::damping);
-			m->set_friction(glut_functions::friction);
-			m->set_bouncing(glut_functions::bouncing);
+			m->simulate_stretch(stretch);
+			m->simulate_bend(bend);
+			m->set_elasticity(elasticity/i);
+			m->set_damping(damping);
+			m->set_friction(friction);
+			m->set_bouncing(bouncing);
 
 			mesh_particle *mp = m->get_particles();
 			mp[0].fixed = true;
-			mp[0].cur_pos = math::vec3(sx, 10.0f, i);
+			mp[0].cur_pos = vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
-				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i);
+				mp[k].cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -74,18 +77,18 @@ namespace study_cases {
 			int j = 5*i;
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 0.5f*j);
-			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_bend(glut_functions::bend);
-			m->set_elasticity(glut_functions::elasticity);
-			m->set_damping(glut_functions::damping);
-			m->set_friction(glut_functions::friction);
-			m->set_bouncing(glut_functions::bouncing);
+			m->simulate_stretch(stretch);
+			m->simulate_bend(bend);
+			m->set_elasticity(elasticity);
+			m->set_damping(damping);
+			m->set_friction(friction);
+			m->set_bouncing(bouncing);
 
 			mesh_particle *mp = m->get_particles();
 			mp[0].fixed = true;
-			mp[0].cur_pos = math::vec3(sx, 10.0f, i + 15.0f);
+			mp[0].cur_pos = vec3(sx, 10.0f, i + 15.0f);
 			for (int k = 1; k < j; ++k) {
-				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i + 15.0f);
+				mp[k].cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i + 15.0f);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -102,8 +105,8 @@ namespace study_cases {
 		SR.get_box().enlarge_box(glm::vec3(sx,10.0f,0.0f));
 		SR.get_box().enlarge_box(glm::vec3(sx + 5.0f,-5.0f,10.0f));
 		rectangle *r = new rectangle(
-			math::vec3( 5.5f, 7.0f, -0.5f), math::vec3( 5.5f, 7.0f, 10.0f),
-			math::vec3(10.5f, 7.0f, 10.0f), math::vec3(10.5f, 7.0f, -0.5f)
+			vec3( 5.5f, 7.0f, -0.5f), vec3( 5.5f, 7.0f, 10.0f),
+			vec3(10.5f, 7.0f, 10.0f), vec3(10.5f, 7.0f, -0.5f)
 		);
 		SR.get_simulator().add_geometry(r);
 
@@ -112,18 +115,18 @@ namespace study_cases {
 			int j = 5*i;
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
-			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_bend(glut_functions::bend);
-			m->set_elasticity(glut_functions::elasticity/i);
-			m->set_damping(glut_functions::damping);
-			m->set_friction(glut_functions::friction);
-			m->set_bouncing(glut_functions::bouncing);
+			m->simulate_stretch(stretch);
+			m->simulate_bend(bend);
+			m->set_elasticity(elasticity/i);
+			m->set_damping(damping);
+			m->set_friction(friction);
+			m->set_bouncing(bouncing);
 
 			mesh_particle *mp = m->get_particles();
 			mp[0].fixed = true;
-			mp[0].cur_pos = math::vec3(sx, 10.0f, i);
+			mp[0].cur_pos = vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
-				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i);
+				mp[k].cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, i);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -152,18 +155,18 @@ namespace study_cases {
 			int j = 5*i;
 			mesh1d *m = new mesh1d();
 			m->allocate(j, 2.0f);
-			m->simulate_stretch(glut_functions::stretch);
-			m->simulate_bend(glut_functions::bend);
-			m->set_elasticity(glut_functions::elasticity/i);
-			m->set_damping(glut_functions::damping);
-			m->set_friction(glut_functions::friction);
-			m->set_bouncing(glut_functions::bouncing);
+			m->simulate_stretch(stretch);
+			m->simulate_bend(bend);
+			m->set_elasticity(elasticity/i);
+			m->set_damping(damping);
+			m->set_friction(friction);
+			m->set_bouncing(bouncing);
 
 			mesh_particle *mp = m->get_particles();
 			mp[0].fixed = true;
-			mp[0].cur_pos = math::vec3(sx, 10.0f, 3*i);
+			mp[0].cur_pos = vec3(sx, 10.0f, 3*i);
 			for (int k = 1; k < j; ++k) {
-				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
+				mp[k].cur_pos = vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -172,22 +175,17 @@ namespace study_cases {
 		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
+		init_shaders();
 		sim_ball->load_textures();
-		if (use_shaders) {
-			glut_functions::init_shaders();
-			SR.get_box().make_buffers();
-			sim_ball->make_buffers_materials_textures();
-			texture_shader.bind();
-			shader_helper::activate_materials_textures(*sim_ball, texture_shader);
-			texture_shader.release();
-		}
-		else {
-			sim_ball->compile();
-		}
+		SR.get_box().make_buffers();
+		sim_ball->make_buffers_materials_textures();
+		texture_shader.bind();
+		shader_helper::activate_materials_textures(*sim_ball, texture_shader);
+		texture_shader.release();
 	}
 
 	void sim_00_help() {
-		glut_functions::help();
+		help();
 
 		cout << "Simulation 00 description:" << endl;
 		cout << endl;
@@ -202,15 +200,11 @@ namespace study_cases {
 		cout << "    In the other groups, the i-th spring has 5*i particles, and its elasticity" << endl;
 		cout << "    constant (Ke) is set to 500/i, for 1 <= i <= 10." << endl;
 		cout << endl;
-		cout << "    Options to manipulate the rendering:" << endl;
-		cout << "    --use-shaders: use GLSL shaders to render objects" << endl;
-		cout << "        Default: false" << endl;
-		cout << endl;
 	}
 
 	void sim_00_reset() {
 		SR.clear();
-		glut_functions::clear_shaders();
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -279,13 +273,13 @@ namespace study_cases {
 
 		// --------------------------- //
 		/* initialise global variables */
-		glut_functions::init_glut_variables();
+		init_glut_variables();
 
-		glut_functions::stretch = true;
-		glut_functions::shear = false;
-		glut_functions::bend = false;
+		stretch = true;
+		shear = false;
+		bend = false;
 
-		glut_functions::parse_common_params(argc, argv);
+		parse_common_params(argc, argv);
 
 		// ---------------- //
 		/* build simulation */
@@ -296,16 +290,16 @@ namespace study_cases {
 		sim_00_initGL(argc, argv);
 		sim_00_help();
 
-		glutDisplayFunc(glut_functions::refresh);
-		glutReshapeFunc(glut_functions::resize);
-		glutMouseFunc(glut_functions::mouse_click_event);
-		glutPassiveMotionFunc(glut_functions::mouse_movement);
-		glutMotionFunc(glut_functions::mouse_drag_event);
-		glutSpecialFunc(glut_functions::special_keys_keyboard);
+		glutDisplayFunc(refresh);
+		glutReshapeFunc(resize);
+		glutMouseFunc(mouse_click_event);
+		glutPassiveMotionFunc(mouse_movement);
+		glutMotionFunc(mouse_drag_event);
+		glutSpecialFunc(special_keys_keyboard);
 		glutKeyboardFunc(sim_00_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
-		glutTimerFunc(1000.0f/FPS, glut_functions::timed_refresh, 0);
+		glutTimerFunc(1000.0f/FPS, timed_refresh, 0);
 
 		glutMainLoop();
 	}

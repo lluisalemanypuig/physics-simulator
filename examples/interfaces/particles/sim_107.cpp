@@ -85,24 +85,18 @@ namespace study_cases {
 		wireframe_sphere = new rendered_triangle_mesh();
 		obj.load_object("../../interfaces/models", "sphere_fsmooth.obj", *wireframe_sphere);
 
-		if (use_shaders) {
-			glut_functions::init_shaders();
+		glut_functions::init_shaders();
 
-			SR.get_box().make_buffers();
-			ro->make_boxes_buffers();
+		SR.get_box().make_buffers();
+		ro->make_boxes_buffers();
 
-			model_pipe->make_buffers_materials_textures();
-			shader& ts = texture_shader;
-			ts.bind();
-			shader_helper::activate_materials_textures(*model_pipe, ts);
-			ts.release();
+		model_pipe->make_buffers_materials_textures();
+		shader& ts = texture_shader;
+		ts.bind();
+		shader_helper::activate_materials_textures(*model_pipe, ts);
+		ts.release();
 
-			wireframe_sphere->make_buffers();
-		}
-		else {
-			model_pipe->compile();
-			wireframe_sphere->compile();
-		}
+		wireframe_sphere->make_buffers();
 	}
 
 	void sim_107_make_simulation() {
@@ -133,9 +127,7 @@ namespace study_cases {
 
 	void sim_107_reset() {
 		clear_simulation();
-		if (use_shaders) {
-			clear_shaders();
-		}
+		clear_shaders();
 
 		// copy cameras
 		perspective old_p = SR.get_perspective_camera();
@@ -149,7 +141,6 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		use_shaders = false;
 		sim_107_make_simulation();
 
 		SR.set_perspective(old_p);
