@@ -230,6 +230,16 @@ class simulator {
 		 */
 		void _simulate_free_particles();
 		/**
+		 * @brief Simulate free particles.
+		 *
+		 * Applies a time step on all the free particles of
+		 * the simulation.
+		 *
+		 * Multithreaded execution.
+		 * @param n Number of threads.
+		 */
+		void _simulate_free_particles(size_t nt);
+		/**
 		 * @brief Simulate sized particles.
 		 *
 		 * Applies a time step on all the sized particles of
@@ -265,6 +275,19 @@ class simulator {
 		 * computed after the internal forces.
 		 */
 		void _simulate_fluids();
+		/**
+		 * @brief Simulate fluids.
+		 *
+		 * Applies a time step on all the particles that make
+		 * up the fluids of the simulation.
+		 *
+		 * The forces due to the presence of force fields are
+		 * computed after the internal forces.
+		 *
+		 * Multithreaded execution.
+		 * @param n Number of threads.
+		 */
+		void _simulate_fluids(size_t n);
 
 		/**
 		 * @brief Predicts a particle's next position and velocity.
@@ -596,7 +619,7 @@ class simulator {
 		/**
 		 * @brief Simulate free particles.
 		 *
-		 * Calls @ref _simulate_free_particles.
+		 * Calls @ref _simulate_free_particles().
 		 *
 		 * A free particle will only start 'living', i.e., moving in the
 		 * environment, when its starting time (see @ref free_particle::starttime)
@@ -617,6 +640,18 @@ class simulator {
 		 * are checked.
 		 */
 		void simulate_free_particles();
+		/**
+		 * @brief Simulate free particles.
+		 *
+		 * The simulation of a free particle is detailed in
+		 * @ref simulate_free_particles().
+		 *
+		 * @param nt Number of threads. If it equals 1, calls
+		 * @ref simulate_free_particles(). If it is greater then it calls
+		 * @ref simulate_free_particles(size_t).
+		 * @pre @e nt > 0.
+		 */
+		void simulate_free_particles(size_t nt);
 		/**
 		 * @brief Simulate sized particles.
 		 *
@@ -661,29 +696,53 @@ class simulator {
 		/**
 		 * @brief Simulate fluids.
 		 *
-		 * Calls @ref _simulate_fluids.
+		 * Calls @ref _simulate_fluids().
 		 *
-		 * Each mesh has each of its particle's force updated according to
-		 * the definition provided in method @ref fluid::update_forces. This
-		 * method defines the model implemented in that fluid. Then, each
-		 * particle of the fluid is considered as a free particle and simulated
-		 * accordingly.
+		 * Each fluid has each of its particle's force updated. Then, each
+		 * particle of the fluid is considered as a free particle and
+		 * simulated accordingly.
 		 */
 		void simulate_fluids();
+		/**
+		 * @brief Simulate fluids.
+		 *
+		 * Each fluid has each of its particle's force updated. Then, each
+		 * particle of the fluid is considered as a free particle and
+		 * simulated accordingly.
+		 *
+		 * @param nt Number of threads. If it equals 1, calls
+		 * @ref _simulate_fluids(). If it is greater then it calls
+		 * @ref _simulate_fluids(size_t).
+		 * @pre @e nt > 0.
+		 */
+		void simulate_fluids(size_t nt);
 
 		/**
 		 * @brief Apply a time step to the simulation.
 		 *
 		 * Calls the following functions:
-		 * - @ref _simulate_sized_particles
-		 * - @ref _simulate_agent_particles.
-		 * - @ref _simulate_free_particles
-		 * - @ref _simulate_meshes.
-		 * - @ref _simulate_fluids.
+		 * - @ref simulate_sized_particles()
+		 * - @ref simulate_agent_particles()
+		 * - @ref simulate_free_particles()
+		 * - @ref simulate_meshes()
+		 * - @ref simulate_fluids()
 		 * Parameter @e dt (set via method @ref set_time_step(float))
 		 * indicates how much time has passed since the last time step.
 		 */
 		void apply_time_step();
+		/**
+		 * @brief Apply a time step to the simulation.
+		 *
+		 * Calls the following functions:
+		 * - @ref simulate_sized_particles()
+		 * - @ref simulate_agent_particles()
+		 * - @ref simulate_free_particles(size_t)
+		 * - @ref simulate_meshes()
+		 * - @ref simulate_fluids(size_t)
+		 * Parameter @e dt (set via method @ref set_time_step(float))
+		 * indicates how much time has passed since the last time step.
+		 */
+		void apply_time_step(size_t n);
 
 		// SETTERS
 
