@@ -56,11 +56,11 @@ namespace study_cases {
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
 
-			mesh_particle **mp = m->get_particles();
-			mp[0]->fixed = true;
-			mp[0]->cur_pos = math::vec3(sx, 10.0f, i);
+			mesh_particle *mp = m->get_particles();
+			mp[0].fixed = true;
+			mp[0].cur_pos = math::vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
-				mp[k]->cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i);
+				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -81,11 +81,11 @@ namespace study_cases {
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
 
-			mesh_particle **mp = m->get_particles();
-			mp[0]->fixed = true;
-			mp[0]->cur_pos = math::vec3(sx, 10.0f, i + 15.0f);
+			mesh_particle *mp = m->get_particles();
+			mp[0].fixed = true;
+			mp[0].cur_pos = math::vec3(sx, 10.0f, i + 15.0f);
 			for (int k = 1; k < j; ++k) {
-				mp[k]->cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i + 15.0f);
+				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i + 15.0f);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -119,11 +119,11 @@ namespace study_cases {
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
 
-			mesh_particle **mp = m->get_particles();
-			mp[0]->fixed = true;
-			mp[0]->cur_pos = math::vec3(sx, 10.0f, i);
+			mesh_particle *mp = m->get_particles();
+			mp[0].fixed = true;
+			mp[0].cur_pos = math::vec3(sx, 10.0f, i);
 			for (int k = 1; k < j; ++k) {
-				mp[k]->cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i);
+				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, i);
 			}
 
 			SR.get_simulator().add_mesh(m);
@@ -159,11 +159,11 @@ namespace study_cases {
 			m->set_friction(glut_functions::friction);
 			m->set_bouncing(glut_functions::bouncing);
 
-			mesh_particle **mp = m->get_particles();
-			mp[0]->fixed = true;
-			mp[0]->cur_pos = math::vec3(sx, 10.0f, 3*i);
+			mesh_particle *mp = m->get_particles();
+			mp[0].fixed = true;
+			mp[0].cur_pos = math::vec3(sx, 10.0f, 3*i);
 			for (int k = 1; k < j; ++k) {
-				mp[k]->cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
+				mp[k].cur_pos = math::vec3(sx + (5.0f/j)*k, 10.0f, 3*i);
 			}
 
 			SR.get_simulator().add_mesh(m);

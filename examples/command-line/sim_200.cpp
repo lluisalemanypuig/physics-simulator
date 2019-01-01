@@ -113,15 +113,15 @@ namespace study_cases {
 		m->set_elasticity(500.0f);
 		m->set_damping(0.5f);
 
-		mesh_particle **mp = m->get_particles();
+		mesh_particle *mp = m->get_particles();
 
-		mp[0]->fixed = true;
+		mp[0].fixed = true;
 
-		mp[0]->cur_pos = vec3(0.0f, 10.0f, 0.0f);
-		mp[1]->cur_pos = vec3(1.0f, 10.0f, 0.0f);
-		mp[2]->cur_pos = vec3(2.0f, 10.0f, 0.0f);
-		mp[3]->cur_pos = vec3(3.0f, 10.0f, 0.0f);
-		mp[4]->cur_pos = vec3(4.0f, 10.0f, 0.0f);
+		mp[0].cur_pos = vec3(0.0f, 10.0f, 0.0f);
+		mp[1].cur_pos = vec3(1.0f, 10.0f, 0.0f);
+		mp[2].cur_pos = vec3(2.0f, 10.0f, 0.0f);
+		mp[3].cur_pos = vec3(3.0f, 10.0f, 0.0f);
+		mp[4].cur_pos = vec3(4.0f, 10.0f, 0.0f);
 
 		simulator S(solv, dt);
 
@@ -136,11 +136,11 @@ namespace study_cases {
 		vector<vec3> t0, t1, t2, t3, t4;
 		float sim_time = 0.0f;
 		while (sim_time <= total_time) {
-			t0.push_back(mp[0]->cur_pos);
-			t1.push_back(mp[1]->cur_pos);
-			t2.push_back(mp[2]->cur_pos);
-			t3.push_back(mp[3]->cur_pos);
-			t4.push_back(mp[4]->cur_pos);
+			t0.push_back(mp[0].cur_pos);
+			t1.push_back(mp[1].cur_pos);
+			t2.push_back(mp[2].cur_pos);
+			t3.push_back(mp[3].cur_pos);
+			t4.push_back(mp[4].cur_pos);
 			S.apply_time_step();
 			sim_time += dt;
 		}

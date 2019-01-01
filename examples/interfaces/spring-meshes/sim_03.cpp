@@ -56,7 +56,7 @@ namespace study_cases {
 		M->set_elasticity(glut_functions::elasticity);
 		M->set_damping(glut_functions::damping);
 
-		mesh_particle **mp = M->get_particles();
+		mesh_particle *mp = M->get_particles();
 
 		shared_ptr<rendered_triangle_mesh> model_pipe(new rendered_triangle_mesh);
 		OBJ_reader obj;
@@ -75,7 +75,7 @@ namespace study_cases {
 		// make positions
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
-				mp[ M->get_global_index(i,j) ]->cur_pos =
+				mp[ M->get_global_index(i,j) ].cur_pos =
 					math::vec3(
 						mx + (length/n)*i,
 						2.0f,

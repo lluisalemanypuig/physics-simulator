@@ -142,16 +142,16 @@ namespace study_cases {
 		M->set_elasticity(500.0f);
 		M->set_damping(0.5f);
 
-		mesh_particle **mp = M->get_particles();
+		mesh_particle *mp = M->get_particles();
 
 		// fix some particles
-		mp[ M->get_global_index(0,m-1) ]->fixed = true;
-		mp[ M->get_global_index(n-1,m - 1) ]->fixed = true;
+		mp[ M->get_global_index(0,m-1) ].fixed = true;
+		mp[ M->get_global_index(n-1,m - 1) ].fixed = true;
 
 		// make positions
 		for (size_t i = 0; i < n; ++i) {
 			for (size_t j = 0; j < m; ++j) {
-				mp[ M->get_global_index(i,j) ]->cur_pos =
+				mp[ M->get_global_index(i,j) ].cur_pos =
 						vec3((length/n)*i, (height/m)*j, 0.0f);
 			}
 		}
