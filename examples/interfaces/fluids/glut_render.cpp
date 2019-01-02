@@ -83,7 +83,7 @@ namespace glut_functions {
 		}
 
 		for (int i = 0; i < n_iterations; ++i) {
-			SR.get_simulator().simulate_fluids();
+			SR.get_simulator().simulate_fluids(num_threads);
 		}
 
 		glutSwapBuffers();

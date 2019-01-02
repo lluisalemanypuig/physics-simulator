@@ -26,12 +26,14 @@ using namespace fluids;
 #include "glut_variables.hpp"
 #include "glut_functions.hpp"
 #include "conversion_helper.hpp"
+#include "kernels.hpp"
 using namespace glut_functions;
 using namespace glut_variables;
 
 namespace study_cases {
 
 	void sim_00_make_simulation() {
+		float volume = 0.01f;
 		simulator& S = SR.get_simulator();
 
 		SR.set_particle_size(2.0f);
@@ -47,38 +49,21 @@ namespace study_cases {
 		fluid *F = new fluid();
 		F->allocate(N, volume, density, viscosity, h, cs);
 
-		float H = h;
+		kernel_scalar_function W;
+		kernel_vectorial_function gW;
+		kernel_scalar_function g2W;
 
-		kernel_scalar_function W =
-		[H](float r2) -> float
-		{
-			float k = 1.0f - r2/(H*H);
-			float PI = static_cast<float>(M_PI);
-			return (315.0f/(64.0f*PI*std::pow(H, 3.0f)))*k*k*k;
-		};
-		kernel_vectorial_function gW =
-		[H](const vec3& r, float r2, vec3& res) -> void
-		{
-			static const float PI = static_cast<float>(M_PI);
+		kernel_functions::density_poly6(h, W);
+		kernel_functions::pressure_poly6(h, gW);
+		kernel_functions::viscosity_poly6(h, g2W);
 
-			float k = 1.0f - r2/(H*H);
-			float s = (-945.0f/(32.0f*PI*std::pow(H, 3.0f)))*k*k;
-			res = r*s;
-		};
-		kernel_scalar_function g2W =
-		[H](float r2) -> float
-		{
-			float k = 1.0f - r2/(H*H);
-			float PI = static_cast<float>(M_PI);
-			return (945.0f/(8.0f*PI*std::pow(H, 7.0f)))*k*(r2/(H*H) - 0.75f*k);
-		};
 		F->set_kernel(W, gW, g2W);
 
 		fluid_particle *Fs = F->get_particles();
 		for (size_t i = 0; i < side__; ++i) {
 			for (size_t j = 0; j < side__; ++j) {
 				for (size_t k = 0; k < side__; ++k) {
-					vec3 pos(i*(0.5f/side__), j*(0.5f/side__), k*(0.5f/side__));
+					vec3 pos(i*(length_x/side__), j*(length_y/side__), k*(length_z/side__));
 					size_t idx = i*side__*side__ + j*side__ + k;
 					Fs[idx].cur_pos = pos;
 					Fs[idx].cur_vel = vec3(0.0f);
@@ -113,7 +98,9 @@ namespace study_cases {
 		cout << "    Density: " << density << endl;
 		cout << "    Neighbourhood size: " << h << endl;
 		cout << "    Initial shape:" << endl;
-		cout << "        0.2 x 0.2 x 0.1" << endl;
+		cout << "       " << length_x << " x "
+						  << length_y << " x "
+						  << length_z << endl;
 	}
 
 	void sim_00_help() {
@@ -199,10 +186,9 @@ namespace study_cases {
 
 		// --------------------------- //
 		/* initialise global variables */
-		glut_functions::init_glut_variables();
+		glut_variables::init_variables();
 
 		h = 0.03f;
-		volume = 0.01f;
 		viscosity = 0.001f;
 		density = 1000.0f;
 		cs = 1500.0f;

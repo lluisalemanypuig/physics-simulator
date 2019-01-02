@@ -28,28 +28,6 @@ using namespace glut_variables;
 
 namespace glut_functions {
 
-	void init_glut_variables() {
-		special_key = 0;
-		pressed_button = 0;
-		last_mouse_moved = point(0,0);
-		lock_mouse = false;
-
-		display_fps = false;
-		FPS = 60;
-		fps_count = 0;
-
-		solver = physim::solver_type::Verlet;
-
-		bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
-
-		n_iterations = 10;
-
-		window_width = 640;
-		window_height = 480;
-
-		sec = timing::now();
-	}
-
 	void init_shaders() {
 		bool r;
 		r = texture_shader.init
@@ -87,8 +65,16 @@ namespace glut_functions {
 				num_threads = atoi(argv[i + 1]);
 				++i;
 			}
-			else if (strcmp(argv[i], "--volume") == 0) {
-				volume = atof(argv[i + 1]);
+			else if (strcmp(argv[i], "--lenx") == 0) {
+				length_x = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--leny") == 0) {
+				length_y = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--lenz") == 0) {
+				length_z = atof(argv[i + 1]);
 				++i;
 			}
 			else if (strcmp(argv[i], "--density") == 0) {
@@ -254,6 +240,19 @@ namespace glut_functions {
 		cout << "    +: increase FPS limit by one (up to at most 60)" << endl;
 		cout << "    -: decrease FPS limit by one (down to at least 1)" << endl;
 		cout << endl;
+		cout << "Parameters:" << endl;
+		cout << "    --num-threads n" << endl;
+		cout << "    --lenx x" << endl;
+		cout << "    --leny y" << endl;
+		cout << "    --lenz z" << endl;
+		cout << "    --density d" << endl;
+		cout << "    --viscosity v" << endl;
+		cout << "    --radius r" << endl;
+		cout << "    --speed-sound c" << endl;
+		cout << "    --solver s" << endl;
+		cout << "        exp-euler" << endl;
+		cout << "        semi-euler" << endl;
+		cout << "        verlet" << endl;
 	}
 
 } // -- namespace glut_functions
