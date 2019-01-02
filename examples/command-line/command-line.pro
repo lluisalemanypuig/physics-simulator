@@ -30,10 +30,12 @@ SOURCES += \
     sim_802.cpp \
     sim_300.cpp \
     sim_301.cpp \
-    sim_302.cpp
+    sim_302.cpp \
+    kernel_functions_fluids.cpp
 
 HEADERS += \
-    utils.hpp
+    utils.hpp \
+    kernel_functions_fluids.hpp
 
 DISTFILES += \
     example-models/cropped-cube.obj \

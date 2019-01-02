@@ -6,9 +6,6 @@
 #include <fstream>
 using namespace std;
 
-// Custom includes
-#include "utils.hpp"
-
 // physim includes
 #include <physim/simulator.hpp>
 #include <physim/particles/fluid_particle.hpp>
@@ -18,6 +15,10 @@ using namespace particles;
 using namespace math;
 using namespace geometric;
 using namespace fluids;
+
+// custom includes
+#include "utils.hpp"
+#include "kernel_functions_fluids.hpp"
 
 namespace study_cases {
 
@@ -167,29 +168,12 @@ namespace study_cases {
 			 << " seconds" << endl;
 		cout << "Mass per particle: " << F->get_particles()[0].mass << endl;
 
-		kernel_scalar_function W =
-		[h](float r2) -> float
-		{
-			float k = 1.0f - r2/(h*h);
-			float PI = static_cast<float>(M_PI);
-			return (315.0f/(64.0f*PI*std::pow(h, 3.0f)))*k*k*k;
-		};
-		kernel_vectorial_function gW =
-		[h](const vec3& r, float r2, vec3& res) -> void
-		{
-			static const float PI = static_cast<float>(M_PI);
-
-			float k = 1.0f - r2/(h*h);
-			float s = (-945.0f/(32.0f*PI*std::pow(h, 3.0f)))*k*k;
-			res = r*s;
-		};
-		kernel_scalar_function g2W =
-		[h](float r2) -> float
-		{
-			float k = 1.0f - r2/(h*h);
-			float PI = static_cast<float>(M_PI);
-			return (945.0f/(8.0f*PI*std::pow(h, 7.0f)))*k*(r2/(h*h) - 0.75f*k);
-		};
+		kernel_scalar_function W;
+		kernel_functions::density_poly6(h, W);
+		kernel_vectorial_function gW;
+		kernel_functions::pressure_poly6(h, gW);
+		kernel_scalar_function g2W;
+		kernel_functions::viscosity_poly6(h, g2W);
 		F->set_kernel(W, gW, g2W);
 
 		// assign initial positions
