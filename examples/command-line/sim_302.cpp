@@ -21,7 +21,7 @@ using namespace fluids;
 
 namespace study_cases {
 
-	void sim_301_usage() {
+	void sim_302_usage() {
 		cout << "Simulation of a simple fluid" << endl;
 		cout << endl;
 		cout << "Used for measuring efficiency of fluid simulation." << endl;
@@ -44,12 +44,12 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim_301(int argc, char *argv[]) {
-		float dt = 0.0001f;
+	void sim_302(int argc, char *argv[]) {
+		float dt = 0.01f;
 		float total_time = 5.0f;
 		solver_type solv = solver_type::EulerSemi;
 		// number of particles per side
-		size_t side__ = 16;
+		size_t side__ = 4;
 		// neighbourhood size
 		float h = 0.015f;
 		// volume
@@ -65,7 +65,7 @@ namespace study_cases {
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
-				sim_301_usage();
+				sim_302_usage();
 				return;
 			}
 			else if (strcmp(argv[i], "--total-time") == 0) {
@@ -204,7 +204,6 @@ namespace study_cases {
 				}
 			}
 		}
-
 		end = timing::now();
 		cout << "    in " << timing::elapsed_seconds(begin, end)
 			 << " seconds" << endl;
@@ -212,6 +211,16 @@ namespace study_cases {
 		simulator S(solv, dt);
 		S.add_fluid(F);
 		S.set_gravity_acceleration(vec3(0.0f, -9.81f, 0.0f));
+		plane *base = new plane(vec3(0,1,0), vec3(0,-0.25,0));
+		plane *w1 = new plane(vec3(1,0,0), vec3(-0.25,0,0));
+		plane *w2 = new plane(vec3(-1,0,0), vec3(0.75,0,0));
+		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,-0.25));
+		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.75));
+		S.add_geometry(base);
+		S.add_geometry(w1);
+		S.add_geometry(w2);
+		S.add_geometry(w3);
+		S.add_geometry(w4);
 
 		float sim_time = 0.0f;
 		double total_exe_secs = 0.0;
@@ -225,6 +234,7 @@ namespace study_cases {
 			total_exe_secs += elapsed_exe_secs;
 
 			sim_time += dt;
+			cout << "Simulation time: " << sim_time << endl;
 		}
 
 		cout << "Total execution time: " << total_exe_secs << endl;

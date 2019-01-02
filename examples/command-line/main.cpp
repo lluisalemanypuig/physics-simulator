@@ -34,6 +34,7 @@ namespace study_cases {
 
 	void sim_300(int argc, char *argv[]);
 	void sim_301(int argc, char *argv[]);
+	void sim_302(int argc, char *argv[]);
 
 	/* ------------ */
 	/* INPUT/OUTPUT */
@@ -80,6 +81,8 @@ void list_all_cases() {
 	cout << "    300 : simulate a very small and simple fluid" << endl;
 	cout << "    301 : simulate a very small and simple fluid" << endl;
 	cout << "          over several time steps" << endl;
+	cout << "    302 : simulate a very small and simple fluid" << endl;
+	cout << "          over several time steps with geometry" << endl;
 	cout << endl;
 	cout << "Input testing:" << endl;
 	cout << "    800 : reads a model from a file and create a geometrical" << endl;
@@ -126,6 +129,7 @@ int main(int argc, char *argv[]) {
 	// fluids
 	case 300:	study_cases::sim_300(argc, argv); break;
 	case 301:	study_cases::sim_301(argc, argv); break;
+	case 302:	study_cases::sim_302(argc, argv); break;
 	// input/output
 	case 800:	study_cases::sim_800(argc, argv); break;
 	case 801:	study_cases::sim_801(argc, argv); break;
