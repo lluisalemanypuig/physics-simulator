@@ -50,13 +50,11 @@ namespace study_cases {
 		F->allocate(N, volume, density, viscosity, h, cs);
 
 		kernel_scalar_function W;
-		kernel_vectorial_function gW;
-		kernel_scalar_function g2W;
-
 		kernel_functions::density_poly6(h, W);
+		kernel_vectorial_function gW;
 		kernel_functions::pressure_poly6(h, gW);
+		kernel_scalar_function g2W;
 		kernel_functions::viscosity_poly6(h, g2W);
-
 		F->set_kernel(W, gW, g2W);
 
 		fluid_particle *Fs = F->get_particles();
