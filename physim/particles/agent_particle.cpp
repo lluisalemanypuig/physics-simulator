@@ -46,15 +46,18 @@ agent_particle::agent_particle() {
 
 agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	__pm3_assign_v(target, p.target);
+	__pm3_assign_v(orientation, p.orientation);
 	behaviour = p.behaviour;
 	max_speed = p.max_speed;
 	max_force = p.max_force;
 	slowing_distance = p.slowing_distance;
 
+	align_weight = p.align_weight;
 	seek_weight = p.seek_weight;
 	flee_weight = p.flee_weight;
 	arrival_weight = p.arrival_weight;
 	coll_avoid_weight = p.coll_avoid_weight;
+	ahead_distance = p.ahead_distance;
 }
 
 agent_particle::~agent_particle() {
@@ -183,6 +186,7 @@ void agent_particle::collision_avoidance_behaviour
 (const vector<geometry *>& scene, vec3& v)
 const
 {
+	__pm3_assign_s(v, 0.0f);
 	for (const geometry *g : scene) {
 		// skip distant objects
 		vec3 geom_pos = g->get_box_center();
@@ -263,7 +267,7 @@ const
 		}
 
 		// compute contribution
-		__pm3_assign_vs(v, repulsion, coll_avoid_weight);
+		__pm3_add_acc_vs(v, repulsion, coll_avoid_weight);
 	}
 }
 
