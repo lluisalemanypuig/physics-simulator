@@ -84,7 +84,7 @@ typedef struct vec3 {
  * @param[in] b Input vector.
  * @param[out] m Minimum of @e a and @e b.
  */
-static inline void min(const vec3& a, const vec3& b, vec3& m) {
+inline void min(const vec3& a, const vec3& b, vec3& m) {
 	m.x = (a.x < b.x ? a.x : b.x);
 	m.y = (a.y < b.y ? a.y : b.y);
 	m.z = (a.z < b.z ? a.z : b.z);
@@ -100,7 +100,7 @@ static inline void min(const vec3& a, const vec3& b, vec3& m) {
  * @param[in] b Input vector.
  * @param[out] M Maximum of @e a and @e b.
  */
-static inline void max(const vec3& a, const vec3& b, vec3& M) {
+inline void max(const vec3& a, const vec3& b, vec3& M) {
 	M.x = (a.x > b.x ? a.x : b.x);
 	M.y = (a.y > b.y ? a.y : b.y);
 	M.z = (a.z > b.z ? a.z : b.z);
@@ -109,10 +109,10 @@ static inline void max(const vec3& a, const vec3& b, vec3& M) {
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-static inline float dot(const vec3& f, const vec3& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z; }
+inline float dot(const vec3& f, const vec3& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z; }
 
 /// The squared distance between two points, given their positional vectors.
-static inline float dist2(const vec3& f, const vec3& g) {
+inline float dist2(const vec3& f, const vec3& g) {
 	return (f.x - g.x)*(f.x - g.x) +
 		   (f.y - g.y)*(f.y - g.y) +
 		   (f.z - g.z)*(f.z - g.z);
@@ -124,7 +124,7 @@ static inline float dist2(const vec3& f, const vec3& g) {
  * @param[in] f Input vector.
  * @param[in] g Input vector.
  */
-static inline void cross(const vec3& f, const vec3& g, vec3& h) {
+inline void cross(const vec3& f, const vec3& g, vec3& h) {
 	h.x = f.y*g.z - f.z*g.y;
 	h.y = f.z*g.x - f.x*g.z;
 	h.z = f.x*g.y - f.y*g.x;
@@ -135,7 +135,7 @@ static inline void cross(const vec3& f, const vec3& g, vec3& h) {
  * @param[in] g Input vector.
  * @returns Returns the cross product of @e f and @e g.
  */
-static inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); return h; }
+inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); return h; }
 
 /**
  * @brief Makes a perpendicular vector to @e f.
@@ -145,7 +145,7 @@ static inline vec3 cross(const vec3& f, const vec3& g) { vec3 h; cross(f,g,h); r
  * @param[out] g A vector perpendicular to @e f.
  * @param[in] f Input vector.
  */
-static inline void perpendicular(const vec3& f, vec3& g) {
+inline void perpendicular(const vec3& f, vec3& g) {
 	g.x = f.y;
 	g.y = -f.x;
 	g.z = 0.0f;
@@ -158,7 +158,7 @@ static inline void perpendicular(const vec3& f, vec3& g) {
  * @param f Input vector.
  * @returns Returns a vector perpendicular to @e f.
  */
-static inline vec3 perpendicular(const vec3& f) {
+inline vec3 perpendicular(const vec3& f) {
 	vec3 g; perpendicular(f,g); return g;
 }
 
@@ -170,7 +170,7 @@ static inline vec3 perpendicular(const vec3& f) {
  * @param[in] f Vector to be normalised.
  * @param[out] g Where to store the normalised vector.
  */
-static inline void normalise(const vec3& f, vec3& g) {
+inline void normalise(const vec3& f, vec3& g) {
 	float n = norm(f);
 	g.x = f.x*(1.0f/n);
 	g.y = f.y*(1.0f/n);
@@ -183,7 +183,7 @@ static inline void normalise(const vec3& f, vec3& g) {
  * @param[in] g 3D vector.
  * @return Returns the angle between the vectors \f$f,g\f$.
  */
-static inline float angle_xyz(const vec3& f, const vec3& g) {
+inline float angle_xyz(const vec3& f, const vec3& g) {
 	float frac = dot(f,g)/(norm(f)*norm(g));
 	// truncate the value of frag so that we don't gent NaNs
 	frac = (frac <= -1.0f)*(-1.0f) +
@@ -199,7 +199,7 @@ static inline float angle_xyz(const vec3& f, const vec3& g) {
  * @return Returns the angle between the vectors \f$(f_x,0,0)\f$
  * and \f$(g_x,g_y,0)\f$.
  */
-static inline float angle_xy(const vec3& f, const vec3& g) {
+inline float angle_xy(const vec3& f, const vec3& g) {
 	vec3 fx(f.x,0.0f,0.0f);
 	vec3 gxy(g.x,g.y,0.0f);
 	return angle_xyz(fx,gxy);
@@ -212,7 +212,7 @@ static inline float angle_xy(const vec3& f, const vec3& g) {
  * @return Returns the angle between the vectors \f$(f_x,f_y,0)\f$
  * and \f$g\f$.
  */
-static inline float angle_xz(const vec3& f, const vec3& g) {
+inline float angle_xz(const vec3& f, const vec3& g) {
 	vec3 fxy(f.x,f.y,0.0f);
 	return angle_xyz(fxy,g);
 }

@@ -89,7 +89,7 @@ typedef struct vec4 {
  * @param[in] b Input vector.
  * @param[out] m Minimum of @e a and @e b.
  */
-static inline void min(const vec4& a, const vec4& b, vec4& m) {
+inline void min(const vec4& a, const vec4& b, vec4& m) {
 	m.x = (a.x < b.x ? a.x : b.x);
 	m.y = (a.y < b.y ? a.y : b.y);
 	m.z = (a.z < b.z ? a.z : b.z);
@@ -106,7 +106,7 @@ static inline void min(const vec4& a, const vec4& b, vec4& m) {
  * @param[in] b Input vector.
  * @param[out] M Maximum of @e a and @e b.
  */
-static inline void max(const vec4& a, const vec4& b, vec4& M) {
+inline void max(const vec4& a, const vec4& b, vec4& M) {
 	M.x = (a.x > b.x ? a.x : b.x);
 	M.y = (a.y > b.y ? a.y : b.y);
 	M.z = (a.z > b.z ? a.z : b.z);
@@ -116,10 +116,10 @@ static inline void max(const vec4& a, const vec4& b, vec4& M) {
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-static inline float dot(const vec4& f, const vec4& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u; }
+inline float dot(const vec4& f, const vec4& g)	{ return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u; }
 
 /// The squared distance between two points, given their positional vectors.
-static inline float dist2(const vec4& f, const vec4& g) {
+inline float dist2(const vec4& f, const vec4& g) {
 	return (f.x - g.x)*(f.x - g.x) +
 		   (f.y - g.y)*(f.y - g.y) +
 		   (f.z - g.z)*(f.z - g.z) +
@@ -134,7 +134,7 @@ static inline float dist2(const vec4& f, const vec4& g) {
  * @param[in] f Input vector.
  * @param[out] g A vector perpendicular to @e f.
  */
-static inline void perpendicular(const vec4& f, vec4& g) {
+inline void perpendicular(const vec4& f, vec4& g) {
 	g.x = f.y;
 	g.y = -f.x;
 	g.z = 0.0f;
@@ -148,7 +148,7 @@ static inline void perpendicular(const vec4& f, vec4& g) {
  * @param f Input vector.
  * @returns Returns a vector perpendicular to @e f.
  */
-static inline vec4 perpendicular(const vec4& f) {
+inline vec4 perpendicular(const vec4& f) {
 	vec4 g; perpendicular(f,g); return g;
 }
 
@@ -160,7 +160,7 @@ static inline vec4 perpendicular(const vec4& f) {
  * @param[in] f Vector to be normalised.
  * @param[out] g Where to store the normalised vector.
  */
-static inline void normalise(const vec4& f, vec4& g) {
+inline void normalise(const vec4& f, vec4& g) {
 	float n = norm(f);
 	g.x = f.x*(1.0f/n);
 	g.y = f.y*(1.0f/n);

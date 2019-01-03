@@ -90,7 +90,7 @@ typedef struct vec6 {
  * @param[in] b Input vector.
  * @param[out] m Minimum of @e a and @e b.
  */
-static inline void min(const vec6& a, const vec6& b, vec6& m) {
+inline void min(const vec6& a, const vec6& b, vec6& m) {
 	m.x = (a.x < b.x ? a.x : b.x);
 	m.y = (a.y < b.y ? a.y : b.y);
 	m.z = (a.z < b.z ? a.z : b.z);
@@ -109,7 +109,7 @@ static inline void min(const vec6& a, const vec6& b, vec6& m) {
  * @param[in] b Input vector.
  * @param[out] M Maximum of @e a and @e b.
  */
-static inline void max(const vec6& a, const vec6& b, vec6& M) {
+inline void max(const vec6& a, const vec6& b, vec6& M) {
 	M.x = (a.x > b.x ? a.x : b.x);
 	M.y = (a.y > b.y ? a.y : b.y);
 	M.z = (a.z > b.z ? a.z : b.z);
@@ -121,16 +121,16 @@ static inline void max(const vec6& a, const vec6& b, vec6& M) {
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-static inline float dot(const vec6& f, const vec6& g)
+inline float dot(const vec6& f, const vec6& g)
 { return f.x*g.x + f.y*g.y + f.z*g.z + f.u*g.u + f.v*g.v + f.w*g.w; }
 
 /// The square of the norm of a vector.
-static inline float norm2(const vec6& f) { return dot(f,f); }
+inline float norm2(const vec6& f) { return dot(f,f); }
 /// The norm of a vector.
-static inline float norm(const vec6& f) { return std::sqrt(dot(f,f)); }
+inline float norm(const vec6& f) { return std::sqrt(dot(f,f)); }
 
 /// The squared distance between two points, given their positional vectors.
-static inline float dist2(const vec6& f, const vec6& g) {
+inline float dist2(const vec6& f, const vec6& g) {
 	return (f.x - g.x)*(f.x - g.x) +
 		   (f.y - g.y)*(f.y - g.y) +
 		   (f.z - g.z)*(f.z - g.z) +
@@ -147,7 +147,7 @@ static inline float dist2(const vec6& f, const vec6& g) {
  * @param[in] f Vector to be normalised.
  * @param[out] g Where to store the normalised vector.
  */
-static inline void normalise(const vec6& f, vec6& g) {
+inline void normalise(const vec6& f, vec6& g) {
 	float n = norm(f);
 	g.x = f.x*(1.0f/n);
 	g.y = f.y*(1.0f/n);

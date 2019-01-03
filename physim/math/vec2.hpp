@@ -79,7 +79,7 @@ typedef struct vec2 {
  * @param[in] b Input vector.
  * @param[out] m Minimum of @e a and @e b.
  */
-static inline void min(const vec2& a, const vec2& b, vec2& m) {
+inline void min(const vec2& a, const vec2& b, vec2& m) {
 	m.x = (a.x < b.x ? a.x : b.x);
 	m.y = (a.y < b.y ? a.y : b.y);
 }
@@ -94,7 +94,7 @@ static inline void min(const vec2& a, const vec2& b, vec2& m) {
  * @param[in] b Input vector.
  * @param[out] M Maximum of @e a and @e b.
  */
-static inline void max(const vec2& a, const vec2& b, vec2& M) {
+inline void max(const vec2& a, const vec2& b, vec2& M) {
 	M.x = (a.x > b.x ? a.x : b.x);
 	M.y = (a.y > b.y ? a.y : b.y);
 }
@@ -102,10 +102,10 @@ static inline void max(const vec2& a, const vec2& b, vec2& M) {
 /* GEOMETRY */
 
 /// The dot product between two vectors.
-static inline float dot(const vec2& f, const vec2& g)	{ return f.x*g.x + f.y*g.y; }
+inline float dot(const vec2& f, const vec2& g)	{ return f.x*g.x + f.y*g.y; }
 
 /// The squared distance between two points, given their positional vectors.
-static inline float dist2(const vec2& f, const vec2& g) {
+inline float dist2(const vec2& f, const vec2& g) {
 	return (f.x - g.x)*(f.x - g.x) +
 		   (f.y - g.y)*(f.y - g.y);
 }
@@ -118,7 +118,7 @@ static inline float dist2(const vec2& f, const vec2& g) {
  * @param[out] g A vector perpendicular to @e f.
  * @param[in] f Input vector.
  */
-static inline void perpendicular(const vec2& f, vec2& g) {
+inline void perpendicular(const vec2& f, vec2& g) {
 	g.x = f.y;
 	g.y = -f.x;
 }
@@ -130,7 +130,7 @@ static inline void perpendicular(const vec2& f, vec2& g) {
  * @param f Input vector.
  * @returns Returns a vector perpendicular to @e f.
  */
-static inline vec2 perpendicular(const vec2& f) {
+inline vec2 perpendicular(const vec2& f) {
 	vec2 g; perpendicular(f,g); return g;
 }
 
@@ -142,7 +142,7 @@ static inline vec2 perpendicular(const vec2& f) {
  * @param[in] f Vector to be normalised.
  * @param[out] g Where to store the normalised vector.
  */
-static inline void normalise(const vec2& f, vec2& g) {
+inline void normalise(const vec2& f, vec2& g) {
 	float n = norm(f);
 	g.x = f.x*(1.0f/n);
 	g.y = f.y*(1.0f/n);
