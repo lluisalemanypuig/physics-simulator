@@ -97,7 +97,9 @@ void simulator::_simulate_agent_particles() {
 		// compute new orientation
 		vec3 alignment;
 		__pm3_sub_v_v(alignment, p.cur_vel, p.orientation);
+		normalise(alignment, alignment);
 		__pm3_add_acc_vs(p.orientation, alignment, p.align_weight);
+		normalise(p.orientation, p.orientation);
 	}
 
 }
