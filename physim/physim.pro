@@ -84,7 +84,8 @@ HEADERS += \
 	emitter/free_emitters/multisource.cpp \
     emitter/free_emitters/hose.hpp \
     fluids/fluid.hpp \
-    fluids/kernel_function.hpp
+    fluids/kernel_function.hpp \
+    fluids/newtonian.hpp
 
 SOURCES += \
     simulator.cpp \
@@ -129,4 +130,5 @@ SOURCES += \
 	emitter/free_emitters/rect_source.cpp \
     emitter/free_emitters/hose.cpp \
     fluids/fluid.cpp \
-    sim_fluids.cpp
+    sim_fluids.cpp \
+    fluids/newtonian.cpp

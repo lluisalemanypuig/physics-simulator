@@ -14,7 +14,7 @@ using namespace std;
 #include <render/obj_reader.hpp>
 
 // physim includes
-#include <physim/fluids/fluid.hpp>
+#include <physim/fluids/newtonian.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
@@ -47,7 +47,7 @@ namespace study_cases {
 		size_t side__ = 16;
 		size_t N = side__*side__*side__;
 
-		fluid *F = new fluid();
+		fluid *F = new newtonian();
 		F->allocate(N, volume, density, viscosity, h, cs);
 
 		kernel_scalar_function density_kernel;
@@ -61,19 +61,23 @@ namespace study_cases {
 			float C = (315.0f/(64.0f*PI));
 			return C*k*k*k;
 		};
+		F->set_kernel_density(density_kernel);
+
 		pressure_kernel = [H](const vec3& r, float r2, vec3& res) -> void
 		{
 			float k = 1.0f - r2/(H*H);
 			float s = (-945.0f/(32.0f*PI*std::pow(H, 5.0f)))*k*k;
 			res = r*s/10000000.0f;
 		};
+		F->set_kernel_pressure(pressure_kernel);
+
 		viscosity_kernel = [H](float r2) -> float
 		{
 			float k = 1.0f - r2/(H*H);
 			float C = (945.0f/(8.0f*PI*std::pow(H, 5.0f)));
 			return C*k*(r2/(H*H) - 0.75f*k)/1000000000.0f;
 		};
-		F->set_kernel(density_kernel, pressure_kernel, viscosity_kernel);
+		F->set_kernel_viscosity(viscosity_kernel);
 
 		fluid_particle *Fs = F->get_particles();
 		for (size_t i = 0; i < side__; ++i) {
@@ -97,15 +101,15 @@ namespace study_cases {
 		SR.init_cameras();
 
 		plane *base = new plane(vec3(0,1,0), vec3(0,-0.25,0));
-		plane *w1 = new plane(vec3(1,0,0), vec3(-0.25,0,0));
+		/*plane *w1 = new plane(vec3(1,0,0), vec3(-0.25,0,0));
 		plane *w2 = new plane(vec3(-1,0,0), vec3(0.75,0,0));
 		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,-0.25));
-		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.75));
+		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.75));*/
 		S.add_geometry(base);
-		S.add_geometry(w1);
+		/*S.add_geometry(w1);
 		S.add_geometry(w2);
 		S.add_geometry(w3);
-		S.add_geometry(w4);
+		S.add_geometry(w4);*/
 
 		cout << "Fluid characteristics:" << endl;
 		cout << "    Number of particles: " << N << endl;

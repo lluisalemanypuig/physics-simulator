@@ -10,6 +10,9 @@ QMAKE_CXXFLAGS_RELEASE += -DNDEBUG
 QMAKE_CXXFLAGS += -fopenmp
 LIBS += -fopenmp
 
+# PNG library
+LIBS += -lpng
+
 # render (model, obj reader, ...)
 LIBS += -L../render/ -lrender
 PRE_TARGETDEPS += ../render/librender.a

@@ -38,7 +38,7 @@ class fluid {
 		/// Neighbourhood size.
 		float R;
 		/**
-		 * @brief Kernel function. \f$W\f$
+		 * @brief Kernel density function. \f$W\f$
 		 *
 		 * This function is used to compute the initial density of the
 		 * particles:
@@ -54,9 +54,9 @@ class fluid {
 		 *
 		 * By default, this function returns 1;
 		 */
-		kernel_scalar_function kernel;
+		kernel_scalar_function kernel_density;
 		/**
-		 * @brief Kernel function. \f$\nabla W\f$
+		 * @brief Kernel pressure function. \f$\nabla W\f$
 		 *
 		 * This function is used to evaluate the new pressure values:
 		 *
@@ -87,7 +87,7 @@ class fluid {
 		 */
 		kernel_vectorial_function kernel_pressure;
 		/**
-		 * @brief Kernel function. \f$\nabla^2 W\f$
+		 * @brief Kernel viscosity function. \f$\nabla^2 W\f$
 		 *
 		 * This is evaluated for the approximation of
 		 *
@@ -182,7 +182,7 @@ class fluid {
 		 * @pre This method is called before computing the forces
 		 * acting on the particles due to force fields.
 		 */
-		virtual void update_forces();
+		virtual void update_forces() = 0;
 		/**
 		 * @brief Update the forces generated within the fluid.
 		 *
@@ -199,7 +199,7 @@ class fluid {
 		 * @pre This method is called before computing the forces
 		 * acting on the particles due to force fields.
 		 */
-		virtual void update_forces(size_t n);
+		virtual void update_forces(size_t n) = 0;
 
 		/**
 		 * @brief Builds the space partition of this fluid's particles.
@@ -212,16 +212,20 @@ class fluid {
 		// SETTERS
 
 		/**
-		 * @brief Sets the kernel functions.
-		 * @param W \f$W\f$, see @ref kernel.
+		 * @brief Sets the kernel density functions.
+		 * @param W \f$W\f$, see @ref kernel_density.
+		 */
+		void set_kernel_density(const kernel_scalar_function& W_d);
+		/**
+		 * @brief Sets the kernel pressure functions.
 		 * @param W_p \f$\nabla W\f$, see @ref kernel_pressure.
+		 */
+		void set_kernel_pressure(const kernel_vectorial_function& W_p);
+		/**
+		 * @brief Sets the kernel viscosity functions.
 		 * @param W_v \f$\nabla^2 W\f$, see @ref kernel_viscosity.
 		 */
-		void set_kernel(
-			const kernel_scalar_function& W,
-			const kernel_vectorial_function& W_p,
-			const kernel_scalar_function& W_v
-		);
+		void set_kernel_viscosity(const kernel_scalar_function& W_v);
 
 		// GETTERS
 

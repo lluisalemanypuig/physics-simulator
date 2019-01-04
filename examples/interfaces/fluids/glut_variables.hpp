@@ -50,6 +50,8 @@ namespace glut_variables {
 
 	extern physim::math::vec3 bgd_color;
 
+	extern bool record;
+
 	void init_variables();
 
 } // -- namespace glut_variables

@@ -13,7 +13,7 @@ using namespace std;
 // physim includes
 #include <physim/math/vec3.hpp>
 #include <physim/structures/octree.hpp>
-#include <physim/fluids/fluid.hpp>
+#include <physim/fluids/newtonian.hpp>
 
 // render includes
 #include <render/include_gl.hpp>
@@ -37,7 +37,7 @@ static pmvec3 __fv_vmin;
 static pmvec3 __fv_vmax;
 static vector<pmbox> __fv_tree_boxes;
 static size_t __fv_slice;
-static physim::fluids::fluid __fv_F;
+static physim::fluids::fluid *__fv_F;
 static vector<uint> __fv_fluid_points_idxs;
 static physim::structures::octree __fv_tree;
 static vector<size_t> __fv_query_indices;
@@ -176,7 +176,8 @@ void __fv_initGL(int argc, char *argv[]) {
 
 	__fv_slice = 16;
 	size_t N = __fv_slice*__fv_slice*__fv_slice;
-	__fv_F.allocate(N, 1, 1, 1, 1, 1);
+	__fv_F = new physim::fluids::newtonian();
+	__fv_F->allocate(N, 1, 1, 1, 1, 1);
 
 	__fv_fluid_points_idxs.resize(N);
 	std::iota(__fv_fluid_points_idxs.begin(), __fv_fluid_points_idxs.end(), 0);
@@ -193,7 +194,7 @@ void __fv_initGL(int argc, char *argv[]) {
 				);
 
 				size_t idx = i*__fv_slice*__fv_slice + j*__fv_slice + k;
-				__fv_F.get_particles()[idx].cur_pos = pos;
+				__fv_F->get_particles()[idx].cur_pos = pos;
 
 				physim::math::min(__fv_vmin, pos, __fv_vmin);
 				physim::math::max(__fv_vmax, pos, __fv_vmax);
@@ -202,7 +203,7 @@ void __fv_initGL(int argc, char *argv[]) {
 	}
 
 	// compute offset of position w.r.t. to the beginning of its struct
-	const fluid_particle *ps = __fv_F.get_particles();
+	const fluid_particle *ps = __fv_F->get_particles();
 
 	size_t base = reinterpret_cast<size_t>( &ps[0] );
 	size_t member_pos = reinterpret_cast<size_t>( &ps[0].cur_pos );
@@ -249,14 +250,14 @@ void __fv_refresh() {
 
 	__fv_SR.apply_view();
 
-	if (__fv_F.size() > 0) {
+	if (__fv_F->size() > 0) {
 		glPointSize(5);
 		glColor3f(1,0,0);
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer
 		(3, GL_FLOAT, sizeof(physim::particles::fluid_particle),
-		 &__fv_F.get_particles()[0].cur_pos.x);
+		 &__fv_F->get_particles()[0].cur_pos.x);
 
 		glDrawElements
 		(GL_POINTS, __fv_fluid_points_idxs.size(),
@@ -289,7 +290,7 @@ void __fv_refresh() {
 		if (__fv_query_indices.size() > 0) {
 			glPointSize(10);
 			for (size_t idx : __fv_query_indices) {
-				const pmvec3& p = __fv_F.get_particles()[idx].cur_pos;
+				const pmvec3& p = __fv_F->get_particles()[idx].cur_pos;
 				glVertex3f(p.x + 0.01f, p.y + 0.01f, p.z + 0.01f);
 			}
 		}

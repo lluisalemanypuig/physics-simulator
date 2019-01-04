@@ -35,6 +35,8 @@ namespace glut_variables {
 
 	physim::math::vec3 bgd_color;
 
+	bool record;
+
 	void init_variables() {
 		special_key = 0;
 		pressed_button = 0;
@@ -61,6 +63,8 @@ namespace glut_variables {
 		viscosity = 0.001f;
 		density = 1000.0f;
 		cs = 1500.0f;
+
+		record = false;
 
 		sec = timing::now();
 	}
