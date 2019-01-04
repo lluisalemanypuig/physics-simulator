@@ -368,7 +368,7 @@ const
 
 	// If there are less than 8 vertices to be partitioned
 	// then we store the vertex indices and stop here.
-	if (v_idxs.size() <= lod) {
+	if (v_idxs.size() <= lod or __pm3_dist2(n->vmin, n->vmax) <= 1.0e-5f) {
 		n->leaf = true;
 		n->count = v_idxs.size();
 		if (n->count > 0) {
