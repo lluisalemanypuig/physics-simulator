@@ -35,13 +35,16 @@ namespace study_cases {
 		cout << "        euler:      Euler integration method.." << endl;
 		cout << "        semi-euler: Euler semi-implicit integration method." << endl;
 		cout << "        verlet:     Verlet integration method." << endl;
-		cout << "    --R r:			 Size of the neighbourhood.     Default: 0.015" << endl;
-		cout << "    --vol v:		 Volume of the fluid.           Default: 0.01" << endl;
-		cout << "    --vis v:		 Viscosity of the fluid.        Default: 0.001" << endl;
+		cout << "    --R r:          Size of the neighbourhood.     Default: 0.015" << endl;
+		cout << "    --vol v:        Volume of the fluid.           Default: 0.01" << endl;
+		cout << "    --vis v:        Viscosity of the fluid.        Default: 0.001" << endl;
 		cout << "    --dens d:       Density at rest of the fluid.  Default: 1000.0" << endl;
-		cout << "    --c v:			 Speed of sound.                Default: 1500.0" << endl;
-		cout << "    --p n:			 Number of particles per side.  Default: 16" << endl;
+		cout << "    --c v:          Speed of sound.                Default: 1500.0" << endl;
+		cout << "    --p n:          Number of particles per side.  Default: 16" << endl;
 		cout << "    --threads n:    Number of threads.             Default: 1" << endl;
+		cout << "    --lenx x:       Length in x axis.              Default: 0.5" << endl;
+		cout << "    --leny y:       Length in y axis.              Default: 0.5" << endl;
+		cout << "    --lenz z:       Length in z axis.              Default: 0.5" << endl;
 		cout << endl;
 	}
 
@@ -49,20 +52,16 @@ namespace study_cases {
 		float dt = 0.01f;
 		float total_time = 5.0f;
 		solver_type solv = solver_type::EulerSemi;
-		// number of particles per side
-		size_t side__ = 8;
-		// neighbourhood size
-		float h = 0.015f;
-		// volume
-		float vol = 0.01f;
-		// viscosity
-		float vis = 0.001f;
-		// density
-		float dens = 1000.0f;
-		// speed of sound
-		float cs = 1500.0f;
-		// number of threads
-		size_t nt = 1;
+		float lenx = 0.5f;
+		float leny = 0.5f;
+		float lenz = 0.5f;
+		size_t side__ = 16;		// number of particles per side
+		float h = 0.015f;		// neighbourhood size
+		float vol = 0.01f;		// volume
+		float vis = 0.001f;		// viscosity
+		float dens = 1000.0f;	// density
+		float cs = 1500.0f;		// speed of sound
+		size_t nt = 1;			// number of threads
 
 		for (int i = 2; i < argc; ++i) {
 			if (strcmp(argv[i], "-h") == 0 or strcmp(argv[i], "--help") == 0) {
@@ -126,6 +125,18 @@ namespace study_cases {
 				}
 				++i;
 			}
+			else if (strcmp(argv[i], "--lenx") == 0) {
+				lenx = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--leny") == 0) {
+				leny = atof(argv[i + 1]);
+				++i;
+			}
+			else if (strcmp(argv[i], "--lenz") == 0) {
+				lenz = atof(argv[i + 1]);
+				++i;
+			}
 			else {
 				cerr << "Error: unknown option '" << string(argv[i])
 					 << "'" << endl;
@@ -134,8 +145,15 @@ namespace study_cases {
 		}
 
 		size_t N = side__*side__*side__;
-
 		timing::time_point begin, end;
+
+		cout << "Allocating..." << endl;
+		begin = timing::now();
+		fluid *F = new fluid();
+		F->allocate(N, vol, dens, vis, h, cs);
+		end = timing::now();
+		cout << "    in " << timing::elapsed_seconds(begin, end)
+			 << " seconds" << endl;
 
 		cout << "Fluid characteristics:" << endl;
 		cout << "    Number of particles: " << N << endl;
@@ -144,7 +162,8 @@ namespace study_cases {
 		cout << "    Density: " << dens << endl;
 		cout << "    Neighbourhood size: " << h << endl;
 		cout << "    Initial shape:" << endl;
-		cout << "        0.2 x 0.2 x 0.1" << endl;
+		cout << "        " << lenx << " x " << leny << " x " << lenz << endl;
+		cout << "    Mass per particle: " << F->get_particles()[0].mass << endl;
 		cout << "Simulation:" << endl;
 		cout << "    total time: " << total_time << endl;
 		cout << "    step time: " << dt << endl,
@@ -158,15 +177,6 @@ namespace study_cases {
 		else if (solv == solver_type::Verlet) {
 			cout << " Verlet" << endl;
 		}
-
-		cout << "Allocating..." << endl;
-		begin = timing::now();
-		fluid *F = new fluid();
-		F->allocate(N, vol, dens, vis, h, cs);
-		end = timing::now();
-		cout << "    in " << timing::elapsed_seconds(begin, end)
-			 << " seconds" << endl;
-		cout << "Mass per particle: " << F->get_particles()[0].mass << endl;
 
 		kernel_scalar_function W;
 		kernel_functions::density_poly6(h, W);
@@ -182,7 +192,7 @@ namespace study_cases {
 		for (size_t i = 0; i < side__; ++i) {
 			for (size_t j = 0; j < side__; ++j) {
 				for (size_t k = 0; k < side__; ++k) {
-					vec3 pos(i*(0.5f/side__), j*(0.5f/side__), k*(0.5f/side__));
+					vec3 pos(i*(lenx/side__), j*(leny/side__), k*(lenz/side__));
 					size_t idx = i*side__*side__ + j*side__ + k;
 					F->get_particles()[idx].cur_pos = pos;
 				}
