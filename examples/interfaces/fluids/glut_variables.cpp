@@ -31,7 +31,6 @@ namespace glut_variables {
 	float h;
 	float cs;
 
-	int n_iterations;
 	physim::solver_type solver;
 
 	physim::math::vec3 bgd_color;
@@ -49,8 +48,6 @@ namespace glut_variables {
 		solver = physim::solver_type::Verlet;
 
 		bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
-
-		n_iterations = 10;
 
 		window_width = 640;
 		window_height = 480;

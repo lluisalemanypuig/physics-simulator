@@ -30,6 +30,8 @@ using namespace fluids;
 using namespace glut_functions;
 using namespace glut_variables;
 
+static const float PI = static_cast<float>(M_PI);
+
 namespace study_cases {
 
 	void sim_00_make_simulation() {
@@ -41,7 +43,6 @@ namespace study_cases {
 		S.set_solver(solver_type::EulerSemi);
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		S.set_time_step(0.01f);
-		n_iterations = 1;
 
 		size_t side__ = 16;
 		size_t N = side__*side__*side__;
@@ -49,13 +50,30 @@ namespace study_cases {
 		fluid *F = new fluid();
 		F->allocate(N, volume, density, viscosity, h, cs);
 
-		kernel_scalar_function W;
-		kernel_functions::density_poly6(h, W);
-		kernel_vectorial_function gW;
-		kernel_functions::pressure_poly6(h, gW);
-		kernel_scalar_function g2W;
-		kernel_functions::viscosity_poly6(h, g2W);
-		F->set_kernel(W, gW, g2W);
+		kernel_scalar_function density_kernel;
+		kernel_vectorial_function pressure_kernel;
+		kernel_scalar_function viscosity_kernel;
+
+		float H = h;
+		density_kernel = [H](float r2) -> float
+		{
+			float k = 1.0f/H - r2*(1.0f/(H*H*H));
+			float C = (315.0f/(64.0f*PI));
+			return C*k*k*k;
+		};
+		pressure_kernel = [H](const vec3& r, float r2, vec3& res) -> void
+		{
+			float k = 1.0f - r2/(H*H);
+			float s = (-945.0f/(32.0f*PI*std::pow(H, 5.0f)))*k*k;
+			res = r*s/10000000.0f;
+		};
+		viscosity_kernel = [H](float r2) -> float
+		{
+			float k = 1.0f - r2/(H*H);
+			float C = (945.0f/(8.0f*PI*std::pow(H, 5.0f)));
+			return C*k*(r2/(H*H) - 0.75f*k)/1000000000.0f;
+		};
+		F->set_kernel(density_kernel, pressure_kernel, viscosity_kernel);
 
 		fluid_particle *Fs = F->get_particles();
 		for (size_t i = 0; i < side__; ++i) {
@@ -95,6 +113,7 @@ namespace study_cases {
 		cout << "    Viscosity: " << viscosity << endl;
 		cout << "    Density: " << density << endl;
 		cout << "    Neighbourhood size: " << h << endl;
+		cout << "    Mass per particle: " << F->get_particles()[0].mass << endl;
 		cout << "    Initial shape:" << endl;
 		cout << "       " << length_x << " x "
 						  << length_y << " x "
@@ -199,8 +218,9 @@ namespace study_cases {
 	}
 
 	void sim_00(int argc, char *argv[]) {
-		sim_00_initGL(argc, argv);
 		sim_00_help();
+
+		sim_00_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);

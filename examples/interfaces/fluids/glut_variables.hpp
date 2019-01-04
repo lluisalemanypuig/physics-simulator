@@ -46,7 +46,6 @@ namespace glut_variables {
 	extern float h;
 	extern float cs;
 
-	extern int n_iterations;
 	extern physim::solver_type solver;
 
 	extern physim::math::vec3 bgd_color;
