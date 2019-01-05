@@ -108,16 +108,18 @@ class octree {
 		 * in @e vertices.
 		 * @param vmax Point with the maximum value coordinates of the points
 		 * in @e vertices.
-		 * @param vertices The full list of vertices.
+		 * @param it Pointer to the first component of the first vertex.
+		 * @param offset Size in bytes between consecutive vertices' first
+		 * component.
 		 * @param vertices_idxs The list of vertices to be partitioned.
 		 * @return Returns the root of an octree that partitions the points
 		 * in @e vertices_idxs.
 		 */
 		node *make_octree_vertices(
-			size_t lod,
+			const void *it, size_t offset,
 			const math::vec3& vmin, const math::vec3& vmax,
-			const math::vec3 *vertices,
-			const std::vector<size_t>& vertices_idxs
+			const std::vector<size_t>& vertices_idxs,
+			size_t lod
 		) const;
 
 		/**

@@ -363,10 +363,10 @@ const
 }
 
 octree::node *octree::make_octree_vertices(
-	size_t lod,
+	const void *it, size_t offset,
 	const vec3& vmin, const vec3& vmax,
-	const vec3 *vertices,
-	const vector<size_t>& v_idxs
+	const vector<size_t>& v_idxs,
+	size_t lod
 )
 const
 {
@@ -409,10 +409,14 @@ const
 
 	// partition the vertices
 	for (size_t v_idx : v_idxs) {
-		const vec3& v = vertices[v_idx];
+		// move iterator to the vec3 pointed by index
+		const void *v = static_cast<const void *>
+			(static_cast<const char *>(it) + v_idx*offset);
+
+		const vec3 *vvec = static_cast<const vec3 *>(v);
 
 		unsigned char s = 0;
-		__pm3_lt(s, v, n->center);
+		__pm3_lt(s, *vvec, n->center);
 
 		// s contains in its three lowest-weight bits the
 		// result of comparing v < n->center.
@@ -437,7 +441,7 @@ const
 		else				 { submax.z = n->center.z; submin.z = n->vmin.z; }
 
 		n->children[i] = make_octree_vertices
-		(lod, submin, submax, vertices, vert_idxs_space[i]);
+		(it, offset, submin, submax, vert_idxs_space[i], lod);
 
 		// free unused memory
 		vert_idxs_space[i].clear();
@@ -622,20 +626,12 @@ void octree::init(const std::vector<math::vec3>& vertices, size_t lod) {
 		idxs[i] = i;
 	}
 
-	root = make_octree_vertices(lod, vmin, vmax, &vertices[0], idxs);
+	root =
+	make_octree_vertices(&vertices[0].x, sizeof(vec3), vmin, vmax, idxs, lod);
 }
 
 void octree::init(const void *it, size_t n,size_t offset, size_t lod) {
 	clear();
-
-	// do not use vectors to allocate as
-	// tightly as possible
-	vec3 *mem = static_cast<vec3 *>(malloc(n*sizeof(vec3)));
-	if (mem == nullptr) {
-		cerr << "octree::init (" << __LINE__ << ") - Error:" << endl;
-		cerr << "    Could not allocate memory for " << n << " vec3" << endl;
-		return;
-	}
 
 	// axis-aligned bounding box of root
 	static const float inf = numeric_limits<float>::max();
@@ -643,31 +639,25 @@ void octree::init(const void *it, size_t n,size_t offset, size_t lod) {
 	__pm3_assign_s(vmin, inf);
 	__pm3_assign_s(vmax, -inf);
 
-	// iterator over 'mem'
-	vec3 *mem_it = &mem[0];
-
 	vector<size_t> idxs(n);
+	const void *iter = it;
 
-	for (size_t i = 0; i < n; ++i, ++mem_it) {
-		const float *v_it = static_cast<const float *>(it);
+	for (size_t i = 0; i < n; ++i) {
+		const vec3 *v_it = static_cast<const vec3 *>(iter);
 
 		// read pack of vec3's
-		mem_it->x = *(v_it++);
-		mem_it->y = *(v_it++);
-		mem_it->z = *(v_it++);
-		__pm3_min2(vmin, vmin, *mem_it);
-		__pm3_max2(vmax, vmax, *mem_it);
+		__pm3_min2(vmin, vmin, *v_it);
+		__pm3_max2(vmax, vmax, *v_it);
 		idxs[i] = i;
 
 		// move iterator to the next vec3
-		it = static_cast<const void *>
-			(static_cast<const char *>(it) + offset);
+		iter = static_cast<const void *>
+			(static_cast<const char *>(iter) + offset);
 	}
 
 	// make octree
-	root = make_octree_vertices(lod, vmin, vmax, mem, idxs);
-
-	free(mem);
+	root =
+	make_octree_vertices(it, offset, vmin, vmax, idxs, lod);
 }
 
 void octree::clear() {
