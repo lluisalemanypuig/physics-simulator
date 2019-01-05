@@ -101,17 +101,17 @@ octree::node::node() {
 }
 
 octree::node::~node() {
+	if (idxs != nullptr) {
+		free(idxs);
+		idxs = nullptr;
+		count = 0;
+	}
+
 	for (unsigned char i = 0; i < 8; ++i) {
 		if (children[i] != nullptr) {
 			delete children[i];
 			children[i] = nullptr;
 		}
-	}
-
-	if (idxs != nullptr) {
-		free(idxs);
-		idxs = nullptr;
-		count = 0;
 	}
 }
 
@@ -143,26 +143,38 @@ octree::node *octree::make_octree_triangles(
 )
 const
 {
-	node *n = new node();
+	// If there are less than 8 vertices to be partitioned
+	// then we store the triangle indices and stop here.
+	if (v_idxs.size() <= lod or __pm3_dist2(vmin, vmax) <= 1.0e-5f) {
 
+		// make a new node only if there are enough vertices to store
+		if (t_idxs.size() > 0) {
+			node *n = new node();
+
+			// set minimum and maximum points
+			__pm3_assign_v(n->vmin, vmin);
+			__pm3_assign_v(n->vmax, vmax);
+			// make center point
+			__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
+
+			n->leaf = true;
+			n->count = t_idxs.size();
+
+			size_t bytes = n->count*sizeof(size_t);
+			n->idxs = static_cast<size_t *>(malloc(bytes));
+			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &t_idxs[0], bytes));
+			return n;
+		}
+
+		return nullptr;
+	}
+
+	node *n = new node();
 	// set minimum and maximum points
 	__pm3_assign_v(n->vmin, vmin);
 	__pm3_assign_v(n->vmax, vmax);
 	// make center point
 	__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
-
-	// If there are less than 8 vertices to be partitioned
-	// then we store the triangle indices and stop here.
-	if (v_idxs.size() <= lod) {
-		n->leaf = true;
-		n->count = t_idxs.size();
-		if (n->count > 0) {
-			size_t bytes = n->count*sizeof(size_t);
-			n->idxs = static_cast<size_t *>(malloc(bytes));
-			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &t_idxs[0], bytes));
-		}
-		return n;
-	}
 
 	// Points defining the 12 'rectangles' that
 	// partition this subspace.
@@ -358,26 +370,37 @@ octree::node *octree::make_octree_vertices(
 )
 const
 {
-	node *n = new node();
+	// If there are less than 8 vertices to be partitioned
+	// then we store the vertex indices and stop here.
+	if (v_idxs.size() <= lod or __pm3_dist2(vmin, vmax) <= 1.0e-5f) {
 
+		// make a new node only if there are enough vertices to store
+		if (v_idxs.size() > 0) {
+			node *n = new node();
+
+			// set minimum and maximum points
+			__pm3_assign_v(n->vmin, vmin);
+			__pm3_assign_v(n->vmax, vmax);
+			// make center point
+			__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
+
+			n->leaf = true;
+			n->count = v_idxs.size();
+			size_t bytes = n->count*sizeof(size_t);
+			n->idxs = static_cast<size_t *>(malloc(bytes));
+			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &v_idxs[0], bytes));
+			return n;
+		}
+
+		return nullptr;
+	}
+
+	node *n = new node();
 	// set minimum and maximum points
 	__pm3_assign_v(n->vmin, vmin);
 	__pm3_assign_v(n->vmax, vmax);
 	// make center point
 	__pm3_add_v_v_div_s(n->center, n->vmin, n->vmax, 2.0f);
-
-	// If there are less than 8 vertices to be partitioned
-	// then we store the vertex indices and stop here.
-	if (v_idxs.size() <= lod or __pm3_dist2(n->vmin, n->vmax) <= 1.0e-5f) {
-		n->leaf = true;
-		n->count = v_idxs.size();
-		if (n->count > 0) {
-			size_t bytes = n->count*sizeof(size_t);
-			n->idxs = static_cast<size_t *>(malloc(bytes));
-			n->idxs = static_cast<size_t *>(memcpy(n->idxs, &v_idxs[0], bytes));
-		}
-		return n;
-	}
 
 	// vert_idxs_space contains indices pointing to vertices
 	// in parameter 'vertices'. These are the vertices that
@@ -602,19 +625,15 @@ void octree::init(const std::vector<math::vec3>& vertices, size_t lod) {
 	root = make_octree_vertices(lod, vmin, vmax, &vertices[0], idxs);
 }
 
-void octree::init(
-	const void *it, size_t n, size_t ps, size_t size, size_t offset,
-	size_t lod
-)
-{
+void octree::init(const void *it, size_t n,size_t offset, size_t lod) {
 	clear();
 
 	// do not use vectors to allocate as
 	// tightly as possible
-	vec3 *mem = static_cast<vec3 *>(malloc(n*ps*sizeof(vec3)));
+	vec3 *mem = static_cast<vec3 *>(malloc(n*sizeof(vec3)));
 	if (mem == nullptr) {
 		cerr << "octree::init (" << __LINE__ << ") - Error:" << endl;
-		cerr << "    Could not allocate memory for " << n*ps << " vec3" << endl;
+		cerr << "    Could not allocate memory for " << n << " vec3" << endl;
 		return;
 	}
 
@@ -627,29 +646,22 @@ void octree::init(
 	// iterator over 'mem'
 	vec3 *mem_it = &mem[0];
 
-	// place iterator at the first vec3
-	it = static_cast<const void *>
-		(static_cast<const char *>(it) + offset);
+	vector<size_t> idxs(n);
 
-	vector<size_t> idxs(n*ps);
-	size_t index = 0;
-
-	for (size_t i = 0; i < n; ++i) {
+	for (size_t i = 0; i < n; ++i, ++mem_it) {
 		const float *v_it = static_cast<const float *>(it);
 
 		// read pack of vec3's
-		for (size_t p = 0; p < ps; ++p, ++mem_it, ++index) {
-			mem_it->x = *(v_it++);
-			mem_it->y = *(v_it++);
-			mem_it->z = *(v_it++);
-			__pm3_min2(vmin, vmin, *mem_it);
-			__pm3_max2(vmax, vmax, *mem_it);
-			idxs[index] = index;
-		}
+		mem_it->x = *(v_it++);
+		mem_it->y = *(v_it++);
+		mem_it->z = *(v_it++);
+		__pm3_min2(vmin, vmin, *mem_it);
+		__pm3_max2(vmax, vmax, *mem_it);
+		idxs[i] = i;
 
 		// move iterator to the next vec3
 		it = static_cast<const void *>
-			(static_cast<const char *>(it) + size);
+			(static_cast<const char *>(it) + offset);
 	}
 
 	// make octree
@@ -678,10 +690,14 @@ void octree::get_indices(const vec3& p, vector<size_t>& idxs) const {
 	assert(root != nullptr);
 
 	node *n = root;
-	while (not n->leaf and __pm3_inside_box(p, n->vmin, n->vmax)) {
+	while (n != nullptr and not n->leaf and __pm3_inside_box(p, n->vmin, n->vmax)) {
 		unsigned char s = 0;
 		__pm3_lt(s, p, n->center);
 		n = n->children[s];
+	}
+
+	if (n == nullptr) {
+		return;
 	}
 
 	if (__pm3_inside_box(p, n->vmin, n->vmax) and n->count > 0) {

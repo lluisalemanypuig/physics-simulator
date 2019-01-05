@@ -189,23 +189,20 @@ class octree {
 		/**
 		 * @brief Builds the partition of a cloud of points.
 		 *
-		 * The points are stored in packs of vec3. A pack is a set of
-		 * tightly allocated vec3's.
-		 *
 		 * For example, we may have a struct like this:
 		 *
 		 \verbatim
 		 struct big {
 			float a,b,c;
 			char k;
-			vec3 p1, p2, p3;
+			math::vec3 p1, p2, p3;
 			char q;
-			vec3 p4;
+			math::vec3 p4;
 		 };
 		 \endverbatim
 		 *
-		 * If one wanted to construct an octree using the vec3's
-		 * p1,p2,p3, in the array
+		 * If one wanted to construct an octree using the math::vec3's
+		 * p1, in the array
 		 *
 		 \verbatim
 		 big b[512]
@@ -213,18 +210,14 @@ class octree {
 		 *
 		 * one would have to call this function as follows:
 		 *
-		 * init(&b[0], 512, 3, sizeof(big), offsetof(big, p1))
+		 * init(&b[0].b1.x, 512, sizeof(big))
 		 *
-		 * @param p Pointer to the first element in which the vec3 is allocated.
-		 * @param n Number of packs of vec3.
-		 * @param ps Pack size.
-		 * @param offset Byte offset of the first vec3.
-		 * @param vertices The vertices, without repetitions, of the cloud.
+		 * @param p Pointer to the first element in which the math::vec3 is allocated.
+		 * @param n Number of math::vec3.
+		 * @param offset Byte offset between math::vec3.
+		 * @param lod Level Of Detail: minimum number of vertices per cell.
 		 */
-		void init(
-			const void *p, size_t n, size_t ps, size_t size, size_t offset,
-			size_t lod = 8
-		);
+		void init(const void *p, size_t n, size_t offset, size_t lod = 8);
 
 		/// Frees the memory occupied by this object.
 		void clear();

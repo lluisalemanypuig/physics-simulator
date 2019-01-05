@@ -205,11 +205,7 @@ void __fv_initGL(int argc, char *argv[]) {
 	// compute offset of position w.r.t. to the beginning of its struct
 	const fluid_particle *ps = __fv_F->get_particles();
 
-	size_t base = reinterpret_cast<size_t>( &ps[0] );
-	size_t member_pos = reinterpret_cast<size_t>( &ps[0].cur_pos );
-	size_t offset = member_pos - base;
-
-	__fv_tree.init(&ps[0], N, 1, sizeof(fluid_particle), offset, 4);
+	__fv_tree.init(&ps[0].cur_pos, N, sizeof(fluid_particle), 4);
 	__fv_tree.get_boxes(__fv_tree_boxes);
 
 	__fv_valid_query = false;

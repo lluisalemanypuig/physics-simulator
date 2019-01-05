@@ -16,7 +16,8 @@ using namespace physim;
 using namespace math;
 using namespace structures;
 
-#define N 4
+#define N 1048576
+//#define N 4
 
 class big {
 	public:
@@ -53,163 +54,187 @@ namespace study_cases {
 	void sim_900_test_vectors() {
 		vector<big> v1(N);
 		for (size_t i = 0; i < N; ++i) {
-			v1[i].p1 = vec3( i*12 + 0.0f, i*12 +  1.0f, i*12 +  2.0f );
-			v1[i].p2 = vec3( i*12 + 3.0f, i*12 +  4.0f, i*12 +  5.0f );
-			v1[i].p3 = vec3( i*12 + 6.0f, i*12 +  7.0f, i*12 +  8.0f );
-			v1[i].p4 = vec3( i*12 + 9.0f, i*12 + 10.0f, i*12 + 11.0f );
+			size_t base = 12*i;
+			v1[i].p1 = vec3( base + 0.0f, base +  1.0f, base +  2.0f );
+			v1[i].p2 = vec3( base + 3.0f, base +  4.0f, base +  5.0f );
+			v1[i].p3 = vec3( base + 6.0f, base +  7.0f, base +  8.0f );
+			v1[i].p4 = vec3( base + 9.0f, base + 10.0f, base + 11.0f );
 		}
 
 		octree tree;
 
 		cout << "Filling from vectors:" << endl;
 
-		cout << "    TEST 1" << endl;
-		tree.init(&v1[0], N, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    v1 (1): TEST p1 " << N << endl;
+		tree.init(&v1[0].p1, N, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (1): TEST p2 " << N << endl;
+		tree.init(&v1[0].p2, N, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (1): TEST p3 " << N << endl;
+		tree.init(&v1[0].p3, N, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (1): TEST p4 " << N << endl;
+		tree.init(&v1[0].p4, N, sizeof(big), 8);
 		tree.clear();
 
-		cout << "    TEST 2" << endl;
-		tree.init(&v1[0], N, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    v1 (2): TEST p1 " << N/2 << endl;
+		tree.init(&v1[N/2].p1, N/2, sizeof(big), 8);
 		tree.clear();
-
-		cout << "    TEST 3" << endl;
-		tree.init(&v1[0], N/2, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    v1 (2): TEST p2 " << N/2 << endl;
+		tree.init(&v1[N/2].p2, N/2, sizeof(big), 8);
 		tree.clear();
-
-		cout << "    TEST 4" << endl;
-		tree.init(&v1[0], N/2, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    v1 (2): TEST p3 " << N/2 << endl;
+		tree.init(&v1[N/2].p3, N/2, sizeof(big), 8);
 		tree.clear();
-
-		cout << "    TEST 5" << endl;
-		tree.init(&v1[N/2], N/2, 3, sizeof(big), offsetof(big, p1), 8);
-		tree.clear();
-
-		cout << "    TEST 6" << endl;
-		tree.init(&v1[N/2], N/2, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    v1 (2): TEST p4 " << N/2 << endl;
+		tree.init(&v1[N/2].p4, N/2, sizeof(big), 8);
 		tree.clear();
 
 		vector<bigger> v2(N);
 		for (size_t i = 0; i < N; ++i) {
-			v2[i].p1 = vec3( i*27 +  0.0f, i*27 +  1.0f, i*27 +  2.0f );
-			v2[i].p2 = vec3( i*27 +  3.0f, i*27 +  4.0f, i*27 +  5.0f );
-			v2[i].p3 = vec3( i*27 +  6.0f, i*27 +  7.0f, i*27 +  8.0f );
-			v2[i].p4 = vec3( i*27 +  9.0f, i*27 + 10.0f, i*27 + 11.0f );
-			v2[i].p5 = vec3( i*27 + 12.0f, i*27 + 13.0f, i*27 + 14.0f );
-			v2[i].p6 = vec3( i*27 + 15.0f, i*27 + 16.0f, i*27 + 17.0f );
-			v2[i].p7 = vec3( i*27 + 18.0f, i*27 + 19.0f, i*27 + 20.0f );
-			v2[i].p8 = vec3( i*27 + 21.0f, i*27 + 22.0f, i*27 + 23.0f );
-			v2[i].p9 = vec3( i*27 + 24.0f, i*27 + 25.0f, i*27 + 26.0f );
+			size_t base = 27*i;
+			v2[i].p1 = vec3( base +  0.0f, base +  1.0f, base +  2.0f );
+			v2[i].p2 = vec3( base +  3.0f, base +  4.0f, base +  5.0f );
+			v2[i].p3 = vec3( base +  6.0f, base +  7.0f, base +  8.0f );
+			v2[i].p4 = vec3( base +  9.0f, base + 10.0f, base + 11.0f );
+			v2[i].p5 = vec3( base + 12.0f, base + 13.0f, base + 14.0f );
+			v2[i].p6 = vec3( base + 15.0f, base + 16.0f, base + 17.0f );
+			v2[i].p7 = vec3( base + 18.0f, base + 19.0f, base + 20.0f );
+			v2[i].p8 = vec3( base + 21.0f, base + 22.0f, base + 23.0f );
+			v2[i].p9 = vec3( base + 24.0f, base + 25.0f, base + 26.0f );
 		}
 
-		size_t base = reinterpret_cast<size_t>( &v2[0] );
-		size_t member_p1 = reinterpret_cast<size_t>( &v2[0].p1 );
-		size_t offset_p1 = member_p1 - base;
-		size_t member_p5 = reinterpret_cast<size_t>( &v2[0].p5 );
-		size_t offset_p5 = member_p5 - base;
-
-		cout << "    TEST 7" << endl;
-		tree.init(&v2[0], N, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    v2 (1): TEST p5 " << N << endl;
+		tree.init(&v2[0].p5, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p6 " << N << endl;
+		tree.init(&v2[0].p6, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p7 " << N << endl;
+		tree.init(&v2[0].p7, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p8 " << N << endl;
+		tree.init(&v2[0].p8, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p9 " << N << endl;
+		tree.init(&v2[0].p9, N, sizeof(bigger), 8);
 		tree.clear();
 
-		cout << "    TEST 8" << endl;
-		tree.init(&v2[0], N, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    v2 (2): TEST p5 " << N/2 << endl;
+		tree.init(&v2[N/2].p5, N/2, sizeof(bigger), 8);
 		tree.clear();
-
-		cout << "    TEST 9" << endl;
-		tree.init(&v2[0], N/2, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    v2 (2): TEST p6 " << N/2 << endl;
+		tree.init(&v2[N/2].p6, N/2, sizeof(bigger), 8);
 		tree.clear();
-
-		cout << "    TEST 10" << endl;
-		tree.init(&v2[0], N/2, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    v2 (2): TEST p7 " << N/2 << endl;
+		tree.init(&v2[N/2].p7, N/2, sizeof(bigger), 8);
 		tree.clear();
-
-		cout << "    TEST 11" << endl;
-		tree.init(&v2[N/2], N/2, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    v2 (2): TEST p8 " << N/2 << endl;
+		tree.init(&v2[N/2].p8, N/2, sizeof(bigger), 8);
 		tree.clear();
-
-		cout << "    TEST 12" << endl;
-		tree.init(&v2[N/2], N/2, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    v2 (2): TEST p9 " << N/2 << endl;
+		tree.init(&v2[N/2].p9, N/2, sizeof(bigger), 8);
 		tree.clear();
 	}
 
 	void sim_900_test_arrays() {
-		big v[N];
+		big *v1 = static_cast<big *>(malloc(N*sizeof(big)));
+		if (v1 == nullptr) {
+			cerr << "Error in allocating " << N << " elements of type big" << endl;
+			return;
+		}
 		for (size_t i = 0; i < N; ++i) {
-			v[i].p1 = vec3( i*12 + 0.0f, i*12 +  1.0f, i*12 +  2.0f );
-			v[i].p2 = vec3( i*12 + 3.0f, i*12 +  4.0f, i*12 +  5.0f );
-			v[i].p3 = vec3( i*12 + 6.0f, i*12 +  7.0f, i*12 +  8.0f );
-			v[i].p4 = vec3( i*12 + 9.0f, i*12 + 10.0f, i*12 + 11.0f );
+			size_t base = 12*i;
+			v1[i].p1 = vec3( base + 0.0f, base +  1.0f, base +  2.0f );
+			v1[i].p2 = vec3( base + 3.0f, base +  4.0f, base +  5.0f );
+			v1[i].p3 = vec3( base + 6.0f, base +  7.0f, base +  8.0f );
+			v1[i].p4 = vec3( base + 9.0f, base + 10.0f, base + 11.0f );
 		}
 
 		octree tree;
 
 		cout << "Filling from arrays:" << endl;
 
-		cout << "    TEST 1" << endl;
-		tree.init(&v[0], N, 3, sizeof(big), offsetof(big, p1), 8);
+		cout << "    v1 (1): TEST p1 " << N << endl;
+		tree.init(&v1[0].p1, N, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (1): TEST p2 " << N << endl;
+		tree.init(&v1[0].p2, N, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (1): TEST p3 " << N << endl;
+		tree.init(&v1[0].p3, N, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (1): TEST p4 " << N << endl;
+		tree.init(&v1[0].p4, N, sizeof(big), 8);
 		tree.clear();
 
-		cout << "    TEST 2" << endl;
-		tree.init(&v[0], N, 1, sizeof(big), offsetof(big, p4), 8);
+		cout << "    v1 (2): TEST p1 " << N/2 << endl;
+		tree.init(&v1[N/2].p1, N/2, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (2): TEST p2 " << N/2 << endl;
+		tree.init(&v1[N/2].p2, N/2, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (2): TEST p3 " << N/2 << endl;
+		tree.init(&v1[N/2].p3, N/2, sizeof(big), 8);
+		tree.clear();
+		cout << "    v1 (2): TEST p4 " << N/2 << endl;
+		tree.init(&v1[N/2].p4, N/2, sizeof(big), 8);
 		tree.clear();
 
-		cout << "    TEST 3" << endl;
-		tree.init(&v[0], N/2, 3, sizeof(big), offsetof(big, p1), 8);
-		tree.clear();
+		free(v1);
 
-		cout << "    TEST 4" << endl;
-		tree.init(&v[0], N/2, 1, sizeof(big), offsetof(big, p4), 8);
-		tree.clear();
-
-		cout << "    TEST 5" << endl;
-		tree.init(&v[N/2], N/2, 3, sizeof(big), offsetof(big, p1), 8);
-		tree.clear();
-
-		cout << "    TEST 6" << endl;
-		tree.init(&v[N/2], N/2, 1, sizeof(big), offsetof(big, p4), 8);
-		tree.clear();
-
-		bigger v2[N];
+		bigger *v2 = static_cast<bigger *>(malloc(N*sizeof(bigger)));
+		if (v2 == nullptr) {
+			cerr << "Error in allocating " << N << " elements of type bigger" << endl;
+			return;
+		}
 		for (size_t i = 0; i < N; ++i) {
-			v2[i].p1 = vec3( i*27 +  0.0f, i*27 +  1.0f, i*27 +  2.0f );
-			v2[i].p2 = vec3( i*27 +  3.0f, i*27 +  4.0f, i*27 +  5.0f );
-			v2[i].p3 = vec3( i*27 +  6.0f, i*27 +  7.0f, i*27 +  8.0f );
-			v2[i].p4 = vec3( i*27 +  9.0f, i*27 + 10.0f, i*27 + 11.0f );
-			v2[i].p5 = vec3( i*27 + 12.0f, i*27 + 13.0f, i*27 + 14.0f );
-			v2[i].p6 = vec3( i*27 + 15.0f, i*27 + 16.0f, i*27 + 17.0f );
-			v2[i].p7 = vec3( i*27 + 18.0f, i*27 + 19.0f, i*27 + 20.0f );
-			v2[i].p8 = vec3( i*27 + 21.0f, i*27 + 22.0f, i*27 + 23.0f );
-			v2[i].p9 = vec3( i*27 + 24.0f, i*27 + 25.0f, i*27 + 26.0f );
+			size_t base = 27*i;
+			v2[i].p1 = vec3( base +  0.0f, base +  1.0f, base +  2.0f );
+			v2[i].p2 = vec3( base +  3.0f, base +  4.0f, base +  5.0f );
+			v2[i].p3 = vec3( base +  6.0f, base +  7.0f, base +  8.0f );
+			v2[i].p4 = vec3( base +  9.0f, base + 10.0f, base + 11.0f );
+			v2[i].p5 = vec3( base + 12.0f, base + 13.0f, base + 14.0f );
+			v2[i].p6 = vec3( base + 15.0f, base + 16.0f, base + 17.0f );
+			v2[i].p7 = vec3( base + 18.0f, base + 19.0f, base + 20.0f );
+			v2[i].p8 = vec3( base + 21.0f, base + 22.0f, base + 23.0f );
+			v2[i].p9 = vec3( base + 24.0f, base + 25.0f, base + 26.0f );
 		}
 
-		size_t base = reinterpret_cast<size_t>( &v2[0] );
-		size_t member_p1 = reinterpret_cast<size_t>( &v2[0].p1 );
-		size_t offset_p1 = member_p1 - base;
-		size_t member_p5 = reinterpret_cast<size_t>( &v2[0].p5 );
-		size_t offset_p5 = member_p5 - base;
-
-		cout << "    TEST 7" << endl;
-		tree.init(&v2[0], N, 3, sizeof(bigger), offset_p1, 8);
+		cout << "    v2 (1): TEST p5 " << N << endl;
+		tree.init(&v2[0].p5, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p6 " << N << endl;
+		tree.init(&v2[0].p6, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p7 " << N << endl;
+		tree.init(&v2[0].p7, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p8 " << N << endl;
+		tree.init(&v2[0].p8, N, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (1): TEST p9 " << N << endl;
+		tree.init(&v2[0].p9, N, sizeof(bigger), 8);
 		tree.clear();
 
-		cout << "    TEST 8" << endl;
-		tree.init(&v2[0], N, 5, sizeof(bigger), offset_p5, 8);
+		cout << "    v2 (2): TEST p5 " << N/2 << endl;
+		tree.init(&v2[N/2].p5, N/2, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (2): TEST p6 " << N/2 << endl;
+		tree.init(&v2[N/2].p6, N/2, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (2): TEST p7 " << N/2 << endl;
+		tree.init(&v2[N/2].p7, N/2, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (2): TEST p8 " << N/2 << endl;
+		tree.init(&v2[N/2].p8, N/2, sizeof(bigger), 8);
+		tree.clear();
+		cout << "    v2 (2): TEST p9 " << N/2 << endl;
+		tree.init(&v2[N/2].p9, N/2, sizeof(bigger), 8);
 		tree.clear();
 
-		cout << "    TEST 9" << endl;
-		tree.init(&v2[0], N/2, 3, sizeof(bigger), offset_p1, 8);
-		tree.clear();
-
-		cout << "    TEST 10" << endl;
-		tree.init(&v2[0], N/2, 5, sizeof(bigger), offset_p5, 8);
-		tree.clear();
-
-		cout << "    TEST 11" << endl;
-		tree.init(&v2[N/2], N/2, 3, sizeof(bigger), offset_p1, 8);
-		tree.clear();
-
-		cout << "    TEST 12" << endl;
-		tree.init(&v2[N/2], N/2, 5, sizeof(bigger), offset_p5, 8);
-		tree.clear();
+		free(v2);
 	}
 
 	void sim_900(int argc, char *argv[]) {
