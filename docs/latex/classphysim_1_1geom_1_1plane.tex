@@ -1,0 +1,287 @@
+\hypertarget{classphysim_1_1geom_1_1plane}{}\section{physim\+:\+:geom\+:\+:plane Class Reference}
+\label{classphysim_1_1geom_1_1plane}\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+
+
+Class that implements a plane.  
+
+
+
+
+{\ttfamily \#include $<$plane.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:geom\+:\+:plane\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classphysim_1_1geom_1_1plane__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:geom\+:\+:plane\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{classphysim_1_1geom_1_1plane__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a64a0fa202286b9e8649829f98e5d3a1e}\label{classphysim_1_1geom_1_1plane_a64a0fa202286b9e8649829f98e5d3a1e}} 
+\hyperlink{classphysim_1_1geom_1_1plane_a64a0fa202286b9e8649829f98e5d3a1e}{plane} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1geom_1_1plane_aeb026d0e17e529a5709fb833e3c0f2a0}{plane} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&n, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p)
+\begin{DoxyCompactList}\small\item\em Construct a plane with a normal and a point. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1geom_1_1plane_aaf64dcf023556f15e3705fa0269a2675}{plane} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&n, float d)
+\begin{DoxyCompactList}\small\item\em Construct a plane with a normal and the equation\textquotesingle{}s independent term. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1geom_1_1plane_a2dd759ec4519cfd2fb943bda36988f9a}{plane} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p0, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p2)
+\begin{DoxyCompactList}\small\item\em Construct plane with three points. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a9446a32f619c01e87b122ee84736dfd2}\label{classphysim_1_1geom_1_1plane_a9446a32f619c01e87b122ee84736dfd2}} 
+\hyperlink{classphysim_1_1geom_1_1plane_a9446a32f619c01e87b122ee84736dfd2}{plane} (const \hyperlink{classphysim_1_1geom_1_1plane}{plane} \&p)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a89d7076c8639031ec4a0874ad8a4424c}\label{classphysim_1_1geom_1_1plane_a89d7076c8639031ec4a0874ad8a4424c}} 
+\hyperlink{classphysim_1_1geom_1_1plane_a89d7076c8639031ec4a0874ad8a4424c}{$\sim$plane} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geom_1_1plane_a6922a19aee04c7a7a975c03a3601951f}{set\+\_\+position} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p)
+\begin{DoxyCompactList}\small\item\em Sets the position of this plane. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a8c266089d77272e4ce104aa1e64ba2ed}\label{classphysim_1_1geom_1_1plane_a8c266089d77272e4ce104aa1e64ba2ed}} 
+\hyperlink{namespacephysim_1_1geom_a473d69ab4667a730784b37b67fa4b658}{geom\+\_\+type} \hyperlink{classphysim_1_1geom_1_1plane_a8c266089d77272e4ce104aa1e64ba2ed}{get\+\_\+geom\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of geometry of this object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_ab8fb985af66d400aaa911514551557b9}\label{classphysim_1_1geom_1_1plane_ab8fb985af66d400aaa911514551557b9}} 
+float \hyperlink{classphysim_1_1geom_1_1plane_ab8fb985af66d400aaa911514551557b9}{dist\+\_\+point\+\_\+plane} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p) const
+\begin{DoxyCompactList}\small\item\em Returns the distance between point {\itshape p} and this plane. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_acd1a7a2e83550025210d32de71c229de}\label{classphysim_1_1geom_1_1plane_acd1a7a2e83550025210d32de71c229de}} 
+void \hyperlink{classphysim_1_1geom_1_1plane_acd1a7a2e83550025210d32de71c229de}{closest\+\_\+point\+\_\+plane} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&c) const
+\begin{DoxyCompactList}\small\item\em Returns the project of point {\itshape p} onto the plane. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a06c074a0807102ee35dddf70db8e6e80}\label{classphysim_1_1geom_1_1plane_a06c074a0807102ee35dddf70db8e6e80}} 
+const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \& \hyperlink{classphysim_1_1geom_1_1plane_a06c074a0807102ee35dddf70db8e6e80}{get\+\_\+normal} () const
+\begin{DoxyCompactList}\small\item\em Returns the normal of this plane. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a30e146a6111a7924d199f7f6170b54d5}\label{classphysim_1_1geom_1_1plane_a30e146a6111a7924d199f7f6170b54d5}} 
+float \hyperlink{classphysim_1_1geom_1_1plane_a30e146a6111a7924d199f7f6170b54d5}{get\+\_\+constant} () const
+\begin{DoxyCompactList}\small\item\em Returns the independent term of this plane\textquotesingle{}s equation. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geom_1_1plane_a2a82c9b43f0883e0cfb7e49fe71b3434}{is\+\_\+inside} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, float tol=1.e-\/6f) const
+\begin{DoxyCompactList}\small\item\em Returns true if {\itshape p} satisfies this plane\textquotesingle{}s equation. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geom_1_1plane_aa424f3bd6b5d4dc9f69683bbcda8c876}{intersec\+\_\+segment} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p2) const
+\begin{DoxyCompactList}\small\item\em Returns if the segment defined by the points {\itshape p1} and {\itshape p2} intersects with the plane. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geom_1_1plane_a2ec8e396f3e61e6c262236f560abfff5}{intersec\+\_\+segment} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p2, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p\+\_\+inter) const
+\begin{DoxyCompactList}\small\item\em Returns the intersection between this plane and the segment defined by the points {\itshape p1} and {\itshape p2}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geom_1_1plane_af40afe0d75150a4b45de85a2197137f1}{update\+\_\+particle} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pp, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pv, \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $\ast$p) const
+\begin{DoxyCompactList}\small\item\em Update a particle in a collision with geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_aaaf1f8bef6dc8fe9398e5c3a07a123c2}\label{classphysim_1_1geom_1_1plane_aaaf1f8bef6dc8fe9398e5c3a07a123c2}} 
+void \hyperlink{classphysim_1_1geom_1_1plane_aaaf1f8bef6dc8fe9398e5c3a07a123c2}{display} (std\+::ostream \&os=std\+::cout) const
+\begin{DoxyCompactList}\small\item\em Output on stream {\itshape os} information about this geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}{normal}
+\begin{DoxyCompactList}\small\item\em Normal of the plane. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a80867844aac8461bd644cca6de9ef739}\label{classphysim_1_1geom_1_1plane_a80867844aac8461bd644cca6de9ef739}} 
+float \hyperlink{classphysim_1_1geom_1_1plane_a80867844aac8461bd644cca6de9ef739}{dconst}
+\begin{DoxyCompactList}\small\item\em Constant, independent term of the plane equation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that implements a plane. 
+
+A plane is defined with a normal, unit vector (see \hyperlink{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}{normal}) and a constant term (see \hyperlink{classphysim_1_1geom_1_1plane_a80867844aac8461bd644cca6de9ef739}{dconst}).
+
+A plane can be defined only with these two parameters (see \hyperlink{classphysim_1_1geom_1_1plane_aeb026d0e17e529a5709fb833e3c0f2a0}{plane(const math\+::vec3\&, const math\+::vec3\&)} or with three points (see \hyperlink{classphysim_1_1geom_1_1plane_a2dd759ec4519cfd2fb943bda36988f9a}{plane(const math\+::vec3\&, const math\+::vec3\&, const math\+::vec3\&)}). 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_aeb026d0e17e529a5709fb833e3c0f2a0}\label{classphysim_1_1geom_1_1plane_aeb026d0e17e529a5709fb833e3c0f2a0}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!plane@{plane}}
+\index{plane@{plane}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{plane()}{plane()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily physim\+::geom\+::plane\+::plane (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{n,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Construct a plane with a normal and a point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Normal vector of the plane. \\
+\hline
+{\em p} & Point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPostcond}{Postcondition}
+\hyperlink{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}{normal} takes the normalisation of the vector {\itshape n}. 
+\end{DoxyPostcond}
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_aaf64dcf023556f15e3705fa0269a2675}\label{classphysim_1_1geom_1_1plane_aaf64dcf023556f15e3705fa0269a2675}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!plane@{plane}}
+\index{plane@{plane}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{plane()}{plane()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily physim\+::geom\+::plane\+::plane (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{n,  }\item[{float}]{d }\end{DoxyParamCaption})}
+
+
+
+Construct a plane with a normal and the equation\textquotesingle{}s independent term. 
+
+The plane\textquotesingle{}s equation is \begin{DoxyVerb}dot(n,X) + d = 0
+\end{DoxyVerb}
+ 
+\begin{DoxyParams}{Parameters}
+{\em n} & Normal vector of the plane. \\
+\hline
+{\em d} & Independent term of the plane\textquotesingle{}s equation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPostcond}{Postcondition}
+\hyperlink{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}{normal} takes the normalisation of the vector {\itshape n}. 
+\end{DoxyPostcond}
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a2dd759ec4519cfd2fb943bda36988f9a}\label{classphysim_1_1geom_1_1plane_a2dd759ec4519cfd2fb943bda36988f9a}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!plane@{plane}}
+\index{plane@{plane}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{plane()}{plane()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily physim\+::geom\+::plane\+::plane (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p0,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2 }\end{DoxyParamCaption})}
+
+
+
+Construct plane with three points. 
+
+The normal of the plane is defined as the cross product of the vectors from {\itshape p0} to {\itshape p1} and from {\itshape p0} to {\itshape p2\+:} \begin{DoxyVerb}n = normalise( (p1 - p0) x (p2 - p0) )
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_aa424f3bd6b5d4dc9f69683bbcda8c876}\label{classphysim_1_1geom_1_1plane_aa424f3bd6b5d4dc9f69683bbcda8c876}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!intersec\+\_\+segment@{intersec\+\_\+segment}}
+\index{intersec\+\_\+segment@{intersec\+\_\+segment}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{intersec\+\_\+segment()}{intersec\_segment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool physim\+::geom\+::plane\+::intersec\+\_\+segment (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2 }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns if the segment defined by the points {\itshape p1} and {\itshape p2} intersects with the plane. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & First endpoint of the segment. \\
+\hline
+\mbox{\tt in}  & {\em p2} & Second endpoint of the segment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if there is intersection. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classphysim_1_1geom_1_1geometry_a53c1fce565d593550f8022118f2bc3a3}{physim\+::geom\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a2ec8e396f3e61e6c262236f560abfff5}\label{classphysim_1_1geom_1_1plane_a2ec8e396f3e61e6c262236f560abfff5}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!intersec\+\_\+segment@{intersec\+\_\+segment}}
+\index{intersec\+\_\+segment@{intersec\+\_\+segment}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{intersec\+\_\+segment()}{intersec\_segment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool physim\+::geom\+::plane\+::intersec\+\_\+segment (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p\+\_\+inter }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns the intersection between this plane and the segment defined by the points {\itshape p1} and {\itshape p2}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & First endpoint of the segment. \\
+\hline
+\mbox{\tt in}  & {\em p2} & Second endpoint of the segment. \\
+\hline
+\mbox{\tt out}  & {\em p\+\_\+inter} & If the segment intersects the plane then this will contain the intersection point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if there is intersection. In this case, the value of {\itshape p\+\_\+inter} is valid at the end of the method. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classphysim_1_1geom_1_1geometry_a0870a4892819489b7e830663a3f582b8}{physim\+::geom\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a2a82c9b43f0883e0cfb7e49fe71b3434}\label{classphysim_1_1geom_1_1plane_a2a82c9b43f0883e0cfb7e49fe71b3434}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!is\+\_\+inside@{is\+\_\+inside}}
+\index{is\+\_\+inside@{is\+\_\+inside}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{is\+\_\+inside()}{is\_inside()}}
+{\footnotesize\ttfamily bool physim\+::geom\+::plane\+::is\+\_\+inside (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{float}]{tol = {\ttfamily 1.e-\/6f} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns true if {\itshape p} satisfies this plane\textquotesingle{}s equation. 
+
+Returns true iff \begin{DoxyVerb}normal**p + dconst = 0
+\end{DoxyVerb}
+ where {\itshape normal} is \hyperlink{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}{normal} and {\itshape dconst} is \hyperlink{classphysim_1_1geom_1_1plane_a80867844aac8461bd644cca6de9ef739}{dconst}.
+
+The equality, however, is satisfied when the left handside of the equation is smaller or equal than {\itshape tol}. 
+
+Implements \hyperlink{classphysim_1_1geom_1_1geometry_ab7aa1a32927e96ed384a93b84fbd62b7}{physim\+::geom\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_a6922a19aee04c7a7a975c03a3601951f}\label{classphysim_1_1geom_1_1plane_a6922a19aee04c7a7a975c03a3601951f}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!set\+\_\+position@{set\+\_\+position}}
+\index{set\+\_\+position@{set\+\_\+position}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{set\+\_\+position()}{set\_position()}}
+{\footnotesize\ttfamily void physim\+::geom\+::plane\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the position of this plane. 
+
+Modifies \hyperlink{classphysim_1_1geom_1_1plane_a80867844aac8461bd644cca6de9ef739}{dconst} so that the plane\textquotesingle{}s equation is satisifed by point {\itshape p}. 
+\begin{DoxyParams}{Parameters}
+{\em p} & Force the plane to go through this point. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1geom_1_1geometry_adbd7c270a0b49c2c6d085457a20bfa69}{physim\+::geom\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_af40afe0d75150a4b45de85a2197137f1}\label{classphysim_1_1geom_1_1plane_af40afe0d75150a4b45de85a2197137f1}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!update\+\_\+particle@{update\+\_\+particle}}
+\index{update\+\_\+particle@{update\+\_\+particle}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{update\+\_\+particle()}{update\_particle()}}
+{\footnotesize\ttfamily void physim\+::geom\+::plane\+::update\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $\ast$}]{pred }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update a particle in a collision with geometry. 
+
+Assumig that particle {\itshape pred} collided with this geometry, update its position, velocity, ... accordingly.
+
+For example, some geometry may be \textquotesingle{}bouncy\textquotesingle{}, it may give the particle some extra speed. This needs to be updated in this method.
+
+The particle {\itshape pred} is given in a state that is not modified by any solver. That is, the particle\textquotesingle{}s position, velocity, force, ... have the value at time step {\itshape T}. The predicted position and velocity are given in {\itshape pred\+\_\+pos} and {\itshape pred\+\_\+vel}. These are predictions of the position and velocity for time {\itshape T} + {\itshape dt} (where dt is some time step). The modified particle due to the collision must be stored in {\itshape pred}.
+
+This method is called only when it is sure that there has been a collision\+: the segment joining the particle\textquotesingle{}s current position and the predicted position intersects the geometry.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pred\+\_\+pos} & The predicted position of the particle. \\
+\hline
+\mbox{\tt in}  & {\em pred\+\_\+vel} & The predicted velocity of the particle. \\
+\hline
+\mbox{\tt out}  & {\em pred} & The particle with the result of the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1geom_1_1geometry_a01084372e5fd738636a31b151918e7dd}{physim\+::geom\+::geometry}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}\label{classphysim_1_1geom_1_1plane_ab9502f59c7c72083fe4ab166ad8e637a}} 
+\index{physim\+::geom\+::plane@{physim\+::geom\+::plane}!normal@{normal}}
+\index{normal@{normal}!physim\+::geom\+::plane@{physim\+::geom\+::plane}}
+\subsubsection{\texorpdfstring{normal}{normal}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::geom\+::plane\+::normal\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Normal of the plane. 
+
+This is a unit vector. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/geometry/plane.\+hpp\item 
+physim/geometry/plane.\+cpp\end{DoxyCompactItemize}

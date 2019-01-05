@@ -1,0 +1,56 @@
+\hypertarget{namespacephysim_1_1meshes}{}\section{physim\+:\+:meshes Namespace Reference}
+\label{namespacephysim_1_1meshes}\index{physim\+::meshes@{physim\+::meshes}}
+
+
+Spring meshes.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1meshes_1_1mesh}{mesh}
+\begin{DoxyCompactList}\small\item\em Abstract spring mesh. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1meshes_1_1mesh1d}{mesh1d}
+\begin{DoxyCompactList}\small\item\em 1-\/\+Dimensional spring mesh. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1meshes_1_1mesh2d}{mesh2d}
+\begin{DoxyCompactList}\small\item\em 2-\/\+Dimensional spring mesh. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular}{mesh2d\+\_\+regular}
+\begin{DoxyCompactList}\small\item\em 2-\/\+Dimensional regular spring mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67}{mesh\+\_\+type} \+: int8\+\_\+t \{ \hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67a9948c645c094247794f4c7acdbeb2bb6}{mesh\+\_\+type\+::d1} = 0, 
+\hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67ab5de808d7817e13049b1c782586af757}{mesh\+\_\+type\+::d2\+\_\+regular}
+ \}\begin{DoxyCompactList}\small\item\em The different types of meshes. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Spring meshes. 
+
+Namespace dedicated to the definition and implementation of systems of springs. 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67}\label{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67}} 
+\index{physim\+::meshes@{physim\+::meshes}!mesh\+\_\+type@{mesh\+\_\+type}}
+\index{mesh\+\_\+type@{mesh\+\_\+type}!physim\+::meshes@{physim\+::meshes}}
+\subsubsection{\texorpdfstring{mesh\+\_\+type}{mesh\_type}}
+{\footnotesize\ttfamily enum \hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67}{physim\+::meshes\+::mesh\+\_\+type} \+: int8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+The different types of meshes. 
+
+The different types of meshes implemented are\+:
+\begin{DoxyItemize}
+\item \hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67a9948c645c094247794f4c7acdbeb2bb6}{mesh\+\_\+type\+::d1} 
+\end{DoxyItemize}\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{d1@{d1}!physim\+::meshes@{physim\+::meshes}}\index{physim\+::meshes@{physim\+::meshes}!d1@{d1}}}\mbox{\Hypertarget{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67a9948c645c094247794f4c7acdbeb2bb6}\label{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67a9948c645c094247794f4c7acdbeb2bb6}} 
+d1&1-\/dimensional meshes. Or, simply, springs. A particle\textquotesingle{}s movement affects, most, two particles (its neighbouring particles). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{d2\+\_\+regular@{d2\+\_\+regular}!physim\+::meshes@{physim\+::meshes}}\index{physim\+::meshes@{physim\+::meshes}!d2\+\_\+regular@{d2\+\_\+regular}}}\mbox{\Hypertarget{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67ab5de808d7817e13049b1c782586af757}\label{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67ab5de808d7817e13049b1c782586af757}} 
+d2\+\_\+regular&2-\/dimensional meshes. Each non-\/border particle has 4 neighbours. Particles at the corners have 2 neighbours and the rest have 3. \\
+\hline
+
+\end{DoxyEnumFields}

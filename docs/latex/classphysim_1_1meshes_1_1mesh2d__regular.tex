@@ -1,0 +1,354 @@
+\hypertarget{classphysim_1_1meshes_1_1mesh2d__regular}{}\section{physim\+:\+:meshes\+:\+:mesh2d\+\_\+regular Class Reference}
+\label{classphysim_1_1meshes_1_1mesh2d__regular}\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+
+
+2-\/\+Dimensional regular spring mesh.  
+
+
+
+
+{\ttfamily \#include $<$mesh2d\+\_\+regular.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:meshes\+:\+:mesh2d\+\_\+regular\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{classphysim_1_1meshes_1_1mesh2d__regular__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:meshes\+:\+:mesh2d\+\_\+regular\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{classphysim_1_1meshes_1_1mesh2d__regular__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a2a8801b097cd6bccd6d6a088fa6f6d9f}\label{classphysim_1_1meshes_1_1mesh2d__regular_a2a8801b097cd6bccd6d6a088fa6f6d9f}} 
+\hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a2a8801b097cd6bccd6d6a088fa6f6d9f}{mesh2d\+\_\+regular} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_acaae970247d081125fc7c77368aafc07}{mesh2d\+\_\+regular} (float ke, float kd)
+\begin{DoxyCompactList}\small\item\em Constructor with parameters. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_aa33cccd404aa92abb6bf1c654054da9d}\label{classphysim_1_1meshes_1_1mesh2d__regular_aa33cccd404aa92abb6bf1c654054da9d}} 
+virtual \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_aa33cccd404aa92abb6bf1c654054da9d}{$\sim$mesh2d\+\_\+regular} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab05d404566850dd5a2d11814c3c25186}{make\+\_\+initial\+\_\+state} ()
+\begin{DoxyCompactList}\small\item\em Builds the initial state of the mesh. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_aaf4e82b9231d79624224c3462cc18809}{update\+\_\+forces} ()
+\begin{DoxyCompactList}\small\item\em Update the forces generated within the mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a6881e0701bdbbaf06f0502edfa8baac8}\label{classphysim_1_1meshes_1_1mesh2d__regular_a6881e0701bdbbaf06f0502edfa8baac8}} 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a6881e0701bdbbaf06f0502edfa8baac8}{clear} ()
+\begin{DoxyCompactList}\small\item\em Frees the memory occupied by this mesh. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a6d9ccf2226fb57cc3ffc04fd9612acdd}{simulate\+\_\+stretch} (bool s=true)
+\begin{DoxyCompactList}\small\item\em Activates/\+Deactivates the simulation of stretch internal forces. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a36293f6559978144527fb829efd63ea2}{simulate\+\_\+shear} (bool s=true)
+\begin{DoxyCompactList}\small\item\em Activates/\+Deactivates the simulation of shear internal forces. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_abc94712fdb508f126934bd2bde2cf867}{simulate\+\_\+bend} (bool s=true)
+\begin{DoxyCompactList}\small\item\em Activates/\+Deactivates the simulation of bending internal forces. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_aa8d8eafaea92619a04b3bd1781c8aec7}{set\+\_\+dimensions} (size\+\_\+t r, size\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em Sets the number of rows and columns. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ad1674ad6c5d8d3ed7ec01767f63f2de5}{is\+\_\+simulating\+\_\+stretch} () const
+\begin{DoxyCompactList}\small\item\em Returns whether stretch forces are actived. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a1620fec743604c7a9dd8b8c81344b615}{is\+\_\+simulating\+\_\+shear} () const
+\begin{DoxyCompactList}\small\item\em Returns whether shear forces are actived. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a9410509a30c8416a11bc50d34820bafe}{is\+\_\+simulating\+\_\+bend} () const
+\begin{DoxyCompactList}\small\item\em Returns whether bend forces are actived. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a26fcf2ed9c0532a33e524a5f1728dbdf}{get\+\_\+dimensions} (size\+\_\+t \&r, size\+\_\+t \&c) const
+\begin{DoxyCompactList}\small\item\em Gets the number of rows and columns. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a9ba9ff2e69bfcdb38a6362f35dbb1ba4}{get\+\_\+global\+\_\+index} (size\+\_\+t i, size\+\_\+t j) const
+\begin{DoxyCompactList}\small\item\em Returns the index of a particle of the mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a5940b5ab5b5b67139d13c10e473b4894}\label{classphysim_1_1meshes_1_1mesh2d__regular_a5940b5ab5b5b67139d13c10e473b4894}} 
+size\+\_\+t \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a5940b5ab5b5b67139d13c10e473b4894}{R}
+\begin{DoxyCompactList}\small\item\em Number of rows of the grid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_ae26a7e636588726103a835faf67b7771}\label{classphysim_1_1meshes_1_1mesh2d__regular_ae26a7e636588726103a835faf67b7771}} 
+size\+\_\+t \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ae26a7e636588726103a835faf67b7771}{C}
+\begin{DoxyCompactList}\small\item\em Number of columns of the grid. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec6}{math\+::vec6} $\ast$ \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ac3a70b7b6b37942d5174ddcc90703993}{sb\+\_\+ds}
+\begin{DoxyCompactList}\small\item\em Original distances between the particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a3101edd8212afd9a35ad11c6666e26be}\label{classphysim_1_1meshes_1_1mesh2d__regular_a3101edd8212afd9a35ad11c6666e26be}} 
+bool \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a3101edd8212afd9a35ad11c6666e26be}{stretch}
+\begin{DoxyCompactList}\small\item\em Simulate stretch forces. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_af25bf35485aa0a40e21a10f4e472721a}\label{classphysim_1_1meshes_1_1mesh2d__regular_af25bf35485aa0a40e21a10f4e472721a}} 
+bool \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_af25bf35485aa0a40e21a10f4e472721a}{shear}
+\begin{DoxyCompactList}\small\item\em Simulate shear forces. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_ab031a8ece45555e421c031b7c3fff4bd}\label{classphysim_1_1meshes_1_1mesh2d__regular_ab031a8ece45555e421c031b7c3fff4bd}} 
+bool \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab031a8ece45555e421c031b7c3fff4bd}{bend}
+\begin{DoxyCompactList}\small\item\em Simulate bend forces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+2-\/\+Dimensional regular spring mesh. 
+
+This mesh\textquotesingle{}s springs are organised in a grid\+: the particles at the four corners have two neighbours, the particles at the border of the grid (without considering the corners) have three neighbours, and the rest have four.
+
+By neighbours it should be understood the immediate particle in the grid. That is, in a grid of {\itshape R} and {\itshape C} particles in each dimension the particle at $(i,j)\:|\: 0 \le i \le R - 1, 0 \le j \le C - 1$ has as neighbours the particles at $(i-1,j),(i+1,j),(i,j-1),(i,j+1)$.
+
+In this type of meshes, there three types of internal forces implemented by default\+:
+\begin{DoxyItemize}
+\item stretch\+: \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a3101edd8212afd9a35ad11c6666e26be}{stretch}.
+\item shear\+: \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_af25bf35485aa0a40e21a10f4e472721a}{shear}.
+\item bending\+: \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab031a8ece45555e421c031b7c3fff4bd}{bend}. These internal forces can be activated through the functions
+\item \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a6d9ccf2226fb57cc3ffc04fd9612acdd}{simulate\+\_\+stretch}.
+\item \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a36293f6559978144527fb829efd63ea2}{simulate\+\_\+shear}.
+\item \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_abc94712fdb508f126934bd2bde2cf867}{simulate\+\_\+bend}. with an appropriate value of their parameter. Depending on the type of mesh some of these forces may not be implemented. 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_acaae970247d081125fc7c77368aafc07}\label{classphysim_1_1meshes_1_1mesh2d__regular_acaae970247d081125fc7c77368aafc07}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!mesh2d\+\_\+regular@{mesh2d\+\_\+regular}}
+\index{mesh2d\+\_\+regular@{mesh2d\+\_\+regular}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{mesh2d\+\_\+regular()}{mesh2d\_regular()}}
+{\footnotesize\ttfamily physim\+::meshes\+::mesh2d\+\_\+regular\+::mesh2d\+\_\+regular (\begin{DoxyParamCaption}\item[{float}]{ke,  }\item[{float}]{kd }\end{DoxyParamCaption})}
+
+
+
+Constructor with parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ke} & Elasticity parameter. \\
+\hline
+{\em kd} & Damping factor. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a26fcf2ed9c0532a33e524a5f1728dbdf}\label{classphysim_1_1meshes_1_1mesh2d__regular_a26fcf2ed9c0532a33e524a5f1728dbdf}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!get\+\_\+dimensions@{get\+\_\+dimensions}}
+\index{get\+\_\+dimensions@{get\+\_\+dimensions}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{get\+\_\+dimensions()}{get\_dimensions()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::get\+\_\+dimensions (\begin{DoxyParamCaption}\item[{size\+\_\+t \&}]{r,  }\item[{size\+\_\+t \&}]{c }\end{DoxyParamCaption}) const}
+
+
+
+Gets the number of rows and columns. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em r} & Number of rows. \\
+\hline
+\mbox{\tt out}  & {\em c} & Number of columns. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a9ba9ff2e69bfcdb38a6362f35dbb1ba4}\label{classphysim_1_1meshes_1_1mesh2d__regular_a9ba9ff2e69bfcdb38a6362f35dbb1ba4}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!get\+\_\+global\+\_\+index@{get\+\_\+global\+\_\+index}}
+\index{get\+\_\+global\+\_\+index@{get\+\_\+global\+\_\+index}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{get\+\_\+global\+\_\+index()}{get\_global\_index()}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::meshes\+::mesh2d\+\_\+regular\+::get\+\_\+global\+\_\+index (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i,  }\item[{size\+\_\+t}]{j }\end{DoxyParamCaption}) const}
+
+
+
+Returns the index of a particle of the mesh. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Row index. \\
+\hline
+{\em j} & Column index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the index of the particle at row {\itshape i} and column {\itshape j} as a single integer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a9410509a30c8416a11bc50d34820bafe}\label{classphysim_1_1meshes_1_1mesh2d__regular_a9410509a30c8416a11bc50d34820bafe}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!is\+\_\+simulating\+\_\+bend@{is\+\_\+simulating\+\_\+bend}}
+\index{is\+\_\+simulating\+\_\+bend@{is\+\_\+simulating\+\_\+bend}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{is\+\_\+simulating\+\_\+bend()}{is\_simulating\_bend()}}
+{\footnotesize\ttfamily bool physim\+::meshes\+::mesh2d\+\_\+regular\+::is\+\_\+simulating\+\_\+bend (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns whether bend forces are actived. 
+
+\begin{DoxyReturn}{Returns}
+Returns the value of \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab031a8ece45555e421c031b7c3fff4bd}{bend}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a1620fec743604c7a9dd8b8c81344b615}\label{classphysim_1_1meshes_1_1mesh2d__regular_a1620fec743604c7a9dd8b8c81344b615}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!is\+\_\+simulating\+\_\+shear@{is\+\_\+simulating\+\_\+shear}}
+\index{is\+\_\+simulating\+\_\+shear@{is\+\_\+simulating\+\_\+shear}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{is\+\_\+simulating\+\_\+shear()}{is\_simulating\_shear()}}
+{\footnotesize\ttfamily bool physim\+::meshes\+::mesh2d\+\_\+regular\+::is\+\_\+simulating\+\_\+shear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns whether shear forces are actived. 
+
+\begin{DoxyReturn}{Returns}
+Returns the value of \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_af25bf35485aa0a40e21a10f4e472721a}{shear}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_ad1674ad6c5d8d3ed7ec01767f63f2de5}\label{classphysim_1_1meshes_1_1mesh2d__regular_ad1674ad6c5d8d3ed7ec01767f63f2de5}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!is\+\_\+simulating\+\_\+stretch@{is\+\_\+simulating\+\_\+stretch}}
+\index{is\+\_\+simulating\+\_\+stretch@{is\+\_\+simulating\+\_\+stretch}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{is\+\_\+simulating\+\_\+stretch()}{is\_simulating\_stretch()}}
+{\footnotesize\ttfamily bool physim\+::meshes\+::mesh2d\+\_\+regular\+::is\+\_\+simulating\+\_\+stretch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns whether stretch forces are actived. 
+
+\begin{DoxyReturn}{Returns}
+Returns the value of \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a3101edd8212afd9a35ad11c6666e26be}{stretch}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_ab05d404566850dd5a2d11814c3c25186}\label{classphysim_1_1meshes_1_1mesh2d__regular_ab05d404566850dd5a2d11814c3c25186}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!make\+\_\+initial\+\_\+state@{make\+\_\+initial\+\_\+state}}
+\index{make\+\_\+initial\+\_\+state@{make\+\_\+initial\+\_\+state}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{make\+\_\+initial\+\_\+state()}{make\_initial\_state()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::make\+\_\+initial\+\_\+state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Builds the initial state of the mesh. 
+
+Records the initial distances between neighbouring particles.
+
+\begin{DoxyPrecond}{Precondition}
+All this mesh\textquotesingle{}s particles must have been initialised. 
+\end{DoxyPrecond}
+
+
+Implements \hyperlink{classphysim_1_1meshes_1_1mesh_a62f877dd42bc306ef70c76fc172f245f}{physim\+::meshes\+::mesh}.
+
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_aa8d8eafaea92619a04b3bd1781c8aec7}\label{classphysim_1_1meshes_1_1mesh2d__regular_aa8d8eafaea92619a04b3bd1781c8aec7}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!set\+\_\+dimensions@{set\+\_\+dimensions}}
+\index{set\+\_\+dimensions@{set\+\_\+dimensions}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{set\+\_\+dimensions()}{set\_dimensions()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::set\+\_\+dimensions (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{r,  }\item[{size\+\_\+t}]{c }\end{DoxyParamCaption})}
+
+
+
+Sets the number of rows and columns. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Number of rows, at least 2. \\
+\hline
+{\em c} & Number of columns, at least 2. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+The particles of this mesh must have been allocated. The dimensions used must be equal to \hyperlink{classphysim_1_1meshes_1_1mesh_a5642217313d7dae9f873f01fad682ff2}{N} \+: r$\ast$c = N. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_abc94712fdb508f126934bd2bde2cf867}\label{classphysim_1_1meshes_1_1mesh2d__regular_abc94712fdb508f126934bd2bde2cf867}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!simulate\+\_\+bend@{simulate\+\_\+bend}}
+\index{simulate\+\_\+bend@{simulate\+\_\+bend}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{simulate\+\_\+bend()}{simulate\_bend()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::simulate\+\_\+bend (\begin{DoxyParamCaption}\item[{bool}]{s = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Activates/\+Deactivates the simulation of bending internal forces. 
+
+Sets \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab031a8ece45555e421c031b7c3fff4bd}{bend} to the value of {\itshape s}. 
+\begin{DoxyParams}{Parameters}
+{\em s} & True or false depending on whether the simulation has to activated or deactivated. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a36293f6559978144527fb829efd63ea2}\label{classphysim_1_1meshes_1_1mesh2d__regular_a36293f6559978144527fb829efd63ea2}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!simulate\+\_\+shear@{simulate\+\_\+shear}}
+\index{simulate\+\_\+shear@{simulate\+\_\+shear}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{simulate\+\_\+shear()}{simulate\_shear()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::simulate\+\_\+shear (\begin{DoxyParamCaption}\item[{bool}]{s = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Activates/\+Deactivates the simulation of shear internal forces. 
+
+Sets \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_af25bf35485aa0a40e21a10f4e472721a}{shear} to the value of {\itshape s}. 
+\begin{DoxyParams}{Parameters}
+{\em s} & True or false depending on whether the simulation has to activated or deactivated. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_a6d9ccf2226fb57cc3ffc04fd9612acdd}\label{classphysim_1_1meshes_1_1mesh2d__regular_a6d9ccf2226fb57cc3ffc04fd9612acdd}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!simulate\+\_\+stretch@{simulate\+\_\+stretch}}
+\index{simulate\+\_\+stretch@{simulate\+\_\+stretch}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{simulate\+\_\+stretch()}{simulate\_stretch()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::simulate\+\_\+stretch (\begin{DoxyParamCaption}\item[{bool}]{s = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Activates/\+Deactivates the simulation of stretch internal forces. 
+
+Sets \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a3101edd8212afd9a35ad11c6666e26be}{stretch} to the value of {\itshape s}. 
+\begin{DoxyParams}{Parameters}
+{\em s} & True or false depending on whether the simulation has to activated or deactivated. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_aaf4e82b9231d79624224c3462cc18809}\label{classphysim_1_1meshes_1_1mesh2d__regular_aaf4e82b9231d79624224c3462cc18809}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!update\+\_\+forces@{update\+\_\+forces}}
+\index{update\+\_\+forces@{update\+\_\+forces}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{update\+\_\+forces()}{update\_forces()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh2d\+\_\+regular\+::update\+\_\+forces (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update the forces generated within the mesh. 
+
+This method updates the forces acting on a particle {\itshape i} and its neighbouring particles. This includes stretch and beding forces.
+
+\begin{DoxyPrecond}{Precondition}
+The modification of the particle\textquotesingle{}s forces should not assume that particles start with null force (force equal to 0 in the three axes). Moreover, the initial state of the mesh must have been made (see \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab05d404566850dd5a2d11814c3c25186}{make\+\_\+initial\+\_\+state}). 
+\end{DoxyPrecond}
+
+
+Implements \hyperlink{classphysim_1_1meshes_1_1mesh_ad7cad4cd454cce562c8c404ef09f8bd3}{physim\+::meshes\+::mesh}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh2d__regular_ac3a70b7b6b37942d5174ddcc90703993}\label{classphysim_1_1meshes_1_1mesh2d__regular_ac3a70b7b6b37942d5174ddcc90703993}} 
+\index{physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}!sb\+\_\+ds@{sb\+\_\+ds}}
+\index{sb\+\_\+ds@{sb\+\_\+ds}!physim\+::meshes\+::mesh2d\+\_\+regular@{physim\+::meshes\+::mesh2d\+\_\+regular}}
+\subsubsection{\texorpdfstring{sb\+\_\+ds}{sb\_ds}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec6}{math\+::vec6}$\ast$ physim\+::meshes\+::mesh2d\+\_\+regular\+::sb\+\_\+ds\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Original distances between the particles. 
+
+Function \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab05d404566850dd5a2d11814c3c25186}{make\+\_\+initial\+\_\+state} fills this vector with the distances between the particles that they had prior to calling this method.
+
+For a particle ({\itshape i}, {\itshape j}) the original distances are\+:
+\begin{DoxyItemize}
+\item Stretch
+\begin{DoxyItemize}
+\item distance to (i, j + 1)\+: in member {\itshape x}.
+\item distance to (i + 1, j)\+: in member {\itshape y}. for $0 \le i \le R - 2, 0 \le j \le C - 2$.
+\end{DoxyItemize}
+\item Bend
+\begin{DoxyItemize}
+\item distance to (i, j + 2)\+: in member {\itshape z}.
+\item distance to (i + 2, j)\+: in member {\itshape u}. for $0 \le i \le R - 3, 0 \le j \le C - 3$.
+\end{DoxyItemize}
+\item Shear
+\begin{DoxyItemize}
+\item distance to (i -\/ 1, j + 1)\+: in member {\itshape v}. for $1 \le i \le R - 1, 0 \le j \le C - 2$.
+\item distance to (i + 1, j + 1)\+: in member {\itshape w}. for $0 \le i \le R - 2, 0 \le j \le C - 2$.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+where {\itshape C} is the number of columns (see \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ae26a7e636588726103a835faf67b7771}{C}), and {\itshape R} is the number of rows (see \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a5940b5ab5b5b67139d13c10e473b4894}{R}).
+
+As a side note, there are some members that are not used at all. These are\+:
+\begin{DoxyItemize}
+\item members {\itshape z},{\itshape u}, for particles $(R-2,j), (i,C-2)$, for $0 \le i \le R - 2$ and $0 \le j \le C - 2$.
+\item members {\itshape v}, for particles $(0,j)$, for $0 \le j \le C - 2$.
+\item members {\itshape w}, for particles $(R-1,j)$, for $0 \le j \le C - 2$.
+\end{DoxyItemize}
+
+where {\itshape C} is the number of columns (see \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ae26a7e636588726103a835faf67b7771}{C}), and {\itshape R} is the number of rows (see \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_a5940b5ab5b5b67139d13c10e473b4894}{R}). 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/meshes/mesh2d\+\_\+regular.\+hpp\item 
+physim/meshes/mesh2d\+\_\+regular.\+cpp\end{DoxyCompactItemize}

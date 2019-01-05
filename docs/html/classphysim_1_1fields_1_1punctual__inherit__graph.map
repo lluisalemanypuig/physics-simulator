@@ -1,0 +1,7 @@
+<map id="physim::fields::punctual" name="physim::fields::punctual">
+<area shape="rect" id="node3" href="$classphysim_1_1fields_1_1gravitational.html" title="Gravitational field. " alt="" coords="396,5,577,32"/>
+<area shape="rect" id="node4" href="$classphysim_1_1fields_1_1gravitational__planet.html" title="A planet&#39;s gravitational field. " alt="" coords="396,57,577,98"/>
+<area shape="rect" id="node5" href="$classphysim_1_1fields_1_1magnetic.html" title="Punctual magnetic field. " alt="" coords="405,123,569,149"/>
+<area shape="rect" id="node2" href="$classphysim_1_1fields_1_1field.html" title="Abstract class for force fields. " alt="" coords="5,64,140,91"/>
+<area shape="rect" id="node6" href="$classphysim_1_1fields_1_1magnetic__B.html" title="Implementation of a magnetic B&#45;field. " alt="" coords="625,123,805,149"/>
+</map>

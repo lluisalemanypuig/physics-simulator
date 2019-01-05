@@ -1,0 +1,223 @@
+\hypertarget{namespacephysim_1_1particles}{}\section{physim\+:\+:particles Namespace Reference}
+\label{namespacephysim_1_1particles}\index{physim\+::particles@{physim\+::particles}}
+
+
+The different types of particles.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle}
+\begin{DoxyCompactList}\small\item\em Class implementing an agent particle. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1particles_1_1base__particle}{base\+\_\+particle}
+\begin{DoxyCompactList}\small\item\em Class implementing the most basic particle. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle}
+\begin{DoxyCompactList}\small\item\em Class implementing a fluid particle. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle}
+\begin{DoxyCompactList}\small\item\em Class implementing a free particle. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle}
+\begin{DoxyCompactList}\small\item\em Class implementing a mesh particle. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1particles_1_1sized__particle}{sized\+\_\+particle}
+\begin{DoxyCompactList}\small\item\em Class implementing a sized particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88}{agent\+\_\+behaviour\+\_\+type} \+: int8\+\_\+t \{ \newline
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8}{agent\+\_\+behaviour\+\_\+type\+::none} = 1 $<$$<$ 0, 
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}{agent\+\_\+behaviour\+\_\+type\+::seek}, 
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b}{agent\+\_\+behaviour\+\_\+type\+::flee} = 1 $<$$<$ 2, 
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}{agent\+\_\+behaviour\+\_\+type\+::arrival} = 1 $<$$<$ 3, 
+\newline
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}{agent\+\_\+behaviour\+\_\+type\+::collision\+\_\+avoidance} = 1 $<$$<$ 4
+ \}\begin{DoxyCompactList}\small\item\em The different types of behaviours for an agent. \end{DoxyCompactList}
+\item 
+enum \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \+: int8\+\_\+t \{ \newline
+\hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08ab475beb2641566c6d36adda0024a1ba1}{particle\+\_\+type\+::base\+\_\+particle} = 0, 
+\hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a6c30f0004aaf69e5cf185346e8f322d8}{particle\+\_\+type\+::free\+\_\+particle}, 
+\hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08aba7a75b3240c0e68fe64be562e4f6f81}{particle\+\_\+type\+::sized\+\_\+particle}, 
+\hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a6dcdddb3b81f6e4419f4b2883f11ac46}{particle\+\_\+type\+::mesh\+\_\+particle}, 
+\newline
+\hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08acd1fa3faece552fbe658256d4d05d2a6}{particle\+\_\+type\+::fluid\+\_\+particle}, 
+\hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a8f5a9a8c6aed38c79edad63bfc681c2c}{particle\+\_\+type\+::agent\+\_\+particle}
+ \}\begin{DoxyCompactList}\small\item\em The different types of particles. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{namespacephysim_1_1particles_a27c0b9cd8f45bd93f376917858b0951e}{from\+\_\+mesh\+\_\+to\+\_\+free} (const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle} \&m, \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&f)
+\begin{DoxyCompactList}\small\item\em Conversion between types of particles. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1particles_ae47fe8ddd8684c737761f5a4fd8dbc6f}{from\+\_\+free\+\_\+to\+\_\+mesh} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&f, \hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle} \&m)
+\begin{DoxyCompactList}\small\item\em Conversion between types of particles. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1particles_a48784a80a2e7e633a40a79fcd54e4f55}{from\+\_\+fluid\+\_\+to\+\_\+free} (const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle} \&fl, \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&fr)
+\begin{DoxyCompactList}\small\item\em Conversion between types of particles. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1particles_a47e79e4da1099cd888baf9f67122d3d5}{from\+\_\+free\+\_\+to\+\_\+fluid} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&fr, \hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle} \&fl)
+\begin{DoxyCompactList}\small\item\em Conversion between types of particles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The different types of particles. 
+
+In this library there are some types of particles, each of which are simulated differently depending on the context.
+
+The types of particles implemented are\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle}
+\item \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} 
+\end{DoxyItemize}
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88}} 
+\index{physim\+::particles@{physim\+::particles}!agent\+\_\+behaviour\+\_\+type@{agent\+\_\+behaviour\+\_\+type}}
+\index{agent\+\_\+behaviour\+\_\+type@{agent\+\_\+behaviour\+\_\+type}!physim\+::particles@{physim\+::particles}}
+\subsubsection{\texorpdfstring{agent\+\_\+behaviour\+\_\+type}{agent\_behaviour\_type}}
+{\footnotesize\ttfamily enum \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88}{physim\+::particles\+::agent\+\_\+behaviour\+\_\+type} \+: int8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+The different types of behaviours for an agent. 
+
+All of these types define types of movement. To make a particle stay put (i.\+e., not to move at all) set its \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{free\+\_\+particle\+::fixed} attribute to \textquotesingle{}true\textquotesingle{}.
+
+The different behaviour types are formally defined in \mbox{[}1\mbox{]}. All of them are strongly dependent on the particle\textquotesingle{}s target (see \hyperlink{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}{agent\+\_\+particle\+::target}).
+
+Behaviours can be compined using the bit-\/wise or operator.
+
+\mbox{[}1\mbox{]}\+: Steering Behaviors For Autonomous Characters.~\newline
+ Craig W. Reynolds, Sony Computer Entertainment America~\newline
+ 919 East Hillsdale Boulevard~\newline
+ Foster City, California 94404~\newline
+Available online at\+:~\newline
+ \href{https://www.red3d.com/cwr/papers/1999/gdc99steer.html}{\tt https\+://www.\+red3d.\+com/cwr/papers/1999/gdc99steer.\+html} \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{none@{none}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!none@{none}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8}} 
+none&No behaviour active. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seek@{seek}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!seek@{seek}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}} 
+seek&Seek. The agent moves towards its target. Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_a853c72c7dbd902a126af1a90d50af222}{agent\+\_\+particle\+::seek\+\_\+weight}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{flee@{flee}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!flee@{flee}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b}} 
+flee&Flee. The agent moves away from its target. Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_ad7824cd0742b42f803542d8b4d5eae98}{agent\+\_\+particle\+::flee\+\_\+weight}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{arrival@{arrival}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!arrival@{arrival}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}} 
+arrival&Arrival. The agent slows down as it approaches its target. The distance at which the agent starts to slow down is defined in \hyperlink{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}{agent\+\_\+particle\+::slowing\+\_\+distance}.
+
+Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{agent\+\_\+particle\+::arrival\+\_\+weight}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{collision\+\_\+avoidance@{collision\+\_\+avoidance}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!collision\+\_\+avoidance@{collision\+\_\+avoidance}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}} 
+collision\+\_\+avoidance&Collision avoidance. The agent will try to move away from an obstacle as it moves.
+
+Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}{agent\+\_\+particle\+::coll\+\_\+avoid\+\_\+weight}. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}} 
+\index{physim\+::particles@{physim\+::particles}!particle\+\_\+type@{particle\+\_\+type}}
+\index{particle\+\_\+type@{particle\+\_\+type}!physim\+::particles@{physim\+::particles}}
+\subsubsection{\texorpdfstring{particle\+\_\+type}{particle\_type}}
+{\footnotesize\ttfamily enum \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{physim\+::particles\+::particle\+\_\+type} \+: int8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+The different types of particles. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{base\+\_\+particle@{base\+\_\+particle}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!base\+\_\+particle@{base\+\_\+particle}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08ab475beb2641566c6d36adda0024a1ba1}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08ab475beb2641566c6d36adda0024a1ba1}} 
+base\+\_\+particle&Base particle, see \hyperlink{classphysim_1_1particles_1_1base__particle}{base\+\_\+particle}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{free\+\_\+particle@{free\+\_\+particle}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!free\+\_\+particle@{free\+\_\+particle}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a6c30f0004aaf69e5cf185346e8f322d8}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a6c30f0004aaf69e5cf185346e8f322d8}} 
+free\+\_\+particle&Free particle, see \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{sized\+\_\+particle@{sized\+\_\+particle}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!sized\+\_\+particle@{sized\+\_\+particle}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08aba7a75b3240c0e68fe64be562e4f6f81}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08aba7a75b3240c0e68fe64be562e4f6f81}} 
+sized\+\_\+particle&Sized particle, see \hyperlink{classphysim_1_1particles_1_1sized__particle}{sized\+\_\+particle}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mesh\+\_\+particle@{mesh\+\_\+particle}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!mesh\+\_\+particle@{mesh\+\_\+particle}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a6dcdddb3b81f6e4419f4b2883f11ac46}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a6dcdddb3b81f6e4419f4b2883f11ac46}} 
+mesh\+\_\+particle&Mesh particle, see \hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{fluid\+\_\+particle@{fluid\+\_\+particle}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!fluid\+\_\+particle@{fluid\+\_\+particle}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08acd1fa3faece552fbe658256d4d05d2a6}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08acd1fa3faece552fbe658256d4d05d2a6}} 
+fluid\+\_\+particle&Fluid particle, see \hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{agent\+\_\+particle@{agent\+\_\+particle}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!agent\+\_\+particle@{agent\+\_\+particle}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a8f5a9a8c6aed38c79edad63bfc681c2c}\label{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08a8f5a9a8c6aed38c79edad63bfc681c2c}} 
+agent\+\_\+particle&Agent particle, see \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle}. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1particles_a48784a80a2e7e633a40a79fcd54e4f55}\label{namespacephysim_1_1particles_a48784a80a2e7e633a40a79fcd54e4f55}} 
+\index{physim\+::particles@{physim\+::particles}!from\+\_\+fluid\+\_\+to\+\_\+free@{from\+\_\+fluid\+\_\+to\+\_\+free}}
+\index{from\+\_\+fluid\+\_\+to\+\_\+free@{from\+\_\+fluid\+\_\+to\+\_\+free}!physim\+::particles@{physim\+::particles}}
+\subsubsection{\texorpdfstring{from\+\_\+fluid\+\_\+to\+\_\+free()}{from\_fluid\_to\_free()}}
+{\footnotesize\ttfamily void physim\+::particles\+::from\+\_\+fluid\+\_\+to\+\_\+free (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle} \&}]{fl,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&}]{fr }\end{DoxyParamCaption})}
+
+
+
+Conversion between types of particles. 
+
+Only the common attributes are copied. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fl} & From a fluid particle. \\
+\hline
+\mbox{\tt out}  & {\em fr} & To a free particle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1particles_a47e79e4da1099cd888baf9f67122d3d5}\label{namespacephysim_1_1particles_a47e79e4da1099cd888baf9f67122d3d5}} 
+\index{physim\+::particles@{physim\+::particles}!from\+\_\+free\+\_\+to\+\_\+fluid@{from\+\_\+free\+\_\+to\+\_\+fluid}}
+\index{from\+\_\+free\+\_\+to\+\_\+fluid@{from\+\_\+free\+\_\+to\+\_\+fluid}!physim\+::particles@{physim\+::particles}}
+\subsubsection{\texorpdfstring{from\+\_\+free\+\_\+to\+\_\+fluid()}{from\_free\_to\_fluid()}}
+{\footnotesize\ttfamily void physim\+::particles\+::from\+\_\+free\+\_\+to\+\_\+fluid (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&}]{fr,  }\item[{\hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle} \&}]{fl }\end{DoxyParamCaption})}
+
+
+
+Conversion between types of particles. 
+
+Only the common attributes are copied. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fr} & From a free particle. \\
+\hline
+\mbox{\tt out}  & {\em fl} & To a fluid particle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1particles_ae47fe8ddd8684c737761f5a4fd8dbc6f}\label{namespacephysim_1_1particles_ae47fe8ddd8684c737761f5a4fd8dbc6f}} 
+\index{physim\+::particles@{physim\+::particles}!from\+\_\+free\+\_\+to\+\_\+mesh@{from\+\_\+free\+\_\+to\+\_\+mesh}}
+\index{from\+\_\+free\+\_\+to\+\_\+mesh@{from\+\_\+free\+\_\+to\+\_\+mesh}!physim\+::particles@{physim\+::particles}}
+\subsubsection{\texorpdfstring{from\+\_\+free\+\_\+to\+\_\+mesh()}{from\_free\_to\_mesh()}}
+{\footnotesize\ttfamily void physim\+::particles\+::from\+\_\+free\+\_\+to\+\_\+mesh (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&}]{f,  }\item[{\hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle} \&}]{m }\end{DoxyParamCaption})}
+
+
+
+Conversion between types of particles. 
+
+Only the common attributes are copied. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & From a free particle. \\
+\hline
+\mbox{\tt out}  & {\em m} & To a mesh particle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1particles_a27c0b9cd8f45bd93f376917858b0951e}\label{namespacephysim_1_1particles_a27c0b9cd8f45bd93f376917858b0951e}} 
+\index{physim\+::particles@{physim\+::particles}!from\+\_\+mesh\+\_\+to\+\_\+free@{from\+\_\+mesh\+\_\+to\+\_\+free}}
+\index{from\+\_\+mesh\+\_\+to\+\_\+free@{from\+\_\+mesh\+\_\+to\+\_\+free}!physim\+::particles@{physim\+::particles}}
+\subsubsection{\texorpdfstring{from\+\_\+mesh\+\_\+to\+\_\+free()}{from\_mesh\_to\_free()}}
+{\footnotesize\ttfamily void physim\+::particles\+::from\+\_\+mesh\+\_\+to\+\_\+free (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle} \&}]{m,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&}]{f }\end{DoxyParamCaption})}
+
+
+
+Conversion between types of particles. 
+
+Only the common attributes are copied. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em m} & From a mesh particle. \\
+\hline
+\mbox{\tt out}  & {\em f} & To a free particle. \\
+\hline
+\end{DoxyParams}

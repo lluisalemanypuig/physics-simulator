@@ -1,0 +1,190 @@
+\hypertarget{namespacephysim_1_1input}{}\section{physim\+:\+:input Namespace Reference}
+\label{namespacephysim_1_1input}\index{physim\+::input@{physim\+::input}}
+
+
+Namespace for file reading.  
+
+
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacephysim_1_1input_1_1input__private}{input\+\_\+private}
+\begin{DoxyCompactList}\small\item\em This namespace contains functions for private use. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{namespacephysim_1_1input_a7f2e283bc4dea0626ffcdb51ba9eaf35}{read\+\_\+file} (const std\+::string \&directory, const std\+::string \&filename, \hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$\hyperlink{classphysim_1_1meshes_1_1mesh}{mesh})
+\begin{DoxyCompactList}\small\item\em Reads a file describing a geometrical object. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacephysim_1_1input_acdb309721dbf67221cb844cb5b73d2bc}{read\+\_\+file} (const std\+::string \&directory, const std\+::string \&filename, std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} $>$ \&points)
+\begin{DoxyCompactList}\small\item\em Reads a file describing a list of two-\/dimensional points. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacephysim_1_1input_af6b64d6efb944ca27335ac40671144b9}{read\+\_\+file} (const std\+::string \&directory, const std\+::string \&filename, std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&points)
+\begin{DoxyCompactList}\small\item\em Reads a file describing a list of three-\/dimensional points. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacephysim_1_1input_ab6a152c0cdac6c0041f0c3402ffc568e}{obj\+\_\+read\+\_\+file} (const std\+::string \&directory, const std\+::string \&filename, \hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$o)
+\begin{DoxyCompactList}\small\item\em Loads a triangular mesh stored in {\itshape filename}. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacephysim_1_1input_a275d779352762c55a24c0e6b8e9dcc26}{ply\+\_\+read\+\_\+file} (const std\+::string \&directory, const std\+::string \&filename, \hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$o)
+\begin{DoxyCompactList}\small\item\em Loads a triangular mesh stored in {\itshape filename}. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacephysim_1_1input_a8e2fe050e529636908811d164cd2c5ee}{soup\+\_\+read\+\_\+file} (const std\+::string \&directory, const std\+::string \&filename, \hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$o)
+\begin{DoxyCompactList}\small\item\em Loads a triangular mesh stored in {\itshape filename}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Namespace for file reading. 
+
+It supports the following formats\+:
+\begin{DoxyItemize}
+\item Wavefront. File extension\+: .obj.
+\item Polygon File Format (a.\+k.\+a. Stanford Triangle Format). File extension\+: .ply.
+\item Triangle Soup Format. File extension\+: .soup.
+\end{DoxyItemize}
+
+These are meant for constructing triangular meshes for geometric that cannot be parametrised.
+
+The function used for reading a file should be \hyperlink{namespacephysim_1_1input_a7f2e283bc4dea0626ffcdb51ba9eaf35}{read\+\_\+file(const std\+::string\&,const std\+::string\&,geometric\+::object $\ast$)}, however, if the extension of the file is known then the user can call the corresponding function\+:
+\begin{DoxyItemize}
+\item \hyperlink{namespacephysim_1_1input_ab6a152c0cdac6c0041f0c3402ffc568e}{obj\+\_\+read\+\_\+file(const std\+::string\&,const std\+::string\&,geometric\+::object $\ast$)}
+\item \hyperlink{namespacephysim_1_1input_a275d779352762c55a24c0e6b8e9dcc26}{ply\+\_\+read\+\_\+file(const std\+::string\&,const std\+::string\&,geometric\+::object $\ast$)}
+\item \hyperlink{namespacephysim_1_1input_a8e2fe050e529636908811d164cd2c5ee}{soup\+\_\+read\+\_\+file(const std\+::string\&,const std\+::string\&,geometric\+::object $\ast$)} 
+\end{DoxyItemize}
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1input_ab6a152c0cdac6c0041f0c3402ffc568e}\label{namespacephysim_1_1input_ab6a152c0cdac6c0041f0c3402ffc568e}} 
+\index{physim\+::input@{physim\+::input}!obj\+\_\+read\+\_\+file@{obj\+\_\+read\+\_\+file}}
+\index{obj\+\_\+read\+\_\+file@{obj\+\_\+read\+\_\+file}!physim\+::input@{physim\+::input}}
+\subsubsection{\texorpdfstring{obj\+\_\+read\+\_\+file()}{obj\_read\_file()}}
+{\footnotesize\ttfamily bool physim\+::input\+::obj\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{filename,  }\item[{\hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$}]{o }\end{DoxyParamCaption})}
+
+
+
+Loads a triangular mesh stored in {\itshape filename}. 
+
+Anything that are not vertices or vertices indices are ignored. 
+\begin{DoxyParams}[1]{Parameters}
+ & {\em directory} & Directory in the system. \\
+\hline
+ & {\em filename} & File with the mesh in wavefront (obj) format. \\
+\hline
+\mbox{\tt out}  & {\em o} & Mesh loaded from file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns false on error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1input_a275d779352762c55a24c0e6b8e9dcc26}\label{namespacephysim_1_1input_a275d779352762c55a24c0e6b8e9dcc26}} 
+\index{physim\+::input@{physim\+::input}!ply\+\_\+read\+\_\+file@{ply\+\_\+read\+\_\+file}}
+\index{ply\+\_\+read\+\_\+file@{ply\+\_\+read\+\_\+file}!physim\+::input@{physim\+::input}}
+\subsubsection{\texorpdfstring{ply\+\_\+read\+\_\+file()}{ply\_read\_file()}}
+{\footnotesize\ttfamily bool physim\+::input\+::ply\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{filename,  }\item[{\hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$}]{o }\end{DoxyParamCaption})}
+
+
+
+Loads a triangular mesh stored in {\itshape filename}. 
+
+Anything that are not vertices or vertices indices are ignored. 
+\begin{DoxyParams}[1]{Parameters}
+ & {\em directory} & Directory in the system. \\
+\hline
+ & {\em filename} & File with the mesh in Stanford Triangle format (ply) format. \\
+\hline
+\mbox{\tt out}  & {\em o} & Mesh loaded from file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns false on error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1input_a7f2e283bc4dea0626ffcdb51ba9eaf35}\label{namespacephysim_1_1input_a7f2e283bc4dea0626ffcdb51ba9eaf35}} 
+\index{physim\+::input@{physim\+::input}!read\+\_\+file@{read\+\_\+file}}
+\index{read\+\_\+file@{read\+\_\+file}!physim\+::input@{physim\+::input}}
+\subsubsection{\texorpdfstring{read\+\_\+file()}{read\_file()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily bool physim\+::input\+::read\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{filename,  }\item[{\hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Reads a file describing a geometrical object. 
+
+The object is typically described as a set of triangles, not necessarily connected (might be a triangle soup).
+
+Supported formats\+:
+\begin{DoxyItemize}
+\item Wavefront. File extension\+: .obj.
+\item Polygon File Format (a.\+k.\+a. Stanford Triangle Format). File extension\+: .ply.
+\item Triangle Soup Format. File extension\+: .soup. This file consists of a list of triangles, each described with three vertices. A vertex is described as usual with three coordinate values.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em directory} & Directory that contains the file to be read. \\
+\hline
+ & {\em filename} & The filename describing the object. \\
+\hline
+\mbox{\tt out}  & {\em mesh} & Object constructed with the contents of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1input_acdb309721dbf67221cb844cb5b73d2bc}\label{namespacephysim_1_1input_acdb309721dbf67221cb844cb5b73d2bc}} 
+\index{physim\+::input@{physim\+::input}!read\+\_\+file@{read\+\_\+file}}
+\index{read\+\_\+file@{read\+\_\+file}!physim\+::input@{physim\+::input}}
+\subsubsection{\texorpdfstring{read\+\_\+file()}{read\_file()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily bool physim\+::input\+::read\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{filename,  }\item[{std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} $>$ \&}]{points }\end{DoxyParamCaption})}
+
+
+
+Reads a file describing a list of two-\/dimensional points. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em directory} & Directory that contains the file to be read. \\
+\hline
+ & {\em filename} & The filename describing the object. \\
+\hline
+\mbox{\tt out}  & {\em points} & List of points stored in the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1input_af6b64d6efb944ca27335ac40671144b9}\label{namespacephysim_1_1input_af6b64d6efb944ca27335ac40671144b9}} 
+\index{physim\+::input@{physim\+::input}!read\+\_\+file@{read\+\_\+file}}
+\index{read\+\_\+file@{read\+\_\+file}!physim\+::input@{physim\+::input}}
+\subsubsection{\texorpdfstring{read\+\_\+file()}{read\_file()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily bool physim\+::input\+::read\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{filename,  }\item[{std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{points }\end{DoxyParamCaption})}
+
+
+
+Reads a file describing a list of three-\/dimensional points. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em directory} & Directory that contains the file to be read. \\
+\hline
+ & {\em filename} & The filename describing the object. \\
+\hline
+\mbox{\tt out}  & {\em points} & List of points stored in the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1input_a8e2fe050e529636908811d164cd2c5ee}\label{namespacephysim_1_1input_a8e2fe050e529636908811d164cd2c5ee}} 
+\index{physim\+::input@{physim\+::input}!soup\+\_\+read\+\_\+file@{soup\+\_\+read\+\_\+file}}
+\index{soup\+\_\+read\+\_\+file@{soup\+\_\+read\+\_\+file}!physim\+::input@{physim\+::input}}
+\subsubsection{\texorpdfstring{soup\+\_\+read\+\_\+file()}{soup\_read\_file()}}
+{\footnotesize\ttfamily bool physim\+::input\+::soup\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{filename,  }\item[{\hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} $\ast$}]{o }\end{DoxyParamCaption})}
+
+
+
+Loads a triangular mesh stored in {\itshape filename}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em directory} & Directory in the system. \\
+\hline
+ & {\em filename} & File with the mesh as a triangle soup (soup) format. \\
+\hline
+\mbox{\tt out}  & {\em o} & Mesh loaded from file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns false on error. 
+\end{DoxyReturn}

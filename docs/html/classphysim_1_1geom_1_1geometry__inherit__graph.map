@@ -1,0 +1,6 @@
+<map id="physim::geom::geometry" name="physim::geom::geometry">
+<area shape="rect" id="node2" href="$classphysim_1_1geom_1_1plane.html" title="Class that implements a plane. " alt="" coords="231,5,374,32"/>
+<area shape="rect" id="node3" href="$classphysim_1_1geom_1_1rectangle.html" title="Class that implements a rectangle. " alt="" coords="220,56,385,83"/>
+<area shape="rect" id="node4" href="$classphysim_1_1geom_1_1sphere.html" title="Class that implements a sphere. " alt="" coords="227,107,378,133"/>
+<area shape="rect" id="node5" href="$classphysim_1_1geom_1_1triangle.html" title="Class that implements a triangle. " alt="" coords="225,157,380,184"/>
+</map>

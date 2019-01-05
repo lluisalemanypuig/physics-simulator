@@ -1,0 +1,201 @@
+\hypertarget{classphysim_1_1particles_1_1free__particle}{}\section{physim\+:\+:particles\+:\+:free\+\_\+particle Class Reference}
+\label{classphysim_1_1particles_1_1free__particle}\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+
+
+Class implementing a free particle.  
+
+
+
+
+{\ttfamily \#include $<$free\+\_\+particle.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:particles\+:\+:free\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=177pt]{classphysim_1_1particles_1_1free__particle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:particles\+:\+:free\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classphysim_1_1particles_1_1free__particle__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a49daf863274486e00c8adce24d78e3bb}\label{classphysim_1_1particles_1_1free__particle_a49daf863274486e00c8adce24d78e3bb}} 
+\hyperlink{classphysim_1_1particles_1_1free__particle_a49daf863274486e00c8adce24d78e3bb}{free\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_aa075ca6679e0f74cacaba04a3457e782}\label{classphysim_1_1particles_1_1free__particle_aa075ca6679e0f74cacaba04a3457e782}} 
+\hyperlink{classphysim_1_1particles_1_1free__particle_aa075ca6679e0f74cacaba04a3457e782}{free\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a14b490652a1ca90950382c86f55e510a}\label{classphysim_1_1particles_1_1free__particle_a14b490652a1ca90950382c86f55e510a}} 
+virtual \hyperlink{classphysim_1_1particles_1_1free__particle_a14b490652a1ca90950382c86f55e510a}{$\sim$free\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1particles_1_1free__particle_a8b8e76a24759a1e0a5d3b0d4933e31c1}{reduce\+\_\+lifetime} (float t)
+\begin{DoxyCompactList}\small\item\em Decreases the lifetime by {\itshape t}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1particles_1_1free__particle_a8f024371fb279e75bbfef1be83bce4bc}{reduce\+\_\+starttime} (float t)
+\begin{DoxyCompactList}\small\item\em Decreases the starttime by {\itshape t}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1particles_1_1free__particle_a0df21e64a28c5fdf471d54a50b59fea3}{init} ()
+\begin{DoxyCompactList}\small\item\em Initialises all particle\textquotesingle{}s attributes, most of them to null values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a3400dd6813c8501646d10ca592f0d67d}\label{classphysim_1_1particles_1_1free__particle_a3400dd6813c8501646d10ca592f0d67d}} 
+virtual \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \hyperlink{classphysim_1_1particles_1_1free__particle_a3400dd6813c8501646d10ca592f0d67d}{get\+\_\+particle\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of this particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_aac766fa5294e47b944d32ca3e38d47fa}\label{classphysim_1_1particles_1_1free__particle_aac766fa5294e47b944d32ca3e38d47fa}} 
+float \hyperlink{classphysim_1_1particles_1_1free__particle_aac766fa5294e47b944d32ca3e38d47fa}{bouncing}
+\begin{DoxyCompactList}\small\item\em Bouncing coefficient of the particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a9e7dfd81e9392fc42b3faecb57afdc02}\label{classphysim_1_1particles_1_1free__particle_a9e7dfd81e9392fc42b3faecb57afdc02}} 
+float \hyperlink{classphysim_1_1particles_1_1free__particle_a9e7dfd81e9392fc42b3faecb57afdc02}{friction}
+\begin{DoxyCompactList}\small\item\em Friction coefficient of the particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}\label{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}} 
+float \hyperlink{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}{charge}
+\begin{DoxyCompactList}\small\item\em Electrical charge of the particle \mbox{[}C\mbox{]}. \end{DoxyCompactList}\item 
+float \hyperlink{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}{lifetime}
+\begin{DoxyCompactList}\small\item\em Lifetime of the particle \mbox{[}s\mbox{]}. \end{DoxyCompactList}\item 
+float \hyperlink{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}{starttime}
+\begin{DoxyCompactList}\small\item\em Starting time of a particle \mbox{[}s\mbox{]}. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{fixed}
+\begin{DoxyCompactList}\small\item\em Is this particle fixed? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1particles_1_1free__particle_a967f3229ac014999de8f9823882c60e8}{partial\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialises this class\textquotesingle{}s attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class implementing a free particle. 
+
+A free particle is a 0-\/dimensional object, subject to several forces but not to any other particle\textquotesingle{}s direct interaction through them. It can collide with other objects in the scene (geometrical objects, see namespace \hyperlink{namespacephysim_1_1geometric}{physim\+::geometric}) but not with other particles.
+
+All this class\textquotesingle{} attributes are public. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a0df21e64a28c5fdf471d54a50b59fea3}\label{classphysim_1_1particles_1_1free__particle_a0df21e64a28c5fdf471d54a50b59fea3}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!init@{init}}
+\index{init@{init}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::free\+\_\+particle\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialises all particle\textquotesingle{}s attributes, most of them to null values. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}{force} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}{mass} \+: 1
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index} \+: no value assigned, since it will be overwritten by the simulator.
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_aac766fa5294e47b944d32ca3e38d47fa}{bouncing} \+: 0.\+8
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a9e7dfd81e9392fc42b3faecb57afdc02}{friction} \+: 0.\+2
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}{charge} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}{lifetime} \+: 10
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}{starttime} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{fixed} \+: false 
+\end{DoxyItemize}
+
+Reimplemented from \hyperlink{classphysim_1_1particles_1_1base__particle_a3bba517d51fd0bff7ec583e701765f87}{physim\+::particles\+::base\+\_\+particle}.
+
+
+
+Reimplemented in \hyperlink{classphysim_1_1particles_1_1agent__particle_ac13082909f480fc55d406321c77d38b1}{physim\+::particles\+::agent\+\_\+particle}, and \hyperlink{classphysim_1_1particles_1_1sized__particle_a63de84961417c1522c0ca576697cd972}{physim\+::particles\+::sized\+\_\+particle}.
+
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a967f3229ac014999de8f9823882c60e8}\label{classphysim_1_1particles_1_1free__particle_a967f3229ac014999de8f9823882c60e8}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!partial\+\_\+init@{partial\+\_\+init}}
+\index{partial\+\_\+init@{partial\+\_\+init}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{partial\+\_\+init()}{partial\_init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::free\+\_\+particle\+::partial\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises this class\textquotesingle{}s attributes. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_aac766fa5294e47b944d32ca3e38d47fa}{bouncing} \+: 0.\+8
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a9e7dfd81e9392fc42b3faecb57afdc02}{friction} \+: 0.\+2
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}{charge} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}{lifetime} \+: 10
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}{starttime} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{fixed} \+: false 
+\end{DoxyItemize}\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a8b8e76a24759a1e0a5d3b0d4933e31c1}\label{classphysim_1_1particles_1_1free__particle_a8b8e76a24759a1e0a5d3b0d4933e31c1}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!reduce\+\_\+lifetime@{reduce\+\_\+lifetime}}
+\index{reduce\+\_\+lifetime@{reduce\+\_\+lifetime}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{reduce\+\_\+lifetime()}{reduce\_lifetime()}}
+{\footnotesize\ttfamily void physim\+::particles\+::free\+\_\+particle\+::reduce\+\_\+lifetime (\begin{DoxyParamCaption}\item[{float}]{t }\end{DoxyParamCaption})}
+
+
+
+Decreases the lifetime by {\itshape t}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & A value equal to or greater than 0. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a8f024371fb279e75bbfef1be83bce4bc}\label{classphysim_1_1particles_1_1free__particle_a8f024371fb279e75bbfef1be83bce4bc}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!reduce\+\_\+starttime@{reduce\+\_\+starttime}}
+\index{reduce\+\_\+starttime@{reduce\+\_\+starttime}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{reduce\+\_\+starttime()}{reduce\_starttime()}}
+{\footnotesize\ttfamily void physim\+::particles\+::free\+\_\+particle\+::reduce\+\_\+starttime (\begin{DoxyParamCaption}\item[{float}]{t }\end{DoxyParamCaption})}
+
+
+
+Decreases the starttime by {\itshape t}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & A value equal to or greater than 0. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}\label{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!fixed@{fixed}}
+\index{fixed@{fixed}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{fixed}{fixed}}
+{\footnotesize\ttfamily bool physim\+::particles\+::free\+\_\+particle\+::fixed}
+
+
+
+Is this particle fixed? 
+
+If the particle, it will be ignored by the solver, therefore not taken into account in the simulation (gravity nor any other force will have any effect on it). \mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}\label{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!lifetime@{lifetime}}
+\index{lifetime@{lifetime}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{lifetime}{lifetime}}
+{\footnotesize\ttfamily float physim\+::particles\+::free\+\_\+particle\+::lifetime}
+
+
+
+Lifetime of the particle \mbox{[}s\mbox{]}. 
+
+Once the simulation has run for a time larger than \hyperlink{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}{lifetime} the particle must be reset. \mbox{\Hypertarget{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}\label{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}} 
+\index{physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}!starttime@{starttime}}
+\index{starttime@{starttime}!physim\+::particles\+::free\+\_\+particle@{physim\+::particles\+::free\+\_\+particle}}
+\subsubsection{\texorpdfstring{starttime}{starttime}}
+{\footnotesize\ttfamily float physim\+::particles\+::free\+\_\+particle\+::starttime}
+
+
+
+Starting time of a particle \mbox{[}s\mbox{]}. 
+
+The amount of time that has to pass for this particle to start \textquotesingle{}living\textquotesingle{}. In the simulation, this particle will not start moving until this value is equal to or less than 0. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/particles/free\+\_\+particle.\+hpp\item 
+physim/particles/free\+\_\+particle.\+cpp\end{DoxyCompactItemize}

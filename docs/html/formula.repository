@@ -1,0 +1,118 @@
+\form#0:$-G \cdot M \cdot m \cdot \frac{p - O}{||p - O||}$
+\form#1:$G$
+\form#2:$M$
+\form#3:$p$
+\form#4:$O$
+\form#5:$m$
+\form#6:$F m\cdot g$
+\form#7:$g$
+\form#8:$ \vec{F} = (q \cdot v_p) \times \vec{B}$
+\form#9:$q$
+\form#10:$B$
+\form#11:$v_p$
+\form#12:$h$
+\form#13:$\sqrt{h^2 + r^2}$
+\form#14:$n$
+\form#15:$s$
+\form#16:$n/s$
+\form#17:$[i*\lfloor n/s \rfloor), (i + 1)*\lfloor n/s \rfloor)$
+\form#18:$[(s - 1)*\lfloor n/s \rfloor), n$
+\form#19:$i \in [0,s - 2] $
+\form#20:$n - (s - 1)*\lfloor n/s \rfloor) + 1$
+\form#21:$R(\lambda, \mu) = S + \lambda\cdot w\cdot \vec{u} + \mu\cdot h\cdot \vec{u}$
+\form#22:$\lambda,\mu \in [0,1]\subset R$
+\form#23:$R(\lambda,0)$
+\form#24:$R(0,\mu)$
+\form#25:$\pm 1$
+\form#26:$(i,j)\:|\: 0 \le i \le R - 1, 0 \le j \le C - 1$
+\form#27:$(i-1,j),(i+1,j),(i,j-1),(i,j+1)$
+\form#28:$0 \le i \le R - 2, 0 \le j \le C - 2$
+\form#29:$0 \le i \le R - 3, 0 \le j \le C - 3$
+\form#30:$1 \le i \le R - 1, 0 \le j \le C - 2$
+\form#31:$(R-2,j), (i,C-2)$
+\form#32:$0 \le i \le R - 2$
+\form#33:$0 \le j \le C - 2$
+\form#34:$(0,j)$
+\form#35:$(R-1,j)$
+\form#36:$ n \cdot X + d = 0$
+\form#37:$n = ( (p1 - p0) \times (p2 - p0) )/||(p1 - p0) \times (p2 - p0)|| $
+\form#38:$ q\cdot n + d > 0$
+\form#39:$n,d$
+\form#40:$normal \cdot p + dconst = 0$
+\form#41:$ (v_1 - v_0) \times (v_2 - v_0) / || (v_1 - v_0) \times (v_2 - v_0) || $
+\form#42:$f,g$
+\form#43:$(f_x,0,0)$
+\form#44:$(g_x,g_y,0)$
+\form#45:$(f_x,f_y,0)$
+\form#46:$\vec{F} = m\cdot \vec{g}$
+\form#47:$ \vec{u_0} = (p_1 - p_0)/||p_1 - p_2|| $
+\form#48:$ \vec{u_1} = \vec{u_2} \times \vec{u_0} $
+\form#49:$ \vec{u_2} = ( (p_1-p_0)\times(p_2-p_0) )/ || (p_1-p_0)\times(p_2-p_0) || $
+\form#50:$q_0 = (0,0)$
+\form#51:$q_1 = (l,0), l = ||p_1-p_0||$
+\form#52:$q_2 = (\alpha,\beta)$
+\form#53:$\alpha = u_0\cdot(p_2-p_0), \beta = u_1\cdot(p_2-p_0)$
+\form#54:$q_3 = (\gamma,\delta)$
+\form#55:$\gamma = u_0\cdot(p_3-p_0), \delta = u_1\cdot(p_3-p_0)$
+\form#56:$\vec{e_0} = q_1 - q_0$
+\form#57:$\vec{e_1} = q_2 - q_1$
+\form#58:$\vec{e_2} = q_3 - q_2$
+\form#59:$\vec{e_3} = q_0 - q_3$
+\form#60:$e_0$
+\form#61:$\vec{n_0} = (0,-1)$
+\form#62:$e_1$
+\form#63:$\vec{n_1} = (\beta, l - \alpha)/ || (\beta, l - \alpha) || $
+\form#64:$e_2$
+\form#65:$\vec{n_2} = (\delta - \beta, \alpha - \gamma)/ || (\delta - \beta, \alpha - \gamma) || $
+\form#66:$e_3$
+\form#67:$\vec{n_3} = (-\delta, \gamma)/ || (-\delta, \gamma) ||$
+\form#68:$q_0 + \vec{n_0}$
+\form#69:$q_0 + \vec{n_3}$
+\form#70:$q_1 + \vec{n_0}$
+\form#71:$q_1 + \vec{n_1}$
+\form#72:$q_2 + \vec{n_1}$
+\form#73:$q_2 + \vec{n_2}$
+\form#74:$q_3 + \vec{n_2}$
+\form#75:$q_3 + \vec{n_3}$
+\form#76:$ (p_1 - p_0) \times (p_2 - p_0) / || (p_1 - p_0) \times (p_2 - p_0) || $
+\form#77:$ \vec{u_2} = (p_1-p_0)\times(p_2-p_0)/ || (p_1-p_0)\times(p_2-p_0) || $
+\form#78:$\vec{e_2} = q_0 - q_2$
+\form#79:$\vec{n_2} = (-\beta, \alpha)/ || (-\beta, \alpha) || $
+\form#80:$q_0 + \vec{n_2}$
+\form#81:$f$
+\form#82:$\vec{F} = \vec{f} \cdot m$
+\form#83:$m = 1$
+\form#84:$g = l*\frac{f}{||f||}$
+\form#85:$g = f$
+\form#86:$l*\frac{f}{||f||}$
+\form#87:$ \left\langle -\frac{1}{\rho}\nabla \right\rangle_i \approx \sum_j P_{ij} \cdot \nabla W(r_{ij}) $
+\form#88:$ P_{ij} = -m_j \left( \frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2} \right) $
+\form#89:$W(r_{ij})$
+\form#90:$r_{ij}$
+\form#91:$m_j$
+\form#92:$p_i, \rho_i$
+\form#93:$ \left\langle \frac{\mu}{\rho}\nabla^2 v\right\rangle_i \approx \sum_j V_{ij} \cdot \nabla^2 W(r_{ij}) $
+\form#94:$ V_{ij} = \mu \cdot m_j \left( \frac{v_j - v_i}{\rho_i \rho_j} \right) $
+\form#95:$\mu$
+\form#96:$W$
+\form#97:$ \rho_i = \sum_j m_j \cdot W(r_{ij}) $
+\form#98:$1 \le i \le N$
+\form#99:$\nabla W$
+\form#100:$ \left\langle -\frac{1}{\rho}\nabla \right\rangle_i \approx \sum_j P_{ij} \cdot \nabla W_\rho(r_{ij}) $
+\form#101:$\nabla^2 W$
+\form#102:$ \left\langle \frac{\mu}{\rho}\nabla^2 v\right\rangle_i \approx \sum_j V_{ij} \cdot \nabla^2 W_\mu(r_{ij}) $
+\form#103:$\rho_i = \sum_j m_j \cdot W_\rho(r_{ij})$
+\form#104:$p_i = c_s^2(\rho_i - \rho_0)$
+\form#105:$c_s$
+\form#106:$\rho_0$
+\form#107:$W_\mu$
+\form#108:$i$
+\form#109:$i, j$
+\form#110:$1 \le i,j \le N$
+\form#111:$p_i, p_j$
+\form#112:$\rho_i, \rho_j$
+\form#113:$\nabla W(r_{ij})$
+\form#114:$\nabla^2 W(r_{ij})$
+\form#115:$v_i, v_j$
+\form#116:$\rho_i$
+\form#117:$p_i$

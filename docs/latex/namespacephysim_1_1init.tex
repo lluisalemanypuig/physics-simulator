@@ -1,0 +1,45 @@
+\hypertarget{namespacephysim_1_1init}{}\section{physim\+:\+:init Namespace Reference}
+\label{namespacephysim_1_1init}\index{physim\+::init@{physim\+::init}}
+
+
+Particle initialiser classes.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1init_1_1hose}{hose}
+\begin{DoxyCompactList}\small\item\em A hose source class initialiser. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1init_1_1initialiser}{initialiser}
+\begin{DoxyCompactList}\small\item\em Class for particle initialisation. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1init_1_1multisource}{multisource}
+\begin{DoxyCompactList}\small\item\em Multiple source initialiser. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1init_1_1rect__fountain}{rect\+\_\+fountain}
+\begin{DoxyCompactList}\small\item\em A fountain class initialiser. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1init_1_1rect__shower}{rect\+\_\+shower}
+\begin{DoxyCompactList}\small\item\em A shower class initialiser. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1init_1_1rect__source}{rect\+\_\+source}
+\begin{DoxyCompactList}\small\item\em A rectangular source class initialiser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacephysim_1_1init_a3ee179a015a8feec7dc58eeb4e1f2783}\label{namespacephysim_1_1init_a3ee179a015a8feec7dc58eeb4e1f2783}} 
+typedef \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \hyperlink{namespacephysim_1_1init_a3ee179a015a8feec7dc58eeb4e1f2783}{fpart}
+\begin{DoxyCompactList}\small\item\em Shortcut for \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1init_a8b9f311523ca787a21c91bdaf28ac1a5}\label{namespacephysim_1_1init_a8b9f311523ca787a21c91bdaf28ac1a5}} 
+typedef \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \hyperlink{namespacephysim_1_1init_a8b9f311523ca787a21c91bdaf28ac1a5}{spart}
+\begin{DoxyCompactList}\small\item\em Shortcut for \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1init_a075c918c300c8a7eb1e3449f8848be22}\label{namespacephysim_1_1init_a075c918c300c8a7eb1e3449f8848be22}} 
+typedef std\+::function$<$ void(\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $\ast$)$>$ \hyperlink{namespacephysim_1_1init_a075c918c300c8a7eb1e3449f8848be22}{partinit\+\_\+free}
+\begin{DoxyCompactList}\small\item\em Shortcut for the free particle initialiser function type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1init_a366bf3e2a64457ad4e3b16c6d671bf7c}\label{namespacephysim_1_1init_a366bf3e2a64457ad4e3b16c6d671bf7c}} 
+typedef std\+::function$<$ void(\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} $\ast$)$>$ \hyperlink{namespacephysim_1_1init_a366bf3e2a64457ad4e3b16c6d671bf7c}{partinit\+\_\+sized}
+\begin{DoxyCompactList}\small\item\em Shortcut for the sized particle initialiser function type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Particle initialiser classes. 
+
+This namespace contains a \textquotesingle{}main\textquotesingle{} class, the \hyperlink{classphysim_1_1init_1_1initialiser}{init\+::initialiser} class that contains several, modifiable functions used to initialise the different attributes of particles.
+
+This namespace also contains several other classes that implement the \textquotesingle{}main\textquotesingle{} class. Each of these classes implement some of the \textquotesingle{}main\textquotesingle{} class attributes to offer nice-\/looking particle systems. 

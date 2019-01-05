@@ -1,0 +1,6 @@
+<map id="physim::geometric::object" name="physim::geometric::object">
+<area shape="rect" id="node2" href="$classphysim_1_1geometric_1_1geometry.html" title="All geometrical on the scene. " alt="" coords="5,189,143,231"/>
+<area shape="rect" id="node3" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="37,5,175,32"/>
+<area shape="rect" id="node5" href="$structphysim_1_1structures_1_1octree_1_1node.html" title="Octree&#39;s node definition. " alt="" coords="111,124,242,165"/>
+<area shape="rect" id="node4" href="$classphysim_1_1structures_1_1octree.html" title="Octree class. " alt="" coords="111,255,242,296"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="physim::fields::magnetic_B" name="physim::fields::magnetic_B">
+<area shape="rect" id="node2" href="$classphysim_1_1fields_1_1magnetic.html" title="Punctual magnetic field. " alt="" coords="13,155,177,181"/>
+<area shape="rect" id="node3" href="$classphysim_1_1fields_1_1punctual.html" title="Force field caused by a particle. " alt="" coords="15,80,175,107"/>
+<area shape="rect" id="node4" href="$classphysim_1_1fields_1_1field.html" title="Abstract class for force fields. " alt="" coords="28,5,163,32"/>
+</map>

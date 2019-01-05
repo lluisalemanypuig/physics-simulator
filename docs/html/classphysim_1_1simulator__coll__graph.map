@@ -1,0 +1,6 @@
+<map id="physim::simulator" name="physim::simulator">
+<area shape="rect" id="node2" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="5,194,143,221"/>
+<area shape="rect" id="node3" href="$classphysim_1_1emitters_1_1sized__emitter.html" title="Class for sized particle initialisation. " alt="" coords="316,187,475,228"/>
+<area shape="rect" id="node4" href="$classphysim_1_1emitters_1_1free__emitter.html" title="Class for free particle initialisation. " alt="" coords="133,96,282,137"/>
+<area shape="rect" id="node5" href="$classphysim_1_1emitters_1_1base__emitter.html" title="Class for particle initialisation. " alt="" coords="130,5,285,47"/>
+</map>

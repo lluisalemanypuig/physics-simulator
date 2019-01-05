@@ -1,0 +1,41 @@
+\hypertarget{namespacephysim_1_1emitters}{}\section{physim\+:\+:emitters Namespace Reference}
+\label{namespacephysim_1_1emitters}\index{physim\+::emitters@{physim\+::emitters}}
+
+
+Particle emitter classes.  
+
+
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacephysim_1_1emitters_1_1free__emitters}{free\+\_\+emitters}
+\begin{DoxyCompactList}\small\item\em Emitters of free particles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1emitters_1_1base__emitter}{base\+\_\+emitter}
+\begin{DoxyCompactList}\small\item\em Class for particle initialisation. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1emitters_1_1free__emitter}{free\+\_\+emitter}
+\begin{DoxyCompactList}\small\item\em Class for free particle initialisation. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1emitters_1_1sized__emitter}{sized\+\_\+emitter}
+\begin{DoxyCompactList}\small\item\em Class for sized particle initialisation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacephysim_1_1emitters_affb35fbd5f02c488436287899e35d4aa}\label{namespacephysim_1_1emitters_affb35fbd5f02c488436287899e35d4aa}} 
+typedef std\+::function$<$ void(\hyperlink{classphysim_1_1particles_1_1base__particle}{particles\+::base\+\_\+particle} \&)$>$ \hyperlink{namespacephysim_1_1emitters_affb35fbd5f02c488436287899e35d4aa}{base\+\_\+emit}
+\begin{DoxyCompactList}\small\item\em Shortcut for the free particle emitter\+\_\+base function type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1emitters_a68725a630c2e0c1b4cdff4ca0ee174ac}\label{namespacephysim_1_1emitters_a68725a630c2e0c1b4cdff4ca0ee174ac}} 
+typedef std\+::function$<$ void(\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&)$>$ \hyperlink{namespacephysim_1_1emitters_a68725a630c2e0c1b4cdff4ca0ee174ac}{free\+\_\+emit}
+\begin{DoxyCompactList}\small\item\em Shortcut for the free particle initialiser function type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1emitters_a924fdfab5324762db7bded5f2877ff87}\label{namespacephysim_1_1emitters_a924fdfab5324762db7bded5f2877ff87}} 
+typedef std\+::function$<$ void(\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&)$>$ \hyperlink{namespacephysim_1_1emitters_a924fdfab5324762db7bded5f2877ff87}{sized\+\_\+emit}
+\begin{DoxyCompactList}\small\item\em Shortcut for the sized particle emitter\+\_\+sized function type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Particle emitter classes. 
+
+This namespace contains a \textquotesingle{}main\textquotesingle{} class, the \hyperlink{classphysim_1_1emitters_1_1base__emitter}{emitters\+::base\+\_\+emitter} class that contains several, modifiable functions used to initialise the different attributes of particles.
+
+This namespace also contains several other classes that implement the \textquotesingle{}main\textquotesingle{} class. Each of these classes implement some of the \textquotesingle{}main\textquotesingle{} class attributes to offer nice-\/looking particle systems. 

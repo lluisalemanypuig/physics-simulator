@@ -1,0 +1,5 @@
+<map id="physim::init::rect_fountain" name="physim::init::rect_fountain">
+<area shape="rect" id="node2" href="$classphysim_1_1init_1_1rect__source.html" title="A rectangular source class initialiser. " alt="" coords="103,153,221,195"/>
+<area shape="rect" id="node3" href="$classphysim_1_1init_1_1initialiser.html" title="Object for particles::free_particle initialisation. " alt="" coords="5,5,153,32"/>
+<area shape="rect" id="node4" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="177,5,315,32"/>
+</map>

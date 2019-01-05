@@ -1,0 +1,5 @@
+<map id="physim::emitters::free_emitters::rect_shower" name="physim::emitters::free_emitters::rect_shower">
+<area shape="rect" id="node2" href="$classphysim_1_1emitters_1_1free__emitters_1_1rect__source.html" title="A rectangular emitter. " alt="" coords="7,184,159,225"/>
+<area shape="rect" id="node3" href="$classphysim_1_1emitters_1_1free__emitter.html" title="Class for free particle initialisation. " alt="" coords="8,95,157,136"/>
+<area shape="rect" id="node4" href="$classphysim_1_1emitters_1_1base__emitter.html" title="Class for particle initialisation. " alt="" coords="5,5,160,47"/>
+</map>

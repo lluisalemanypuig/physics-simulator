@@ -1,0 +1,96 @@
+\hypertarget{namespacephysim}{}\section{physim Namespace Reference}
+\label{namespacephysim}\index{physim@{physim}}
+
+
+Simulator namespace.  
+
+
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacephysim_1_1emitters}{emitters}
+\begin{DoxyCompactList}\small\item\em Particle emitter classes. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1fields}{fields}
+\begin{DoxyCompactList}\small\item\em Force fields. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1fluids}{fluids}
+\begin{DoxyCompactList}\small\item\em All classes needed for fluid simulation. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1geometric}{geometric}
+\begin{DoxyCompactList}\small\item\em Geometrical objects. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1input}{input}
+\begin{DoxyCompactList}\small\item\em Namespace for file reading. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1math}{math}
+\begin{DoxyCompactList}\small\item\em Mathematical operations namespace. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1meshes}{meshes}
+\begin{DoxyCompactList}\small\item\em Spring meshes. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1particles}{particles}
+\begin{DoxyCompactList}\small\item\em The different types of particles. \end{DoxyCompactList}\item 
+ \hyperlink{namespacephysim_1_1structures}{structures}
+\begin{DoxyCompactList}\small\item\em Space partition data structures. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1simulator}{simulator}
+\begin{DoxyCompactList}\small\item\em Simulator class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type} \+: int8\+\_\+t \{ {\bfseries none} = -\/1, 
+\hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686aa1a59d5d012fd05efb1223f874f77d4b}{solver\+\_\+type\+::\+Euler\+Orig}, 
+\hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686a1855dee0fffde2f4ed8ef6c4a0420b30}{solver\+\_\+type\+::\+Euler\+Semi}, 
+\hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}{solver\+\_\+type\+::\+Verlet}
+ \}\begin{DoxyCompactList}\small\item\em The different types of solvers. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simulator namespace. 
+
+Main namespace of this library. 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacephysim_a09adeda29c09e651877e880d31fc9686}\label{namespacephysim_a09adeda29c09e651877e880d31fc9686}} 
+\index{physim@{physim}!solver\+\_\+type@{solver\+\_\+type}}
+\index{solver\+\_\+type@{solver\+\_\+type}!physim@{physim}}
+\subsubsection{\texorpdfstring{solver\+\_\+type}{solver\_type}}
+{\footnotesize\ttfamily enum \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{physim\+::solver\+\_\+type} \+: int8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+The different types of solvers. 
+
+Each solver updates the position and velocity of a particle differently\+:
+\begin{DoxyItemize}
+\item Euler\+Orig\+: see \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686aa1a59d5d012fd05efb1223f874f77d4b}{solver\+\_\+type\+::\+Euler\+Orig}.
+\item Euler\+Semi\+: see \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686a1855dee0fffde2f4ed8ef6c4a0420b30}{solver\+\_\+type\+::\+Euler\+Semi}.
+\item Verlet\+: see \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}{solver\+\_\+type\+::\+Verlet}. 
+\end{DoxyItemize}\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Euler\+Orig@{Euler\+Orig}!physim@{physim}}\index{physim@{physim}!Euler\+Orig@{Euler\+Orig}}}\mbox{\Hypertarget{namespacephysim_a09adeda29c09e651877e880d31fc9686aa1a59d5d012fd05efb1223f874f77d4b}\label{namespacephysim_a09adeda29c09e651877e880d31fc9686aa1a59d5d012fd05efb1223f874f77d4b}} 
+Euler\+Orig&Implements the usual version of the Euler solver. Position and velocity are updated with the usual formulas, and in this order. \begin{DoxyVerb}xc := current position
+new position = xc + time step * current velocity
+new volcity = xc + time step * force / particle mass
+\end{DoxyVerb}
+ \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Euler\+Semi@{Euler\+Semi}!physim@{physim}}\index{physim@{physim}!Euler\+Semi@{Euler\+Semi}}}\mbox{\Hypertarget{namespacephysim_a09adeda29c09e651877e880d31fc9686a1855dee0fffde2f4ed8ef6c4a0420b30}\label{namespacephysim_a09adeda29c09e651877e880d31fc9686a1855dee0fffde2f4ed8ef6c4a0420b30}} 
+Euler\+Semi&implements a slightly different version from the {\itshape Euler\+Orig} solver. Although it uses the same formulas, the velocity is updated first, and then the position is updated. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Verlet@{Verlet}!physim@{physim}}\index{physim@{physim}!Verlet@{Verlet}}}\mbox{\Hypertarget{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}\label{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}} 
+Verlet&This solver does not use the particle\textquotesingle{}s velocity to update its position. However, the velocity is still updated. \begin{DoxyVerb}xc := current position
+xp := previous position
+new position = xc + k*(xc - xp) + force * dt^2 / mass
+new velocity = (new position - xc) / dt
+\end{DoxyVerb}
+ where
+\begin{DoxyItemize}
+\item xc \+:\+: current position
+\item xp \+:\+: previous position
+\item k \+:\+: damping factor (set to 1.\+0)
+\item force \+:\+: the force that acts upon the particle
+\item dt \+:\+: time step
+\item mass \+:\+: particle\textquotesingle{}s mass 
+\end{DoxyItemize}\\
+\hline
+
+\end{DoxyEnumFields}

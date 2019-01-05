@@ -1,0 +1,116 @@
+\hypertarget{classphysim_1_1particles_1_1sized__particle}{}\section{physim\+:\+:particles\+:\+:sized\+\_\+particle Class Reference}
+\label{classphysim_1_1particles_1_1sized__particle}\index{physim\+::particles\+::sized\+\_\+particle@{physim\+::particles\+::sized\+\_\+particle}}
+
+
+Class implementing a sized particle.  
+
+
+
+
+{\ttfamily \#include $<$sized\+\_\+particle.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:particles\+:\+:sized\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=177pt]{classphysim_1_1particles_1_1sized__particle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:particles\+:\+:sized\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classphysim_1_1particles_1_1sized__particle__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_a17d839e98133f850e0830195452ae4cc}\label{classphysim_1_1particles_1_1sized__particle_a17d839e98133f850e0830195452ae4cc}} 
+\hyperlink{classphysim_1_1particles_1_1sized__particle_a17d839e98133f850e0830195452ae4cc}{sized\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_abd73ec6598e9595d6c7b07c04cf6e808}\label{classphysim_1_1particles_1_1sized__particle_abd73ec6598e9595d6c7b07c04cf6e808}} 
+\hyperlink{classphysim_1_1particles_1_1sized__particle_abd73ec6598e9595d6c7b07c04cf6e808}{sized\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1sized__particle}{sized\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_a2324f58dc1cab36e8fe55080bc5567f3}\label{classphysim_1_1particles_1_1sized__particle_a2324f58dc1cab36e8fe55080bc5567f3}} 
+virtual \hyperlink{classphysim_1_1particles_1_1sized__particle_a2324f58dc1cab36e8fe55080bc5567f3}{$\sim$sized\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1particles_1_1sized__particle_a63de84961417c1522c0ca576697cd972}{init} ()
+\begin{DoxyCompactList}\small\item\em Initialises all particle\textquotesingle{}s attributes, most of them to null values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_a03cd08b0e1c6156fa4fdf1cde2618f4b}\label{classphysim_1_1particles_1_1sized__particle_a03cd08b0e1c6156fa4fdf1cde2618f4b}} 
+virtual \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \hyperlink{classphysim_1_1particles_1_1sized__particle_a03cd08b0e1c6156fa4fdf1cde2618f4b}{get\+\_\+particle\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of this particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}\label{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}} 
+float \hyperlink{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}{R}
+\begin{DoxyCompactList}\small\item\em Radius of the particle \mbox{[}m\mbox{]}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1particles_1_1sized__particle_a30eee2e3b0c0cf9e6f56a21e10a424f3}{partial\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialises this class\textquotesingle{}s attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class implementing a sized particle. 
+
+A free particle is a 0-\/dimensional object, subject to several forces but not to any other particle\textquotesingle{}s direct interaction through them. It can collide with other objects in the scene (geometrical objects, see namespace \hyperlink{namespacephysim_1_1geometric}{physim\+::geometric}) and also with other paricles.
+
+A sized particle is, then, a particle with some size (the radius, see \hyperlink{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}{R}) along the three axis. The loci of point defined by the sphere centered at the current position of the particle (see \hyperlink{classphysim_1_1particles_1_1base__particle_a6298a121dea043741e5d3722386163c6}{base\+\_\+particle\+::cur\+\_\+pos}) and radius {\itshape R} are part of the particle. Notice, however, that this is not a sphere.
+
+All this class\textquotesingle{} attributes are public. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_a63de84961417c1522c0ca576697cd972}\label{classphysim_1_1particles_1_1sized__particle_a63de84961417c1522c0ca576697cd972}} 
+\index{physim\+::particles\+::sized\+\_\+particle@{physim\+::particles\+::sized\+\_\+particle}!init@{init}}
+\index{init@{init}!physim\+::particles\+::sized\+\_\+particle@{physim\+::particles\+::sized\+\_\+particle}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::sized\+\_\+particle\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialises all particle\textquotesingle{}s attributes, most of them to null values. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}{force} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}{mass} \+: 1
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index} \+: no value assigned, since it will be overwritten by the simulator.
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_aac766fa5294e47b944d32ca3e38d47fa}{bouncing} \+: 0.\+8
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a9e7dfd81e9392fc42b3faecb57afdc02}{friction} \+: 0.\+2
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}{charge} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}{lifetime} \+: 10
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}{starttime} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{fixed} \+: false
+\item \hyperlink{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}{R} \+: 1.\+0 
+\end{DoxyItemize}
+
+Reimplemented from \hyperlink{classphysim_1_1particles_1_1free__particle_a0df21e64a28c5fdf471d54a50b59fea3}{physim\+::particles\+::free\+\_\+particle}.
+
+\mbox{\Hypertarget{classphysim_1_1particles_1_1sized__particle_a30eee2e3b0c0cf9e6f56a21e10a424f3}\label{classphysim_1_1particles_1_1sized__particle_a30eee2e3b0c0cf9e6f56a21e10a424f3}} 
+\index{physim\+::particles\+::sized\+\_\+particle@{physim\+::particles\+::sized\+\_\+particle}!partial\+\_\+init@{partial\+\_\+init}}
+\index{partial\+\_\+init@{partial\+\_\+init}!physim\+::particles\+::sized\+\_\+particle@{physim\+::particles\+::sized\+\_\+particle}}
+\subsubsection{\texorpdfstring{partial\+\_\+init()}{partial\_init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::sized\+\_\+particle\+::partial\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises this class\textquotesingle{}s attributes. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}{R} \+: 1.\+0 
+\end{DoxyItemize}
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/particles/sized\+\_\+particle.\+hpp\item 
+physim/particles/sized\+\_\+particle.\+cpp\end{DoxyCompactItemize}

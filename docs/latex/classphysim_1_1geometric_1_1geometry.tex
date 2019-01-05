@@ -1,0 +1,291 @@
+\hypertarget{classphysim_1_1geometric_1_1geometry}{}\section{physim\+:\+:geometric\+:\+:geometry Class Reference}
+\label{classphysim_1_1geometric_1_1geometry}\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+
+
+All geometrical on the scene.  
+
+
+
+
+{\ttfamily \#include $<$geometry.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:geometric\+:\+:geometry\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{classphysim_1_1geometric_1_1geometry__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:geometric\+:\+:geometry\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classphysim_1_1geometric_1_1geometry__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a79e4756803e45be5f1cfeb7d40668c7c}\label{classphysim_1_1geometric_1_1geometry_a79e4756803e45be5f1cfeb7d40668c7c}} 
+\hyperlink{classphysim_1_1geometric_1_1geometry_a79e4756803e45be5f1cfeb7d40668c7c}{geometry} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a9274693e558edca5464d1945eb26f327}\label{classphysim_1_1geometric_1_1geometry_a9274693e558edca5464d1945eb26f327}} 
+\hyperlink{classphysim_1_1geometric_1_1geometry_a9274693e558edca5464d1945eb26f327}{geometry} (const \hyperlink{classphysim_1_1geometric_1_1geometry}{geometry} \&g)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a3ad710d087fd0edadb584ce22feb4d2b}\label{classphysim_1_1geometric_1_1geometry_a3ad710d087fd0edadb584ce22feb4d2b}} 
+virtual \hyperlink{classphysim_1_1geometric_1_1geometry_a3ad710d087fd0edadb584ce22feb4d2b}{$\sim$geometry} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1geometric_1_1geometry_a5b029b5fa8e55847d5aa06b1d341c88c}{set\+\_\+position} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p)=0
+\begin{DoxyCompactList}\small\item\em Sets the position of the geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_afab4343665170b22328a3c46359de5d1}\label{classphysim_1_1geometric_1_1geometry_afab4343665170b22328a3c46359de5d1}} 
+virtual \hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fca}{geometry\+\_\+type} \hyperlink{classphysim_1_1geometric_1_1geometry_afab4343665170b22328a3c46359de5d1}{get\+\_\+geom\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of geometry of this object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_aa5ee497ba6c15da3be5087cab53f2754}\label{classphysim_1_1geometric_1_1geometry_aa5ee497ba6c15da3be5087cab53f2754}} 
+const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \& \hyperlink{classphysim_1_1geometric_1_1geometry_aa5ee497ba6c15da3be5087cab53f2754}{get\+\_\+min} () const
+\begin{DoxyCompactList}\small\item\em Returns point with mininum coordinate values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a6ab9de84b1241c1e82187efb0398ddb3}\label{classphysim_1_1geometric_1_1geometry_a6ab9de84b1241c1e82187efb0398ddb3}} 
+const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \& \hyperlink{classphysim_1_1geometric_1_1geometry_a6ab9de84b1241c1e82187efb0398ddb3}{get\+\_\+max} () const
+\begin{DoxyCompactList}\small\item\em Returns point with maxinum coordinate values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a5b82ef61d845a8dc4adf4ae97d39c312}\label{classphysim_1_1geometric_1_1geometry_a5b82ef61d845a8dc4adf4ae97d39c312}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometric_1_1geometry_a5b82ef61d845a8dc4adf4ae97d39c312}{get\+\_\+box\+\_\+center} () const
+\begin{DoxyCompactList}\small\item\em Returns the center of the bounding box. \end{DoxyCompactList}\item 
+float \hyperlink{classphysim_1_1geometric_1_1geometry_a570de2d1faf50b787ec2f72703c41e19}{approx\+\_\+radius} () const
+\begin{DoxyCompactList}\small\item\em Returns the radius of the bounding sphere. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classphysim_1_1geometric_1_1geometry_a325d4049d4e14584b389a2f1202bdc08}{is\+\_\+inside} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, float tol=1.e-\/6f) const =0
+\begin{DoxyCompactList}\small\item\em Returns whether a point is inside the geometry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classphysim_1_1geometric_1_1geometry_a63d63c340937cede50a95903679c5ad3}{intersec\+\_\+segment} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p2) const =0
+\begin{DoxyCompactList}\small\item\em Returns if the segment defined by the points {\itshape p1} and {\itshape p2} intersects the geometry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classphysim_1_1geometric_1_1geometry_ae9fa877e89b7b2693a94d0772561ad9a}{intersec\+\_\+segment} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p2, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p\+\_\+inter) const =0
+\begin{DoxyCompactList}\small\item\em Returns true if the segment \mbox{[}{\itshape p1}, {\itshape p2} \mbox{]} intersects with the geometry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classphysim_1_1geometric_1_1geometry_aab49e452a72d1ecaf434be2b8de98169}{intersec\+\_\+sphere} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&c, float R) const =0
+\begin{DoxyCompactList}\small\item\em Returns if the sphere with center the point {\itshape c} and radius {\itshape R} intersects the geometry. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1geometric_1_1geometry_ae5d606ba51451b964fcb2301d5622cab}{update\+\_\+particle} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+pos, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+vel, \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&pred) const =0
+\begin{DoxyCompactList}\small\item\em Update a free particle in a collision with geometry. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1geometric_1_1geometry_a11c26d2fea85bf7bc41ec94cefa9729e}{update\+\_\+particle} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+pos, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+vel, \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&pred) const =0
+\begin{DoxyCompactList}\small\item\em Update a sized particle in a collision with geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a1fdaea58b350277f14ee51aedba3111e}\label{classphysim_1_1geometric_1_1geometry_a1fdaea58b350277f14ee51aedba3111e}} 
+virtual void \hyperlink{classphysim_1_1geometric_1_1geometry_a1fdaea58b350277f14ee51aedba3111e}{display} () const =0
+\begin{DoxyCompactList}\small\item\em Output on stream {\itshape cout} information about this geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a5a573b2ff467d2fe492db9240eeff49a}\label{classphysim_1_1geometric_1_1geometry_a5a573b2ff467d2fe492db9240eeff49a}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometric_1_1geometry_a5a573b2ff467d2fe492db9240eeff49a}{vmin}
+\begin{DoxyCompactList}\small\item\em Minimum coordinates of the geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a75eeb09e8584ff0d2109396baf0380d4}\label{classphysim_1_1geometric_1_1geometry_a75eeb09e8584ff0d2109396baf0380d4}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometric_1_1geometry_a75eeb09e8584ff0d2109396baf0380d4}{vmax}
+\begin{DoxyCompactList}\small\item\em Maximum coordinates of the geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+All geometrical on the scene. 
+
+This class is used to group all geometrical objects on the simulated scene.
+
+These objects are typically spheres, planes, triangles that are fixed at a certain position.
+
+Maybe they could also move, but not as a result of any collision between this object and another one. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a570de2d1faf50b787ec2f72703c41e19}\label{classphysim_1_1geometric_1_1geometry_a570de2d1faf50b787ec2f72703c41e19}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!approx\+\_\+radius@{approx\+\_\+radius}}
+\index{approx\+\_\+radius@{approx\+\_\+radius}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{approx\+\_\+radius()}{approx\_radius()}}
+{\footnotesize\ttfamily float physim\+::geometric\+::geometry\+::approx\+\_\+radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the radius of the bounding sphere. 
+
+\begin{DoxyReturn}{Returns}
+Returns the length between the center of the box and one of its vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a63d63c340937cede50a95903679c5ad3}\label{classphysim_1_1geometric_1_1geometry_a63d63c340937cede50a95903679c5ad3}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!intersec\+\_\+segment@{intersec\+\_\+segment}}
+\index{intersec\+\_\+segment@{intersec\+\_\+segment}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{intersec\+\_\+segment()}{intersec\_segment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual bool physim\+::geometric\+::geometry\+::intersec\+\_\+segment (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2 }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Returns if the segment defined by the points {\itshape p1} and {\itshape p2} intersects the geometry. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & First endpoint of the segment. \\
+\hline
+\mbox{\tt in}  & {\em p2} & Second endpoint of the segment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if there is intersection. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_aed45b841c7d1e615565e36720386f7a4}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_ab5ca57fd95a11b4fd1754d6d35799f23}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_a8a3b99b36271702bbececed5fce16391}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1object_a1bb905634af6176cc88680ce6f9fb080}{physim\+::geometric\+::object}, and \hyperlink{classphysim_1_1geometric_1_1sphere_ae9e58ed95da106650ca29f210d75223b}{physim\+::geometric\+::sphere}.
+
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_ae9fa877e89b7b2693a94d0772561ad9a}\label{classphysim_1_1geometric_1_1geometry_ae9fa877e89b7b2693a94d0772561ad9a}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!intersec\+\_\+segment@{intersec\+\_\+segment}}
+\index{intersec\+\_\+segment@{intersec\+\_\+segment}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{intersec\+\_\+segment()}{intersec\_segment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual bool physim\+::geometric\+::geometry\+::intersec\+\_\+segment (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p\+\_\+inter }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Returns true if the segment \mbox{[}{\itshape p1}, {\itshape p2} \mbox{]} intersects with the geometry. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & The first endpoint of the segment. \\
+\hline
+\mbox{\tt in}  & {\em p2} & The second endpoint of the segment. \\
+\hline
+\mbox{\tt out}  & {\em p\+\_\+inter} & The intersection point between the segment and the geometry. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the segment and the geometry intersect. In this case, the value in {\itshape p\+\_\+inter} will be the intersection point. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_a093865345b5a82576351be159ae56ee1}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_a013d124b88d40ddd698ed27047896bd0}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_a4e42f4d03045655690ee0339a9f2b50d}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1object_a10ee0f5a42edf3c469a9354a11571aac}{physim\+::geometric\+::object}, and \hyperlink{classphysim_1_1geometric_1_1sphere_ac89b9985569693cb7f6ba6cb3d0fe9f8}{physim\+::geometric\+::sphere}.
+
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_aab49e452a72d1ecaf434be2b8de98169}\label{classphysim_1_1geometric_1_1geometry_aab49e452a72d1ecaf434be2b8de98169}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!intersec\+\_\+sphere@{intersec\+\_\+sphere}}
+\index{intersec\+\_\+sphere@{intersec\+\_\+sphere}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{intersec\+\_\+sphere()}{intersec\_sphere()}}
+{\footnotesize\ttfamily virtual bool physim\+::geometric\+::geometry\+::intersec\+\_\+sphere (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{c,  }\item[{float}]{R }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Returns if the sphere with center the point {\itshape c} and radius {\itshape R} intersects the geometry. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em c} & Center of the sphere. \\
+\hline
+\mbox{\tt in}  & {\em R} & radius of the sphere. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if there is intersection. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_a39a293ca40cfbde7a2ef8c1ab487833d}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_a0cb72d1f970ef06df43206eb4b9cf19a}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_a1f4ba9f73933f56201339789e37f7ff7}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1object_a2846f76ef5b800bc50b6fa7e0a478a80}{physim\+::geometric\+::object}, and \hyperlink{classphysim_1_1geometric_1_1sphere_ad0f0fb96457cef20bb6626cad129b90b}{physim\+::geometric\+::sphere}.
+
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a325d4049d4e14584b389a2f1202bdc08}\label{classphysim_1_1geometric_1_1geometry_a325d4049d4e14584b389a2f1202bdc08}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!is\+\_\+inside@{is\+\_\+inside}}
+\index{is\+\_\+inside@{is\+\_\+inside}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{is\+\_\+inside()}{is\_inside()}}
+{\footnotesize\ttfamily virtual bool physim\+::geometric\+::geometry\+::is\+\_\+inside (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{float}]{tol = {\ttfamily 1.e-\/6f} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Returns whether a point is inside the geometry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & The point to check whether it is inside the geometry. \\
+\hline
+{\em tol} & Optional tolerance to deal corerctly with equalities. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if {\itshape p} is inside the geometry. Returns false if otherwise. Depending on the type of geometry this method has a different geometrical interpretation. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_ab36400ef3f750fb6482fda8e1044bfa5}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_a735cfae7db71f5d6105011c40595ca37}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_a873ac41caf2d1ed4b9f8e52502ecbd92}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1object_ade3bdbcb865c6b0910b8adfe2225be9b}{physim\+::geometric\+::object}, and \hyperlink{classphysim_1_1geometric_1_1sphere_a22ca74b7056f85165d80d9913b32bbfb}{physim\+::geometric\+::sphere}.
+
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a5b029b5fa8e55847d5aa06b1d341c88c}\label{classphysim_1_1geometric_1_1geometry_a5b029b5fa8e55847d5aa06b1d341c88c}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!set\+\_\+position@{set\+\_\+position}}
+\index{set\+\_\+position@{set\+\_\+position}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{set\+\_\+position()}{set\_position()}}
+{\footnotesize\ttfamily virtual void physim\+::geometric\+::geometry\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Sets the position of the geometry. 
+
+For each type of object that implements this class, setting the position has a different geometrical interpretation. 
+\begin{DoxyParams}{Parameters}
+{\em p} & The \char`\"{}new position\char`\"{} of the object. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_a7458e8b880ace6a3393a728edb6d66fa}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_a60c60f0260fff5402c546a01e7fb5d5f}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_a201455ce1b4493b02b2f0c14e7d57e71}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1sphere_ad31c556961c46dbbdf3ade9bd7035d58}{physim\+::geometric\+::sphere}, and \hyperlink{classphysim_1_1geometric_1_1object_ab1efcebf4013206cee817beeb0415cd6}{physim\+::geometric\+::object}.
+
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_ae5d606ba51451b964fcb2301d5622cab}\label{classphysim_1_1geometric_1_1geometry_ae5d606ba51451b964fcb2301d5622cab}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!update\+\_\+particle@{update\+\_\+particle}}
+\index{update\+\_\+particle@{update\+\_\+particle}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{update\+\_\+particle()}{update\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void physim\+::geometric\+::geometry\+::update\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{pred }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Update a free particle in a collision with geometry. 
+
+Assumig that particle {\itshape pred} collided with this geometry, update its position, velocity, ... accordingly.
+
+For example, some geometry may be \textquotesingle{}bouncy\textquotesingle{}, it may give the particle some extra speed. This needs to be updated in this method.
+
+The particle {\itshape pred} is given in a state that is not modified by any solver. That is, the particle\textquotesingle{}s position, velocity, force, ... have the value at time step {\itshape T}. The predicted position and velocity are given in {\itshape pred\+\_\+pos} and {\itshape pred\+\_\+vel}. These are predictions of the position and velocity for time {\itshape T} + {\itshape dt} (where dt is some time step). The modified particle due to the collision must be stored in {\itshape pred}.
+
+This method is called only when it is sure that there has been a collision\+: the segment joining the particle\textquotesingle{}s current position and the predicted position intersects the geometry.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pred\+\_\+pos} & The predicted position of the particle. \\
+\hline
+\mbox{\tt in}  & {\em pred\+\_\+vel} & The predicted velocity of the particle. \\
+\hline
+\mbox{\tt out}  & {\em pred} & The particle with the result of the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_a38e4eaa8bff24511cd3a9d94cd04e3dd}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_a3285ad4d763703ed84a21b25420c84bc}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_a9dc212ff39713d1525550c0bf328fe3a}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1object_a9885341b8bad60413402d84249bea9a2}{physim\+::geometric\+::object}, and \hyperlink{classphysim_1_1geometric_1_1sphere_a22318ec85e433ed92a0a9f90aed97b79}{physim\+::geometric\+::sphere}.
+
+\mbox{\Hypertarget{classphysim_1_1geometric_1_1geometry_a11c26d2fea85bf7bc41ec94cefa9729e}\label{classphysim_1_1geometric_1_1geometry_a11c26d2fea85bf7bc41ec94cefa9729e}} 
+\index{physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}!update\+\_\+particle@{update\+\_\+particle}}
+\index{update\+\_\+particle@{update\+\_\+particle}!physim\+::geometric\+::geometry@{physim\+::geometric\+::geometry}}
+\subsubsection{\texorpdfstring{update\+\_\+particle()}{update\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void physim\+::geometric\+::geometry\+::update\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&}]{pred }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Update a sized particle in a collision with geometry. 
+
+Assumig that particle {\itshape pred} collided with this geometry, update its position, velocity, ... accordingly.
+
+For example, some geometry may be \textquotesingle{}bouncy\textquotesingle{}, it may give the particle some extra speed. This needs to be updated in this method.
+
+The particle {\itshape pred} is given in a state that is not modified by any solver. That is, the particle\textquotesingle{}s position, velocity, force, ... have the value at time step {\itshape T}. The predicted position and velocity are given in {\itshape pred\+\_\+pos} and {\itshape pred\+\_\+vel}. These are predictions of the position and velocity for time {\itshape T} + {\itshape dt} (where dt is some time step). The modified particle due to the collision must be stored in {\itshape pred}.
+
+This method is called only when it is sure that there has been a collision\+: the segment joining the particle\textquotesingle{}s current position and the predicted position intersects the geometry.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pred\+\_\+pos} & The predicted position of the particle. \\
+\hline
+\mbox{\tt in}  & {\em pred\+\_\+vel} & The predicted velocity of the particle. \\
+\hline
+\mbox{\tt out}  & {\em pred} & The particle with the result of the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classphysim_1_1geometric_1_1rectangle_a61fead9b22595c9d9be8dc3867e26717}{physim\+::geometric\+::rectangle}, \hyperlink{classphysim_1_1geometric_1_1triangle_ae2551793ce8a5de01504326309c1543b}{physim\+::geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1plane_aff9bd840500b32eeefb89ac0a7d9b95f}{physim\+::geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1object_aa9f27d1cc4ee3a3b9883bd155435c2bc}{physim\+::geometric\+::object}, and \hyperlink{classphysim_1_1geometric_1_1sphere_a3c395dccc5e2c8995e28767419fe59d6}{physim\+::geometric\+::sphere}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/geometry/geometry.\+hpp\item 
+physim/geometry/geometry.\+cpp\end{DoxyCompactItemize}

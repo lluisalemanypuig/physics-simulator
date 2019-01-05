@@ -1,0 +1,207 @@
+\hypertarget{classphysim_1_1init_1_1rect__source}{}\section{physim\+:\+:init\+:\+:rect\+\_\+source Class Reference}
+\label{classphysim_1_1init_1_1rect__source}\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+
+
+A rectangular source class initialiser.  
+
+
+
+
+{\ttfamily \#include $<$rect\+\_\+source.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:init\+:\+:rect\+\_\+source\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{classphysim_1_1init_1_1rect__source__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:init\+:\+:rect\+\_\+source\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{classphysim_1_1init_1_1rect__source__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_acf710adbf563be896e4f5d664c679366}\label{classphysim_1_1init_1_1rect__source_acf710adbf563be896e4f5d664c679366}} 
+\hyperlink{classphysim_1_1init_1_1rect__source_acf710adbf563be896e4f5d664c679366}{rect\+\_\+source} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1init_1_1rect__source_a0a8b0a776a1aba007a620ce7bd5033dc}{rect\+\_\+source} (const \hyperlink{classphysim_1_1init_1_1rect__source}{rect\+\_\+source} \&rs)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_af3cb48e7b32f013808bdb9792e7e8bac}\label{classphysim_1_1init_1_1rect__source_af3cb48e7b32f013808bdb9792e7e8bac}} 
+virtual \hyperlink{classphysim_1_1init_1_1rect__source_af3cb48e7b32f013808bdb9792e7e8bac}{$\sim$rect\+\_\+source} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1rect__source_a6f398085d0f0391b2acf91cebd5b97c1}{set\+\_\+rectangular\+\_\+source} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+S, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+u, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+v, float \+\_\+w, float \+\_\+h)
+\begin{DoxyCompactList}\small\item\em Sets the source of the rectangle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1rect__source_aa76e350cf969a5f7e264fc6318d91be5}{set\+\_\+straight\+\_\+source} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+S, float \+\_\+w, float \+\_\+h)
+\begin{DoxyCompactList}\small\item\em Patricular case of flat rectangular source. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a6538f769f29a02ba6323d6c93af6f685}\label{classphysim_1_1init_1_1rect__source_a6538f769f29a02ba6323d6c93af6f685}} 
+virtual \hyperlink{classphysim_1_1init_1_1initialiser}{initialiser} $\ast$ \hyperlink{classphysim_1_1init_1_1rect__source_a6538f769f29a02ba6323d6c93af6f685}{clone} () const =0
+\begin{DoxyCompactList}\small\item\em Returns a reference to a copy of this initialiser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classphysim_1_1init_1_1rect__source_a3789669ec12884fe9fe766cefb02a5ed}{make\+\_\+pos\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the position initialser. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1init_1_1rect__source_a3b825bcedd2d622dabc10aa6a1252cbf}{make\+\_\+vel\+\_\+init} ()=0
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_abd010c853eefe15fcbb719e30856884a}\label{classphysim_1_1init_1_1rect__source_abd010c853eefe15fcbb719e30856884a}} 
+std\+::default\+\_\+random\+\_\+engine \hyperlink{classphysim_1_1init_1_1rect__source_abd010c853eefe15fcbb719e30856884a}{E}
+\begin{DoxyCompactList}\small\item\em Engine used in the uniform distribution \hyperlink{classphysim_1_1init_1_1rect__source_af45d00e6991106d11b3c8fd1e87e18ec}{U01}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_af45d00e6991106d11b3c8fd1e87e18ec}\label{classphysim_1_1init_1_1rect__source_af45d00e6991106d11b3c8fd1e87e18ec}} 
+std\+::uniform\+\_\+real\+\_\+distribution$<$ float $>$ \hyperlink{classphysim_1_1init_1_1rect__source_af45d00e6991106d11b3c8fd1e87e18ec}{U01}
+\begin{DoxyCompactList}\small\item\em Random number generator for uniform values between 0 and 1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}\label{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}{S}
+\begin{DoxyCompactList}\small\item\em The source point of the rectangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a3308db7d0c3629fcfd43e6a6f06aa406}\label{classphysim_1_1init_1_1rect__source_a3308db7d0c3629fcfd43e6a6f06aa406}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1init_1_1rect__source_a3308db7d0c3629fcfd43e6a6f06aa406}{C}
+\begin{DoxyCompactList}\small\item\em The center of the rectangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}\label{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}{u}
+\begin{DoxyCompactList}\small\item\em Unitary vector along the width. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}\label{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}{v}
+\begin{DoxyCompactList}\small\item\em Unitary vector along the height. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1init_1_1rect__source_af4540b1269f8a0bf26fe7cad23bdbdd2}{n}
+\begin{DoxyCompactList}\small\item\em Normal to the rectangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}\label{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}} 
+float \hyperlink{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}{w}
+\begin{DoxyCompactList}\small\item\em The distance between \hyperlink{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}{S} and the farthest point in $R(\lambda,0)$. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a9ada91327596758bd9e1d5053db0ff73}\label{classphysim_1_1init_1_1rect__source_a9ada91327596758bd9e1d5053db0ff73}} 
+float \hyperlink{classphysim_1_1init_1_1rect__source_a9ada91327596758bd9e1d5053db0ff73}{h}
+\begin{DoxyCompactList}\small\item\em The distance between \hyperlink{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}{S} and the farthest point in $R(0,\mu)$. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A rectangular source class initialiser. 
+
+Provides a position initialiser function so that particles are generated within a rectangle of specific dimensions.
+
+Need to set the source size through \hyperlink{classphysim_1_1init_1_1rect__source_a6f398085d0f0391b2acf91cebd5b97c1}{set\+\_\+rectangular\+\_\+source} so that the initialser\textquotesingle{}s source is defined. In this method is specified the coordinates of one of its corners (the source \hyperlink{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}{S}), the two unit vectors spanning the plane it belongs to (see \hyperlink{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}{u} and \hyperlink{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}{v}), and the lengths of the sides, width and length (see \hyperlink{classphysim_1_1init_1_1rect__source_a9ada91327596758bd9e1d5053db0ff73}{h} and \hyperlink{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}{w}).
+
+The points in this rectangle are, then, parametrised by\+:
+
+$R(\lambda, \mu) = S + \lambda\cdot w\cdot \vec{u} + \mu\cdot h\cdot \vec{u}$
+
+for $\lambda,\mu \in [0,1]\subset R$.
+
+Needless to say that if the vectors \hyperlink{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}{u} and \hyperlink{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}{v} are not perpendicular the result will be a parallelogram, not a rectangle. However, the word \textquotesingle{}rectangle\textquotesingle{} will be used regardless of how misleading it might be. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a0a8b0a776a1aba007a620ce7bd5033dc}\label{classphysim_1_1init_1_1rect__source_a0a8b0a776a1aba007a620ce7bd5033dc}} 
+\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}!rect\+\_\+source@{rect\+\_\+source}}
+\index{rect\+\_\+source@{rect\+\_\+source}!physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{rect\+\_\+source()}{rect\_source()}}
+{\footnotesize\ttfamily physim\+::init\+::rect\+\_\+source\+::rect\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1init_1_1rect__source}{rect\+\_\+source} \&}]{rs }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+The function \hyperlink{classphysim_1_1init_1_1initialiser_a1980105ffaa655858b90a8f3a9368682}{initialiser\+::pos} is not copied. Instead, it is remade (function \hyperlink{classphysim_1_1init_1_1rect__source_a3789669ec12884fe9fe766cefb02a5ed}{make\+\_\+pos\+\_\+init} is called again). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a3789669ec12884fe9fe766cefb02a5ed}\label{classphysim_1_1init_1_1rect__source_a3789669ec12884fe9fe766cefb02a5ed}} 
+\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}!make\+\_\+pos\+\_\+init@{make\+\_\+pos\+\_\+init}}
+\index{make\+\_\+pos\+\_\+init@{make\+\_\+pos\+\_\+init}!physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{make\+\_\+pos\+\_\+init()}{make\_pos\_init()}}
+{\footnotesize\ttfamily void physim\+::init\+::rect\+\_\+source\+::make\+\_\+pos\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the position initialser. 
+
+It is made a virtual function so that this class can be reimplemented in another one.
+
+Positions are generated according to the parametrisation of this rectangle. \mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a3b825bcedd2d622dabc10aa6a1252cbf}\label{classphysim_1_1init_1_1rect__source_a3b825bcedd2d622dabc10aa6a1252cbf}} 
+\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily virtual void physim\+::init\+::rect\+\_\+source\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+It is made a virtual function so that this class can be reimplemented in another one. 
+
+Implemented in \hyperlink{classphysim_1_1init_1_1rect__fountain_a3070a3ff21834d8a9a8315dac3e6fffe}{physim\+::init\+::rect\+\_\+fountain}, and \hyperlink{classphysim_1_1init_1_1rect__shower_adb3c74e88c13b26955e4c817e7ffe343}{physim\+::init\+::rect\+\_\+shower}.
+
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_a6f398085d0f0391b2acf91cebd5b97c1}\label{classphysim_1_1init_1_1rect__source_a6f398085d0f0391b2acf91cebd5b97c1}} 
+\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}!set\+\_\+rectangular\+\_\+source@{set\+\_\+rectangular\+\_\+source}}
+\index{set\+\_\+rectangular\+\_\+source@{set\+\_\+rectangular\+\_\+source}!physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{set\+\_\+rectangular\+\_\+source()}{set\_rectangular\_source()}}
+{\footnotesize\ttfamily void physim\+::init\+::rect\+\_\+source\+::set\+\_\+rectangular\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+S,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+u,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+v,  }\item[{float}]{\+\_\+w,  }\item[{float}]{\+\_\+h }\end{DoxyParamCaption})}
+
+
+
+Sets the source of the rectangle. 
+
+The order of {\itshape \+\_\+u} and {\itshape \+\_\+v} is important. It defines the \textquotesingle{}above\textquotesingle{} and \textquotesingle{}below\textquotesingle{} parts of the rectangle. This is user-\/defined.
+
+The normal (see \hyperlink{classphysim_1_1init_1_1rect__source_af4540b1269f8a0bf26fe7cad23bdbdd2}{n}) is determined as the cross-\/product of \+\_\+u and \+\_\+v, in this order. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+S} & See \hyperlink{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}{S}. \\
+\hline
+{\em \+\_\+u} & See \hyperlink{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}{u}. \\
+\hline
+{\em \+\_\+v} & See \hyperlink{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}{v}. \\
+\hline
+{\em \+\_\+w} & See \hyperlink{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}{w}. \\
+\hline
+{\em \+\_\+h} & See \hyperlink{classphysim_1_1init_1_1rect__source_a9ada91327596758bd9e1d5053db0ff73}{h}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_aa76e350cf969a5f7e264fc6318d91be5}\label{classphysim_1_1init_1_1rect__source_aa76e350cf969a5f7e264fc6318d91be5}} 
+\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}!set\+\_\+straight\+\_\+source@{set\+\_\+straight\+\_\+source}}
+\index{set\+\_\+straight\+\_\+source@{set\+\_\+straight\+\_\+source}!physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{set\+\_\+straight\+\_\+source()}{set\_straight\_source()}}
+{\footnotesize\ttfamily void physim\+::init\+::rect\+\_\+source\+::set\+\_\+straight\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+S,  }\item[{float}]{\+\_\+w,  }\item[{float}]{\+\_\+h }\end{DoxyParamCaption})}
+
+
+
+Patricular case of flat rectangular source. 
+
+Unitary vectors used are\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}{u} = (1.\+0, 0.\+0, 0.\+0)
+\item \hyperlink{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}{v} = (0.\+0, 0.\+0, 1.\+0) 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+S} & See \hyperlink{classphysim_1_1init_1_1rect__source_ab12449975c6df03027ff17b424fb151b}{S}. \\
+\hline
+{\em \+\_\+w} & See \hyperlink{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}{w}. \\
+\hline
+{\em \+\_\+h} & See \hyperlink{classphysim_1_1init_1_1rect__source_a9ada91327596758bd9e1d5053db0ff73}{h}. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__source_af4540b1269f8a0bf26fe7cad23bdbdd2}\label{classphysim_1_1init_1_1rect__source_af4540b1269f8a0bf26fe7cad23bdbdd2}} 
+\index{physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}!n@{n}}
+\index{n@{n}!physim\+::init\+::rect\+\_\+source@{physim\+::init\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::init\+::rect\+\_\+source\+::n\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Normal to the rectangle. 
+
+Unitary vector. Cross-\/product of \hyperlink{classphysim_1_1init_1_1rect__source_ab46280374968757bd185cb9053020371}{u} and \hyperlink{classphysim_1_1init_1_1rect__source_a3373fe0fda8e01ba6680bde903b371b1}{v}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/initialiser/rect\+\_\+source.\+hpp\item 
+physim/initialiser/rect\+\_\+source.\+cpp\end{DoxyCompactItemize}

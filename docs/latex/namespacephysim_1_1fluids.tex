@@ -1,0 +1,63 @@
+\hypertarget{namespacephysim_1_1fluids}{}\section{physim\+:\+:fluids Namespace Reference}
+\label{namespacephysim_1_1fluids}\index{physim\+::fluids@{physim\+::fluids}}
+
+
+All classes needed for fluid simulation.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1fluids_1_1fluid}{fluid}
+\begin{DoxyCompactList}\small\item\em Class implementing a fluid. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1fluids_1_1newtonian}{newtonian}
+\begin{DoxyCompactList}\small\item\em Class implementing a newtonian fluid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ float(float) $>$ \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function}
+\begin{DoxyCompactList}\small\item\em Shorthand for a scalar kernel function. \end{DoxyCompactList}\item 
+typedef std\+::function$<$ void(const \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3} \&, float, \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3} \&)$>$ \hyperlink{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}{kernel\+\_\+vectorial\+\_\+function}
+\begin{DoxyCompactList}\small\item\em Shorthand for a vectorial kernel function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+All classes needed for fluid simulation. 
+
+This namespace contains the definition of what a fluid is, and the kernel functions for simulating a fluid\textquotesingle{}s behaviour. 
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}\label{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}} 
+\index{physim\+::fluids@{physim\+::fluids}!kernel\+\_\+scalar\+\_\+function@{kernel\+\_\+scalar\+\_\+function}}
+\index{kernel\+\_\+scalar\+\_\+function@{kernel\+\_\+scalar\+\_\+function}!physim\+::fluids@{physim\+::fluids}}
+\subsubsection{\texorpdfstring{kernel\+\_\+scalar\+\_\+function}{kernel\_scalar\_function}}
+{\footnotesize\ttfamily typedef std\+::function$<$ float (float) $>$ \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{physim\+::fluids\+::kernel\+\_\+scalar\+\_\+function}}
+
+
+
+Shorthand for a scalar kernel function. 
+
+A kernel function for fluids may be denoted as $W(r_{ij})$, where $r_{ij}$ is the distance between two particles.
+
+This function uses a maximum distance to define a neighbourhood for a given particle $i$. Whenever this function is evaluated for a pair of particles $i, j$ such that the distance between them is larger than this maximum distance, it should return 0.
+
+The only parameter is the squared distance between the particles. \mbox{\Hypertarget{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}\label{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}} 
+\index{physim\+::fluids@{physim\+::fluids}!kernel\+\_\+vectorial\+\_\+function@{kernel\+\_\+vectorial\+\_\+function}}
+\index{kernel\+\_\+vectorial\+\_\+function@{kernel\+\_\+vectorial\+\_\+function}!physim\+::fluids@{physim\+::fluids}}
+\subsubsection{\texorpdfstring{kernel\+\_\+vectorial\+\_\+function}{kernel\_vectorial\_function}}
+{\footnotesize\ttfamily typedef std\+::function$<$ void (const \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3}\&, float, \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3}\&)$>$ \hyperlink{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}{physim\+::fluids\+::kernel\+\_\+vectorial\+\_\+function}}
+
+
+
+Shorthand for a vectorial kernel function. 
+
+A kernel function for fluids may be denoted as $W(r_{ij})$, where $r_{ij}$ is the distance between two particles.
+
+This function uses a maximum distance to define a neighbourhood for a given particle $i$. Whenever this function is evaluated for a pair of particles $i, j$ such that the distance between them is larger than this maximum distance, it should return 0.
+
+
+\begin{DoxyItemize}
+\item First parameter is the vector from particle {\itshape i} to particle {\itshape j}.
+\item Second parameter is the squared distance between them.
+\item Third parameter is the result of the function. 
+\end{DoxyItemize}

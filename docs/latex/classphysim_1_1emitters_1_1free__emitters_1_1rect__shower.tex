@@ -1,0 +1,80 @@
+\hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower}{}\section{physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+shower Class Reference}
+\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower}\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower}}
+
+
+A shower emitter.  
+
+
+
+
+{\ttfamily \#include $<$rect\+\_\+shower.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+shower\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+shower\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_a7c334dfc7c9192e5f097c198981f28c8}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_a7c334dfc7c9192e5f097c198981f28c8}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_a7c334dfc7c9192e5f097c198981f28c8}{rect\+\_\+shower} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_af96b9ac048d24aa8fd3dbe61634f371c}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_af96b9ac048d24aa8fd3dbe61634f371c}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_af96b9ac048d24aa8fd3dbe61634f371c}{rect\+\_\+shower} (const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower}{rect\+\_\+shower} \&\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}{w})
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab687fca42ff43d5576cccfca4a793c31}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab687fca42ff43d5576cccfca4a793c31}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab687fca42ff43d5576cccfca4a793c31}{$\sim$rect\+\_\+shower} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_a66ab8bd169b7ff4639214103845e6af9}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_a66ab8bd169b7ff4639214103845e6af9}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitter}{free\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_a66ab8bd169b7ff4639214103845e6af9}{clone} () const
+\begin{DoxyCompactList}\small\item\em Returns a reference to a copy of this emitter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab1c7c992c636e3a15e70d6ce3180ed70}{make\+\_\+vel\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A shower emitter. 
+
+Provides a position initialiser function so that generated particles behave like a shower\+: their velocity is set to negative values of y, and null values of x and z.
+
+Need to set the source size through \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab85134622163dfc1e3a77730ea94557e}{rect\+\_\+source\+::set\+\_\+rectangular\+\_\+source} method so that the initialser\textquotesingle{}s source is defined. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab1c7c992c636e3a15e70d6ce3180ed70}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab1c7c992c636e3a15e70d6ce3180ed70}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+The velocity is set to negative values of y, and null values of x and z. 
+
+Implements \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aace4d8f596f2a138e098ab0f86e927b5}{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/emitter/free\+\_\+emitters/rect\+\_\+shower.\+hpp\item 
+physim/emitter/free\+\_\+emitters/rect\+\_\+shower.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,413 @@
+\hypertarget{classphysim_1_1init_1_1multisource}{}\section{physim\+:\+:init\+:\+:multisource$<$ T $>$ Class Template Reference}
+\label{classphysim_1_1init_1_1multisource}\index{physim\+::init\+::multisource$<$ T $>$@{physim\+::init\+::multisource$<$ T $>$}}
+
+
+Multiple source initialiser.  
+
+
+
+
+{\ttfamily \#include $<$multisource.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:init\+:\+:multisource$<$ T $>$\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{classphysim_1_1init_1_1multisource__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:init\+:\+:multisource$<$ T $>$\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{classphysim_1_1init_1_1multisource__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_ad5b585b05f21a66fbeba5253c97e115d}\label{classphysim_1_1init_1_1multisource_ad5b585b05f21a66fbeba5253c97e115d}} 
+\hyperlink{classphysim_1_1init_1_1multisource_ad5b585b05f21a66fbeba5253c97e115d}{multisource} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_ab62db1285d151fcd9460e9e9286a621b}\label{classphysim_1_1init_1_1multisource_ab62db1285d151fcd9460e9e9286a621b}} 
+\hyperlink{classphysim_1_1init_1_1multisource_ab62db1285d151fcd9460e9e9286a621b}{$\sim$multisource} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_af4a2f1d12712c4d672233539e721f000}{allocate} (size\+\_\+t N, size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Allocates space for {\itshape n} initialisers. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a9fb693b4587cac0bd27ad96fc00fc325}{use\+\_\+position\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The position initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_ad62414d7308146311f5d7df177c31d8d}{use\+\_\+velocity\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The velocity initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_aa61a8925f6363b01e40f37aea40ba730}{use\+\_\+mass\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The mass initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a4bc9fa90be0a91942071746743701edd}{use\+\_\+charge\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The charge initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a11d489afb2900b0ecec211e79dad14ef}{use\+\_\+bounce\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The bouncing coefficient initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_aa4a00aa2fa625043ec0d20e2303758ed}{use\+\_\+friction\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The friction coefficient initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a45156cd3cd13cb4ebc4540fa56251cd5}{use\+\_\+lifetime\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The lifetime initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_af15a42abe4b6c8f842731d288c4cf71f}{use\+\_\+starttime\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The starttime initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a58ee9fcd33be010bc6e4df0da14b39ae}{use\+\_\+fixed\+\_\+init} (bool u=true)
+\begin{DoxyCompactList}\small\item\em The fixed attribute initialiser will be remade when copying. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a41bf00a8e0b8b60d7ca86dc9dd00c0db}{make\+\_\+position\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make position initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a1980105ffaa655858b90a8f3a9368682}{initialiser\+::pos}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a9bd421ceff83a6989e071cb0eebcae77}{make\+\_\+velocity\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make velocity initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a0e6b1de60df484977b975369b225e89b}{initialiser\+::vel}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a6fe9dabcfe734fb68611d71de90157bb}{make\+\_\+mass\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make mass initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_aaf4931c0b596b54097c43d9439d03edc}{initialiser\+::mass}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a9118fc38926eab79955cb02a8b27284f}{make\+\_\+charge\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make charge initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_ac9ff9d82f6a1effdaf44cfacd92669d6}{initialiser\+::charge}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_ad994252de40d3c0affb068cc2f2d645e}{make\+\_\+bounce\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make bounce initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_ad8917d57b62f13ffb6cff24d39b4d360}{initialiser\+::bounce}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a18db2f8c43641a9ec243ba0a4693f679}{make\+\_\+friction\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make friction initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a47fdfedccb1be510ee3021749dfe06e6}{initialiser\+::friction}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a5eac947010c79300e4aa80b374edd129}{make\+\_\+lifetime\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make lifetime initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_ac137b5089b9beca078e08b2bcdf0d54c}{initialiser\+::lifetime}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_adf2deaa3069a402b578d461b620d71e9}{make\+\_\+starttime\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make starttime initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a651ed09452c1621cec2ca7f52073f53f}{initialiser\+::starttime}. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1init_1_1multisource_a76a07d9c40c1b816efa0a20285f3c46f}{make\+\_\+fixed\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Make fixed initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a0deb0d7e29b824274c4cd81306b42465}{initialiser\+::fixed}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a48e4fd674c2ee2d4209ef9be97105fa2}\label{classphysim_1_1init_1_1multisource_a48e4fd674c2ee2d4209ef9be97105fa2}} 
+void \hyperlink{classphysim_1_1init_1_1multisource_a48e4fd674c2ee2d4209ef9be97105fa2}{make\+\_\+all\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Calls all make\+\_\+$\ast$\+\_\+init functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_aece8508cfe9fdceb63a21a2001a9e6e3}\label{classphysim_1_1init_1_1multisource_aece8508cfe9fdceb63a21a2001a9e6e3}} 
+size\+\_\+t \hyperlink{classphysim_1_1init_1_1multisource_aece8508cfe9fdceb63a21a2001a9e6e3}{size} () const
+\begin{DoxyCompactList}\small\item\em Returns the amount of sources of this initialiser. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a075bc9637cb8b843253fade495de87c3}\label{classphysim_1_1init_1_1multisource_a075bc9637cb8b843253fade495de87c3}} 
+std\+::vector$<$ T $>$ \& \hyperlink{classphysim_1_1init_1_1multisource_a075bc9637cb8b843253fade495de87c3}{get\+\_\+sources} ()
+\begin{DoxyCompactList}\small\item\em Returns a reference to the sources. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a4e5a65dc115294367129be116d4aab83}\label{classphysim_1_1init_1_1multisource_a4e5a65dc115294367129be116d4aab83}} 
+const std\+::vector$<$ T $>$ \& \hyperlink{classphysim_1_1init_1_1multisource_a4e5a65dc115294367129be116d4aab83}{get\+\_\+sources} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the sources. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_affde6caf02eac0bb1b173ead8dd6f25c}\label{classphysim_1_1init_1_1multisource_affde6caf02eac0bb1b173ead8dd6f25c}} 
+\hyperlink{classphysim_1_1init_1_1initialiser}{initialiser} $\ast$ \hyperlink{classphysim_1_1init_1_1multisource_affde6caf02eac0bb1b173ead8dd6f25c}{clone} () const
+\begin{DoxyCompactList}\small\item\em Returns a reference to a copy of this initialiser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a341e8edbb35cc2514c6009014ec3e6e3}\label{classphysim_1_1init_1_1multisource_a341e8edbb35cc2514c6009014ec3e6e3}} 
+size\+\_\+t \hyperlink{classphysim_1_1init_1_1multisource_a341e8edbb35cc2514c6009014ec3e6e3}{P}
+\begin{DoxyCompactList}\small\item\em Number of particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_ad16d3a372efb23d3975df960a54f4dc1}\label{classphysim_1_1init_1_1multisource_ad16d3a372efb23d3975df960a54f4dc1}} 
+std\+::vector$<$ T $>$ \hyperlink{classphysim_1_1init_1_1multisource_ad16d3a372efb23d3975df960a54f4dc1}{sources}
+\begin{DoxyCompactList}\small\item\em Collection of sources for this multiple source initialiser. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}
+\begin{DoxyCompactList}\small\item\em Bit mask that indicates what functions are used. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class physim\+::init\+::multisource$<$ T $>$}
+
+Multiple source initialiser. 
+
+This class implements an initialiser that uses multiple initialisers of the same type.
+
+This can be used, for example, to have several hoses in the same simulator.
+
+In order to achieve this, the class divides into chunks of similar size all the particles in the simulation. If there are $n$ particles in the simulation and this class has $s$ sources then every chunk will have $n/s$ particles in it. The {\itshape i-\/th} chunk is assigned the particles with index
+
+$[i*\lfloor n/s \rfloor), (i + 1)*\lfloor n/s \rfloor)$, $[(s - 1)*\lfloor n/s \rfloor), n$
+
+for $i \in [0,s - 2] $
+
+Since \$ $n$ may not be a multiple of $s$ then the last chunk will have a few more particles than the others.
+
+In particular, the last chunk will have $n - (s - 1)*\lfloor n/s \rfloor) + 1$ particles.
+
+The sources should be set by retrieving the reference to the sources container (see \hyperlink{classphysim_1_1init_1_1multisource_a075bc9637cb8b843253fade495de87c3}{get\+\_\+sources}) after allocating the wanted amount (see \hyperlink{classphysim_1_1init_1_1multisource_af4a2f1d12712c4d672233539e721f000}{allocate}).
+
+Some of the functions used to initialise the chunks of particles will have to be remade in the copy constructor. The functions to be remade are indicated by calling the use\+\_\+$\ast$\+\_\+init functions. Notice that when using the \hyperlink{classphysim_1_1init_1_1hose}{hose} initialiser the position and velocity init must be remade. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_af4a2f1d12712c4d672233539e721f000}\label{classphysim_1_1init_1_1multisource_af4a2f1d12712c4d672233539e721f000}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!allocate@{allocate}}
+\index{allocate@{allocate}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::allocate (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{N,  }\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+
+
+Allocates space for {\itshape n} initialisers. 
+
+Resizes \hyperlink{classphysim_1_1init_1_1multisource_ad16d3a372efb23d3975df960a54f4dc1}{sources} to have {\itshape n} elements. 
+\begin{DoxyParams}{Parameters}
+{\em N} & Number of particles in the simulation. \\
+\hline
+{\em n} & Number of initialisers. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_ad994252de40d3c0affb068cc2f2d645e}\label{classphysim_1_1init_1_1multisource_ad994252de40d3c0affb068cc2f2d645e}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+bounce\+\_\+init@{make\+\_\+bounce\+\_\+init}}
+\index{make\+\_\+bounce\+\_\+init@{make\+\_\+bounce\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+bounce\+\_\+init()}{make\_bounce\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+bounce\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make bounce initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_ad8917d57b62f13ffb6cff24d39b4d360}{initialiser\+::bounce}. 
+
+The {\itshape i-\/th} particle is assigned its bouncing coefficient using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a9118fc38926eab79955cb02a8b27284f}\label{classphysim_1_1init_1_1multisource_a9118fc38926eab79955cb02a8b27284f}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+charge\+\_\+init@{make\+\_\+charge\+\_\+init}}
+\index{make\+\_\+charge\+\_\+init@{make\+\_\+charge\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+charge\+\_\+init()}{make\_charge\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+charge\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make charge initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_ac9ff9d82f6a1effdaf44cfacd92669d6}{initialiser\+::charge}. 
+
+The {\itshape i-\/th} particle is assigned its charge using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a76a07d9c40c1b816efa0a20285f3c46f}\label{classphysim_1_1init_1_1multisource_a76a07d9c40c1b816efa0a20285f3c46f}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+fixed\+\_\+init@{make\+\_\+fixed\+\_\+init}}
+\index{make\+\_\+fixed\+\_\+init@{make\+\_\+fixed\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+fixed\+\_\+init()}{make\_fixed\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+fixed\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make fixed initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a0deb0d7e29b824274c4cd81306b42465}{initialiser\+::fixed}. 
+
+The {\itshape i-\/th} particle is assigned its \textquotesingle{}fixed\textquotesingle{} attribute using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a18db2f8c43641a9ec243ba0a4693f679}\label{classphysim_1_1init_1_1multisource_a18db2f8c43641a9ec243ba0a4693f679}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+friction\+\_\+init@{make\+\_\+friction\+\_\+init}}
+\index{make\+\_\+friction\+\_\+init@{make\+\_\+friction\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+friction\+\_\+init()}{make\_friction\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+friction\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make friction initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a47fdfedccb1be510ee3021749dfe06e6}{initialiser\+::friction}. 
+
+The {\itshape i-\/th} particle is assigned its position using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a5eac947010c79300e4aa80b374edd129}\label{classphysim_1_1init_1_1multisource_a5eac947010c79300e4aa80b374edd129}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+lifetime\+\_\+init@{make\+\_\+lifetime\+\_\+init}}
+\index{make\+\_\+lifetime\+\_\+init@{make\+\_\+lifetime\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+lifetime\+\_\+init()}{make\_lifetime\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+lifetime\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make lifetime initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_ac137b5089b9beca078e08b2bcdf0d54c}{initialiser\+::lifetime}. 
+
+The {\itshape i-\/th} particle is assigned its lifetime using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a6fe9dabcfe734fb68611d71de90157bb}\label{classphysim_1_1init_1_1multisource_a6fe9dabcfe734fb68611d71de90157bb}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+mass\+\_\+init@{make\+\_\+mass\+\_\+init}}
+\index{make\+\_\+mass\+\_\+init@{make\+\_\+mass\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+mass\+\_\+init()}{make\_mass\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+mass\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make mass initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_aaf4931c0b596b54097c43d9439d03edc}{initialiser\+::mass}. 
+
+The {\itshape i-\/th} particle is assigned its mass using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a41bf00a8e0b8b60d7ca86dc9dd00c0db}\label{classphysim_1_1init_1_1multisource_a41bf00a8e0b8b60d7ca86dc9dd00c0db}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+position\+\_\+init@{make\+\_\+position\+\_\+init}}
+\index{make\+\_\+position\+\_\+init@{make\+\_\+position\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+position\+\_\+init()}{make\_position\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+position\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make position initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a1980105ffaa655858b90a8f3a9368682}{initialiser\+::pos}. 
+
+The {\itshape i-\/th} particle is assigned its position using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_adf2deaa3069a402b578d461b620d71e9}\label{classphysim_1_1init_1_1multisource_adf2deaa3069a402b578d461b620d71e9}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+starttime\+\_\+init@{make\+\_\+starttime\+\_\+init}}
+\index{make\+\_\+starttime\+\_\+init@{make\+\_\+starttime\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+starttime\+\_\+init()}{make\_starttime\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+starttime\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make starttime initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a651ed09452c1621cec2ca7f52073f53f}{initialiser\+::starttime}. 
+
+The {\itshape i-\/th} particle is assigned its starttime using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a9bd421ceff83a6989e071cb0eebcae77}\label{classphysim_1_1init_1_1multisource_a9bd421ceff83a6989e071cb0eebcae77}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!make\+\_\+velocity\+\_\+init@{make\+\_\+velocity\+\_\+init}}
+\index{make\+\_\+velocity\+\_\+init@{make\+\_\+velocity\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{make\+\_\+velocity\+\_\+init()}{make\_velocity\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::make\+\_\+velocity\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make velocity initialiser. See \hyperlink{classphysim_1_1init_1_1initialiser_a0e6b1de60df484977b975369b225e89b}{initialiser\+::vel}. 
+
+The {\itshape i-\/th} particle is assigned its velocity using the {\itshape k-\/th} source. See description of the class for details on what source is used. \mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a11d489afb2900b0ecec211e79dad14ef}\label{classphysim_1_1init_1_1multisource_a11d489afb2900b0ecec211e79dad14ef}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+bounce\+\_\+init@{use\+\_\+bounce\+\_\+init}}
+\index{use\+\_\+bounce\+\_\+init@{use\+\_\+bounce\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+bounce\+\_\+init()}{use\_bounce\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+bounce\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The bouncing coefficient initialiser will be remade when copying. 
+
+Sets or unsets the 4 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a4bc9fa90be0a91942071746743701edd}\label{classphysim_1_1init_1_1multisource_a4bc9fa90be0a91942071746743701edd}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+charge\+\_\+init@{use\+\_\+charge\+\_\+init}}
+\index{use\+\_\+charge\+\_\+init@{use\+\_\+charge\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+charge\+\_\+init()}{use\_charge\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+charge\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The charge initialiser will be remade when copying. 
+
+Sets or unsets the 3 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a58ee9fcd33be010bc6e4df0da14b39ae}\label{classphysim_1_1init_1_1multisource_a58ee9fcd33be010bc6e4df0da14b39ae}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+fixed\+\_\+init@{use\+\_\+fixed\+\_\+init}}
+\index{use\+\_\+fixed\+\_\+init@{use\+\_\+fixed\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+fixed\+\_\+init()}{use\_fixed\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+fixed\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The fixed attribute initialiser will be remade when copying. 
+
+Sets or unsets the 8 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_aa4a00aa2fa625043ec0d20e2303758ed}\label{classphysim_1_1init_1_1multisource_aa4a00aa2fa625043ec0d20e2303758ed}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+friction\+\_\+init@{use\+\_\+friction\+\_\+init}}
+\index{use\+\_\+friction\+\_\+init@{use\+\_\+friction\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+friction\+\_\+init()}{use\_friction\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+friction\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The friction coefficient initialiser will be remade when copying. 
+
+Sets or unsets the 5 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a45156cd3cd13cb4ebc4540fa56251cd5}\label{classphysim_1_1init_1_1multisource_a45156cd3cd13cb4ebc4540fa56251cd5}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+lifetime\+\_\+init@{use\+\_\+lifetime\+\_\+init}}
+\index{use\+\_\+lifetime\+\_\+init@{use\+\_\+lifetime\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+lifetime\+\_\+init()}{use\_lifetime\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+lifetime\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The lifetime initialiser will be remade when copying. 
+
+Sets or unsets the 6 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_aa61a8925f6363b01e40f37aea40ba730}\label{classphysim_1_1init_1_1multisource_aa61a8925f6363b01e40f37aea40ba730}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+mass\+\_\+init@{use\+\_\+mass\+\_\+init}}
+\index{use\+\_\+mass\+\_\+init@{use\+\_\+mass\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+mass\+\_\+init()}{use\_mass\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+mass\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The mass initialiser will be remade when copying. 
+
+Sets or unsets the 2 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a9fb693b4587cac0bd27ad96fc00fc325}\label{classphysim_1_1init_1_1multisource_a9fb693b4587cac0bd27ad96fc00fc325}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+position\+\_\+init@{use\+\_\+position\+\_\+init}}
+\index{use\+\_\+position\+\_\+init@{use\+\_\+position\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+position\+\_\+init()}{use\_position\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+position\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The position initialiser will be remade when copying. 
+
+Sets or unsets the 0 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_af15a42abe4b6c8f842731d288c4cf71f}\label{classphysim_1_1init_1_1multisource_af15a42abe4b6c8f842731d288c4cf71f}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+starttime\+\_\+init@{use\+\_\+starttime\+\_\+init}}
+\index{use\+\_\+starttime\+\_\+init@{use\+\_\+starttime\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+starttime\+\_\+init()}{use\_starttime\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+starttime\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The starttime initialiser will be remade when copying. 
+
+Sets or unsets the 7 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_ad62414d7308146311f5d7df177c31d8d}\label{classphysim_1_1init_1_1multisource_ad62414d7308146311f5d7df177c31d8d}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+velocity\+\_\+init@{use\+\_\+velocity\+\_\+init}}
+\index{use\+\_\+velocity\+\_\+init@{use\+\_\+velocity\+\_\+init}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+velocity\+\_\+init()}{use\_velocity\_init()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+velocity\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{u = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+The velocity initialiser will be remade when copying. 
+
+Sets or unsets the 1 bit of \hyperlink{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}{use\+\_\+functions}; 
+\begin{DoxyParams}{Parameters}
+{\em u} & Either true or false. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}\label{classphysim_1_1init_1_1multisource_a12caae3f36b17cd343065aab62b62a8c}} 
+\index{physim\+::init\+::multisource@{physim\+::init\+::multisource}!use\+\_\+functions@{use\+\_\+functions}}
+\index{use\+\_\+functions@{use\+\_\+functions}!physim\+::init\+::multisource@{physim\+::init\+::multisource}}
+\subsubsection{\texorpdfstring{use\+\_\+functions}{use\_functions}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+unsigned int \hyperlink{classphysim_1_1init_1_1multisource}{physim\+::init\+::multisource}$<$ T $>$\+::use\+\_\+functions\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Bit mask that indicates what functions are used. 
+
+When copy-\/constructing an object of this type, some functions will have to be remade (using the appropriate make\+\_\+$\ast$\+\_\+init functions).
+
+The least-\/weight bits of this integer represent the 9 functions available. If any of these 9 bits is set to one, then the corresponding function will be made. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/initialiser/multisource.\+hpp\item 
+physim/initialiser/multisource.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,64 @@
+\hypertarget{structphysim_1_1structures_1_1object__partition_1_1node}{}\section{physim\+:\+:structures\+:\+:object\+\_\+partition\+:\+:node Struct Reference}
+\label{structphysim_1_1structures_1_1object__partition_1_1node}\index{physim\+::structures\+::object\+\_\+partition\+::node@{physim\+::structures\+::object\+\_\+partition\+::node}}
+
+
+Nodes of the octree.  
+
+
+
+
+Collaboration diagram for physim\+:\+:structures\+:\+:object\+\_\+partition\+:\+:node\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{structphysim_1_1structures_1_1object__partition_1_1node__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structphysim_1_1structures_1_1object__partition_1_1node_afeabfca825a2b137ebad1737f75617d3}\label{structphysim_1_1structures_1_1object__partition_1_1node_afeabfca825a2b137ebad1737f75617d3}} 
+\hyperlink{structphysim_1_1structures_1_1object__partition_1_1node_afeabfca825a2b137ebad1737f75617d3}{node} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. Initialises pointers to null. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structphysim_1_1structures_1_1object__partition_1_1node_a69a6a2782d442c3fbf8412702523505d}\label{structphysim_1_1structures_1_1object__partition_1_1node_a69a6a2782d442c3fbf8412702523505d}} 
+\hyperlink{structphysim_1_1structures_1_1object__partition_1_1node_a69a6a2782d442c3fbf8412702523505d}{$\sim$node} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node_a050a9a5a4fce3e677a524cba652d8ab9}{is\+\_\+leaf} () const
+\begin{DoxyCompactList}\small\item\em Is this node a leaf. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structphysim_1_1structures_1_1object__partition_1_1node_ae535e618078fd71a060df825e9f3a7ae}\label{structphysim_1_1structures_1_1object__partition_1_1node_ae535e618078fd71a060df825e9f3a7ae}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node_ae535e618078fd71a060df825e9f3a7ae}{center}
+\begin{DoxyCompactList}\small\item\em Point at the center of the region this node partitions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structphysim_1_1structures_1_1object__partition_1_1node_a73ec613764b8eb7a893ad368b060258b}\label{structphysim_1_1structures_1_1object__partition_1_1node_a73ec613764b8eb7a893ad368b060258b}} 
+std\+::vector$<$ size\+\_\+t $>$ $\ast$ \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node_a73ec613764b8eb7a893ad368b060258b}{tris\+\_\+idxs}
+\begin{DoxyCompactList}\small\item\em Indices to an object\textquotesingle{}s triangles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structphysim_1_1structures_1_1object__partition_1_1node_a27aee2b688559600ce40bfc4b7cf3625}\label{structphysim_1_1structures_1_1object__partition_1_1node_a27aee2b688559600ce40bfc4b7cf3625}} 
+\hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node} $\ast$ \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node_a27aee2b688559600ce40bfc4b7cf3625}{children} \mbox{[}8\mbox{]}
+\begin{DoxyCompactList}\small\item\em Pointers to the children of this node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Nodes of the octree. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{structphysim_1_1structures_1_1object__partition_1_1node_a050a9a5a4fce3e677a524cba652d8ab9}\label{structphysim_1_1structures_1_1object__partition_1_1node_a050a9a5a4fce3e677a524cba652d8ab9}} 
+\index{physim\+::structures\+::object\+\_\+partition\+::node@{physim\+::structures\+::object\+\_\+partition\+::node}!is\+\_\+leaf@{is\+\_\+leaf}}
+\index{is\+\_\+leaf@{is\+\_\+leaf}!physim\+::structures\+::object\+\_\+partition\+::node@{physim\+::structures\+::object\+\_\+partition\+::node}}
+\subsubsection{\texorpdfstring{is\+\_\+leaf()}{is\_leaf()}}
+{\footnotesize\ttfamily bool physim\+::structures\+::object\+\_\+partition\+::node\+::is\+\_\+leaf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Is this node a leaf. 
+
+A node is a leaf if it stores triangle indices. \begin{DoxyReturn}{Returns}
+Returns true if this node is a leaf. Returns false otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/structures/object\+\_\+partition.\+hpp\item 
+physim/structures/object\+\_\+partition.\+cpp\end{DoxyCompactItemize}

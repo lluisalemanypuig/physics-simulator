@@ -1,0 +1,1295 @@
+\hypertarget{classphysim_1_1simulator}{}\section{physim\+:\+:simulator Class Reference}
+\label{classphysim_1_1simulator}\index{physim\+::simulator@{physim\+::simulator}}
+
+
+Simulator class.  
+
+
+
+
+{\ttfamily \#include $<$simulator.\+hpp$>$}
+
+
+
+Collaboration diagram for physim\+:\+:simulator\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classphysim_1_1simulator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphysim_1_1simulator_ae89aeb2287bbf9bbb482f448e2ac375a}{simulator} (const \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type} \&s=\hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686a1855dee0fffde2f4ed8ef6c4a0420b30}{solver\+\_\+type\+::\+Euler\+Semi}, float t=0.\+01f)
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_af4b2f525e544e0b642683d2260bb9c1a}\label{classphysim_1_1simulator_af4b2f525e544e0b642683d2260bb9c1a}} 
+\hyperlink{classphysim_1_1simulator_af4b2f525e544e0b642683d2260bb9c1a}{$\sim$simulator} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a6d2b636673f895b006724a6ba310e322}{add\+\_\+free\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Adds a free particle to the simulation. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_ae36d99f98f5e470934eea0523ffca583}{add\+\_\+sized\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Adds a sized particle to the simulation. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_adc50e1ec0da019bf120db3ae5af27d39}{add\+\_\+free\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Adds the particle passed as parameter to the simulation. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_aa7b066130ec71e7f8985ebc94605cf3b}{add\+\_\+sized\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Adds the particle passed as parameter to the simulation. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a73e277b53d80d584fd8d72b586ff7b80}{add\+\_\+agent\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Adds the particle passed as parameter to the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a8729cd8c3590730d8897f61f2320f3e8}{add\+\_\+free\+\_\+particles} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Adds {\itshape n} free particles to the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ae0551469d3c6b536da89bce04ff93fee}{add\+\_\+sized\+\_\+particles} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Adds {\itshape n} sized particles to the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a3b6c748422ce495c2f26130136f6c460}{clear\+\_\+free\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Deletes all free particles in this simulator. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a4aa10ffe26a505dfa9ad5e6875a2964f}{clear\+\_\+sized\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Deletes all sized particles in this simulator. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a903bf3d4f155e8e524d4031b24042142}{clear\+\_\+agent\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Deletes all agent particles in this simulator. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ade81dc85cbad0e86fc38b29f48fedcd6}{clear\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Deletes all particles in this simulator. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a92a79231495f047789176a19857735ff}{add\+\_\+geometry} (\hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$g)
+\begin{DoxyCompactList}\small\item\em Adds a geometrical object to the scene. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a8112f43801df68b3140458d1915c8d97}{clear\+\_\+geometry} ()
+\begin{DoxyCompactList}\small\item\em Deletes all geometry in this simulator. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_afb7ded1049ec82f7ea8d908c5cefaff7}{add\+\_\+field} (\hyperlink{classphysim_1_1fields_1_1field}{fields\+::field} $\ast$f)
+\begin{DoxyCompactList}\small\item\em Adds a force field to the scene. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a11d8e86465d367b9907bd541964d5a4b}{set\+\_\+gravity\+\_\+acceleration} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&g)
+\begin{DoxyCompactList}\small\item\em Sets the gravity vector. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_afe53c23ae11f78166576ad44f56ee953}{clear\+\_\+fields} ()
+\begin{DoxyCompactList}\small\item\em Deletes all force fields in this simulator. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a65e96ed22a3d12c5be1ff933d4c79436}{add\+\_\+mesh} (\hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Adds a mesh to the scene. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a050e1ddeece122406b045262e40d4063}{clear\+\_\+meshes} ()
+\begin{DoxyCompactList}\small\item\em Deletes all meshes in this simulator. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a0b65d437e6e32a851251cfab5d184382}{add\+\_\+fluid} (\hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$f)
+\begin{DoxyCompactList}\small\item\em Adds a fluids to the scene. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_adda92bb271d38830fa374d61a160afeb}{clear\+\_\+fluids} ()
+\begin{DoxyCompactList}\small\item\em Deletes all fluids in this simulator. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a5881327d525fd4928fd274528863d9f7}{clear\+\_\+simulation} ()
+\begin{DoxyCompactList}\small\item\em Clears the simulation to an empty state;. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a6d3a5491771496c3da2be7c3382f061b}{reset\+\_\+simulation} ()
+\begin{DoxyCompactList}\small\item\em Resets the simulation to its initial state. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ac836fc5c8ccf186b8030da54586a8b07}{simulate\+\_\+free\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Simulate free particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_af4c6a7a02feeb89263fa557a1ea3de7e}{simulate\+\_\+free\+\_\+particles} (size\+\_\+t nt)
+\begin{DoxyCompactList}\small\item\em Simulate free particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ac99a02f99b4f83501478093d402abea5}{simulate\+\_\+sized\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Simulate sized particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a99dbf5870ec5383266f87e60c1686049}{simulate\+\_\+agent\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Simulate agent particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_aea4165314f9285dfc3b64ba9a2666aaf}{simulate\+\_\+meshes} ()
+\begin{DoxyCompactList}\small\item\em Simulate meshes. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a63f7f4b59a79b8b294aaa6d8870fccd2}{simulate\+\_\+fluids} ()
+\begin{DoxyCompactList}\small\item\em Simulate fluids. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_acb3359c9faedfc69191bf9a4618eebfa}{simulate\+\_\+fluids} (size\+\_\+t nt)
+\begin{DoxyCompactList}\small\item\em Simulate fluids. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a1bef71687a4b46373753847a5d2112ff}{apply\+\_\+time\+\_\+step} ()
+\begin{DoxyCompactList}\small\item\em Apply a time step to the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a5bee70bb8d7f0744e47f1ae76b3c8189}{apply\+\_\+time\+\_\+step} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Apply a time step to the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ab86bf6d22fd222a299183c9d82a71bc1}{set\+\_\+time\+\_\+step} (float t)
+\begin{DoxyCompactList}\small\item\em Sets the time step of the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a6e6fc481334928bdcb13fa309fb62748}{set\+\_\+viscous\+\_\+drag} (float d)
+\begin{DoxyCompactList}\small\item\em Sets the viscous drag coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a83ab26eaa30b62959f6afcb9ec58696f}{set\+\_\+free\+\_\+emitter} (const \hyperlink{classphysim_1_1emitters_1_1free__emitter}{emitters\+::free\+\_\+emitter} $\ast$f)
+\begin{DoxyCompactList}\small\item\em Sets the free particle emitter object. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a39882b752b51378a547bab344933c49e}{set\+\_\+sized\+\_\+emitter} (const \hyperlink{classphysim_1_1emitters_1_1sized__emitter}{emitters\+::sized\+\_\+emitter} $\ast$s)
+\begin{DoxyCompactList}\small\item\em Sets the sized particle emitter object. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ac0724a6950d7ce81793f8dbeafbfd08a}{set\+\_\+solver} (const \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type} \&s)
+\begin{DoxyCompactList}\small\item\em Sets the type of solver. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a46208fce1548645f874618b44edde065}{set\+\_\+particle\+\_\+particle\+\_\+collisions} (bool a)
+\begin{DoxyCompactList}\small\item\em Activates/\+Deactivates particle-\/particle collisions. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $>$ \& \hyperlink{classphysim_1_1simulator_a8d030b30ee12814ea6a20faa7e61bd8c}{get\+\_\+free\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns all free particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a4e357245a3b138c46c8b52647b65cfa0}\label{classphysim_1_1simulator_a4e357245a3b138c46c8b52647b65cfa0}} 
+\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \& \hyperlink{classphysim_1_1simulator_a4e357245a3b138c46c8b52647b65cfa0}{get\+\_\+free\+\_\+particle} (size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Returns a reference to i-\/th free particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_ae2db5d5199ffa176bc5e08fee2d41a31}\label{classphysim_1_1simulator_ae2db5d5199ffa176bc5e08fee2d41a31}} 
+const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \& \hyperlink{classphysim_1_1simulator_ae2db5d5199ffa176bc5e08fee2d41a31}{get\+\_\+free\+\_\+particle} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to i-\/th free particle. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} $>$ \& \hyperlink{classphysim_1_1simulator_acf45d34a15b06437858e3324af1a559c}{get\+\_\+sized\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns all sized particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a5fd37f79deceb3be5b4d70c9b421a637}\label{classphysim_1_1simulator_a5fd37f79deceb3be5b4d70c9b421a637}} 
+\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \& \hyperlink{classphysim_1_1simulator_a5fd37f79deceb3be5b4d70c9b421a637}{get\+\_\+sized\+\_\+particle} (size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Returns a reference to i-\/th sized particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a593cbb6a85d914bd4044cb4db6cc523b}\label{classphysim_1_1simulator_a593cbb6a85d914bd4044cb4db6cc523b}} 
+const \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \& \hyperlink{classphysim_1_1simulator_a593cbb6a85d914bd4044cb4db6cc523b}{get\+\_\+sized\+\_\+particle} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to i-\/th sized particle. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} $>$ \& \hyperlink{classphysim_1_1simulator_a043656dfeb0ce60416c234abb2280383}{get\+\_\+agent\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns all agent particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a1b083b545660929082e1f646ff06d10f}\label{classphysim_1_1simulator_a1b083b545660929082e1f646ff06d10f}} 
+\hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} \& \hyperlink{classphysim_1_1simulator_a1b083b545660929082e1f646ff06d10f}{get\+\_\+agent\+\_\+particle} (size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Returns a reference to i-\/th agent particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a6e285c59b113d384a9121e619f8fbc4f}\label{classphysim_1_1simulator_a6e285c59b113d384a9121e619f8fbc4f}} 
+const \hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} \& \hyperlink{classphysim_1_1simulator_a6e285c59b113d384a9121e619f8fbc4f}{get\+\_\+agent\+\_\+particle} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to i-\/th agent particle. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$ $>$ \& \hyperlink{classphysim_1_1simulator_a515217acebf6d4ae784af02a60bede00}{get\+\_\+meshes} () const
+\begin{DoxyCompactList}\small\item\em Returns all meshes in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a04a83acd2135ea5a20c5374cd823224b}\label{classphysim_1_1simulator_a04a83acd2135ea5a20c5374cd823224b}} 
+const \hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$ \hyperlink{classphysim_1_1simulator_a04a83acd2135ea5a20c5374cd823224b}{get\+\_\+mesh} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to i-\/th mesh. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$ $>$ \& \hyperlink{classphysim_1_1simulator_a65b91f351c9e2164c0e6bd46cdc0a431}{get\+\_\+fluids} () const
+\begin{DoxyCompactList}\small\item\em Returns all fluids in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_ad202bd47576d65f838e79c043b5f6075}\label{classphysim_1_1simulator_ad202bd47576d65f838e79c043b5f6075}} 
+const \hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$ \hyperlink{classphysim_1_1simulator_ad202bd47576d65f838e79c043b5f6075}{get\+\_\+fluid} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to i-\/th mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_aefd663a9132dd6f500ff0fb8b1c8984a}\label{classphysim_1_1simulator_aefd663a9132dd6f500ff0fb8b1c8984a}} 
+const std\+::vector$<$ \hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$ $>$ \& \hyperlink{classphysim_1_1simulator_aefd663a9132dd6f500ff0fb8b1c8984a}{get\+\_\+fixed\+\_\+objects} () const
+\begin{DoxyCompactList}\small\item\em Returns all fixed objects of the scene. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a06c09c9b7d44dd817a8e8fb39665289f}\label{classphysim_1_1simulator_a06c09c9b7d44dd817a8e8fb39665289f}} 
+const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \& \hyperlink{classphysim_1_1simulator_a06c09c9b7d44dd817a8e8fb39665289f}{get\+\_\+gravity} () const
+\begin{DoxyCompactList}\small\item\em Returns the gravity of the scene. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a1ea65a9a3448e2842dd0d5689771bcca}\label{classphysim_1_1simulator_a1ea65a9a3448e2842dd0d5689771bcca}} 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a1ea65a9a3448e2842dd0d5689771bcca}{n\+\_\+free\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of free particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_aa5ec5faee34607ddc46bbc1395f963de}\label{classphysim_1_1simulator_aa5ec5faee34607ddc46bbc1395f963de}} 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_aa5ec5faee34607ddc46bbc1395f963de}{n\+\_\+sized\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of sized particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_ac49334f6f9708263918a106317e23857}\label{classphysim_1_1simulator_ac49334f6f9708263918a106317e23857}} 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_ac49334f6f9708263918a106317e23857}{n\+\_\+agent\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of agent particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_ad5f0945b5feacbe152a9109369361ae1}\label{classphysim_1_1simulator_ad5f0945b5feacbe152a9109369361ae1}} 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_ad5f0945b5feacbe152a9109369361ae1}{n\+\_\+meshes} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of meshes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a09f70976676691fac655a7c4c5efba96}\label{classphysim_1_1simulator_a09f70976676691fac655a7c4c5efba96}} 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a09f70976676691fac655a7c4c5efba96}{n\+\_\+fluids} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of meshes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a77da641e3bba577bbbfe67a8bcfcbe26}\label{classphysim_1_1simulator_a77da641e3bba577bbbfe67a8bcfcbe26}} 
+size\+\_\+t \hyperlink{classphysim_1_1simulator_a77da641e3bba577bbbfe67a8bcfcbe26}{n\+\_\+geometry} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of fixed geometrical objects. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a038e443c30bb788124f4c223f1dc6b2b}\label{classphysim_1_1simulator_a038e443c30bb788124f4c223f1dc6b2b}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitter}{emitters\+::free\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1simulator_a038e443c30bb788124f4c223f1dc6b2b}{get\+\_\+free\+\_\+emitter} ()
+\begin{DoxyCompactList}\small\item\em Returns the free emitter object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a48a574582fa0d04712f222456d79e834}\label{classphysim_1_1simulator_a48a574582fa0d04712f222456d79e834}} 
+const \hyperlink{classphysim_1_1emitters_1_1free__emitter}{emitters\+::free\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1simulator_a48a574582fa0d04712f222456d79e834}{get\+\_\+free\+\_\+emitter} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the free emitter object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a4eb508e0264771e4e61d37eca4aa45a1}\label{classphysim_1_1simulator_a4eb508e0264771e4e61d37eca4aa45a1}} 
+\hyperlink{classphysim_1_1emitters_1_1sized__emitter}{emitters\+::sized\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1simulator_a4eb508e0264771e4e61d37eca4aa45a1}{get\+\_\+sized\+\_\+emitter} ()
+\begin{DoxyCompactList}\small\item\em Returns the sized emitter object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_af2d5db9f6b27dfc7ff090d97e90d9445}\label{classphysim_1_1simulator_af2d5db9f6b27dfc7ff090d97e90d9445}} 
+const \hyperlink{classphysim_1_1emitters_1_1sized__emitter}{emitters\+::sized\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1simulator_af2d5db9f6b27dfc7ff090d97e90d9445}{get\+\_\+sized\+\_\+emitter} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the sized emitter object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a37d5c3adc5e003ab046cc3624e12b6fb}\label{classphysim_1_1simulator_a37d5c3adc5e003ab046cc3624e12b6fb}} 
+float \hyperlink{classphysim_1_1simulator_a37d5c3adc5e003ab046cc3624e12b6fb}{get\+\_\+time\+\_\+step} () const
+\begin{DoxyCompactList}\small\item\em Returns the time step of the simulation (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}). \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1simulator_ab36133b4fa2b4fb2d8f297f6a7dda497}{part\+\_\+part\+\_\+colls\+\_\+activated} () const
+\begin{DoxyCompactList}\small\item\em Are collisions between particles activated? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1simulator_a55759abc6a93f89e3244bc16518c7fe4}{init\+\_\+particle} (\hyperlink{classphysim_1_1particles_1_1base__particle}{particles\+::base\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Initialises a particle using its corresponding emitter. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a5344fb7665e2f4c0e7930f7897f9a3bf}{init\+\_\+mesh} (\hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Initialises a mesh. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_afc4f4dc27c302b5dd31824429d67104c}{init\+\_\+fluid} (\hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$f)
+\begin{DoxyCompactList}\small\item\em Initialises a fluid. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ae553797df3ee38cfe3c93bbc0b94be06}{\+\_\+simulate\+\_\+free\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Simulate free particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_acf1b77beeaf600d40f88d7b91dac80f7}{\+\_\+simulate\+\_\+free\+\_\+particles} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Simulate free particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a04922992cda3b1c402da7041324c6049}{\+\_\+simulate\+\_\+sized\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Simulate sized particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a97eef0600da8870ee590babaffff775b}{\+\_\+simulate\+\_\+agent\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Simulate agent particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ac598aa9b36e01c8cee937a8f95719cd8}{\+\_\+simulate\+\_\+meshes} ()
+\begin{DoxyCompactList}\small\item\em Simulate meshes. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ac01677745377a9520453b73e199fcf99}{\+\_\+simulate\+\_\+fluids} ()
+\begin{DoxyCompactList}\small\item\em Simulate fluids. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a5b0b7e9c7790144f17d5de13c8d098dc}{\+\_\+simulate\+\_\+fluids} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Simulate fluids. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class P $>$ }\\void \hyperlink{classphysim_1_1simulator_a551890b383f97f13bb429e40f72c6c33}{apply\+\_\+solver} (const P \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pos, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&vel)
+\begin{DoxyCompactList}\small\item\em Predicts a particle\textquotesingle{}s next position and velocity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class P $>$ }\\void \hyperlink{classphysim_1_1simulator_a00c7815358139bf08b2e13fe1ab377bc}{compute\+\_\+forces} (P \&p)
+\begin{DoxyCompactList}\small\item\em Computes the forces acting in the simulation. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1simulator_a223170686fbf961c62d52da3fdc964c8}{find\+\_\+update\+\_\+geomcoll\+\_\+free} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+pos, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+vel, \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&coll\+\_\+pred)
+\begin{DoxyCompactList}\small\item\em Update a free particle that may collide with geometry. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1simulator_a228598663672e0a7cfb025ea5c6b9235}{find\+\_\+update\+\_\+partcoll\+\_\+free} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+pos, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+vel, \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&coll\+\_\+pred)
+\begin{DoxyCompactList}\small\item\em Update a free particle that may collide with a sized or an agent particle. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1simulator_a4f982c557113ed7e810efb9e1ff0f838}{find\+\_\+update\+\_\+geomcoll\+\_\+sized} (const \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+pos, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pred\+\_\+vel, \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&coll\+\_\+pred)
+\begin{DoxyCompactList}\small\item\em Update a sized particle that may collide with geometry. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_a5505bc29690fe424e87415ba97a159bc}{find\+\_\+update\+\_\+partcoll\+\_\+sized} (\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&p, size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Update a sized particle that may collide with a sized or an agent particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1simulator_ae30accaea01fe716e0d51e6766fe44b6}{find\+\_\+update\+\_\+partcoll\+\_\+agent} (\hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} \&p, size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Update an agent particle that may collide with a sized or an agent particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$ $>$ \hyperlink{classphysim_1_1simulator_a7ea652d4a55986d0c2cf527e40495fd8}{scene\+\_\+fixed}
+\begin{DoxyCompactList}\small\item\em Collection of fixed geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a7e4d709f4b43199405be83eded074816}\label{classphysim_1_1simulator_a7e4d709f4b43199405be83eded074816}} 
+std\+::vector$<$ \hyperlink{classphysim_1_1fields_1_1field}{fields\+::field} $\ast$ $>$ \hyperlink{classphysim_1_1simulator_a7e4d709f4b43199405be83eded074816}{force\+\_\+fields}
+\begin{DoxyCompactList}\small\item\em Collection of force fields. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}\label{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}} 
+std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $>$ \hyperlink{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}{fps}
+\begin{DoxyCompactList}\small\item\em The collection of free particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}\label{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}} 
+std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} $>$ \hyperlink{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}{sps}
+\begin{DoxyCompactList}\small\item\em The collection of sized particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a838f036ef9d378d1e3f5207c3f031b52}\label{classphysim_1_1simulator_a838f036ef9d378d1e3f5207c3f031b52}} 
+std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} $>$ \hyperlink{classphysim_1_1simulator_a838f036ef9d378d1e3f5207c3f031b52}{aps}
+\begin{DoxyCompactList}\small\item\em The collection of agent particles in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_ae2bcb1ad81b487abd2ad00b0118d2f51}\label{classphysim_1_1simulator_ae2bcb1ad81b487abd2ad00b0118d2f51}} 
+std\+::vector$<$ \hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$ $>$ \hyperlink{classphysim_1_1simulator_ae2bcb1ad81b487abd2ad00b0118d2f51}{ms}
+\begin{DoxyCompactList}\small\item\em The collection of meshes in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a34f5a69a58c9106cf42657c0700074e7}\label{classphysim_1_1simulator_a34f5a69a58c9106cf42657c0700074e7}} 
+std\+::vector$<$ \hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$ $>$ \hyperlink{classphysim_1_1simulator_a34f5a69a58c9106cf42657c0700074e7}{fs}
+\begin{DoxyCompactList}\small\item\em The collection of fluids in the simulation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a2b5bd96495bd4cae9f6e9eda4b521140}\label{classphysim_1_1simulator_a2b5bd96495bd4cae9f6e9eda4b521140}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1simulator_a2b5bd96495bd4cae9f6e9eda4b521140}{gravity}
+\begin{DoxyCompactList}\small\item\em Gravity of the simulation. \mbox{[}m/s$^\wedge$2\mbox{]}. \end{DoxyCompactList}\item 
+float \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}
+\begin{DoxyCompactList}\small\item\em Time step of the simulation. \end{DoxyCompactList}\item 
+float \hyperlink{classphysim_1_1simulator_a307fe3207801e5497e690facc58fa8f5}{visc\+\_\+drag}
+\begin{DoxyCompactList}\small\item\em Viscous drag coefficient. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1simulator_a22425d61c50ef57ea39566d39c14e6a0}\label{classphysim_1_1simulator_a22425d61c50ef57ea39566d39c14e6a0}} 
+\hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type} \hyperlink{classphysim_1_1simulator_a22425d61c50ef57ea39566d39c14e6a0}{solver}
+\begin{DoxyCompactList}\small\item\em Solver used to update each particle\textquotesingle{}s position. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1emitters_1_1free__emitter}{emitters\+::free\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}
+\begin{DoxyCompactList}\small\item\em Initialiser applied to all free particles. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1emitters_1_1sized__emitter}{emitters\+::sized\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit}
+\begin{DoxyCompactList}\small\item\em Initialiser applied to all sized particles. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1simulator_a4a7d02feac1ca57bb143b70ad8b81134}{part\+\_\+part\+\_\+collisions}
+\begin{DoxyCompactList}\small\item\em Are particle-\/particle collisions activated? \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simulator class. 
+
+This class contains the algorihms used to simulate the movement of particles and systems of particles (like springs systems).
+
+Use method \hyperlink{classphysim_1_1simulator_a1bef71687a4b46373753847a5d2112ff}{apply\+\_\+time\+\_\+step} to run the simulation step by step.
+
+Use method \hyperlink{classphysim_1_1simulator_a92a79231495f047789176a19857735ff}{add\+\_\+geometry} to add fixed geometrical objects (spheres, triangles, planes) with which the particles may collide with.
+
+Function \hyperlink{classphysim_1_1simulator_a6d3a5491771496c3da2be7c3382f061b}{reset\+\_\+simulation} resets all particle to their original state using the initialiser objects (see \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}, \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit}). 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1simulator_ae89aeb2287bbf9bbb482f448e2ac375a}\label{classphysim_1_1simulator_ae89aeb2287bbf9bbb482f448e2ac375a}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulator@{simulator}}
+\index{simulator@{simulator}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulator()}{simulator()}}
+{\footnotesize\ttfamily physim\+::simulator\+::simulator (\begin{DoxyParamCaption}\item[{const \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type} \&}]{s = {\ttfamily \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686a1855dee0fffde2f4ed8ef6c4a0420b30}{solver\+\_\+type\+::\+Euler\+Semi}},  }\item[{float}]{t = {\ttfamily 0.01f} }\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Numerical solver to move the particles. \\
+\hline
+{\em t} & Time step of the simulation. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1simulator_a97eef0600da8870ee590babaffff775b}\label{classphysim_1_1simulator_a97eef0600da8870ee590babaffff775b}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+agent\+\_\+particles@{\+\_\+simulate\+\_\+agent\+\_\+particles}}
+\index{\+\_\+simulate\+\_\+agent\+\_\+particles@{\+\_\+simulate\+\_\+agent\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+agent\+\_\+particles()}{\_simulate\_agent\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+agent\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate agent particles. 
+
+Applies a time step on all the agent particles of the simulation. \mbox{\Hypertarget{classphysim_1_1simulator_ac01677745377a9520453b73e199fcf99}\label{classphysim_1_1simulator_ac01677745377a9520453b73e199fcf99}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+fluids@{\+\_\+simulate\+\_\+fluids}}
+\index{\+\_\+simulate\+\_\+fluids@{\+\_\+simulate\+\_\+fluids}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+fluids()}{\_simulate\_fluids()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+fluids (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate fluids. 
+
+Applies a time step on all the particles that make up the fluids of the simulation.
+
+The forces due to the presence of force fields are computed after the internal forces. \mbox{\Hypertarget{classphysim_1_1simulator_a5b0b7e9c7790144f17d5de13c8d098dc}\label{classphysim_1_1simulator_a5b0b7e9c7790144f17d5de13c8d098dc}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+fluids@{\+\_\+simulate\+\_\+fluids}}
+\index{\+\_\+simulate\+\_\+fluids@{\+\_\+simulate\+\_\+fluids}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+fluids()}{\_simulate\_fluids()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+fluids (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate fluids. 
+
+Applies a time step on all the particles that make up the fluids of the simulation.
+
+The forces due to the presence of force fields are computed after the internal forces.
+
+Multithreaded execution. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of threads. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_ae553797df3ee38cfe3c93bbc0b94be06}\label{classphysim_1_1simulator_ae553797df3ee38cfe3c93bbc0b94be06}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+free\+\_\+particles@{\+\_\+simulate\+\_\+free\+\_\+particles}}
+\index{\+\_\+simulate\+\_\+free\+\_\+particles@{\+\_\+simulate\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+free\+\_\+particles()}{\_simulate\_free\_particles()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate free particles. 
+
+Applies a time step on all the free particles of the simulation. \mbox{\Hypertarget{classphysim_1_1simulator_acf1b77beeaf600d40f88d7b91dac80f7}\label{classphysim_1_1simulator_acf1b77beeaf600d40f88d7b91dac80f7}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+free\+\_\+particles@{\+\_\+simulate\+\_\+free\+\_\+particles}}
+\index{\+\_\+simulate\+\_\+free\+\_\+particles@{\+\_\+simulate\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+free\+\_\+particles()}{\_simulate\_free\_particles()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate free particles. 
+
+Applies a time step on all the free particles of the simulation.
+
+Multithreaded execution. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of threads. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_ac598aa9b36e01c8cee937a8f95719cd8}\label{classphysim_1_1simulator_ac598aa9b36e01c8cee937a8f95719cd8}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+meshes@{\+\_\+simulate\+\_\+meshes}}
+\index{\+\_\+simulate\+\_\+meshes@{\+\_\+simulate\+\_\+meshes}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+meshes()}{\_simulate\_meshes()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+meshes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate meshes. 
+
+Applies a time step on all the particles that make up the meshes of the simulation.
+
+The forces due to the presence of force fields are computed after the internal forces. \mbox{\Hypertarget{classphysim_1_1simulator_a04922992cda3b1c402da7041324c6049}\label{classphysim_1_1simulator_a04922992cda3b1c402da7041324c6049}} 
+\index{physim\+::simulator@{physim\+::simulator}!\+\_\+simulate\+\_\+sized\+\_\+particles@{\+\_\+simulate\+\_\+sized\+\_\+particles}}
+\index{\+\_\+simulate\+\_\+sized\+\_\+particles@{\+\_\+simulate\+\_\+sized\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{\+\_\+simulate\+\_\+sized\+\_\+particles()}{\_simulate\_sized\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::\+\_\+simulate\+\_\+sized\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Simulate sized particles. 
+
+Applies a time step on all the sized particles of the simulation. \mbox{\Hypertarget{classphysim_1_1simulator_a73e277b53d80d584fd8d72b586ff7b80}\label{classphysim_1_1simulator_a73e277b53d80d584fd8d72b586ff7b80}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+agent\+\_\+particle@{add\+\_\+agent\+\_\+particle}}
+\index{add\+\_\+agent\+\_\+particle@{add\+\_\+agent\+\_\+particle}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+agent\+\_\+particle()}{add\_agent\_particle()}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+agent\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Adds the particle passed as parameter to the simulation. 
+
+None of the initialiser objects are used. The particle is added to \hyperlink{classphysim_1_1simulator_a838f036ef9d378d1e3f5207c3f031b52}{aps}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & An agent particle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+If the solver set to this simulator is \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}{solver\+\_\+type\+::\+Verlet}, then the step time (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}) needs to be set to initialise correctly the particle\textquotesingle{}s previous position. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_afb7ded1049ec82f7ea8d908c5cefaff7}\label{classphysim_1_1simulator_afb7ded1049ec82f7ea8d908c5cefaff7}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+field@{add\+\_\+field}}
+\index{add\+\_\+field@{add\+\_\+field}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+field()}{add\_field()}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+field (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1fields_1_1field}{fields\+::field} $\ast$}]{f }\end{DoxyParamCaption})}
+
+
+
+Adds a force field to the scene. 
+
+The force field is added to \hyperlink{classphysim_1_1simulator_a7e4d709f4b43199405be83eded074816}{force\+\_\+fields}.
+
+The caller should not free the object since the simulator will take care of that. 
+\begin{DoxyParams}{Parameters}
+{\em f} & A non-\/null pointer to the object. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a0b65d437e6e32a851251cfab5d184382}\label{classphysim_1_1simulator_a0b65d437e6e32a851251cfab5d184382}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+fluid@{add\+\_\+fluid}}
+\index{add\+\_\+fluid@{add\+\_\+fluid}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+fluid()}{add\_fluid()}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+fluid (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$}]{f }\end{DoxyParamCaption})}
+
+
+
+Adds a fluids to the scene. 
+
+The fluid is not initialised. \begin{DoxyReturn}{Returns}
+Returns the index of the fluid. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a6d2b636673f895b006724a6ba310e322}\label{classphysim_1_1simulator_a6d2b636673f895b006724a6ba310e322}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+free\+\_\+particle@{add\+\_\+free\+\_\+particle}}
+\index{add\+\_\+free\+\_\+particle@{add\+\_\+free\+\_\+particle}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+free\+\_\+particle()}{add\_free\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+free\+\_\+particle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Adds a free particle to the simulation. 
+
+The particle is initialised using \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}. \begin{DoxyPrecond}{Precondition}
+For this initialisation to be completely correct, the step time (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}) needs to be set. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_adc50e1ec0da019bf120db3ae5af27d39}\label{classphysim_1_1simulator_adc50e1ec0da019bf120db3ae5af27d39}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+free\+\_\+particle@{add\+\_\+free\+\_\+particle}}
+\index{add\+\_\+free\+\_\+particle@{add\+\_\+free\+\_\+particle}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+free\+\_\+particle()}{add\_free\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+free\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Adds the particle passed as parameter to the simulation. 
+
+The initialser function (see \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}) is not called. The particle is added to \hyperlink{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}{fps}. 
+\begin{DoxyParams}{Parameters}
+{\em p} & A free particle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+If the solver set to this simulator is \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}{solver\+\_\+type\+::\+Verlet}, then the step time (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}) needs to be set to initialise correctly the particle\textquotesingle{}s previous position. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_a8729cd8c3590730d8897f61f2320f3e8}\label{classphysim_1_1simulator_a8729cd8c3590730d8897f61f2320f3e8}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+free\+\_\+particles@{add\+\_\+free\+\_\+particles}}
+\index{add\+\_\+free\+\_\+particles@{add\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+free\+\_\+particles()}{add\_free\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::add\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+
+
+Adds {\itshape n} free particles to the simulation. 
+
+Each of the particles is initialised with the \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit} object used at the moment of calling this method. The particle is added to \hyperlink{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}{fps}. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of particles. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a92a79231495f047789176a19857735ff}\label{classphysim_1_1simulator_a92a79231495f047789176a19857735ff}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+geometry@{add\+\_\+geometry}}
+\index{add\+\_\+geometry@{add\+\_\+geometry}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+geometry()}{add\_geometry()}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+geometry (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$}]{g }\end{DoxyParamCaption})}
+
+
+
+Adds a geometrical object to the scene. 
+
+The geometrical object is added to \hyperlink{classphysim_1_1simulator_a7ea652d4a55986d0c2cf527e40495fd8}{scene\+\_\+fixed}.
+
+The caller should not free the object since the simulator will take care of that. 
+\begin{DoxyParams}{Parameters}
+{\em g} & A non-\/null pointer to the object. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a65e96ed22a3d12c5be1ff933d4c79436}\label{classphysim_1_1simulator_a65e96ed22a3d12c5be1ff933d4c79436}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+mesh@{add\+\_\+mesh}}
+\index{add\+\_\+mesh@{add\+\_\+mesh}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+mesh()}{add\_mesh()}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+mesh (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$}]{m }\end{DoxyParamCaption})}
+
+
+
+Adds a mesh to the scene. 
+
+The mesh added is copied. \begin{DoxyReturn}{Returns}
+Returns the index of the mesh. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_ae36d99f98f5e470934eea0523ffca583}\label{classphysim_1_1simulator_ae36d99f98f5e470934eea0523ffca583}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+sized\+\_\+particle@{add\+\_\+sized\+\_\+particle}}
+\index{add\+\_\+sized\+\_\+particle@{add\+\_\+sized\+\_\+particle}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+sized\+\_\+particle()}{add\_sized\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+sized\+\_\+particle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Adds a sized particle to the simulation. 
+
+The particle is initialised using \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit}. \begin{DoxyPrecond}{Precondition}
+For this initialisation to be completely correct, the step time (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}) needs to be set. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_aa7b066130ec71e7f8985ebc94605cf3b}\label{classphysim_1_1simulator_aa7b066130ec71e7f8985ebc94605cf3b}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+sized\+\_\+particle@{add\+\_\+sized\+\_\+particle}}
+\index{add\+\_\+sized\+\_\+particle@{add\+\_\+sized\+\_\+particle}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+sized\+\_\+particle()}{add\_sized\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::simulator\+::add\+\_\+sized\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Adds the particle passed as parameter to the simulation. 
+
+The initialiser object (see \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit}) is not called. The particle is added to \hyperlink{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}{sps}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & A sized particle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+If the solver set to this simulator is \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}{solver\+\_\+type\+::\+Verlet}, then the step time (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}) needs to be set to initialise correctly the particle\textquotesingle{}s previous position. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_ae0551469d3c6b536da89bce04ff93fee}\label{classphysim_1_1simulator_ae0551469d3c6b536da89bce04ff93fee}} 
+\index{physim\+::simulator@{physim\+::simulator}!add\+\_\+sized\+\_\+particles@{add\+\_\+sized\+\_\+particles}}
+\index{add\+\_\+sized\+\_\+particles@{add\+\_\+sized\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{add\+\_\+sized\+\_\+particles()}{add\_sized\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::add\+\_\+sized\+\_\+particles (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+
+
+Adds {\itshape n} sized particles to the simulation. 
+
+Each of the particles is initialised with the \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit} object used at the moment of calling this method. The particle is added to \hyperlink{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}{sps}. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of particles. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a551890b383f97f13bb429e40f72c6c33}\label{classphysim_1_1simulator_a551890b383f97f13bb429e40f72c6c33}} 
+\index{physim\+::simulator@{physim\+::simulator}!apply\+\_\+solver@{apply\+\_\+solver}}
+\index{apply\+\_\+solver@{apply\+\_\+solver}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{apply\+\_\+solver()}{apply\_solver()}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void physim\+::simulator\+::apply\+\_\+solver (\begin{DoxyParamCaption}\item[{const P \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pos,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{vel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Predicts a particle\textquotesingle{}s next position and velocity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em p} & Particle to apply the solver on. \\
+\hline
+\mbox{\tt out}  & {\em pos} & The predicted position. \\
+\hline
+\mbox{\tt out}  & {\em vel} & The predicted velocity. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a1bef71687a4b46373753847a5d2112ff}\label{classphysim_1_1simulator_a1bef71687a4b46373753847a5d2112ff}} 
+\index{physim\+::simulator@{physim\+::simulator}!apply\+\_\+time\+\_\+step@{apply\+\_\+time\+\_\+step}}
+\index{apply\+\_\+time\+\_\+step@{apply\+\_\+time\+\_\+step}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{apply\+\_\+time\+\_\+step()}{apply\_time\_step()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::apply\+\_\+time\+\_\+step (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Apply a time step to the simulation. 
+
+Calls the following functions\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1simulator_ac99a02f99b4f83501478093d402abea5}{simulate\+\_\+sized\+\_\+particles()}
+\item \hyperlink{classphysim_1_1simulator_a99dbf5870ec5383266f87e60c1686049}{simulate\+\_\+agent\+\_\+particles()}
+\item \hyperlink{classphysim_1_1simulator_ac836fc5c8ccf186b8030da54586a8b07}{simulate\+\_\+free\+\_\+particles()}
+\item \hyperlink{classphysim_1_1simulator_aea4165314f9285dfc3b64ba9a2666aaf}{simulate\+\_\+meshes()}
+\item \hyperlink{classphysim_1_1simulator_a63f7f4b59a79b8b294aaa6d8870fccd2}{simulate\+\_\+fluids()} Parameter {\itshape dt} (set via method \hyperlink{classphysim_1_1simulator_ab86bf6d22fd222a299183c9d82a71bc1}{set\+\_\+time\+\_\+step(float)}) indicates how much time has passed since the last time step. 
+\end{DoxyItemize}\mbox{\Hypertarget{classphysim_1_1simulator_a5bee70bb8d7f0744e47f1ae76b3c8189}\label{classphysim_1_1simulator_a5bee70bb8d7f0744e47f1ae76b3c8189}} 
+\index{physim\+::simulator@{physim\+::simulator}!apply\+\_\+time\+\_\+step@{apply\+\_\+time\+\_\+step}}
+\index{apply\+\_\+time\+\_\+step@{apply\+\_\+time\+\_\+step}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{apply\+\_\+time\+\_\+step()}{apply\_time\_step()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::apply\+\_\+time\+\_\+step (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+
+
+Apply a time step to the simulation. 
+
+Calls the following functions\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1simulator_ac99a02f99b4f83501478093d402abea5}{simulate\+\_\+sized\+\_\+particles()}
+\item \hyperlink{classphysim_1_1simulator_a99dbf5870ec5383266f87e60c1686049}{simulate\+\_\+agent\+\_\+particles()}
+\item \hyperlink{classphysim_1_1simulator_af4c6a7a02feeb89263fa557a1ea3de7e}{simulate\+\_\+free\+\_\+particles(size\+\_\+t)}
+\item \hyperlink{classphysim_1_1simulator_aea4165314f9285dfc3b64ba9a2666aaf}{simulate\+\_\+meshes()}
+\item \hyperlink{classphysim_1_1simulator_acb3359c9faedfc69191bf9a4618eebfa}{simulate\+\_\+fluids(size\+\_\+t)} Parameter {\itshape dt} (set via method \hyperlink{classphysim_1_1simulator_ab86bf6d22fd222a299183c9d82a71bc1}{set\+\_\+time\+\_\+step(float)}) indicates how much time has passed since the last time step. 
+\end{DoxyItemize}\mbox{\Hypertarget{classphysim_1_1simulator_a903bf3d4f155e8e524d4031b24042142}\label{classphysim_1_1simulator_a903bf3d4f155e8e524d4031b24042142}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+agent\+\_\+particles@{clear\+\_\+agent\+\_\+particles}}
+\index{clear\+\_\+agent\+\_\+particles@{clear\+\_\+agent\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+agent\+\_\+particles()}{clear\_agent\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+agent\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all agent particles in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_a838f036ef9d378d1e3f5207c3f031b52}{aps} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_afe53c23ae11f78166576ad44f56ee953}\label{classphysim_1_1simulator_afe53c23ae11f78166576ad44f56ee953}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+fields@{clear\+\_\+fields}}
+\index{clear\+\_\+fields@{clear\+\_\+fields}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+fields()}{clear\_fields()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+fields (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all force fields in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_a7e4d709f4b43199405be83eded074816}{force\+\_\+fields} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_adda92bb271d38830fa374d61a160afeb}\label{classphysim_1_1simulator_adda92bb271d38830fa374d61a160afeb}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+fluids@{clear\+\_\+fluids}}
+\index{clear\+\_\+fluids@{clear\+\_\+fluids}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+fluids()}{clear\_fluids()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+fluids (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all fluids in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_a34f5a69a58c9106cf42657c0700074e7}{fs} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_a3b6c748422ce495c2f26130136f6c460}\label{classphysim_1_1simulator_a3b6c748422ce495c2f26130136f6c460}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+free\+\_\+particles@{clear\+\_\+free\+\_\+particles}}
+\index{clear\+\_\+free\+\_\+particles@{clear\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+free\+\_\+particles()}{clear\_free\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all free particles in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}{fps} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_a8112f43801df68b3140458d1915c8d97}\label{classphysim_1_1simulator_a8112f43801df68b3140458d1915c8d97}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+geometry@{clear\+\_\+geometry}}
+\index{clear\+\_\+geometry@{clear\+\_\+geometry}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+geometry()}{clear\_geometry()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+geometry (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all geometry in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_a7ea652d4a55986d0c2cf527e40495fd8}{scene\+\_\+fixed} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_a050e1ddeece122406b045262e40d4063}\label{classphysim_1_1simulator_a050e1ddeece122406b045262e40d4063}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+meshes@{clear\+\_\+meshes}}
+\index{clear\+\_\+meshes@{clear\+\_\+meshes}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+meshes()}{clear\_meshes()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+meshes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all meshes in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_ae2bcb1ad81b487abd2ad00b0118d2f51}{ms} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_ade81dc85cbad0e86fc38b29f48fedcd6}\label{classphysim_1_1simulator_ade81dc85cbad0e86fc38b29f48fedcd6}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+particles@{clear\+\_\+particles}}
+\index{clear\+\_\+particles@{clear\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+particles()}{clear\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all particles in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_a4f92b1da1d5e8e0c35d6339991b4d7ce}{fps}, \hyperlink{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}{sps} and \hyperlink{classphysim_1_1simulator_a838f036ef9d378d1e3f5207c3f031b52}{aps}, and clears the containers. \mbox{\Hypertarget{classphysim_1_1simulator_a5881327d525fd4928fd274528863d9f7}\label{classphysim_1_1simulator_a5881327d525fd4928fd274528863d9f7}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+simulation@{clear\+\_\+simulation}}
+\index{clear\+\_\+simulation@{clear\+\_\+simulation}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+simulation()}{clear\_simulation()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+simulation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the simulation to an empty state;. 
+
+Deletes all particles, geometry and resets the simulation time.
+
+That is, calls\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1simulator_ade81dc85cbad0e86fc38b29f48fedcd6}{clear\+\_\+particles},
+\item \hyperlink{classphysim_1_1simulator_a8112f43801df68b3140458d1915c8d97}{clear\+\_\+geometry},
+\item \hyperlink{classphysim_1_1simulator_afe53c23ae11f78166576ad44f56ee953}{clear\+\_\+fields},
+\item \hyperlink{classphysim_1_1simulator_a050e1ddeece122406b045262e40d4063}{clear\+\_\+meshes}.
+\item \hyperlink{classphysim_1_1simulator_adda92bb271d38830fa374d61a160afeb}{clear\+\_\+fluids}. 
+\end{DoxyItemize}\mbox{\Hypertarget{classphysim_1_1simulator_a4aa10ffe26a505dfa9ad5e6875a2964f}\label{classphysim_1_1simulator_a4aa10ffe26a505dfa9ad5e6875a2964f}} 
+\index{physim\+::simulator@{physim\+::simulator}!clear\+\_\+sized\+\_\+particles@{clear\+\_\+sized\+\_\+particles}}
+\index{clear\+\_\+sized\+\_\+particles@{clear\+\_\+sized\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{clear\+\_\+sized\+\_\+particles()}{clear\_sized\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::clear\+\_\+sized\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes all sized particles in this simulator. 
+
+Deletes all the objects in \hyperlink{classphysim_1_1simulator_ad3bc00314e9fd8435125ff1225c0658b}{sps} and clears the container. \mbox{\Hypertarget{classphysim_1_1simulator_a00c7815358139bf08b2e13fe1ab377bc}\label{classphysim_1_1simulator_a00c7815358139bf08b2e13fe1ab377bc}} 
+\index{physim\+::simulator@{physim\+::simulator}!compute\+\_\+forces@{compute\+\_\+forces}}
+\index{compute\+\_\+forces@{compute\+\_\+forces}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{compute\+\_\+forces()}{compute\_forces()}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void physim\+::simulator\+::compute\+\_\+forces (\begin{DoxyParamCaption}\item[{P \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Computes the forces acting in the simulation. 
+
+These forces are defined in the different focuses added to the simulator. Each force vector is added to the particle\textquotesingle{}s force accumulator. The force accumulator, however, is not initialised to 0.
+
+The result is set to the force acting on particle {\itshape p}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p} & The particle whose force attribute is to be modified. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a223170686fbf961c62d52da3fdc964c8}\label{classphysim_1_1simulator_a223170686fbf961c62d52da3fdc964c8}} 
+\index{physim\+::simulator@{physim\+::simulator}!find\+\_\+update\+\_\+geomcoll\+\_\+free@{find\+\_\+update\+\_\+geomcoll\+\_\+free}}
+\index{find\+\_\+update\+\_\+geomcoll\+\_\+free@{find\+\_\+update\+\_\+geomcoll\+\_\+free}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{find\+\_\+update\+\_\+geomcoll\+\_\+free()}{find\_update\_geomcoll\_free()}}
+{\footnotesize\ttfamily bool physim\+::simulator\+::find\+\_\+update\+\_\+geomcoll\+\_\+free (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{coll\+\_\+pred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update a free particle that may collide with geometry. 
+
+A particle has a predicted position and velocity which needs to be changed in the event that it collides with geometry. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Current state of particle to be updated. \\
+\hline
+\mbox{\tt out}  & {\em pred\+\_\+pos} & Predicted position modified to the final position. \\
+\hline
+\mbox{\tt out}  & {\em pred\+\_\+vel} & Predicted velocity modified to the final velocity. \\
+\hline
+\mbox{\tt out}  & {\em coll\+\_\+pred} & The particle with the updated state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on collision with geometry. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a4f982c557113ed7e810efb9e1ff0f838}\label{classphysim_1_1simulator_a4f982c557113ed7e810efb9e1ff0f838}} 
+\index{physim\+::simulator@{physim\+::simulator}!find\+\_\+update\+\_\+geomcoll\+\_\+sized@{find\+\_\+update\+\_\+geomcoll\+\_\+sized}}
+\index{find\+\_\+update\+\_\+geomcoll\+\_\+sized@{find\+\_\+update\+\_\+geomcoll\+\_\+sized}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{find\+\_\+update\+\_\+geomcoll\+\_\+sized()}{find\_update\_geomcoll\_sized()}}
+{\footnotesize\ttfamily bool physim\+::simulator\+::find\+\_\+update\+\_\+geomcoll\+\_\+sized (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&}]{coll\+\_\+pred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update a sized particle that may collide with geometry. 
+
+A particle has a predicted position and velocity which needs to be changed in the event that it collides with geometry.
+
+The difference between this and \hyperlink{classphysim_1_1simulator_a228598663672e0a7cfb025ea5c6b9235}{find\+\_\+update\+\_\+partcoll\+\_\+free} is that there is an extra intersection test. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Current state of particle to be updated. \\
+\hline
+\mbox{\tt out}  & {\em pred\+\_\+pos} & Predicted position modified to the final position. \\
+\hline
+\mbox{\tt out}  & {\em pred\+\_\+vel} & Predicted velocity modified to the final velocity. \\
+\hline
+\mbox{\tt out}  & {\em coll\+\_\+pred} & The particle with the updated state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on collision with geometry. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_ae30accaea01fe716e0d51e6766fe44b6}\label{classphysim_1_1simulator_ae30accaea01fe716e0d51e6766fe44b6}} 
+\index{physim\+::simulator@{physim\+::simulator}!find\+\_\+update\+\_\+partcoll\+\_\+agent@{find\+\_\+update\+\_\+partcoll\+\_\+agent}}
+\index{find\+\_\+update\+\_\+partcoll\+\_\+agent@{find\+\_\+update\+\_\+partcoll\+\_\+agent}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{find\+\_\+update\+\_\+partcoll\+\_\+agent()}{find\_update\_partcoll\_agent()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::find\+\_\+update\+\_\+partcoll\+\_\+agent (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1particles_1_1agent__particle}{particles\+::agent\+\_\+particle} \&}]{p,  }\item[{size\+\_\+t}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update an agent particle that may collide with a sized or an agent particle. 
+
+When checking collisions with agent particles, the {\itshape i-\/th} particle is ignored.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Current state of particle to be updated. \\
+\hline
+\mbox{\tt in}  & {\em i} & Index of the sized particle to ignore. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+This method is called after finding a definitive state of a particle after colliding with geometry. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_a228598663672e0a7cfb025ea5c6b9235}\label{classphysim_1_1simulator_a228598663672e0a7cfb025ea5c6b9235}} 
+\index{physim\+::simulator@{physim\+::simulator}!find\+\_\+update\+\_\+partcoll\+\_\+free@{find\+\_\+update\+\_\+partcoll\+\_\+free}}
+\index{find\+\_\+update\+\_\+partcoll\+\_\+free@{find\+\_\+update\+\_\+partcoll\+\_\+free}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{find\+\_\+update\+\_\+partcoll\+\_\+free()}{find\_update\_partcoll\_free()}}
+{\footnotesize\ttfamily bool physim\+::simulator\+::find\+\_\+update\+\_\+partcoll\+\_\+free (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{coll\+\_\+pred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update a free particle that may collide with a sized or an agent particle. 
+
+A particle has a predicted position and velocity which needs to be changed in the event that it collides with another particle. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Current state of particle to be updated. \\
+\hline
+\mbox{\tt out}  & {\em pred\+\_\+pos} & Predicted position modified to the final position. \\
+\hline
+\mbox{\tt out}  & {\em pred\+\_\+vel} & Predicted velocity modified to the final velocity. \\
+\hline
+\mbox{\tt out}  & {\em coll\+\_\+pred} & The particle with the updated state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on collision with geometry. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a5505bc29690fe424e87415ba97a159bc}\label{classphysim_1_1simulator_a5505bc29690fe424e87415ba97a159bc}} 
+\index{physim\+::simulator@{physim\+::simulator}!find\+\_\+update\+\_\+partcoll\+\_\+sized@{find\+\_\+update\+\_\+partcoll\+\_\+sized}}
+\index{find\+\_\+update\+\_\+partcoll\+\_\+sized@{find\+\_\+update\+\_\+partcoll\+\_\+sized}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{find\+\_\+update\+\_\+partcoll\+\_\+sized()}{find\_update\_partcoll\_sized()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::find\+\_\+update\+\_\+partcoll\+\_\+sized (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} \&}]{p,  }\item[{size\+\_\+t}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update a sized particle that may collide with a sized or an agent particle. 
+
+When checking collisions with sized particles, the {\itshape i-\/th} particle is ignored.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Current state of particle to be updated. \\
+\hline
+\mbox{\tt in}  & {\em i} & Index of the sized particle to ignore. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+This method is called after finding a definitive state of a particle after colliding with geometry. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_a043656dfeb0ce60416c234abb2280383}\label{classphysim_1_1simulator_a043656dfeb0ce60416c234abb2280383}} 
+\index{physim\+::simulator@{physim\+::simulator}!get\+\_\+agent\+\_\+particles@{get\+\_\+agent\+\_\+particles}}
+\index{get\+\_\+agent\+\_\+particles@{get\+\_\+agent\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{get\+\_\+agent\+\_\+particles()}{get\_agent\_particles()}}
+{\footnotesize\ttfamily const vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \& physim\+::simulator\+::get\+\_\+agent\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns all agent particles in the simulation. 
+
+\begin{DoxyReturn}{Returns}
+Returns a constant reference to the structure containing all agent particles. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a65b91f351c9e2164c0e6bd46cdc0a431}\label{classphysim_1_1simulator_a65b91f351c9e2164c0e6bd46cdc0a431}} 
+\index{physim\+::simulator@{physim\+::simulator}!get\+\_\+fluids@{get\+\_\+fluids}}
+\index{get\+\_\+fluids@{get\+\_\+fluids}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{get\+\_\+fluids()}{get\_fluids()}}
+{\footnotesize\ttfamily const vector$<$ \hyperlink{classphysim_1_1fluids_1_1fluid}{fluid} $\ast$ $>$ \& physim\+::simulator\+::get\+\_\+fluids (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns all fluids in the simulation. 
+
+\begin{DoxyReturn}{Returns}
+Returns a constant reference to the structure containing all particles. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a8d030b30ee12814ea6a20faa7e61bd8c}\label{classphysim_1_1simulator_a8d030b30ee12814ea6a20faa7e61bd8c}} 
+\index{physim\+::simulator@{physim\+::simulator}!get\+\_\+free\+\_\+particles@{get\+\_\+free\+\_\+particles}}
+\index{get\+\_\+free\+\_\+particles@{get\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{get\+\_\+free\+\_\+particles()}{get\_free\_particles()}}
+{\footnotesize\ttfamily const vector$<$ \hyperlink{classphysim_1_1particles_1_1free__particle}{free\+\_\+particle} $>$ \& physim\+::simulator\+::get\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns all free particles in the simulation. 
+
+\begin{DoxyReturn}{Returns}
+Returns a constant reference to the structure containing all free particles. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a515217acebf6d4ae784af02a60bede00}\label{classphysim_1_1simulator_a515217acebf6d4ae784af02a60bede00}} 
+\index{physim\+::simulator@{physim\+::simulator}!get\+\_\+meshes@{get\+\_\+meshes}}
+\index{get\+\_\+meshes@{get\+\_\+meshes}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{get\+\_\+meshes()}{get\_meshes()}}
+{\footnotesize\ttfamily const vector$<$ \hyperlink{classphysim_1_1meshes_1_1mesh}{mesh} $\ast$ $>$ \& physim\+::simulator\+::get\+\_\+meshes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns all meshes in the simulation. 
+
+\begin{DoxyReturn}{Returns}
+Returns a constant reference to the structure containing all particles. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_acf45d34a15b06437858e3324af1a559c}\label{classphysim_1_1simulator_acf45d34a15b06437858e3324af1a559c}} 
+\index{physim\+::simulator@{physim\+::simulator}!get\+\_\+sized\+\_\+particles@{get\+\_\+sized\+\_\+particles}}
+\index{get\+\_\+sized\+\_\+particles@{get\+\_\+sized\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{get\+\_\+sized\+\_\+particles()}{get\_sized\_particles()}}
+{\footnotesize\ttfamily const vector$<$ \hyperlink{classphysim_1_1particles_1_1sized__particle}{sized\+\_\+particle} $>$ \& physim\+::simulator\+::get\+\_\+sized\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns all sized particles in the simulation. 
+
+\begin{DoxyReturn}{Returns}
+Returns a constant reference to the structure containing all sized particles. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_afc4f4dc27c302b5dd31824429d67104c}\label{classphysim_1_1simulator_afc4f4dc27c302b5dd31824429d67104c}} 
+\index{physim\+::simulator@{physim\+::simulator}!init\+\_\+fluid@{init\+\_\+fluid}}
+\index{init\+\_\+fluid@{init\+\_\+fluid}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{init\+\_\+fluid()}{init\_fluid()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::init\+\_\+fluid (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1fluids_1_1fluid}{fluids\+::fluid} $\ast$}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises a fluid. 
+
+Computes an initial previous position for each particle of the mesh so that the Verlet solver can work correctly (see \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type}). 
+\begin{DoxyParams}{Parameters}
+{\em f} & The fluid to be initialsed. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a5344fb7665e2f4c0e7930f7897f9a3bf}\label{classphysim_1_1simulator_a5344fb7665e2f4c0e7930f7897f9a3bf}} 
+\index{physim\+::simulator@{physim\+::simulator}!init\+\_\+mesh@{init\+\_\+mesh}}
+\index{init\+\_\+mesh@{init\+\_\+mesh}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{init\+\_\+mesh()}{init\_mesh()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::init\+\_\+mesh (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1meshes_1_1mesh}{meshes\+::mesh} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises a mesh. 
+
+Builds the initial state of the mesh (see \hyperlink{classphysim_1_1meshes_1_1mesh_a62f877dd42bc306ef70c76fc172f245f}{meshes\+::mesh\+::make\+\_\+initial\+\_\+state}). Computes an initial previous position for each particle of the mesh so that the Verlet solver can work correctly (see \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type}). 
+\begin{DoxyParams}{Parameters}
+{\em m} & The mesh to be initialsed. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a55759abc6a93f89e3244bc16518c7fe4}\label{classphysim_1_1simulator_a55759abc6a93f89e3244bc16518c7fe4}} 
+\index{physim\+::simulator@{physim\+::simulator}!init\+\_\+particle@{init\+\_\+particle}}
+\index{init\+\_\+particle@{init\+\_\+particle}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{init\+\_\+particle()}{init\_particle()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::init\+\_\+particle (\begin{DoxyParamCaption}\item[{\hyperlink{classphysim_1_1particles_1_1base__particle}{particles\+::base\+\_\+particle} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises a particle using its corresponding emitter. 
+
+Calls one of
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}
+\item \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit} to initialise its attributes, according to the type of particle.
+\end{DoxyItemize}
+
+This function also updates the particle\textquotesingle{}s previous position so that the Verlet solver can be correctly used (see \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686ac1f9df543f33d8a79fb2437c853f09b9}{solver\+\_\+type\+::\+Verlet}). 
+\begin{DoxyParams}{Parameters}
+{\em p} & The particle to be initialsed. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_ab36133b4fa2b4fb2d8f297f6a7dda497}\label{classphysim_1_1simulator_ab36133b4fa2b4fb2d8f297f6a7dda497}} 
+\index{physim\+::simulator@{physim\+::simulator}!part\+\_\+part\+\_\+colls\+\_\+activated@{part\+\_\+part\+\_\+colls\+\_\+activated}}
+\index{part\+\_\+part\+\_\+colls\+\_\+activated@{part\+\_\+part\+\_\+colls\+\_\+activated}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{part\+\_\+part\+\_\+colls\+\_\+activated()}{part\_part\_colls\_activated()}}
+{\footnotesize\ttfamily bool physim\+::simulator\+::part\+\_\+part\+\_\+colls\+\_\+activated (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Are collisions between particles activated? 
+
+See \hyperlink{classphysim_1_1simulator_a4a7d02feac1ca57bb143b70ad8b81134}{part\+\_\+part\+\_\+collisions} for details. \begin{DoxyReturn}{Returns}
+Returns the value of \hyperlink{classphysim_1_1simulator_a4a7d02feac1ca57bb143b70ad8b81134}{part\+\_\+part\+\_\+collisions}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1simulator_a6d3a5491771496c3da2be7c3382f061b}\label{classphysim_1_1simulator_a6d3a5491771496c3da2be7c3382f061b}} 
+\index{physim\+::simulator@{physim\+::simulator}!reset\+\_\+simulation@{reset\+\_\+simulation}}
+\index{reset\+\_\+simulation@{reset\+\_\+simulation}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{reset\+\_\+simulation()}{reset\_simulation()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::reset\+\_\+simulation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Resets the simulation to its initial state. 
+
+Initialises all particles with the initialiser objects (using the appropriate objects for each type of particle). \mbox{\Hypertarget{classphysim_1_1simulator_a83ab26eaa30b62959f6afcb9ec58696f}\label{classphysim_1_1simulator_a83ab26eaa30b62959f6afcb9ec58696f}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+free\+\_\+emitter@{set\+\_\+free\+\_\+emitter}}
+\index{set\+\_\+free\+\_\+emitter@{set\+\_\+free\+\_\+emitter}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+free\+\_\+emitter()}{set\_free\_emitter()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+free\+\_\+emitter (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1emitters_1_1free__emitter}{emitters\+::free\+\_\+emitter} $\ast$}]{f }\end{DoxyParamCaption})}
+
+
+
+Sets the free particle emitter object. 
+
+See \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}.
+
+The simulator copies the object, therefore the intialiser object should be freed by the user. Since the simulator keeps its own copy, the parameter may be freed any time.
+
+The previous emitter is destroyed by the class. 
+\begin{DoxyParams}{Parameters}
+{\em f} & Free particle emitter object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+{\itshape f} can not be null. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_a11d8e86465d367b9907bd541964d5a4b}\label{classphysim_1_1simulator_a11d8e86465d367b9907bd541964d5a4b}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+gravity\+\_\+acceleration@{set\+\_\+gravity\+\_\+acceleration}}
+\index{set\+\_\+gravity\+\_\+acceleration@{set\+\_\+gravity\+\_\+acceleration}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+gravity\+\_\+acceleration()}{set\_gravity\_acceleration()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+gravity\+\_\+acceleration (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{g }\end{DoxyParamCaption})}
+
+
+
+Sets the gravity vector. 
+
+Makes a force field of type \hyperlink{classphysim_1_1fields_1_1gravitational__planet}{fields\+::gravitational\+\_\+planet} using vector {\itshape g}. \mbox{\Hypertarget{classphysim_1_1simulator_a46208fce1548645f874618b44edde065}\label{classphysim_1_1simulator_a46208fce1548645f874618b44edde065}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+particle\+\_\+particle\+\_\+collisions@{set\+\_\+particle\+\_\+particle\+\_\+collisions}}
+\index{set\+\_\+particle\+\_\+particle\+\_\+collisions@{set\+\_\+particle\+\_\+particle\+\_\+collisions}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+particle\+\_\+particle\+\_\+collisions()}{set\_particle\_particle\_collisions()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+particle\+\_\+particle\+\_\+collisions (\begin{DoxyParamCaption}\item[{bool}]{a }\end{DoxyParamCaption})}
+
+
+
+Activates/\+Deactivates particle-\/particle collisions. 
+
+Sets the value to \hyperlink{classphysim_1_1simulator_a4a7d02feac1ca57bb143b70ad8b81134}{part\+\_\+part\+\_\+collisions}. 
+\begin{DoxyParams}{Parameters}
+{\em a} & Either true or false. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a39882b752b51378a547bab344933c49e}\label{classphysim_1_1simulator_a39882b752b51378a547bab344933c49e}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+sized\+\_\+emitter@{set\+\_\+sized\+\_\+emitter}}
+\index{set\+\_\+sized\+\_\+emitter@{set\+\_\+sized\+\_\+emitter}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+sized\+\_\+emitter()}{set\_sized\_emitter()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+sized\+\_\+emitter (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1emitters_1_1sized__emitter}{emitters\+::sized\+\_\+emitter} $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Sets the sized particle emitter object. 
+
+See \hyperlink{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}{sized\+\_\+global\+\_\+emit}.
+
+The simulator copies the object, therefore the intialiser object should be freed by the user. Since the simulator keeps its own copy, the parameter may be freed any time.
+
+The previous emitter is destroyed by the class. 
+\begin{DoxyParams}{Parameters}
+{\em s} & Sized particle emitter object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+{\itshape s} can not be null. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_ac0724a6950d7ce81793f8dbeafbfd08a}\label{classphysim_1_1simulator_ac0724a6950d7ce81793f8dbeafbfd08a}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+solver@{set\+\_\+solver}}
+\index{set\+\_\+solver@{set\+\_\+solver}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+solver()}{set\_solver()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+solver (\begin{DoxyParamCaption}\item[{const \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type} \&}]{s }\end{DoxyParamCaption})}
+
+
+
+Sets the type of solver. 
+
+There are several types of solvers. See enumeration \hyperlink{namespacephysim_a09adeda29c09e651877e880d31fc9686}{solver\+\_\+type}. 
+\begin{DoxyParams}{Parameters}
+{\em s} & The type of sovler to be used. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_ab86bf6d22fd222a299183c9d82a71bc1}\label{classphysim_1_1simulator_ab86bf6d22fd222a299183c9d82a71bc1}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+time\+\_\+step@{set\+\_\+time\+\_\+step}}
+\index{set\+\_\+time\+\_\+step@{set\+\_\+time\+\_\+step}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+time\+\_\+step()}{set\_time\_step()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+time\+\_\+step (\begin{DoxyParamCaption}\item[{float}]{t }\end{DoxyParamCaption})}
+
+
+
+Sets the time step of the simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Time step of the simulation. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a6e6fc481334928bdcb13fa309fb62748}\label{classphysim_1_1simulator_a6e6fc481334928bdcb13fa309fb62748}} 
+\index{physim\+::simulator@{physim\+::simulator}!set\+\_\+viscous\+\_\+drag@{set\+\_\+viscous\+\_\+drag}}
+\index{set\+\_\+viscous\+\_\+drag@{set\+\_\+viscous\+\_\+drag}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{set\+\_\+viscous\+\_\+drag()}{set\_viscous\_drag()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::set\+\_\+viscous\+\_\+drag (\begin{DoxyParamCaption}\item[{float}]{d }\end{DoxyParamCaption})}
+
+
+
+Sets the viscous drag coefficient. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d} & Positive floating-\/point value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1simulator_a99dbf5870ec5383266f87e60c1686049}\label{classphysim_1_1simulator_a99dbf5870ec5383266f87e60c1686049}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+agent\+\_\+particles@{simulate\+\_\+agent\+\_\+particles}}
+\index{simulate\+\_\+agent\+\_\+particles@{simulate\+\_\+agent\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+agent\+\_\+particles()}{simulate\_agent\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+agent\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Simulate agent particles. 
+
+Calls \hyperlink{classphysim_1_1simulator_a97eef0600da8870ee590babaffff775b}{\+\_\+simulate\+\_\+agent\+\_\+particles}.
+
+That function applies the steering behaviour set to every agent particle in its attribute \hyperlink{classphysim_1_1particles_1_1agent__particle_af219e3f46630bb7f51f3d00952ed4f1c}{agent\+\_\+particle\+::behaviour}.
+
+The simulation of an agent particle, regarding collisions with geometry, if any, is done similarly as in the simulation of sized particles. \mbox{\Hypertarget{classphysim_1_1simulator_a63f7f4b59a79b8b294aaa6d8870fccd2}\label{classphysim_1_1simulator_a63f7f4b59a79b8b294aaa6d8870fccd2}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+fluids@{simulate\+\_\+fluids}}
+\index{simulate\+\_\+fluids@{simulate\+\_\+fluids}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+fluids()}{simulate\_fluids()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+fluids (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Simulate fluids. 
+
+Calls \hyperlink{classphysim_1_1simulator_ac01677745377a9520453b73e199fcf99}{\+\_\+simulate\+\_\+fluids()}.
+
+Each fluid has each of its particle\textquotesingle{}s force updated. Then, each particle of the fluid is considered as a free particle and simulated accordingly. \mbox{\Hypertarget{classphysim_1_1simulator_acb3359c9faedfc69191bf9a4618eebfa}\label{classphysim_1_1simulator_acb3359c9faedfc69191bf9a4618eebfa}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+fluids@{simulate\+\_\+fluids}}
+\index{simulate\+\_\+fluids@{simulate\+\_\+fluids}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+fluids()}{simulate\_fluids()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+fluids (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nt }\end{DoxyParamCaption})}
+
+
+
+Simulate fluids. 
+
+Each fluid has each of its particle\textquotesingle{}s force updated. Then, each particle of the fluid is considered as a free particle and simulated accordingly.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nt} & Number of threads. If it equals 1, calls \hyperlink{classphysim_1_1simulator_ac01677745377a9520453b73e199fcf99}{\+\_\+simulate\+\_\+fluids()}. If it is greater then it calls \hyperlink{classphysim_1_1simulator_a5b0b7e9c7790144f17d5de13c8d098dc}{\+\_\+simulate\+\_\+fluids(size\+\_\+t)}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+{\itshape nt} $>$ 0. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_ac836fc5c8ccf186b8030da54586a8b07}\label{classphysim_1_1simulator_ac836fc5c8ccf186b8030da54586a8b07}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+free\+\_\+particles@{simulate\+\_\+free\+\_\+particles}}
+\index{simulate\+\_\+free\+\_\+particles@{simulate\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+free\+\_\+particles()}{simulate\_free\_particles()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Simulate free particles. 
+
+Calls \hyperlink{classphysim_1_1simulator_ae553797df3ee38cfe3c93bbc0b94be06}{\+\_\+simulate\+\_\+free\+\_\+particles()}.
+
+A free particle will only start \textquotesingle{}living\textquotesingle{}, i.\+e., moving in the environment, when its starting time (see \hyperlink{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}{free\+\_\+particle\+::starttime}) is equal or less than 0. Also, as long as \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{free\+\_\+particle\+::fixed} is set to false. At every time step, the starting time of each particle is decreased by an amount equal to the time step (see \hyperlink{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}{dt}).
+
+The lifetime of each particle (see \hyperlink{classphysim_1_1particles_1_1free__particle_a5870d6fd3167d2c6120f887f45fe50fc}{free\+\_\+particle\+::lifetime}) is also decreased by the exact same amount. Whenever this value reaches 0 the particle is reinitialised using the emitter for free particles (see \hyperlink{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}{free\+\_\+global\+\_\+emit}).
+
+Free particles collide with the geometrical objects added via method \hyperlink{classphysim_1_1simulator_a92a79231495f047789176a19857735ff}{add\+\_\+geometry(geometric\+::geometry $\ast$)}, and are moved depending on that geometry.
+
+When activated, collisions of free particles against sized particles are checked. \mbox{\Hypertarget{classphysim_1_1simulator_af4c6a7a02feeb89263fa557a1ea3de7e}\label{classphysim_1_1simulator_af4c6a7a02feeb89263fa557a1ea3de7e}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+free\+\_\+particles@{simulate\+\_\+free\+\_\+particles}}
+\index{simulate\+\_\+free\+\_\+particles@{simulate\+\_\+free\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+free\+\_\+particles()}{simulate\_free\_particles()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+free\+\_\+particles (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nt }\end{DoxyParamCaption})}
+
+
+
+Simulate free particles. 
+
+The simulation of a free particle is detailed in \hyperlink{classphysim_1_1simulator_ac836fc5c8ccf186b8030da54586a8b07}{simulate\+\_\+free\+\_\+particles()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nt} & Number of threads. If it equals 1, calls \hyperlink{classphysim_1_1simulator_ac836fc5c8ccf186b8030da54586a8b07}{simulate\+\_\+free\+\_\+particles()}. If it is greater then it calls \hyperlink{classphysim_1_1simulator_af4c6a7a02feeb89263fa557a1ea3de7e}{simulate\+\_\+free\+\_\+particles(size\+\_\+t)}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+{\itshape nt} $>$ 0. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{classphysim_1_1simulator_aea4165314f9285dfc3b64ba9a2666aaf}\label{classphysim_1_1simulator_aea4165314f9285dfc3b64ba9a2666aaf}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+meshes@{simulate\+\_\+meshes}}
+\index{simulate\+\_\+meshes@{simulate\+\_\+meshes}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+meshes()}{simulate\_meshes()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+meshes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Simulate meshes. 
+
+Calls \hyperlink{classphysim_1_1simulator_ac598aa9b36e01c8cee937a8f95719cd8}{\+\_\+simulate\+\_\+meshes}.
+
+Each mesh has each of its particle\textquotesingle{}s force updated according to the definition provided in method \hyperlink{classphysim_1_1meshes_1_1mesh_ad7cad4cd454cce562c8c404ef09f8bd3}{meshes\+::mesh\+::update\+\_\+forces}. This method defines the model implemented in that mesh. Then, each particle of the mesh is considered as a free particle and simulated accordingly. \mbox{\Hypertarget{classphysim_1_1simulator_ac99a02f99b4f83501478093d402abea5}\label{classphysim_1_1simulator_ac99a02f99b4f83501478093d402abea5}} 
+\index{physim\+::simulator@{physim\+::simulator}!simulate\+\_\+sized\+\_\+particles@{simulate\+\_\+sized\+\_\+particles}}
+\index{simulate\+\_\+sized\+\_\+particles@{simulate\+\_\+sized\+\_\+particles}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{simulate\+\_\+sized\+\_\+particles()}{simulate\_sized\_particles()}}
+{\footnotesize\ttfamily void physim\+::simulator\+::simulate\+\_\+sized\+\_\+particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Simulate sized particles. 
+
+Calls \hyperlink{classphysim_1_1simulator_a04922992cda3b1c402da7041324c6049}{\+\_\+simulate\+\_\+sized\+\_\+particles}.
+
+The simulation of sized particles follows exactly the same rules as those for the simulation of free particles. The only difference is that collisions with geometrical object are copmuted considering that these particles have a certain size (see \hyperlink{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}{sized\+\_\+particle\+::R}).
+
+When activated, collisions of free particles against sized particles are checked. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}\label{classphysim_1_1simulator_a12a60d0ed819937b51ce50162dbdd6e1}} 
+\index{physim\+::simulator@{physim\+::simulator}!dt@{dt}}
+\index{dt@{dt}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{dt}{dt}}
+{\footnotesize\ttfamily float physim\+::simulator\+::dt\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Time step of the simulation. 
+
+Default value\+: 0.\+01. \mbox{\Hypertarget{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}\label{classphysim_1_1simulator_a05e2840fc39c644d7005ea938e63202f}} 
+\index{physim\+::simulator@{physim\+::simulator}!free\+\_\+global\+\_\+emit@{free\+\_\+global\+\_\+emit}}
+\index{free\+\_\+global\+\_\+emit@{free\+\_\+global\+\_\+emit}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{free\+\_\+global\+\_\+emit}{free\_global\_emit}}
+{\footnotesize\ttfamily \hyperlink{classphysim_1_1emitters_1_1free__emitter}{emitters\+::free\+\_\+emitter}$\ast$ physim\+::simulator\+::free\+\_\+global\+\_\+emit\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialiser applied to all free particles. 
+
+Whenever \hyperlink{classphysim_1_1simulator_a6d2b636673f895b006724a6ba310e322}{add\+\_\+free\+\_\+particle()} or \hyperlink{classphysim_1_1simulator_a8729cd8c3590730d8897f61f2320f3e8}{add\+\_\+free\+\_\+particles(size\+\_\+t)} are called, the attributes of the particles are initialised using this object.
+
+This initialisation is also done whenever the lifetime of a particle goes below 0. Note that, in this case, some attributes like the velocity and position may not be zero, as a result of running the simulation.
+
+The default behaviour of the function is to not do anything, that is, the attribtues of the particle are not modified at all. \mbox{\Hypertarget{classphysim_1_1simulator_a4a7d02feac1ca57bb143b70ad8b81134}\label{classphysim_1_1simulator_a4a7d02feac1ca57bb143b70ad8b81134}} 
+\index{physim\+::simulator@{physim\+::simulator}!part\+\_\+part\+\_\+collisions@{part\+\_\+part\+\_\+collisions}}
+\index{part\+\_\+part\+\_\+collisions@{part\+\_\+part\+\_\+collisions}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{part\+\_\+part\+\_\+collisions}{part\_part\_collisions}}
+{\footnotesize\ttfamily bool physim\+::simulator\+::part\+\_\+part\+\_\+collisions\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Are particle-\/particle collisions activated? 
+
+Default\+: no.
+
+Activates or deactivates the detection of collisions between pairs of sized particles and between pairs of a free and a sized particle.
+
+Notice that this excludes pairs of free particles. \mbox{\Hypertarget{classphysim_1_1simulator_a7ea652d4a55986d0c2cf527e40495fd8}\label{classphysim_1_1simulator_a7ea652d4a55986d0c2cf527e40495fd8}} 
+\index{physim\+::simulator@{physim\+::simulator}!scene\+\_\+fixed@{scene\+\_\+fixed}}
+\index{scene\+\_\+fixed@{scene\+\_\+fixed}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{scene\+\_\+fixed}{scene\_fixed}}
+{\footnotesize\ttfamily std\+::vector$<$\hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$$>$ physim\+::simulator\+::scene\+\_\+fixed\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Collection of fixed geometry. 
+
+The collection of objects whose position does not depend on the interaction with other objects. This position is, then, fixed. \mbox{\Hypertarget{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}\label{classphysim_1_1simulator_a61d4f20480309e95fce1db56b7fc8a88}} 
+\index{physim\+::simulator@{physim\+::simulator}!sized\+\_\+global\+\_\+emit@{sized\+\_\+global\+\_\+emit}}
+\index{sized\+\_\+global\+\_\+emit@{sized\+\_\+global\+\_\+emit}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{sized\+\_\+global\+\_\+emit}{sized\_global\_emit}}
+{\footnotesize\ttfamily \hyperlink{classphysim_1_1emitters_1_1sized__emitter}{emitters\+::sized\+\_\+emitter}$\ast$ physim\+::simulator\+::sized\+\_\+global\+\_\+emit\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialiser applied to all sized particles. 
+
+Whenever \hyperlink{classphysim_1_1simulator_ae36d99f98f5e470934eea0523ffca583}{add\+\_\+sized\+\_\+particle()} or \hyperlink{classphysim_1_1simulator_ae0551469d3c6b536da89bce04ff93fee}{add\+\_\+sized\+\_\+particles(size\+\_\+t)} are called, the attributes of the particles are initialised using this object.
+
+This initialisation is also done whenever the lifetime of a particle goes below 0. Note that, in this case, some attributes like the velocity and position may not be zero, as a result of running the simulation.
+
+The default behaviour of the function is to not do anything, that is, the attribtues of the particle are not modified at all. \mbox{\Hypertarget{classphysim_1_1simulator_a307fe3207801e5497e690facc58fa8f5}\label{classphysim_1_1simulator_a307fe3207801e5497e690facc58fa8f5}} 
+\index{physim\+::simulator@{physim\+::simulator}!visc\+\_\+drag@{visc\+\_\+drag}}
+\index{visc\+\_\+drag@{visc\+\_\+drag}!physim\+::simulator@{physim\+::simulator}}
+\subsubsection{\texorpdfstring{visc\+\_\+drag}{visc\_drag}}
+{\footnotesize\ttfamily float physim\+::simulator\+::visc\+\_\+drag\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Viscous drag coefficient. 
+
+Applied as a force in the \hyperlink{classphysim_1_1simulator_a00c7815358139bf08b2e13fe1ab377bc}{compute\+\_\+forces} method to enhance numerical stability (as suggested in \mbox{[}1\mbox{]}).
+
+Default value\+: 0.\+01.
+
+\mbox{[}1\mbox{]} Physically based modeling. Andrew Witkin (Pixar Animation Studios) S\+I\+G\+G\+R\+A\+PH 2001 C\+O\+U\+R\+SE N\+O\+T\+ES 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/simulator.\+hpp\item 
+physim/sim\+\_\+agent\+\_\+particles.\+cpp\item 
+physim/sim\+\_\+find\+\_\+collisions.\+cpp\item 
+physim/sim\+\_\+fluids.\+cpp\item 
+physim/sim\+\_\+free\+\_\+particles.\+cpp\item 
+physim/sim\+\_\+meshes.\+cpp\item 
+physim/sim\+\_\+sized\+\_\+particles.\+cpp\item 
+physim/sim\+\_\+solver.\+cpp\item 
+physim/simulator.\+cpp\end{DoxyCompactItemize}

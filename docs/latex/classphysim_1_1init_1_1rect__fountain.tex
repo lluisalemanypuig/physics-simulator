@@ -1,0 +1,93 @@
+\hypertarget{classphysim_1_1init_1_1rect__fountain}{}\section{physim\+:\+:init\+:\+:rect\+\_\+fountain Class Reference}
+\label{classphysim_1_1init_1_1rect__fountain}\index{physim\+::init\+::rect\+\_\+fountain@{physim\+::init\+::rect\+\_\+fountain}}
+
+
+A fountain class initialiser.  
+
+
+
+
+{\ttfamily \#include $<$rect\+\_\+fountain.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:init\+:\+:rect\+\_\+fountain\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classphysim_1_1init_1_1rect__fountain__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:init\+:\+:rect\+\_\+fountain\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{classphysim_1_1init_1_1rect__fountain__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__fountain_ad6f465c75c85e64e8fb4a1aa29dccaea}\label{classphysim_1_1init_1_1rect__fountain_ad6f465c75c85e64e8fb4a1aa29dccaea}} 
+\hyperlink{classphysim_1_1init_1_1rect__fountain_ad6f465c75c85e64e8fb4a1aa29dccaea}{rect\+\_\+fountain} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1init_1_1rect__fountain_a514a1cf5c7feb99f1e2bddbfac585099}{rect\+\_\+fountain} (const \hyperlink{classphysim_1_1init_1_1rect__fountain}{rect\+\_\+fountain} \&f)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__fountain_a30e2bfad7c8a2f49be3bc5e0d838c1a0}\label{classphysim_1_1init_1_1rect__fountain_a30e2bfad7c8a2f49be3bc5e0d838c1a0}} 
+\hyperlink{classphysim_1_1init_1_1rect__fountain_a30e2bfad7c8a2f49be3bc5e0d838c1a0}{$\sim$rect\+\_\+fountain} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1init_1_1rect__fountain_a3070a3ff21834d8a9a8315dac3e6fffe}{make\+\_\+vel\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A fountain class initialiser. 
+
+Provides a position initialiser function so that generated particles behave like a fountain\+: their velocity is set to positive values of the normal to the plane, and values of x and z set as a function of their distance to the center plus some random value.
+
+Need to set the source size through \hyperlink{classphysim_1_1init_1_1rect__source_a6f398085d0f0391b2acf91cebd5b97c1}{rect\+\_\+source\+::set\+\_\+rectangular\+\_\+source} method so that the initialser\textquotesingle{}s source is defined. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__fountain_a514a1cf5c7feb99f1e2bddbfac585099}\label{classphysim_1_1init_1_1rect__fountain_a514a1cf5c7feb99f1e2bddbfac585099}} 
+\index{physim\+::init\+::rect\+\_\+fountain@{physim\+::init\+::rect\+\_\+fountain}!rect\+\_\+fountain@{rect\+\_\+fountain}}
+\index{rect\+\_\+fountain@{rect\+\_\+fountain}!physim\+::init\+::rect\+\_\+fountain@{physim\+::init\+::rect\+\_\+fountain}}
+\subsubsection{\texorpdfstring{rect\+\_\+fountain()}{rect\_fountain()}}
+{\footnotesize\ttfamily physim\+::init\+::rect\+\_\+fountain\+::rect\+\_\+fountain (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1init_1_1rect__fountain}{rect\+\_\+fountain} \&}]{f }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+The function \hyperlink{classphysim_1_1init_1_1initialiser_a1980105ffaa655858b90a8f3a9368682}{initialiser\+::pos} is not copied. Instead, it is remade (function \hyperlink{classphysim_1_1init_1_1rect__fountain_a3070a3ff21834d8a9a8315dac3e6fffe}{make\+\_\+vel\+\_\+init} is called again). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__fountain_a3070a3ff21834d8a9a8315dac3e6fffe}\label{classphysim_1_1init_1_1rect__fountain_a3070a3ff21834d8a9a8315dac3e6fffe}} 
+\index{physim\+::init\+::rect\+\_\+fountain@{physim\+::init\+::rect\+\_\+fountain}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::init\+::rect\+\_\+fountain@{physim\+::init\+::rect\+\_\+fountain}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily void physim\+::init\+::rect\+\_\+fountain\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+The velocity is set so that those points that are\+:
+\begin{DoxyItemize}
+\item farther from the rectangle\textquotesingle{}s center have a smaller-\/magnitude, \char`\"{}flatter\char`\"{} vector velocity, i.\+e., the angle between the vector and the plane is small.
+\item closer to the center have larger-\/magnitude and \char`\"{}more vertical\char`\"{} vector velocity, i.\+e., the angle between the vector and the plane is large. 
+\end{DoxyItemize}
+
+Implements \hyperlink{classphysim_1_1init_1_1rect__source_a3b825bcedd2d622dabc10aa6a1252cbf}{physim\+::init\+::rect\+\_\+source}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/initialiser/rect\+\_\+fountain.\+hpp\item 
+physim/initialiser/rect\+\_\+fountain.\+cpp\end{DoxyCompactItemize}

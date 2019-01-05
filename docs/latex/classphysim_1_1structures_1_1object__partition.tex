@@ -1,0 +1,162 @@
+\hypertarget{classphysim_1_1structures_1_1object__partition}{}\section{physim\+:\+:structures\+:\+:object\+\_\+partition Class Reference}
+\label{classphysim_1_1structures_1_1object__partition}\index{physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}}
+
+
+Object partition class.  
+
+
+
+
+{\ttfamily \#include $<$object\+\_\+partition.\+hpp$>$}
+
+
+
+Collaboration diagram for physim\+:\+:structures\+:\+:object\+\_\+partition\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{classphysim_1_1structures_1_1object__partition__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node}
+\begin{DoxyCompactList}\small\item\em Nodes of the octree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_ae04de0339b0dd80bde620b8ad2dd6243}\label{classphysim_1_1structures_1_1object__partition_ae04de0339b0dd80bde620b8ad2dd6243}} 
+\hyperlink{classphysim_1_1structures_1_1object__partition_ae04de0339b0dd80bde620b8ad2dd6243}{object\+\_\+partition} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_a72207ca60dc87fd04801d6e932f46348}\label{classphysim_1_1structures_1_1object__partition_a72207ca60dc87fd04801d6e932f46348}} 
+\hyperlink{classphysim_1_1structures_1_1object__partition_a72207ca60dc87fd04801d6e932f46348}{$\sim$object\+\_\+partition} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1object__partition_ab05a750f356257799e80f977a0f92ddd}{init} (const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&vertices, const std\+::vector$<$ size\+\_\+t $>$ \&tris\+\_\+indices)
+\begin{DoxyCompactList}\small\item\em Builds the partition of an object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_a2bbf4fa99ef6a7dfc76df753e7f05c12}\label{classphysim_1_1structures_1_1object__partition_a2bbf4fa99ef6a7dfc76df753e7f05c12}} 
+void \hyperlink{classphysim_1_1structures_1_1object__partition_a2bbf4fa99ef6a7dfc76df753e7f05c12}{clear} ()
+\begin{DoxyCompactList}\small\item\em Frees the memory occupied by this object. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1object__partition_ab3916ebd7be8c1d6404252cd413aa0db}{copy} (const \hyperlink{classphysim_1_1structures_1_1object__partition}{object\+\_\+partition} \&part)
+\begin{DoxyCompactList}\small\item\em Copies the partition passed as parameter. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1object__partition_a9842318da10d96079d00fe53debd9398}{get\+\_\+triangles} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, std\+::vector$<$ size\+\_\+t $>$ \&tris\+\_\+idxs) const
+\begin{DoxyCompactList}\small\item\em Finds the indices of the triangles in the subspace of a point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1object__partition_ad69ce29b93aa13415421c1d7bb303e71}{make\+\_\+tree\+\_\+at} (const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&vertices, const std\+::vector$<$ size\+\_\+t $>$ \&triangles, const std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$ \&tris\+\_\+per\+\_\+vertex, const std\+::vector$<$ size\+\_\+t $>$ \&vertices\+\_\+idxs, const std\+::vector$<$ size\+\_\+t $>$ \&triangle\+\_\+idxs) const
+\begin{DoxyCompactList}\small\item\em Builds a tree rooted at a node that partitions the triangles stored in {\itshape triangles}. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1object__partition_a3ffb4d83ee3be148c31a85e0603d7be7}{copy\+\_\+node} (const \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node} $\ast$n) const
+\begin{DoxyCompactList}\small\item\em Copies a node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_a4ae621816ca99166a33e173255f706c6}\label{classphysim_1_1structures_1_1object__partition_a4ae621816ca99166a33e173255f706c6}} 
+\hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1object__partition_a4ae621816ca99166a33e173255f706c6}{root}
+\begin{DoxyCompactList}\small\item\em Root of the octree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object partition class. 
+
+This is basically an implementation of an octree for a set of triangles, forming a connected triangular mesh or not. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_ab3916ebd7be8c1d6404252cd413aa0db}\label{classphysim_1_1structures_1_1object__partition_ab3916ebd7be8c1d6404252cd413aa0db}} 
+\index{physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}!copy@{copy}}
+\index{copy@{copy}!physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}}
+\subsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily void physim\+::structures\+::object\+\_\+partition\+::copy (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1structures_1_1object__partition}{object\+\_\+partition} \&}]{part }\end{DoxyParamCaption})}
+
+
+
+Copies the partition passed as parameter. 
+
+The contents of this partition are cleared. 
+\begin{DoxyParams}{Parameters}
+{\em part} & An object partition. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_a3ffb4d83ee3be148c31a85e0603d7be7}\label{classphysim_1_1structures_1_1object__partition_a3ffb4d83ee3be148c31a85e0603d7be7}} 
+\index{physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}!copy\+\_\+node@{copy\+\_\+node}}
+\index{copy\+\_\+node@{copy\+\_\+node}!physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}}
+\subsubsection{\texorpdfstring{copy\+\_\+node()}{copy\_node()}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{object\+\_\+partition\+::node} $\ast$ physim\+::structures\+::object\+\_\+partition\+::copy\+\_\+node (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{node} $\ast$}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Copies a node. 
+
+Recursively copies a node {\itshape n}. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Node to be copied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to a node created in this function, a copy of {\itshape n}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_a9842318da10d96079d00fe53debd9398}\label{classphysim_1_1structures_1_1object__partition_a9842318da10d96079d00fe53debd9398}} 
+\index{physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}!get\+\_\+triangles@{get\+\_\+triangles}}
+\index{get\+\_\+triangles@{get\+\_\+triangles}!physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}}
+\subsubsection{\texorpdfstring{get\+\_\+triangles()}{get\_triangles()}}
+{\footnotesize\ttfamily void physim\+::structures\+::object\+\_\+partition\+::get\+\_\+triangles (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{std\+::vector$<$ size\+\_\+t $>$ \&}]{tris\+\_\+idxs }\end{DoxyParamCaption}) const}
+
+
+
+Finds the indices of the triangles in the subspace of a point. 
+
+Point {\itshape p} is located inside the octree at some subspace. In parameter {\itshape tris\+\_\+idxs} are stored the indices of those triangles
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Point to be located. \\
+\hline
+\mbox{\tt out}  & {\em tris\+\_\+idxs} & The triangles incident to the subspace where {\itshape p} is located at. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_ab05a750f356257799e80f977a0f92ddd}\label{classphysim_1_1structures_1_1object__partition_ab05a750f356257799e80f977a0f92ddd}} 
+\index{physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}!init@{init}}
+\index{init@{init}!physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void physim\+::structures\+::object\+\_\+partition\+::init (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{vertices,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{tris\+\_\+indices }\end{DoxyParamCaption})}
+
+
+
+Builds the partition of an object. 
+
+The object is made up of the triangles in {\itshape triangles}. 
+\begin{DoxyParams}{Parameters}
+{\em vertices} & The vertices, without repetitions, of the object. \\
+\hline
+{\em tris\+\_\+indices} & The vertices indices of each triangle. Every three integer values we have a triangle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1object__partition_ad69ce29b93aa13415421c1d7bb303e71}\label{classphysim_1_1structures_1_1object__partition_ad69ce29b93aa13415421c1d7bb303e71}} 
+\index{physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}!make\+\_\+tree\+\_\+at@{make\+\_\+tree\+\_\+at}}
+\index{make\+\_\+tree\+\_\+at@{make\+\_\+tree\+\_\+at}!physim\+::structures\+::object\+\_\+partition@{physim\+::structures\+::object\+\_\+partition}}
+\subsubsection{\texorpdfstring{make\+\_\+tree\+\_\+at()}{make\_tree\_at()}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1structures_1_1object__partition_1_1node}{object\+\_\+partition\+::node} $\ast$ physim\+::structures\+::object\+\_\+partition\+::make\+\_\+tree\+\_\+at (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{vertices,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{triangles,  }\item[{const std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$ \&}]{tris\+\_\+per\+\_\+vertex,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{vertices\+\_\+idxs,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{triangle\+\_\+idxs }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Builds a tree rooted at a node that partitions the triangles stored in {\itshape triangles}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em vertices} & The full list of non-\/repeated vertices of the triangles in {\itshape triangles}. \\
+\hline
+\mbox{\tt in}  & {\em triangles} & The full list of triangles. Every three integer values we have one triangle. \\
+\hline
+\mbox{\tt in}  & {\em tris\+\_\+per\+\_\+vertex} & The {\itshape i-\/th} position of this vector contains the indices of the triangles adjacent to the {\itshape i-\/th} vertex. \\
+\hline
+\mbox{\tt in}  & {\em vertices\+\_\+idxs} & The list of vertices to be partitioned. \\
+\hline
+\mbox{\tt in}  & {\em triangle\+\_\+idxs} & The list of triangles to incident to the node to be created. The indexes in this list are all multiples of 3 and point to positions (also multiple of 3) in {\itshape triangles}. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/structures/object\+\_\+partition.\+hpp\item 
+physim/structures/object\+\_\+partition.\+cpp\end{DoxyCompactItemize}

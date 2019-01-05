@@ -1,0 +1,7 @@
+<map id="physim::init::initialiser" name="physim::init::initialiser">
+<area shape="rect" id="node2" href="$classphysim_1_1init_1_1hose.html" title="A hose source class initialiser. " alt="" coords="5,87,131,114"/>
+<area shape="rect" id="node3" href="$classphysim_1_1init_1_1multisource.html" title="Multiple source initialiser. " alt="" coords="155,87,351,114"/>
+<area shape="rect" id="node4" href="$classphysim_1_1init_1_1rect__source.html" title="A rectangular source class initialiser. " alt="" coords="375,80,494,121"/>
+<area shape="rect" id="node5" href="$classphysim_1_1init_1_1rect__fountain.html" title="A fountain class initialiser. " alt="" coords="303,169,422,211"/>
+<area shape="rect" id="node6" href="$classphysim_1_1init_1_1rect__shower.html" title="A shower class initialiser. " alt="" coords="446,169,565,211"/>
+</map>

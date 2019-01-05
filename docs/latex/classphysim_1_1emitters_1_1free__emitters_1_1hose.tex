@@ -1,0 +1,180 @@
+\hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose}{}\section{physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:hose Class Reference}
+\label{classphysim_1_1emitters_1_1free__emitters_1_1hose}\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+
+
+A hose emitter.  
+
+
+
+
+{\ttfamily \#include $<$hose.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:hose\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{classphysim_1_1emitters_1_1free__emitters_1_1hose__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:hose\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{classphysim_1_1emitters_1_1free__emitters_1_1hose__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_ae69ff0689f1e36850e034a508e84326f}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_ae69ff0689f1e36850e034a508e84326f}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ae69ff0689f1e36850e034a508e84326f}{hose} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ad20ae14c9c19227c1555fa9ce7f58891}{hose} (const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose}{hose} \&\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}{h})
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7063d70c22e19a7191067089f654d64d}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7063d70c22e19a7191067089f654d64d}} 
+virtual \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7063d70c22e19a7191067089f654d64d}{$\sim$hose} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_aeffa7bc72509d3ae1262244815f97737}{set\+\_\+hose\+\_\+source} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&S, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&u, float \+\_\+r, float \+\_\+h)
+\begin{DoxyCompactList}\small\item\em Sets the source of the hose. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a31a261d8cb387f018faaf070eb5aef1a}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a31a261d8cb387f018faaf070eb5aef1a}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitter}{free\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a31a261d8cb387f018faaf070eb5aef1a}{clone} () const
+\begin{DoxyCompactList}\small\item\em Returns a reference to a copy of this emitter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a6c78d604106eb5b8d20021f56f9512ba}{make\+\_\+pos\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the position initialser. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7976365f9101e4095d00dc8eafc82ebb}{make\+\_\+vel\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a9aa2c30faa0d53057d1b1b2cb44d45cf}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a9aa2c30faa0d53057d1b1b2cb44d45cf}} 
+std\+::default\+\_\+random\+\_\+engine \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a9aa2c30faa0d53057d1b1b2cb44d45cf}{E}
+\begin{DoxyCompactList}\small\item\em Engine used in the uniform distribution \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a052854d482c3c10996080eeb1f022857}{U01}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a052854d482c3c10996080eeb1f022857}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a052854d482c3c10996080eeb1f022857}} 
+std\+::uniform\+\_\+real\+\_\+distribution$<$ float $>$ \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a052854d482c3c10996080eeb1f022857}{U01}
+\begin{DoxyCompactList}\small\item\em Random number generator for uniform values between 0 and 1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}{source}
+\begin{DoxyCompactList}\small\item\em The vertex (apex) of the cone. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_ace1e6f8f24a7d1649be59e40234fc1ed}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_ace1e6f8f24a7d1649be59e40234fc1ed}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ace1e6f8f24a7d1649be59e40234fc1ed}{cc}
+\begin{DoxyCompactList}\small\item\em The center of the cone\textquotesingle{}s base. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a3a849102db9771fe37143abec55f29f7}{v}
+\begin{DoxyCompactList}\small\item\em Unit vector on the circle. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a2c408a7344d516cd74a57250e8d708e2}{w}
+\begin{DoxyCompactList}\small\item\em Unit vector on the circle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_af89bf89e98c1670556734022e034f2aa}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_af89bf89e98c1670556734022e034f2aa}} 
+float \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_af89bf89e98c1670556734022e034f2aa}{r}
+\begin{DoxyCompactList}\small\item\em Radius of the cone. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}} 
+float \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}{h}
+\begin{DoxyCompactList}\small\item\em Height of the cone. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A hose emitter. 
+
+This emitter tries to make the particles have the same behaviour as the water coming out of a hose. This so-\/called hose has been abstracted as a cone.
+
+The cone is parametrised with a source, the vertex at the peak of the cone (see \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}{source}), and with a circular base, centered at a point (see \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ace1e6f8f24a7d1649be59e40234fc1ed}{cc}), that has radius \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_af89bf89e98c1670556734022e034f2aa}{r}. The distance between the vertex and the center of the base is the height of the cone (see \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}{h}). For easier calculations this object stores the perpendicular unit vectors \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a3a849102db9771fe37143abec55f29f7}{v} and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a2c408a7344d516cd74a57250e8d708e2}{w} that span the plane containing the base.
+
+In order to define this cone one has to use method \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_aeffa7bc72509d3ae1262244815f97737}{set\+\_\+hose\+\_\+source}. This method needs the \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}{source} of the hose (the peak of the cone), a unit vector that points from the source to the base, the radius of the base \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_af89bf89e98c1670556734022e034f2aa}{r}, and finally the height of the cone, \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}{h}.
+
+Particles are initialised with initial position \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}{source}. The velocity is a random vector that goes from the \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}{source} to a randomly generated point on the base of the cone. Therefore the minimum speed the particles will have is
+\begin{DoxyItemize}
+\item $h$ (in case the point generated is exactly on the middle of the base), and the maximum is
+\item $\sqrt{h^2 + r^2}$ (in case the point generated lies on the circumference of the base). 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_ad20ae14c9c19227c1555fa9ce7f58891}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_ad20ae14c9c19227c1555fa9ce7f58891}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}!hose@{hose}}
+\index{hose@{hose}!physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+\subsubsection{\texorpdfstring{hose()}{hose()}}
+{\footnotesize\ttfamily physim\+::emitters\+::free\+\_\+emitters\+::hose\+::hose (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose}{hose} \&}]{h }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+The functions \hyperlink{classphysim_1_1emitters_1_1base__emitter_ac67584a2ca34232c1f4f04c41599df0e}{base\+\_\+emitter\+::pos} and \hyperlink{classphysim_1_1emitters_1_1base__emitter_a9ea19d96450cff65882371b61a2294c8}{base\+\_\+emitter\+::vel} are not copied. Instead, they are remade (functions \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a6c78d604106eb5b8d20021f56f9512ba}{make\+\_\+pos\+\_\+init} and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7976365f9101e4095d00dc8eafc82ebb}{make\+\_\+vel\+\_\+init} are called again). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a6c78d604106eb5b8d20021f56f9512ba}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a6c78d604106eb5b8d20021f56f9512ba}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}!make\+\_\+pos\+\_\+init@{make\+\_\+pos\+\_\+init}}
+\index{make\+\_\+pos\+\_\+init@{make\+\_\+pos\+\_\+init}!physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+\subsubsection{\texorpdfstring{make\+\_\+pos\+\_\+init()}{make\_pos\_init()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::hose\+::make\+\_\+pos\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the position initialser. 
+
+It is made a virtual function so that this class can be reimplemented in another one.
+
+Positions are generated according to the parametrisation of this rectangle. \mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7976365f9101e4095d00dc8eafc82ebb}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a7976365f9101e4095d00dc8eafc82ebb}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::hose\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+It is made a virtual function so that this class can be reimplemented in another one. \mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_aeffa7bc72509d3ae1262244815f97737}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_aeffa7bc72509d3ae1262244815f97737}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}!set\+\_\+hose\+\_\+source@{set\+\_\+hose\+\_\+source}}
+\index{set\+\_\+hose\+\_\+source@{set\+\_\+hose\+\_\+source}!physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+\subsubsection{\texorpdfstring{set\+\_\+hose\+\_\+source()}{set\_hose\_source()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::hose\+::set\+\_\+hose\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{S,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{u,  }\item[{float}]{\+\_\+r,  }\item[{float}]{\+\_\+h }\end{DoxyParamCaption})}
+
+
+
+Sets the source of the hose. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em S} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a0b4f4a66f8eda0638692f3f45e301cd1}{source}. \\
+\hline
+{\em u} & Unit vector from the source to the center of the base. Notice that the center of the base (\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ace1e6f8f24a7d1649be59e40234fc1ed}{cc}) is calculated as S + h$\ast$u. \\
+\hline
+{\em \+\_\+r} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_af89bf89e98c1670556734022e034f2aa}{r}. \\
+\hline
+{\em \+\_\+h} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_ac1398640d981dd745b8d26e72bc7fe40}{h}. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a3a849102db9771fe37143abec55f29f7}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a3a849102db9771fe37143abec55f29f7}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}!v@{v}}
+\index{v@{v}!physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+\subsubsection{\texorpdfstring{v}{v}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::emitters\+::free\+\_\+emitters\+::hose\+::v\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Unit vector on the circle. 
+
+It is perpendicular to \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a2c408a7344d516cd74a57250e8d708e2}{w}. \mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1hose_a2c408a7344d516cd74a57250e8d708e2}\label{classphysim_1_1emitters_1_1free__emitters_1_1hose_a2c408a7344d516cd74a57250e8d708e2}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}!w@{w}}
+\index{w@{w}!physim\+::emitters\+::free\+\_\+emitters\+::hose@{physim\+::emitters\+::free\+\_\+emitters\+::hose}}
+\subsubsection{\texorpdfstring{w}{w}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::emitters\+::free\+\_\+emitters\+::hose\+::w\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Unit vector on the circle. 
+
+It is perpendicular to \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1hose_a3a849102db9771fe37143abec55f29f7}{v}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/emitter/free\+\_\+emitters/hose.\+hpp\item 
+physim/emitter/free\+\_\+emitters/hose.\+cpp\end{DoxyCompactItemize}

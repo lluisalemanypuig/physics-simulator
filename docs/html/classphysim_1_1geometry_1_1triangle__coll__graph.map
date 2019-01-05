@@ -1,0 +1,6 @@
+<map id="physim::geometry::triangle" name="physim::geometry::triangle">
+<area shape="rect" id="node2" href="$classphysim_1_1geometry_1_1geometry.html" title="All geometrical on the scene. " alt="" coords="224,111,412,137"/>
+<area shape="rect" id="node5" href="$classphysim_1_1geometry_1_1plane.html" title="Class that implements a plane. " alt="" coords="479,153,644,180"/>
+<area shape="rect" id="node3" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="5,111,143,137"/>
+<area shape="rect" id="node4" href="$structphysim_1_1math_1_1vec2.html" title="2&#45;dimensional vector. " alt="" coords="493,329,630,356"/>
+</map>

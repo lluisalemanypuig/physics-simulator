@@ -1,0 +1,77 @@
+\hypertarget{namespacephysim_1_1geometric}{}\section{physim\+:\+:geometric Namespace Reference}
+\label{namespacephysim_1_1geometric}\index{physim\+::geometric@{physim\+::geometric}}
+
+
+Geometrical objects.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphysim_1_1geometric_1_1geometry}{geometry}
+\begin{DoxyCompactList}\small\item\em All geometrical on the scene. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1geometric_1_1object}{object}
+\begin{DoxyCompactList}\small\item\em Class that implements a triangular object. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1geometric_1_1plane}{plane}
+\begin{DoxyCompactList}\small\item\em Class that implements a plane. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1geometric_1_1rectangle}{rectangle}
+\begin{DoxyCompactList}\small\item\em Class that implements a rectangle. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1geometric_1_1sphere}{sphere}
+\begin{DoxyCompactList}\small\item\em Class that implements a sphere. \end{DoxyCompactList}\item 
+class \hyperlink{classphysim_1_1geometric_1_1triangle}{triangle}
+\begin{DoxyCompactList}\small\item\em Class that implements a triangle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fca}{geometry\+\_\+type} \{ \newline
+{\bfseries none} = -\/1, 
+\hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaada2ae991b7062eaee11973f3c1926678}{Plane}, 
+\hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaadcf071a7b88867762e81730452f4b284}{Triangle}, 
+\hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaaec1691b01dfeb4d2115d1789d3350c30}{Rectangle}, 
+\newline
+\hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaadea58f36128f5a4be0fe79472395ad58}{Sphere}, 
+\hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaa2b5aa0783c878e1a658e297335a75f9a}{Object}
+ \}\begin{DoxyCompactList}\small\item\em Enumeration for the type of geometry. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Geometrical objects. 
+
+Namespace containing geometrical objects whose position does not depend on the interaction with other objects, namely, they remain fixed on the same place throughout the simulation.
+
+Some of the geometrical objects are parametrised by their points, like \hyperlink{classphysim_1_1geometric_1_1triangle}{geometric\+::triangle}, \hyperlink{classphysim_1_1geometric_1_1sphere}{geometric\+::sphere}, \hyperlink{classphysim_1_1geometric_1_1plane}{geometric\+::plane}, \hyperlink{classphysim_1_1geometric_1_1rectangle}{geometric\+::rectangle}, but more general objects, see \hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object}, are supported. These general objects must be read from a file, see namespace \hyperlink{namespacephysim_1_1input}{physim\+::input}. 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fca}\label{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fca}} 
+\index{physim\+::geometric@{physim\+::geometric}!geometry\+\_\+type@{geometry\+\_\+type}}
+\index{geometry\+\_\+type@{geometry\+\_\+type}!physim\+::geometric@{physim\+::geometric}}
+\subsubsection{\texorpdfstring{geometry\+\_\+type}{geometry\_type}}
+{\footnotesize\ttfamily enum \hyperlink{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fca}{physim\+::geometric\+::geometry\+\_\+type}}
+
+
+
+Enumeration for the type of geometry. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Plane@{Plane}!physim\+::geometric@{physim\+::geometric}}\index{physim\+::geometric@{physim\+::geometric}!Plane@{Plane}}}\mbox{\Hypertarget{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaada2ae991b7062eaee11973f3c1926678}\label{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaada2ae991b7062eaee11973f3c1926678}} 
+Plane&See \hyperlink{classphysim_1_1geometric_1_1plane}{geometric\+::plane} for details. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Triangle@{Triangle}!physim\+::geometric@{physim\+::geometric}}\index{physim\+::geometric@{physim\+::geometric}!Triangle@{Triangle}}}\mbox{\Hypertarget{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaadcf071a7b88867762e81730452f4b284}\label{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaadcf071a7b88867762e81730452f4b284}} 
+Triangle&See \hyperlink{classphysim_1_1geometric_1_1triangle}{geometric\+::triangle} for details. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Rectangle@{Rectangle}!physim\+::geometric@{physim\+::geometric}}\index{physim\+::geometric@{physim\+::geometric}!Rectangle@{Rectangle}}}\mbox{\Hypertarget{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaaec1691b01dfeb4d2115d1789d3350c30}\label{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaaec1691b01dfeb4d2115d1789d3350c30}} 
+Rectangle&See \hyperlink{classphysim_1_1geometric_1_1rectangle}{geometric\+::rectangle} for details. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sphere@{Sphere}!physim\+::geometric@{physim\+::geometric}}\index{physim\+::geometric@{physim\+::geometric}!Sphere@{Sphere}}}\mbox{\Hypertarget{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaadea58f36128f5a4be0fe79472395ad58}\label{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaadea58f36128f5a4be0fe79472395ad58}} 
+Sphere&See \hyperlink{classphysim_1_1geometric_1_1sphere}{geometric\+::sphere} for details. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Object@{Object}!physim\+::geometric@{physim\+::geometric}}\index{physim\+::geometric@{physim\+::geometric}!Object@{Object}}}\mbox{\Hypertarget{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaa2b5aa0783c878e1a658e297335a75f9a}\label{namespacephysim_1_1geometric_ac2794fff270c5b2ff4307f107a365fcaa2b5aa0783c878e1a658e297335a75f9a}} 
+Object&See \hyperlink{classphysim_1_1geometric_1_1object}{geometric\+::object} for details. \\
+\hline
+
+\end{DoxyEnumFields}

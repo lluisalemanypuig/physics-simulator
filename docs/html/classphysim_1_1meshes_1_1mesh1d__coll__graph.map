@@ -1,0 +1,7 @@
+<map id="physim::meshes::mesh1d" name="physim::meshes::mesh1d">
+<area shape="rect" id="node2" href="$classphysim_1_1meshes_1_1mesh.html" title="Abstract spring mesh. " alt="" coords="5,333,164,360"/>
+<area shape="rect" id="node3" href="$classphysim_1_1particles_1_1mesh__particle.html" title="Class implementing a mesh particle. " alt="" coords="20,229,149,271"/>
+<area shape="rect" id="node4" href="$classphysim_1_1particles_1_1base__particle.html" title="Class implementing the most basic particle. " alt="" coords="20,139,149,180"/>
+<area shape="rect" id="node5" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="16,5,153,32"/>
+<area shape="rect" id="node6" href="$structphysim_1_1math_1_1vec2.html" title="2&#45;dimensional vector. " alt="" coords="188,333,325,360"/>
+</map>

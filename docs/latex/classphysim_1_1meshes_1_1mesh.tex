@@ -1,0 +1,262 @@
+\hypertarget{classphysim_1_1meshes_1_1mesh}{}\section{physim\+:\+:meshes\+:\+:mesh Class Reference}
+\label{classphysim_1_1meshes_1_1mesh}\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+
+
+Abstract spring mesh.  
+
+
+
+
+{\ttfamily \#include $<$mesh.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:meshes\+:\+:mesh\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classphysim_1_1meshes_1_1mesh__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:meshes\+:\+:mesh\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{classphysim_1_1meshes_1_1mesh__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a923bdaeba6dff1d95c2e55a80bfb26b5}\label{classphysim_1_1meshes_1_1mesh_a923bdaeba6dff1d95c2e55a80bfb26b5}} 
+\hyperlink{classphysim_1_1meshes_1_1mesh_a923bdaeba6dff1d95c2e55a80bfb26b5}{mesh} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1meshes_1_1mesh_a853728b532513cf9fe5f0df25f88358f}{mesh} (float ke, float kd)
+\begin{DoxyCompactList}\small\item\em Constructor with parameters. \end{DoxyCompactList}\item 
+virtual \hyperlink{classphysim_1_1meshes_1_1mesh_a51250a9f06eabd7cf05c0af7c3d7138c}{$\sim$mesh} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_ae238482532e415ee3585765db2427731}\label{classphysim_1_1meshes_1_1mesh_ae238482532e415ee3585765db2427731}} 
+\hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} \& \hyperlink{classphysim_1_1meshes_1_1mesh_ae238482532e415ee3585765db2427731}{operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Returns a reference to the {\itshape i-\/th} particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a37064be55680e2ae0b30fd3fe8cd5816}\label{classphysim_1_1meshes_1_1mesh_a37064be55680e2ae0b30fd3fe8cd5816}} 
+const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} \& \hyperlink{classphysim_1_1meshes_1_1mesh_a37064be55680e2ae0b30fd3fe8cd5816}{operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the {\itshape i-\/th} particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh_a09dcfcda6da092c7acae3f961fde4b32}{allocate} (size\+\_\+t n, float Kg=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Allocates memory for {\itshape n} particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_ae2923846bfeec345fae4876181960c03}\label{classphysim_1_1meshes_1_1mesh_ae2923846bfeec345fae4876181960c03}} 
+virtual void \hyperlink{classphysim_1_1meshes_1_1mesh_ae2923846bfeec345fae4876181960c03}{clear} ()
+\begin{DoxyCompactList}\small\item\em Frees the memory occupied by this mesh. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1meshes_1_1mesh_a62f877dd42bc306ef70c76fc172f245f}{make\+\_\+initial\+\_\+state} ()=0
+\begin{DoxyCompactList}\small\item\em Builds the initial state of the mesh. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1meshes_1_1mesh_ad7cad4cd454cce562c8c404ef09f8bd3}{update\+\_\+forces} ()=0
+\begin{DoxyCompactList}\small\item\em Update the forces generated within the mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a1b12b241f860fea09d17196132cf46da}\label{classphysim_1_1meshes_1_1mesh_a1b12b241f860fea09d17196132cf46da}} 
+void \hyperlink{classphysim_1_1meshes_1_1mesh_a1b12b241f860fea09d17196132cf46da}{set\+\_\+elasticity} (float ke)
+\begin{DoxyCompactList}\small\item\em Sets the elasticity coefficient of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a54b38e38d22ba1e4b4966c29e0fcb3ea}\label{classphysim_1_1meshes_1_1mesh_a54b38e38d22ba1e4b4966c29e0fcb3ea}} 
+void \hyperlink{classphysim_1_1meshes_1_1mesh_a54b38e38d22ba1e4b4966c29e0fcb3ea}{set\+\_\+damping} (float kd)
+\begin{DoxyCompactList}\small\item\em Sets the damping factor of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a8933b7d34f1b92f0348d2d7223ad747f}\label{classphysim_1_1meshes_1_1mesh_a8933b7d34f1b92f0348d2d7223ad747f}} 
+void \hyperlink{classphysim_1_1meshes_1_1mesh_a8933b7d34f1b92f0348d2d7223ad747f}{set\+\_\+friction} (float ke)
+\begin{DoxyCompactList}\small\item\em Sets the friction coefficient of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a729ee4377e1d4159ac5844b014521b88}\label{classphysim_1_1meshes_1_1mesh_a729ee4377e1d4159ac5844b014521b88}} 
+void \hyperlink{classphysim_1_1meshes_1_1mesh_a729ee4377e1d4159ac5844b014521b88}{set\+\_\+bouncing} (float kd)
+\begin{DoxyCompactList}\small\item\em Sets the bouncing factor of this mesh. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1meshes_1_1mesh_a8eabfe8ed4457f150a1f401ac116a3de}{set\+\_\+mass} (float Kg)
+\begin{DoxyCompactList}\small\item\em Sets the mass (in Kg) of the mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a683ae48a5d7468d081d971835522813a}\label{classphysim_1_1meshes_1_1mesh_a683ae48a5d7468d081d971835522813a}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_a683ae48a5d7468d081d971835522813a}{get\+\_\+elasticity} () const
+\begin{DoxyCompactList}\small\item\em Returns the elasticity coefficient of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a861b09b83121d7d7f025abd6c1719b01}\label{classphysim_1_1meshes_1_1mesh_a861b09b83121d7d7f025abd6c1719b01}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_a861b09b83121d7d7f025abd6c1719b01}{get\+\_\+damping} () const
+\begin{DoxyCompactList}\small\item\em Returns the damping factor of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a40c01dbcea91b285437dceed1246a5ce}\label{classphysim_1_1meshes_1_1mesh_a40c01dbcea91b285437dceed1246a5ce}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_a40c01dbcea91b285437dceed1246a5ce}{get\+\_\+friction} () const
+\begin{DoxyCompactList}\small\item\em Returns the friction coefficient of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a95b803bd21567fe3d3f9507a92e0357c}\label{classphysim_1_1meshes_1_1mesh_a95b803bd21567fe3d3f9507a92e0357c}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_a95b803bd21567fe3d3f9507a92e0357c}{get\+\_\+bouncing} () const
+\begin{DoxyCompactList}\small\item\em Returns the bouncing factor of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_aac74989eef79d2cbc342d276f4215872}\label{classphysim_1_1meshes_1_1mesh_aac74989eef79d2cbc342d276f4215872}} 
+size\+\_\+t \hyperlink{classphysim_1_1meshes_1_1mesh_aac74989eef79d2cbc342d276f4215872}{size} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of particles of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a016d53d761ee8b9b5121b347f071ff6a}\label{classphysim_1_1meshes_1_1mesh_a016d53d761ee8b9b5121b347f071ff6a}} 
+const \hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67}{mesh\+\_\+type} \& \hyperlink{classphysim_1_1meshes_1_1mesh_a016d53d761ee8b9b5121b347f071ff6a}{get\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of this mesh. See \hyperlink{classphysim_1_1meshes_1_1mesh_a0775ba21bb034b19e9ce1314f9a3b995}{mt}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_ad1a34e0170bf12b81d9b04d75f0737e2}\label{classphysim_1_1meshes_1_1mesh_ad1a34e0170bf12b81d9b04d75f0737e2}} 
+\hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1meshes_1_1mesh_ad1a34e0170bf12b81d9b04d75f0737e2}{get\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Returns a reference to this mesh\textquotesingle{}s particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a689c4b1ea0b9522dd8e9564c7bbacdd2}\label{classphysim_1_1meshes_1_1mesh_a689c4b1ea0b9522dd8e9564c7bbacdd2}} 
+const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1meshes_1_1mesh_a689c4b1ea0b9522dd8e9564c7bbacdd2}{get\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to this mesh\textquotesingle{}s particles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a0775ba21bb034b19e9ce1314f9a3b995}\label{classphysim_1_1meshes_1_1mesh_a0775ba21bb034b19e9ce1314f9a3b995}} 
+\hyperlink{namespacephysim_1_1meshes_a0a3501674fecdbcbbee92c4c3bb68a67}{mesh\+\_\+type} \hyperlink{classphysim_1_1meshes_1_1mesh_a0775ba21bb034b19e9ce1314f9a3b995}{mt}
+\begin{DoxyCompactList}\small\item\em The type of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a5642217313d7dae9f873f01fad682ff2}\label{classphysim_1_1meshes_1_1mesh_a5642217313d7dae9f873f01fad682ff2}} 
+size\+\_\+t \hyperlink{classphysim_1_1meshes_1_1mesh_a5642217313d7dae9f873f01fad682ff2}{N}
+\begin{DoxyCompactList}\small\item\em Total number of particles of the mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_adb7eb9def630cc025997f859c74afd58}\label{classphysim_1_1meshes_1_1mesh_adb7eb9def630cc025997f859c74afd58}} 
+\hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1meshes_1_1mesh_adb7eb9def630cc025997f859c74afd58}{ps}
+\begin{DoxyCompactList}\small\item\em The particles of this mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_ab5afc13f5931c6a9df16d5ee49edc453}\label{classphysim_1_1meshes_1_1mesh_ab5afc13f5931c6a9df16d5ee49edc453}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_ab5afc13f5931c6a9df16d5ee49edc453}{Ke}
+\begin{DoxyCompactList}\small\item\em Elasticity coefficient of each spring. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_abba546f70a90e7678efc5b746cf1ccd1}\label{classphysim_1_1meshes_1_1mesh_abba546f70a90e7678efc5b746cf1ccd1}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_abba546f70a90e7678efc5b746cf1ccd1}{Kd}
+\begin{DoxyCompactList}\small\item\em Damping factor of each spring. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a90dc28ae4b66272d40615cb55596383a}\label{classphysim_1_1meshes_1_1mesh_a90dc28ae4b66272d40615cb55596383a}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_a90dc28ae4b66272d40615cb55596383a}{bouncing}
+\begin{DoxyCompactList}\small\item\em Bouncing coefficient of all the particles in the mesh. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a131fe4688049ea2ec62ef108aee1944c}\label{classphysim_1_1meshes_1_1mesh_a131fe4688049ea2ec62ef108aee1944c}} 
+float \hyperlink{classphysim_1_1meshes_1_1mesh_a131fe4688049ea2ec62ef108aee1944c}{friction}
+\begin{DoxyCompactList}\small\item\em Friction coefficient of all the particles in the mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstract spring mesh. 
+
+This represents a set of \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} where one particle is attached to some other particles of the same mesh with a spring. The movement of one particle in the spring, then, affects the other particles it is attached to. Each particle has a local index {\itshape i} that ranges between 0 and the number of particles -\/ 1.
+
+All the springs of the mesh are described similarly with the following coefficients\+:
+\begin{DoxyItemize}
+\item elasticity parameter (see \hyperlink{classphysim_1_1meshes_1_1mesh_ab5afc13f5931c6a9df16d5ee49edc453}{Ke}).
+\item damping factor (see \hyperlink{classphysim_1_1meshes_1_1mesh_abba546f70a90e7678efc5b746cf1ccd1}{Kd}).
+\end{DoxyItemize}
+
+Some coefficients are common to all the particles\+:
+\begin{DoxyItemize}
+\item bouncing coefficient (see \hyperlink{classphysim_1_1meshes_1_1mesh_a90dc28ae4b66272d40615cb55596383a}{bouncing}).
+\item friction coefficient (see \hyperlink{classphysim_1_1meshes_1_1mesh_a131fe4688049ea2ec62ef108aee1944c}{friction}).
+\end{DoxyItemize}
+
+There are internal forces that can be simulated. These are dependent on each type of mesh. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a853728b532513cf9fe5f0df25f88358f}\label{classphysim_1_1meshes_1_1mesh_a853728b532513cf9fe5f0df25f88358f}} 
+\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}!mesh@{mesh}}
+\index{mesh@{mesh}!physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+\subsubsection{\texorpdfstring{mesh()}{mesh()}}
+{\footnotesize\ttfamily physim\+::meshes\+::mesh\+::mesh (\begin{DoxyParamCaption}\item[{float}]{ke,  }\item[{float}]{kd }\end{DoxyParamCaption})}
+
+
+
+Constructor with parameters. 
+
+The meshe\textquotesingle{}s attributes are initialised to\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1meshes_1_1mesh_ab5afc13f5931c6a9df16d5ee49edc453}{Ke} \+: 100
+\item \hyperlink{classphysim_1_1meshes_1_1mesh_abba546f70a90e7678efc5b746cf1ccd1}{Kd} \+: 0.\+05
+\item \hyperlink{classphysim_1_1meshes_1_1mesh_a90dc28ae4b66272d40615cb55596383a}{bouncing} \+: 0.\+8
+\item \hyperlink{classphysim_1_1meshes_1_1mesh_a131fe4688049ea2ec62ef108aee1944c}{friction} \+: 0.\+2 
+\begin{DoxyParams}{Parameters}
+{\em ke} & Elasticity parameter. \\
+\hline
+{\em kd} & Damping factor. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a51250a9f06eabd7cf05c0af7c3d7138c}\label{classphysim_1_1meshes_1_1mesh_a51250a9f06eabd7cf05c0af7c3d7138c}} 
+\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}!````~mesh@{$\sim$mesh}}
+\index{````~mesh@{$\sim$mesh}!physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+\subsubsection{\texorpdfstring{$\sim$mesh()}{~mesh()}}
+{\footnotesize\ttfamily physim\+::meshes\+::mesh\+::$\sim$mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destructor. 
+
+This method automatically frees the allocated memory by calling \hyperlink{classphysim_1_1meshes_1_1mesh_ae2923846bfeec345fae4876181960c03}{clear}. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a09dcfcda6da092c7acae3f961fde4b32}\label{classphysim_1_1meshes_1_1mesh_a09dcfcda6da092c7acae3f961fde4b32}} 
+\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}!allocate@{allocate}}
+\index{allocate@{allocate}!physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+\subsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh\+::allocate (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n,  }\item[{float}]{Kg = {\ttfamily 1.0f} }\end{DoxyParamCaption})}
+
+
+
+Allocates memory for {\itshape n} particles. 
+
+The previous contents of this spring are cleared (see \hyperlink{classphysim_1_1meshes_1_1mesh_ae2923846bfeec345fae4876181960c03}{clear}).
+
+Every particle is initialised with its default constructor. After that, they are assigned an index within the mesh.
+
+This index is local, that is, the first particle of every 1-\/dimensional mesh has index 0, the second particle has index 1, ...
+
+The mass of each particle can also be initialised at this point. The mass of the mesh (param {\itshape Kg}) is divided uniformly among the {\itshape n} particles. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of particles. \\
+\hline
+{\em Kg} & Mass of the mesh. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a62f877dd42bc306ef70c76fc172f245f}\label{classphysim_1_1meshes_1_1mesh_a62f877dd42bc306ef70c76fc172f245f}} 
+\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}!make\+\_\+initial\+\_\+state@{make\+\_\+initial\+\_\+state}}
+\index{make\+\_\+initial\+\_\+state@{make\+\_\+initial\+\_\+state}!physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+\subsubsection{\texorpdfstring{make\+\_\+initial\+\_\+state()}{make\_initial\_state()}}
+{\footnotesize\ttfamily virtual void physim\+::meshes\+::mesh\+::make\+\_\+initial\+\_\+state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Builds the initial state of the mesh. 
+
+After assigning each of this mesh\textquotesingle{}s particles a position, the initial state needed for proper simulation is computed.
+
+This may include the initial distances between the particles at each end of every simulated spring.
+
+Each type of mesh has to implement this method for a proper simulation of that type of mesh. \begin{DoxyPrecond}{Precondition}
+In general, all this mesh\textquotesingle{}s particles must have been initialised (say, given an initial current position). 
+\end{DoxyPrecond}
+
+
+Implemented in \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_ab05d404566850dd5a2d11814c3c25186}{physim\+::meshes\+::mesh2d\+\_\+regular}, and \hyperlink{classphysim_1_1meshes_1_1mesh1d_a6f2275fbab0ddfcbf523cc5a359e1d9c}{physim\+::meshes\+::mesh1d}.
+
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_a8eabfe8ed4457f150a1f401ac116a3de}\label{classphysim_1_1meshes_1_1mesh_a8eabfe8ed4457f150a1f401ac116a3de}} 
+\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}!set\+\_\+mass@{set\+\_\+mass}}
+\index{set\+\_\+mass@{set\+\_\+mass}!physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+\subsubsection{\texorpdfstring{set\+\_\+mass()}{set\_mass()}}
+{\footnotesize\ttfamily void physim\+::meshes\+::mesh\+::set\+\_\+mass (\begin{DoxyParamCaption}\item[{float}]{Kg }\end{DoxyParamCaption})}
+
+
+
+Sets the mass (in Kg) of the mesh. 
+
+The mass is divided uniformly among the particles of the mesh. This method can only be called after allocating 
+\begin{DoxyParams}{Parameters}
+{\em Kg} & Mass of the mesh. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1meshes_1_1mesh_ad7cad4cd454cce562c8c404ef09f8bd3}\label{classphysim_1_1meshes_1_1mesh_ad7cad4cd454cce562c8c404ef09f8bd3}} 
+\index{physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}!update\+\_\+forces@{update\+\_\+forces}}
+\index{update\+\_\+forces@{update\+\_\+forces}!physim\+::meshes\+::mesh@{physim\+::meshes\+::mesh}}
+\subsubsection{\texorpdfstring{update\+\_\+forces()}{update\_forces()}}
+{\footnotesize\ttfamily virtual void physim\+::meshes\+::mesh\+::update\+\_\+forces (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Update the forces generated within the mesh. 
+
+This method updates the forces acting on all particles. This update depends on the neighbouring information determined by the type of mesh.
+
+This method does not update positions or velocities.
+
+\begin{DoxyPrecond}{Precondition}
+The modification of a particles\textquotesingle{} force may assume that all particles start with null force (force equal to 0 in the three axes). 
+
+This method is called before computing the forces acting on the particles due to force fields. 
+\end{DoxyPrecond}
+
+
+Implemented in \hyperlink{classphysim_1_1meshes_1_1mesh2d__regular_aaf4e82b9231d79624224c3462cc18809}{physim\+::meshes\+::mesh2d\+\_\+regular}, and \hyperlink{classphysim_1_1meshes_1_1mesh1d_abc53d477a2999654e09cabb0b5fd15ff}{physim\+::meshes\+::mesh1d}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/meshes/mesh.\+hpp\item 
+physim/meshes/mesh.\+cpp\end{DoxyCompactItemize}

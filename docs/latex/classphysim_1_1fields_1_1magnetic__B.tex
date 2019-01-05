@@ -1,0 +1,146 @@
+\hypertarget{classphysim_1_1fields_1_1magnetic__B}{}\section{physim\+:\+:fields\+:\+:magnetic\+\_\+B Class Reference}
+\label{classphysim_1_1fields_1_1magnetic__B}\index{physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}}
+
+
+Implementation of a magnetic B-\/field.  
+
+
+
+
+{\ttfamily \#include $<$magnetic\+\_\+\+B.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:fields\+:\+:magnetic\+\_\+B\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{classphysim_1_1fields_1_1magnetic__B__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:fields\+:\+:magnetic\+\_\+B\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{classphysim_1_1fields_1_1magnetic__B__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_ab5da6ab1de8e9724f61cad63fe21f374}\label{classphysim_1_1fields_1_1magnetic__B_ab5da6ab1de8e9724f61cad63fe21f374}} 
+\hyperlink{classphysim_1_1fields_1_1magnetic__B_ab5da6ab1de8e9724f61cad63fe21f374}{magnetic\+\_\+B} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_a5541b899c3f02a42b0aa67f4ec18c824}\label{classphysim_1_1fields_1_1magnetic__B_a5541b899c3f02a42b0aa67f4ec18c824}} 
+\hyperlink{classphysim_1_1fields_1_1magnetic__B_a5541b899c3f02a42b0aa67f4ec18c824}{magnetic\+\_\+B} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\hyperlink{classphysim_1_1fields_1_1punctual_a00344d6f3e4f3f841e7d876918c66977}{pos}, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&b)
+\begin{DoxyCompactList}\small\item\em Constructor with position and magnetic field vector. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_ada69a69a5582e244210f10d8d1e69426}\label{classphysim_1_1fields_1_1magnetic__B_ada69a69a5582e244210f10d8d1e69426}} 
+\hyperlink{classphysim_1_1fields_1_1magnetic__B_ada69a69a5582e244210f10d8d1e69426}{magnetic\+\_\+B} (const \hyperlink{classphysim_1_1fields_1_1magnetic__B}{magnetic\+\_\+B} \&f)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_ab6e422ab8c678c67e447db13742f1180}\label{classphysim_1_1fields_1_1magnetic__B_ab6e422ab8c678c67e447db13742f1180}} 
+virtual \hyperlink{classphysim_1_1fields_1_1magnetic__B_ab6e422ab8c678c67e447db13742f1180}{$\sim$magnetic\+\_\+B} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fields_1_1magnetic__B_a806a3e8aa306f0ed33954d79c3082698}{compute\+\_\+force} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Compute the force vector acting on a particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fields_1_1magnetic__B_aa337b83c6dea0726d2dc2d7cd1cd978a}{compute\+\_\+force} (const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Compute the force vector acting on a particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fields_1_1magnetic__B_a17ca2b3c6cbf61c53665cf23632187b8}{compute\+\_\+force} (const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Compute the force vector acting on a particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class P $>$ }\\void \hyperlink{classphysim_1_1fields_1_1magnetic__B_ad7c54b149a9a43b086dfab580129bfb2}{\+\_\+\+\_\+compute\+\_\+force} (const P \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Function that actuall computes the force of this field. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Implementation of a magnetic B-\/field. 
+
+The force that acts on a particle is calculated as\+:
+
+$ \vec{F} = (q \cdot v_p) \times \vec{B}$, where $q$ is the charge of the particle (see \hyperlink{classphysim_1_1particles_1_1free__particle_a7513ac41f3cab1ce083f8695e2c73301}{free\+\_\+particle\+::charge} and \hyperlink{classphysim_1_1particles_1_1mesh__particle_adf14d64e9effa2bcf5cb84a537bd8027}{mesh\+\_\+particle\+::charge}), $B$ is the magnetic field vector (see \hyperlink{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}{magnetic\+::B}) and $v_p$ is the particle\textquotesingle{}s punctual velocity (see \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{free\+\_\+particle\+::cur\+\_\+vel} and see \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{mesh\+\_\+particle\+::cur\+\_\+vel}). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_ad7c54b149a9a43b086dfab580129bfb2}\label{classphysim_1_1fields_1_1magnetic__B_ad7c54b149a9a43b086dfab580129bfb2}} 
+\index{physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}!\+\_\+\+\_\+compute\+\_\+force@{\+\_\+\+\_\+compute\+\_\+force}}
+\index{\+\_\+\+\_\+compute\+\_\+force@{\+\_\+\+\_\+compute\+\_\+force}!physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+compute\+\_\+force()}{\_\_compute\_force()}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void physim\+::fields\+::magnetic\+\_\+\+B\+::\+\_\+\+\_\+compute\+\_\+force (\begin{DoxyParamCaption}\item[{const P \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Function that actuall computes the force of this field. 
+
+Works for \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} and \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle}. \mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_a806a3e8aa306f0ed33954d79c3082698}\label{classphysim_1_1fields_1_1magnetic__B_a806a3e8aa306f0ed33954d79c3082698}} 
+\index{physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}!compute\+\_\+force@{compute\+\_\+force}}
+\index{compute\+\_\+force@{compute\+\_\+force}!physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}}
+\subsubsection{\texorpdfstring{compute\+\_\+force()}{compute\_force()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void physim\+::fields\+::magnetic\+\_\+\+B\+::compute\+\_\+force (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute the force vector acting on a particle. 
+
+The contents of parameter {\itshape F} is undefined when calling this function, thus the contents should be overwritten. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Particle where the force is applied to. \\
+\hline
+\mbox{\tt out}  & {\em F} & The force from this field acting on the particle. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1fields_1_1field_a0d836756ac51a6a1e99d3c9a60310694}{physim\+::fields\+::field}.
+
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_aa337b83c6dea0726d2dc2d7cd1cd978a}\label{classphysim_1_1fields_1_1magnetic__B_aa337b83c6dea0726d2dc2d7cd1cd978a}} 
+\index{physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}!compute\+\_\+force@{compute\+\_\+force}}
+\index{compute\+\_\+force@{compute\+\_\+force}!physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}}
+\subsubsection{\texorpdfstring{compute\+\_\+force()}{compute\_force()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void physim\+::fields\+::magnetic\+\_\+\+B\+::compute\+\_\+force (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute the force vector acting on a particle. 
+
+The contents of parameter {\itshape F} is undefined when calling this function, thus the contents should be overwritten. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Particle where the force is applied to. \\
+\hline
+\mbox{\tt out}  & {\em F} & The force from this field acting on the particle. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1fields_1_1field_aa167d81f223daab47989168c9d3b8cb4}{physim\+::fields\+::field}.
+
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic__B_a17ca2b3c6cbf61c53665cf23632187b8}\label{classphysim_1_1fields_1_1magnetic__B_a17ca2b3c6cbf61c53665cf23632187b8}} 
+\index{physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}!compute\+\_\+force@{compute\+\_\+force}}
+\index{compute\+\_\+force@{compute\+\_\+force}!physim\+::fields\+::magnetic\+\_\+B@{physim\+::fields\+::magnetic\+\_\+B}}
+\subsubsection{\texorpdfstring{compute\+\_\+force()}{compute\_force()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void physim\+::fields\+::magnetic\+\_\+\+B\+::compute\+\_\+force (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute the force vector acting on a particle. 
+
+The contents of parameter {\itshape F} is undefined when calling this function, thus the contents should be overwritten. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Particle where the force is applied to. \\
+\hline
+\mbox{\tt out}  & {\em F} & The force from this field acting on the particle. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1fields_1_1field_a099fb8b1dee7afae4610c6275432bc81}{physim\+::fields\+::field}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/fields/magnetic\+\_\+\+B.\+hpp\item 
+physim/fields/magnetic\+\_\+\+B.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,80 @@
+\hypertarget{classphysim_1_1init_1_1rect__shower}{}\section{physim\+:\+:init\+:\+:rect\+\_\+shower Class Reference}
+\label{classphysim_1_1init_1_1rect__shower}\index{physim\+::init\+::rect\+\_\+shower@{physim\+::init\+::rect\+\_\+shower}}
+
+
+A shower class initialiser.  
+
+
+
+
+{\ttfamily \#include $<$rect\+\_\+shower.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:init\+:\+:rect\+\_\+shower\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classphysim_1_1init_1_1rect__shower__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:init\+:\+:rect\+\_\+shower\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{classphysim_1_1init_1_1rect__shower__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__shower_ae2316c75cc0c0e6ea32b4875405315d9}\label{classphysim_1_1init_1_1rect__shower_ae2316c75cc0c0e6ea32b4875405315d9}} 
+\hyperlink{classphysim_1_1init_1_1rect__shower_ae2316c75cc0c0e6ea32b4875405315d9}{rect\+\_\+shower} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__shower_a7b2ee923b808fe9587d9afa33141129d}\label{classphysim_1_1init_1_1rect__shower_a7b2ee923b808fe9587d9afa33141129d}} 
+\hyperlink{classphysim_1_1init_1_1rect__shower_a7b2ee923b808fe9587d9afa33141129d}{rect\+\_\+shower} (const \hyperlink{classphysim_1_1init_1_1rect__shower}{rect\+\_\+shower} \&\hyperlink{classphysim_1_1init_1_1rect__source_a4a7f1402b417e2217ab3724e6e55c18b}{w})
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__shower_aa1fc16c97deb04c5be1faa64e63ebb36}\label{classphysim_1_1init_1_1rect__shower_aa1fc16c97deb04c5be1faa64e63ebb36}} 
+\hyperlink{classphysim_1_1init_1_1rect__shower_aa1fc16c97deb04c5be1faa64e63ebb36}{$\sim$rect\+\_\+shower} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__shower_ac3fe693d39154dba3b021da0a247703d}\label{classphysim_1_1init_1_1rect__shower_ac3fe693d39154dba3b021da0a247703d}} 
+\hyperlink{classphysim_1_1init_1_1initialiser}{initialiser} $\ast$ \hyperlink{classphysim_1_1init_1_1rect__shower_ac3fe693d39154dba3b021da0a247703d}{clone} () const
+\begin{DoxyCompactList}\small\item\em Returns a reference to a copy of this initialiser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1init_1_1rect__shower_adb3c74e88c13b26955e4c817e7ffe343}{make\+\_\+vel\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A shower class initialiser. 
+
+Provides a position initialiser function so that generated particles behave like a shower\+: their velocity is set to negative values of y, and null values of x and z.
+
+Need to set the source size through \hyperlink{classphysim_1_1init_1_1rect__source_a6f398085d0f0391b2acf91cebd5b97c1}{rect\+\_\+source\+::set\+\_\+rectangular\+\_\+source} method so that the initialser\textquotesingle{}s source is defined. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1init_1_1rect__shower_adb3c74e88c13b26955e4c817e7ffe343}\label{classphysim_1_1init_1_1rect__shower_adb3c74e88c13b26955e4c817e7ffe343}} 
+\index{physim\+::init\+::rect\+\_\+shower@{physim\+::init\+::rect\+\_\+shower}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::init\+::rect\+\_\+shower@{physim\+::init\+::rect\+\_\+shower}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily void physim\+::init\+::rect\+\_\+shower\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+The velocity is set to negative values of y, and null values of x and z. 
+
+Implements \hyperlink{classphysim_1_1init_1_1rect__source_a3b825bcedd2d622dabc10aa6a1252cbf}{physim\+::init\+::rect\+\_\+source}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/initialiser/rect\+\_\+shower.\+hpp\item 
+physim/initialiser/rect\+\_\+shower.\+cpp\end{DoxyCompactItemize}

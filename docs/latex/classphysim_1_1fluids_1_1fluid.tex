@@ -1,0 +1,349 @@
+\hypertarget{classphysim_1_1fluids_1_1fluid}{}\section{physim\+:\+:fluids\+:\+:fluid Class Reference}
+\label{classphysim_1_1fluids_1_1fluid}\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+
+
+Class implementing a fluid.  
+
+
+
+
+{\ttfamily \#include $<$fluid.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:fluids\+:\+:fluid\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classphysim_1_1fluids_1_1fluid__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:fluids\+:\+:fluid\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=349pt]{classphysim_1_1fluids_1_1fluid__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_accaba6072529138d6ba9d167ea4febbf}\label{classphysim_1_1fluids_1_1fluid_accaba6072529138d6ba9d167ea4febbf}} 
+\hyperlink{classphysim_1_1fluids_1_1fluid_accaba6072529138d6ba9d167ea4febbf}{fluid} ()
+\begin{DoxyCompactList}\small\item\em Default onstructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_ad4e5dc8a4530a41727958ad689ce83fb}\label{classphysim_1_1fluids_1_1fluid_ad4e5dc8a4530a41727958ad689ce83fb}} 
+virtual \hyperlink{classphysim_1_1fluids_1_1fluid_ad4e5dc8a4530a41727958ad689ce83fb}{$\sim$fluid} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_ac26ad353b668110caa4328aa3b2a9208}\label{classphysim_1_1fluids_1_1fluid_ac26ad353b668110caa4328aa3b2a9208}} 
+\hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1fluids_1_1fluid_ac26ad353b668110caa4328aa3b2a9208}{operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t i)
+\begin{DoxyCompactList}\small\item\em Returns a reference to the {\itshape i-\/th} particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a3e7640bf098662ce95378649eb43c016}\label{classphysim_1_1fluids_1_1fluid_a3e7640bf098662ce95378649eb43c016}} 
+const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1fluids_1_1fluid_a3e7640bf098662ce95378649eb43c016}{operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the {\itshape i-\/th} particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fluids_1_1fluid_a1572bdeaca8942347aa79ee35a112ce6}{allocate} (size\+\_\+t n, float vol, float dens, float visc, float r, float cs)
+\begin{DoxyCompactList}\small\item\em Allocates memoery for {\itshape n} particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a581b8991d4fd6564c5e0b2a49cacd69c}\label{classphysim_1_1fluids_1_1fluid_a581b8991d4fd6564c5e0b2a49cacd69c}} 
+virtual void \hyperlink{classphysim_1_1fluids_1_1fluid_a581b8991d4fd6564c5e0b2a49cacd69c}{clear} ()
+\begin{DoxyCompactList}\small\item\em Deallocates the memory occupied by the particles of this fluid. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1fluids_1_1fluid_a6cde063d44b1e33199c08e64d801bb04}{update\+\_\+forces} ()=0
+\begin{DoxyCompactList}\small\item\em Update the forces generated within the fluid. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1fluids_1_1fluid_a08fe6b6111608b3deb3c3ddd84e1ab32}{update\+\_\+forces} (size\+\_\+t n)=0
+\begin{DoxyCompactList}\small\item\em Update the forces generated within the fluid. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fluids_1_1fluid_a06bb3b5ad3676e0e8485cba3ca12cd73}{make\+\_\+partition} ()
+\begin{DoxyCompactList}\small\item\em Builds the space partition of this fluid\textquotesingle{}s particles. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fluids_1_1fluid_a5701d069c23eb7a902fa944af1e55b61}{set\+\_\+kernel\+\_\+density} (const \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} \&W\+\_\+d)
+\begin{DoxyCompactList}\small\item\em Sets the kernel density functions. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fluids_1_1fluid_ad7cbaf969b9c5e4c75606e2f84b81e69}{set\+\_\+kernel\+\_\+pressure} (const \hyperlink{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}{kernel\+\_\+vectorial\+\_\+function} \&W\+\_\+p)
+\begin{DoxyCompactList}\small\item\em Sets the kernel pressure functions. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fluids_1_1fluid_a57d90a54268e6c204e0173f81a678dd6}{set\+\_\+kernel\+\_\+viscosity} (const \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} \&W\+\_\+v)
+\begin{DoxyCompactList}\small\item\em Sets the kernel viscosity functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_afd3bc254d3c033f42dabd68140b3462f}\label{classphysim_1_1fluids_1_1fluid_afd3bc254d3c033f42dabd68140b3462f}} 
+size\+\_\+t \hyperlink{classphysim_1_1fluids_1_1fluid_afd3bc254d3c033f42dabd68140b3462f}{size} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a5edae508eb8eec257c53dc2f333b5e4d}\label{classphysim_1_1fluids_1_1fluid_a5edae508eb8eec257c53dc2f333b5e4d}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_a5edae508eb8eec257c53dc2f333b5e4d}{get\+\_\+volume} () const
+\begin{DoxyCompactList}\small\item\em Returns the volume of the fluid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a8dbe0c4575e0308c70d0544cf0741cc6}\label{classphysim_1_1fluids_1_1fluid_a8dbe0c4575e0308c70d0544cf0741cc6}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_a8dbe0c4575e0308c70d0544cf0741cc6}{get\+\_\+density} () const
+\begin{DoxyCompactList}\small\item\em Returns the density of the fluid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a047fcfcc2df0d02e3c2bb2ae50659e21}\label{classphysim_1_1fluids_1_1fluid_a047fcfcc2df0d02e3c2bb2ae50659e21}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_a047fcfcc2df0d02e3c2bb2ae50659e21}{get\+\_\+viscosity} () const
+\begin{DoxyCompactList}\small\item\em Returns the viscosity of the fluid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a4f55eb4ebc2bb422b237b79613c33982}\label{classphysim_1_1fluids_1_1fluid_a4f55eb4ebc2bb422b237b79613c33982}} 
+\hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1fluids_1_1fluid_a4f55eb4ebc2bb422b237b79613c33982}{get\+\_\+particles} ()
+\begin{DoxyCompactList}\small\item\em Returns a reference to this fluid\textquotesingle{}s particles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_ae8ca8c756706dcc2e41307eb118ee2a5}\label{classphysim_1_1fluids_1_1fluid_ae8ca8c756706dcc2e41307eb118ee2a5}} 
+const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1fluids_1_1fluid_ae8ca8c756706dcc2e41307eb118ee2a5}{get\+\_\+particles} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to this fluid\textquotesingle{}s particles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_aadae0b1babcbfff6f5a4e546dff4dd3b}\label{classphysim_1_1fluids_1_1fluid_aadae0b1babcbfff6f5a4e546dff4dd3b}} 
+size\+\_\+t \hyperlink{classphysim_1_1fluids_1_1fluid_aadae0b1babcbfff6f5a4e546dff4dd3b}{N}
+\begin{DoxyCompactList}\small\item\em Number of particles of the fluid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_afaf22d3c8f6a042e838daff1132c5a7a}\label{classphysim_1_1fluids_1_1fluid_afaf22d3c8f6a042e838daff1132c5a7a}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_afaf22d3c8f6a042e838daff1132c5a7a}{volume}
+\begin{DoxyCompactList}\small\item\em Total volume of the fluid. \mbox{[}m$^\wedge$3\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a27be9c413c5773096f158d5d9c252731}\label{classphysim_1_1fluids_1_1fluid_a27be9c413c5773096f158d5d9c252731}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_a27be9c413c5773096f158d5d9c252731}{density}
+\begin{DoxyCompactList}\small\item\em Fluid reference density $\rho_0$. \mbox{[}Kg/m$^\wedge$3\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_ad5c3e98b6aac62058af8defcb20a2678}\label{classphysim_1_1fluids_1_1fluid_ad5c3e98b6aac62058af8defcb20a2678}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_ad5c3e98b6aac62058af8defcb20a2678}{viscosity}
+\begin{DoxyCompactList}\small\item\em Viscosity of the fluid. \mbox{[}Kg/(m$\ast$s)\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_adbd74fe1ace2d9aec33932048279cf4a}\label{classphysim_1_1fluids_1_1fluid_adbd74fe1ace2d9aec33932048279cf4a}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_adbd74fe1ace2d9aec33932048279cf4a}{speed\+\_\+sound}
+\begin{DoxyCompactList}\small\item\em The speed of sound through this fluid. \mbox{[}m/s\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a84c7e50ce0c4f26f1358527f84a18dbb}\label{classphysim_1_1fluids_1_1fluid_a84c7e50ce0c4f26f1358527f84a18dbb}} 
+\hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} $\ast$ \hyperlink{classphysim_1_1fluids_1_1fluid_a84c7e50ce0c4f26f1358527f84a18dbb}{ps}
+\begin{DoxyCompactList}\small\item\em Particles of this fluid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a21f8c90be97f04d991adb05a8a088cf7}\label{classphysim_1_1fluids_1_1fluid_a21f8c90be97f04d991adb05a8a088cf7}} 
+float \hyperlink{classphysim_1_1fluids_1_1fluid_a21f8c90be97f04d991adb05a8a088cf7}{R}
+\begin{DoxyCompactList}\small\item\em Neighbourhood size. \end{DoxyCompactList}\item 
+\hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} \hyperlink{classphysim_1_1fluids_1_1fluid_a8774f815e80bb81ddc14890fee13bffc}{kernel\+\_\+density}
+\begin{DoxyCompactList}\small\item\em Kernel density function. $W$. \end{DoxyCompactList}\item 
+\hyperlink{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}{kernel\+\_\+vectorial\+\_\+function} \hyperlink{classphysim_1_1fluids_1_1fluid_ae3ccfb94b27e6a1464210d36744f16a4}{kernel\+\_\+pressure}
+\begin{DoxyCompactList}\small\item\em Kernel pressure function. $\nabla W$. \end{DoxyCompactList}\item 
+\hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} \hyperlink{classphysim_1_1fluids_1_1fluid_a5ba8b8fc47ed8c45c279aebf5d62899d}{kernel\+\_\+viscosity}
+\begin{DoxyCompactList}\small\item\em Kernel viscosity function. $\nabla^2 W$. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1structures_1_1octree}{structures\+::octree} $\ast$ \hyperlink{classphysim_1_1fluids_1_1fluid_a9728c3603981a5a4658a263b900c1c3c}{tree}
+\begin{DoxyCompactList}\small\item\em Space partition of this fluid\textquotesingle{}s particles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class implementing a fluid. 
+
+A fluid is characterised by its \hyperlink{classphysim_1_1fluids_1_1fluid_afaf22d3c8f6a042e838daff1132c5a7a}{volume}, \hyperlink{classphysim_1_1fluids_1_1fluid_a27be9c413c5773096f158d5d9c252731}{density} and \hyperlink{classphysim_1_1fluids_1_1fluid_ad5c3e98b6aac62058af8defcb20a2678}{viscosity}.
+
+It is also characterised by a kernel function and its gradients (see \hyperlink{classphysim_1_1fluids_1_1fluid_a8774f815e80bb81ddc14890fee13bffc}{kernel\+\_\+density}, \hyperlink{classphysim_1_1fluids_1_1fluid_ae3ccfb94b27e6a1464210d36744f16a4}{kernel\+\_\+pressure}, \hyperlink{classphysim_1_1fluids_1_1fluid_a5ba8b8fc47ed8c45c279aebf5d62899d}{kernel\+\_\+viscosity}). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a1572bdeaca8942347aa79ee35a112ce6}\label{classphysim_1_1fluids_1_1fluid_a1572bdeaca8942347aa79ee35a112ce6}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!allocate@{allocate}}
+\index{allocate@{allocate}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily void physim\+::fluids\+::fluid\+::allocate (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n,  }\item[{float}]{vol,  }\item[{float}]{dens,  }\item[{float}]{visc,  }\item[{float}]{r,  }\item[{float}]{cs }\end{DoxyParamCaption})}
+
+
+
+Allocates memoery for {\itshape n} particles. 
+
+Allocates memory for {\itshape n} fluid particles and sets their initial mass.
+
+The memory currently allocated is cleared only if {\itshape n} differs from the current number of paricles \hyperlink{classphysim_1_1fluids_1_1fluid_aadae0b1babcbfff6f5a4e546dff4dd3b}{N}.
+
+It also initialises the mass of the particles and their index within the fluid. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of particles. \\
+\hline
+{\em vol} & Volume of the fluid (see \hyperlink{classphysim_1_1fluids_1_1fluid_afaf22d3c8f6a042e838daff1132c5a7a}{volume}). \\
+\hline
+{\em dens} & Density of the fluid (see \hyperlink{classphysim_1_1fluids_1_1fluid_a27be9c413c5773096f158d5d9c252731}{density}). \\
+\hline
+{\em visc} & Viscosity of the fluid (see \hyperlink{classphysim_1_1fluids_1_1fluid_ad5c3e98b6aac62058af8defcb20a2678}{viscosity}). \\
+\hline
+{\em r} & Neighbourhood size. Radius of the largest sphere around a particle. This sphere defines the neighbourhood\textquotesingle{}s size of a particle (see \hyperlink{classphysim_1_1fluids_1_1fluid_a21f8c90be97f04d991adb05a8a088cf7}{R}). \\
+\hline
+{\em cs} & Speed of sound in this fluid (see \hyperlink{classphysim_1_1fluids_1_1fluid_adbd74fe1ace2d9aec33932048279cf4a}{speed\+\_\+sound}). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a06bb3b5ad3676e0e8485cba3ca12cd73}\label{classphysim_1_1fluids_1_1fluid_a06bb3b5ad3676e0e8485cba3ca12cd73}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!make\+\_\+partition@{make\+\_\+partition}}
+\index{make\+\_\+partition@{make\+\_\+partition}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{make\+\_\+partition()}{make\_partition()}}
+{\footnotesize\ttfamily void physim\+::fluids\+::fluid\+::make\+\_\+partition (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Builds the space partition of this fluid\textquotesingle{}s particles. 
+
+Constructs the partition using \hyperlink{classphysim_1_1fluids_1_1fluid_a9728c3603981a5a4658a263b900c1c3c}{tree}. The contents of the tree are first cleared and then rebuilt again. \mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a5701d069c23eb7a902fa944af1e55b61}\label{classphysim_1_1fluids_1_1fluid_a5701d069c23eb7a902fa944af1e55b61}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!set\+\_\+kernel\+\_\+density@{set\+\_\+kernel\+\_\+density}}
+\index{set\+\_\+kernel\+\_\+density@{set\+\_\+kernel\+\_\+density}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{set\+\_\+kernel\+\_\+density()}{set\_kernel\_density()}}
+{\footnotesize\ttfamily void physim\+::fluids\+::fluid\+::set\+\_\+kernel\+\_\+density (\begin{DoxyParamCaption}\item[{const \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} \&}]{W\+\_\+d }\end{DoxyParamCaption})}
+
+
+
+Sets the kernel density functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em W\+\_\+d} & $W$, see \hyperlink{classphysim_1_1fluids_1_1fluid_a8774f815e80bb81ddc14890fee13bffc}{kernel\+\_\+density}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_ad7cbaf969b9c5e4c75606e2f84b81e69}\label{classphysim_1_1fluids_1_1fluid_ad7cbaf969b9c5e4c75606e2f84b81e69}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!set\+\_\+kernel\+\_\+pressure@{set\+\_\+kernel\+\_\+pressure}}
+\index{set\+\_\+kernel\+\_\+pressure@{set\+\_\+kernel\+\_\+pressure}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{set\+\_\+kernel\+\_\+pressure()}{set\_kernel\_pressure()}}
+{\footnotesize\ttfamily void physim\+::fluids\+::fluid\+::set\+\_\+kernel\+\_\+pressure (\begin{DoxyParamCaption}\item[{const \hyperlink{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}{kernel\+\_\+vectorial\+\_\+function} \&}]{W\+\_\+p }\end{DoxyParamCaption})}
+
+
+
+Sets the kernel pressure functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em W\+\_\+p} & $\nabla W$, see \hyperlink{classphysim_1_1fluids_1_1fluid_ae3ccfb94b27e6a1464210d36744f16a4}{kernel\+\_\+pressure}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a57d90a54268e6c204e0173f81a678dd6}\label{classphysim_1_1fluids_1_1fluid_a57d90a54268e6c204e0173f81a678dd6}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!set\+\_\+kernel\+\_\+viscosity@{set\+\_\+kernel\+\_\+viscosity}}
+\index{set\+\_\+kernel\+\_\+viscosity@{set\+\_\+kernel\+\_\+viscosity}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{set\+\_\+kernel\+\_\+viscosity()}{set\_kernel\_viscosity()}}
+{\footnotesize\ttfamily void physim\+::fluids\+::fluid\+::set\+\_\+kernel\+\_\+viscosity (\begin{DoxyParamCaption}\item[{const \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} \&}]{W\+\_\+v }\end{DoxyParamCaption})}
+
+
+
+Sets the kernel viscosity functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em W\+\_\+v} & $\nabla^2 W$, see \hyperlink{classphysim_1_1fluids_1_1fluid_a5ba8b8fc47ed8c45c279aebf5d62899d}{kernel\+\_\+viscosity}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a6cde063d44b1e33199c08e64d801bb04}\label{classphysim_1_1fluids_1_1fluid_a6cde063d44b1e33199c08e64d801bb04}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!update\+\_\+forces@{update\+\_\+forces}}
+\index{update\+\_\+forces@{update\+\_\+forces}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{update\+\_\+forces()}{update\_forces()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void physim\+::fluids\+::fluid\+::update\+\_\+forces (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Update the forces generated within the fluid. 
+
+This method updates the forces acting on all particles. This update depends on the neighbouring information determined by the kernel functions.
+
+This method does not update positions or velocities.
+
+\begin{DoxyPrecond}{Precondition}
+The modification of a particles\textquotesingle{} force may assume that all particles start with null force (force equal to 0 in the three axes). 
+
+This method is called before computing the forces acting on the particles due to force fields. 
+\end{DoxyPrecond}
+
+
+Implemented in \hyperlink{classphysim_1_1fluids_1_1newtonian_accfe7d69d2d3985e8ec8c8179a6cf5ba}{physim\+::fluids\+::newtonian}.
+
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a08fe6b6111608b3deb3c3ddd84e1ab32}\label{classphysim_1_1fluids_1_1fluid_a08fe6b6111608b3deb3c3ddd84e1ab32}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!update\+\_\+forces@{update\+\_\+forces}}
+\index{update\+\_\+forces@{update\+\_\+forces}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{update\+\_\+forces()}{update\_forces()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void physim\+::fluids\+::fluid\+::update\+\_\+forces (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Update the forces generated within the fluid. 
+
+This method updates the forces acting on all particles. This update depends on the neighbouring information determined by the kernel functions.
+
+This method does not update positions or velocities.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of threads \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+The modification of a particles\textquotesingle{} force may assume that all particles start with null force (force equal to 0 in the three axes). 
+
+This method is called before computing the forces acting on the particles due to force fields. 
+\end{DoxyPrecond}
+
+
+Implemented in \hyperlink{classphysim_1_1fluids_1_1newtonian_a2ad3a26c489e0167f16cc4cd2ead981d}{physim\+::fluids\+::newtonian}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a8774f815e80bb81ddc14890fee13bffc}\label{classphysim_1_1fluids_1_1fluid_a8774f815e80bb81ddc14890fee13bffc}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!kernel\+\_\+density@{kernel\+\_\+density}}
+\index{kernel\+\_\+density@{kernel\+\_\+density}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{kernel\+\_\+density}{kernel\_density}}
+{\footnotesize\ttfamily \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} physim\+::fluids\+::fluid\+::kernel\+\_\+density\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Kernel density function. $W$. 
+
+This function is used to compute the initial density of the particles\+:
+
+$ \rho_i = \sum_j m_j \cdot W(r_{ij}) $,
+
+for all particles $1 \le i \le N$,
+\begin{DoxyItemize}
+\item $W(r_{ij})$ denotes the kernel function evaluated at the distance between the {\itshape i-\/th} and the {\itshape j-\/th} particle,
+\item $m_j$ is the mass of the {\itshape j-\/th} particle.
+\end{DoxyItemize}
+
+By default, this function returns 1; \mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_ae3ccfb94b27e6a1464210d36744f16a4}\label{classphysim_1_1fluids_1_1fluid_ae3ccfb94b27e6a1464210d36744f16a4}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!kernel\+\_\+pressure@{kernel\+\_\+pressure}}
+\index{kernel\+\_\+pressure@{kernel\+\_\+pressure}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{kernel\+\_\+pressure}{kernel\_pressure}}
+{\footnotesize\ttfamily \hyperlink{namespacephysim_1_1fluids_ab109a55050c62abe9c1c23924f620754}{kernel\+\_\+vectorial\+\_\+function} physim\+::fluids\+::fluid\+::kernel\+\_\+pressure\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Kernel pressure function. $\nabla W$. 
+
+This function is used to evaluate the new pressure values\+:
+
+$ \left\langle -\frac{1}{\rho}\nabla \right\rangle_i \approx \sum_j P_{ij} \cdot \nabla W_\rho(r_{ij}) $
+
+where
+
+$ P_{ij} = -m_j \left( \frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2} \right) $,
+
+for all particles $1 \le i,j \le N$,
+\begin{DoxyItemize}
+\item $\nabla W(r_{ij})$ denotes the gradient of the kernel function evaluated at the distance between the {\itshape i-\/th} and the {\itshape j-\/th} particles $r_{ij}$,
+\item $m_j$ is the mass of the {\itshape j-\/th} particle,
+\item $p_i, p_j$ denote the pressure,
+\item $\rho_i, \rho_j$ denote the densities at particles {\itshape i} and {\itshape j}.
+\end{DoxyItemize}
+
+By default, this function returns 1; \mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a5ba8b8fc47ed8c45c279aebf5d62899d}\label{classphysim_1_1fluids_1_1fluid_a5ba8b8fc47ed8c45c279aebf5d62899d}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!kernel\+\_\+viscosity@{kernel\+\_\+viscosity}}
+\index{kernel\+\_\+viscosity@{kernel\+\_\+viscosity}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{kernel\+\_\+viscosity}{kernel\_viscosity}}
+{\footnotesize\ttfamily \hyperlink{namespacephysim_1_1fluids_a22c55c76ab3fe3de79dada15e2f9c2d6}{kernel\+\_\+scalar\+\_\+function} physim\+::fluids\+::fluid\+::kernel\+\_\+viscosity\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Kernel viscosity function. $\nabla^2 W$. 
+
+This is evaluated for the approximation of
+
+$ \left\langle \frac{\mu}{\rho}\nabla^2 v\right\rangle_i \approx \sum_j V_{ij} \cdot \nabla^2 W_\mu(r_{ij}) $
+
+where
+
+$ V_{ij} = \mu \cdot m_j \left( \frac{v_j - v_i}{\rho_i \rho_j} \right) $
+
+for all particles $1 \le i,j \le N$, where
+\begin{DoxyItemize}
+\item $\nabla^2 W(r_{ij})$ denotes the gradient of the kernel function evaluated at the distance between the {\itshape i-\/th} and the {\itshape j-\/th} particles $r_{ij}$,
+\item $\mu$ is the fluid\textquotesingle{}s reference viscosity (see \hyperlink{classphysim_1_1fluids_1_1fluid_ad5c3e98b6aac62058af8defcb20a2678}{viscosity}).
+\item $m_j$ is the mass of the {\itshape j-\/th} particle,
+\item $p_i, p_j$ denote the pressures,
+\item $\rho_i, \rho_j$ denote the densities,
+\item $v_i, v_j$ denote the velocities of particles {\itshape i} and {\itshape j}.
+\end{DoxyItemize}
+
+By default, this function returns 1; \mbox{\Hypertarget{classphysim_1_1fluids_1_1fluid_a9728c3603981a5a4658a263b900c1c3c}\label{classphysim_1_1fluids_1_1fluid_a9728c3603981a5a4658a263b900c1c3c}} 
+\index{physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}!tree@{tree}}
+\index{tree@{tree}!physim\+::fluids\+::fluid@{physim\+::fluids\+::fluid}}
+\subsubsection{\texorpdfstring{tree}{tree}}
+{\footnotesize\ttfamily \hyperlink{classphysim_1_1structures_1_1octree}{structures\+::octree}$\ast$ physim\+::fluids\+::fluid\+::tree\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Space partition of this fluid\textquotesingle{}s particles. 
+
+Used for fast neighbourhood queries. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/fluids/fluid.\+hpp\item 
+physim/fluids/fluid.\+cpp\end{DoxyCompactItemize}

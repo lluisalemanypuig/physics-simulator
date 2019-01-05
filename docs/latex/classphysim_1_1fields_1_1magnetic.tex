@@ -1,0 +1,81 @@
+\hypertarget{classphysim_1_1fields_1_1magnetic}{}\section{physim\+:\+:fields\+:\+:magnetic Class Reference}
+\label{classphysim_1_1fields_1_1magnetic}\index{physim\+::fields\+::magnetic@{physim\+::fields\+::magnetic}}
+
+
+Punctual magnetic field.  
+
+
+
+
+{\ttfamily \#include $<$magnetic.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:fields\+:\+:magnetic\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{classphysim_1_1fields_1_1magnetic__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:fields\+:\+:magnetic\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{classphysim_1_1fields_1_1magnetic__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphysim_1_1fields_1_1magnetic_a4bc1ebfece31aa73f3242850314dcaac}{magnetic} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_ae7e5039ac9ffa0e4283698c6215ae8cf}\label{classphysim_1_1fields_1_1magnetic_ae7e5039ac9ffa0e4283698c6215ae8cf}} 
+\hyperlink{classphysim_1_1fields_1_1magnetic_ae7e5039ac9ffa0e4283698c6215ae8cf}{magnetic} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\hyperlink{classphysim_1_1fields_1_1punctual_a00344d6f3e4f3f841e7d876918c66977}{pos}, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&b)
+\begin{DoxyCompactList}\small\item\em Constructor with magnetic field vector. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_a573c07a7a049bebe1f47eef6621cc2cd}\label{classphysim_1_1fields_1_1magnetic_a573c07a7a049bebe1f47eef6621cc2cd}} 
+\hyperlink{classphysim_1_1fields_1_1magnetic_a573c07a7a049bebe1f47eef6621cc2cd}{magnetic} (const \hyperlink{classphysim_1_1fields_1_1magnetic}{magnetic} \&f)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_a8263839cd27980407f2480601e677f4a}\label{classphysim_1_1fields_1_1magnetic_a8263839cd27980407f2480601e677f4a}} 
+virtual \hyperlink{classphysim_1_1fields_1_1magnetic_a8263839cd27980407f2480601e677f4a}{$\sim$magnetic} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_a405a791a9e5a711eb6a43de73462c609}\label{classphysim_1_1fields_1_1magnetic_a405a791a9e5a711eb6a43de73462c609}} 
+void \hyperlink{classphysim_1_1fields_1_1magnetic_a405a791a9e5a711eb6a43de73462c609}{set\+\_\+vector} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v)
+\begin{DoxyCompactList}\small\item\em Sets this magnetic field vector. See \hyperlink{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}{B}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_a279376a78adda4e96bc02aef38cb54bd}\label{classphysim_1_1fields_1_1magnetic_a279376a78adda4e96bc02aef38cb54bd}} 
+const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \& \hyperlink{classphysim_1_1fields_1_1magnetic_a279376a78adda4e96bc02aef38cb54bd}{get\+\_\+vector} () const
+\begin{DoxyCompactList}\small\item\em Returns this field\textquotesingle{}s magnetic vector. See \hyperlink{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}{B}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}\label{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}{B}
+\begin{DoxyCompactList}\small\item\em Magnetic field vector \mbox{[}T\mbox{]}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Punctual magnetic field. 
+
+Described by a position \hyperlink{classphysim_1_1fields_1_1punctual_a00344d6f3e4f3f841e7d876918c66977}{pos} and a magentic field vector \hyperlink{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}{B}.
+
+There are several types of magnetic fields. As an example, see \hyperlink{classphysim_1_1fields_1_1magnetic__B}{magnetic\+\_\+B}. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1fields_1_1magnetic_a4bc1ebfece31aa73f3242850314dcaac}\label{classphysim_1_1fields_1_1magnetic_a4bc1ebfece31aa73f3242850314dcaac}} 
+\index{physim\+::fields\+::magnetic@{physim\+::fields\+::magnetic}!magnetic@{magnetic}}
+\index{magnetic@{magnetic}!physim\+::fields\+::magnetic@{physim\+::fields\+::magnetic}}
+\subsubsection{\texorpdfstring{magnetic()}{magnetic()}}
+{\footnotesize\ttfamily physim\+::fields\+::magnetic\+::magnetic (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+The magnetic field vector \hyperlink{classphysim_1_1fields_1_1magnetic_a9955f0d4a3773ff96b536f37623b5ac7}{B} is initialised to (0,0,0). 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/fields/magnetic.\+hpp\item 
+physim/fields/magnetic.\+cpp\end{DoxyCompactItemize}

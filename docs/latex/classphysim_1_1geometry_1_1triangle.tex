@@ -1,0 +1,612 @@
+\hypertarget{classphysim_1_1geometry_1_1triangle}{}\section{physim\+:\+:geometry\+:\+:triangle Class Reference}
+\label{classphysim_1_1geometry_1_1triangle}\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+
+
+Class that implements a triangle.  
+
+
+
+
+{\ttfamily \#include $<$triangle.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:geometry\+:\+:triangle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classphysim_1_1geometry_1_1triangle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:geometry\+:\+:triangle\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classphysim_1_1geometry_1_1triangle__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a15efd231cb09e3faed6eb247f060ca66}\label{classphysim_1_1geometry_1_1triangle_a15efd231cb09e3faed6eb247f060ca66}} 
+\hyperlink{classphysim_1_1geometry_1_1triangle_a15efd231cb09e3faed6eb247f060ca66}{triangle} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1geometry_1_1triangle_a4e0a11057c6297dbe03c193d52e7e212}{triangle} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p0, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p2)
+\begin{DoxyCompactList}\small\item\em Constructor with points. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_ab45719d2021233260e8ca28362711fb2}\label{classphysim_1_1geometry_1_1triangle_ab45719d2021233260e8ca28362711fb2}} 
+\hyperlink{classphysim_1_1geometry_1_1triangle_ab45719d2021233260e8ca28362711fb2}{triangle} (const \hyperlink{classphysim_1_1geometry_1_1triangle}{triangle} \&t)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_ac48a9492d0b28bd46a235bba375f942b}\label{classphysim_1_1geometry_1_1triangle_ac48a9492d0b28bd46a235bba375f942b}} 
+\hyperlink{classphysim_1_1geometry_1_1triangle_ac48a9492d0b28bd46a235bba375f942b}{$\sim$triangle} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a3009b26592dd9b08611b116b5439fac7}{set\+\_\+points} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p0, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p1, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p2)
+\begin{DoxyCompactList}\small\item\em Set the points of this triangle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a9446670dcea26f020c4ad10c7234cce6}{set\+\_\+position} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v)
+\begin{DoxyCompactList}\small\item\em Sets the position of this triangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a5451577cd5511fb6bc6874795e307042}\label{classphysim_1_1geometry_1_1triangle_a5451577cd5511fb6bc6874795e307042}} 
+const \hyperlink{classphysim_1_1geometry_1_1plane}{plane} \& \hyperlink{classphysim_1_1geometry_1_1triangle_a5451577cd5511fb6bc6874795e307042}{get\+\_\+plane} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant reference to the assiociated plane (\hyperlink{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}{pl}). \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a6d78d93d66524dacd0270c3d6c293319}{get\+\_\+points} (\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p0, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p1, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p2) const
+\begin{DoxyCompactList}\small\item\em Return the points of this triangle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a302e6c6d964849980d1caa60736cae1d}{projection} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&proj) const
+\begin{DoxyCompactList}\small\item\em Project a point to this triangle. \end{DoxyCompactList}\item 
+float \hyperlink{classphysim_1_1geometry_1_1triangle_a0a2c713287510cf43a00ca3139af27b8}{distance} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p) const
+\begin{DoxyCompactList}\small\item\em Computes the distance between a point and this triangle. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geometry_1_1triangle_aa63eb64a152db96607423c9c30e5dd01}{is\+\_\+inside} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, float tol=1.e-\/6f) const
+\begin{DoxyCompactList}\small\item\em Returns whether a point is inside the geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_af46c36c6dd8f7319bcbf5cd38cdf639e}\label{classphysim_1_1geometry_1_1triangle_af46c36c6dd8f7319bcbf5cd38cdf639e}} 
+\hyperlink{namespacephysim_1_1geometry_a60e1ee7ea6f443f8ec9341ca7f12f1b7}{geometry\+\_\+type} \hyperlink{classphysim_1_1geometry_1_1triangle_af46c36c6dd8f7319bcbf5cd38cdf639e}{get\+\_\+geom\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of geometry of this object. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geometry_1_1triangle_ae030bd068acc074aaf7321fd3378a1ad}{intersec\+\_\+segment} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p0, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p1) const
+\begin{DoxyCompactList}\small\item\em Returns if the segment defined by the points {\itshape p1} and {\itshape p2} intersects the geometry. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geometry_1_1triangle_a7058cb649cd4617d868627217c9de841}{intersec\+\_\+segment} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p0, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+p1, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p\+\_\+inter) const
+\begin{DoxyCompactList}\small\item\em Returns true if the segment \mbox{[}{\itshape p1}, {\itshape p2} \mbox{]} intersects with the geometry. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1geometry_1_1triangle_aa5637d5f349e5cd1c774110b26854192}{intersec\+\_\+sphere} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&c, float R) const
+\begin{DoxyCompactList}\small\item\em Returns if the sphere with center the point {\itshape c} and radius {\itshape R} intersects the geometry. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a85898a3cca36efa410dfe9044619c798}{update\+\_\+particle} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pp, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pv, \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $\ast$p) const
+\begin{DoxyCompactList}\small\item\em Update a free particle in a collision with geometry. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a138bc267ef333128534651fa6f20ff2a}{update\+\_\+particle} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pp, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&pv, \hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} $\ast$p) const
+\begin{DoxyCompactList}\small\item\em Update a sized particle in a collision with geometry. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a6f66065d251a306ea97a9ba7b80eaa0b}\label{classphysim_1_1geometry_1_1triangle_a6f66065d251a306ea97a9ba7b80eaa0b}} 
+void \hyperlink{classphysim_1_1geometry_1_1triangle_a6f66065d251a306ea97a9ba7b80eaa0b}{display} () const
+\begin{DoxyCompactList}\small\item\em Output on stream {\itshape cout} information about this geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_aacff267a29d1080e1a367b6b0e5b352d}\label{classphysim_1_1geometry_1_1triangle_aacff267a29d1080e1a367b6b0e5b352d}} 
+float \hyperlink{classphysim_1_1geometry_1_1triangle_aacff267a29d1080e1a367b6b0e5b352d}{get\+\_\+area} () const
+\begin{DoxyCompactList}\small\item\em Returns the are of this triangle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a0eb1d801bfd3d7c7a3fbbccfc3705f67}\label{classphysim_1_1geometry_1_1triangle_a0eb1d801bfd3d7c7a3fbbccfc3705f67}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometry_1_1triangle_a0eb1d801bfd3d7c7a3fbbccfc3705f67}{p0}
+\begin{DoxyCompactList}\small\item\em The first vertex of the triangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a792e2ba27decc6582131cc6b977b8f35}\label{classphysim_1_1geometry_1_1triangle_a792e2ba27decc6582131cc6b977b8f35}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometry_1_1triangle_a792e2ba27decc6582131cc6b977b8f35}{p1}
+\begin{DoxyCompactList}\small\item\em The second vertex of the triangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a5c08097d254bc239148f42951a249ce4}\label{classphysim_1_1geometry_1_1triangle_a5c08097d254bc239148f42951a249ce4}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometry_1_1triangle_a5c08097d254bc239148f42951a249ce4}{p2}
+\begin{DoxyCompactList}\small\item\em The third vertex of the triangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}\label{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}} 
+\hyperlink{classphysim_1_1geometry_1_1plane}{plane} \hyperlink{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}{pl}
+\begin{DoxyCompactList}\small\item\em Plane associated to the triangle. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometry_1_1triangle_a330380022489f6a4c40bc3a0ec74b021}{u0}
+\begin{DoxyCompactList}\small\item\em Plane parametrisation vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometry_1_1triangle_a4af756a7338103b26dd60e1663fe1279}{u1}
+\begin{DoxyCompactList}\small\item\em Plane parametrisation vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1geometry_1_1triangle_a179ce681e75d39b776b54ec104f956a1}{u2}
+\begin{DoxyCompactList}\small\item\em Plane parametrisation vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a5484f51c5b3eeb278be2b8bb1e2652ca}{q0}
+\begin{DoxyCompactList}\small\item\em Local reference system point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a658747d09ec843033d9657301eb753e9}{q1}
+\begin{DoxyCompactList}\small\item\em Local reference system point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a4857cf46530b169470ebaa5d4a94b7af}{q2}
+\begin{DoxyCompactList}\small\item\em Local reference system point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a848982c72944fee96e266cae874b0553}{e0}
+\begin{DoxyCompactList}\small\item\em Local reference system edge vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a1c94f05234361db97e282aaee2bda8f9}{e1}
+\begin{DoxyCompactList}\small\item\em Local reference system edge vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a560a7684adbd40a8386e46767a759574}{e2}
+\begin{DoxyCompactList}\small\item\em Local reference system edge vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a0d45217eeeeee6df38e4167384a3ce29}{n0}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_abebf947c1772ae8b3932a2c3e84597c6}{n1}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a18331f9216797cdb920b1dfb9d04b3d4}{n2}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge vector. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_aa5b6924651358f265c6c81a7aea1b440}{q0n0}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a3637d2ff3e60e9f53818786e54106b88}{q0n2}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a9de5ea7ce4f1a2c96a76f5aec7c20fd2}{q1n0}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a473c07e005c6f4db071924f5c9d52361}{q1n1}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_aa64e3c6fa754d12f9a94a67535e958e0}{q2n1}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge point. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} \hyperlink{classphysim_1_1geometry_1_1triangle_a35bbf5b5989499f0eafd6043619f3e98}{q2n2}
+\begin{DoxyCompactList}\small\item\em Local reference system normal edge point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Class that implements a triangle. 
+
+A triangle is, informally, a polygonal object of three sides of arbitrary length, whose endpoints are defined by three vertices (see \hyperlink{classphysim_1_1geometry_1_1triangle_a0eb1d801bfd3d7c7a3fbbccfc3705f67}{p0}, \hyperlink{classphysim_1_1geometry_1_1triangle_a792e2ba27decc6582131cc6b977b8f35}{p1}, \hyperlink{classphysim_1_1geometry_1_1triangle_a5c08097d254bc239148f42951a249ce4}{p2}).
+
+The normal of a triangle is then
+
+$ (p_1 - p_0) \times (p_2 - p_0) / || (p_1 - p_0) \times (p_2 - p_0) || $
+
+These three vertices all lie on a plane (see \hyperlink{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}{pl}), the creation of which depends on the order of the vertices they are given in.
+
+There is a lot more information in this triangle, motivated by the sphere-\/triangle intersection test described in\+:
+
+\href{https://www.geometrictools.com/Documentation/IntersectionMovingSphereTriangle.pdf}{\tt https\+://www.\+geometrictools.\+com/\+Documentation/\+Intersection\+Moving\+Sphere\+Triangle.\+pdf} 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a4e0a11057c6297dbe03c193d52e7e212}\label{classphysim_1_1geometry_1_1triangle_a4e0a11057c6297dbe03c193d52e7e212}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!triangle@{triangle}}
+\index{triangle@{triangle}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{triangle()}{triangle()}}
+{\footnotesize\ttfamily physim\+::geometry\+::triangle\+::triangle (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p0,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p2 }\end{DoxyParamCaption})}
+
+
+
+Constructor with points. 
+
+The plane associated to this triangle (see \hyperlink{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}{pl}) is built using these vertices in the same order they are given in this method.
+
+See \hyperlink{classphysim_1_1geometry_1_1plane_a7ff5e0444f792d759198fb7339c9dc1a}{plane\+::plane(const math\+::vec3\&,const math\+::vec3\&,const math\+::vec3\&)} to see how the normal is determined. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a0a2c713287510cf43a00ca3139af27b8}\label{classphysim_1_1geometry_1_1triangle_a0a2c713287510cf43a00ca3139af27b8}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!distance@{distance}}
+\index{distance@{distance}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{distance()}{distance()}}
+{\footnotesize\ttfamily float physim\+::geometry\+::triangle\+::distance (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p }\end{DoxyParamCaption}) const}
+
+
+
+Computes the distance between a point and this triangle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Point to measure the distance to the triangle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the distance between {\itshape p} and this triangle. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a6d78d93d66524dacd0270c3d6c293319}\label{classphysim_1_1geometry_1_1triangle_a6d78d93d66524dacd0270c3d6c293319}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!get\+\_\+points@{get\+\_\+points}}
+\index{get\+\_\+points@{get\+\_\+points}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{get\+\_\+points()}{get\_points()}}
+{\footnotesize\ttfamily void physim\+::geometry\+::triangle\+::get\+\_\+points (\begin{DoxyParamCaption}\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p0,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p1,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p2 }\end{DoxyParamCaption}) const}
+
+
+
+Return the points of this triangle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em \+\_\+p0} & First point of the triangle. See \hyperlink{classphysim_1_1geometry_1_1triangle_a0eb1d801bfd3d7c7a3fbbccfc3705f67}{p0}. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+p1} & Second point of the triangle. See \hyperlink{classphysim_1_1geometry_1_1triangle_a792e2ba27decc6582131cc6b977b8f35}{p1}. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+p2} & Third point of the triangle. See \hyperlink{classphysim_1_1geometry_1_1triangle_a5c08097d254bc239148f42951a249ce4}{p2}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_ae030bd068acc074aaf7321fd3378a1ad}\label{classphysim_1_1geometry_1_1triangle_ae030bd068acc074aaf7321fd3378a1ad}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!intersec\+\_\+segment@{intersec\+\_\+segment}}
+\index{intersec\+\_\+segment@{intersec\+\_\+segment}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{intersec\+\_\+segment()}{intersec\_segment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool physim\+::geometry\+::triangle\+::intersec\+\_\+segment (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2 }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns if the segment defined by the points {\itshape p1} and {\itshape p2} intersects the geometry. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & First endpoint of the segment. \\
+\hline
+\mbox{\tt in}  & {\em p2} & Second endpoint of the segment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if there is intersection. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_a0acdb44e41727b9d24afeb9a445c56b7}{physim\+::geometry\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a7058cb649cd4617d868627217c9de841}\label{classphysim_1_1geometry_1_1triangle_a7058cb649cd4617d868627217c9de841}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!intersec\+\_\+segment@{intersec\+\_\+segment}}
+\index{intersec\+\_\+segment@{intersec\+\_\+segment}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{intersec\+\_\+segment()}{intersec\_segment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool physim\+::geometry\+::triangle\+::intersec\+\_\+segment (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p2,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p\+\_\+inter }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns true if the segment \mbox{[}{\itshape p1}, {\itshape p2} \mbox{]} intersects with the geometry. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & The first endpoint of the segment. \\
+\hline
+\mbox{\tt in}  & {\em p2} & The second endpoint of the segment. \\
+\hline
+\mbox{\tt out}  & {\em p\+\_\+inter} & The intersection point between the segment and the geometry. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the segment and the geometry intersect. In this case, the value in {\itshape p\+\_\+inter} will be the intersection point. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_a8c505467e81b6da4dcf01a48a4546ba9}{physim\+::geometry\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_aa5637d5f349e5cd1c774110b26854192}\label{classphysim_1_1geometry_1_1triangle_aa5637d5f349e5cd1c774110b26854192}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!intersec\+\_\+sphere@{intersec\+\_\+sphere}}
+\index{intersec\+\_\+sphere@{intersec\+\_\+sphere}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{intersec\+\_\+sphere()}{intersec\_sphere()}}
+{\footnotesize\ttfamily bool physim\+::geometry\+::triangle\+::intersec\+\_\+sphere (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{c,  }\item[{float}]{R }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns if the sphere with center the point {\itshape c} and radius {\itshape R} intersects the geometry. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em c} & Center of the sphere. \\
+\hline
+\mbox{\tt in}  & {\em R} & radius of the sphere. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if there is intersection. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_a3e37ab4d3b7674d6ce243dc51695693a}{physim\+::geometry\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_aa63eb64a152db96607423c9c30e5dd01}\label{classphysim_1_1geometry_1_1triangle_aa63eb64a152db96607423c9c30e5dd01}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!is\+\_\+inside@{is\+\_\+inside}}
+\index{is\+\_\+inside@{is\+\_\+inside}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{is\+\_\+inside()}{is\_inside()}}
+{\footnotesize\ttfamily bool physim\+::geometry\+::triangle\+::is\+\_\+inside (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{float}]{tol = {\ttfamily 1.e-\/6f} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns whether a point is inside the geometry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & The point to check whether it is inside the geometry. \\
+\hline
+{\em tol} & Optional tolerance to deal corerctly with equalities. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if {\itshape p} is inside the geometry. Returns false if otherwise. Depending on the type of geometry this method has a different geometrical interpretation. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_a8ae67bba78a06e3c41b7f5b5903b897d}{physim\+::geometry\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a302e6c6d964849980d1caa60736cae1d}\label{classphysim_1_1geometry_1_1triangle_a302e6c6d964849980d1caa60736cae1d}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!projection@{projection}}
+\index{projection@{projection}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{projection()}{projection()}}
+{\footnotesize\ttfamily void physim\+::geometry\+::triangle\+::projection (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{proj }\end{DoxyParamCaption}) const}
+
+
+
+Project a point to this triangle. 
+
+The projected point is the closest point inside the triangle to point {\itshape p}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Point to be projected onto the triangle. \\
+\hline
+\mbox{\tt out}  & {\em proj} & Projection of {\itshape p} onto the closest point to it inside the triangle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a3009b26592dd9b08611b116b5439fac7}\label{classphysim_1_1geometry_1_1triangle_a3009b26592dd9b08611b116b5439fac7}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!set\+\_\+points@{set\+\_\+points}}
+\index{set\+\_\+points@{set\+\_\+points}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{set\+\_\+points()}{set\_points()}}
+{\footnotesize\ttfamily void physim\+::geometry\+::triangle\+::set\+\_\+points (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p0,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p1,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+p2 }\end{DoxyParamCaption})}
+
+
+
+Set the points of this triangle. 
+
+The plane associated to this triangle (see \hyperlink{classphysim_1_1geometry_1_1triangle_a4fcfc136bcc0d2cdf31c37a7a71fc9f8}{pl}) is built using these vertices in the same order they are given in this method.
+
+See \hyperlink{classphysim_1_1geometry_1_1plane_a7ff5e0444f792d759198fb7339c9dc1a}{plane\+::plane(const math\+::vec3\&,const math\+::vec3\&,const math\+::vec3\&)} to see how the normal is determined. \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a9446670dcea26f020c4ad10c7234cce6}\label{classphysim_1_1geometry_1_1triangle_a9446670dcea26f020c4ad10c7234cce6}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!set\+\_\+position@{set\+\_\+position}}
+\index{set\+\_\+position@{set\+\_\+position}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{set\+\_\+position()}{set\_position()}}
+{\footnotesize\ttfamily void physim\+::geometry\+::triangle\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the position of this triangle. 
+
+The vertices of the triangle are translated with vector {\itshape v}. 
+\begin{DoxyParams}{Parameters}
+{\em v} & Vector representing the direction in which every vertex moves. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_a45bffd27f5e8d59375762cf7987625e1}{physim\+::geometry\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a85898a3cca36efa410dfe9044619c798}\label{classphysim_1_1geometry_1_1triangle_a85898a3cca36efa410dfe9044619c798}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!update\+\_\+particle@{update\+\_\+particle}}
+\index{update\+\_\+particle@{update\+\_\+particle}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{update\+\_\+particle()}{update\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::geometry\+::triangle\+::update\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} $\ast$}]{pred }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update a free particle in a collision with geometry. 
+
+Assumig that particle {\itshape pred} collided with this geometry, update its position, velocity, ... accordingly.
+
+For example, some geometry may be \textquotesingle{}bouncy\textquotesingle{}, it may give the particle some extra speed. This needs to be updated in this method.
+
+The particle {\itshape pred} is given in a state that is not modified by any solver. That is, the particle\textquotesingle{}s position, velocity, force, ... have the value at time step {\itshape T}. The predicted position and velocity are given in {\itshape pred\+\_\+pos} and {\itshape pred\+\_\+vel}. These are predictions of the position and velocity for time {\itshape T} + {\itshape dt} (where dt is some time step). The modified particle due to the collision must be stored in {\itshape pred}.
+
+This method is called only when it is sure that there has been a collision\+: the segment joining the particle\textquotesingle{}s current position and the predicted position intersects the geometry.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pred\+\_\+pos} & The predicted position of the particle. \\
+\hline
+\mbox{\tt in}  & {\em pred\+\_\+vel} & The predicted velocity of the particle. \\
+\hline
+\mbox{\tt out}  & {\em pred} & The particle with the result of the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_abbf5d7e5e0214d3c2cf95064f552928d}{physim\+::geometry\+::geometry}.
+
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a138bc267ef333128534651fa6f20ff2a}\label{classphysim_1_1geometry_1_1triangle_a138bc267ef333128534651fa6f20ff2a}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!update\+\_\+particle@{update\+\_\+particle}}
+\index{update\+\_\+particle@{update\+\_\+particle}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{update\+\_\+particle()}{update\_particle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::geometry\+::triangle\+::update\+\_\+particle (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+pos,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{pred\+\_\+vel,  }\item[{\hyperlink{classphysim_1_1particles_1_1sized__particle}{particles\+::sized\+\_\+particle} $\ast$}]{pred }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update a sized particle in a collision with geometry. 
+
+Assumig that particle {\itshape pred} collided with this geometry, update its position, velocity, ... accordingly.
+
+For example, some geometry may be \textquotesingle{}bouncy\textquotesingle{}, it may give the particle some extra speed. This needs to be updated in this method.
+
+The particle {\itshape pred} is given in a state that is not modified by any solver. That is, the particle\textquotesingle{}s position, velocity, force, ... have the value at time step {\itshape T}. The predicted position and velocity are given in {\itshape pred\+\_\+pos} and {\itshape pred\+\_\+vel}. These are predictions of the position and velocity for time {\itshape T} + {\itshape dt} (where dt is some time step). The modified particle due to the collision must be stored in {\itshape pred}.
+
+This method is called only when it is sure that there has been a collision\+: the segment joining the particle\textquotesingle{}s current position and the predicted position intersects the geometry.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pred\+\_\+pos} & The predicted position of the particle. \\
+\hline
+\mbox{\tt in}  & {\em pred\+\_\+vel} & The predicted velocity of the particle. \\
+\hline
+\mbox{\tt out}  & {\em pred} & The particle with the result of the collision. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1geometry_1_1geometry_afb3aefeefc98c6d310d7dd93a9d4ff9c}{physim\+::geometry\+::geometry}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a848982c72944fee96e266cae874b0553}\label{classphysim_1_1geometry_1_1triangle_a848982c72944fee96e266cae874b0553}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!e0@{e0}}
+\index{e0@{e0}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{e0}{e0}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::e0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system edge vector. 
+
+$\vec{e_0} = q_1 - q_0$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a1c94f05234361db97e282aaee2bda8f9}\label{classphysim_1_1geometry_1_1triangle_a1c94f05234361db97e282aaee2bda8f9}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!e1@{e1}}
+\index{e1@{e1}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{e1}{e1}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::e1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system edge vector. 
+
+$\vec{e_1} = q_2 - q_1$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a560a7684adbd40a8386e46767a759574}\label{classphysim_1_1geometry_1_1triangle_a560a7684adbd40a8386e46767a759574}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!e2@{e2}}
+\index{e2@{e2}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{e2}{e2}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::e2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system edge vector. 
+
+$\vec{e_2} = q_0 - q_2$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a0d45217eeeeee6df38e4167384a3ce29}\label{classphysim_1_1geometry_1_1triangle_a0d45217eeeeee6df38e4167384a3ce29}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!n0@{n0}}
+\index{n0@{n0}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{n0}{n0}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::n0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge vector. 
+
+Perpendicular to $e_0$, see \hyperlink{classphysim_1_1geometry_1_1triangle_a848982c72944fee96e266cae874b0553}{e0}.
+
+$\vec{n_0} = (0,-1)$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_abebf947c1772ae8b3932a2c3e84597c6}\label{classphysim_1_1geometry_1_1triangle_abebf947c1772ae8b3932a2c3e84597c6}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!n1@{n1}}
+\index{n1@{n1}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{n1}{n1}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::n1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge vector. 
+
+Perpendicular to $e_1$, see \hyperlink{classphysim_1_1geometry_1_1triangle_a1c94f05234361db97e282aaee2bda8f9}{e1}.
+
+$\vec{n_1} = (\beta, l - \alpha)/ || (\beta, l - \alpha) || $
+
+where $\alpha = u_0\cdot(p_2-p_0), \beta = u_1\cdot(p_2-p_0)$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a18331f9216797cdb920b1dfb9d04b3d4}\label{classphysim_1_1geometry_1_1triangle_a18331f9216797cdb920b1dfb9d04b3d4}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!n2@{n2}}
+\index{n2@{n2}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{n2}{n2}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::n2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge vector. 
+
+Perpendicular to $e_2$, see \hyperlink{classphysim_1_1geometry_1_1triangle_a560a7684adbd40a8386e46767a759574}{e2}.
+
+$\vec{n_2} = (-\beta, \alpha)/ || (-\beta, \alpha) || $
+
+where $\alpha = u_0\cdot(p_2-p_0), \beta = u_1\cdot(p_2-p_0)$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a5484f51c5b3eeb278be2b8bb1e2652ca}\label{classphysim_1_1geometry_1_1triangle_a5484f51c5b3eeb278be2b8bb1e2652ca}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q0@{q0}}
+\index{q0@{q0}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q0}{q0}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system point. 
+
+$q_0 = (0,0)$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_aa5b6924651358f265c6c81a7aea1b440}\label{classphysim_1_1geometry_1_1triangle_aa5b6924651358f265c6c81a7aea1b440}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q0n0@{q0n0}}
+\index{q0n0@{q0n0}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q0n0}{q0n0}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q0n0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge point. 
+
+$q_0 + \vec{n_0}$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a3637d2ff3e60e9f53818786e54106b88}\label{classphysim_1_1geometry_1_1triangle_a3637d2ff3e60e9f53818786e54106b88}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q0n2@{q0n2}}
+\index{q0n2@{q0n2}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q0n2}{q0n2}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q0n2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge point. 
+
+$q_0 + \vec{n_2}$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a658747d09ec843033d9657301eb753e9}\label{classphysim_1_1geometry_1_1triangle_a658747d09ec843033d9657301eb753e9}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q1@{q1}}
+\index{q1@{q1}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q1}{q1}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system point. 
+
+$q_1 = (l,0), l = ||p_1-p_0||$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a9de5ea7ce4f1a2c96a76f5aec7c20fd2}\label{classphysim_1_1geometry_1_1triangle_a9de5ea7ce4f1a2c96a76f5aec7c20fd2}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q1n0@{q1n0}}
+\index{q1n0@{q1n0}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q1n0}{q1n0}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q1n0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge point. 
+
+$q_1 + \vec{n_0}$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a473c07e005c6f4db071924f5c9d52361}\label{classphysim_1_1geometry_1_1triangle_a473c07e005c6f4db071924f5c9d52361}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q1n1@{q1n1}}
+\index{q1n1@{q1n1}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q1n1}{q1n1}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q1n1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge point. 
+
+$q_1 + \vec{n_1}$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a4857cf46530b169470ebaa5d4a94b7af}\label{classphysim_1_1geometry_1_1triangle_a4857cf46530b169470ebaa5d4a94b7af}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q2@{q2}}
+\index{q2@{q2}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q2}{q2}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system point. 
+
+$q_2 = (\alpha,\beta)$,
+
+where $\alpha = u_0\cdot(p_2-p_0), \beta = u_1\cdot(p_2-p_0)$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_aa64e3c6fa754d12f9a94a67535e958e0}\label{classphysim_1_1geometry_1_1triangle_aa64e3c6fa754d12f9a94a67535e958e0}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q2n1@{q2n1}}
+\index{q2n1@{q2n1}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q2n1}{q2n1}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q2n1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge point. 
+
+$q_2 + \vec{n_1}$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a35bbf5b5989499f0eafd6043619f3e98}\label{classphysim_1_1geometry_1_1triangle_a35bbf5b5989499f0eafd6043619f3e98}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!q2n2@{q2n2}}
+\index{q2n2@{q2n2}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{q2n2}{q2n2}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{math\+::vec2} physim\+::geometry\+::triangle\+::q2n2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Local reference system normal edge point. 
+
+$q_2 + \vec{n_2}$ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a330380022489f6a4c40bc3a0ec74b021}\label{classphysim_1_1geometry_1_1triangle_a330380022489f6a4c40bc3a0ec74b021}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!u0@{u0}}
+\index{u0@{u0}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{u0}{u0}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::geometry\+::triangle\+::u0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Plane parametrisation vector. 
+
+$ \vec{u_0} = (p_1 - p_0)/||p_1 - p_2|| $ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a4af756a7338103b26dd60e1663fe1279}\label{classphysim_1_1geometry_1_1triangle_a4af756a7338103b26dd60e1663fe1279}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!u1@{u1}}
+\index{u1@{u1}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{u1}{u1}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::geometry\+::triangle\+::u1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Plane parametrisation vector. 
+
+$ \vec{u_1} = \vec{u_2} \times \vec{u_0} $ \mbox{\Hypertarget{classphysim_1_1geometry_1_1triangle_a179ce681e75d39b776b54ec104f956a1}\label{classphysim_1_1geometry_1_1triangle_a179ce681e75d39b776b54ec104f956a1}} 
+\index{physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}!u2@{u2}}
+\index{u2@{u2}!physim\+::geometry\+::triangle@{physim\+::geometry\+::triangle}}
+\subsubsection{\texorpdfstring{u2}{u2}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::geometry\+::triangle\+::u2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Plane parametrisation vector. 
+
+$ \vec{u_2} = (p_1-p_0)\times(p_2-p_0)/ || (p_1-p_0)\times(p_2-p_0) || $ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/geometry/triangle.\+hpp\item 
+physim/geometry/triangle.\+cpp\end{DoxyCompactItemize}

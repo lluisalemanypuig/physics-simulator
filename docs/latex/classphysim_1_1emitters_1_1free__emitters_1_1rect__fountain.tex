@@ -1,0 +1,93 @@
+\hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain}{}\section{physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+fountain Class Reference}
+\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain}\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain}}
+
+
+A fountain emitter.  
+
+
+
+
+{\ttfamily \#include $<$rect\+\_\+fountain.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+fountain\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+fountain\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_acd9f95ada0c4b401c96d06214e377f36}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_acd9f95ada0c4b401c96d06214e377f36}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_acd9f95ada0c4b401c96d06214e377f36}{rect\+\_\+fountain} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a48f4339f6374aa9adbdd1031e1eadb33}{rect\+\_\+fountain} (const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain}{rect\+\_\+fountain} \&f)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a14e67f38b21eee05cb0fa496d78384e5}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a14e67f38b21eee05cb0fa496d78384e5}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a14e67f38b21eee05cb0fa496d78384e5}{$\sim$rect\+\_\+fountain} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a86c3d792fa977ef2b97785abced613ae}{make\+\_\+vel\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A fountain emitter. 
+
+Provides a position initialiser function so that generated particles behave like a fountain\+: their velocity is set to positive values of the normal to the plane, and values of x and z set as a function of their distance to the center plus some random value.
+
+Need to set the source size through \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab85134622163dfc1e3a77730ea94557e}{rect\+\_\+source\+::set\+\_\+rectangular\+\_\+source} method so that the initialser\textquotesingle{}s source is defined. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a48f4339f6374aa9adbdd1031e1eadb33}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a48f4339f6374aa9adbdd1031e1eadb33}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain}!rect\+\_\+fountain@{rect\+\_\+fountain}}
+\index{rect\+\_\+fountain@{rect\+\_\+fountain}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain}}
+\subsubsection{\texorpdfstring{rect\+\_\+fountain()}{rect\_fountain()}}
+{\footnotesize\ttfamily physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain\+::rect\+\_\+fountain (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain}{rect\+\_\+fountain} \&}]{f }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+The function \hyperlink{classphysim_1_1emitters_1_1base__emitter_ac67584a2ca34232c1f4f04c41599df0e}{base\+\_\+emitter\+::pos} is not copied. Instead, it is remade (function \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a86c3d792fa977ef2b97785abced613ae}{make\+\_\+vel\+\_\+init} is called again). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a86c3d792fa977ef2b97785abced613ae}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a86c3d792fa977ef2b97785abced613ae}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+The velocity is set so that those points that are\+:
+\begin{DoxyItemize}
+\item farther from the rectangle\textquotesingle{}s center have a smaller-\/magnitude, \char`\"{}flatter\char`\"{} vector velocity, i.\+e., the angle between the vector and the plane is small.
+\item closer to the center have larger-\/magnitude and \char`\"{}more vertical\char`\"{} vector velocity, i.\+e., the angle between the vector and the plane is large. 
+\end{DoxyItemize}
+
+Implements \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aace4d8f596f2a138e098ab0f86e927b5}{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/emitter/free\+\_\+emitters/rect\+\_\+fountain.\+hpp\item 
+physim/emitter/free\+\_\+emitters/rect\+\_\+fountain.\+cpp\end{DoxyCompactItemize}

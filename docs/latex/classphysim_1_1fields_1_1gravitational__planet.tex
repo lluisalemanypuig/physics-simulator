@@ -1,0 +1,150 @@
+\hypertarget{classphysim_1_1fields_1_1gravitational__planet}{}\section{physim\+:\+:fields\+:\+:gravitational\+\_\+planet Class Reference}
+\label{classphysim_1_1fields_1_1gravitational__planet}\index{physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}}
+
+
+A planet\textquotesingle{}s gravitational field.  
+
+
+
+
+{\ttfamily \#include $<$gravitational\+\_\+planet.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:fields\+:\+:gravitational\+\_\+planet\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classphysim_1_1fields_1_1gravitational__planet__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:fields\+:\+:gravitational\+\_\+planet\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{classphysim_1_1fields_1_1gravitational__planet__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_a9c225658e7538b0b62cb3e5647dfc172}\label{classphysim_1_1fields_1_1gravitational__planet_a9c225658e7538b0b62cb3e5647dfc172}} 
+\hyperlink{classphysim_1_1fields_1_1gravitational__planet_a9c225658e7538b0b62cb3e5647dfc172}{gravitational\+\_\+planet} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_adf2de01f520960fe939e0943cfa3871e}\label{classphysim_1_1fields_1_1gravitational__planet_adf2de01f520960fe939e0943cfa3871e}} 
+\hyperlink{classphysim_1_1fields_1_1gravitational__planet_adf2de01f520960fe939e0943cfa3871e}{gravitational\+\_\+planet} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\hyperlink{classphysim_1_1fields_1_1punctual_a00344d6f3e4f3f841e7d876918c66977}{pos})
+\begin{DoxyCompactList}\small\item\em Constructor with position and mass. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_a7e1ac5ee386422f3b02129cac5c17b4d}\label{classphysim_1_1fields_1_1gravitational__planet_a7e1ac5ee386422f3b02129cac5c17b4d}} 
+\hyperlink{classphysim_1_1fields_1_1gravitational__planet_a7e1ac5ee386422f3b02129cac5c17b4d}{gravitational\+\_\+planet} (const \hyperlink{classphysim_1_1fields_1_1gravitational__planet}{gravitational\+\_\+planet} \&f)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_a9384cf122e83c63992c000b221b9fb96}\label{classphysim_1_1fields_1_1gravitational__planet_a9384cf122e83c63992c000b221b9fb96}} 
+virtual \hyperlink{classphysim_1_1fields_1_1gravitational__planet_a9384cf122e83c63992c000b221b9fb96}{$\sim$gravitational\+\_\+planet} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fields_1_1gravitational__planet_ab272f7db84ad53d320d467b75d3f9ed2}{compute\+\_\+force} (const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Compute the force vector acting on a particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fields_1_1gravitational__planet_aece6e4cc8679b3be5075c1e5fd1b3162}{compute\+\_\+force} (const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Compute the force vector acting on a particle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1fields_1_1gravitational__planet_a3b79869e1411c333b21ba4a240574641}{compute\+\_\+force} (const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Compute the force vector acting on a particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class P $>$ }\\void \hyperlink{classphysim_1_1fields_1_1gravitational__planet_a5bb7992e6b6b03144262e0dfb3639f17}{\+\_\+\+\_\+compute\+\_\+force} (const P \&p, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&F)
+\begin{DoxyCompactList}\small\item\em Function that actuall computes the force of this field. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A planet\textquotesingle{}s gravitational field. 
+
+This class implements the gravitational force field typical of a planet.
+
+This field is assumed to have some huge mass, placed at some point near infinity in a certain direction. This vector is stored at the position to which this field is set to, and interpreted as the acceleration of the gravity it yields. Thus, the force it applies on a particle of mass $m$ is\+:
+
+$\vec{F} = m\cdot \vec{g}$
+
+Here $g$ is the vector set in \hyperlink{classphysim_1_1fields_1_1punctual_a00344d6f3e4f3f841e7d876918c66977}{punctual\+::pos}. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_a5bb7992e6b6b03144262e0dfb3639f17}\label{classphysim_1_1fields_1_1gravitational__planet_a5bb7992e6b6b03144262e0dfb3639f17}} 
+\index{physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}!\+\_\+\+\_\+compute\+\_\+force@{\+\_\+\+\_\+compute\+\_\+force}}
+\index{\+\_\+\+\_\+compute\+\_\+force@{\+\_\+\+\_\+compute\+\_\+force}!physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+compute\+\_\+force()}{\_\_compute\_force()}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void physim\+::fields\+::gravitational\+\_\+planet\+::\+\_\+\+\_\+compute\+\_\+force (\begin{DoxyParamCaption}\item[{const P \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Function that actuall computes the force of this field. 
+
+Works for \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} and \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle}. \mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_ab272f7db84ad53d320d467b75d3f9ed2}\label{classphysim_1_1fields_1_1gravitational__planet_ab272f7db84ad53d320d467b75d3f9ed2}} 
+\index{physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}!compute\+\_\+force@{compute\+\_\+force}}
+\index{compute\+\_\+force@{compute\+\_\+force}!physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}}
+\subsubsection{\texorpdfstring{compute\+\_\+force()}{compute\_force()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void physim\+::fields\+::gravitational\+\_\+planet\+::compute\+\_\+force (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1free__particle}{particles\+::free\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute the force vector acting on a particle. 
+
+The contents of parameter {\itshape F} is undefined when calling this function, thus the contents should be overwritten. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Particle where the force is applied to. \\
+\hline
+\mbox{\tt out}  & {\em F} & The force from this field acting on the particle. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1fields_1_1field_a0d836756ac51a6a1e99d3c9a60310694}{physim\+::fields\+::field}.
+
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_aece6e4cc8679b3be5075c1e5fd1b3162}\label{classphysim_1_1fields_1_1gravitational__planet_aece6e4cc8679b3be5075c1e5fd1b3162}} 
+\index{physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}!compute\+\_\+force@{compute\+\_\+force}}
+\index{compute\+\_\+force@{compute\+\_\+force}!physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}}
+\subsubsection{\texorpdfstring{compute\+\_\+force()}{compute\_force()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void physim\+::fields\+::gravitational\+\_\+planet\+::compute\+\_\+force (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{particles\+::mesh\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute the force vector acting on a particle. 
+
+The contents of parameter {\itshape F} is undefined when calling this function, thus the contents should be overwritten. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Particle where the force is applied to. \\
+\hline
+\mbox{\tt out}  & {\em F} & The force from this field acting on the particle. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1fields_1_1field_aa167d81f223daab47989168c9d3b8cb4}{physim\+::fields\+::field}.
+
+\mbox{\Hypertarget{classphysim_1_1fields_1_1gravitational__planet_a3b79869e1411c333b21ba4a240574641}\label{classphysim_1_1fields_1_1gravitational__planet_a3b79869e1411c333b21ba4a240574641}} 
+\index{physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}!compute\+\_\+force@{compute\+\_\+force}}
+\index{compute\+\_\+force@{compute\+\_\+force}!physim\+::fields\+::gravitational\+\_\+planet@{physim\+::fields\+::gravitational\+\_\+planet}}
+\subsubsection{\texorpdfstring{compute\+\_\+force()}{compute\_force()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void physim\+::fields\+::gravitational\+\_\+planet\+::compute\+\_\+force (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{particles\+::fluid\+\_\+particle} \&}]{p,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{F }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute the force vector acting on a particle. 
+
+The contents of parameter {\itshape F} is undefined when calling this function, thus the contents should be overwritten. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Particle where the force is applied to. \\
+\hline
+\mbox{\tt out}  & {\em F} & The force from this field acting on the particle. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classphysim_1_1fields_1_1field_a099fb8b1dee7afae4610c6275432bc81}{physim\+::fields\+::field}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/fields/gravitational\+\_\+planet.\+hpp\item 
+physim/fields/gravitational\+\_\+planet.\+cpp\end{DoxyCompactItemize}

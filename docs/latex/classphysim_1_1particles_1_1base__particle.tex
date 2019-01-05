@@ -1,0 +1,129 @@
+\hypertarget{classphysim_1_1particles_1_1base__particle}{}\section{physim\+:\+:particles\+:\+:base\+\_\+particle Class Reference}
+\label{classphysim_1_1particles_1_1base__particle}\index{physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}}
+
+
+Class implementing the most basic particle.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+particle.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:particles\+:\+:base\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classphysim_1_1particles_1_1base__particle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:particles\+:\+:base\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classphysim_1_1particles_1_1base__particle__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_ad42844e13e91c175c3911439a0e08940}\label{classphysim_1_1particles_1_1base__particle_ad42844e13e91c175c3911439a0e08940}} 
+\hyperlink{classphysim_1_1particles_1_1base__particle_ad42844e13e91c175c3911439a0e08940}{base\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a3055f0439b30d31a94f0e2b3fc0300d0}\label{classphysim_1_1particles_1_1base__particle_a3055f0439b30d31a94f0e2b3fc0300d0}} 
+\hyperlink{classphysim_1_1particles_1_1base__particle_a3055f0439b30d31a94f0e2b3fc0300d0}{base\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1base__particle}{base\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a41ef26ded7282647f2dbe576714f6a4f}\label{classphysim_1_1particles_1_1base__particle_a41ef26ded7282647f2dbe576714f6a4f}} 
+virtual \hyperlink{classphysim_1_1particles_1_1base__particle_a41ef26ded7282647f2dbe576714f6a4f}{$\sim$base\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1particles_1_1base__particle_aee1ed4e0daca8db01c3a8f150fcdbbb1}{save\+\_\+position} ()
+\begin{DoxyCompactList}\small\item\em Saves the current position in the particle\textquotesingle{}s state. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1particles_1_1base__particle_a3bba517d51fd0bff7ec583e701765f87}{init} ()
+\begin{DoxyCompactList}\small\item\em Initialises all particle\textquotesingle{}s attributes, most of them to null values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_ac6aec0759a48d4337006aa41c280b8fc}\label{classphysim_1_1particles_1_1base__particle_ac6aec0759a48d4337006aa41c280b8fc}} 
+virtual \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \hyperlink{classphysim_1_1particles_1_1base__particle_ac6aec0759a48d4337006aa41c280b8fc}{get\+\_\+particle\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of this particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}\label{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos}
+\begin{DoxyCompactList}\small\item\em Previous position of the particle \mbox{[}m\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a6298a121dea043741e5d3722386163c6}\label{classphysim_1_1particles_1_1base__particle_a6298a121dea043741e5d3722386163c6}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1particles_1_1base__particle_a6298a121dea043741e5d3722386163c6}{cur\+\_\+pos}
+\begin{DoxyCompactList}\small\item\em Current position of the particle \mbox{[}m\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}\label{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel}
+\begin{DoxyCompactList}\small\item\em Current velocity of the particle \mbox{[}m/s\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}\label{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}{force}
+\begin{DoxyCompactList}\small\item\em Force currently applied to the particle \mbox{[}N\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}\label{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}} 
+float \hyperlink{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}{mass}
+\begin{DoxyCompactList}\small\item\em Mass of the particle \mbox{[}Kg\mbox{]}. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index}
+\begin{DoxyCompactList}\small\item\em Index of the particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class implementing the most basic particle. 
+
+The most basic particle in this library is a 0-\/dimensional object that is subject to several forces but not to any other particle\textquotesingle{}s direct interaction through them. It can collide with other objects in the scene (geometrical objects, see namespace \hyperlink{namespacephysim_1_1geometric}{physim\+::geometric}) and maybe with other particles, depending on the subclass. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a3bba517d51fd0bff7ec583e701765f87}\label{classphysim_1_1particles_1_1base__particle_a3bba517d51fd0bff7ec583e701765f87}} 
+\index{physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}!init@{init}}
+\index{init@{init}!physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::base\+\_\+particle\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialises all particle\textquotesingle{}s attributes, most of them to null values. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a6298a121dea043741e5d3722386163c6}{cur\+\_\+pos} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}{force} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}{mass} \+: 1
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index} \+: no value assigned, since it will be overwritten by the simulator. 
+\end{DoxyItemize}
+
+Reimplemented in \hyperlink{classphysim_1_1particles_1_1agent__particle_ac13082909f480fc55d406321c77d38b1}{physim\+::particles\+::agent\+\_\+particle}, \hyperlink{classphysim_1_1particles_1_1free__particle_a0df21e64a28c5fdf471d54a50b59fea3}{physim\+::particles\+::free\+\_\+particle}, \hyperlink{classphysim_1_1particles_1_1mesh__particle_a1b3c3eac1e62296c2facd8c9d9b84608}{physim\+::particles\+::mesh\+\_\+particle}, \hyperlink{classphysim_1_1particles_1_1sized__particle_a63de84961417c1522c0ca576697cd972}{physim\+::particles\+::sized\+\_\+particle}, and \hyperlink{classphysim_1_1particles_1_1fluid__particle_a0aa522f9400bcb02373edd7bb073249b}{physim\+::particles\+::fluid\+\_\+particle}.
+
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_aee1ed4e0daca8db01c3a8f150fcdbbb1}\label{classphysim_1_1particles_1_1base__particle_aee1ed4e0daca8db01c3a8f150fcdbbb1}} 
+\index{physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}!save\+\_\+position@{save\+\_\+position}}
+\index{save\+\_\+position@{save\+\_\+position}!physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}}
+\subsubsection{\texorpdfstring{save\+\_\+position()}{save\_position()}}
+{\footnotesize\ttfamily void physim\+::particles\+::base\+\_\+particle\+::save\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Saves the current position in the particle\textquotesingle{}s state. 
+
+Copies \hyperlink{classphysim_1_1particles_1_1base__particle_a6298a121dea043741e5d3722386163c6}{cur\+\_\+pos} into \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos}. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}\label{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}} 
+\index{physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}!index@{index}}
+\index{index@{index}!physim\+::particles\+::base\+\_\+particle@{physim\+::particles\+::base\+\_\+particle}}
+\subsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily size\+\_\+t physim\+::particles\+::base\+\_\+particle\+::index}
+
+
+
+Index of the particle. 
+
+This index is automatically set when added to the simulator object. The collection of indexes determine the order in which particles have been added to it. The indexes start at 0.
+
+It can be used to initialise its attributes through the different initialiser functions. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/particles/base\+\_\+particle.\+hpp\item 
+physim/particles/base\+\_\+particle.\+cpp\end{DoxyCompactItemize}

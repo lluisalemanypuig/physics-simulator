@@ -1,0 +1,351 @@
+\hypertarget{classphysim_1_1structures_1_1octree}{}\section{physim\+:\+:structures\+:\+:octree Class Reference}
+\label{classphysim_1_1structures_1_1octree}\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+
+
+Octree class.  
+
+
+
+
+{\ttfamily \#include $<$octree.\+hpp$>$}
+
+
+
+Collaboration diagram for physim\+:\+:structures\+:\+:octree\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{classphysim_1_1structures_1_1octree__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node}
+\begin{DoxyCompactList}\small\item\em Octree\textquotesingle{}s node definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_ae8f02259c6494f8529542ae3bbd8e89f}\label{classphysim_1_1structures_1_1octree_ae8f02259c6494f8529542ae3bbd8e89f}} 
+\hyperlink{classphysim_1_1structures_1_1octree_ae8f02259c6494f8529542ae3bbd8e89f}{octree} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a827e35f372995bf2906ab42da5d67a78}\label{classphysim_1_1structures_1_1octree_a827e35f372995bf2906ab42da5d67a78}} 
+\hyperlink{classphysim_1_1structures_1_1octree_a827e35f372995bf2906ab42da5d67a78}{$\sim$octree} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_add00dd5e93158b3fb54a7c8e37f01e8f}{init} (const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&vertices, const std\+::vector$<$ size\+\_\+t $>$ \&tris\+\_\+indices, size\+\_\+t lod=8)
+\begin{DoxyCompactList}\small\item\em Builds the partition of an object. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_a6b6f4eb568f298f92f2c25025c60a2e2}{init} (const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&vertices, size\+\_\+t lod=8)
+\begin{DoxyCompactList}\small\item\em Builds the partition of a cloud of points. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_a193143baa82a028ca9f7c65d69b48246}{init} (const void $\ast$p, size\+\_\+t n, size\+\_\+t offset, size\+\_\+t lod=8)
+\begin{DoxyCompactList}\small\item\em Builds the partition of a cloud of points. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a67b90846b173c0f34606d0f718d44497}\label{classphysim_1_1structures_1_1octree_a67b90846b173c0f34606d0f718d44497}} 
+void \hyperlink{classphysim_1_1structures_1_1octree_a67b90846b173c0f34606d0f718d44497}{clear} ()
+\begin{DoxyCompactList}\small\item\em Frees the memory occupied by this object. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_aefdcd3e41277fa5d639dc9452361cba5}{copy} (const \hyperlink{classphysim_1_1structures_1_1octree}{octree} \&part)
+\begin{DoxyCompactList}\small\item\em Copies the partition passed as parameter. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_a5416f8bedbc67dbb4b0d7614c7ef811a}{get\+\_\+indices} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, std\+::vector$<$ size\+\_\+t $>$ \&idxs) const
+\begin{DoxyCompactList}\small\item\em Retrieves the indices of the objects incident to the cell of a point. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_a808087da71c7499ca78613f770b0083e}{get\+\_\+indices} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, float R, std\+::vector$<$ size\+\_\+t $>$ \&idxs) const
+\begin{DoxyCompactList}\small\item\em Retrieves the indices of the objects incident to the cells intersecting a sphere. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_ab113e2fd11a5c146a4c35c6f3e8db63c}{get\+\_\+boxes} (std\+::vector$<$ std\+::pair$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ $>$ \&boxes) const
+\begin{DoxyCompactList}\small\item\em Returns the bounding boxes of the cells in this octree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1octree_a7891cdfc782b4a6026167d692783306e}{make\+\_\+octree\+\_\+triangles} (size\+\_\+t lod, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&vmin, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&vmax, const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&vertices, const std\+::vector$<$ size\+\_\+t $>$ \&triangles, const std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$ \&tris\+\_\+per\+\_\+vertex, const std\+::vector$<$ size\+\_\+t $>$ \&vertices\+\_\+idxs, const std\+::vector$<$ size\+\_\+t $>$ \&triangle\+\_\+idxs) const
+\begin{DoxyCompactList}\small\item\em Builds a tree rooted at a node that partitions the triangles stored in {\itshape triangles} pointed by {\itshape triangle\+\_\+idxs}. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1octree_a47755b22ab1c4231a1c2bcf7b5ef2fe9}{make\+\_\+octree\+\_\+vertices} (const void $\ast$it, size\+\_\+t offset, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&vmin, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&vmax, const std\+::vector$<$ size\+\_\+t $>$ \&vertices\+\_\+idxs, size\+\_\+t lod) const
+\begin{DoxyCompactList}\small\item\em Builds a tree rooted at a node that partitions the vertices stored in {\itshape vertices} pointed by {\itshape vertices\+\_\+idxs}. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1octree_a2c4f254c7dfac0ed6f0ee4197e1bdeac}{copy\+\_\+node} (const \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$n) const
+\begin{DoxyCompactList}\small\item\em Copies a node. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_a4cd66ca4218ba9ff09ba953c4264f8ed}{get\+\_\+boxes\+\_\+node} (const \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$n, std\+::vector$<$ std\+::pair$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ $>$ \&boxes) const
+\begin{DoxyCompactList}\small\item\em Returns the bounding boxes of the cells in this octree. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1structures_1_1octree_aec88b11968f8899022a93cb22b900398}{get\+\_\+indices\+\_\+node} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&p, float R, const \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$n, std\+::vector$<$ size\+\_\+t $>$ \&idxs) const
+\begin{DoxyCompactList}\small\item\em Retrieves the indices stored at those cells intersecting a sphere of radius {\itshape R} centered at {\itshape p}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a20e74f30f2e76fa03899e236fcedaac4}\label{classphysim_1_1structures_1_1octree_a20e74f30f2e76fa03899e236fcedaac4}} 
+\hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$ \hyperlink{classphysim_1_1structures_1_1octree_a20e74f30f2e76fa03899e236fcedaac4}{root}
+\begin{DoxyCompactList}\small\item\em Root of the octree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Octree class. 
+
+This is an implementation of a basic octree for both set of triangles (see function \hyperlink{classphysim_1_1structures_1_1octree_add00dd5e93158b3fb54a7c8e37f01e8f}{init(const std\+::vector$<$math\+::vec3$>$\&, const std\+::vector$<$size\+\_\+t$>$\&, size\+\_\+t)} ),
+
+and a set of vertices (see function \hyperlink{classphysim_1_1structures_1_1octree_a6b6f4eb568f298f92f2c25025c60a2e2}{init(const std\+::vector$<$math\+::vec3$>$\&, size\+\_\+t)} ). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_aefdcd3e41277fa5d639dc9452361cba5}\label{classphysim_1_1structures_1_1octree_aefdcd3e41277fa5d639dc9452361cba5}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!copy@{copy}}
+\index{copy@{copy}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::copy (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1structures_1_1octree}{octree} \&}]{part }\end{DoxyParamCaption})}
+
+
+
+Copies the partition passed as parameter. 
+
+The contents of this partition are cleared. 
+\begin{DoxyParams}{Parameters}
+{\em part} & An object partition. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a2c4f254c7dfac0ed6f0ee4197e1bdeac}\label{classphysim_1_1structures_1_1octree_a2c4f254c7dfac0ed6f0ee4197e1bdeac}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!copy\+\_\+node@{copy\+\_\+node}}
+\index{copy\+\_\+node@{copy\+\_\+node}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{copy\+\_\+node()}{copy\_node()}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{octree\+::node} $\ast$ physim\+::structures\+::octree\+::copy\+\_\+node (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Copies a node. 
+
+Recursively copies a node {\itshape n}. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Node to be copied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to a node created in this function, a copy of {\itshape n}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_ab113e2fd11a5c146a4c35c6f3e8db63c}\label{classphysim_1_1structures_1_1octree_ab113e2fd11a5c146a4c35c6f3e8db63c}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!get\+\_\+boxes@{get\+\_\+boxes}}
+\index{get\+\_\+boxes@{get\+\_\+boxes}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{get\+\_\+boxes()}{get\_boxes()}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::get\+\_\+boxes (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::pair$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ $>$ \&}]{boxes }\end{DoxyParamCaption}) const}
+
+
+
+Returns the bounding boxes of the cells in this octree. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em boxes} & The vector contains pairs of elements with points the minimum and maximum coordinate values. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a4cd66ca4218ba9ff09ba953c4264f8ed}\label{classphysim_1_1structures_1_1octree_a4cd66ca4218ba9ff09ba953c4264f8ed}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!get\+\_\+boxes\+\_\+node@{get\+\_\+boxes\+\_\+node}}
+\index{get\+\_\+boxes\+\_\+node@{get\+\_\+boxes\+\_\+node}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{get\+\_\+boxes\+\_\+node()}{get\_boxes\_node()}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::get\+\_\+boxes\+\_\+node (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$}]{n,  }\item[{std\+::vector$<$ std\+::pair$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ $>$ \&}]{boxes }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Returns the bounding boxes of the cells in this octree. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em n} & Node to obtain the boxes from. \\
+\hline
+\mbox{\tt out}  & {\em boxes} & The vector contains pairs of elements with points the minimum and maximum coordinate values. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a5416f8bedbc67dbb4b0d7614c7ef811a}\label{classphysim_1_1structures_1_1octree_a5416f8bedbc67dbb4b0d7614c7ef811a}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!get\+\_\+indices@{get\+\_\+indices}}
+\index{get\+\_\+indices@{get\+\_\+indices}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{get\+\_\+indices()}{get\_indices()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::get\+\_\+indices (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{std\+::vector$<$ size\+\_\+t $>$ \&}]{idxs }\end{DoxyParamCaption}) const}
+
+
+
+Retrieves the indices of the objects incident to the cell of a point. 
+
+Point {\itshape p} is located inside the octree at some cell. In parameter {\itshape tris\+\_\+idxs} are stored the indices of those objects incident to that cell.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Point to be located. \\
+\hline
+\mbox{\tt out}  & {\em idxs} & The unique indices of the objectes incident to the cell where {\itshape p} is located at. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a808087da71c7499ca78613f770b0083e}\label{classphysim_1_1structures_1_1octree_a808087da71c7499ca78613f770b0083e}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!get\+\_\+indices@{get\+\_\+indices}}
+\index{get\+\_\+indices@{get\+\_\+indices}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{get\+\_\+indices()}{get\_indices()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::get\+\_\+indices (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{float}]{R,  }\item[{std\+::vector$<$ size\+\_\+t $>$ \&}]{idxs }\end{DoxyParamCaption}) const}
+
+
+
+Retrieves the indices of the objects incident to the cells intersecting a sphere. 
+
+Sphere has center at {\itshape p} and radius {\itshape R}, Parameter {\itshape tris\+\_\+idxs} stores the indices of those objects incident to the cells
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Center of the sphere. \\
+\hline
+\mbox{\tt in}  & {\em R} & Radious of the sphere. \\
+\hline
+\mbox{\tt out}  & {\em idxs} & The unique indices of the objectes incident to the cell that intersect the sphere. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_aec88b11968f8899022a93cb22b900398}\label{classphysim_1_1structures_1_1octree_aec88b11968f8899022a93cb22b900398}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!get\+\_\+indices\+\_\+node@{get\+\_\+indices\+\_\+node}}
+\index{get\+\_\+indices\+\_\+node@{get\+\_\+indices\+\_\+node}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{get\+\_\+indices\+\_\+node()}{get\_indices\_node()}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::get\+\_\+indices\+\_\+node (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{p,  }\item[{float}]{R,  }\item[{const \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{node} $\ast$}]{n,  }\item[{std\+::vector$<$ size\+\_\+t $>$ \&}]{idxs }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Retrieves the indices stored at those cells intersecting a sphere of radius {\itshape R} centered at {\itshape p}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Center of sphere. \\
+\hline
+\mbox{\tt in}  & {\em R} & Radius of sphere. \\
+\hline
+\mbox{\tt in}  & {\em n} & Node of the tree \\
+\hline
+\mbox{\tt out}  & {\em idxs} & List of indices (need not be unique). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_add00dd5e93158b3fb54a7c8e37f01e8f}\label{classphysim_1_1structures_1_1octree_add00dd5e93158b3fb54a7c8e37f01e8f}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!init@{init}}
+\index{init@{init}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::init (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{vertices,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{tris\+\_\+indices,  }\item[{size\+\_\+t}]{lod = {\ttfamily 8} }\end{DoxyParamCaption})}
+
+
+
+Builds the partition of an object. 
+
+The object is made up of the triangles in {\itshape triangles}. 
+\begin{DoxyParams}{Parameters}
+{\em vertices} & The vertices, without repetitions, of the object. \\
+\hline
+{\em tris\+\_\+indices} & The vertices indices of each triangle. Every three integer values we have a triangle. \\
+\hline
+{\em lod} & Level Of Detail\+: minimum number of vertices needed to subdivide a cell. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a6b6f4eb568f298f92f2c25025c60a2e2}\label{classphysim_1_1structures_1_1octree_a6b6f4eb568f298f92f2c25025c60a2e2}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!init@{init}}
+\index{init@{init}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::init (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{vertices,  }\item[{size\+\_\+t}]{lod = {\ttfamily 8} }\end{DoxyParamCaption})}
+
+
+
+Builds the partition of a cloud of points. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertices} & The vertices, without repetitions, of the cloud. \\
+\hline
+{\em lod} & Level Of Detail\+: minimum number of vertices per cell. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a193143baa82a028ca9f7c65d69b48246}\label{classphysim_1_1structures_1_1octree_a193143baa82a028ca9f7c65d69b48246}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!init@{init}}
+\index{init@{init}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void physim\+::structures\+::octree\+::init (\begin{DoxyParamCaption}\item[{const void $\ast$}]{p,  }\item[{size\+\_\+t}]{n,  }\item[{size\+\_\+t}]{offset,  }\item[{size\+\_\+t}]{lod = {\ttfamily 8} }\end{DoxyParamCaption})}
+
+
+
+Builds the partition of a cloud of points. 
+
+For example, we may have a struct like this\+:
+
+\begin{DoxyVerb}struct big {
+   float a,b,c;
+   char k;
+   math::vec3 p1, p2, p3;
+   char q;
+   math::vec3 p4;
+};
+\end{DoxyVerb}
+
+
+If one wanted to construct an octree using the \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}\textquotesingle{}s p1, in the array
+
+\begin{DoxyVerb}big b[512]
+\end{DoxyVerb}
+
+
+one would have to call this function as follows\+:
+
+init(\&b\mbox{[}0\mbox{]}.b1.\+x, 512, sizeof(big))
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & Pointer to the first element in which the \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} is allocated. \\
+\hline
+{\em n} & Number of \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}. \\
+\hline
+{\em offset} & Byte offset between \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}. \\
+\hline
+{\em lod} & Level Of Detail\+: minimum number of vertices per cell. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a7891cdfc782b4a6026167d692783306e}\label{classphysim_1_1structures_1_1octree_a7891cdfc782b4a6026167d692783306e}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!make\+\_\+octree\+\_\+triangles@{make\+\_\+octree\+\_\+triangles}}
+\index{make\+\_\+octree\+\_\+triangles@{make\+\_\+octree\+\_\+triangles}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{make\+\_\+octree\+\_\+triangles()}{make\_octree\_triangles()}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{octree\+::node} $\ast$ physim\+::structures\+::octree\+::make\+\_\+octree\+\_\+triangles (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{lod,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{vmin,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{vmax,  }\item[{const std\+::vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{vertices,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{triangles,  }\item[{const std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$ \&}]{tris\+\_\+per\+\_\+vertex,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{vertices\+\_\+idxs,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{triangle\+\_\+idxs }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Builds a tree rooted at a node that partitions the triangles stored in {\itshape triangles} pointed by {\itshape triangle\+\_\+idxs}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lod} & Threshold value for vertex partition. Below this amount, vertices will not be partitioned anymore. \\
+\hline
+{\em vmin} & Point with the minimum value coordinates of the points in {\itshape vertices}. \\
+\hline
+{\em vmax} & Point with the maximum value coordinates of the points in {\itshape vertices}. \\
+\hline
+{\em vertices} & The full list of non-\/repeated vertices of the triangles in {\itshape triangles}. \\
+\hline
+{\em triangles} & The full list of triangles. Every three integer values we have one triangle. \\
+\hline
+{\em tris\+\_\+per\+\_\+vertex} & The {\itshape i-\/th} position of this vector contains the indices of the triangles adjacent to the {\itshape i-\/th} vertex. This is an auxiliary vector for faster tree building. \\
+\hline
+{\em vertices\+\_\+idxs} & The list of vertices to be partitioned. \\
+\hline
+{\em triangle\+\_\+idxs} & The list of triangles to incident to the node to be created. The indexes in this list are all multiples of 3 and point to positions (also multiple of 3) in {\itshape triangles}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the root of an octree that partitions the triangles in {\itshape triangle\+\_\+idxs} and the points in {\itshape vertices\+\_\+idxs}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classphysim_1_1structures_1_1octree_a47755b22ab1c4231a1c2bcf7b5ef2fe9}\label{classphysim_1_1structures_1_1octree_a47755b22ab1c4231a1c2bcf7b5ef2fe9}} 
+\index{physim\+::structures\+::octree@{physim\+::structures\+::octree}!make\+\_\+octree\+\_\+vertices@{make\+\_\+octree\+\_\+vertices}}
+\index{make\+\_\+octree\+\_\+vertices@{make\+\_\+octree\+\_\+vertices}!physim\+::structures\+::octree@{physim\+::structures\+::octree}}
+\subsubsection{\texorpdfstring{make\+\_\+octree\+\_\+vertices()}{make\_octree\_vertices()}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1structures_1_1octree_1_1node}{octree\+::node} $\ast$ physim\+::structures\+::octree\+::make\+\_\+octree\+\_\+vertices (\begin{DoxyParamCaption}\item[{const void $\ast$}]{it,  }\item[{size\+\_\+t}]{offset,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{vmin,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{vmax,  }\item[{const std\+::vector$<$ size\+\_\+t $>$ \&}]{vertices\+\_\+idxs,  }\item[{size\+\_\+t}]{lod }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Builds a tree rooted at a node that partitions the vertices stored in {\itshape vertices} pointed by {\itshape vertices\+\_\+idxs}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lod} & Threshold value for vertex partition. Below this amount, vertices will not be partitioned anymore. \\
+\hline
+{\em vmin} & Point with the minimum value coordinates of the points in {\itshape vertices}. \\
+\hline
+{\em vmax} & Point with the maximum value coordinates of the points in {\itshape vertices}. \\
+\hline
+{\em it} & Pointer to the first component of the first vertex. \\
+\hline
+{\em offset} & Size in bytes between consecutive vertices\textquotesingle{} first component. \\
+\hline
+{\em vertices\+\_\+idxs} & The list of vertices to be partitioned. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the root of an octree that partitions the points in {\itshape vertices\+\_\+idxs}. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/structures/octree.\+hpp\item 
+physim/structures/octree.\+cpp\end{DoxyCompactItemize}

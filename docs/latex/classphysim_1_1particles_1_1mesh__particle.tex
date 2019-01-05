@@ -1,0 +1,123 @@
+\hypertarget{classphysim_1_1particles_1_1mesh__particle}{}\section{physim\+:\+:particles\+:\+:mesh\+\_\+particle Class Reference}
+\label{classphysim_1_1particles_1_1mesh__particle}\index{physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}}
+
+
+Class implementing a mesh particle.  
+
+
+
+
+{\ttfamily \#include $<$mesh\+\_\+particle.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:particles\+:\+:mesh\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=177pt]{classphysim_1_1particles_1_1mesh__particle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:particles\+:\+:mesh\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classphysim_1_1particles_1_1mesh__particle__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_a0d7ccc38aee9b4cdeb5f66712d281040}\label{classphysim_1_1particles_1_1mesh__particle_a0d7ccc38aee9b4cdeb5f66712d281040}} 
+\hyperlink{classphysim_1_1particles_1_1mesh__particle_a0d7ccc38aee9b4cdeb5f66712d281040}{mesh\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_a157eed705543d26a39ca4de632845699}\label{classphysim_1_1particles_1_1mesh__particle_a157eed705543d26a39ca4de632845699}} 
+\hyperlink{classphysim_1_1particles_1_1mesh__particle_a157eed705543d26a39ca4de632845699}{mesh\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1mesh__particle}{mesh\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_acb853a925c65cd562252392ec754d614}\label{classphysim_1_1particles_1_1mesh__particle_acb853a925c65cd562252392ec754d614}} 
+virtual \hyperlink{classphysim_1_1particles_1_1mesh__particle_acb853a925c65cd562252392ec754d614}{$\sim$mesh\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1particles_1_1mesh__particle_a1b3c3eac1e62296c2facd8c9d9b84608}{init} ()
+\begin{DoxyCompactList}\small\item\em Initialises all particle\textquotesingle{}s attributes, most of them to null values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_afb35d487caf79656b4e433ad34b0d8ac}\label{classphysim_1_1particles_1_1mesh__particle_afb35d487caf79656b4e433ad34b0d8ac}} 
+virtual \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \hyperlink{classphysim_1_1particles_1_1mesh__particle_afb35d487caf79656b4e433ad34b0d8ac}{get\+\_\+particle\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of this particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_adf14d64e9effa2bcf5cb84a537bd8027}\label{classphysim_1_1particles_1_1mesh__particle_adf14d64e9effa2bcf5cb84a537bd8027}} 
+float \hyperlink{classphysim_1_1particles_1_1mesh__particle_adf14d64e9effa2bcf5cb84a537bd8027}{charge}
+\begin{DoxyCompactList}\small\item\em Electrical charge of the particle \mbox{[}C\mbox{]}. \end{DoxyCompactList}\item 
+bool \hyperlink{classphysim_1_1particles_1_1mesh__particle_a5813a57507d8a3539a1534dfd1b74883}{fixed}
+\begin{DoxyCompactList}\small\item\em Is this particle fixed? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1particles_1_1mesh__particle_acf394e0f807a6105e579750afbadeaea}{partial\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialises this class\textquotesingle{}s attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class implementing a mesh particle. 
+
+A particle is a 0-\/dimensional object, subject to several forces. It can also collide with other objects in the scene (geometrical objects, see namespace \hyperlink{namespacephysim_1_1geometric}{physim\+::geometric}) but not with other particles. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_a1b3c3eac1e62296c2facd8c9d9b84608}\label{classphysim_1_1particles_1_1mesh__particle_a1b3c3eac1e62296c2facd8c9d9b84608}} 
+\index{physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}!init@{init}}
+\index{init@{init}!physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::mesh\+\_\+particle\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialises all particle\textquotesingle{}s attributes, most of them to null values. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}{force} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}{mass} \+: 1
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index} \+: no value assigned, since it will be overwritten by the simulator.
+\item \hyperlink{classphysim_1_1particles_1_1mesh__particle_adf14d64e9effa2bcf5cb84a537bd8027}{charge} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1mesh__particle_a5813a57507d8a3539a1534dfd1b74883}{fixed} \+: false 
+\end{DoxyItemize}
+
+Reimplemented from \hyperlink{classphysim_1_1particles_1_1base__particle_a3bba517d51fd0bff7ec583e701765f87}{physim\+::particles\+::base\+\_\+particle}.
+
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_acf394e0f807a6105e579750afbadeaea}\label{classphysim_1_1particles_1_1mesh__particle_acf394e0f807a6105e579750afbadeaea}} 
+\index{physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}!partial\+\_\+init@{partial\+\_\+init}}
+\index{partial\+\_\+init@{partial\+\_\+init}!physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}}
+\subsubsection{\texorpdfstring{partial\+\_\+init()}{partial\_init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::mesh\+\_\+particle\+::partial\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises this class\textquotesingle{}s attributes. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1mesh__particle_adf14d64e9effa2bcf5cb84a537bd8027}{charge} \+: 0
+\item \hyperlink{classphysim_1_1particles_1_1mesh__particle_a5813a57507d8a3539a1534dfd1b74883}{fixed} \+: false 
+\end{DoxyItemize}
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1mesh__particle_a5813a57507d8a3539a1534dfd1b74883}\label{classphysim_1_1particles_1_1mesh__particle_a5813a57507d8a3539a1534dfd1b74883}} 
+\index{physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}!fixed@{fixed}}
+\index{fixed@{fixed}!physim\+::particles\+::mesh\+\_\+particle@{physim\+::particles\+::mesh\+\_\+particle}}
+\subsubsection{\texorpdfstring{fixed}{fixed}}
+{\footnotesize\ttfamily bool physim\+::particles\+::mesh\+\_\+particle\+::fixed}
+
+
+
+Is this particle fixed? 
+
+If the particle, it will be ignored by the solver, therefore not taken into account in the simulation (gravity nor any other force will have any effect on it). 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/particles/mesh\+\_\+particle.\+hpp\item 
+physim/particles/mesh\+\_\+particle.\+cpp\end{DoxyCompactItemize}

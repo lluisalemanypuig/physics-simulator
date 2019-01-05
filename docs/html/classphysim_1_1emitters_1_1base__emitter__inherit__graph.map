@@ -1,0 +1,9 @@
+<map id="physim::emitters::base_emitter" name="physim::emitters::base_emitter">
+<area shape="rect" id="node2" href="$classphysim_1_1emitters_1_1free__emitter.html" title="Class for free particle initialisation. " alt="" coords="208,104,357,145"/>
+<area shape="rect" id="node3" href="$classphysim_1_1emitters_1_1free__emitters_1_1hose.html" title="A hose emitter. " alt="" coords="422,5,571,47"/>
+<area shape="rect" id="node4" href="$classphysim_1_1emitters_1_1free__emitters_1_1multisource.html" title="Emitter from multiple sources. " alt="" coords="405,71,588,112"/>
+<area shape="rect" id="node5" href="$classphysim_1_1emitters_1_1free__emitters_1_1rect__source.html" title="A rectangular emitter. " alt="" coords="421,136,573,177"/>
+<area shape="rect" id="node8" href="$classphysim_1_1emitters_1_1sized__emitter.html" title="Class for sized particle initialisation. " alt="" coords="417,201,576,243"/>
+<area shape="rect" id="node6" href="$classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain.html" title="A fountain emitter. " alt="" coords="636,104,795,145"/>
+<area shape="rect" id="node7" href="$classphysim_1_1emitters_1_1free__emitters_1_1rect__shower.html" title="A shower emitter. " alt="" coords="638,169,793,211"/>
+</map>

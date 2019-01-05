@@ -1,0 +1,7 @@
+<map id="physim::particles::base_particle" name="physim::particles::base_particle">
+<area shape="rect" id="node2" href="$classphysim_1_1particles_1_1fluid__particle.html" title="Class implementing a fluid particle. " alt="" coords="183,5,312,47"/>
+<area shape="rect" id="node3" href="$classphysim_1_1particles_1_1free__particle.html" title="Class implementing a free particle. " alt="" coords="183,71,312,112"/>
+<area shape="rect" id="node6" href="$classphysim_1_1particles_1_1mesh__particle.html" title="Class implementing a mesh particle. " alt="" coords="183,136,312,177"/>
+<area shape="rect" id="node4" href="$classphysim_1_1particles_1_1sized__particle.html" title="Class implementing a sized particle. " alt="" coords="360,71,489,112"/>
+<area shape="rect" id="node5" href="$classphysim_1_1particles_1_1agent__particle.html" title="Class implementing an agent particle. " alt="" coords="537,71,667,112"/>
+</map>

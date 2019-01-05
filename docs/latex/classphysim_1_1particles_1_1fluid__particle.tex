@@ -1,0 +1,111 @@
+\hypertarget{classphysim_1_1particles_1_1fluid__particle}{}\section{physim\+:\+:particles\+:\+:fluid\+\_\+particle Class Reference}
+\label{classphysim_1_1particles_1_1fluid__particle}\index{physim\+::particles\+::fluid\+\_\+particle@{physim\+::particles\+::fluid\+\_\+particle}}
+
+
+Class implementing a fluid particle.  
+
+
+
+
+{\ttfamily \#include $<$fluid\+\_\+particle.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:particles\+:\+:fluid\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=177pt]{classphysim_1_1particles_1_1fluid__particle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:particles\+:\+:fluid\+\_\+particle\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classphysim_1_1particles_1_1fluid__particle__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a0608e20564e48974f8d05ea1da1f5d8b}\label{classphysim_1_1particles_1_1fluid__particle_a0608e20564e48974f8d05ea1da1f5d8b}} 
+\hyperlink{classphysim_1_1particles_1_1fluid__particle_a0608e20564e48974f8d05ea1da1f5d8b}{fluid\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a1a60daa5bf72b641f46b7227e9b32a7e}\label{classphysim_1_1particles_1_1fluid__particle_a1a60daa5bf72b641f46b7227e9b32a7e}} 
+\hyperlink{classphysim_1_1particles_1_1fluid__particle_a1a60daa5bf72b641f46b7227e9b32a7e}{fluid\+\_\+particle} (const \hyperlink{classphysim_1_1particles_1_1fluid__particle}{fluid\+\_\+particle} \&p)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_afc95cf0e4346e59d54c222dae8c287f6}\label{classphysim_1_1particles_1_1fluid__particle_afc95cf0e4346e59d54c222dae8c287f6}} 
+virtual \hyperlink{classphysim_1_1particles_1_1fluid__particle_afc95cf0e4346e59d54c222dae8c287f6}{$\sim$fluid\+\_\+particle} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1particles_1_1fluid__particle_a0aa522f9400bcb02373edd7bb073249b}{init} ()
+\begin{DoxyCompactList}\small\item\em Initialises all particle\textquotesingle{}s attributes, most of them to null values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a14f4c27cc4268f98235b371e060ae996}\label{classphysim_1_1particles_1_1fluid__particle_a14f4c27cc4268f98235b371e060ae996}} 
+virtual \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \hyperlink{classphysim_1_1particles_1_1fluid__particle_a14f4c27cc4268f98235b371e060ae996}{get\+\_\+particle\+\_\+type} () const
+\begin{DoxyCompactList}\small\item\em Returns the type of this particle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a0664c7d411aae32890f6fd359c74f2bc}\label{classphysim_1_1particles_1_1fluid__particle_a0664c7d411aae32890f6fd359c74f2bc}} 
+float \hyperlink{classphysim_1_1particles_1_1fluid__particle_a0664c7d411aae32890f6fd359c74f2bc}{density}
+\begin{DoxyCompactList}\small\item\em Density of the particle $\rho_i$. \mbox{[}Kg/m$^\wedge$3\mbox{]}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a2829dc6a83026e0854dd0ef4064f19b6}\label{classphysim_1_1particles_1_1fluid__particle_a2829dc6a83026e0854dd0ef4064f19b6}} 
+float \hyperlink{classphysim_1_1particles_1_1fluid__particle_a2829dc6a83026e0854dd0ef4064f19b6}{pressure}
+\begin{DoxyCompactList}\small\item\em Pressure of the particle $p_i$. \mbox{[}N/m$^\wedge$2\mbox{]}, \mbox{[}Kg/(m$\ast$s$^\wedge$2)\mbox{]}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classphysim_1_1particles_1_1fluid__particle_a5860aec6ef23bd4a700df26eb6b7b2f7}{partial\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialises this class\textquotesingle{}s attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class implementing a fluid particle. 
+
+A particle is a 0-\/dimensional object, subject to several forces. It can also collide with other objects in the scene (geometrical objects, see namespace \hyperlink{namespacephysim_1_1geometric}{physim\+::geometric}) but not with other particles. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a0aa522f9400bcb02373edd7bb073249b}\label{classphysim_1_1particles_1_1fluid__particle_a0aa522f9400bcb02373edd7bb073249b}} 
+\index{physim\+::particles\+::fluid\+\_\+particle@{physim\+::particles\+::fluid\+\_\+particle}!init@{init}}
+\index{init@{init}!physim\+::particles\+::fluid\+\_\+particle@{physim\+::particles\+::fluid\+\_\+particle}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::fluid\+\_\+particle\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialises all particle\textquotesingle{}s attributes, most of them to null values. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a08072db6a1a59d21acc9cac6ac8965f7}{prev\+\_\+pos} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_adc3b11899d2e50970ae5d4931721a0ef}{force} \+: vec3(0,0,0)
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_acb5c9f0b4a911d8981210e2cfc4dda8a}{mass} \+: 1
+\item \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index} \+: no value assigned, since it will be overwritten by the simulator.
+\item \hyperlink{classphysim_1_1particles_1_1fluid__particle_a0664c7d411aae32890f6fd359c74f2bc}{density} \+: 0.\+0
+\item \hyperlink{classphysim_1_1particles_1_1fluid__particle_a2829dc6a83026e0854dd0ef4064f19b6}{pressure} \+: 0.\+0 
+\end{DoxyItemize}
+
+Reimplemented from \hyperlink{classphysim_1_1particles_1_1base__particle_a3bba517d51fd0bff7ec583e701765f87}{physim\+::particles\+::base\+\_\+particle}.
+
+\mbox{\Hypertarget{classphysim_1_1particles_1_1fluid__particle_a5860aec6ef23bd4a700df26eb6b7b2f7}\label{classphysim_1_1particles_1_1fluid__particle_a5860aec6ef23bd4a700df26eb6b7b2f7}} 
+\index{physim\+::particles\+::fluid\+\_\+particle@{physim\+::particles\+::fluid\+\_\+particle}!partial\+\_\+init@{partial\+\_\+init}}
+\index{partial\+\_\+init@{partial\+\_\+init}!physim\+::particles\+::fluid\+\_\+particle@{physim\+::particles\+::fluid\+\_\+particle}}
+\subsubsection{\texorpdfstring{partial\+\_\+init()}{partial\_init()}}
+{\footnotesize\ttfamily void physim\+::particles\+::fluid\+\_\+particle\+::partial\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialises this class\textquotesingle{}s attributes. 
+
+The attributes of the class take the following values\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1particles_1_1fluid__particle_a0664c7d411aae32890f6fd359c74f2bc}{density} \+: 0.\+0
+\item \hyperlink{classphysim_1_1particles_1_1fluid__particle_a2829dc6a83026e0854dd0ef4064f19b6}{pressure} \+: 0.\+0 
+\end{DoxyItemize}
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/particles/fluid\+\_\+particle.\+hpp\item 
+physim/particles/fluid\+\_\+particle.\+cpp\end{DoxyCompactItemize}

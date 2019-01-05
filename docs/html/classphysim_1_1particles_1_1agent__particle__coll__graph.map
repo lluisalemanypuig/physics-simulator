@@ -1,0 +1,6 @@
+<map id="physim::particles::agent_particle" name="physim::particles::agent_particle">
+<area shape="rect" id="node2" href="$classphysim_1_1particles_1_1sized__particle.html" title="Class implementing a sized particle. " alt="" coords="115,320,244,361"/>
+<area shape="rect" id="node3" href="$classphysim_1_1particles_1_1free__particle.html" title="Class implementing a free particle. " alt="" coords="139,229,268,271"/>
+<area shape="rect" id="node4" href="$classphysim_1_1particles_1_1base__particle.html" title="Class implementing the most basic particle. " alt="" coords="115,139,244,180"/>
+<area shape="rect" id="node5" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="5,5,143,32"/>
+</map>

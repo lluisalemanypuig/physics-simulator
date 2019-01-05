@@ -1,0 +1,593 @@
+\hypertarget{namespacephysim_1_1math}{}\section{physim\+:\+:math Namespace Reference}
+\label{namespacephysim_1_1math}\index{physim\+::math@{physim\+::math}}
+
+
+Mathematical operations namespace.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structphysim_1_1math_1_1vec2}{vec2}
+\begin{DoxyCompactList}\small\item\em 2-\/dimensional vector. \end{DoxyCompactList}\item 
+struct \hyperlink{structphysim_1_1math_1_1vec3}{vec3}
+\begin{DoxyCompactList}\small\item\em 3-\/dimensional vector. \end{DoxyCompactList}\item 
+struct \hyperlink{structphysim_1_1math_1_1vec4}{vec4}
+\begin{DoxyCompactList}\small\item\em 4-\/dimensional vector. \end{DoxyCompactList}\item 
+struct \hyperlink{structphysim_1_1math_1_1vec6}{vec6}
+\begin{DoxyCompactList}\small\item\em 6-\/dimensional vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structphysim_1_1math_1_1vec2}{physim\+::math\+::vec2} \hyperlink{namespacephysim_1_1math_afe00b7e2c64c6f8b46f5d9be3f516acf}{vec2}
+\begin{DoxyCompactList}\small\item\em 2-\/dimensional vector. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3} \hyperlink{namespacephysim_1_1math_a4641a15d91e1eed417901040c33d3c72}{vec3}
+\begin{DoxyCompactList}\small\item\em 3-\/dimensional vector. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structphysim_1_1math_1_1vec4}{physim\+::math\+::vec4} \hyperlink{namespacephysim_1_1math_a325cbe58f444c9ff84ca5831849f35ca}{vec4}
+\begin{DoxyCompactList}\small\item\em 4-\/dimensional vector. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structphysim_1_1math_1_1vec6}{physim\+::math\+::vec6} \hyperlink{namespacephysim_1_1math_a4927e09ba2ee25602c7ca62839a24d53}{vec6}
+\begin{DoxyCompactList}\small\item\em 6-\/dimensional vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{namespacephysim_1_1math_a35252bcade59c97ebc060a98fbb8a2b7}{min} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&a, const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&b, \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&m)
+\begin{DoxyCompactList}\small\item\em Computes the minimum of two vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a7398ab5056daf695a7a09614d7953c26}{max} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&a, const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&b, \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&M)
+\begin{DoxyCompactList}\small\item\em Computes the maximum of two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_aa83badac9152442c475f8080b844bc48}\label{namespacephysim_1_1math_aa83badac9152442c475f8080b844bc48}} 
+float \hyperlink{namespacephysim_1_1math_aa83badac9152442c475f8080b844bc48}{dot} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&f, const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&g)
+\begin{DoxyCompactList}\small\item\em The dot product between two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_a90a72aec2c53b1e7bd9d40a981dc3eef}\label{namespacephysim_1_1math_a90a72aec2c53b1e7bd9d40a981dc3eef}} 
+float \hyperlink{namespacephysim_1_1math_a90a72aec2c53b1e7bd9d40a981dc3eef}{dist2} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&f, const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&g)
+\begin{DoxyCompactList}\small\item\em The squared distance between two points, given their positional vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_af0c0f930df35414c901dbf366e03ec31}{perpendicular} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&f, \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&g)
+\begin{DoxyCompactList}\small\item\em Makes a perpendicular vector to {\itshape f}. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec2}{vec2} \hyperlink{namespacephysim_1_1math_a5fa60d9192d57b248fd5aef6cae2ec5b}{perpendicular} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&f)
+\begin{DoxyCompactList}\small\item\em Makes a perpendicular vector to {\itshape f}. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_af5428f77daf8d0b8d6c91343f98c3f32}{normalise} (const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&f, \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&g)
+\begin{DoxyCompactList}\small\item\em Vector normalisation. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_af828881d225d22df1a7049d5eccb0323}{min} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&a, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&b, \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&m)
+\begin{DoxyCompactList}\small\item\em Computes the minimum of two vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a0c47a45a0b76bb0d4d1d0684ffe40ff0}{max} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&a, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&b, \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&M)
+\begin{DoxyCompactList}\small\item\em Computes the maximum of two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_ace02057bfed8d85dce266dea1d7edf6d}\label{namespacephysim_1_1math_ace02057bfed8d85dce266dea1d7edf6d}} 
+float \hyperlink{namespacephysim_1_1math_ace02057bfed8d85dce266dea1d7edf6d}{dot} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em The dot product between two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_a3bde831a582dcf1b601ee7b70a1cb806}\label{namespacephysim_1_1math_a3bde831a582dcf1b601ee7b70a1cb806}} 
+float \hyperlink{namespacephysim_1_1math_a3bde831a582dcf1b601ee7b70a1cb806}{dist2} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em The squared distance between two points, given their positional vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a8f3b856b6e82c3703833395420d3541d}{cross} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g, \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&h)
+\begin{DoxyCompactList}\small\item\em The cross product of two vectors. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \hyperlink{namespacephysim_1_1math_a2ee48b2fd6bc80eb526a0ec81fe60f54}{cross} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em The cross product of two vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a4f57ea985280db4b2a313178500a38dd}{perpendicular} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em Makes a perpendicular vector to {\itshape f}. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \hyperlink{namespacephysim_1_1math_a0520988ecea5a25c000ce3bc22a695ed}{perpendicular} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f)
+\begin{DoxyCompactList}\small\item\em Makes a perpendicular vector to {\itshape f}. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_ab214b019b2cf8507d2a632ad0ec6075b}{normalise} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em Vector normalisation. \end{DoxyCompactList}\item 
+float \hyperlink{namespacephysim_1_1math_a5fdfad1a0bf0be5c6d6cba9ecc45c037}{angle\+\_\+xyz} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em Returns the angle between two vectors. \end{DoxyCompactList}\item 
+float \hyperlink{namespacephysim_1_1math_ac80bfe5ed2d96ff378869b6c087bc7df}{angle\+\_\+xy} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em Returns the xy angle between two vectors. \end{DoxyCompactList}\item 
+float \hyperlink{namespacephysim_1_1math_a5e56aec5af787b18d3636ca9ae7340e2}{angle\+\_\+xz} (const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&f, const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&g)
+\begin{DoxyCompactList}\small\item\em Returns the xz angle between two vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a45f0c59675615b717294abe00a7c268c}{min} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&a, const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&b, \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&m)
+\begin{DoxyCompactList}\small\item\em Computes the minimum of two vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_ab056fe88bcef66617badeee517327520}{max} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&a, const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&b, \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&M)
+\begin{DoxyCompactList}\small\item\em Computes the maximum of two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_acf476bb85d5f1270d9fc081e343fe4c1}\label{namespacephysim_1_1math_acf476bb85d5f1270d9fc081e343fe4c1}} 
+float \hyperlink{namespacephysim_1_1math_acf476bb85d5f1270d9fc081e343fe4c1}{dot} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&f, const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&g)
+\begin{DoxyCompactList}\small\item\em The dot product between two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_ade7d952497aa228c6a037643f03e655c}\label{namespacephysim_1_1math_ade7d952497aa228c6a037643f03e655c}} 
+float \hyperlink{namespacephysim_1_1math_ade7d952497aa228c6a037643f03e655c}{dist2} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&f, const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&g)
+\begin{DoxyCompactList}\small\item\em The squared distance between two points, given their positional vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a5df531bc331e7f1b439ce5d65d1853bf}{perpendicular} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&f, \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&g)
+\begin{DoxyCompactList}\small\item\em Makes a perpendicular vector to {\itshape f}. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec4}{vec4} \hyperlink{namespacephysim_1_1math_a7c59997429c9f892398287810f23371a}{perpendicular} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&f)
+\begin{DoxyCompactList}\small\item\em Makes a perpendicular vector to {\itshape f}. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_ab056ca8acc427646fa969864a34efd18}{normalise} (const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&f, \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&g)
+\begin{DoxyCompactList}\small\item\em Vector normalisation. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a863a43b7b02745aeda968023f961f3f0}{min} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&a, const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&b, \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&m)
+\begin{DoxyCompactList}\small\item\em Computes the minimum of two vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_aef66973aaf17e34ce0b033a67c201662}{max} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&a, const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&b, \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&M)
+\begin{DoxyCompactList}\small\item\em Computes the maximum of two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_a14d567a123df9f67a1cfe39a4b1d1d0c}\label{namespacephysim_1_1math_a14d567a123df9f67a1cfe39a4b1d1d0c}} 
+float \hyperlink{namespacephysim_1_1math_a14d567a123df9f67a1cfe39a4b1d1d0c}{dot} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&f, const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&g)
+\begin{DoxyCompactList}\small\item\em The dot product between two vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_a6670150aeb429958e0ebe24638fc8eb8}\label{namespacephysim_1_1math_a6670150aeb429958e0ebe24638fc8eb8}} 
+float \hyperlink{namespacephysim_1_1math_a6670150aeb429958e0ebe24638fc8eb8}{norm2} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&f)
+\begin{DoxyCompactList}\small\item\em The square of the norm of a vector. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_a4448e3d1fa7426900fbe4289e740dc85}\label{namespacephysim_1_1math_a4448e3d1fa7426900fbe4289e740dc85}} 
+float \hyperlink{namespacephysim_1_1math_a4448e3d1fa7426900fbe4289e740dc85}{norm} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&f)
+\begin{DoxyCompactList}\small\item\em The norm of a vector. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1math_a8ae04921f7fea681783094923a0d5b25}\label{namespacephysim_1_1math_a8ae04921f7fea681783094923a0d5b25}} 
+float \hyperlink{namespacephysim_1_1math_a8ae04921f7fea681783094923a0d5b25}{dist2} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&f, const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&g)
+\begin{DoxyCompactList}\small\item\em The squared distance between two points, given their positional vectors. \end{DoxyCompactList}\item 
+void \hyperlink{namespacephysim_1_1math_a3b053d26eb6b4f23753547e609bef56e}{normalise} (const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&f, \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&g)
+\begin{DoxyCompactList}\small\item\em Vector normalisation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Mathematical operations namespace. 
+
+Contains the definition of the three different types of vectors\+: \hyperlink{structphysim_1_1math_1_1vec2}{vec2}, \hyperlink{structphysim_1_1math_1_1vec3}{vec3} and \hyperlink{structphysim_1_1math_1_1vec4}{vec4}.
+
+Also, it contains several macros for the efficient compilation of typical operations between vecors. These are not meant to be used outside the library, since they are cumbersome to use. 
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1math_afe00b7e2c64c6f8b46f5d9be3f516acf}\label{namespacephysim_1_1math_afe00b7e2c64c6f8b46f5d9be3f516acf}} 
+\index{physim\+::math@{physim\+::math}!vec2@{vec2}}
+\index{vec2@{vec2}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{vec2}{vec2}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structphysim_1_1math_1_1vec2}{physim\+::math\+::vec2}  \hyperlink{structphysim_1_1math_1_1vec2}{physim\+::math\+::vec2}}
+
+
+
+2-\/dimensional vector. 
+
+Basic implementation of a two-\/dimensional vector as a struct with only two attributes \hyperlink{structphysim_1_1math_1_1vec2_a6a8f77a1b21b1ec2564c92468df19a89}{vec2\+::x}, \hyperlink{structphysim_1_1math_1_1vec2_aeed40ea44616cf9e3605e3e94b00d4d9}{vec2\+::y}.
+
+The notation is borrowed from the \textquotesingle{}glm\textquotesingle{} library. \mbox{\Hypertarget{namespacephysim_1_1math_a4641a15d91e1eed417901040c33d3c72}\label{namespacephysim_1_1math_a4641a15d91e1eed417901040c33d3c72}} 
+\index{physim\+::math@{physim\+::math}!vec3@{vec3}}
+\index{vec3@{vec3}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{vec3}{vec3}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3}  \hyperlink{structphysim_1_1math_1_1vec3}{physim\+::math\+::vec3}}
+
+
+
+3-\/dimensional vector. 
+
+Basic implementation of a three-\/dimensional vector as a struct with only three attributes \hyperlink{structphysim_1_1math_1_1vec3_a1e6e6b869b8631d35d47f729d0e7b133}{vec3\+::x}, \hyperlink{structphysim_1_1math_1_1vec3_a9d8e3bdd74443a7bc8cf45c85d1d008a}{vec3\+::y} and \hyperlink{structphysim_1_1math_1_1vec3_a541880e43f1a7bd1b2c4524891a51727}{vec3\+::z}.
+
+The notation is borrowed from the \textquotesingle{}glm\textquotesingle{} library. \mbox{\Hypertarget{namespacephysim_1_1math_a325cbe58f444c9ff84ca5831849f35ca}\label{namespacephysim_1_1math_a325cbe58f444c9ff84ca5831849f35ca}} 
+\index{physim\+::math@{physim\+::math}!vec4@{vec4}}
+\index{vec4@{vec4}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{vec4}{vec4}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structphysim_1_1math_1_1vec4}{physim\+::math\+::vec4}  \hyperlink{structphysim_1_1math_1_1vec4}{physim\+::math\+::vec4}}
+
+
+
+4-\/dimensional vector. 
+
+Basic implementation of a four-\/dimensional vector as a struct with only four attributes \hyperlink{structphysim_1_1math_1_1vec4_a21bfa48cfaaf92c12e6af075ee661a3b}{vec4\+::x}, \hyperlink{structphysim_1_1math_1_1vec4_a718bf02c9b812d991467e1299de4b3d8}{vec4\+::y}, \hyperlink{structphysim_1_1math_1_1vec4_a46412c320c10c30f63dc4e54652f93f7}{vec4\+::z} and \hyperlink{structphysim_1_1math_1_1vec4_a04d868010d1b53431dbc96442d204685}{vec4\+::u}.
+
+The notation is borrowed from the \textquotesingle{}glm\textquotesingle{} library. \mbox{\Hypertarget{namespacephysim_1_1math_a4927e09ba2ee25602c7ca62839a24d53}\label{namespacephysim_1_1math_a4927e09ba2ee25602c7ca62839a24d53}} 
+\index{physim\+::math@{physim\+::math}!vec6@{vec6}}
+\index{vec6@{vec6}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{vec6}{vec6}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structphysim_1_1math_1_1vec6}{physim\+::math\+::vec6}  \hyperlink{structphysim_1_1math_1_1vec6}{physim\+::math\+::vec6}}
+
+
+
+6-\/dimensional vector. 
+
+Basic implementation of a six-\/dimensional vector as a struct with only six attributes \hyperlink{structphysim_1_1math_1_1vec6_a38324c181585016fc93ec6d64532d649}{vec6\+::x}, \hyperlink{structphysim_1_1math_1_1vec6_a1f17bfbd699b91f52527d61302bd97d8}{vec6\+::y}, \hyperlink{structphysim_1_1math_1_1vec6_a97d6e428b29374a491d63c0470e6c1e9}{vec6\+::z}, \hyperlink{structphysim_1_1math_1_1vec6_a20a084c3874c741f3c8f90b184b563bc}{vec6\+::u}, \hyperlink{structphysim_1_1math_1_1vec6_ade41c2d920828684bfcfa76563bb65d5}{vec6\+::v} and \hyperlink{structphysim_1_1math_1_1vec6_ac35ab7be6a7783abff02bf48968dec6a}{vec6\+::w}.
+
+The notation is borrowed from the \textquotesingle{}glm\textquotesingle{} library. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1math_ac80bfe5ed2d96ff378869b6c087bc7df}\label{namespacephysim_1_1math_ac80bfe5ed2d96ff378869b6c087bc7df}} 
+\index{physim\+::math@{physim\+::math}!angle\+\_\+xy@{angle\+\_\+xy}}
+\index{angle\+\_\+xy@{angle\+\_\+xy}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{angle\+\_\+xy()}{angle\_xy()}}
+{\footnotesize\ttfamily float physim\+::math\+::angle\+\_\+xy (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the xy angle between two vectors. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & 3D vector. \\
+\hline
+\mbox{\tt in}  & {\em g} & 3D vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the angle between the vectors $(f_x,0,0)$ and $(g_x,g_y,0)$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1math_a5fdfad1a0bf0be5c6d6cba9ecc45c037}\label{namespacephysim_1_1math_a5fdfad1a0bf0be5c6d6cba9ecc45c037}} 
+\index{physim\+::math@{physim\+::math}!angle\+\_\+xyz@{angle\+\_\+xyz}}
+\index{angle\+\_\+xyz@{angle\+\_\+xyz}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{angle\+\_\+xyz()}{angle\_xyz()}}
+{\footnotesize\ttfamily float physim\+::math\+::angle\+\_\+xyz (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the angle between two vectors. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & 3D vector. \\
+\hline
+\mbox{\tt in}  & {\em g} & 3D vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the angle between the vectors $f,g$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1math_a5e56aec5af787b18d3636ca9ae7340e2}\label{namespacephysim_1_1math_a5e56aec5af787b18d3636ca9ae7340e2}} 
+\index{physim\+::math@{physim\+::math}!angle\+\_\+xz@{angle\+\_\+xz}}
+\index{angle\+\_\+xz@{angle\+\_\+xz}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{angle\+\_\+xz()}{angle\_xz()}}
+{\footnotesize\ttfamily float physim\+::math\+::angle\+\_\+xz (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the xz angle between two vectors. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & 3D vector. \\
+\hline
+\mbox{\tt in}  & {\em g} & 3D vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the angle between the vectors $(f_x,f_y,0)$ and $g$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1math_a8f3b856b6e82c3703833395420d3541d}\label{namespacephysim_1_1math_a8f3b856b6e82c3703833395420d3541d}} 
+\index{physim\+::math@{physim\+::math}!cross@{cross}}
+\index{cross@{cross}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{cross()}{cross()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void physim\+::math\+::cross (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The cross product of two vectors. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em h} & The cross product of {\itshape f} and {\itshape g}. \\
+\hline
+\mbox{\tt in}  & {\em f} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em g} & Input vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a2ee48b2fd6bc80eb526a0ec81fe60f54}\label{namespacephysim_1_1math_a2ee48b2fd6bc80eb526a0ec81fe60f54}} 
+\index{physim\+::math@{physim\+::math}!cross@{cross}}
+\index{cross@{cross}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{cross()}{cross()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{vec3} physim\+::math\+::cross (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The cross product of two vectors. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em g} & Input vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the cross product of {\itshape f} and {\itshape g}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1math_a7398ab5056daf695a7a09614d7953c26}\label{namespacephysim_1_1math_a7398ab5056daf695a7a09614d7953c26}} 
+\index{physim\+::math@{physim\+::math}!max@{max}}
+\index{max@{max}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{max()}{max()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::max (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{M }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the maximum of two vectors. 
+
+The first component of the result is the maximum value of the first components of the inputs, the second component of the result is the maximum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em M} & Maximum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a0c47a45a0b76bb0d4d1d0684ffe40ff0}\label{namespacephysim_1_1math_a0c47a45a0b76bb0d4d1d0684ffe40ff0}} 
+\index{physim\+::math@{physim\+::math}!max@{max}}
+\index{max@{max}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{max()}{max()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::max (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{M }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the maximum of two vectors. 
+
+The first component of the result is the maximum value of the first components of the inputs, the second component of the result is the maximum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em M} & Maximum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_ab056fe88bcef66617badeee517327520}\label{namespacephysim_1_1math_ab056fe88bcef66617badeee517327520}} 
+\index{physim\+::math@{physim\+::math}!max@{max}}
+\index{max@{max}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{max()}{max()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::max (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{M }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the maximum of two vectors. 
+
+The first component of the result is the maximum value of the first components of the inputs, the second component of the result is the maximum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em M} & Maximum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_aef66973aaf17e34ce0b033a67c201662}\label{namespacephysim_1_1math_aef66973aaf17e34ce0b033a67c201662}} 
+\index{physim\+::math@{physim\+::math}!max@{max}}
+\index{max@{max}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{max()}{max()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::max (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{M }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the maximum of two vectors. 
+
+The first component of the result is the maximum value of the first components of the inputs, the second component of the result is the maximum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em M} & Maximum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a35252bcade59c97ebc060a98fbb8a2b7}\label{namespacephysim_1_1math_a35252bcade59c97ebc060a98fbb8a2b7}} 
+\index{physim\+::math@{physim\+::math}!min@{min}}
+\index{min@{min}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{min()}{min()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::min (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the minimum of two vectors. 
+
+The first component of the result is the minimum value of the first components of the inputs, the second component of the result is the minimum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em m} & Minimum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_af828881d225d22df1a7049d5eccb0323}\label{namespacephysim_1_1math_af828881d225d22df1a7049d5eccb0323}} 
+\index{physim\+::math@{physim\+::math}!min@{min}}
+\index{min@{min}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{min()}{min()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::min (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the minimum of two vectors. 
+
+The first component of the result is the minimum value of the first components of the inputs, the second component of the result is the minimum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em m} & Minimum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a45f0c59675615b717294abe00a7c268c}\label{namespacephysim_1_1math_a45f0c59675615b717294abe00a7c268c}} 
+\index{physim\+::math@{physim\+::math}!min@{min}}
+\index{min@{min}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{min()}{min()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::min (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the minimum of two vectors. 
+
+The first component of the result is the minimum value of the first components of the inputs, the second component of the result is the minimum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em m} & Minimum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a863a43b7b02745aeda968023f961f3f0}\label{namespacephysim_1_1math_a863a43b7b02745aeda968023f961f3f0}} 
+\index{physim\+::math@{physim\+::math}!min@{min}}
+\index{min@{min}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{min()}{min()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::min (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{a,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{b,  }\item[{\hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the minimum of two vectors. 
+
+The first component of the result is the minimum value of the first components of the inputs, the second component of the result is the minimum value of the second components of the inputs, ... 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input vector. \\
+\hline
+\mbox{\tt in}  & {\em b} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em m} & Minimum of {\itshape a} and {\itshape b}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_af5428f77daf8d0b8d6c91343f98c3f32}\label{namespacephysim_1_1math_af5428f77daf8d0b8d6c91343f98c3f32}} 
+\index{physim\+::math@{physim\+::math}!normalise@{normalise}}
+\index{normalise@{normalise}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{normalise()}{normalise()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::normalise (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Vector normalisation. 
+
+Each component of vector {\itshape f} is divided by its norm. The result is stored in {\itshape g}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Vector to be normalised. \\
+\hline
+\mbox{\tt out}  & {\em g} & Where to store the normalised vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a3b053d26eb6b4f23753547e609bef56e}\label{namespacephysim_1_1math_a3b053d26eb6b4f23753547e609bef56e}} 
+\index{physim\+::math@{physim\+::math}!normalise@{normalise}}
+\index{normalise@{normalise}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{normalise()}{normalise()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::normalise (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec6}{vec6} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Vector normalisation. 
+
+Each component of vector {\itshape f} is divided by its norm. The result is stored in {\itshape g}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Vector to be normalised. \\
+\hline
+\mbox{\tt out}  & {\em g} & Where to store the normalised vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_ab056ca8acc427646fa969864a34efd18}\label{namespacephysim_1_1math_ab056ca8acc427646fa969864a34efd18}} 
+\index{physim\+::math@{physim\+::math}!normalise@{normalise}}
+\index{normalise@{normalise}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{normalise()}{normalise()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::normalise (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Vector normalisation. 
+
+Each component of vector {\itshape f} is divided by its norm. The result is stored in {\itshape g}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Vector to be normalised. \\
+\hline
+\mbox{\tt out}  & {\em g} & Where to store the normalised vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_ab214b019b2cf8507d2a632ad0ec6075b}\label{namespacephysim_1_1math_ab214b019b2cf8507d2a632ad0ec6075b}} 
+\index{physim\+::math@{physim\+::math}!normalise@{normalise}}
+\index{normalise@{normalise}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{normalise()}{normalise()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void physim\+::math\+::normalise (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Vector normalisation. 
+
+Each component of vector {\itshape f} is divided by its norm. The result is stored in {\itshape g}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Vector to be normalised. \\
+\hline
+\mbox{\tt out}  & {\em g} & Where to store the normalised vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_af0c0f930df35414c901dbf366e03ec31}\label{namespacephysim_1_1math_af0c0f930df35414c901dbf366e03ec31}} 
+\index{physim\+::math@{physim\+::math}!perpendicular@{perpendicular}}
+\index{perpendicular@{perpendicular}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{perpendicular()}{perpendicular()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily void physim\+::math\+::perpendicular (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Makes a perpendicular vector to {\itshape f}. 
+
+Two vectors are perpendicular if, and only if, their dot product equals 0. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em g} & A vector perpendicular to {\itshape f}. \\
+\hline
+\mbox{\tt in}  & {\em f} & Input vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a5fa60d9192d57b248fd5aef6cae2ec5b}\label{namespacephysim_1_1math_a5fa60d9192d57b248fd5aef6cae2ec5b}} 
+\index{physim\+::math@{physim\+::math}!perpendicular@{perpendicular}}
+\index{perpendicular@{perpendicular}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{perpendicular()}{perpendicular()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec2}{vec2} physim\+::math\+::perpendicular (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec2}{vec2} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Makes a perpendicular vector to {\itshape f}. 
+
+Two vectors are perpendicular if, and only if, their dot product equals 0. 
+\begin{DoxyParams}{Parameters}
+{\em f} & Input vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a vector perpendicular to {\itshape f}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1math_a5df531bc331e7f1b439ce5d65d1853bf}\label{namespacephysim_1_1math_a5df531bc331e7f1b439ce5d65d1853bf}} 
+\index{physim\+::math@{physim\+::math}!perpendicular@{perpendicular}}
+\index{perpendicular@{perpendicular}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{perpendicular()}{perpendicular()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily void physim\+::math\+::perpendicular (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Makes a perpendicular vector to {\itshape f}. 
+
+Two vectors are perpendicular if, and only if, their dot product equals 0. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Input vector. \\
+\hline
+\mbox{\tt out}  & {\em g} & A vector perpendicular to {\itshape f}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a4f57ea985280db4b2a313178500a38dd}\label{namespacephysim_1_1math_a4f57ea985280db4b2a313178500a38dd}} 
+\index{physim\+::math@{physim\+::math}!perpendicular@{perpendicular}}
+\index{perpendicular@{perpendicular}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{perpendicular()}{perpendicular()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily void physim\+::math\+::perpendicular (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Makes a perpendicular vector to {\itshape f}. 
+
+Two vectors are perpendicular if, and only if, their dot product equals 0. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em g} & A vector perpendicular to {\itshape f}. \\
+\hline
+\mbox{\tt in}  & {\em f} & Input vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1math_a7c59997429c9f892398287810f23371a}\label{namespacephysim_1_1math_a7c59997429c9f892398287810f23371a}} 
+\index{physim\+::math@{physim\+::math}!perpendicular@{perpendicular}}
+\index{perpendicular@{perpendicular}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{perpendicular()}{perpendicular()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec4}{vec4} physim\+::math\+::perpendicular (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec4}{vec4} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Makes a perpendicular vector to {\itshape f}. 
+
+Two vectors are perpendicular if, and only if, their dot product equals 0. 
+\begin{DoxyParams}{Parameters}
+{\em f} & Input vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a vector perpendicular to {\itshape f}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacephysim_1_1math_a0520988ecea5a25c000ce3bc22a695ed}\label{namespacephysim_1_1math_a0520988ecea5a25c000ce3bc22a695ed}} 
+\index{physim\+::math@{physim\+::math}!perpendicular@{perpendicular}}
+\index{perpendicular@{perpendicular}!physim\+::math@{physim\+::math}}
+\subsubsection{\texorpdfstring{perpendicular()}{perpendicular()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{vec3} physim\+::math\+::perpendicular (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{vec3} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Makes a perpendicular vector to {\itshape f}. 
+
+Two vectors are perpendicular if, and only if, their dot product equals 0. 
+\begin{DoxyParams}{Parameters}
+{\em f} & Input vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a vector perpendicular to {\itshape f}. 
+\end{DoxyReturn}

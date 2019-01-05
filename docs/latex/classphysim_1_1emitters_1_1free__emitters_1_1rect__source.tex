@@ -1,0 +1,207 @@
+\hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source}{}\section{physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+source Class Reference}
+\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source}\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+
+
+A rectangular emitter.  
+
+
+
+
+{\ttfamily \#include $<$rect\+\_\+source.\+hpp$>$}
+
+
+
+Inheritance diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+source\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classphysim_1_1emitters_1_1free__emitters_1_1rect__source__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for physim\+:\+:emitters\+:\+:free\+\_\+emitters\+:\+:rect\+\_\+source\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{classphysim_1_1emitters_1_1free__emitters_1_1rect__source__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aaeb94fe15698d716f7d3641f0d6365bf}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aaeb94fe15698d716f7d3641f0d6365bf}} 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aaeb94fe15698d716f7d3641f0d6365bf}{rect\+\_\+source} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a2aa2b82ecb8b46f6a5cda7c8b19f8f05}{rect\+\_\+source} (const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source}{rect\+\_\+source} \&rs)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aa3447fb2fe83b0b4c80ea30ef45882a2}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aa3447fb2fe83b0b4c80ea30ef45882a2}} 
+virtual \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aa3447fb2fe83b0b4c80ea30ef45882a2}{$\sim$rect\+\_\+source} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab85134622163dfc1e3a77730ea94557e}{set\+\_\+rectangular\+\_\+source} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+S, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+u, const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+v, float \+\_\+w, float \+\_\+h)
+\begin{DoxyCompactList}\small\item\em Sets the source of the rectangle. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a815c63a97fe9fd5defe9110666e4c794}{set\+\_\+straight\+\_\+source} (const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&\+\_\+S, float \+\_\+w, float \+\_\+h)
+\begin{DoxyCompactList}\small\item\em Patricular case of flat rectangular source. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a629b14b434936e5dfd1f82ac6e7853a8}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a629b14b434936e5dfd1f82ac6e7853a8}} 
+virtual \hyperlink{classphysim_1_1emitters_1_1free__emitter}{free\+\_\+emitter} $\ast$ \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a629b14b434936e5dfd1f82ac6e7853a8}{clone} () const =0
+\begin{DoxyCompactList}\small\item\em Returns a reference to a copy of this emitter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab5109666862f8f49e18f06d9bf663901}{make\+\_\+pos\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Sets the position initialser. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aace4d8f596f2a138e098ab0f86e927b5}{make\+\_\+vel\+\_\+init} ()=0
+\begin{DoxyCompactList}\small\item\em Sets the velocity initialser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a3b849dcdb1584ec1fd564d9341ed89f0}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a3b849dcdb1584ec1fd564d9341ed89f0}} 
+std\+::default\+\_\+random\+\_\+engine \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a3b849dcdb1584ec1fd564d9341ed89f0}{E}
+\begin{DoxyCompactList}\small\item\em Engine used in the uniform distribution \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ad88b5ea9f44837663c5dc53affde853c}{U01}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ad88b5ea9f44837663c5dc53affde853c}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ad88b5ea9f44837663c5dc53affde853c}} 
+std\+::uniform\+\_\+real\+\_\+distribution$<$ float $>$ \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ad88b5ea9f44837663c5dc53affde853c}{U01}
+\begin{DoxyCompactList}\small\item\em Random number generator for uniform values between 0 and 1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}{S}
+\begin{DoxyCompactList}\small\item\em The source point of the rectangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a06ebfb60a14d8495e495818378aaa519}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a06ebfb60a14d8495e495818378aaa519}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a06ebfb60a14d8495e495818378aaa519}{C}
+\begin{DoxyCompactList}\small\item\em The center of the rectangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}{u}
+\begin{DoxyCompactList}\small\item\em Unitary vector along the width. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}} 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}{v}
+\begin{DoxyCompactList}\small\item\em Unitary vector along the height. \end{DoxyCompactList}\item 
+\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0ce1fc34b505b94cdbc22cdb05047142}{n}
+\begin{DoxyCompactList}\small\item\em Normal to the rectangle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}} 
+float \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}{w}
+\begin{DoxyCompactList}\small\item\em The distance between \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}{S} and the farthest point in $R(\lambda,0)$. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aebabbc2dc4e697b10d37e54d998f1146}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aebabbc2dc4e697b10d37e54d998f1146}} 
+float \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aebabbc2dc4e697b10d37e54d998f1146}{h}
+\begin{DoxyCompactList}\small\item\em The distance between \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}{S} and the farthest point in $R(0,\mu)$. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A rectangular emitter. 
+
+Provides a position initialiser function so that particles are generated within a rectangle of specific dimensions.
+
+Need to set the source size through \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab85134622163dfc1e3a77730ea94557e}{set\+\_\+rectangular\+\_\+source} so that the initialser\textquotesingle{}s source is defined. In this method is specified the coordinates of one of its corners (the source \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}{S}), the two unit vectors spanning the plane it belongs to (see \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}{u} and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}{v}), and the lengths of the sides, width and length (see \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aebabbc2dc4e697b10d37e54d998f1146}{h} and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}{w}).
+
+The points in this rectangle are, then, parametrised by\+:
+
+$R(\lambda, \mu) = S + \lambda\cdot w\cdot \vec{u} + \mu\cdot h\cdot \vec{u}$
+
+for $\lambda,\mu \in [0,1]\subset R$.
+
+Needless to say that if the vectors \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}{u} and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}{v} are not perpendicular the result will be a parallelogram, not a rectangle. However, the word \textquotesingle{}rectangle\textquotesingle{} will be used regardless of how misleading it might be. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a2aa2b82ecb8b46f6a5cda7c8b19f8f05}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a2aa2b82ecb8b46f6a5cda7c8b19f8f05}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}!rect\+\_\+source@{rect\+\_\+source}}
+\index{rect\+\_\+source@{rect\+\_\+source}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{rect\+\_\+source()}{rect\_source()}}
+{\footnotesize\ttfamily physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source\+::rect\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source}{rect\+\_\+source} \&}]{rs }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+The function \hyperlink{classphysim_1_1emitters_1_1base__emitter_ac67584a2ca34232c1f4f04c41599df0e}{free\+\_\+emitter\+::pos} is not copied. Instead, it is remade (function \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab5109666862f8f49e18f06d9bf663901}{make\+\_\+pos\+\_\+init} is called again). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab5109666862f8f49e18f06d9bf663901}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab5109666862f8f49e18f06d9bf663901}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}!make\+\_\+pos\+\_\+init@{make\+\_\+pos\+\_\+init}}
+\index{make\+\_\+pos\+\_\+init@{make\+\_\+pos\+\_\+init}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{make\+\_\+pos\+\_\+init()}{make\_pos\_init()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source\+::make\+\_\+pos\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Sets the position initialser. 
+
+It is made a virtual function so that this class can be reimplemented in another one.
+
+Positions are generated according to the parametrisation of this rectangle. \mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aace4d8f596f2a138e098ab0f86e927b5}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aace4d8f596f2a138e098ab0f86e927b5}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}!make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}}
+\index{make\+\_\+vel\+\_\+init@{make\+\_\+vel\+\_\+init}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{make\+\_\+vel\+\_\+init()}{make\_vel\_init()}}
+{\footnotesize\ttfamily virtual void physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source\+::make\+\_\+vel\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Sets the velocity initialser. 
+
+It is made a virtual function so that this class can be reimplemented in another one. 
+
+Implemented in \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__fountain_a86c3d792fa977ef2b97785abced613ae}{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+fountain}, and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__shower_ab1c7c992c636e3a15e70d6ce3180ed70}{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+shower}.
+
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab85134622163dfc1e3a77730ea94557e}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab85134622163dfc1e3a77730ea94557e}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}!set\+\_\+rectangular\+\_\+source@{set\+\_\+rectangular\+\_\+source}}
+\index{set\+\_\+rectangular\+\_\+source@{set\+\_\+rectangular\+\_\+source}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{set\+\_\+rectangular\+\_\+source()}{set\_rectangular\_source()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source\+::set\+\_\+rectangular\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+S,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+u,  }\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+v,  }\item[{float}]{\+\_\+w,  }\item[{float}]{\+\_\+h }\end{DoxyParamCaption})}
+
+
+
+Sets the source of the rectangle. 
+
+The order of {\itshape \+\_\+u} and {\itshape \+\_\+v} is important. It defines the \textquotesingle{}above\textquotesingle{} and \textquotesingle{}below\textquotesingle{} parts of the rectangle. This is user-\/defined.
+
+The normal (see \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0ce1fc34b505b94cdbc22cdb05047142}{n}) is determined as the cross-\/product of \+\_\+u and \+\_\+v, in this order. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+S} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}{S}. \\
+\hline
+{\em \+\_\+u} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}{u}. \\
+\hline
+{\em \+\_\+v} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}{v}. \\
+\hline
+{\em \+\_\+w} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}{w}. \\
+\hline
+{\em \+\_\+h} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aebabbc2dc4e697b10d37e54d998f1146}{h}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a815c63a97fe9fd5defe9110666e4c794}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a815c63a97fe9fd5defe9110666e4c794}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}!set\+\_\+straight\+\_\+source@{set\+\_\+straight\+\_\+source}}
+\index{set\+\_\+straight\+\_\+source@{set\+\_\+straight\+\_\+source}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{set\+\_\+straight\+\_\+source()}{set\_straight\_source()}}
+{\footnotesize\ttfamily void physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source\+::set\+\_\+straight\+\_\+source (\begin{DoxyParamCaption}\item[{const \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{\+\_\+S,  }\item[{float}]{\+\_\+w,  }\item[{float}]{\+\_\+h }\end{DoxyParamCaption})}
+
+
+
+Patricular case of flat rectangular source. 
+
+Unitary vectors used are\+:
+\begin{DoxyItemize}
+\item \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}{u} = (1.\+0, 0.\+0, 0.\+0)
+\item \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}{v} = (0.\+0, 0.\+0, 1.\+0) 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+S} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0d958945449e9d31e95b154f942b21ca}{S}. \\
+\hline
+{\em \+\_\+w} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_ab6e88219088b1048622242f7f2d03f91}{w}. \\
+\hline
+{\em \+\_\+h} & See \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_aebabbc2dc4e697b10d37e54d998f1146}{h}. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0ce1fc34b505b94cdbc22cdb05047142}\label{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a0ce1fc34b505b94cdbc22cdb05047142}} 
+\index{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}!n@{n}}
+\index{n@{n}!physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source@{physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source}}
+\subsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} physim\+::emitters\+::free\+\_\+emitters\+::rect\+\_\+source\+::n\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Normal to the rectangle. 
+
+Unitary vector. Cross-\/product of \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a692e4b1fd9e74b5c7692cad3f0c184c4}{u} and \hyperlink{classphysim_1_1emitters_1_1free__emitters_1_1rect__source_a9540156884818d3f6b0ed86a1b0902d0}{v}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+physim/emitter/free\+\_\+emitters/rect\+\_\+source.\+hpp\item 
+physim/emitter/free\+\_\+emitters/rect\+\_\+source.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,7 @@
+<map id="physim::fluids::fluid" name="physim::fluids::fluid">
+<area shape="rect" id="node2" href="$classphysim_1_1particles_1_1fluid__particle.html" title="Class implementing a fluid particle. " alt="" coords="5,243,135,284"/>
+<area shape="rect" id="node3" href="$classphysim_1_1particles_1_1base__particle.html" title="Class implementing the most basic particle. " alt="" coords="5,139,135,180"/>
+<area shape="rect" id="node4" href="$structphysim_1_1math_1_1vec3.html" title="3&#45;dimensional vector. " alt="" coords="77,5,215,32"/>
+<area shape="rect" id="node6" href="$structphysim_1_1structures_1_1octree_1_1node.html" title="Octree&#39;s node definition. " alt="" coords="159,139,290,180"/>
+<area shape="rect" id="node5" href="$classphysim_1_1structures_1_1octree.html" title="Octree class. " alt="" coords="159,243,290,284"/>
+</map>

@@ -1,0 +1,77 @@
+\hypertarget{namespacephysim_1_1input_1_1input__private}{}\section{physim\+:\+:input\+:\+:input\+\_\+private Namespace Reference}
+\label{namespacephysim_1_1input_1_1input__private}\index{physim\+::input\+::input\+\_\+private@{physim\+::input\+::input\+\_\+private}}
+
+
+This namespace contains functions for private use.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{namespacephysim_1_1input_1_1input__private_a9bf525ab1bb178cfe1de59c6a91b6554}{\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines} (ifstream \&fin, vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&vertices, vector$<$ size\+\_\+t $>$ \&triangles)
+\begin{DoxyCompactList}\small\item\em Retrieves the vertex coordinates and the faces. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacephysim_1_1input_1_1input__private_a9621d3648a479a8b35a221aac2c1b619}{\+\_\+\+\_\+ply\+\_\+load\+\_\+header} (ifstream \&fin, int \&n\+\_\+verts, int \&n\+\_\+faces, string \&format)
+\begin{DoxyCompactList}\small\item\em Loads the header of the ply file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1input_1_1input__private_aa74f98e62f9523f70b544142b293c6f3}\label{namespacephysim_1_1input_1_1input__private_aa74f98e62f9523f70b544142b293c6f3}} 
+void \hyperlink{namespacephysim_1_1input_1_1input__private_aa74f98e62f9523f70b544142b293c6f3}{\+\_\+\+\_\+ply\+\_\+load\+\_\+vertices\+\_\+binary\+\_\+le\+\_\+1\+\_\+0} (ifstream \&fin, int n\+\_\+verts, vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&verts)
+\begin{DoxyCompactList}\small\item\em Load vertices in binary, little endian format. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1input_1_1input__private_ab107468bc09cd1ac542e4ea65c49d07c}\label{namespacephysim_1_1input_1_1input__private_ab107468bc09cd1ac542e4ea65c49d07c}} 
+void \hyperlink{namespacephysim_1_1input_1_1input__private_ab107468bc09cd1ac542e4ea65c49d07c}{\+\_\+\+\_\+ply\+\_\+load\+\_\+faces\+\_\+binary\+\_\+le\+\_\+1\+\_\+0} (ifstream \&fin, int n\+\_\+faces, vector$<$ size\+\_\+t $>$ \&tris)
+\begin{DoxyCompactList}\small\item\em Load faces in binary, little endian format. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1input_1_1input__private_a3af6652f88ef9e889e48a7e4f72a8611}\label{namespacephysim_1_1input_1_1input__private_a3af6652f88ef9e889e48a7e4f72a8611}} 
+void \hyperlink{namespacephysim_1_1input_1_1input__private_a3af6652f88ef9e889e48a7e4f72a8611}{\+\_\+\+\_\+ply\+\_\+load\+\_\+vertices\+\_\+ascii\+\_\+1\+\_\+0} (ifstream \&fin, int n\+\_\+verts, vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&verts)
+\begin{DoxyCompactList}\small\item\em Load vertices in A\+S\+C\+II. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacephysim_1_1input_1_1input__private_a176b0dd04828268bb3cee9a776a2f351}\label{namespacephysim_1_1input_1_1input__private_a176b0dd04828268bb3cee9a776a2f351}} 
+void \hyperlink{namespacephysim_1_1input_1_1input__private_a176b0dd04828268bb3cee9a776a2f351}{\+\_\+\+\_\+ply\+\_\+load\+\_\+faces\+\_\+ascii\+\_\+1\+\_\+0} (ifstream \&fin, int n\+\_\+faces, vector$<$ size\+\_\+t $>$ \&tris)
+\begin{DoxyCompactList}\small\item\em Load faces in A\+S\+C\+II. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This namespace contains functions for private use. 
+
+There is no need to call any of these functions. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacephysim_1_1input_1_1input__private_a9bf525ab1bb178cfe1de59c6a91b6554}\label{namespacephysim_1_1input_1_1input__private_a9bf525ab1bb178cfe1de59c6a91b6554}} 
+\index{physim\+::input\+::input\+\_\+private@{physim\+::input\+::input\+\_\+private}!\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines@{\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines}}
+\index{\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines@{\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines}!physim\+::input\+::input\+\_\+private@{physim\+::input\+::input\+\_\+private}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines()}{\_\_obj\_parse\_file\_lines()}}
+{\footnotesize\ttfamily void physim\+::input\+::input\+\_\+private\+::\+\_\+\+\_\+obj\+\_\+parse\+\_\+file\+\_\+lines (\begin{DoxyParamCaption}\item[{ifstream \&}]{fin,  }\item[{vector$<$ \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} $>$ \&}]{vertices,  }\item[{vector$<$ size\+\_\+t $>$ \&}]{triangles }\end{DoxyParamCaption})}
+
+
+
+Retrieves the vertex coordinates and the faces. 
+
+Private function. Do not call directly. 
+\begin{DoxyParams}[1]{Parameters}
+ & {\em fin} & Input stream. \\
+\hline
+\mbox{\tt out}  & {\em vertices} & Vertices of the object read from the file. \\
+\hline
+\mbox{\tt out}  & {\em triangles} & Triangles of the object read from the file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacephysim_1_1input_1_1input__private_a9621d3648a479a8b35a221aac2c1b619}\label{namespacephysim_1_1input_1_1input__private_a9621d3648a479a8b35a221aac2c1b619}} 
+\index{physim\+::input\+::input\+\_\+private@{physim\+::input\+::input\+\_\+private}!\+\_\+\+\_\+ply\+\_\+load\+\_\+header@{\+\_\+\+\_\+ply\+\_\+load\+\_\+header}}
+\index{\+\_\+\+\_\+ply\+\_\+load\+\_\+header@{\+\_\+\+\_\+ply\+\_\+load\+\_\+header}!physim\+::input\+::input\+\_\+private@{physim\+::input\+::input\+\_\+private}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+ply\+\_\+load\+\_\+header()}{\_\_ply\_load\_header()}}
+{\footnotesize\ttfamily bool physim\+::input\+::input\+\_\+private\+::\+\_\+\+\_\+ply\+\_\+load\+\_\+header (\begin{DoxyParamCaption}\item[{ifstream \&}]{fin,  }\item[{int \&}]{n\+\_\+verts,  }\item[{int \&}]{n\+\_\+faces,  }\item[{string \&}]{format }\end{DoxyParamCaption})}
+
+
+
+Loads the header of the ply file. 
+
+Extracts number of vertices, faces, and whether it is binary or A\+S\+C\+II format. 
+\begin{DoxyParams}[1]{Parameters}
+ & {\em fin} & File stream. \\
+\hline
+\mbox{\tt out}  & {\em n\+\_\+verts} & Number of vertices. \\
+\hline
+\mbox{\tt out}  & {\em n\+\_\+faces} & Number of faces. \\
+\hline
+\mbox{\tt out}  & {\em format} & Format of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
