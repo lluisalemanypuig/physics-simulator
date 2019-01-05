@@ -17,7 +17,7 @@ namespace fluids {
  * A fluid is characterised by its @ref volume, @ref density and @ref viscosity.
  *
  * It is also characterised by a kernel function and its gradients (see
- * @ref kernel, @ref kernel_gr, @ref kernel_gr2).
+ * @ref kernel_density, @ref kernel_pressure, @ref kernel_viscosity).
  */
 class fluid {
 	protected:
@@ -213,7 +213,7 @@ class fluid {
 
 		/**
 		 * @brief Sets the kernel density functions.
-		 * @param W \f$W\f$, see @ref kernel_density.
+		 * @param W_d \f$W\f$, see @ref kernel_density.
 		 */
 		void set_kernel_density(const kernel_scalar_function& W_d);
 		/**

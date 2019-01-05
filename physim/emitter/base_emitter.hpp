@@ -40,7 +40,7 @@ typedef std::function<void (particles::base_particle& )> base_emit;
  * Therefore, there is no need to initialise it.
  *
  * The initialisation of the particle takes place in the method
- * @ref initialise_particle(base_particle *)const.
+ * @ref initialise_particle(base_particle&)const.
  *
  * Finally, all classes must implement the @ref clone function.
  */

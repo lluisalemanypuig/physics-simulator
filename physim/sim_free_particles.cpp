@@ -74,9 +74,9 @@ void simulator::_simulate_free_particles() {
 	}
 }
 
-void simulator::_simulate_free_particles(size_t nt) {
+void simulator::_simulate_free_particles(size_t n) {
 
-	#pragma omp parallel for num_threads(nt)
+	#pragma omp parallel for num_threads(n)
 	for (size_t i = 0; i < fps.size(); ++i) {
 
 		free_particle& p = fps[i];

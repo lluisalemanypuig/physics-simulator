@@ -15,10 +15,6 @@ namespace fluids {
 /**
  * @brief Class implementing a newtonian fluid.
  *
- * A fluid is characterised by its @ref volume, @ref density and @ref viscosity.
- *
- * It is also characterised by a kernel function and its gradients (see
- * @ref kernel, @ref kernel_gr, @ref kernel_gr2).
  */
 class newtonian : public fluid {
 	protected:

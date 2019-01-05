@@ -101,7 +101,7 @@ class object : public geometry {
 		 * @brief Updates a particle when its trajectory intersects this object.
 		 *
 		 * See
-		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::free_particle*)const
+		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::free_particle&)const
 		 * for details.
 		 *
 		 * Prior to updating the position of @e p, its contents are copied into
@@ -129,7 +129,7 @@ class object : public geometry {
 		 * @brief Updates a particle when its trajectory intersects this object.
 		 *
 		 * See
-		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::sized_particle*)const
+		 * @ref update_particle(const math::vec3&, const math::vec3&, particles::sized_particle&)const
 		 * for details.
 		 *
 		 * Prior to updating the position of @e p, its contents are copied into

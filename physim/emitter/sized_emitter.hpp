@@ -48,7 +48,7 @@ typedef std::function<void (particles::sized_particle& )> sized_emit;
  * Therefore, there is no need to initialise it.
  *
  * The initialisation of the particle takes place in the method
- * @ref initialise_particle(sized_particle *)const.
+ * @ref initialise_particle(sized_particle&)const.
  *
  * Finally, all classes must implement the @ref clone function.
  */

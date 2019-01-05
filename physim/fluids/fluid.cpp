@@ -109,13 +109,7 @@ void fluid::clear() {
 void fluid::make_partition() {
 	tree->clear();
 
-	// compute offset of position w.r.t. to the
-	// beginning of its struct
-	size_t base = reinterpret_cast<size_t>( &ps[0] );
-	size_t member_pos = reinterpret_cast<size_t>( &ps[0].cur_pos );
-	size_t offset = member_pos - base;
-
-	tree->init(&ps[0], N, 1, sizeof(fluid_particle), offset);
+	tree->init(&ps[0].cur_pos.x, N, sizeof(fluid_particle));
 }
 
 // SETTERS

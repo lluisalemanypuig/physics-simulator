@@ -238,7 +238,7 @@ class simulator {
 		 * Multithreaded execution.
 		 * @param n Number of threads.
 		 */
-		void _simulate_free_particles(size_t nt);
+		void _simulate_free_particles(size_t n);
 		/**
 		 * @brief Simulate sized particles.
 		 *

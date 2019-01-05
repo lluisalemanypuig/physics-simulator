@@ -117,7 +117,7 @@ class agent_particle : public sized_particle {
 		/**
 		 * @brief Vector indicating the orientation of the particle.
 		 *
-		 * This need not be equal to the @ref cur_velocity vector,
+		 * This need not be equal to the @ref cur_vel vector,
 		 * but it should be initialised with a value equal to the
 		 * velocity.
 		 */
