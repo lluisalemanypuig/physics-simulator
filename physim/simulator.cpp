@@ -133,7 +133,7 @@ size_t simulator::add_agent_particle(const agent_particle& _p) {
 	aps.push_back(_p);
 
 	agent_particle& p = aps.back();
-	p.index = fps.size() - 1;
+	p.index = aps.size() - 1;
 	if (solver == solver_type::Verlet) {
 		// Update the previous position for Verlet
 		__pm3_sub_v_vs(p.prev_pos, p.cur_pos, p.cur_vel, dt);
