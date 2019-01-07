@@ -66,7 +66,8 @@ class sized_particle : public free_particle {
 		 * - @ref lifetime : 10
 		 * - @ref starttime : 0
 		 * - @ref fixed : false
-		 * - @ref R : 1.0
+		 * See @ref partial_init() to see how the attributes of this class
+		 * are intialised.
 		 */
 		void init();
 

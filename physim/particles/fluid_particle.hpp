@@ -58,8 +58,8 @@ class fluid_particle : public base_particle {
 		 * - @ref mass : 1
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
-		 * - @ref density : 0.0
-		 * - @ref pressure : 0.0
+		 * See @ref partial_init() to see how the attributes of this class
+		 * are intialised.
 		 */
 		virtual void init();
 

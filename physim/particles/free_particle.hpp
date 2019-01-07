@@ -104,12 +104,8 @@ class free_particle : public base_particle {
 		 * - @ref mass : 1
 		 * - @ref index : no value assigned, since it will be
 		 * overwritten by the simulator.
-		 * - @ref bouncing : 0.8
-		 * - @ref friction : 0.2
-		 * - @ref charge : 0
-		 * - @ref lifetime : 10
-		 * - @ref starttime : 0
-		 * - @ref fixed : false
+		 * See @ref partial_init() to see how the attributes of this class
+		 * are intialised.
 		 */
 		virtual void init();
 
