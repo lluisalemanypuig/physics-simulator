@@ -31,8 +31,7 @@ void simulator::_simulate_agent_particles() {
 
 		p.apply_behaviours(steer_force);
 		p.apply_behaviours(scene_fixed, steer_force);
-
-		// p.apply_behaviours(aps, steer_force)
+		p.apply_behaviours(aps, steer_force);
 
 		// store force
 		truncate(steer_force, p.max_force, p.force);

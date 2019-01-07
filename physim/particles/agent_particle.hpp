@@ -66,7 +66,15 @@ enum class agent_behaviour_type : int8_t {
 	 *
 	 * Its weight is @ref agent_particle::coll_avoid_weight.
 	 */
-	collision_avoidance	= 1 << 4
+	collision_avoidance	= 1 << 4,
+	/**
+	 * @brief Unaligned collision avoidance.
+	 *
+	 * Agent try to avoid colliding with other agents.
+	 *
+	 * Its weight is @ref agent_particle::ucoll_avoid_weight.
+	 */
+	unaligned_collision_avoidance	= 1 << 5,
 };
 
 /**
@@ -95,12 +103,14 @@ class agent_particle : public sized_particle {
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
 		 * - @ref slowing_distance : 0.0
-		 * - @ref align_weight : 1.0/5.0
-		 * - @ref seek_weight : 1.0/5.0
-		 * - @ref flee_weight : 1.0/5.0
-		 * - @ref arrival_weight : 1.0/5.0
-		 * - @ref coll_avoid_weight : 1.0/5.0
-		 * - @ref ahead_distance : 5.0
+		 * - @ref align_weight : 1.0/6.0
+		 * - @ref seek_weight : 1.0/6.0
+		 * - @ref flee_weight : 1.0/6.0
+		 * - @ref arrival_weight : 1.0/6.0
+		 * - @ref coll_weight : 1.0/6.0
+		 * - @ref ucoll_weight : 1.0/6.0
+		 * - @ref collision_distance : 5.0
+		 * - @ref ucollision_distance : 5.0
 		 */
 		void partial_init();
 
@@ -160,9 +170,13 @@ class agent_particle : public sized_particle {
 		/// Weight for arrival behaviour.
 		float arrival_weight;
 		/// Weight for collision avoidance behaviour.
-		float coll_avoid_weight;
-		/// Distance ahead of the agent for collision detection.
-		float ahead_distance;
+		float coll_weight;
+		/// Weight for unaligned collision avoidance behaviour.
+		float ucoll_weight;
+		/// Distance ahead of the agent for collision avoidance.
+		float collision_distance;
+		/// Distance ahead of the agent for unaligned collision avoidance.
+		float ucollision_distance;
 
 	public:
 		/// Default constructor.
@@ -191,17 +205,8 @@ class agent_particle : public sized_particle {
 		 * - @ref fixed : false
 		 * - @ref R : 1.0
 		 * - @ref target : vec3(0,0,0)
-		 * - @ref orientation : vec3(0,0,0)
-		 * - @ref behaviour : @ref agent_behaviour_type::none
-		 * - @ref max_speed : 1.0
-		 * - @ref max_force : 1.0
-		 * - @ref slowing_distance : 0.0
-		 * - @ref align_weight : 1.0/5.0
-		 * - @ref seek_weight : 1.0/5.0
-		 * - @ref flee_weight : 1.0/5.0
-		 * - @ref arrival_weight : 1.0/5.0
-		 * - @ref coll_avoid_weight : 1.0/5.0
-		 * - @ref ahead_distance : 5.0
+		 * See @ref partial_init() to see how the attributes of this class
+		 * are intialised.
 		 */
 		void init();
 
@@ -256,11 +261,14 @@ class agent_particle : public sized_particle {
 		 *
 		 * The behaviours considered in this function are:
 		 * - @ref agent_behaviour_type::seek
+		 * (function @ref seek_behaviour(math::vec3&) ).
 		 * - @ref agent_behaviour_type::flee
+		 * (function @ref flee_behaviour(math::vec3&) ).
 		 * - @ref agent_behaviour_type::arrival
+		 * (function @ref arrival_behaviour(math::vec3&) ).
 		 *
-		 * The resulting vector will be accumulated to an internal vector
-		 * "as is" to make a new velocity vector.
+		 * The resulting vector of each behaviour will be accumulated to the
+		 * output vector of this function.
 		 *
 		 * Recall that the target is stored in @ref target.
 		 * @param[out] weighted_steering Weighted steering vector.
@@ -274,14 +282,11 @@ class agent_particle : public sized_particle {
 		 * vectors obtained by the different behaviours activated.
 		 *
 		 * The behaviours considered in this function are:
-		 * - @ref agent_behaviour_type::collision_avoidance.
+		 * - @ref agent_behaviour_type::collision_avoidance
+		 * (function @ref collision_avoidance_behaviour(math::vec3&) ).
 		 *
-		 * This function is called for every geometrical object in the
-		 * scene. It is up to the user to decide what is a "most threatening"
-		 * geometrical object.
-		 *
-		 * The resulting vector will be accumulated to an internal vector
-		 * "as is" to make a new velocity vector.
+		 * The resulting vector of each behaviour will be accumulated to the
+		 * output vector of this function.
 		 *
 		 * Recall that the target is stored in @ref target.
 		 * @param[in] scene The geometry in the simulation.
@@ -289,6 +294,27 @@ class agent_particle : public sized_particle {
 		 */
 		void apply_behaviours
 		(const std::vector<geometric::geometry *>& scene,
+		 math::vec3& weighted_steering) const;
+
+		/**
+		 * @brief Computes a weighted steering vector force.
+		 *
+		 * This vector is the weighted average over the different steering
+		 * vectors obtained by the different behaviours activated.
+		 *
+		 * The behaviours considered in this function are:
+		 * - @ref agent_behaviour_type::unaligned_collision_avoidance
+		 * (function @ref unaligned_collision_avoidance_behaviour(math::vec3&) ).
+		 *
+		 * The resulting vector of each behaviour will be accumulated to the
+		 * output vector of this function.
+		 *
+		 * Recall that the index of this agent particle is stored in @ref index.
+		 * @param[in] agents All the agents in the simulation.
+		 * @param[out] weighted_steering Weighted steering vector.
+		 */
+		void apply_behaviours
+		(const std::vector<agent_particle>& agents,
 		 math::vec3& weighted_steering) const;
 
 		/* steering behaviours */
@@ -340,8 +366,35 @@ class agent_particle : public sized_particle {
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void collision_avoidance_behaviour
-		(const std::vector<geometric::geometry *>& scene,
-		 math::vec3& v) const;
+		(const std::vector<geometric::geometry *>& scene, math::vec3& v) const;
+		/**
+		 * @brief Computes the collision avoidance steering force.
+		 *
+		 * This function must compute a velocity vector multiplied
+		 * by a certain weight. The result must be assigned to @e v.
+		 *
+		 * The vector computed is meant to provide the agent a means of
+		 * avoiding collision with other agents 'locally', that is, the
+		 * ability of choosing what to do without the help of an oracle.
+		 *
+		 * Only some agents are considered. Those ignored are listed below.
+		 * FOV stands for Field of View, it is aligned at this agent's
+		 * velocity vector and is of 90º to its left and 90º to its right.
+		 *
+		 * The following agents are ignored:
+		 * - agents too far away (the distance between the agents is more
+		 * than @ref ucollision_distance, where the distance considered is
+		 * the distance between the current positions minus the sum of both
+		 * agent's radius)
+		 * - agents whose predicted position is outside the FOV.
+		 * - agents whose current position is outside the FOV.
+		 *
+		 * @param[in] scene The geometry in the simulation.
+		 * @param[out] v Unaligned collision avoidance steering vector.
+		 * @pre Vector @e v may not be initialised to 0.
+		 */
+		virtual void unaligned_collision_avoidance_behaviour
+		(const std::vector<agent_particle>& agents, math::vec3& v) const;
 };
 
 } // -- namespace particles

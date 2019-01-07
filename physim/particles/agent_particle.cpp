@@ -11,6 +11,7 @@ using namespace std;
 #include <physim/geometry/rectangle.hpp>
 
 #define FULL_MASK static_cast<int>(0xffffffff)
+#define ninety static_cast<float>(M_PI)/2.0f
 
 namespace physim {
 using namespace math;
@@ -28,14 +29,15 @@ void agent_particle::partial_init() {
 	max_force = 1.0f;
 	slowing_distance = 0.0f;
 
-	float w = 1.0f/5.0f;
+	float w = 1.0f/6.0f;
 	align_weight = w;
 	seek_weight = w;
 	flee_weight = w;
 	arrival_weight = w;
-	coll_avoid_weight = w;
+	coll_weight = w;
+	ucoll_weight = w;
 
-	ahead_distance = 5.0f;
+	collision_distance = 5.0f;
 }
 
 // PUBLIC
@@ -56,8 +58,9 @@ agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	seek_weight = p.seek_weight;
 	flee_weight = p.flee_weight;
 	arrival_weight = p.arrival_weight;
-	coll_avoid_weight = p.coll_avoid_weight;
-	ahead_distance = p.ahead_distance;
+	coll_weight = p.coll_weight;
+	ucoll_weight = p.ucoll_weight;
+	collision_distance = p.collision_distance;
 }
 
 agent_particle::~agent_particle() {
@@ -97,8 +100,6 @@ void agent_particle::unset_all_behaviours() {
 
 // OTHERS
 
-/* steering behaviours */
-
 void agent_particle::apply_behaviours(vec3& weighted_steering) const {
 	if (behaviour == agent_behaviour_type::none) {
 		return;
@@ -135,6 +136,24 @@ const
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 }
+
+void agent_particle::apply_behaviours
+(const vector<agent_particle>& agents, vec3& weighted_steering)
+const
+{
+	if (behaviour == agent_behaviour_type::none) {
+		return;
+	}
+
+	vec3 v;
+
+	if (is_behaviour_set(agent_behaviour_type::unaligned_collision_avoidance)) {
+		unaligned_collision_avoidance_behaviour(agents, v);
+		__pm3_add_acc_v(weighted_steering, v);
+	}
+}
+
+/* steering behaviours */
 
 void agent_particle::seek_behaviour(vec3& v) const {
 	vec3 des_vel;
@@ -206,7 +225,7 @@ const
 		else {
 			dist2 = __pm3_dist2(cur_pos, geom_pos) - g->approx_radius();
 		}
-		if (dist2 > ahead_distance*ahead_distance) {
+		if (dist2 > collision_distance*collision_distance) {
 			continue;
 		}
 
@@ -267,7 +286,56 @@ const
 		}
 
 		// compute contribution
-		__pm3_add_acc_vs(v, repulsion, coll_avoid_weight);
+		__pm3_add_acc_vs(v, repulsion, coll_weight);
+	}
+}
+
+void agent_particle::unaligned_collision_avoidance_behaviour
+(const vector<agent_particle>& agents, vec3& v) const
+{
+	//cout << "void agent_particle::unaligned_collision_avoidance_behaviour" << endl;
+
+	__pm3_assign_s(v, 0.0f);
+	float r = ucollision_distance;
+	//cout << "    ucollision_distance= " << ucollision_distance << endl;
+	//cout << "    ucoll_weight= " << ucoll_weight << endl;
+
+	for (const agent_particle& a : agents) {
+		if (index == a.index) {
+			continue;
+		}
+		float D = __pm3_dist(cur_pos, a.cur_pos);
+		float d = D - (R + a.R);
+		if (d > r) {
+			continue;
+		}
+
+		vec3 cur_agent;
+		__pm3_sub_v_v(cur_agent, a.cur_pos, cur_pos);
+		float cur_cosangle =
+		__pm3_dot(cur_vel, cur_agent)/(__pm3_norm(cur_vel)*__pm3_norm(cur_agent));
+		float cur_angle = std::abs(std::acos(cur_cosangle));
+		if (cur_angle > ninety) {
+			continue;
+		}
+
+		vec3 pred_agent;
+		__pm3_add_v_vs(pred_agent, a.cur_pos, a.cur_vel, 1.0f);
+		float pred_cosangle =
+		__pm3_dot(cur_vel, cur_agent)/(__pm3_norm(cur_vel)*__pm3_norm(cur_agent));
+		float pred_angle = std::abs(std::acos(pred_cosangle));
+		if (pred_angle > ninety) {
+			continue;
+		}
+
+
+		vec3 X_curagent_curvel;
+		__pm3_cross(X_curagent_curvel, cur_agent, cur_vel);
+		vec3 repulsion;
+		__pm3_cross(repulsion, X_curagent_curvel, cur_vel);
+		math::normalise(repulsion, repulsion);
+
+		__pm3_add_acc_vs(v, repulsion, ucoll_weight);
 	}
 }
 
