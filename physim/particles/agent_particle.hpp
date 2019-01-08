@@ -54,7 +54,7 @@ enum class agent_behaviour_type : int8_t {
 	 * @brief Arrival. The agent slows down as it approaches its target.
 	 *
 	 * The distance at which the agent starts to slow down is defined in
-	 * @ref agent_particle::slowing_distance.
+	 * @ref agent_particle::arrival_distance.
 	 *
 	 * Its weight is @ref agent_particle::arrival_weight.
 	 */
@@ -102,7 +102,7 @@ class agent_particle : public sized_particle {
 		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
-		 * - @ref slowing_distance : 0.0
+		 * - @ref arrival_distance : 0.0
 		 * - @ref align_weight : 1.0/6.0
 		 * - @ref seek_weight : 1.0/6.0
 		 * - @ref flee_weight : 1.0/6.0
@@ -151,16 +151,6 @@ class agent_particle : public sized_particle {
 		 */
 		float max_force;
 
-		/**
-		 * @brief Distance from the target to start slowing down at.
-		 *
-		 * When the agent is in behaviour arrival (see
-		 * @ref agent_behaviour_type::arrival) it starts slow down. This
-		 * attribute encodes the distance from its target at which this
-		 * happens.
-		 */
-		float slowing_distance;
-
 		/// Weight for aligning orientation with velocity.
 		float align_weight;
 		/// Weight for seek behaviour.
@@ -169,14 +159,23 @@ class agent_particle : public sized_particle {
 		float flee_weight;
 		/// Weight for arrival behaviour.
 		float arrival_weight;
+		/**
+		 * @brief Distance from the target to start slowing down at.
+		 *
+		 * When the agent is in behaviour arrival (see
+		 * @ref agent_behaviour_type::arrival) it starts slow down. This
+		 * attribute encodes the distance from its target at which this
+		 * happens.
+		 */
+		float arrival_distance;
 		/// Weight for collision avoidance behaviour.
 		float coll_weight;
+		/// Distance ahead of the agent for collision avoidance.
+		float coll_distance;
 		/// Weight for unaligned collision avoidance behaviour.
 		float ucoll_weight;
-		/// Distance ahead of the agent for collision avoidance.
-		float collision_distance;
 		/// Distance ahead of the agent for unaligned collision avoidance.
-		float ucollision_distance;
+		float ucoll_distance;
 
 	public:
 		/// Default constructor.

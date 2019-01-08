@@ -27,7 +27,10 @@ void agent_particle::partial_init() {
 	behaviour = agent_behaviour_type::none;
 	max_speed = 1.0f;
 	max_force = 1.0f;
-	slowing_distance = 0.0f;
+	arrival_distance = 0.0f;
+
+	coll_distance = 5.0f;
+	ucoll_distance = 5.0f;
 
 	float w = 1.0f/6.0f;
 	align_weight = w;
@@ -36,8 +39,6 @@ void agent_particle::partial_init() {
 	arrival_weight = w;
 	coll_weight = w;
 	ucoll_weight = w;
-
-	collision_distance = 5.0f;
 }
 
 // PUBLIC
@@ -52,7 +53,7 @@ agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	behaviour = p.behaviour;
 	max_speed = p.max_speed;
 	max_force = p.max_force;
-	slowing_distance = p.slowing_distance;
+	arrival_distance = p.arrival_distance;
 
 	align_weight = p.align_weight;
 	seek_weight = p.seek_weight;
@@ -60,7 +61,7 @@ agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	arrival_weight = p.arrival_weight;
 	coll_weight = p.coll_weight;
 	ucoll_weight = p.ucoll_weight;
-	collision_distance = p.collision_distance;
+	coll_distance = p.coll_distance;
 }
 
 agent_particle::~agent_particle() {
@@ -187,7 +188,7 @@ void agent_particle::arrival_behaviour(vec3& v) const {
 	vec3 offset_target;
 	__pm3_sub_v_v(offset_target, target, cur_pos);
 	float dist_target = __pm3_norm(offset_target);
-	float ramped_distance = (dist_target/slowing_distance)*max_speed;
+	float ramped_distance = (dist_target/arrival_distance)*max_speed;
 	float clipped_speed = std::min(ramped_distance, max_speed);
 
 	vec3 des_vel;
@@ -225,7 +226,7 @@ const
 		else {
 			dist2 = __pm3_dist2(cur_pos, geom_pos) - g->approx_radius();
 		}
-		if (dist2 > collision_distance*collision_distance) {
+		if (dist2 > coll_distance*coll_distance) {
 			continue;
 		}
 
@@ -290,15 +291,17 @@ const
 	}
 }
 
+#define cosangle3d(u,v) __pm3_dot(u,v)/(__pm3_norm(u)*__pm3_norm(v))
+#define angle3d(u,v) std::acos(cosangle3d(u,v))
+
 void agent_particle::unaligned_collision_avoidance_behaviour
 (const vector<agent_particle>& agents, vec3& v) const
 {
-	//cout << "void agent_particle::unaligned_collision_avoidance_behaviour" << endl;
+	vec3 X;
+	vec3 pos_rep, vel_rep;
 
 	__pm3_assign_s(v, 0.0f);
-	float r = ucollision_distance;
-	//cout << "    ucollision_distance= " << ucollision_distance << endl;
-	//cout << "    ucoll_weight= " << ucoll_weight << endl;
+	float r = ucoll_distance;
 
 	for (const agent_particle& a : agents) {
 		if (index == a.index) {
@@ -310,32 +313,27 @@ void agent_particle::unaligned_collision_avoidance_behaviour
 			continue;
 		}
 
-		vec3 cur_agent;
-		__pm3_sub_v_v(cur_agent, a.cur_pos, cur_pos);
-		float cur_cosangle =
-		__pm3_dot(cur_vel, cur_agent)/(__pm3_norm(cur_vel)*__pm3_norm(cur_agent));
-		float cur_angle = std::abs(std::acos(cur_cosangle));
-		if (cur_angle > ninety) {
+		vec3 pos_dir;
+		__pm3_sub_v_v(pos_dir, a.cur_pos, cur_pos);
+		float vta_angle = angle3d(pos_dir, cur_vel);
+		if (vta_angle > ninety) {
 			continue;
 		}
 
 		vec3 pred_agent;
-		__pm3_add_v_vs(pred_agent, a.cur_pos, a.cur_vel, 1.0f);
-		float pred_cosangle =
-		__pm3_dot(cur_vel, cur_agent)/(__pm3_norm(cur_vel)*__pm3_norm(cur_agent));
-		float pred_angle = std::abs(std::acos(pred_cosangle));
+		__pm3_add_v_vs(pred_agent, a.cur_pos, a.cur_vel, 0.5f);
+		float pred_angle = angle3d(cur_vel, pos_dir);
 		if (pred_angle > ninety) {
 			continue;
 		}
 
+		// copmute repulsion using vector from this position
+		// to the agent's position and this velocity
+		__pm3_cross(X, pos_dir, cur_vel);
+		__pm3_cross(pos_rep, X,cur_vel);
+		math::normalise(pos_rep, pos_rep);
 
-		vec3 X_curagent_curvel;
-		__pm3_cross(X_curagent_curvel, cur_agent, cur_vel);
-		vec3 repulsion;
-		__pm3_cross(repulsion, X_curagent_curvel, cur_vel);
-		math::normalise(repulsion, repulsion);
-
-		__pm3_add_acc_vs(v, repulsion, ucoll_weight);
+		__pm3_add_acc_vs(v, pos_rep, ucoll_weight);
 	}
 }
 

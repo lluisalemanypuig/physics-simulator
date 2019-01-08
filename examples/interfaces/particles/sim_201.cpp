@@ -133,11 +133,12 @@ namespace study_cases {
 	void sim_201_help() {
 		glut_functions::help();
 
-		cout << "Simulation 200 description:" << endl;
+		cout << "Simulation 201 description:" << endl;
 		cout << endl;
 		cout << "Exactly 1000 particles bouncing on top of a plane." << endl;
 		cout << "These particles are generated with a rectangular source." << endl;
-		cout << "Just right above the plane is a sized particle" << endl;
+		cout << "A sized particle crashes through the shower averting some" << endl;
+		cout << "of the free particles." << endl;
 		cout << endl;
 	}
 
@@ -189,7 +190,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(window_width, window_height);
-		window_id = glutCreateWindow("Particles - Simulation 200");
+		window_id = glutCreateWindow("Particles - Simulation 201");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
