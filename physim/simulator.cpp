@@ -105,6 +105,20 @@ size_t simulator::add_sized_particle() {
 	return p.index;
 }
 
+size_t simulator::add_agent_particle() {
+	agent_particle p;
+	p.index = aps.size();
+	//init_particle(p);
+
+	if (solver == solver_type::Verlet) {
+		// Update the previous position for Verlet
+		__pm3_sub_v_vs(p.prev_pos, p.cur_pos, p.cur_vel, dt);
+	}
+
+	aps.push_back(p);
+	return p.index;
+}
+
 size_t simulator::add_free_particle(const free_particle& _p) {
 	fps.push_back(_p);
 
@@ -121,7 +135,7 @@ size_t simulator::add_sized_particle(const sized_particle& _p) {
 	sps.push_back(_p);
 
 	sized_particle& p = sps.back();
-	p.index = fps.size() - 1;
+	p.index = sps.size() - 1;
 	if (solver == solver_type::Verlet) {
 		// Update the previous position for Verlet
 		__pm3_sub_v_vs(p.prev_pos, p.cur_pos, p.cur_vel, dt);

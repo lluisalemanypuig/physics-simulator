@@ -416,51 +416,69 @@ class simulator {
 		 * @brief Adds a free particle to the simulation.
 		 *
 		 * The particle is initialised using @ref free_global_emit.
+		 * The particle is assigned an index, which is returned.
 		 * @pre For this initialisation to be completely correct, the step
 		 * time (see @ref dt) needs to be set.
+		 * @returns Returns the index of the particle in the set @ref fps.
 		 */
 		size_t add_free_particle();
 		/**
 		 * @brief Adds a sized particle to the simulation.
 		 *
 		 * The particle is initialised using @ref sized_global_emit.
+		 * The particle is assigned an index, which is returned.
 		 * @pre For this initialisation to be completely correct, the step
 		 * time (see @ref dt) needs to be set.
+		 * @returns Returns the index of the particle in the set @ref sps.
 		 */
 		size_t add_sized_particle();
+		/**
+		 * @brief Adds an agent particle to the simulation.
+		 *
+		 * The particle is not initialised.
+		 * The particle is assigned an index, which is returned.
+		 * @pre For this initialisation to be completely correct, the step
+		 * time (see @ref dt) needs to be set.
+		 * @returns Returns the index of the particle in the set @ref aps.
+		 */
+		size_t add_agent_particle();
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialser function (see @ref free_global_emit) is not called.
-		 * The particle is added to @ref fps.
+		 * The particle is added to @ref fps, and is assigned an index according
+		 * to its position in that set.
 		 * @param p A free particle.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
 		 * then the step time (see @ref dt) needs to be set to initialise correctly
 		 * the particle's previous position.
+		 * @returns Returns the index of the particle in the set @ref fps.
 		 */
 		size_t add_free_particle(const particles::free_particle& p);
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * The initialiser object (see @ref sized_global_emit) is not called.
-		 * The particle is added to @ref sps.
-		 *
+		 * The particle is added to @ref sps, and is assigned an index according
+		 * to its position in that set.
 		 * @param p A sized particle.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
 		 * then the step time (see @ref dt) needs to be set to initialise correctly
 		 * the particle's previous position.
+		 * @returns Returns the index of the particle in the set @ref sps.
 		 */
 		size_t add_sized_particle(const particles::sized_particle& p);
 		/**
 		 * @brief Adds the particle passed as parameter to the simulation.
 		 *
 		 * None of the initialiser objects are used. The particle is added
-		 * to @ref aps.
-		 *
+		 * to @ref aps, and is assigned an index according
+		 * to its position in that set.
 		 * @param p An agent particle.
 		 * @pre If the solver set to this simulator is @ref solver_type::Verlet,
 		 * then the step time (see @ref dt) needs to be set to initialise correctly
 		 * the particle's previous position.
+		 * @returns Returns the index of the particle in the set @ref aps.
 		 */
 		size_t add_agent_particle(const particles::agent_particle& p);
 		/**

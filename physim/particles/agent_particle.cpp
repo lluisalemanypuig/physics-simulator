@@ -27,18 +27,20 @@ void agent_particle::partial_init() {
 	behaviour = agent_behaviour_type::none;
 	max_speed = 1.0f;
 	max_force = 1.0f;
-	arrival_distance = 0.0f;
 
-	coll_distance = 5.0f;
-	ucoll_distance = 5.0f;
-
-	float w = 1.0f/6.0f;
+	const float w = 1.0f/6.0f;
 	align_weight = w;
 	seek_weight = w;
 	flee_weight = w;
+
 	arrival_weight = w;
+	arrival_distance = 0.0f;
+
 	coll_weight = w;
+	coll_distance = 5.0f;
+
 	ucoll_weight = w;
+	ucoll_distance = 5.0f;
 }
 
 // PUBLIC
@@ -53,15 +55,19 @@ agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 	behaviour = p.behaviour;
 	max_speed = p.max_speed;
 	max_force = p.max_force;
-	arrival_distance = p.arrival_distance;
 
 	align_weight = p.align_weight;
 	seek_weight = p.seek_weight;
 	flee_weight = p.flee_weight;
+
 	arrival_weight = p.arrival_weight;
+	arrival_distance = p.arrival_distance;
+
 	coll_weight = p.coll_weight;
-	ucoll_weight = p.ucoll_weight;
 	coll_distance = p.coll_distance;
+
+	ucoll_weight = p.ucoll_weight;
+	ucoll_distance = p.ucoll_distance;
 }
 
 agent_particle::~agent_particle() {

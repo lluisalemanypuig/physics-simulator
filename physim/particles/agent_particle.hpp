@@ -102,14 +102,14 @@ class agent_particle : public sized_particle {
 		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
-		 * - @ref arrival_distance : 0.0
 		 * - @ref align_weight : 1.0/6.0
 		 * - @ref seek_weight : 1.0/6.0
 		 * - @ref flee_weight : 1.0/6.0
 		 * - @ref arrival_weight : 1.0/6.0
+		 * - @ref arrival_distance : 0.0
 		 * - @ref coll_weight : 1.0/6.0
-		 * - @ref ucoll_weight : 1.0/6.0
 		 * - @ref collision_distance : 5.0
+		 * - @ref ucoll_weight : 1.0/6.0
 		 * - @ref ucollision_distance : 5.0
 		 */
 		void partial_init();
