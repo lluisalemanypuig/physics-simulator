@@ -5,6 +5,7 @@ using namespace std;
 
 // physim includes
 #include <physim/math/private/math3.hpp>
+#include <physim/math/private/numeric.hpp>
 #include <physim/geometry/sphere.hpp>
 #include <physim/geometry/object.hpp>
 
@@ -394,10 +395,16 @@ static inline void update_particles_velocity
 
 	// 3. decompose this vector into x'-y'-z' components,
 	// where x' is aligned with the center-line
-	float a_xy1 = angle_xy(in.cur_vel, in.cur_vel);
-	float a_xz1 = angle_xz(in.cur_vel, in.cur_vel);
-	float a_xy2 = angle_xy(out.cur_vel, out.cur_vel);
-	float a_xz2 = angle_xz(out.cur_vel, out.cur_vel);
+	float a_xy1, a_xz1, a_xy2, a_xz2;
+	a_xy1 = (is_zero(in.cur_vel.x, 1e-4f) and is_zero(in.cur_vel.y, 1e-4f) ?
+			 0.0f : angle_xy(in.cur_vel, in.cur_vel));
+	a_xz1 = (is_zero(in.cur_vel.x, 1e-4f) and is_zero(in.cur_vel.y, 1e-4f) ?
+			 0.0f : angle_xz(in.cur_vel, in.cur_vel));
+
+	a_xy2 = (is_zero(out.cur_vel.x, 1e-4f) and is_zero(out.cur_vel.y, 1e-4f) ?
+			 0.0f : angle_xy(out.cur_vel, out.cur_vel));
+	a_xz2 = (is_zero(out.cur_vel.x, 1e-4f) and is_zero(out.cur_vel.y, 1e-4f) ?
+			 0.0f : angle_xz(out.cur_vel, out.cur_vel));
 
 	c1.x = c1.x*std::sin(a_xz1)*std::cos(a_xy1);
 	c1.y = c1.y*std::sin(a_xz1)*std::sin(a_xy1);
