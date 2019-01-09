@@ -89,6 +89,10 @@ void parse_common_params(int argc, char *argv[]) {
 			h = atof(argv[i + 1]);
 			++i;
 		}
+		else if (strcmp(argv[i], "--dt") == 0) {
+			dt = atof(argv[i + 1]);
+			++i;
+		}
 		else if (strcmp(argv[i], "--speed-sound") == 0) {
 			cs = atof(argv[i + 1]);
 			++i;

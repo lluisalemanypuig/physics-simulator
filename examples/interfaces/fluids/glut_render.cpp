@@ -226,9 +226,7 @@ void refresh() {
 
 		string name = "image-" + int_to_string(counter) + ".png";
 		write_png(name, screen, window_width, window_height);
-
 		free(screen);
-
 		++counter;
 	}
 

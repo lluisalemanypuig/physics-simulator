@@ -25,6 +25,7 @@ namespace glut_variables {
 	int fps_count;
 	size_t num_threads;
 
+	float dt;
 	float length_x, length_y, length_z;
 	float density;
 	float viscosity;
@@ -56,6 +57,7 @@ namespace glut_variables {
 
 		num_threads = 1;
 
+		dt = 0.01f;
 		length_x = 0.5f;
 		length_y = 0.5f;
 		length_z = 0.5f;

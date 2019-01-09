@@ -43,7 +43,7 @@ namespace study_cases {
 
 		S.set_solver(solver_type::Verlet);
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
-		S.set_time_step(0.01f);
+		S.set_time_step(dt);
 
 		size_t side__ = 16;
 		size_t N = side__*side__*side__;

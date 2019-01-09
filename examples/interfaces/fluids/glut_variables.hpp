@@ -40,6 +40,7 @@ namespace glut_variables {
 	extern int fps_count;
 	extern size_t num_threads;
 
+	extern float dt;
 	extern float length_x, length_y, length_z;
 	extern float density;
 	extern float viscosity;
