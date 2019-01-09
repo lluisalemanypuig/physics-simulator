@@ -107,13 +107,6 @@ void simulator::_simulate_fluids(size_t n) {
 
 	for (fluid *f : fs) {
 
-		/* check mesh start time and lifetime
-		 * of mesh
-		 */
-
-		// some of the meshe's attributes are needed
-		// in the collision prediction particle for...
-		// collision prediction
 		coll_pred.friction = f->get_viscosity()/50000.0f;
 		coll_pred.bouncing = 0.0f;
 
