@@ -215,7 +215,6 @@ void refresh() {
 
 	SR.get_simulator().simulate_fluids(num_threads);
 
-
 	if (record) {
 		unsigned char *screen =
 		static_cast<unsigned char *>(

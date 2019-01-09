@@ -5,6 +5,7 @@ using namespace std;
 
 // glm includes
 #include <glm/vec3.hpp>
+typedef glm::vec3 gvec3;
 
 // render includes
 #include <render/geometry/rplane.hpp>
@@ -40,7 +41,7 @@ namespace study_cases {
 
 		SR.set_particle_size(2.0f);
 
-		S.set_solver(solver_type::EulerSemi);
+		S.set_solver(solver_type::Verlet);
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		S.set_time_step(0.01f);
 
@@ -83,7 +84,13 @@ namespace study_cases {
 		for (size_t i = 0; i < side__; ++i) {
 			for (size_t j = 0; j < side__; ++j) {
 				for (size_t k = 0; k < side__; ++k) {
-					vec3 pos(i*(length_x/side__), j*(length_y/side__), k*(length_z/side__));
+					int r1 = rand();
+					int r2 = rand();
+					float dx = (r1%2 == 0 ? 1.0f : -1.0f)*r1/(10.0f*RAND_MAX);
+					float dz = (r2%2 == 0 ? 1.0f : -1.0f)*r2/(10.0f*RAND_MAX);
+					vec3 pos(i*(length_x/side__) + dx,
+							 j*(length_y/side__) + 0.5f,
+							 k*(length_z/side__) + dz);
 					size_t idx = i*side__*side__ + j*side__ + k;
 					Fs[idx].cur_pos = pos;
 					Fs[idx].cur_vel = vec3(0.0f);
@@ -101,15 +108,49 @@ namespace study_cases {
 		SR.init_cameras();
 
 		plane *base = new plane(vec3(0,1,0), vec3(0,-0.25,0));
-		/*plane *w1 = new plane(vec3(1,0,0), vec3(-0.25,0,0));
-		plane *w2 = new plane(vec3(-1,0,0), vec3(0.75,0,0));
-		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,-0.25));
-		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.75));*/
+		plane *w1 = new plane(vec3(1,0,0), vec3(-0.1f,0,0));
+		plane *w2 = new plane(vec3(-1,0,0), vec3(0.6f,0,0));
+		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,-0.1f));
+		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.6f));
 		S.add_geometry(base);
-		/*S.add_geometry(w1);
+		S.add_geometry(w1);
 		S.add_geometry(w2);
 		S.add_geometry(w3);
-		S.add_geometry(w4);*/
+		S.add_geometry(w4);
+
+		float basey = -0.26f;
+		float topy = basey + 0.5f;
+		gvec3 A00(-0.1f,  basey, -0.1f);
+		gvec3 A0p(-0.1f,  basey,  0.6f);
+		gvec3 Ap0( 0.6f, basey, -0.1f);
+		gvec3 App( 0.6f, basey,  0.6f);
+		gvec3 B00(-0.1f,  topy, -0.1f);
+		gvec3 B0p(-0.1f,  topy,  0.6f);
+		gvec3 Bp0( 0.6f, topy, -0.1f);
+		gvec3 Bpp( 0.6f, topy,  0.6f);
+
+		rplane *rbase = new rplane();
+		rbase->set_points(A00, Ap0, App, A0p);
+		rbase->set_color(1.0f, 0.0f, 0.0f, 0.5f);
+		rplane *rw1 = new rplane();
+		rw1->set_points(A00, Ap0, Bp0, B00);
+		rw1->set_color(1.0f, 0.0f, 0.0f, 0.5f);
+		rplane *rw2 = new rplane();
+		rw2->set_points(Ap0, Bp0, Bpp, App);
+		rw2->set_color(1.0f, 0.0f, 0.0f, 0.5f);
+		rplane *rw3 = new rplane();
+		rw3->set_points(App, Bpp, B0p, A0p);
+		rw3->set_color(1.0f, 0.0f, 0.0f, 0.5f);
+		rplane *rw4 = new rplane();
+		rw4->set_points(A0p, B0p, B00, A00);
+		rw4->set_color(1.0f, 0.0f, 0.0f, 0.5f);
+		SR.add_geometry(rbase);
+		SR.add_geometry(rw1);
+		SR.add_geometry(rw2);
+		SR.add_geometry(rw3);
+		SR.add_geometry(rw4);
+
+		bgd_color.x = bgd_color.y = bgd_color.z = 0.8f;
 
 		cout << "Fluid characteristics:" << endl;
 		cout << "    Number of particles: " << N << endl;
@@ -189,6 +230,8 @@ namespace study_cases {
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
 		glEnable(GL_LIGHTING);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glEnable(GL_LIGHT0);
 		float col[] = {1.0f, 1.0f, 1.0f, 1.0f};
