@@ -77,6 +77,18 @@ void parse_common_params(int argc, char *argv[]) {
 			length_z = atof(argv[i + 1]);
 			++i;
 		}
+		else if (strcmp(argv[i], "--sidex") == 0) {
+			side_x = atoi(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--sidey") == 0) {
+			side_y = atoi(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--sidez") == 0) {
+			side_z = atoi(argv[i + 1]);
+			++i;
+		}
 		else if (strcmp(argv[i], "--density") == 0) {
 			density = atof(argv[i + 1]);
 			++i;

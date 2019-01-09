@@ -42,6 +42,7 @@ namespace glut_variables {
 
 	extern float dt;
 	extern float length_x, length_y, length_z;
+	extern size_t side_x, side_y, side_z;
 	extern float density;
 	extern float viscosity;
 	extern float h;

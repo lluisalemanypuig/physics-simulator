@@ -27,6 +27,7 @@ namespace glut_variables {
 
 	float dt;
 	float length_x, length_y, length_z;
+	size_t side_x, side_y, side_z;
 	float density;
 	float viscosity;
 	float h;
@@ -58,9 +59,8 @@ namespace glut_variables {
 		num_threads = 1;
 
 		dt = 0.01f;
-		length_x = 0.5f;
-		length_y = 0.5f;
-		length_z = 0.5f;
+		side_x = side_y = side_z = 16;
+		length_x = length_y = length_z = 0.5f;
 		h = 0.03f;
 		viscosity = 0.001f;
 		density = 1000.0f;

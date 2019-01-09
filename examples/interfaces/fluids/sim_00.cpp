@@ -45,8 +45,7 @@ namespace study_cases {
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		S.set_time_step(dt);
 
-		size_t side__ = 16;
-		size_t N = side__*side__*side__;
+		size_t N = side_x*side_y*side_z;
 
 		fluid *F = new newtonian();
 		F->allocate(N, volume, density, viscosity, h, cs);
@@ -81,17 +80,18 @@ namespace study_cases {
 		F->set_kernel_viscosity(viscosity_kernel);
 
 		fluid_particle *Fs = F->get_particles();
-		for (size_t i = 0; i < side__; ++i) {
-			for (size_t j = 0; j < side__; ++j) {
-				for (size_t k = 0; k < side__; ++k) {
+		for (size_t i = 0; i < side_x; ++i) {
+			for (size_t j = 0; j < side_y; ++j) {
+				for (size_t k = 0; k < side_z; ++k) {
 					int r1 = rand();
 					int r2 = rand();
 					float dx = (r1%2 == 0 ? 1.0f : -1.0f)*r1/(10.0f*RAND_MAX);
 					float dz = (r2%2 == 0 ? 1.0f : -1.0f)*r2/(10.0f*RAND_MAX);
-					vec3 pos(i*(length_x/side__) + dx,
-							 j*(length_y/side__) + 0.5f,
-							 k*(length_z/side__) + dz);
-					size_t idx = i*side__*side__ + j*side__ + k;
+					vec3 pos(i*(length_x/side_x) + dx,
+							 j*(length_y/side_y) + 0.5f,
+							 k*(length_z/side_z) + dz);
+					size_t idx = k*side_x*side_y + j*side_x + i;
+					Fs[idx].prev_pos = pos;
 					Fs[idx].cur_pos = pos;
 					Fs[idx].cur_vel = vec3(0.0f);
 				}
