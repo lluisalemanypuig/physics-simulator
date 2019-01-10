@@ -40,8 +40,13 @@ void sim_301_usage() {
 	cout << "    --vis v:		 Viscosity of the fluid.        Default: 0.001" << endl;
 	cout << "    --dens d:       Density at rest of the fluid.  Default: 1000.0" << endl;
 	cout << "    --c v:			 Speed of sound.                Default: 1500.0" << endl;
-	cout << "    --p n:			 Number of particles per side.  Default: 16" << endl;
 	cout << "    --threads n:    Number of threads.             Default: 1" << endl;
+	cout << "    --lenx x        Length in each dimension.      Default: 0.5" << endl;
+	cout << "    --lenx y                                       Default: 0.5" << endl;
+	cout << "    --lenx z                                       Default: 0.5" << endl;
+	cout << "    --sidex x       Sizes in each dimension.       Default: 8" << endl;
+	cout << "    --sidey y                                      Default: 8" << endl;
+	cout << "    --sidez z                                      Default: 8" << endl;
 	cout << endl;
 }
 
@@ -49,12 +54,13 @@ void sim_301(int argc, char *argv[]) {
 	float dt = 0.0001f;
 	float total_time = 5.0f;
 	solver_type solv = solver_type::EulerSemi;
-	// number of particles per side
-	size_t side__ = 16;
 	// neighbourhood size
 	float h = 0.015f;
-	// volume
-	float vol = 0.01f;
+	// sizes and lengths
+	float lenx, leny, lenz;
+	lenx = leny = lenz = 0.5f;
+	size_t sidex, sidey, sidez;
+	sidex = sidey = sidez = 8;
 	// viscosity
 	float vis = 0.001f;
 	// density
@@ -81,10 +87,6 @@ void sim_301(int argc, char *argv[]) {
 			h = atof(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--vol") == 0) {
-			vol = atof(argv[i + 1]);
-			++i;
-		}
 		else if (strcmp(argv[i], "--vis") == 0) {
 			vis = atof(argv[i + 1]);
 			++i;
@@ -97,16 +99,32 @@ void sim_301(int argc, char *argv[]) {
 			cs = atof(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--p") == 0) {
-			side__ = atoi(argv[i + 1]);
-			++i;
-		}
 		else if (strcmp(argv[i], "--threads") == 0) {
 			nt = atoi(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--particles") == 0) {
-			side__ = atoi(argv[i + 1]);
+		else if (strcmp(argv[i], "--lenx") == 0) {
+			lenx = atof(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--leny") == 0) {
+			leny = atof(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--lenz") == 0) {
+			lenz = atof(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--sidex") == 0) {
+			sidex = atoi(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--sidey") == 0) {
+			sidey = atoi(argv[i + 1]);
+			++i;
+		}
+		else if (strcmp(argv[i], "--sidez") == 0) {
+			sidez = atoi(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--solver") == 0) {
@@ -133,18 +151,24 @@ void sim_301(int argc, char *argv[]) {
 		}
 	}
 
-	size_t N = side__*side__*side__;
+	// volume
+	float vol = lenx*leny*lenz;
+	// number of particles
+	size_t N = sidex*sidey*sidez;
 
 	timing::time_point begin, end;
 
 	cout << "Fluid characteristics:" << endl;
-	cout << "    Number of particles: " << N << endl;
+	cout << "    Number of particles: "
+		 << sidex << " x "
+		 << sidey << " x "
+		 << sidez << endl;
 	cout << "    Volume: " << vol << endl;
 	cout << "    Viscosity: " << vis << endl;
 	cout << "    Density: " << dens << endl;
 	cout << "    Neighbourhood size: " << h << endl;
 	cout << "    Initial shape:" << endl;
-	cout << "        0.2 x 0.2 x 0.1" << endl;
+	cout << "        " << lenx << " x " << leny << " x " << lenz << endl;
 	cout << "Simulation:" << endl;
 	cout << "    total time: " << total_time << endl;
 	cout << "    step time: " << dt << endl,
@@ -183,16 +207,15 @@ void sim_301(int argc, char *argv[]) {
 	// assign initial positions
 	cout << "Assigning initial positions..." << endl;
 	begin = timing::now();
-	for (size_t i = 0; i < side__; ++i) {
-		for (size_t j = 0; j < side__; ++j) {
-			for (size_t k = 0; k < side__; ++k) {
-				vec3 pos(i*(0.5f/side__), j*(0.5f/side__), k*(0.5f/side__));
-				size_t idx = i*side__*side__ + j*side__ + k;
+	for (size_t i = 0; i < sidex; ++i) {
+		for (size_t j = 0; j < sidey; ++j) {
+			for (size_t k = 0; k < sidez; ++k) {
+				vec3 pos(i*(lenx/sidex), j*(leny/sidey), k*(lenz/sidez));
+				size_t idx = j*sidex*sidez + k*sidex + i;
 				F->get_particles()[idx].cur_pos = pos;
 			}
 		}
 	}
-
 	end = timing::now();
 	cout << "    in " << timing::elapsed_seconds(begin, end)
 		 << " seconds" << endl;
@@ -219,6 +242,22 @@ void sim_301(int argc, char *argv[]) {
 	cout << "Simulation time: " << total_time << " seconds" << endl;
 	cout << "Average execution time per update: "
 		 << total_exe_secs/(sim_time/dt) << " seconds" << endl;
+
+#define vec_out(v) v.x << "," << v.y << "," << v.z
+
+	const fluid_particle *ps = F->get_particles();
+
+	for (size_t i = 0; i < N; ++i) {
+		const fluid_particle& p = ps[i];
+		cout << i << " : " << endl;
+		cout << "    " << "prev_pos: " << vec_out(p.prev_pos) << endl;
+		cout << "    " << " cur_pos: " << vec_out(p.cur_pos) << endl;
+		cout << "    " << " cur_vel: " << vec_out(p.cur_vel) << endl;
+		cout << "    " << "   force: " << vec_out(p.force) << endl;
+		cout << "    " << "    mass: " << p.mass << endl;
+		cout << "    " << " density: " << p.density << endl;
+		cout << "    " << "pressure: " << p.pressure << endl;
+	}
 }
 
 } // -- namespace study_cases
