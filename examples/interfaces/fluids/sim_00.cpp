@@ -45,7 +45,7 @@ namespace study_cases {
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		S.set_time_step(dt);
 
-		size_t N = side_x*side_y*side_z;
+		size_t N = sidex*sidey*sidez;
 
 		fluid *F = new newtonian();
 		F->allocate(N, volume, density, viscosity, h, cs);
@@ -80,17 +80,17 @@ namespace study_cases {
 		F->set_kernel_viscosity(viscosity_kernel);
 
 		fluid_particle *Fs = F->get_particles();
-		for (size_t i = 0; i < side_x; ++i) {
-			for (size_t j = 0; j < side_y; ++j) {
-				for (size_t k = 0; k < side_z; ++k) {
+		for (size_t i = 0; i < sidex; ++i) {
+			for (size_t j = 0; j < sidey; ++j) {
+				for (size_t k = 0; k < sidez; ++k) {
 					int r1 = rand();
 					int r2 = rand();
 					float dx = (r1%2 == 0 ? 1.0f : -1.0f)*r1/(10.0f*RAND_MAX);
 					float dz = (r2%2 == 0 ? 1.0f : -1.0f)*r2/(10.0f*RAND_MAX);
-					vec3 pos(i*(length_x/side_x) + dx,
-							 j*(length_y/side_y) + 0.5f,
-							 k*(length_z/side_z) + dz);
-					size_t idx = k*side_x*side_y + j*side_x + i;
+					vec3 pos(i*(lenx/sidex) + dx,
+							 j*(leny/sidey) + 0.5f,
+							 k*(lenz/sidez) + dz);
+					size_t idx = j*sidex*sidez + k*sidex + i;
 					Fs[idx].prev_pos = pos;
 					Fs[idx].cur_pos = pos;
 					Fs[idx].cur_vel = vec3(0.0f);
@@ -120,14 +120,14 @@ namespace study_cases {
 
 		float basey = -0.26f;
 		float topy = basey + 0.5f;
-		gvec3 A00(-0.1f,  basey, -0.1f);
-		gvec3 A0p(-0.1f,  basey,  0.6f);
+		gvec3 A00(-0.1f, basey, -0.1f);
+		gvec3 A0p(-0.1f, basey,  0.6f);
 		gvec3 Ap0( 0.6f, basey, -0.1f);
 		gvec3 App( 0.6f, basey,  0.6f);
-		gvec3 B00(-0.1f,  topy, -0.1f);
-		gvec3 B0p(-0.1f,  topy,  0.6f);
-		gvec3 Bp0( 0.6f, topy, -0.1f);
-		gvec3 Bpp( 0.6f, topy,  0.6f);
+		gvec3 B00(-0.1f, topy,  -0.1f);
+		gvec3 B0p(-0.1f, topy,   0.6f);
+		gvec3 Bp0( 0.6f, topy,  -0.1f);
+		gvec3 Bpp( 0.6f, topy,   0.6f);
 
 		rplane *rbase = new rplane();
 		rbase->set_points(A00, Ap0, App, A0p);
@@ -160,9 +160,9 @@ namespace study_cases {
 		cout << "    Neighbourhood size: " << h << endl;
 		cout << "    Mass per particle: " << F->get_particles()[0].mass << endl;
 		cout << "    Initial shape:" << endl;
-		cout << "       " << length_x << " x "
-						  << length_y << " x "
-						  << length_z << endl;
+		cout << "       " << lenx << " x "
+						  << leny << " x "
+						  << lenz << endl;
 	}
 
 	void sim_00_help() {

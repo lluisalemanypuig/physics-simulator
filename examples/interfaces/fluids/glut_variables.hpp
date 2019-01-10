@@ -41,8 +41,8 @@ namespace glut_variables {
 	extern size_t num_threads;
 
 	extern float dt;
-	extern float length_x, length_y, length_z;
-	extern size_t side_x, side_y, side_z;
+	extern float lenx, leny, lenz;
+	extern size_t sidex, sidey, sidez;
 	extern float density;
 	extern float viscosity;
 	extern float h;

@@ -66,27 +66,27 @@ void parse_common_params(int argc, char *argv[]) {
 			++i;
 		}
 		else if (strcmp(argv[i], "--lenx") == 0) {
-			length_x = atof(argv[i + 1]);
+			lenx = atof(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--leny") == 0) {
-			length_y = atof(argv[i + 1]);
+			leny = atof(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--lenz") == 0) {
-			length_z = atof(argv[i + 1]);
+			lenz = atof(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--sidex") == 0) {
-			side_x = atoi(argv[i + 1]);
+			sidex = atoi(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--sidey") == 0) {
-			side_y = atoi(argv[i + 1]);
+			sidey = atoi(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--sidez") == 0) {
-			side_z = atoi(argv[i + 1]);
+			sidez = atoi(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--density") == 0) {
