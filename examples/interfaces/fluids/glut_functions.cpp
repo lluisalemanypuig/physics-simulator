@@ -217,7 +217,7 @@ void regular_keys_keyboard(unsigned char c, int x, int y) {
 		break;
 	case 'b':
 		run = not run;
-		if (record) {
+		if (run) {
 			cout << "Run simulation!" << endl;
 		}
 		break;
