@@ -101,12 +101,16 @@ void parse_common_params(int argc, char *argv[]) {
 			h = atof(argv[i + 1]);
 			++i;
 		}
+		else if (strcmp(argv[i], "--speed-sound") == 0) {
+			cs = atof(argv[i + 1]);
+			++i;
+		}
 		else if (strcmp(argv[i], "--dt") == 0) {
 			dt = atof(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--speed-sound") == 0) {
-			cs = atof(argv[i + 1]);
+		else if (strcmp(argv[i], "--it") == 0) {
+			n_iterations = atoi(argv[i + 1]);
 			++i;
 		}
 		else if (strcmp(argv[i], "--solver") == 0) {
@@ -205,7 +209,18 @@ void regular_keys_keyboard(unsigned char c, int x, int y) {
 	case 'z': display_fps = not display_fps; break;
 	case '+': if (FPS < 60) { ++FPS; } break;
 	case '-': if (FPS > 1)  { --FPS; } break;
-	case 't': record = not record; break;
+	case 'm':
+		record = not record;
+		if (record) {
+			cout << "Record video!" << endl;
+		}
+		break;
+	case 'b':
+		run = not run;
+		if (record) {
+			cout << "Run simulation!" << endl;
+		}
+		break;
 	default:
 		;
 	}
@@ -219,12 +234,15 @@ void help() {
 	cout << "    p: switch to perspective camera." << endl;
 	cout << "    z: display fps count." << endl;
 	cout << "    r: reset simulation to its initial state" << endl;
-	cout << "    w: display the octrees for the objects" << endl;
 	cout << "    h: display the options available" << endl;
 	cout << "    +: increase FPS limit by one (up to at most 60)" << endl;
 	cout << "    -: decrease FPS limit by one (down to at least 1)" << endl;
+	cout << "    m: start/stop record video" << endl;
+	cout << "    b: start/stop simulation" << endl;
 	cout << endl;
 	cout << "Parameters:" << endl;
+	cout << "    --dt t" << endl;
+	cout << "    --it n" << endl;
 	cout << "    --num-threads n" << endl;
 	cout << "    --lenx x" << endl;
 	cout << "    --leny y" << endl;

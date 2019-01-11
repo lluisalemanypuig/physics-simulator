@@ -213,7 +213,11 @@ void refresh() {
 		}
 	}
 
-	SR.get_simulator().simulate_fluids(num_threads);
+	if (run) {
+		for (size_t i = 0; i < n_iterations; ++i) {
+			SR.get_simulator().simulate_fluids(num_threads);
+		}
+	}
 
 	if (record) {
 		unsigned char *screen =

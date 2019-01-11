@@ -41,7 +41,7 @@ namespace study_cases {
 
 		SR.set_particle_size(2.0f);
 
-		S.set_solver(solver_type::Verlet);
+		S.set_solver(solver);
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		S.set_time_step(dt);
 
@@ -67,7 +67,7 @@ namespace study_cases {
 		{
 			float k = 1.0f - r2/(H*H);
 			float s = (-945.0f/(32.0f*PI*std::pow(H, 5.0f)))*k*k;
-			res = r*s/10000000.0f;
+			res = r*s;
 		};
 		F->set_kernel_pressure(pressure_kernel);
 
@@ -75,7 +75,7 @@ namespace study_cases {
 		{
 			float k = 1.0f - r2/(H*H);
 			float C = (945.0f/(8.0f*PI*std::pow(H, 5.0f)));
-			return C*k*(r2/(H*H) - 0.75f*k)/1000000000.0f;
+			return C*k*(r2/(H*H) - 0.75f*k);
 		};
 		F->set_kernel_viscosity(viscosity_kernel);
 
@@ -85,11 +85,16 @@ namespace study_cases {
 				for (size_t k = 0; k < sidez; ++k) {
 					int r1 = rand();
 					int r2 = rand();
-					float dx = (r1%2 == 0 ? 1.0f : -1.0f)*r1/(10.0f*RAND_MAX);
-					float dz = (r2%2 == 0 ? 1.0f : -1.0f)*r2/(10.0f*RAND_MAX);
-					vec3 pos(i*(lenx/sidex) + dx,
-							 j*(leny/sidey) + 0.5f,
-							 k*(lenz/sidez) + dz);
+					int r3 = rand();
+
+					float dx = lenx/2.0f;
+					dx += (r1%2 == 0 ? 1.0f : -1.0f)*r1*(lenx/2.0f)/RAND_MAX;
+					float dy = leny/2.0f;
+					dy += (r2%2 == 0 ? 1.0f : -1.0f)*r2*(lenx/2.0f)/RAND_MAX;
+					float dz = lenz/2.0f;
+					dz += (r3%2 == 0 ? 1.0f : -1.0f)*r3*(lenx/2.0f)/RAND_MAX;
+
+					vec3 pos(dx, dy, dz);
 					size_t idx = j*sidex*sidez + k*sidex + i;
 					Fs[idx].prev_pos = pos;
 					Fs[idx].cur_pos = pos;
@@ -163,6 +168,20 @@ namespace study_cases {
 		cout << "       " << lenx << " x "
 						  << leny << " x "
 						  << lenz << endl;
+		cout << "Simulation characteristics:" << endl;
+		cout << "    time step: " << dt << endl;
+		cout << "    iterations per frame: " << n_iterations << endl;
+		cout << "    solver: ";
+		if (solver == solver_type::EulerOrig) {
+			cout << "Euler Original" << endl;
+		}
+		if (solver == solver_type::EulerSemi) {
+			cout << "Euler Semi" << endl;
+		}
+		if (solver == solver_type::Verlet) {
+			cout << "Verlet" << endl;
+		}
+		cout << "    Number of threads: " << num_threads << endl;
 	}
 
 	void sim_00_help() {
@@ -225,7 +244,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(window_width, window_height);
-		window_id = glutCreateWindow("Spring meshes - Simulation 00");
+		window_id = glutCreateWindow("Fluids - Simulation 00");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -254,8 +273,8 @@ namespace study_cases {
 
 		h = 0.03f;
 		viscosity = 0.001f;
-		density = 1000.0f;
-		cs = 1500.0f;
+		density = 10.0f;
+		cs = 0.5f;
 
 		glut_functions::parse_common_params(argc, argv);
 

@@ -24,6 +24,7 @@ namespace glut_variables {
 	int FPS;
 	int fps_count;
 	size_t num_threads;
+	size_t n_iterations;
 
 	float dt;
 	float lenx, leny, lenz;
@@ -37,6 +38,7 @@ namespace glut_variables {
 
 	physim::math::vec3 bgd_color;
 
+	bool run;
 	bool record;
 
 	void init_variables() {
@@ -49,7 +51,7 @@ namespace glut_variables {
 		FPS = 60;
 		fps_count = 0;
 
-		solver = physim::solver_type::Verlet;
+		solver = physim::solver_type::EulerSemi;
 
 		bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
 
@@ -57,6 +59,7 @@ namespace glut_variables {
 		window_height = 480;
 
 		num_threads = 1;
+		n_iterations = 10;
 
 		dt = 0.01f;
 		sidex = sidey = sidez = 16;
@@ -66,6 +69,7 @@ namespace glut_variables {
 		density = 1000.0f;
 		cs = 1500.0f;
 
+		run = false;
 		record = false;
 
 		sec = timing::now();

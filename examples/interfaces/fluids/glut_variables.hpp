@@ -39,6 +39,7 @@ namespace glut_variables {
 	extern int FPS;
 	extern int fps_count;
 	extern size_t num_threads;
+	extern size_t n_iterations;
 
 	extern float dt;
 	extern float lenx, leny, lenz;
@@ -52,6 +53,7 @@ namespace glut_variables {
 
 	extern physim::math::vec3 bgd_color;
 
+	extern bool run;
 	extern bool record;
 
 	void init_variables();
