@@ -124,6 +124,7 @@ void simulator::_simulate_fluids(size_t n) {
 		// originated within the mesh's structure
 		f->update_forces(n);
 
+		#pragma omp parallel for num_threads(n) private(current) private(coll_pred)
 		for (size_t p_idx = 0; p_idx < N; ++p_idx) {
 
 			// compute forces for particle p that are

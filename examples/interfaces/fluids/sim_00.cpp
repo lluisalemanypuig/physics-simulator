@@ -87,12 +87,13 @@ namespace study_cases {
 					int r2 = rand();
 					int r3 = rand();
 
-					float dx = lenx/2.0f;
-					dx += (r1%2 == 0 ? 1.0f : -1.0f)*r1*(lenx/2.0f)/RAND_MAX;
-					float dy = leny/2.0f;
-					dy += (r2%2 == 0 ? 1.0f : -1.0f)*r2*(lenx/2.0f)/RAND_MAX;
-					float dz = lenz/2.0f;
-					dz += (r3%2 == 0 ? 1.0f : -1.0f)*r3*(lenx/2.0f)/RAND_MAX;
+					float cx = lenx/4.0f;
+					float cy = 0.7f;
+					float cz = lenz/4.0f;
+
+					float dx = cx + (r1%2 == 0 ? 1.0f : -1.0f)*r1*cx/RAND_MAX;
+					float dy = 0.2f + cy + (r2%2 == 0 ? 1.0f : -1.0f)*r2*cy/RAND_MAX;
+					float dz = cz + (r3%2 == 0 ? 1.0f : -1.0f)*r3*cz/RAND_MAX;
 
 					vec3 pos(dx, dy, dz);
 					size_t idx = j*sidex*sidez + k*sidex + i;
@@ -112,27 +113,27 @@ namespace study_cases {
 		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
-		plane *base = new plane(vec3(0,1,0), vec3(0,-0.25,0));
-		plane *w1 = new plane(vec3(1,0,0), vec3(-0.1f,0,0));
-		plane *w2 = new plane(vec3(-1,0,0), vec3(0.6f,0,0));
-		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,-0.1f));
-		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.6f));
+		plane *base = new plane(vec3(0,1,0), vec3(0,0,0));
+		plane *w1 = new plane(vec3(1,0,0), vec3(0,0,0));
+		plane *w2 = new plane(vec3(-1,0,0), vec3(0.5f,0,0));
+		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,0));
+		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.5f));
 		S.add_geometry(base);
 		S.add_geometry(w1);
 		S.add_geometry(w2);
 		S.add_geometry(w3);
 		S.add_geometry(w4);
 
-		float basey = -0.26f;
-		float topy = basey + 0.5f;
-		gvec3 A00(-0.1f, basey, -0.1f);
-		gvec3 A0p(-0.1f, basey,  0.6f);
-		gvec3 Ap0( 0.6f, basey, -0.1f);
-		gvec3 App( 0.6f, basey,  0.6f);
-		gvec3 B00(-0.1f, topy,  -0.1f);
-		gvec3 B0p(-0.1f, topy,   0.6f);
-		gvec3 Bp0( 0.6f, topy,  -0.1f);
-		gvec3 Bpp( 0.6f, topy,   0.6f);
+		float basey = -0.01f;
+		float topy = basey + 0.51f;
+		gvec3 A00(-0.01f, basey, -0.01f);
+		gvec3 A0p(-0.01f, basey,  0.51f);
+		gvec3 Ap0( 0.51f, basey, -0.01f);
+		gvec3 App( 0.51f, basey,  0.51f);
+		gvec3 B00(-0.01f, topy,  -0.01f);
+		gvec3 B0p(-0.01f, topy,   0.51f);
+		gvec3 Bp0( 0.51f, topy,  -0.01f);
+		gvec3 Bpp( 0.51f, topy,   0.51f);
 
 		rplane *rbase = new rplane();
 		rbase->set_points(A00, Ap0, App, A0p);
@@ -273,8 +274,8 @@ namespace study_cases {
 
 		h = 0.03f;
 		viscosity = 0.001f;
-		density = 10.0f;
-		cs = 0.5f;
+		density = 50.0f;
+		cs = 2.0f;
 
 		glut_functions::parse_common_params(argc, argv);
 
