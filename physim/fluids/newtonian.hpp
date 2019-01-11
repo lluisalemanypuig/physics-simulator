@@ -14,10 +14,21 @@ namespace fluids {
 
 /**
  * @brief Class implementing a newtonian fluid.
- *
  */
 class newtonian : public fluid {
 	protected:
+
+		void make_neighbours_lists
+		(size_t i, std::vector<size_t>& neihgs, std::vector<float>& d2s) const;
+
+		void make_neighbours_lists_tree
+		(size_t i, std::vector<size_t>& neihgs, std::vector<float>& d2s) const;
+
+		void initialise_density_pressure
+		(size_t i, const std::vector<size_t>& neighs, const std::vector<float>& d2s);
+
+		void update_force
+		(size_t i, const std::vector<size_t>& neighs, const std::vector<float>& d2s);
 
 	public:
 		/// Default onstructor.
