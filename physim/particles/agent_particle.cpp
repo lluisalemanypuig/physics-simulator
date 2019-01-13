@@ -28,7 +28,7 @@ void agent_particle::partial_init() {
 	max_speed = 1.0f;
 	max_force = 1.0f;
 
-	const float w = 1.0f/6.0f;
+	const float w = 1.0f/7.0f;
 	align_weight = w;
 	seek_weight = w;
 	flee_weight = w;
@@ -41,6 +41,9 @@ void agent_particle::partial_init() {
 
 	ucoll_weight = w;
 	ucoll_distance = 5.0f;
+
+	wow_weight = w;
+	wow_distance = 5.0f;
 }
 
 // PUBLIC
@@ -68,6 +71,9 @@ agent_particle::agent_particle(const agent_particle& p) : sized_particle(p) {
 
 	ucoll_weight = p.ucoll_weight;
 	ucoll_distance = p.ucoll_distance;
+
+	wow_weight = p.wow_weight;
+	wow_distance = p.wow_distance;
 }
 
 agent_particle::~agent_particle() {
@@ -156,6 +162,11 @@ const
 
 	if (is_behaviour_set(agent_behaviour_type::unaligned_collision_avoidance)) {
 		unaligned_collision_avoidance_behaviour(agents, v);
+		__pm3_add_acc_v(weighted_steering, v);
+	}
+
+	if (is_behaviour_set(agent_behaviour_type::walk_off_with)) {
+		wow_behaviour(agents, v);
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 }
@@ -314,32 +325,64 @@ void agent_particle::unaligned_collision_avoidance_behaviour
 			continue;
 		}
 		float D = __pm3_dist(cur_pos, a.cur_pos);
-		float d = D - (R + a.R);
-		if (d > r) {
+		if (D - (R + a.R) > r) {
 			continue;
 		}
 
-		vec3 pos_dir;
-		__pm3_sub_v_v(pos_dir, a.cur_pos, cur_pos);
-		float vta_angle = angle3d(pos_dir, cur_vel);
-		if (vta_angle > ninety) {
-			continue;
-		}
-
-		vec3 pred_agent;
-		__pm3_add_v_vs(pred_agent, a.cur_pos, a.cur_vel, 0.5f);
-		float pred_angle = angle3d(cur_vel, pos_dir);
+		vec3 future_agent;
+		__pm3_add_v_vs(future_agent, a.cur_pos, a.cur_vel, 0.01f);
+		vec3 A_to_future;
+		__pm3_sub_v_v(A_to_future, future_agent, cur_pos);
+		float pred_angle = angle3d(cur_vel, A_to_future);
 		if (pred_angle > ninety) {
 			continue;
 		}
 
-		// copmute repulsion using vector from this position
-		// to the agent's position and this velocity
-		__pm3_cross(X, pos_dir, cur_vel);
-		__pm3_cross(pos_rep, X,cur_vel);
-		math::normalise(pos_rep, pos_rep);
+		// vector from this agent to the other agent
+		vec3 AB;
+		__pm3_sub_v_v(AB, a.cur_pos, cur_pos);
+		float vta_angle = angle3d(AB, cur_vel);
+		if (vta_angle > ninety) {
+			continue;
+		}
 
+		// compute repulsion using vector from this position
+		// to the agent's position and this velocity
+		__pm3_cross(X, AB, cur_vel);
+		__pm3_cross(pos_rep, X,cur_vel);
+
+		// Do not normalise! The greater the velocity
+		// the greater the force.
 		__pm3_add_acc_vs(v, pos_rep, ucoll_weight);
+	}
+}
+
+void agent_particle::wow_behaviour
+(const std::vector<agent_particle>& agents, math::vec3& v) const
+{
+	vec3 X;
+	vec3 pos_rep, vel_rep;
+
+	__pm3_assign_s(v, 0.0f);
+	float r = wow_distance;
+
+	for (const agent_particle& a : agents) {
+		if (index == a.index) {
+			continue;
+		}
+		float D = __pm3_dist(cur_pos, a.cur_pos);
+		if (D - (R + a.R) > r) {
+			continue;
+		}
+
+		// compute repulsion using vector from this position
+		// to the agent's position and this velocity
+		__pm3_cross(X, cur_vel, a.cur_vel);
+		__pm3_cross(pos_rep, X,cur_vel);
+
+		// Do not normalise! The greater the velocity
+		// the greater the force.
+		__pm3_add_acc_vs(v, pos_rep, wow_weight);
 	}
 }
 

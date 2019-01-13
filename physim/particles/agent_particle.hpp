@@ -37,19 +37,19 @@ namespace particles {
  */
 enum class agent_behaviour_type : int8_t {
 	/// No behaviour active.
-	none				= 1 << 0,
+	none = 1 << 0,
 	/**
 	 * @brief Seek. The agent moves towards its target.
 	 *
 	 * Its weight is @ref agent_particle::seek_weight.
 	 */
-	seek,
+	seek = 1 << 1,
 	/**
 	 * @brief Flee. The agent moves away from its target.
 	 *
 	 * Its weight is @ref agent_particle::flee_weight.
 	 */
-	flee				= 1 << 2,
+	flee = 1 << 2,
 	/**
 	 * @brief Arrival. The agent slows down as it approaches its target.
 	 *
@@ -58,7 +58,7 @@ enum class agent_behaviour_type : int8_t {
 	 *
 	 * Its weight is @ref agent_particle::arrival_weight.
 	 */
-	arrival				= 1 << 3,
+	arrival = 1 << 3,
 	/**
 	 * @brief Collision avoidance.
 	 *
@@ -66,7 +66,7 @@ enum class agent_behaviour_type : int8_t {
 	 *
 	 * Its weight is @ref agent_particle::coll_avoid_weight.
 	 */
-	collision_avoidance	= 1 << 4,
+	collision_avoidance = 1 << 4,
 	/**
 	 * @brief Unaligned collision avoidance.
 	 *
@@ -74,7 +74,14 @@ enum class agent_behaviour_type : int8_t {
 	 *
 	 * Its weight is @ref agent_particle::ucoll_avoid_weight.
 	 */
-	unaligned_collision_avoidance	= 1 << 5,
+	unaligned_collision_avoidance = 1 << 5,
+	/**
+	 * @brief Walk off with.
+	 *
+	 * Agents nearby will try to align their velocities so that
+	 * it looks like they are walking together.
+	 */
+	walk_off_with = 1 << 6,
 };
 
 /**
@@ -102,14 +109,16 @@ class agent_particle : public sized_particle {
 		 * - @ref behaviour : @ref agent_behaviour_type::none
 		 * - @ref max_speed : 1.0
 		 * - @ref max_force : 1.0
-		 * - @ref align_weight : 1.0/6.0
-		 * - @ref seek_weight : 1.0/6.0
-		 * - @ref flee_weight : 1.0/6.0
-		 * - @ref arrival_weight : 1.0/6.0
+		 * - @ref align_weight : 1.0/7.0
+		 * - @ref seek_weight : 1.0/7.0
+		 * - @ref flee_weight : 1.0/7.0
+		 * - @ref arrival_weight : 1.0/7.0
 		 * - @ref arrival_distance : 0.0
-		 * - @ref coll_weight : 1.0/6.0
+		 * - @ref coll_weight : 1.0/7.0
 		 * - @ref collision_distance : 5.0
-		 * - @ref ucoll_weight : 1.0/6.0
+		 * - @ref wow_weight : 1.0/7.0
+		 * - @ref wow_distance : 5.0
+		 * - @ref ucoll_weight : 1.0/7.0
 		 * - @ref ucollision_distance : 5.0
 		 */
 		void partial_init();
@@ -159,14 +168,7 @@ class agent_particle : public sized_particle {
 		float flee_weight;
 		/// Weight for arrival behaviour.
 		float arrival_weight;
-		/**
-		 * @brief Distance from the target to start slowing down at.
-		 *
-		 * When the agent is in behaviour arrival (see
-		 * @ref agent_behaviour_type::arrival) it starts slow down. This
-		 * attribute encodes the distance from its target at which this
-		 * happens.
-		 */
+		/// Distance from the target to start slowing down at in arrival behaviour.
 		float arrival_distance;
 		/// Weight for collision avoidance behaviour.
 		float coll_weight;
@@ -176,6 +178,10 @@ class agent_particle : public sized_particle {
 		float ucoll_weight;
 		/// Distance ahead of the agent for unaligned collision avoidance.
 		float ucoll_distance;
+		/// Weight for 'walk off with' behaviour.
+		float wow_weight;
+		/// Distance ahead of the agent for 'walk off with' behaviour.
+		float wow_distance;
 
 	public:
 		/// Default constructor.
@@ -322,7 +328,7 @@ class agent_particle : public sized_particle {
 		 * @brief Computes the seek steering force.
 		 *
 		 * This function must compute a velocity vector multiplied
-		 * by a certain weight. The result must be assigned to @e v.
+		 * by weight @ref seek_weight. The result must be assigned to @e v.
 		 *
 		 * @param[out] v Seek steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
@@ -332,7 +338,7 @@ class agent_particle : public sized_particle {
 		 * @brief Computes the flee steering force.
 		 *
 		 * This function must compute a velocity vector multiplied
-		 * by a certain weight. The result must be assigned to @e v.
+		 * by weight @ref free_weight. The result must be assigned to @e v.
 		 *
 		 * @param[out] v Flee steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
@@ -342,7 +348,7 @@ class agent_particle : public sized_particle {
 		 * @brief Computes the arrival steering force.
 		 *
 		 * This function must compute a velocity vector multiplied
-		 * by a certain weight. The result must be assigned to @e v.
+		 * by weight @ref arrival_weight. The result must be assigned to @e v.
 		 *
 		 * Recall that the slowing distance considered is stored
 		 * in @e v.
@@ -355,7 +361,7 @@ class agent_particle : public sized_particle {
 		 * @brief Computes the collision avoidance steering force.
 		 *
 		 * This function must compute a velocity vector multiplied
-		 * by a certain weight. The result must be assigned to @e v.
+		 * by weight @ref coll_weight. The result must be assigned to @e v.
 		 *
 		 * Rectangles are considered walls. The rest of the geometry
 		 * is approximated with spheres.
@@ -370,7 +376,7 @@ class agent_particle : public sized_particle {
 		 * @brief Computes the collision avoidance steering force.
 		 *
 		 * This function must compute a velocity vector multiplied
-		 * by a certain weight. The result must be assigned to @e v.
+		 * by weight @ref ucoll_weight. The result must be assigned to @e v.
 		 *
 		 * The vector computed is meant to provide the agent a means of
 		 * avoiding collision with other agents 'locally', that is, the
@@ -388,11 +394,38 @@ class agent_particle : public sized_particle {
 		 * - agents whose predicted position is outside the FOV.
 		 * - agents whose current position is outside the FOV.
 		 *
-		 * @param[in] scene The geometry in the simulation.
+		 * @param[in] agents All the agents in the simulation.
 		 * @param[out] v Unaligned collision avoidance steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
 		virtual void unaligned_collision_avoidance_behaviour
+		(const std::vector<agent_particle>& agents, math::vec3& v) const;
+		/**
+		 * @brief Computes the "walk off with" steering force.
+		 *
+		 * This function must compute a velocity vector multiplied
+		 * by weight @ref wow_weight. The result must be assigned to @e v.
+		 *
+		 * The vector computed is meant to provide the agent a means of
+		 * walking together with another agent with similar velocity direction.
+		 *
+		 *  Only some agents are considered. Those ignored are listed below.
+		 * FOV stands for Field of View, it is aligned at this agent's
+		 * velocity vector and is of 90º to its left and 90º to its right.
+		 *
+		 * The following agents are ignored:
+		 * - agents too far away (the distance between the agents is more
+		 * than @ref wow_distance, where the distance considered is
+		 * the distance between the current positions minus the sum of both
+		 * agent's radius)
+		 * - agents whose predicted position is outside the FOV.
+		 * - agents whose current position is outside the FOV.
+		 *
+		 * @param[in] agents All the agents in the simulation.
+		 * @param[out] v "Walk off with" steering vector.
+		 * @pre Vector @e v may not be initialised to 0.
+		 */
+		virtual void wow_behaviour
 		(const std::vector<agent_particle>& agents, math::vec3& v) const;
 };
 
