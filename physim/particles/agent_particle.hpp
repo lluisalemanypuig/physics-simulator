@@ -81,7 +81,7 @@ enum class agent_behaviour_type : int8_t {
 	 * Agents nearby will try to align their velocities so that
 	 * it looks like they are walking together.
 	 */
-	walk_off_with = 1 << 6,
+	walk_with_me = 1 << 6,
 };
 
 /**
@@ -178,9 +178,9 @@ class agent_particle : public sized_particle {
 		float ucoll_weight;
 		/// Distance ahead of the agent for unaligned collision avoidance.
 		float ucoll_distance;
-		/// Weight for 'walk off with' behaviour.
+		/// Weight for 'walk with me' behaviour.
 		float wow_weight;
-		/// Distance ahead of the agent for 'walk off with' behaviour.
+		/// Distance ahead of the agent for 'walk with me' behaviour.
 		float wow_distance;
 
 	public:
@@ -425,7 +425,7 @@ class agent_particle : public sized_particle {
 		 * @param[out] v "Walk off with" steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
 		 */
-		virtual void wow_behaviour
+		virtual void wwm_behaviour
 		(const std::vector<agent_particle>& agents, math::vec3& v) const;
 };
 

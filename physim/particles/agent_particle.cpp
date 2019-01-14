@@ -165,8 +165,8 @@ const
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 
-	if (is_behaviour_set(agent_behaviour_type::walk_off_with)) {
-		wow_behaviour(agents, v);
+	if (is_behaviour_set(agent_behaviour_type::walk_with_me)) {
+		wwm_behaviour(agents, v);
 		__pm3_add_acc_v(weighted_steering, v);
 	}
 }
@@ -357,7 +357,7 @@ void agent_particle::unaligned_collision_avoidance_behaviour
 	}
 }
 
-void agent_particle::wow_behaviour
+void agent_particle::wwm_behaviour
 (const std::vector<agent_particle>& agents, math::vec3& v) const
 {
 	vec3 X;
