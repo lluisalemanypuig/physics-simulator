@@ -36,7 +36,6 @@ static const float PI = static_cast<float>(M_PI);
 namespace study_cases {
 
 	void sim_00_make_simulation() {
-		float volume = 0.01f;
 		simulator& S = SR.get_simulator();
 
 		SR.set_particle_size(2.0f);
@@ -46,37 +45,20 @@ namespace study_cases {
 		S.set_time_step(dt);
 
 		size_t N = sidex*sidey*sidez;
+		float volume = lenx*leny*lenz;
 
 		fluid *F = new newtonian();
 		F->allocate(N, volume, density, viscosity, h, cs);
 
 		kernel_scalar_function density_kernel;
+		kernel_functions::density_poly6(h, density_kernel);
 		kernel_vectorial_function pressure_kernel;
+		kernel_functions::pressure_poly6(h, pressure_kernel);
 		kernel_scalar_function viscosity_kernel;
+		kernel_functions::viscosity_poly6(h, viscosity_kernel);
 
-		float H = h;
-		density_kernel = [H](float r2) -> float
-		{
-			float k = 1.0f/H - r2*(1.0f/(H*H*H));
-			float C = (315.0f/(64.0f*PI));
-			return C*k*k*k;
-		};
 		F->set_kernel_density(density_kernel);
-
-		pressure_kernel = [H](const vec3& r, float r2, vec3& res) -> void
-		{
-			float k = 1.0f - r2/(H*H);
-			float s = (-945.0f/(32.0f*PI*std::pow(H, 5.0f)))*k*k;
-			res = r*s;
-		};
 		F->set_kernel_pressure(pressure_kernel);
-
-		viscosity_kernel = [H](float r2) -> float
-		{
-			float k = 1.0f - r2/(H*H);
-			float C = (945.0f/(8.0f*PI*std::pow(H, 5.0f)));
-			return C*k*(r2/(H*H) - 0.75f*k);
-		};
 		F->set_kernel_viscosity(viscosity_kernel);
 
 		fluid_particle *Fs = F->get_particles();
@@ -84,16 +66,24 @@ namespace study_cases {
 			for (size_t j = 0; j < sidey; ++j) {
 				for (size_t k = 0; k < sidez; ++k) {
 					int r1 = rand();
+					float fr1 = static_cast<float>(r1);
 					int r2 = rand();
+					float fr2 = static_cast<float>(r2);
 					int r3 = rand();
+					float fr3 = static_cast<float>(r3);
 
-					float cx = lenx/4.0f;
+					float cx = 0.25f;
+					float sx = (r1%2 == 0 ? 1.0f : -1.0f);
+
 					float cy = 0.7f;
-					float cz = lenz/4.0f;
+					float sy = (r2%2 == 0 ? 1.0f : -1.0f);
 
-					float dx = cx + (r1%2 == 0 ? 1.0f : -1.0f)*r1*cx/RAND_MAX;
-					float dy = 0.2f + cy + (r2%2 == 0 ? 1.0f : -1.0f)*r2*cy/RAND_MAX;
-					float dz = cz + (r3%2 == 0 ? 1.0f : -1.0f)*r3*cz/RAND_MAX;
+					float cz = 0.25f;
+					float sz = (r3%2 == 0 ? 1.0f : -1.0f);
+
+					float dx = cx + sx*(fr1/RAND_MAX)*lenx/4.0f;
+					float dy = cy + sy*(fr2/RAND_MAX)*leny/2.0f;
+					float dz = cz + sz*(fr3/RAND_MAX)*lenz/4.0f;
 
 					vec3 pos(dx, dy, dz);
 					size_t idx = j*sidex*sidez + k*sidex + i;
@@ -157,32 +147,7 @@ namespace study_cases {
 		SR.add_geometry(rw4);
 
 		bgd_color.x = bgd_color.y = bgd_color.z = 0.8f;
-
-		cout << "Fluid characteristics:" << endl;
-		cout << "    Number of particles: " << N << endl;
-		cout << "    Volume: " << volume << endl;
-		cout << "    Viscosity: " << viscosity << endl;
-		cout << "    Density: " << density << endl;
-		cout << "    Neighbourhood size: " << h << endl;
-		cout << "    Mass per particle: " << F->get_particles()[0].mass << endl;
-		cout << "    Initial shape:" << endl;
-		cout << "       " << lenx << " x "
-						  << leny << " x "
-						  << lenz << endl;
-		cout << "Simulation characteristics:" << endl;
-		cout << "    time step: " << dt << endl;
-		cout << "    iterations per frame: " << n_iterations << endl;
-		cout << "    solver: ";
-		if (solver == solver_type::EulerOrig) {
-			cout << "Euler Original" << endl;
-		}
-		if (solver == solver_type::EulerSemi) {
-			cout << "Euler Semi" << endl;
-		}
-		if (solver == solver_type::Verlet) {
-			cout << "Verlet" << endl;
-		}
-		cout << "    Number of threads: " << num_threads << endl;
+		simulation_info(F);
 	}
 
 	void sim_00_help() {
@@ -190,7 +155,7 @@ namespace study_cases {
 
 		cout << "Simulation 00 description:" << endl;
 		cout << endl;
-		cout << "    This is a simulation of a very small water-like fluid." << endl;
+		cout << "    This is a simulation of a very small fluid." << endl;
 		cout << endl;
 	}
 
@@ -274,8 +239,8 @@ namespace study_cases {
 
 		h = 0.03f;
 		viscosity = 0.001f;
-		density = 50.0f;
-		cs = 2.0f;
+		density = 1000.0f;
+		cs = 1500.0f;
 
 		glut_functions::parse_common_params(argc, argv);
 

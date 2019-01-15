@@ -61,7 +61,7 @@ void finish_simulation() {
 
 void parse_common_params(int argc, char *argv[]) {
 	for (int i = 2; i < argc; ++i) {
-		if (strcmp(argv[i], "--num-threads") == 0) {
+		if (strcmp(argv[i], "--nt") == 0) {
 			num_threads = atoi(argv[i + 1]);
 			++i;
 		}
@@ -89,11 +89,11 @@ void parse_common_params(int argc, char *argv[]) {
 			sidez = atoi(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--density") == 0) {
+		else if (strcmp(argv[i], "--dens") == 0) {
 			density = atof(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--viscosity") == 0) {
+		else if (strcmp(argv[i], "--visc") == 0) {
 			viscosity = atof(argv[i + 1]);
 			++i;
 		}
@@ -101,7 +101,7 @@ void parse_common_params(int argc, char *argv[]) {
 			h = atof(argv[i + 1]);
 			++i;
 		}
-		else if (strcmp(argv[i], "--speed-sound") == 0) {
+		else if (strcmp(argv[i], "--cs") == 0) {
 			cs = atof(argv[i + 1]);
 			++i;
 		}
@@ -243,18 +243,19 @@ void help() {
 	cout << "Parameters:" << endl;
 	cout << "    --dt t" << endl;
 	cout << "    --it n" << endl;
-	cout << "    --num-threads n" << endl;
+	cout << "    --nt n" << endl;
 	cout << "    --lenx x" << endl;
 	cout << "    --leny y" << endl;
 	cout << "    --lenz z" << endl;
-	cout << "    --density d" << endl;
-	cout << "    --viscosity v" << endl;
+	cout << "    --dens d" << endl;
+	cout << "    --visc v" << endl;
 	cout << "    --radius r" << endl;
-	cout << "    --speed-sound c" << endl;
+	cout << "    --cs c" << endl;
 	cout << "    --solver s" << endl;
 	cout << "        exp-euler" << endl;
 	cout << "        semi-euler" << endl;
 	cout << "        verlet" << endl;
+	cout << endl;
 }
 
 } // -- namespace glut_functions

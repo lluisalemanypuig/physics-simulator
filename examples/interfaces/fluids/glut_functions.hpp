@@ -27,12 +27,9 @@ namespace glut_functions {
 	/* ---------------- */
 	/* helper functions */
 
-	void set_internal_forces();
-
 	/* --------------------- */
 	/* actual glut functions */
 
-	void init_glut_variables();
 	void init_shaders();
 	void clear_shaders();
 
