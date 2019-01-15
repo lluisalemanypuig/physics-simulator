@@ -84,6 +84,8 @@ void init_variables() {
 }
 
 void simulation_info(const fluids::fluid *F) {
+	float m = F->get_particles()[0].mass;
+
 	cout << "Fluid characteristics:" << endl;
 	cout << "    Number of particles: " << endl;
 	cout << "        " << sidex << " x "
@@ -92,15 +94,16 @@ void simulation_info(const fluids::fluid *F) {
 	cout << "    Initial shape:" << endl;
 	cout << "       " << lenx << " x "
 					  << leny << " x "
-					  << lenz << endl;
+					  << lenz << " = " << lenx*leny*lenz << endl;
 	cout << "    Volume: " << lenx*leny*lenz << endl;
 	cout << "    Viscosity: " << viscosity << endl;
 	cout << "    Density: " << density << endl;
 	cout << "    Neighbourhood size: " << h << endl;
-	cout << "    Mass per particle: " << F->get_particles()[0].mass << endl;
+	cout << "    Mass per particle: " << m << endl;
 	cout << "    Speed of sound: " << cs << endl;
 	cout << "Simulation characteristics:" << endl;
 	cout << "    time step: " << dt << endl;
+	cout << "    dt/mass: " << dt*(1.0f/m) << endl;
 	cout << "    iterations per frame: " << n_iterations << endl;
 	cout << "    solver: ";
 	if (solver == solver_type::EulerOrig) {

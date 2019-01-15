@@ -31,8 +31,6 @@ using namespace fluids;
 using namespace glut_functions;
 using namespace glut_variables;
 
-static const float PI = static_cast<float>(M_PI);
-
 namespace study_cases {
 
 	void sim_00_make_simulation() {
@@ -51,11 +49,11 @@ namespace study_cases {
 		F->allocate(N, volume, density, viscosity, h, cs);
 
 		kernel_scalar_function density_kernel;
-		kernel_functions::density_poly6(h, density_kernel);
+		kernel_functions::density_spline(h, density_kernel);
 		kernel_vectorial_function pressure_kernel;
-		kernel_functions::pressure_poly6(h, pressure_kernel);
+		kernel_functions::pressure_spiky(h, pressure_kernel);
 		kernel_scalar_function viscosity_kernel;
-		kernel_functions::viscosity_poly6(h, viscosity_kernel);
+		kernel_functions::viscosity_spiky(h, viscosity_kernel);
 
 		F->set_kernel_density(density_kernel);
 		F->set_kernel_pressure(pressure_kernel);
@@ -75,7 +73,7 @@ namespace study_cases {
 					float cx = 0.25f;
 					float sx = (r1%2 == 0 ? 1.0f : -1.0f);
 
-					float cy = 0.7f;
+					float cy = 0.3f;
 					float sy = (r2%2 == 0 ? 1.0f : -1.0f);
 
 					float cz = 0.25f;
@@ -236,12 +234,6 @@ namespace study_cases {
 		// --------------------------- //
 		/* initialise global variables */
 		glut_variables::init_variables();
-
-		h = 0.03f;
-		viscosity = 0.001f;
-		density = 1000.0f;
-		cs = 1500.0f;
-
 		glut_functions::parse_common_params(argc, argv);
 
 		// ---------------- //
