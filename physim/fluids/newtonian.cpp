@@ -137,11 +137,14 @@ void newtonian::update_force
 
 		/* viscosity acceleration */
 		float Vij = ps[i].density*ps[j].density;
-		Vij *= viscosity*ps[j].mass*inv(Vij);
+		Vij *= ps[j].mass*inv(Vij);
 		Vij *= kernel_viscosity(d2s[j_it]);
 		__pm3_sub_v_v_mul_s (visc_acc, ps[i].cur_vel,ps[j].cur_vel, Vij);
 		__pm3_add_acc_v(acc, visc_acc);
 	}
+
+	/* take common factor to viscosity */
+	__pm3_mul_acc_s(visc_acc, viscosity);
 
 	/* compute force in particle*/
 	__pm3_assign_vs(ps[i].force, acc, ps[i].mass);

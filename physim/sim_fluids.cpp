@@ -24,20 +24,15 @@ void simulator::_simulate_fluids() {
 	// of the mesh particle will be copied into this one.
 	free_particle current;
 	free_particle coll_pred;
+	coll_pred.bouncing = 0.0f;
 
 	for (fluid *f : fs) {
 
 		coll_pred.friction = f->get_viscosity()/50000.0f;
-		coll_pred.bouncing = 0.0f;
 
 		/* update a meshe's particles */
 		fluid_particle *fluid_ps = f->get_particles();
 		size_t N = f->size();
-
-		// set forces to 0
-		for (size_t i = 0; i < N; ++i) {
-			__pm3_assign_s(fluid_ps[i].force, 0.0f);
-		}
 
 		// compute forces for particle p that are
 		// originated within the mesh's structure
@@ -113,12 +108,6 @@ void simulator::_simulate_fluids(size_t n) {
 		/* update a meshe's particles */
 		fluid_particle *fluid_ps = f->get_particles();
 		size_t N = f->size();
-
-		// set forces to 0
-		#pragma omp parallel for num_threads(n)
-		for (size_t i = 0; i < N; ++i) {
-			__pm3_assign_s(fluid_ps[i].force, 0.0f);
-		}
 
 		// compute forces for particle p that are
 		// originated within the mesh's structure
