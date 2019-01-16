@@ -2,9 +2,11 @@
 
 // C++ includes
 #include <utility>
+#include <set>
 
 // physim includes
 #include <physim/fluids/fluid.hpp>
+#include <physim/fluids/kernel_function.hpp>
 
 // render includes
 #include <render/scene/sim_renderer.hpp>
@@ -12,6 +14,7 @@
 #include <render/shader/shader.hpp>
 
 // custom includes
+#include "kernels.hpp"
 #include "utils.hpp"
 
 namespace glut_variables {
@@ -44,6 +47,18 @@ extern int fps_count;
 extern size_t num_threads;
 extern size_t n_iterations;
 
+extern std::set<std::string> allowed_dens_kernel_names;
+extern std::set<std::string> allowed_press_kernel_names;
+extern std::set<std::string> allowed_visc_kernel_names;
+
+extern std::string dens_kernel_name;
+extern std::string press_kernel_name;
+extern std::string visc_kernel_name;
+
+extern physim::fluids::kernel_scalar_function density_kernel;
+extern physim::fluids::kernel_vectorial_function pressure_kernel;
+extern physim::fluids::kernel_scalar_function viscosity_kernel;
+
 extern float dt;
 extern float lenx, leny, lenz;
 extern size_t sidex, sidey, sidez;
@@ -61,5 +76,6 @@ extern bool record;
 
 void init_variables();
 void simulation_info(const physim::fluids::fluid *F);
+void make_kernels();
 
 } // -- namespace glut_variables

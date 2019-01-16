@@ -48,13 +48,7 @@ namespace study_cases {
 		fluid *F = new newtonian();
 		F->allocate(N, volume, density, viscosity, h, cs);
 
-		kernel_scalar_function density_kernel;
-		kernel_functions::density_spline(h, density_kernel);
-		kernel_vectorial_function pressure_kernel;
-		kernel_functions::pressure_spiky(h, pressure_kernel);
-		kernel_scalar_function viscosity_kernel;
-		kernel_functions::viscosity_spiky(h, viscosity_kernel);
-
+		make_kernels();
 		F->set_kernel_density(density_kernel);
 		F->set_kernel_pressure(pressure_kernel);
 		F->set_kernel_viscosity(viscosity_kernel);
@@ -101,27 +95,33 @@ namespace study_cases {
 		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
-		plane *base = new plane(vec3(0,1,0), vec3(0,0,0));
-		plane *w1 = new plane(vec3(1,0,0), vec3(0,0,0));
-		plane *w2 = new plane(vec3(-1,0,0), vec3(0.5f,0,0));
-		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,0));
-		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,0.5f));
+		float px = lenx + 0.05f;
+		float mx = -0.05f;
+		float my = -0.05f;
+		float pz = lenz + 0.05f;
+		float mz = -0.05f;
+
+		plane *base = new plane(vec3(0,1,0), vec3(0,my,0));
+		plane *w1 = new plane(vec3(1,0,0), vec3(mx,0,0));
+		plane *w2 = new plane(vec3(-1,0,0), vec3(px,0,0));
+		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,mz));
+		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,pz));
 		S.add_geometry(base);
 		S.add_geometry(w1);
 		S.add_geometry(w2);
 		S.add_geometry(w3);
 		S.add_geometry(w4);
 
-		float basey = -0.01f;
-		float topy = basey + 0.51f;
-		gvec3 A00(-0.01f, basey, -0.01f);
-		gvec3 A0p(-0.01f, basey,  0.51f);
-		gvec3 Ap0( 0.51f, basey, -0.01f);
-		gvec3 App( 0.51f, basey,  0.51f);
-		gvec3 B00(-0.01f, topy,  -0.01f);
-		gvec3 B0p(-0.01f, topy,   0.51f);
-		gvec3 Bp0( 0.51f, topy,  -0.01f);
-		gvec3 Bpp( 0.51f, topy,   0.51f);
+		float topy = my + 0.51f;
+
+		gvec3 A00(my, my, mz);
+		gvec3 A0p(my, my, pz);
+		gvec3 Ap0(px, my, mz);
+		gvec3 App(px, my, pz);
+		gvec3 B00(my, topy, mz);
+		gvec3 B0p(my, topy, pz);
+		gvec3 Bp0(px, topy, mz);
+		gvec3 Bpp(px, topy, pz);
 
 		rplane *rbase = new rplane();
 		rbase->set_points(A00, Ap0, App, A0p);

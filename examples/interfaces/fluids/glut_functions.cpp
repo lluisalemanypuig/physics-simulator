@@ -113,6 +113,33 @@ void parse_common_params(int argc, char *argv[]) {
 			n_iterations = atoi(argv[i + 1]);
 			++i;
 		}
+		else if (strcmp(argv[i], "--dens-kernel") == 0) {
+			dens_kernel_name = string(argv[i + 1]);
+			auto it = allowed_dens_kernel_names.find(dens_kernel_name);
+			if (it == allowed_dens_kernel_names.end()) {
+				cerr << "Error: density kernel '" << dens_kernel_name << "' not recognised" << endl;
+				cerr << "    Choosing poly6" << endl;
+				dens_kernel_name = "poly6";
+			}
+		}
+		else if (strcmp(argv[i], "--press-kernel") == 0) {
+			press_kernel_name = string(argv[i + 1]);
+			auto it = allowed_press_kernel_names.find(press_kernel_name);
+			if (it == allowed_press_kernel_names.end()) {
+				cerr << "Error: pressure kernel '" << press_kernel_name << "' not recognised" << endl;
+				cerr << "    Choosing poly6" << endl;
+				press_kernel_name = "poly6";
+			}
+		}
+		else if (strcmp(argv[i], "--visc-kernel") == 0) {
+			visc_kernel_name = string(argv[i + 1]);
+			auto it = allowed_visc_kernel_names.find(visc_kernel_name);
+			if (it == allowed_visc_kernel_names.end()) {
+				cerr << "Error: viscosity kernel '" << visc_kernel_name << "' not recognised" << endl;
+				cerr << "    Choosing poly6" << endl;
+				visc_kernel_name = "poly6";
+			}
+		}
 		else if (strcmp(argv[i], "--solver") == 0) {
 			string s = string(argv[i + 1]);
 			if (s == "exp-euler") {
@@ -255,6 +282,9 @@ void help() {
 	cout << "        exp-euler" << endl;
 	cout << "        semi-euler" << endl;
 	cout << "        verlet" << endl;
+	cout << "    --dens-kernel  {poly6, spline}" << endl;
+	cout << "    --press-kernel {poly6, spiky}" << endl;
+	cout << "    --visc-kernel  {poly6, spiky}" << endl;
 	cout << endl;
 }
 

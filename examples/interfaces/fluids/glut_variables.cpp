@@ -34,6 +34,18 @@ int fps_count;
 size_t num_threads;
 size_t n_iterations;
 
+set<string> allowed_dens_kernel_names = {"poly6", "spline"};
+set<string> allowed_press_kernel_names = {"poly6", "spiky"};
+set<string> allowed_visc_kernel_names = {"poly6", "spiky"};
+
+string dens_kernel_name;
+string press_kernel_name;
+string visc_kernel_name;
+
+fluids::kernel_scalar_function density_kernel;
+fluids::kernel_vectorial_function pressure_kernel;
+fluids::kernel_scalar_function viscosity_kernel;
+
 float dt;
 float lenx, leny, lenz;
 size_t sidex, sidey, sidez;
@@ -81,6 +93,10 @@ void init_variables() {
 	record = false;
 
 	sec = timing::now();
+
+	dens_kernel_name = "poly6";
+	press_kernel_name = "poly6";
+	visc_kernel_name = "poly6";
 }
 
 void simulation_info(const fluids::fluid *F) {
@@ -91,11 +107,10 @@ void simulation_info(const fluids::fluid *F) {
 	cout << "        " << sidex << " x "
 					   << sidey << " x "
 					   << sidez << " = " << sidex*sidey*sidez << endl;
-	cout << "    Initial shape:" << endl;
+	cout << "    Initial volume:" << endl;
 	cout << "       " << lenx << " x "
 					  << leny << " x "
 					  << lenz << " = " << lenx*leny*lenz << endl;
-	cout << "    Volume: " << lenx*leny*lenz << endl;
 	cout << "    Viscosity: " << viscosity << endl;
 	cout << "    Density: " << density << endl;
 	cout << "    Neighbourhood size: " << h << endl;
@@ -116,6 +131,34 @@ void simulation_info(const fluids::fluid *F) {
 		cout << "Verlet" << endl;
 	}
 	cout << "    Number of threads: " << num_threads << endl;
+	cout << "Kernels:" << endl;
+	cout << "    Density: " << dens_kernel_name << endl;
+	cout << "    Pressure: " << press_kernel_name << endl;
+	cout << "    Viscosity: " << visc_kernel_name << endl;
+	cout << endl;
+}
+
+void make_kernels() {
+	if (dens_kernel_name == "poly6") {
+		kernel_functions::density_poly6(h, density_kernel);
+	}
+	else if (dens_kernel_name == "spline") {
+		kernel_functions::density_spline(h, density_kernel);
+	}
+
+	if (press_kernel_name == "poly6") {
+		kernel_functions::pressure_poly6(h, pressure_kernel);
+	}
+	else if (press_kernel_name == "spiky") {
+		kernel_functions::pressure_spiky(h, pressure_kernel);
+	}
+
+	if (press_kernel_name == "poly6") {
+		kernel_functions::viscosity_poly6(h, viscosity_kernel);
+	}
+	else if (press_kernel_name == "spiky") {
+		kernel_functions::viscosity_spiky(h, viscosity_kernel);
+	}
 }
 
 } // -- namespace glut_variables
