@@ -29,6 +29,10 @@ using namespace std;
 #define OUTPUT_PRESS_DENS (OUTPUT_DENS + OUTPUT_PRESS)
 #define OUTPUT (OUTPUT_NEIGHBOURS + OUTPUT_DENS + OUTPUT_PRESS + OUTPUT_ACCEL_PRESS + OUTPUT_ACCEL_VISC + OUTPUT_FORCE)
 
+#if (SAFE_NEIGH == 1) && (EXPL_NEIGH == 1)
+#error("Can't use both safe and experimental neighbour retrieval")
+#endif
+
 namespace physim {
 using namespace math;
 using namespace particles;
@@ -94,6 +98,8 @@ void newtonian::make_neighbours_lists_tree
 	d2s.erase( d2s.begin() + lim, d2s.end() );
 
 #if (OUTPUT_NEIGHBOURS == 1)
+	#pragma omp critical
+	{
 	cout << "Neighbours:" << endl;
 	cout << "    particle " << i << " has " << neighs.size() << " neighbours" << endl;
 	cout << "    particle is at: " << __pm3_out(ps[i].cur_pos) << endl;
@@ -102,6 +108,7 @@ void newtonian::make_neighbours_lists_tree
 		size_t j = neighs[j_it];
 		cout << "        " << j << ": " << __pm3_out(ps[j].cur_pos)
 			 << " .. d2= " << d2s[j_it] << endl;
+	}
 	}
 #endif
 }
@@ -277,14 +284,14 @@ void newtonian::update_forces(size_t n) {
 	vector<vector<size_t> > all_neighs(N);
 	vector<vector<float> > all_d2s(N);
 
-#if defined (SAFE_NEIGH)
+#if (SAFE_NEIGH == 1)
 	#pragma omp parallel for num_threads(n)
 	for (size_t i = 0; i < N; ++i) {
 		make_neighbours_lists(i, all_neighs[i], all_d2s[i]);
 	}
 #endif
 
-#if defined (EXPL_NEIGH)
+#if (EXPL_NEIGH == 1)
 	make_partition();
 	#pragma omp parallel for num_threads(n)
 	for (size_t i = 0; i < N; ++i) {
