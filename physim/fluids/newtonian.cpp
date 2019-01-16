@@ -33,6 +33,9 @@ using namespace std;
 #error("Can't use both safe and experimental neighbour retrieval")
 #endif
 
+#define sq(x) ((x)*(x))
+#define inv(x) (1.0f/(x))
+
 namespace physim {
 using namespace math;
 using namespace particles;
@@ -42,11 +45,8 @@ namespace fluids {
 
 // PROTECTED
 
-#define sq(x) ((x)*(x))
-#define inv(x) (1.0f/(x))
-
 void newtonian::make_neighbours_lists
-(size_t i, vector<size_t>& neihgs, vector<float>& d2s)
+(size_t i, vector<size_t>& neighs, vector<float>& d2s)
 const
 {
 	//cout << "    " << i << ":" << endl;
@@ -56,7 +56,7 @@ const
 		}
 		float d2 = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
 		if (d2 <= sq(R)) {
-			neihgs.push_back(j);
+			neighs.push_back(j);
 			d2s.push_back(d2);
 		}
 	}
@@ -97,9 +97,7 @@ void newtonian::make_neighbours_lists_tree
 	neighs.erase( neighs.begin() + lim, neighs.end() );
 	d2s.erase( d2s.begin() + lim, d2s.end() );
 
-#if (OUTPUT_NEIGHBOURS == 1)
-	#pragma omp critical
-	{
+#if OUTPUT_NEIGHBOURS == 1
 	cout << "Neighbours:" << endl;
 	cout << "    particle " << i << " has " << neighs.size() << " neighbours" << endl;
 	cout << "    particle is at: " << __pm3_out(ps[i].cur_pos) << endl;
@@ -109,14 +107,13 @@ void newtonian::make_neighbours_lists_tree
 		cout << "        " << j << ": " << __pm3_out(ps[j].cur_pos)
 			 << " .. d2= " << d2s[j_it] << endl;
 	}
-	}
 #endif
 }
 
 void newtonian::initialise_density_pressure
 (size_t i, const vector<size_t>& neighs, const vector<float>& d2s)
 {
-#if (OUTPUT_PRESS_DENS == 1)
+#if OUTPUT_PRESS_DENS == 1
 	cout << "    ** particle " << i << endl;
 #endif
 
@@ -128,14 +125,14 @@ void newtonian::initialise_density_pressure
 		size_t j = neighs[j_it];
 		float d2 = d2s[j_it];
 
-#if (OUTPUT_DENS == 1)
+#if OUTPUT_DENS == 1
 		cout << "        for neighbour " << j << " at distance^2= " << d2 << endl;
 		cout << "            density before= " << ps[i].density << endl;
 #endif
 
 		ps[i].density += ps[j].mass*kernel_density(d2);
 
-#if (OUTPUT_DENS == 1)
+#if OUTPUT_DENS == 1
 		cout << "            density after= " << ps[i].density << endl;
 		cout << "            contribution=   " << ps[j].mass*kernel_density(d2) << endl;
 		cout << "                ps[" << j << "].mass= " << ps[j].mass << endl;
@@ -150,7 +147,7 @@ void newtonian::initialise_density_pressure
 	}
 	ps[i].density += ps[i].mass*kernel_density(0.0f);
 
-#if (OUTPUT_DENS == 1)
+#if OUTPUT_DENS == 1
 	cout << "    final density= " << ps[i].density << endl;
 	cout << "        self-contribution= "
 		 << ps[i].mass*kernel_density(0.0f) << endl;
@@ -158,7 +155,7 @@ void newtonian::initialise_density_pressure
 
 	ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
 
-#if (OUTPUT_PRESS == 1)
+#if OUTPUT_PRESS == 1
 	cout << "    pressure= " << ps[i].pressure << endl;
 	cout << "        diff= " << ps[i].density - density << endl;
 #endif
@@ -167,8 +164,8 @@ void newtonian::initialise_density_pressure
 void newtonian::update_force
 (size_t i, const vector<size_t>& neighs, const vector<float>& d2s)
 {
-#if (OUTPUT_ACCEL_FORCE > 0)
-	cout << "    ** particle " << i << endl;
+#if OUTPUT_ACCEL_FORCE > 0
+	cout << "    ** particle " << i << ". # neighbours= " << neighs.size() << endl;
 #endif
 
 	/* total acceleration */
@@ -189,7 +186,14 @@ void newtonian::update_force
 		__pm3_assign_vs(press_acc, pressure_dir,Pij);
 		__pm3_add_acc_v(acc, press_acc);
 
-#if (OUTPUT_ACCEL_PRESS == 1)
+#if OUTPUT_ACCEL_PRESS == 1
+		cout << "        Pij= " << Pij << endl;
+		cout << "            ps[" << i << "].pressure = " << ps[i].pressure << endl;
+		cout << "            ps[" << i << "].density  = " << ps[i].density << endl;
+		cout << "            ps[" << j << "].pressure = " << ps[j].pressure << endl;
+		cout << "            ps[" << j << "].density  = " << ps[j].density << endl;
+		cout << "            ps[" << j << "].mass     = " << ps[j].mass << endl;
+		cout << "            kernel result: " << __pm3_out(pressure_dir) << endl;
 		cout << "        pressure vector: " << __pm3_out(press_acc) << endl;
 #endif
 
@@ -200,15 +204,26 @@ void newtonian::update_force
 		__pm3_sub_v_v_mul_s(visc_acc, ps[j].cur_vel,ps[i].cur_vel, Vij);
 		__pm3_add_acc_v(acc, visc_acc);
 
-#if (OUTPUT_ACCEL_VISC == 1)
-		cout << "        viscosity vector: " << __pm3_out(visc_acc) << endl;
+#if OUTPUT_ACCEL_VISC == 1
+		cout << "        Vij= " << Vij << endl;
+		cout << "            ps[" << i << "].density= " << ps[i].density << endl;
+		cout << "            ps[" << j << "].density= " << ps[j].density << endl;
+		cout << "            ps[" << j << "].mass= " << ps[j].mass << endl;
+		cout << "            1/(rho_i*tho_j)= " << inv(ps[i].density*ps[j].density) << endl;
+		cout << "            kernel result= " << kernel_viscosity(d2) << endl;
+		cout << "            ps[" << i << "].cur_vel= " << __pm3_out(ps[i].cur_vel) << endl;
+		cout << "            ps[" << j << "].cur_vel= " << __pm3_out(ps[j].cur_vel) << endl;
+		vec3 vel_diff;
+		__pm3_sub_v_v(vel_diff, ps[j].cur_vel,ps[i].cur_vel);
+		cout << "            vel diff= " << __pm3_out(vel_diff) << endl;
+		cout << "        viscosity vector= " << __pm3_out(visc_acc) << endl;
 #endif
 	}
 
 	/* compute force in particle*/
 	__pm3_assign_vs(ps[i].force, acc, ps[i].mass);
 
-#if (OUTPUT_FORCE == 1)
+#if OUTPUT_FORCE == 1
 	cout << "    total force= " << __pm3_out(ps[i].force) << endl;
 #endif
 }
@@ -235,20 +250,20 @@ void newtonian::update_forces() {
 	vector<vector<size_t> > all_neighs(N);
 	vector<vector<float> > all_d2s(N);
 
-#if (SAFE_NEIGH == 1)
+#if SAFE_NEIGH == 1
 	for (size_t i = 0; i < N; ++i) {
 		make_neighbours_lists(i, all_neighs[i], all_d2s[i]);
 	}
 #endif
 
-#if (EXPL_NEIGH == 1)
+#if EXPL_NEIGH == 1
 	make_partition();
 	for (size_t i = 0; i < N; ++i) {
 		make_neighbours_lists_tree(i, all_neighs[i], all_d2s[i]);
 	}
 #endif
 
-#if (OUTPUT > 0)
+#if OUTPUT > 0
 	cout << "Density and pressure" << endl;
 #endif
 
@@ -257,7 +272,7 @@ void newtonian::update_forces() {
 		initialise_density_pressure(i, all_neighs[i], all_d2s[i]);
 	}
 
-#if (OUTPUT_ACCEL_FORCE > 0)
+#if OUTPUT_ACCEL_FORCE > 0
 	cout << "Force" << endl;
 #endif
 
@@ -266,7 +281,7 @@ void newtonian::update_forces() {
 		update_force(i, all_neighs[i], all_d2s[i]);
 	}
 
-#if (OUTPUT > 0)
+#if OUTPUT > 0
 	cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
 #endif
 }
@@ -284,14 +299,14 @@ void newtonian::update_forces(size_t n) {
 	vector<vector<size_t> > all_neighs(N);
 	vector<vector<float> > all_d2s(N);
 
-#if (SAFE_NEIGH == 1)
+#if SAFE_NEIGH == 1
 	#pragma omp parallel for num_threads(n)
 	for (size_t i = 0; i < N; ++i) {
 		make_neighbours_lists(i, all_neighs[i], all_d2s[i]);
 	}
 #endif
 
-#if (EXPL_NEIGH == 1)
+#if EXPL_NEIGH == 1
 	make_partition();
 	#pragma omp parallel for num_threads(n)
 	for (size_t i = 0; i < N; ++i) {

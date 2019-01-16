@@ -64,13 +64,13 @@ namespace study_cases {
 					int r3 = rand();
 					float fr3 = static_cast<float>(r3);
 
-					float cx = 0.25f;
+					float cx = lenx/3.0f;
 					float sx = (r1%2 == 0 ? 1.0f : -1.0f);
 
-					float cy = 0.3f;
+					float cy = 0.1f + leny/3.0f;
 					float sy = (r2%2 == 0 ? 1.0f : -1.0f);
 
-					float cz = 0.25f;
+					float cz = lenz/3.0f;
 					float sz = (r3%2 == 0 ? 1.0f : -1.0f);
 
 					float dx = cx + sx*(fr1/RAND_MAX)*lenx/4.0f;
@@ -81,7 +81,7 @@ namespace study_cases {
 					size_t idx = j*sidex*sidez + k*sidex + i;
 					Fs[idx].prev_pos = pos;
 					Fs[idx].cur_pos = pos;
-					Fs[idx].cur_vel = vec3(0.0f);
+					Fs[idx].cur_vel = vec3(0.1f, 1.0f, 0.1f);
 				}
 			}
 		}

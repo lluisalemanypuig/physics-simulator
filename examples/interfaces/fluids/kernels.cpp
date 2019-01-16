@@ -29,7 +29,7 @@ void density_spline(float H, kernel_scalar_function& f) {
 		else {
 			C = 0.25f*std::pow(2.0f - r*inv(H), 3.0f);
 		}
-		return (1.0f/(PI*H*H*H))*C;
+		return inv(PI*H*H*H)*C;
 	};
 }
 
@@ -55,7 +55,7 @@ void viscosity_poly6(float H, kernel_scalar_function& f) {
 	{
 		float r2_h2 = r2*inv(H*H);
 		float C = r2_h2*(10.0f - 7.0f*r2_h2) - 3.0f;
-		return 945.0f*inv(8.0f*PI*std::pow(H, 5.0f))*C;
+		return 945.0f*inv(32.0f*PI*std::pow(H, 5.0f))*C;
 	};
 }
 void viscosity_spiky(float H, kernel_scalar_function& f) {
