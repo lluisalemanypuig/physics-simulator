@@ -53,6 +53,14 @@ namespace study_cases {
 		F->set_kernel_pressure(pressure_kernel);
 		F->set_kernel_viscosity(viscosity_kernel);
 
+		float boxx = 0.5f;
+		float boxy = 0.5f;
+		float boxz = 0.5f;
+
+		float cx = boxx/2.0f;
+		float cy = boxy/2.0f;
+		float cz = boxz/2.0f;
+
 		fluid_particle *Fs = F->get_particles();
 		for (size_t i = 0; i < sidex; ++i) {
 			for (size_t j = 0; j < sidey; ++j) {
@@ -64,18 +72,13 @@ namespace study_cases {
 					int r3 = rand();
 					float fr3 = static_cast<float>(r3);
 
-					float cx = lenx/3.0f;
 					float sx = (r1%2 == 0 ? 1.0f : -1.0f);
-
-					float cy = 0.1f + leny/3.0f;
 					float sy = (r2%2 == 0 ? 1.0f : -1.0f);
-
-					float cz = lenz/3.0f;
 					float sz = (r3%2 == 0 ? 1.0f : -1.0f);
 
-					float dx = cx + sx*(fr1/RAND_MAX)*lenx/4.0f;
+					float dx = cx + sx*(fr1/RAND_MAX)*lenx/2.0f;
 					float dy = cy + sy*(fr2/RAND_MAX)*leny/2.0f;
-					float dz = cz + sz*(fr3/RAND_MAX)*lenz/4.0f;
+					float dz = cz + sz*(fr3/RAND_MAX)*lenz/2.0f;
 
 					vec3 pos(dx, dy, dz);
 					size_t idx = j*sidex*sidez + k*sidex + i;
@@ -87,6 +90,7 @@ namespace study_cases {
 		}
 
 		S.add_fluid(F);
+		S.set_particle_particle_collisions(true);
 		SR.make_fluid_particle_indices();
 
 		glut_functions::init_shaders();
@@ -95,10 +99,10 @@ namespace study_cases {
 		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
-		float px = lenx + 0.05f;
+		float px = boxx + 0.05f;
 		float mx = -0.05f;
 		float my = -0.05f;
-		float pz = lenz + 0.05f;
+		float pz = boxz + 0.05f;
 		float mz = -0.05f;
 
 		plane *base = new plane(vec3(0,1,0), vec3(0,my,0));
@@ -126,7 +130,9 @@ namespace study_cases {
 		rplane *rbase = new rplane();
 		rbase->set_points(A00, Ap0, App, A0p);
 		rbase->set_color(1.0f, 0.0f, 0.0f, 0.5f);
-		rplane *rw1 = new rplane();
+		SR.add_geometry(rbase);
+
+		/*rplane *rw1 = new rplane();
 		rw1->set_points(A00, Ap0, Bp0, B00);
 		rw1->set_color(1.0f, 0.0f, 0.0f, 0.5f);
 		rplane *rw2 = new rplane();
@@ -138,11 +144,10 @@ namespace study_cases {
 		rplane *rw4 = new rplane();
 		rw4->set_points(A0p, B0p, B00, A00);
 		rw4->set_color(1.0f, 0.0f, 0.0f, 0.5f);
-		SR.add_geometry(rbase);
 		SR.add_geometry(rw1);
 		SR.add_geometry(rw2);
 		SR.add_geometry(rw3);
-		SR.add_geometry(rw4);
+		SR.add_geometry(rw4);*/
 
 		bgd_color.x = bgd_color.y = bgd_color.z = 0.8f;
 		simulation_info(F);

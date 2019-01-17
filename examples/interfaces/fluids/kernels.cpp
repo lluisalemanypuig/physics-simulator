@@ -22,9 +22,14 @@ void density_spline(float H, kernel_scalar_function& f) {
 	f = [H](float r2) -> float
 	{
 		float r = std::sqrt(r2);
-		float C = (r*inv(H) <= 1.0f ?
-					C = 1.0f - 1.5f*r2*inv(H*H) + 0.75f*r*r*r*inv(H*H*H) :
-					C = 0.25f*std::pow(2.0f - r*inv(H), 3.0f));
+		float C;
+
+		if (r*inv(H) <= 1.0f) {
+			C = 1.0f - 1.5f*r2*inv(H*H) + 0.75f*r*r*r*inv(H*H*H);
+		}
+		else {
+			C = 0.25f*std::pow(2.0f - r*inv(H), 3.0f);
+		}
 
 		return inv(PI*H*H*H)*C;
 	};
@@ -62,6 +67,5 @@ void viscosity_spiky(float H, kernel_scalar_function& f) {
 		return 45.0f*inv(PI*std::pow(H, 6.0f))*s;
 	};
 }
-
 
 } // -- namespace kernel_functions

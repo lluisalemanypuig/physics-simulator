@@ -239,13 +239,19 @@ void regular_keys_keyboard(unsigned char c, int x, int y) {
 	case 'm':
 		record = not record;
 		if (record) {
-			cout << "Record video!" << endl;
+			cout << "Start recording!" << endl;
+		}
+		else {
+			cout << "STOP recording!" << endl;
 		}
 		break;
 	case 'b':
 		run = not run;
 		if (run) {
-			cout << "Run simulation!" << endl;
+			cout << "Start simulation!" << endl;
+		}
+		else {
+			cout << "STOP simulation!" << endl;
 		}
 		break;
 	default:
@@ -274,6 +280,9 @@ void help() {
 	cout << "    --lenx x" << endl;
 	cout << "    --leny y" << endl;
 	cout << "    --lenz z" << endl;
+	cout << "    --sidex x" << endl;
+	cout << "    --sidey y" << endl;
+	cout << "    --sidez z" << endl;
 	cout << "    --dens d" << endl;
 	cout << "    --visc v" << endl;
 	cout << "    --radius r" << endl;
