@@ -11,6 +11,7 @@ using namespace std;
 
 // physim includes
 #include <physim/math/private/math3.hpp>
+#include <physim/math/private/numeric.hpp>
 #include <physim/math/vec3.hpp>
 
 // neighbour computation
@@ -32,9 +33,6 @@ using namespace std;
 #if (SAFE_NEIGH == 1) && (EXPL_NEIGH == 1)
 #error("Can't use both safe and experimental neighbour retrieval")
 #endif
-
-#define sq(x) ((x)*(x))
-#define inv(x) (1.0f/(x))
 
 namespace physim {
 using namespace math;
@@ -172,6 +170,8 @@ void newtonian::update_force
 	vec3 acc;
 	/* auxiliary vectors */
 	vec3 part_i_to_j, pressure_dir, press_acc, visc_acc;
+
+
 	for (size_t j_it = 0; j_it < neighs.size(); ++j_it) {
 		size_t j = neighs[j_it];
 		float d2 = d2s[j_it];
@@ -198,8 +198,7 @@ void newtonian::update_force
 #endif
 
 		/* viscosity acceleration */
-		float Vij = inv(ps[i].density*ps[j].density);
-		Vij *= viscosity*ps[j].mass;
+		float Vij = viscosity*ps[j].mass*inv(ps[i].density*ps[j].density);
 		Vij *= kernel_viscosity(d2);
 		__pm3_sub_v_v_mul_s(visc_acc, ps[j].cur_vel,ps[i].cur_vel, Vij);
 		__pm3_add_acc_v(acc, visc_acc);

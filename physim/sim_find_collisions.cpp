@@ -148,7 +148,7 @@ bool simulator::find_update_geomcoll_free
 		__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j].cur_pos);	\
 		float l = __pm3_norm(centre_particle);								\
 		__pm3_add_acc_vs													\
-		(coll_pred.cur_pos, centre_particle, sps[j].R*(1.0f/l) + 0.001f);	\
+		(coll_pred.cur_pos, centre_particle, sps[j].R*inv(l) + 0.001f);	\
 	}
 
 bool simulator::find_update_partcoll_free
