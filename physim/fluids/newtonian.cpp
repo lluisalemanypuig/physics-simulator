@@ -58,13 +58,6 @@ const
 			d2s.push_back(d2);
 		}
 	}
-
-	/*cout << "        neighbourhood size: " << all_neighs[i].size() << endl;
-	cout << "           ";
-	for (size_t j = 0; j < all_neighs[i].size(); ++j) {
-		cout << " " << all_neighs[i][j];
-	}
-	cout << endl;*/
 }
 
 void newtonian::make_neighbours_lists_tree
@@ -72,6 +65,7 @@ void newtonian::make_neighbours_lists_tree
 {
 	tree->get_indices(ps[i].cur_pos, R, neighs);
 	d2s = vector<float>(neighs.size());
+
 	/* resort by distances: put those farther than R
 	 * at the back of the vector */
 	size_t lim = neighs.size();
@@ -117,8 +111,7 @@ void newtonian::initialise_density_pressure
 
 	ps[i].density = 0.0f;
 	/* iterate over the list of neighbours.
-	 * initialise density, pressure, and store squared
-	 * distance */
+	 * initialise density, pressure */
 	for (size_t j_it = 0; j_it < neighs.size(); ++j_it) {
 		size_t j = neighs[j_it];
 		float d2 = d2s[j_it];
@@ -177,7 +170,10 @@ void newtonian::update_force
 		float d2 = d2s[j_it];
 
 		/* pressure acceleration */
-		__pm3_sub_v_v(part_i_to_j, ps[j].cur_pos, ps[i].cur_pos);
+		/*  NOTE: the '-' is important for the correctness of the pressure
+			computation. Without the '-' we need to compute 'part_i_to_j'
+			as pos_j - pos_i. */
+		__pm3_sub_v_v(part_i_to_j, ps[i].cur_pos, ps[j].cur_pos);
 		float Pij = -ps[j].mass*(
 			ps[i].pressure*inv(sq(ps[i].density)) +
 			ps[j].pressure*inv(sq(ps[j].density))

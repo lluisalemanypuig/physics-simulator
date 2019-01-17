@@ -24,8 +24,8 @@ void simulator::_simulate_fluids() {
 	// of the mesh particle will be copied into this one.
 	free_particle current;
 	free_particle coll_pred;
-	current.bouncing = 0.0f;
-	coll_pred.bouncing = 0.0f;
+	current.bouncing = 0.1f;
+	coll_pred.bouncing = 0.1f;
 
 	for (fluid *f : fs) {
 
@@ -68,7 +68,7 @@ void simulator::_simulate_fluids() {
 			bool collision =
 			find_update_geomcoll_free(current, pred_pos, pred_vel, coll_pred);
 
-			if (part_part_colls_activated()) {				
+			if (part_part_colls_activated()) {
 				bool r = find_update_partcoll_free
 				(current, pred_pos, pred_vel, coll_pred);
 
@@ -117,8 +117,8 @@ void simulator::_simulate_fluids(size_t n) {
 
 		#pragma omp parallel for num_threads(n) private(current) private(coll_pred)
 		for (size_t p_idx = 0; p_idx < N; ++p_idx) {
-			current.bouncing = 0.0f;
-			coll_pred.bouncing = 0.0f;
+			current.bouncing = 0.1f;
+			coll_pred.bouncing = 0.1f;
 
 			// compute forces for particle p that are
 			// originated by the force fields of the
