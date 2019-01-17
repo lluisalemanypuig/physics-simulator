@@ -57,4 +57,5 @@ SOURCES += \
     sim_00.cpp \
     utils.cpp \
     glut_variables.cpp \
-    kernels.cpp
+    kernels.cpp \
+    sim_01.cpp

@@ -8,6 +8,7 @@ using namespace std;
 namespace study_cases {
 
 	void sim_00(int argc, char *argv[]);
+	void sim_01(int argc, char *argv[]);
 
 } // -- namespace study_cases
 
@@ -15,7 +16,8 @@ void list_all_cases() {
 	cout << "Welcome to the Fluids renderer" << endl;
 	cout << "The list of simulations available are:" << endl;
 	cout << endl;
-	cout << "    * 00 : simulation of a small fluid." << endl;
+	cout << "    * 00 : simulation of a droplet of a fluid." << endl;
+	cout << "    * 01 : filling a small box." << endl;
 	cout << endl;
 }
 
@@ -38,13 +40,11 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	int id_num = atoi(argv[1]);
-	switch (id_num) {
-	// free particles
-	case  0:	study_cases::sim_00(argc, argv); break;
-	default:
-		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
-		cerr << "    Use './particles --list' to see all cases" << endl;
+	if (strcmp(argv[1], "00") == 0) {
+		study_cases::sim_00(argc, argv);
+	}
+	else if (strcmp(argv[1], "01") == 0) {
+		study_cases::sim_01(argc, argv);
 	}
 
 	return 0;
