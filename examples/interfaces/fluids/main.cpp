@@ -18,9 +18,9 @@ void list_all_cases() {
 	cout << "Welcome to the Fluids renderer" << endl;
 	cout << "The list of simulations available are:" << endl;
 	cout << endl;
-	cout << "    * 00 : simulation of a droplet of a fluid." << endl;
-	cout << "    * 01 : filling a small box." << endl;
-	cout << "    * 02 : fluid on monkey." << endl;
+	cout << "    00 : simulation of a droplet of a fluid." << endl;
+	cout << "    01 : filling a small box." << endl;
+	cout << "    02 : fluid on monkey." << endl;
 	cout << endl;
 }
 
