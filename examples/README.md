@@ -191,7 +191,13 @@ message summarising each of them will appear on screeen:
 
 It is suggested that the _fluids_ simulations be recorded. This can be done by pressing letter _m_ after launching
 one of the simulations. The application will start recording but not simulating the fluid. To do so, press letter
-_b_. Since obtaining a "nice" fluid behaviour is somewhat difficult, the user is encouraged to try the following
+_b_. Recording the simulation will produce several _.png_ files stored in working directory of the terminal when
+running the application. These files are formatted as _image-*.png_ where _*_ is a 6-digit number (with leading zeros).
+Making a video out of these images can be done by issuing:
+
+	ffmpeg -framerate 60 -i image-%06d.png -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
+
+Since obtaining a "nice" fluid behaviour is somewhat difficult, the user is encouraged to try the following
 parameters:
 
 	./fluids 00 --nt 4 --it 1 --radius 0.08 --visc 0.001 --dt 0.01 --cs 1 --dens 1000 --sidex 16 --sidey 16 --sidez 16 --lenx 0.2 --leny 0.2 --lenz 0.2 --dens-kernel poly6 --press-kernel poly6 --visc-kernel poly6
@@ -204,5 +210,6 @@ parameters:
 	./fluids 02 --nt 4 --it 1 --radius 0.08 --visc 0.001 --dt 0.001 --cs 2 --dens 1000 --sidex 8 --sidey 64 --sidez 8 --lenx 0.1 --leny 1.2 --lenz 0.1 --dens-kernel poly6 --press-kernel poly6 --visc-kernel poly6
 
 These parameters are guaranteed to make a "nice" fluid. Although there are minors differences between each set of
-parameters, note that these can make huge changes in the simulations.Some of these simulations were recorded in this
+parameters, note that these can make huge changes in the simulations. Also, using only 4 threads are not be enough
+resources to visualise the simulation in real-time. Therefore, some of these simulations were recorded in this
 [video](https://youtu.be/15qUi43HnmI).
