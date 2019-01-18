@@ -38,7 +38,7 @@ namespace study_cases {
 	static float mesh_mass;
 	static size_t n, m;
 
-	void sim_03_make_simulation() {
+	void sim_04_make_simulation() {
 		SR.set_particle_size(2.0f);
 		SR.set_spring_width(1.0f);
 
@@ -64,7 +64,7 @@ namespace study_cases {
 
 		shared_ptr<rendered_triangle_mesh> model_pipe(new rendered_triangle_mesh);
 		OBJ_reader obj;
-		obj.load_object("../../interfaces/models", "pipe-artistic.obj", *model_pipe);
+		obj.load_object("../../interfaces/models", "monkey-artistic.obj", *model_pipe);
 
 		robject *ro = new robject();
 		ro->set_model(model_pipe);
@@ -73,6 +73,7 @@ namespace study_cases {
 		box B;
 		ro->make_box(B);
 		float mx = (B.get_max().x + B.get_min().x)/2.0f;
+		float lx = B.get_max().x - B.get_min().x;
 		float mz = (B.get_max().z + B.get_min().z)/2.0f;
 		float lz = B.get_max().z - B.get_min().z;
 
@@ -81,14 +82,14 @@ namespace study_cases {
 			for (size_t j = 0; j < m; ++j) {
 				mp[ M->get_global_index(i,j) ].cur_pos =
 					vec3(
-						mx + (length/n)*i,
-						2.0f,
-						mz + lz/2.0f - (height/m)*j);
+						mx - lx/2.0f + (length/n)*i,
+						1.0f,
+						mz - lz/2.0f + (height/m)*j);
 			}
 		}
 
 		object *O = new object();
-		input::read_file("../../interfaces/models", "pipe-geometric.obj", O);
+		input::read_file("../../interfaces/models", "monkey-geometric.obj", O);
 		SR.get_simulator().add_geometry(O);
 
 		SR.get_simulator().add_mesh(M);
@@ -133,10 +134,10 @@ namespace study_cases {
 		}
 	}
 
-	void sim_03_help() {
+	void sim_04_help() {
 		help();
 
-		cout << "Simulation 03 description:" << endl;
+		cout << "Simulation 04 description:" << endl;
 		cout << endl;
 		cout << "    This simulation features a single 2d mesh falling on a" << endl;
 		cout << "    geometrical object." << endl;
@@ -164,7 +165,7 @@ namespace study_cases {
 		cout << endl;
 	}
 
-	void sim_03_reset() {
+	void sim_04_reset() {
 		SR.clear();
 		clear_shaders();
 
@@ -181,7 +182,7 @@ namespace study_cases {
 		float pitch = SR.get_pitch();
 
 		// remake simulations
-		sim_03_make_simulation();
+		sim_04_make_simulation();
 
 		// reset cameras
 		SR.set_perspective(old_p);
@@ -194,15 +195,15 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_03_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_04_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_03_help();
+			sim_04_help();
 			break;
 		case 'r':
-			sim_03_reset();
+			sim_04_reset();
 			break;
 		}
 
@@ -228,20 +229,20 @@ namespace study_cases {
 			case 'd':
 				cout << "Enter dimensions (two numbers: x and z): ";
 				cin >> n >> m;
-				sim_03_reset();
+				sim_04_reset();
 				break;
 			}
 		}
 	}
 
-	void sim_03_initGL(int argc, char *argv[]) {
+	void sim_04_initGL(int argc, char *argv[]) {
 		// ----------------- //
 		/* initialise window */
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(window_width, window_height);
-		window_id = glutCreateWindow("Spring meshes - Simulation 03");
+		window_id = glutCreateWindow("Spring meshes - Simulation 04");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -297,12 +298,12 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim_03_make_simulation();
+		sim_04_make_simulation();
 	}
 
-	void sim_03(int argc, char *argv[]) {
-		sim_03_initGL(argc, argv);
-		sim_03_help();
+	void sim_04(int argc, char *argv[]) {
+		sim_04_initGL(argc, argv);
+		sim_04_help();
 
 		glutDisplayFunc(refresh);
 		glutReshapeFunc(resize);
@@ -310,7 +311,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(mouse_movement);
 		glutMotionFunc(mouse_drag_event);
 		glutSpecialFunc(special_keys_keyboard);
-		glutKeyboardFunc(sim_03_regular_keys_keyboard);
+		glutKeyboardFunc(sim_04_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1000.0f/FPS, timed_refresh, 0);

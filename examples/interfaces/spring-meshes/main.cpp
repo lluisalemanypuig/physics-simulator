@@ -10,6 +10,7 @@ namespace study_cases {
 	void sim_01(int argc, char *argv[]);
 	void sim_02(int argc, char *argv[]);
 	void sim_03(int argc, char *argv[]);
+	void sim_04(int argc, char *argv[]);
 
 } // -- namespace study_cases
 
@@ -29,9 +30,15 @@ void list_all_cases() {
 	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
 	cout << endl;
 	cout << "    * 03 : simulation of a single two-dimensional" << endl;
-	cout << "        mesh that falls on a geometrical object." << endl;
+	cout << "        mesh that falls on a geometrical object (pipe)." << endl;
 	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
 	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
+	cout << endl;
+	cout << "    * 04 : simulation of a single two-dimensional" << endl;
+	cout << "        mesh that falls on a geometrical object (monkey head)." << endl;
+	cout << "        Most of its parameters (mass, size, elasticity, ...)" << endl;
+	cout << "        can be modified. The model of the mesh is a regular grid." << endl;
+	cout << endl;
 }
 
 bool is_help(const char *arg) {
@@ -56,10 +63,11 @@ int main(int argc, char *argv[]) {
 	int id_num = atoi(argv[1]);
 	switch (id_num) {
 	// free particles
-	case  0:	study_cases::sim_00(argc, argv); break;
-	case  1:	study_cases::sim_01(argc, argv); break;
-	case  2:	study_cases::sim_02(argc, argv); break;
-	case  3:	study_cases::sim_03(argc, argv); break;
+	case  00:	study_cases::sim_00(argc, argv); break;
+	case  01:	study_cases::sim_01(argc, argv); break;
+	case  02:	study_cases::sim_02(argc, argv); break;
+	case  03:	study_cases::sim_03(argc, argv); break;
+	case  04:	study_cases::sim_04(argc, argv); break;
 	default:
 		cerr << "Unknown case '" << string(argv[1]) << "'." << endl;
 		cerr << "    Use './particles --list' to see all cases" << endl;
