@@ -236,6 +236,7 @@ void regular_keys_keyboard(unsigned char c, int x, int y) {
 	case 'z': display_fps = not display_fps; break;
 	case '+': if (FPS < 60) { ++FPS; } break;
 	case '-': if (FPS > 1)  { --FPS; } break;
+	case 'w': draw_boxes_octree = not draw_boxes_octree; break;
 	case 'm':
 		record = not record;
 		if (record) {

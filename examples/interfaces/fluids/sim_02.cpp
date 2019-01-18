@@ -84,7 +84,7 @@ namespace study_cases {
 
 					float dx = mid.x + sx*(fr1/RAND_MAX)*lenx/2.0f;
 					float dy =  1.3f + sy*(fr2/RAND_MAX)*leny/2.0f;
-					float dz = mid.z + sz*(fr3/RAND_MAX)*lenz/2.0f;
+					float dz = -0.05f + sz*(fr3/RAND_MAX)*lenz/2.0f;
 
 					vec3 pos(dx, dy, dz);
 					size_t idx = j*sidex*sidez + k*sidex + i;
