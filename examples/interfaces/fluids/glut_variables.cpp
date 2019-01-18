@@ -56,6 +56,7 @@ float cs;
 
 physim::solver_type solver;
 
+bool draw_boxes_octree;
 physim::math::vec3 bgd_color;
 
 bool run;
@@ -72,8 +73,6 @@ void init_variables() {
 	fps_count = 0;
 
 	solver = physim::solver_type::EulerSemi;
-
-	bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
 
 	window_width = 640;
 	window_height = 480;
@@ -92,11 +91,14 @@ void init_variables() {
 	run = false;
 	record = false;
 
-	sec = timing::now();
+	draw_boxes_octree = true;
+	bgd_color = physim::math::vec3(0.0f,0.0f,0.0f);
 
 	dens_kernel_name = "poly6";
 	press_kernel_name = "poly6";
 	visc_kernel_name = "poly6";
+
+	sec = timing::now();
 }
 
 void simulation_info(const fluids::fluid *F) {

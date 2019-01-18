@@ -213,6 +213,19 @@ void refresh() {
 		}
 	}
 
+	if (draw_boxes_octree) {
+		glColor3f(1.0f,1.0f,0.0f);
+		for (const rgeom *r : SR.get_geometry()) {
+			if (r->get_type() == rendered_geometry_type::object) {
+				const robject *ro = static_cast<const robject *>(r);
+				const vector<box>& bs = ro->get_boxes();
+				for (const box& B : bs) {
+					B.slow_render();
+				}
+			}
+		}
+	}
+
 	if (run) {
 		for (size_t i = 0; i < n_iterations; ++i) {
 			SR.get_simulator().simulate_fluids(num_threads);

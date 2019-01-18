@@ -69,6 +69,7 @@ extern float cs;
 
 extern physim::solver_type solver;
 
+extern bool draw_boxes_octree;
 extern physim::math::vec3 bgd_color;
 
 extern bool run;

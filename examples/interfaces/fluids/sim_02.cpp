@@ -9,6 +9,7 @@ typedef glm::vec3 gvec3;
 
 // render includes
 #include <render/geometry/rplane.hpp>
+#include <render/geometry/robject.hpp>
 #include <render/triangle_mesh/rendered_triangle_mesh.hpp>
 #include <render/shader/shader_helper.hpp>
 #include <render/include_gl.hpp>
@@ -16,6 +17,8 @@ typedef glm::vec3 gvec3;
 
 // physim includes
 #include <physim/fluids/newtonian.hpp>
+#include <physim/geometry/object.hpp>
+#include <physim/input/input.hpp>
 #include <physim/math/vec3.hpp>
 using namespace physim;
 using namespace particles;
@@ -33,7 +36,7 @@ using namespace glut_variables;
 
 namespace study_cases {
 
-	void sim_01_make_simulation() {
+	void sim_02_make_simulation() {
 		simulator& S = SR.get_simulator();
 
 		SR.set_particle_size(2.0f);
@@ -41,6 +44,17 @@ namespace study_cases {
 		S.set_solver(solver);
 		S.set_gravity_acceleration(vec3(0.0f,-9.81f,0.0f));
 		S.set_time_step(dt);
+
+		plane *base = new plane(vec3(0,1,0), vec3(0,0,0));
+		S.add_geometry(base);
+
+		object *O = new object();
+		input::read_file("../../interfaces/models", "monkey-geometric.obj", O);
+		S.add_geometry(O);
+
+		vec3 Omin = O->get_min();
+		vec3 Omax = O->get_max();
+		vec3 mid = (Omin + Omax)/2.0f;
 
 		size_t N = sidex*sidey*sidez;
 		float volume = lenx*leny*lenz;
@@ -52,14 +66,6 @@ namespace study_cases {
 		F->set_kernel_density(density_kernel);
 		F->set_kernel_pressure(pressure_kernel);
 		F->set_kernel_viscosity(viscosity_kernel);
-
-		float boxx = 0.1f;
-		float boxy = 0.1f;
-		float boxz = 0.1f;
-
-		float cx = boxx/2.0f;
-		float cy = 1.0f;
-		float cz = boxz/2.0f;
 
 		fluid_particle *Fs = F->get_particles();
 		for (size_t i = 0; i < sidex; ++i) {
@@ -76,9 +82,9 @@ namespace study_cases {
 					float sy = (r2%2 == 0 ? 1.0f : -1.0f);
 					float sz = (r3%2 == 0 ? 1.0f : -1.0f);
 
-					float dx = cx + sx*(fr1/RAND_MAX)*lenx/2.0f;
-					float dy = cy + sy*(fr2/RAND_MAX)*leny/2.0f;
-					float dz = cz + sz*(fr3/RAND_MAX)*lenz/2.0f;
+					float dx = mid.x + sx*(fr1/RAND_MAX)*lenx/2.0f;
+					float dy =  1.3f + sy*(fr2/RAND_MAX)*leny/2.0f;
+					float dz = mid.z + sz*(fr3/RAND_MAX)*lenz/2.0f;
 
 					vec3 pos(dx, dy, dz);
 					size_t idx = j*sidex*sidez + k*sidex + i;
@@ -88,81 +94,73 @@ namespace study_cases {
 				}
 			}
 		}
-
 		S.add_fluid(F);
-		S.set_particle_particle_collisions(true);
 		SR.make_fluid_particle_indices();
 
-		glut_functions::init_shaders();
+		/* construct renderisation */
 
+		glut_functions::init_shaders();
+		shared_ptr<rendered_triangle_mesh> model_monkey(new rendered_triangle_mesh);
+		// load artistic object
+		OBJ_reader obj;
+		obj.load_object
+		("../../interfaces/models", "monkey-artistic.obj", *model_monkey);
+		// construct rendered object
+		robject *ro = new robject();
+		ro->set_model(model_monkey);
+		// get model's octree's boxes
+		vector<pair<vec3, vec3> > pmboxes;
+		O->get_partition().get_boxes(pmboxes);
+		ro->set_boxes(pmboxes);
+		// add geometry for rendering
+		SR.add_geometry(ro);
+		// load textures, if any, make buffers
+		model_monkey->load_textures();
+		model_monkey->make_buffers_materials_textures();
+		// prepare shader
+		shader& ts = texture_shader;
+		ts.bind();
+		shader_helper::activate_materials_textures(*model_monkey, ts);
+		ts.release();
+
+		box M;
+		ro->make_box(M);
 		SR.get_box().set_min_max(glm::vec3(-1,-1,-1), glm::vec3(1,1,1));
+		SR.get_box().enlarge_box(M);
 		SR.set_window_dims(window_width, window_height);
 		SR.init_cameras();
 
-		float px = boxx + 0.05f;
-		float mx = -0.05f;
-		float my = -0.05f;
-		float pz = boxz + 0.05f;
-		float mz = -0.05f;
+		float px = 0.5f;
+		float mx = -0.5f;
+		float my = 0.0f;
+		float pz = 0.5f;
+		float mz = -0.5f;
 
-		plane *base = new plane(vec3(0,1,0), vec3(0,my,0));
-		plane *w1 = new plane(vec3(1,0,0), vec3(mx,0,0));
-		plane *w2 = new plane(vec3(-1,0,0), vec3(px,0,0));
-		plane *w3 = new plane(vec3(0,0,1), vec3(0,0,mz));
-		plane *w4 = new plane(vec3(0,0,-1), vec3(0,0,pz));
-		S.add_geometry(base);
-		S.add_geometry(w1);
-		S.add_geometry(w2);
-		S.add_geometry(w3);
-		S.add_geometry(w4);
-
-		float topy = boxy + 0.51f;
-
-		gvec3 A01(my, my, mz);
-		gvec3 A0p(my, my, pz);
-		gvec3 Ap0(px, my, mz);
+		gvec3 Amm(mx, my, mz);
+		gvec3 Amp(mx, my, pz);
 		gvec3 App(px, my, pz);
-		gvec3 B01(my, topy, mz);
-		gvec3 B0p(my, topy, pz);
-		gvec3 Bp0(px, topy, mz);
-		gvec3 Bpp(px, topy, pz);
+		gvec3 Apm(px, my, mz);
 
 		rplane *rbase = new rplane();
-		rbase->set_points(A01, Ap0, App, A0p);
+		rbase->set_points(Amm, Amp, App, Apm);
 		rbase->set_color(1.0f, 0.0f, 0.0f, 0.5f);
 		SR.add_geometry(rbase);
-
-		/*rplane *rw1 = new rplane();
-		rw1->set_points(A01, Ap0, Bp0, B01);
-		rw1->set_color(1.0f, 0.0f, 0.0f, 0.5f);
-		rplane *rw2 = new rplane();
-		rw2->set_points(Ap0, Bp0, Bpp, App);
-		rw2->set_color(1.0f, 0.0f, 0.0f, 0.5f);
-		rplane *rw3 = new rplane();
-		rw3->set_points(App, Bpp, B0p, A0p);
-		rw3->set_color(1.0f, 0.0f, 0.0f, 0.5f);
-		rplane *rw4 = new rplane();
-		rw4->set_points(A0p, B0p, B01, A01);
-		rw4->set_color(1.0f, 0.0f, 0.0f, 0.5f);
-		SR.add_geometry(rw1);
-		SR.add_geometry(rw2);
-		SR.add_geometry(rw3);
-		SR.add_geometry(rw4);*/
 
 		bgd_color.x = bgd_color.y = bgd_color.z = 0.8f;
 		simulation_info(F);
 	}
 
-	void sim_01_help() {
+	void sim_02_help() {
 		glut_functions::help();
 
-		cout << "Simulation 01 description:" << endl;
+		cout << "Simulation 02 description:" << endl;
 		cout << endl;
-		cout << "    This is a simulation of a very small fluid." << endl;
+		cout << "    This is a simulation of a very small fluid" << endl;
+		cout << "    falling on top of a monkey head." << endl;
 		cout << endl;
 	}
 
-	void sim_01_reset() {
+	void sim_02_reset() {
 		SR.clear();
 		glut_functions::clear_shaders();
 
@@ -178,7 +176,7 @@ namespace study_cases {
 		float yaw = SR.get_yaw();
 		float pitch = SR.get_pitch();
 
-		sim_01_make_simulation();
+		sim_02_make_simulation();
 
 		SR.set_perspective(old_p);
 		SR.set_orthogonal(old_o);
@@ -190,20 +188,20 @@ namespace study_cases {
 		SR.set_pitch(pitch);
 	}
 
-	void sim_01_regular_keys_keyboard(unsigned char c, int x, int y) {
+	void sim_02_regular_keys_keyboard(unsigned char c, int x, int y) {
 		regular_keys_keyboard(c, x, y);
 
 		switch (c) {
 		case 'h':
-			sim_01_help();
+			sim_02_help();
 			break;
 		case 'r':
-			sim_01_reset();
+			sim_02_reset();
 			break;
 		}
 	}
 
-	void sim_01_initGL(int argc, char *argv[]) {
+	void sim_02_initGL(int argc, char *argv[]) {
 		window_width = 640;
 		window_height = 480;
 
@@ -213,7 +211,7 @@ namespace study_cases {
 		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 		glutInitWindowPosition(50, 25);
 		glutInitWindowSize(window_width, window_height);
-		window_id = glutCreateWindow("Fluids - Simulation 01");
+		window_id = glutCreateWindow("Fluids - Simulation 02");
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_NORMALIZE);
@@ -241,13 +239,13 @@ namespace study_cases {
 
 		// ---------------- //
 		/* build simulation */
-		sim_01_make_simulation();
+		sim_02_make_simulation();
 	}
 
-	void sim_01(int argc, char *argv[]) {
-		sim_01_help();
+	void sim_02(int argc, char *argv[]) {
+		sim_02_help();
 
-		sim_01_initGL(argc, argv);
+		sim_02_initGL(argc, argv);
 
 		glutDisplayFunc(glut_functions::refresh);
 		glutReshapeFunc(glut_functions::resize);
@@ -255,7 +253,7 @@ namespace study_cases {
 		glutPassiveMotionFunc(glut_functions::mouse_movement);
 		glutMotionFunc(glut_functions::mouse_drag_event);
 		glutSpecialFunc(glut_functions::special_keys_keyboard);
-		glutKeyboardFunc(sim_01_regular_keys_keyboard);
+		glutKeyboardFunc(sim_02_regular_keys_keyboard);
 
 		//glutIdleFunc(refresh);
 		glutTimerFunc(1010.0f/FPS, glut_functions::timed_refresh, 0);
