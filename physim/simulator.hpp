@@ -230,16 +230,6 @@ class simulator {
 		 */
 		void _simulate_free_particles();
 		/**
-		 * @brief Simulate free particles.
-		 *
-		 * Applies a time step on all the free particles of
-		 * the simulation.
-		 *
-		 * Multithreaded execution.
-		 * @param n Number of threads.
-		 */
-		void _simulate_free_particles(size_t n);
-		/**
 		 * @brief Simulate sized particles.
 		 *
 		 * Applies a time step on all the sized particles of
@@ -659,18 +649,6 @@ class simulator {
 		 */
 		void simulate_free_particles();
 		/**
-		 * @brief Simulate free particles.
-		 *
-		 * The simulation of a free particle is detailed in
-		 * @ref simulate_free_particles().
-		 *
-		 * @param nt Number of threads. If it equals 1, calls
-		 * @ref simulate_free_particles(). If it is greater then it calls
-		 * @ref simulate_free_particles(size_t).
-		 * @pre @e nt > 0.
-		 */
-		void simulate_free_particles(size_t nt);
-		/**
 		 * @brief Simulate sized particles.
 		 *
 		 * Calls @ref _simulate_sized_particles.
@@ -754,7 +732,7 @@ class simulator {
 		 * Calls the following functions:
 		 * - @ref simulate_sized_particles()
 		 * - @ref simulate_agent_particles()
-		 * - @ref simulate_free_particles(size_t)
+		 * - @ref simulate_free_particles()
 		 * - @ref simulate_meshes()
 		 * - @ref simulate_fluids(size_t)
 		 * Parameter @e dt (set via method @ref set_time_step(float))

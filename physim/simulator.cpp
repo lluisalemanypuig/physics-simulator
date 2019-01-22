@@ -269,16 +269,6 @@ void simulator::simulate_free_particles() {
 	_simulate_free_particles();
 }
 
-void simulator::simulate_free_particles(size_t nt) {
-	assert(nt > 0);
-	if (nt == 1) {
-		_simulate_free_particles();
-	}
-	else {
-		_simulate_free_particles(nt);
-	}
-}
-
 void simulator::simulate_sized_particles() {
 	_simulate_sized_particles();
 }
@@ -316,7 +306,7 @@ void simulator::apply_time_step() {
 void simulator::apply_time_step(size_t nt) {
 	simulate_sized_particles();
 	simulate_agent_particles();
-	simulate_free_particles(nt);
+	simulate_free_particles();
 	simulate_meshes();
 	simulate_fluids(nt);
 }

@@ -11,9 +11,9 @@
 /* GEOMETRICAL OPERATIONS */
 
 // Change direction of vector to its opposite
-#define __pm3_invert(g, f)					\
-	__pm3_assign_c(g, -(f).x,				\
-					  -(f).y,				\
+#define __pm3_invert(g, f)			\
+	__pm3_assign_c(g, -(f).x,		\
+					  -(f).y,		\
 					  -(f).z)
 
 // The expression of the dot product between two vectors.

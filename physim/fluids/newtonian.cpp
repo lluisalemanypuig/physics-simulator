@@ -53,7 +53,7 @@ const
 			continue;
 		}
 		float d2 = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
-		if (d2 <= sq(R)) {
+		if (d2 <= __pm_sq(R)) {
 			neighs.push_back(j);
 			d2s.push_back(d2);
 		}
@@ -73,7 +73,7 @@ void newtonian::make_neighbours_lists_tree
 	while (j_it < lim) {
 		size_t j = neighs[j_it];
 		d2s[j_it] = __pm3_dist2(ps[i].cur_pos, ps[j].cur_pos);
-		if (d2s[j_it] > sq(R) or j == i) {
+		if (d2s[j_it] > __pm_sq(R) or j == i) {
 			/* Put this element at the end. (to be removed)
 			 * Do not advance 'j_it' */
 			swap(neighs[j_it], neighs[lim - 1]);
@@ -144,7 +144,7 @@ void newtonian::initialise_density_pressure
 		 << ps[i].mass*kernel_density(0.0f) << endl;
 #endif
 
-	ps[i].pressure = sq(speed_sound)*(ps[i].density - density);
+	ps[i].pressure = __pm_sq(speed_sound)*(ps[i].density - density);
 
 #if OUTPUT_PRESS == 1
 	cout << "    pressure= " << ps[i].pressure << endl;
@@ -175,8 +175,8 @@ void newtonian::update_force
 			as pos_j - pos_i. */
 		__pm3_sub_v_v(part_i_to_j, ps[i].cur_pos, ps[j].cur_pos);
 		float Pij = -ps[j].mass*(
-			ps[i].pressure*inv(sq(ps[i].density)) +
-			ps[j].pressure*inv(sq(ps[j].density))
+			ps[i].pressure*__pm_inv(__pm_sq(ps[i].density)) +
+			ps[j].pressure*__pm_inv(__pm_sq(ps[j].density))
 		);
 		kernel_pressure(part_i_to_j, d2, pressure_dir);
 		__pm3_assign_vs(press_acc, pressure_dir,Pij);
@@ -194,7 +194,7 @@ void newtonian::update_force
 #endif
 
 		/* viscosity acceleration */
-		float Vij = viscosity*ps[j].mass*inv(ps[i].density*ps[j].density);
+		float Vij = viscosity*ps[j].mass*__pm_inv(ps[i].density*ps[j].density);
 		Vij *= kernel_viscosity(d2);
 		__pm3_sub_v_v_mul_s(visc_acc, ps[j].cur_vel,ps[i].cur_vel, Vij);
 		__pm3_add_acc_v(acc, visc_acc);

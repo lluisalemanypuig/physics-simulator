@@ -29,12 +29,12 @@ void simulator::apply_solver(const P& p, vec3& pred_pos, vec3& pred_vel) {
 			// pred_pos <- pos + vel*dt
 			__pm3_add_v_vs(pred_pos, p.cur_pos, p.cur_vel, dt);
 			// pred_vel <- vel + force*dt/mass
-			__pm3_add_v_vs(pred_vel, p.cur_vel, p.force, dt*inv(mass));
+			__pm3_add_v_vs(pred_vel, p.cur_vel, p.force, dt*__pm_inv(mass));
 			break;
 
 		case solver_type::EulerSemi:
 			// pred_vel <- vel + force*dt/mass
-			__pm3_add_v_vs(pred_vel, p.cur_vel, p.force, dt*inv(mass));
+			__pm3_add_v_vs(pred_vel, p.cur_vel, p.force, dt*__pm_inv(mass));
 			// pred_pos <- pos + pred_vel*dt
 			__pm3_add_v_vs(pred_pos, p.cur_pos, pred_vel, dt);
 			break;
@@ -42,7 +42,7 @@ void simulator::apply_solver(const P& p, vec3& pred_pos, vec3& pred_vel) {
 		case solver_type::Verlet:
 			// pred_pos <- pos + 1.0f*(pos - prev_pos) + force*dt*dt/m
 			__pm3_sub_v_v(pred_pos, p.cur_pos, p.prev_pos);
-			__pm3_add_vs_vs_v(pred_pos, pred_pos,1.0f, p.force,sq(dt)*inv(mass), p.cur_pos);
+			__pm3_add_vs_vs_v(pred_pos, pred_pos,1.0f, p.force,__pm_sq(dt)*__pm_inv(mass), p.cur_pos);
 
 			// pred_vel <- (pred_pos - pos)/dt
 			__pm3_sub_v_v_div_s(pred_vel, pred_pos, p.cur_pos, dt);
