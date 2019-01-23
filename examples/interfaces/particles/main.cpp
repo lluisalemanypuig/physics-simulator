@@ -13,6 +13,7 @@ namespace study_cases {
 	void sim_004(int argc, char *argv[]);
 	void sim_005(int argc, char *argv[]);
 	void sim_006(int argc, char *argv[]);
+	void sim_007(int argc, char *argv[]);
 
 	void sim_100(int argc, char *argv[]);
 	void sim_101(int argc, char *argv[]);
@@ -48,6 +49,7 @@ void list_all_cases() {
 	cout << "    005 : likewise '04' but for the bouncing coefficient." << endl;
 	cout << "          Friction coefficient is fixed to 0." << endl;
 	cout << "    006 : (testing) One free particle colliding with an object." << endl;
+	cout << "    007 : A shower of 1000 particles on top of an object." << endl;
 	cout << endl;
 	cout << "Sized particles:" << endl;
 	cout << "    100 : (testing) sized particle bouncing on a plane." << endl;
@@ -98,6 +100,7 @@ int main(int argc, char *argv[]) {
 	case 004:	study_cases::sim_004(argc, argv); break;
 	case 005:	study_cases::sim_005(argc, argv); break;
 	case 006:	study_cases::sim_006(argc, argv); break;
+	case 007:	study_cases::sim_007(argc, argv); break;
 
 	case 100:	study_cases::sim_100(argc, argv); break;
 	case 101:	study_cases::sim_101(argc, argv); break;
