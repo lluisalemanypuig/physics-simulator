@@ -5,5 +5,7 @@ var searchData=
   ['u01',['U01',['../classphysim_1_1emitters_1_1free__emitters_1_1hose.html#a052854d482c3c10996080eeb1f022857',1,'physim::emitters::free_emitters::hose::U01()'],['../classphysim_1_1emitters_1_1free__emitters_1_1rect__source.html#ad88b5ea9f44837663c5dc53affde853c',1,'physim::emitters::free_emitters::rect_source::U01()']]],
   ['u1',['u1',['../classphysim_1_1geometric_1_1rectangle.html#a0570b2c50e93ca033123eaaa00a0e068',1,'physim::geometric::rectangle::u1()'],['../classphysim_1_1geometric_1_1triangle.html#a16075f51dc838b9320ba3d87af6e7e35',1,'physim::geometric::triangle::u1()']]],
   ['u2',['u2',['../classphysim_1_1geometric_1_1rectangle.html#a237f0ac5cb92cd71726c5902fb802dc4',1,'physim::geometric::rectangle::u2()'],['../classphysim_1_1geometric_1_1triangle.html#a6b87ae44a5f773a727d77a965ca9d695',1,'physim::geometric::triangle::u2()']]],
+  ['ucoll_5fdistance',['ucoll_distance',['../classphysim_1_1particles_1_1agent__particle.html#abe0c2e35c753ee40c5fb9408932d6513',1,'physim::particles::agent_particle']]],
+  ['ucoll_5fweight',['ucoll_weight',['../classphysim_1_1particles_1_1agent__particle.html#ab25fc01e8a49f57aca2be031f048edea',1,'physim::particles::agent_particle']]],
   ['use_5ffunctions',['use_functions',['../classphysim_1_1emitters_1_1free__emitters_1_1multisource.html#a99bad5ac0fb5cb14652bbfd0c1f0eeff',1,'physim::emitters::free_emitters::multisource']]]
 ];

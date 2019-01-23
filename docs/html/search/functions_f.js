@@ -40,7 +40,7 @@ var searchData=
   ['simulate_5fagent_5fparticles',['simulate_agent_particles',['../classphysim_1_1simulator.html#a99dbf5870ec5383266f87e60c1686049',1,'physim::simulator']]],
   ['simulate_5fbend',['simulate_bend',['../classphysim_1_1meshes_1_1mesh1d.html#aaea453fcd1f5f41b6674da822bf53b2f',1,'physim::meshes::mesh1d::simulate_bend()'],['../classphysim_1_1meshes_1_1mesh2d__regular.html#abc94712fdb508f126934bd2bde2cf867',1,'physim::meshes::mesh2d_regular::simulate_bend()']]],
   ['simulate_5ffluids',['simulate_fluids',['../classphysim_1_1simulator.html#a63f7f4b59a79b8b294aaa6d8870fccd2',1,'physim::simulator::simulate_fluids()'],['../classphysim_1_1simulator.html#acb3359c9faedfc69191bf9a4618eebfa',1,'physim::simulator::simulate_fluids(size_t nt)']]],
-  ['simulate_5ffree_5fparticles',['simulate_free_particles',['../classphysim_1_1simulator.html#ac836fc5c8ccf186b8030da54586a8b07',1,'physim::simulator::simulate_free_particles()'],['../classphysim_1_1simulator.html#af4c6a7a02feeb89263fa557a1ea3de7e',1,'physim::simulator::simulate_free_particles(size_t nt)']]],
+  ['simulate_5ffree_5fparticles',['simulate_free_particles',['../classphysim_1_1simulator.html#ac836fc5c8ccf186b8030da54586a8b07',1,'physim::simulator']]],
   ['simulate_5fmeshes',['simulate_meshes',['../classphysim_1_1simulator.html#aea4165314f9285dfc3b64ba9a2666aaf',1,'physim::simulator']]],
   ['simulate_5fshear',['simulate_shear',['../classphysim_1_1meshes_1_1mesh2d__regular.html#a36293f6559978144527fb829efd63ea2',1,'physim::meshes::mesh2d_regular']]],
   ['simulate_5fsized_5fparticles',['simulate_sized_particles',['../classphysim_1_1simulator.html#ac99a02f99b4f83501478093d402abea5',1,'physim::simulator']]],

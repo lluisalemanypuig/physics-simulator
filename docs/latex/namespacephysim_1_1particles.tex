@@ -25,11 +25,13 @@ class \hyperlink{classphysim_1_1particles_1_1sized__particle}{sized\+\_\+particl
 \item 
 enum \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88}{agent\+\_\+behaviour\+\_\+type} \+: int8\+\_\+t \{ \newline
 \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8}{agent\+\_\+behaviour\+\_\+type\+::none} = 1 $<$$<$ 0, 
-\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}{agent\+\_\+behaviour\+\_\+type\+::seek}, 
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}{agent\+\_\+behaviour\+\_\+type\+::seek} = 1 $<$$<$ 1, 
 \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b}{agent\+\_\+behaviour\+\_\+type\+::flee} = 1 $<$$<$ 2, 
 \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}{agent\+\_\+behaviour\+\_\+type\+::arrival} = 1 $<$$<$ 3, 
 \newline
-\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}{agent\+\_\+behaviour\+\_\+type\+::collision\+\_\+avoidance} = 1 $<$$<$ 4
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}{agent\+\_\+behaviour\+\_\+type\+::collision\+\_\+avoidance} = 1 $<$$<$ 4, 
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a6fdb0358d9b651e9e9eb5c255ab998e0}{agent\+\_\+behaviour\+\_\+type\+::unaligned\+\_\+collision\+\_\+avoidance} = 1 $<$$<$ 5, 
+\hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88af30345cdf3a84d8528df256adaa00e20}{agent\+\_\+behaviour\+\_\+type\+::walk\+\_\+with\+\_\+me} = 1 $<$$<$ 6
  \}\begin{DoxyCompactList}\small\item\em The different types of behaviours for an agent. \end{DoxyCompactList}
 \item 
 enum \hyperlink{namespacephysim_1_1particles_a068e6cda6626fbd381c07a9835425b08}{particle\+\_\+type} \+: int8\+\_\+t \{ \newline
@@ -102,7 +104,7 @@ flee&Flee. The agent moves away from its target. Its weight is \hyperlink{classp
 \hline
 
 \raisebox{\heightof{T}}[0pt][0pt]{\index{arrival@{arrival}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!arrival@{arrival}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}} 
-arrival&Arrival. The agent slows down as it approaches its target. The distance at which the agent starts to slow down is defined in \hyperlink{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}{agent\+\_\+particle\+::slowing\+\_\+distance}.
+arrival&Arrival. The agent slows down as it approaches its target. The distance at which the agent starts to slow down is defined in \hyperlink{classphysim_1_1particles_1_1agent__particle_ab042fe6b2ee2ebb86bf0de7c23c09d04}{agent\+\_\+particle\+::arrival\+\_\+distance}.
 
 Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{agent\+\_\+particle\+::arrival\+\_\+weight}. \\
 \hline
@@ -110,7 +112,17 @@ Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b3
 \raisebox{\heightof{T}}[0pt][0pt]{\index{collision\+\_\+avoidance@{collision\+\_\+avoidance}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!collision\+\_\+avoidance@{collision\+\_\+avoidance}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}} 
 collision\+\_\+avoidance&Collision avoidance. The agent will try to move away from an obstacle as it moves.
 
-Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}{agent\+\_\+particle\+::coll\+\_\+avoid\+\_\+weight}. \\
+Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_af026f67b9cd8c190fdee03ef143d6e83}{agent\+\_\+particle\+::coll\+\_\+weight}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{unaligned\+\_\+collision\+\_\+avoidance@{unaligned\+\_\+collision\+\_\+avoidance}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!unaligned\+\_\+collision\+\_\+avoidance@{unaligned\+\_\+collision\+\_\+avoidance}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a6fdb0358d9b651e9e9eb5c255ab998e0}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a6fdb0358d9b651e9e9eb5c255ab998e0}} 
+unaligned\+\_\+collision\+\_\+avoidance&Unaligned collision avoidance. Agent try to avoid colliding with other agents.
+
+Its weight is \hyperlink{classphysim_1_1particles_1_1agent__particle_ab25fc01e8a49f57aca2be031f048edea}{agent\+\_\+particle\+::ucoll\+\_\+weight}. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{walk\+\_\+with\+\_\+me@{walk\+\_\+with\+\_\+me}!physim\+::particles@{physim\+::particles}}\index{physim\+::particles@{physim\+::particles}!walk\+\_\+with\+\_\+me@{walk\+\_\+with\+\_\+me}}}\mbox{\Hypertarget{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88af30345cdf3a84d8528df256adaa00e20}\label{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88af30345cdf3a84d8528df256adaa00e20}} 
+walk\+\_\+with\+\_\+me&Walk off with. Agents nearby will try to align their velocities so that it looks like they are walking together. \\
 \hline
 
 \end{DoxyEnumFields}

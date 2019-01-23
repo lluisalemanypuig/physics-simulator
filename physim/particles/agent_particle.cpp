@@ -151,7 +151,7 @@ const
 }
 
 void agent_particle::apply_behaviours
-(const vector<agent_particle>& agents, vec3& weighted_steering)
+(const std::vector<agent_particle>& agents, vec3& weighted_steering)
 const
 {
 	if (behaviour == agent_behaviour_type::none) {

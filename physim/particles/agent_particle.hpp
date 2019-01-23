@@ -64,7 +64,7 @@ enum class agent_behaviour_type : int8_t {
 	 *
 	 * The agent will try to move away from an obstacle as it moves.
 	 *
-	 * Its weight is @ref agent_particle::coll_avoid_weight.
+	 * Its weight is @ref agent_particle::coll_weight.
 	 */
 	collision_avoidance = 1 << 4,
 	/**
@@ -72,7 +72,7 @@ enum class agent_behaviour_type : int8_t {
 	 *
 	 * Agent try to avoid colliding with other agents.
 	 *
-	 * Its weight is @ref agent_particle::ucoll_avoid_weight.
+	 * Its weight is @ref agent_particle::ucoll_weight.
 	 */
 	unaligned_collision_avoidance = 1 << 5,
 	/**
@@ -115,11 +115,11 @@ class agent_particle : public sized_particle {
 		 * - @ref arrival_weight : 1.0/7.0
 		 * - @ref arrival_distance : 0.0
 		 * - @ref coll_weight : 1.0/7.0
-		 * - @ref collision_distance : 5.0
+		 * - @ref coll_distance : 5.0
 		 * - @ref wow_weight : 1.0/7.0
 		 * - @ref wow_distance : 5.0
 		 * - @ref ucoll_weight : 1.0/7.0
-		 * - @ref ucollision_distance : 5.0
+		 * - @ref ucoll_distance : 5.0
 		 */
 		void partial_init();
 
@@ -266,11 +266,11 @@ class agent_particle : public sized_particle {
 		 *
 		 * The behaviours considered in this function are:
 		 * - @ref agent_behaviour_type::seek
-		 * (function @ref seek_behaviour(math::vec3&) ).
+		 * (function @ref seek_behaviour(math::vec3&)const ).
 		 * - @ref agent_behaviour_type::flee
-		 * (function @ref flee_behaviour(math::vec3&) ).
+		 * (function @ref flee_behaviour(math::vec3&)const ).
 		 * - @ref agent_behaviour_type::arrival
-		 * (function @ref arrival_behaviour(math::vec3&) ).
+		 * (function @ref arrival_behaviour(math::vec3&)const ).
 		 *
 		 * The resulting vector of each behaviour will be accumulated to the
 		 * output vector of this function.
@@ -287,8 +287,9 @@ class agent_particle : public sized_particle {
 		 * vectors obtained by the different behaviours activated.
 		 *
 		 * The behaviours considered in this function are:
-		 * - @ref agent_behaviour_type::collision_avoidance
-		 * (function @ref collision_avoidance_behaviour(math::vec3&) ).
+		 * - @ref agent_behaviour_type::collision_avoidance (function
+		 * @ref collision_avoidance_behaviour
+		 * (const std::vector<geometric::geometry *>&, math::vec3&)const ).
 		 *
 		 * The resulting vector of each behaviour will be accumulated to the
 		 * output vector of this function.
@@ -308,8 +309,9 @@ class agent_particle : public sized_particle {
 		 * vectors obtained by the different behaviours activated.
 		 *
 		 * The behaviours considered in this function are:
-		 * - @ref agent_behaviour_type::unaligned_collision_avoidance
-		 * (function @ref unaligned_collision_avoidance_behaviour(math::vec3&) ).
+		 * - @ref agent_behaviour_type::unaligned_collision_avoidance (function
+		 * @ref unaligned_collision_avoidance_behaviour
+		 * (const std::vector<agent_particle>&, math::vec3&)const ).
 		 *
 		 * The resulting vector of each behaviour will be accumulated to the
 		 * output vector of this function.
@@ -338,7 +340,7 @@ class agent_particle : public sized_particle {
 		 * @brief Computes the flee steering force.
 		 *
 		 * This function must compute a velocity vector multiplied
-		 * by weight @ref free_weight. The result must be assigned to @e v.
+		 * by weight @ref flee_weight. The result must be assigned to @e v.
 		 *
 		 * @param[out] v Flee steering vector.
 		 * @pre Vector @e v may not be initialised to 0.
@@ -388,7 +390,7 @@ class agent_particle : public sized_particle {
 		 *
 		 * The following agents are ignored:
 		 * - agents too far away (the distance between the agents is more
-		 * than @ref ucollision_distance, where the distance considered is
+		 * than @ref ucoll_distance, where the distance considered is
 		 * the distance between the current positions minus the sum of both
 		 * agent's radius)
 		 * - agents whose predicted position is outside the FOV.

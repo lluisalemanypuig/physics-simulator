@@ -57,6 +57,8 @@ void \hyperlink{classphysim_1_1particles_1_1agent__particle_a8c43ad56e0b73e6795a
 \begin{DoxyCompactList}\small\item\em Computes a weighted steering vector force. \end{DoxyCompactList}\item 
 void \hyperlink{classphysim_1_1particles_1_1agent__particle_abd9976b5fd7b03ef4301878085e21fbc}{apply\+\_\+behaviours} (const std\+::vector$<$ \hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$$>$ \&scene, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&weighted\+\_\+steering) const
 \begin{DoxyCompactList}\small\item\em Computes a weighted steering vector force. \end{DoxyCompactList}\item 
+void \hyperlink{classphysim_1_1particles_1_1agent__particle_a50b6152ce041bf69df383cc6a6e4e6a7}{apply\+\_\+behaviours} (const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \&agents, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&weighted\+\_\+steering) const
+\begin{DoxyCompactList}\small\item\em Computes a weighted steering vector force. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_ac4eabcfb94d1c5769415f8822556be8b}{seek\+\_\+behaviour} (\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v) const
 \begin{DoxyCompactList}\small\item\em Computes the seek steering force. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_aca72133a2c84d5849185cbe8daf8910f}{flee\+\_\+behaviour} (\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v) const
@@ -64,7 +66,11 @@ virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_aca72133a2c8
 virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_a2859f442bcd33d39767e15d882ba5229}{arrival\+\_\+behaviour} (\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v) const
 \begin{DoxyCompactList}\small\item\em Computes the arrival steering force. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_a776246cbbc1550db54368039db73d51b}{collision\+\_\+avoidance\+\_\+behaviour} (const std\+::vector$<$ \hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$$>$ \&scene, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v) const
-\begin{DoxyCompactList}\small\item\em Computes the collision avoidance steering force. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Computes the collision avoidance steering force. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_a9322edc7431018233f64b56701af342b}{unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour} (const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \&agents, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v) const
+\begin{DoxyCompactList}\small\item\em Computes the collision avoidance steering force. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classphysim_1_1particles_1_1agent__particle_ad86911b0dfbcebf64700ee4bacc86763}{wwm\+\_\+behaviour} (const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \&agents, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&v) const
+\begin{DoxyCompactList}\small\item\em Computes the \char`\"{}walk off with\char`\"{} steering force. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -79,8 +85,6 @@ float \hyperlink{classphysim_1_1particles_1_1agent__particle_a3e34a9a7fc82cbad02
 \begin{DoxyCompactList}\small\item\em Maximum speed allowed. \mbox{[}m/s\mbox{]}. \end{DoxyCompactList}\item 
 float \hyperlink{classphysim_1_1particles_1_1agent__particle_a57909cb85564f4432754000ed570d88a}{max\+\_\+force}
 \begin{DoxyCompactList}\small\item\em Maximum force allowed. \mbox{[}m/s\mbox{]}. \end{DoxyCompactList}\item 
-float \hyperlink{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}{slowing\+\_\+distance}
-\begin{DoxyCompactList}\small\item\em Distance from the target to start slowing down at. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a119da4916df4f5c52f13170725295f20}\label{classphysim_1_1particles_1_1agent__particle_a119da4916df4f5c52f13170725295f20}} 
 float \hyperlink{classphysim_1_1particles_1_1agent__particle_a119da4916df4f5c52f13170725295f20}{align\+\_\+weight}
 \begin{DoxyCompactList}\small\item\em Weight for aligning orientation with velocity. \end{DoxyCompactList}\item 
@@ -93,12 +97,27 @@ float \hyperlink{classphysim_1_1particles_1_1agent__particle_ad7824cd0742b42f803
 \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}\label{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}} 
 float \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{arrival\+\_\+weight}
 \begin{DoxyCompactList}\small\item\em Weight for arrival behaviour. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}\label{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}} 
-float \hyperlink{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}{coll\+\_\+avoid\+\_\+weight}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_ab042fe6b2ee2ebb86bf0de7c23c09d04}\label{classphysim_1_1particles_1_1agent__particle_ab042fe6b2ee2ebb86bf0de7c23c09d04}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_ab042fe6b2ee2ebb86bf0de7c23c09d04}{arrival\+\_\+distance}
+\begin{DoxyCompactList}\small\item\em Distance from the target to start slowing down at in arrival behaviour. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_af026f67b9cd8c190fdee03ef143d6e83}\label{classphysim_1_1particles_1_1agent__particle_af026f67b9cd8c190fdee03ef143d6e83}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_af026f67b9cd8c190fdee03ef143d6e83}{coll\+\_\+weight}
 \begin{DoxyCompactList}\small\item\em Weight for collision avoidance behaviour. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_ab08a6b3f3a8f27b3281d981146135234}\label{classphysim_1_1particles_1_1agent__particle_ab08a6b3f3a8f27b3281d981146135234}} 
-float \hyperlink{classphysim_1_1particles_1_1agent__particle_ab08a6b3f3a8f27b3281d981146135234}{ahead\+\_\+distance}
-\begin{DoxyCompactList}\small\item\em Distance ahead of the agent for collision detection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_ae851f1172de706931eebf33b642983e8}\label{classphysim_1_1particles_1_1agent__particle_ae851f1172de706931eebf33b642983e8}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_ae851f1172de706931eebf33b642983e8}{coll\+\_\+distance}
+\begin{DoxyCompactList}\small\item\em Distance ahead of the agent for collision avoidance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_ab25fc01e8a49f57aca2be031f048edea}\label{classphysim_1_1particles_1_1agent__particle_ab25fc01e8a49f57aca2be031f048edea}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_ab25fc01e8a49f57aca2be031f048edea}{ucoll\+\_\+weight}
+\begin{DoxyCompactList}\small\item\em Weight for unaligned collision avoidance behaviour. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_abe0c2e35c753ee40c5fb9408932d6513}\label{classphysim_1_1particles_1_1agent__particle_abe0c2e35c753ee40c5fb9408932d6513}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_abe0c2e35c753ee40c5fb9408932d6513}{ucoll\+\_\+distance}
+\begin{DoxyCompactList}\small\item\em Distance ahead of the agent for unaligned collision avoidance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_acc82ad218207d618d25128ac4a885e11}\label{classphysim_1_1particles_1_1agent__particle_acc82ad218207d618d25128ac4a885e11}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_acc82ad218207d618d25128ac4a885e11}{wow\+\_\+weight}
+\begin{DoxyCompactList}\small\item\em Weight for \textquotesingle{}walk with me\textquotesingle{} behaviour. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_aea89f1ac8529f17432d20280cff39411}\label{classphysim_1_1particles_1_1agent__particle_aea89f1ac8529f17432d20280cff39411}} 
+float \hyperlink{classphysim_1_1particles_1_1agent__particle_aea89f1ac8529f17432d20280cff39411}{wow\+\_\+distance}
+\begin{DoxyCompactList}\small\item\em Distance ahead of the agent for \textquotesingle{}walk with me\textquotesingle{} behaviour. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -117,7 +136,7 @@ Although it is a type of sized particle (see \hyperlink{classphysim_1_1particles
 \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a8c43ad56e0b73e6795a287fb945da092}\label{classphysim_1_1particles_1_1agent__particle_a8c43ad56e0b73e6795a287fb945da092}} 
 \index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!apply\+\_\+behaviours@{apply\+\_\+behaviours}}
 \index{apply\+\_\+behaviours@{apply\+\_\+behaviours}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
-\subsubsection{\texorpdfstring{apply\+\_\+behaviours()}{apply\_behaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+\subsubsection{\texorpdfstring{apply\+\_\+behaviours()}{apply\_behaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
 {\footnotesize\ttfamily void physim\+::particles\+::agent\+\_\+particle\+::apply\+\_\+behaviours (\begin{DoxyParamCaption}\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{weighted\+\_\+steering }\end{DoxyParamCaption}) const}
 
 
@@ -128,12 +147,12 @@ This vector is the weighted average over the different steering vectors obtained
 
 The behaviours considered in this function are\+:
 \begin{DoxyItemize}
-\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}{agent\+\_\+behaviour\+\_\+type\+::seek}
-\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b}{agent\+\_\+behaviour\+\_\+type\+::flee}
-\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}{agent\+\_\+behaviour\+\_\+type\+::arrival}
+\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076}{agent\+\_\+behaviour\+\_\+type\+::seek} (function \hyperlink{classphysim_1_1particles_1_1agent__particle_ac4eabcfb94d1c5769415f8822556be8b}{seek\+\_\+behaviour(math\+::vec3\&)const} ).
+\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b}{agent\+\_\+behaviour\+\_\+type\+::flee} (function \hyperlink{classphysim_1_1particles_1_1agent__particle_aca72133a2c84d5849185cbe8daf8910f}{flee\+\_\+behaviour(math\+::vec3\&)const} ).
+\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}{agent\+\_\+behaviour\+\_\+type\+::arrival} (function \hyperlink{classphysim_1_1particles_1_1agent__particle_a2859f442bcd33d39767e15d882ba5229}{arrival\+\_\+behaviour(math\+::vec3\&)const} ).
 \end{DoxyItemize}
 
-The resulting vector will be accumulated to an internal vector \char`\"{}as is\char`\"{} to make a new velocity vector.
+The resulting vector of each behaviour will be accumulated to the output vector of this function.
 
 Recall that the target is stored in \hyperlink{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}{target}. 
 \begin{DoxyParams}[1]{Parameters}
@@ -143,7 +162,7 @@ Recall that the target is stored in \hyperlink{classphysim_1_1particles_1_1agent
 \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_abd9976b5fd7b03ef4301878085e21fbc}\label{classphysim_1_1particles_1_1agent__particle_abd9976b5fd7b03ef4301878085e21fbc}} 
 \index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!apply\+\_\+behaviours@{apply\+\_\+behaviours}}
 \index{apply\+\_\+behaviours@{apply\+\_\+behaviours}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
-\subsubsection{\texorpdfstring{apply\+\_\+behaviours()}{apply\_behaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+\subsubsection{\texorpdfstring{apply\+\_\+behaviours()}{apply\_behaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
 {\footnotesize\ttfamily void physim\+::particles\+::agent\+\_\+particle\+::apply\+\_\+behaviours (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{classphysim_1_1geometric_1_1geometry}{geometric\+::geometry} $\ast$$>$ \&}]{scene,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{weighted\+\_\+steering }\end{DoxyParamCaption}) const}
 
 
@@ -154,16 +173,40 @@ This vector is the weighted average over the different steering vectors obtained
 
 The behaviours considered in this function are\+:
 \begin{DoxyItemize}
-\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}{agent\+\_\+behaviour\+\_\+type\+::collision\+\_\+avoidance}.
+\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4}{agent\+\_\+behaviour\+\_\+type\+::collision\+\_\+avoidance} (function \hyperlink{classphysim_1_1particles_1_1agent__particle_a776246cbbc1550db54368039db73d51b}{collision\+\_\+avoidance\+\_\+behaviour} (const std\+::vector$<$geometric\+::geometry $\ast$$>$\&, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}\&)const ).
 \end{DoxyItemize}
 
-This function is called for every geometrical object in the scene. It is up to the user to decide what is a \char`\"{}most threatening\char`\"{} geometrical object.
-
-The resulting vector will be accumulated to an internal vector \char`\"{}as is\char`\"{} to make a new velocity vector.
+The resulting vector of each behaviour will be accumulated to the output vector of this function.
 
 Recall that the target is stored in \hyperlink{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}{target}. 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em scene} & The geometry in the simulation. \\
+\hline
+\mbox{\tt out}  & {\em weighted\+\_\+steering} & Weighted steering vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a50b6152ce041bf69df383cc6a6e4e6a7}\label{classphysim_1_1particles_1_1agent__particle_a50b6152ce041bf69df383cc6a6e4e6a7}} 
+\index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!apply\+\_\+behaviours@{apply\+\_\+behaviours}}
+\index{apply\+\_\+behaviours@{apply\+\_\+behaviours}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
+\subsubsection{\texorpdfstring{apply\+\_\+behaviours()}{apply\_behaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void physim\+::particles\+::agent\+\_\+particle\+::apply\+\_\+behaviours (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \&}]{agents,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{weighted\+\_\+steering }\end{DoxyParamCaption}) const}
+
+
+
+Computes a weighted steering vector force. 
+
+This vector is the weighted average over the different steering vectors obtained by the different behaviours activated.
+
+The behaviours considered in this function are\+:
+\begin{DoxyItemize}
+\item \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a6fdb0358d9b651e9e9eb5c255ab998e0}{agent\+\_\+behaviour\+\_\+type\+::unaligned\+\_\+collision\+\_\+avoidance} (function \hyperlink{classphysim_1_1particles_1_1agent__particle_a9322edc7431018233f64b56701af342b}{unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour} (const std\+::vector$<$agent\+\_\+particle$>$\&, \hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3}\&)const ).
+\end{DoxyItemize}
+
+The resulting vector of each behaviour will be accumulated to the output vector of this function.
+
+Recall that the index of this agent particle is stored in \hyperlink{classphysim_1_1particles_1_1base__particle_a44f5de3bb4b860dfd511e28e1d6519d5}{index}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em agents} & All the agents in the simulation. \\
 \hline
 \mbox{\tt out}  & {\em weighted\+\_\+steering} & Weighted steering vector. \\
 \hline
@@ -178,7 +221,7 @@ Recall that the target is stored in \hyperlink{classphysim_1_1particles_1_1agent
 
 Computes the arrival steering force. 
 
-This function must compute a velocity vector multiplied by a certain weight. The result must be assigned to {\itshape v}.
+This function must compute a velocity vector multiplied by weight \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{arrival\+\_\+weight}. The result must be assigned to {\itshape v}.
 
 Recall that the slowing distance considered is stored in {\itshape v}.
 
@@ -200,7 +243,7 @@ Vector {\itshape v} may not be initialised to 0.
 
 Computes the collision avoidance steering force. 
 
-This function must compute a velocity vector multiplied by a certain weight. The result must be assigned to {\itshape v}.
+This function must compute a velocity vector multiplied by weight \hyperlink{classphysim_1_1particles_1_1agent__particle_af026f67b9cd8c190fdee03ef143d6e83}{coll\+\_\+weight}. The result must be assigned to {\itshape v}.
 
 Rectangles are considered walls. The rest of the geometry is approximated with spheres.
 
@@ -224,7 +267,7 @@ Vector {\itshape v} may not be initialised to 0.
 
 Computes the flee steering force. 
 
-This function must compute a velocity vector multiplied by a certain weight. The result must be assigned to {\itshape v}.
+This function must compute a velocity vector multiplied by weight \hyperlink{classphysim_1_1particles_1_1agent__particle_ad7824cd0742b42f803542d8b4d5eae98}{flee\+\_\+weight}. The result must be assigned to {\itshape v}.
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -258,18 +301,7 @@ The attributes of the class take the following values\+:
 \item \hyperlink{classphysim_1_1particles_1_1free__particle_ad0379ba926ecc909bfbfb373045bfcf9}{starttime} \+: 0
 \item \hyperlink{classphysim_1_1particles_1_1free__particle_a0f6d69caeac140abd74c7be4ed55eb74}{fixed} \+: false
 \item \hyperlink{classphysim_1_1particles_1_1sized__particle_ac67d5df84b91bb12152c8691dd43e98c}{R} \+: 1.\+0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}{target} \+: vec3(0,0,0)
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a87b2554699454e6850f1d2b48e278f63}{orientation} \+: vec3(0,0,0)
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_af219e3f46630bb7f51f3d00952ed4f1c}{behaviour} \+: \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8}{agent\+\_\+behaviour\+\_\+type\+::none}
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a3e34a9a7fc82cbad0226b7b925b5ba22}{max\+\_\+speed} \+: 1.\+0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a57909cb85564f4432754000ed570d88a}{max\+\_\+force} \+: 1.\+0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}{slowing\+\_\+distance} \+: 0.\+0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a119da4916df4f5c52f13170725295f20}{align\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a853c72c7dbd902a126af1a90d50af222}{seek\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ad7824cd0742b42f803542d8b4d5eae98}{flee\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{arrival\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}{coll\+\_\+avoid\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ab08a6b3f3a8f27b3281d981146135234}{ahead\+\_\+distance} \+: 5.\+0 
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}{target} \+: vec3(0,0,0) See \hyperlink{classphysim_1_1particles_1_1agent__particle_af48f594a16ab6c2ff3b475fa7f64266c}{partial\+\_\+init()} to see how the attributes of this class are intialised. 
 \end{DoxyItemize}
 
 Reimplemented from \hyperlink{classphysim_1_1particles_1_1free__particle_a0df21e64a28c5fdf471d54a50b59fea3}{physim\+::particles\+::free\+\_\+particle}.
@@ -291,13 +323,17 @@ The attributes of the class take the following values\+:
 \item \hyperlink{classphysim_1_1particles_1_1agent__particle_af219e3f46630bb7f51f3d00952ed4f1c}{behaviour} \+: \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8}{agent\+\_\+behaviour\+\_\+type\+::none}
 \item \hyperlink{classphysim_1_1particles_1_1agent__particle_a3e34a9a7fc82cbad0226b7b925b5ba22}{max\+\_\+speed} \+: 1.\+0
 \item \hyperlink{classphysim_1_1particles_1_1agent__particle_a57909cb85564f4432754000ed570d88a}{max\+\_\+force} \+: 1.\+0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}{slowing\+\_\+distance} \+: 0.\+0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a119da4916df4f5c52f13170725295f20}{align\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a853c72c7dbd902a126af1a90d50af222}{seek\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ad7824cd0742b42f803542d8b4d5eae98}{flee\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{arrival\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_acf2c406d0b41c07d3f786701dec35020}{coll\+\_\+avoid\+\_\+weight} \+: 1.\+0/5.0
-\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ab08a6b3f3a8f27b3281d981146135234}{ahead\+\_\+distance} \+: 5.\+0 
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a119da4916df4f5c52f13170725295f20}{align\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_a853c72c7dbd902a126af1a90d50af222}{seek\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ad7824cd0742b42f803542d8b4d5eae98}{flee\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_aaeb579f8b30b7604d7205bb7aff5197b}{arrival\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ab042fe6b2ee2ebb86bf0de7c23c09d04}{arrival\+\_\+distance} \+: 0.\+0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_af026f67b9cd8c190fdee03ef143d6e83}{coll\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ae851f1172de706931eebf33b642983e8}{coll\+\_\+distance} \+: 5.\+0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_acc82ad218207d618d25128ac4a885e11}{wow\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_aea89f1ac8529f17432d20280cff39411}{wow\+\_\+distance} \+: 5.\+0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_ab25fc01e8a49f57aca2be031f048edea}{ucoll\+\_\+weight} \+: 1.\+0/7.0
+\item \hyperlink{classphysim_1_1particles_1_1agent__particle_abe0c2e35c753ee40c5fb9408932d6513}{ucoll\+\_\+distance} \+: 5.\+0 
 \end{DoxyItemize}\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_ac4eabcfb94d1c5769415f8822556be8b}\label{classphysim_1_1particles_1_1agent__particle_ac4eabcfb94d1c5769415f8822556be8b}} 
 \index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!seek\+\_\+behaviour@{seek\+\_\+behaviour}}
 \index{seek\+\_\+behaviour@{seek\+\_\+behaviour}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
@@ -308,7 +344,7 @@ The attributes of the class take the following values\+:
 
 Computes the seek steering force. 
 
-This function must compute a velocity vector multiplied by a certain weight. The result must be assigned to {\itshape v}.
+This function must compute a velocity vector multiplied by weight \hyperlink{classphysim_1_1particles_1_1agent__particle_a853c72c7dbd902a126af1a90d50af222}{seek\+\_\+weight}. The result must be assigned to {\itshape v}.
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -335,6 +371,39 @@ Attribute \hyperlink{classphysim_1_1particles_1_1agent__particle_af219e3f46630bb
 {\em b} & Type of behaviour. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a9322edc7431018233f64b56701af342b}\label{classphysim_1_1particles_1_1agent__particle_a9322edc7431018233f64b56701af342b}} 
+\index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour@{unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour}}
+\index{unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour@{unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
+\subsubsection{\texorpdfstring{unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour()}{unaligned\_collision\_avoidance\_behaviour()}}
+{\footnotesize\ttfamily void physim\+::particles\+::agent\+\_\+particle\+::unaligned\+\_\+collision\+\_\+avoidance\+\_\+behaviour (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \&}]{agents,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Computes the collision avoidance steering force. 
+
+This function must compute a velocity vector multiplied by weight \hyperlink{classphysim_1_1particles_1_1agent__particle_ab25fc01e8a49f57aca2be031f048edea}{ucoll\+\_\+weight}. The result must be assigned to {\itshape v}.
+
+The vector computed is meant to provide the agent a means of avoiding collision with other agents \textquotesingle{}locally\textquotesingle{}, that is, the ability of choosing what to do without the help of an oracle.
+
+Only some agents are considered. Those ignored are listed below. F\+OV stands for Field of View, it is aligned at this agent\textquotesingle{}s velocity vector and is of 90º to its left and 90º to its right.
+
+The following agents are ignored\+:
+\begin{DoxyItemize}
+\item agents too far away (the distance between the agents is more than \hyperlink{classphysim_1_1particles_1_1agent__particle_abe0c2e35c753ee40c5fb9408932d6513}{ucoll\+\_\+distance}, where the distance considered is the distance between the current positions minus the sum of both agent\textquotesingle{}s radius)
+\item agents whose predicted position is outside the F\+OV.
+\item agents whose current position is outside the F\+OV.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em agents} & All the agents in the simulation. \\
+\hline
+\mbox{\tt out}  & {\em v} & Unaligned collision avoidance steering vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Vector {\itshape v} may not be initialised to 0. 
+\end{DoxyPrecond}
 \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a1707492909bba01164bf38186a68bcb7}\label{classphysim_1_1particles_1_1agent__particle_a1707492909bba01164bf38186a68bcb7}} 
 \index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!unset\+\_\+all\+\_\+behaviours@{unset\+\_\+all\+\_\+behaviours}}
 \index{unset\+\_\+all\+\_\+behaviours@{unset\+\_\+all\+\_\+behaviours}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
@@ -362,6 +431,39 @@ Attribute \hyperlink{classphysim_1_1particles_1_1agent__particle_af219e3f46630bb
 {\em b} & Type of behaviour. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_ad86911b0dfbcebf64700ee4bacc86763}\label{classphysim_1_1particles_1_1agent__particle_ad86911b0dfbcebf64700ee4bacc86763}} 
+\index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!wwm\+\_\+behaviour@{wwm\+\_\+behaviour}}
+\index{wwm\+\_\+behaviour@{wwm\+\_\+behaviour}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
+\subsubsection{\texorpdfstring{wwm\+\_\+behaviour()}{wwm\_behaviour()}}
+{\footnotesize\ttfamily void physim\+::particles\+::agent\+\_\+particle\+::wwm\+\_\+behaviour (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \hyperlink{classphysim_1_1particles_1_1agent__particle}{agent\+\_\+particle} $>$ \&}]{agents,  }\item[{\hyperlink{structphysim_1_1math_1_1vec3}{math\+::vec3} \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Computes the \char`\"{}walk off with\char`\"{} steering force. 
+
+This function must compute a velocity vector multiplied by weight \hyperlink{classphysim_1_1particles_1_1agent__particle_acc82ad218207d618d25128ac4a885e11}{wow\+\_\+weight}. The result must be assigned to {\itshape v}.
+
+The vector computed is meant to provide the agent a means of walking together with another agent with similar velocity direction.
+
+Only some agents are considered. Those ignored are listed below. F\+OV stands for Field of View, it is aligned at this agent\textquotesingle{}s velocity vector and is of 90º to its left and 90º to its right.
+
+The following agents are ignored\+:
+\begin{DoxyItemize}
+\item agents too far away (the distance between the agents is more than \hyperlink{classphysim_1_1particles_1_1agent__particle_aea89f1ac8529f17432d20280cff39411}{wow\+\_\+distance}, where the distance considered is the distance between the current positions minus the sum of both agent\textquotesingle{}s radius)
+\item agents whose predicted position is outside the F\+OV.
+\item agents whose current position is outside the F\+OV.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em agents} & All the agents in the simulation. \\
+\hline
+\mbox{\tt out}  & {\em v} & \char`\"{}\+Walk off with\char`\"{} steering vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Vector {\itshape v} may not be initialised to 0. 
+\end{DoxyPrecond}
 
 
 \subsection{Member Data Documentation}
@@ -395,17 +497,7 @@ This particle can move at a velocity with maximum magnitude stored in this value
 
 Vector indicating the orientation of the particle. 
 
-This need not be equal to the \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} vector, but it should be initialised with a value equal to the velocity. \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}\label{classphysim_1_1particles_1_1agent__particle_a1c3e4357a84047b45ea827a2e90cd14b}} 
-\index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!slowing\+\_\+distance@{slowing\+\_\+distance}}
-\index{slowing\+\_\+distance@{slowing\+\_\+distance}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
-\subsubsection{\texorpdfstring{slowing\+\_\+distance}{slowing\_distance}}
-{\footnotesize\ttfamily float physim\+::particles\+::agent\+\_\+particle\+::slowing\+\_\+distance}
-
-
-
-Distance from the target to start slowing down at. 
-
-When the agent is in behaviour arrival (see \hyperlink{namespacephysim_1_1particles_a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0}{agent\+\_\+behaviour\+\_\+type\+::arrival}) it starts slow down. This attribute encodes the distance from its target at which this happens. \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}\label{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}} 
+This need not be equal to the \hyperlink{classphysim_1_1particles_1_1base__particle_a66a164d2a130c40901e3ec2709cdad43}{cur\+\_\+vel} vector, but it should be initialised with a value equal to the velocity. \mbox{\Hypertarget{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}\label{classphysim_1_1particles_1_1agent__particle_a0658207e11a5d39844856233ae8bf2cb}} 
 \index{physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}!target@{target}}
 \index{target@{target}!physim\+::particles\+::agent\+\_\+particle@{physim\+::particles\+::agent\+\_\+particle}}
 \subsubsection{\texorpdfstring{target}{target}}

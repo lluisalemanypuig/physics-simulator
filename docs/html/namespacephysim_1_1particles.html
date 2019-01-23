@@ -100,11 +100,13 @@ Classes</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:a033757595f7862a0fc8a389d79bf9c88"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88">agent_behaviour_type</a> : int8_t { <br />
 &#160;&#160;<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88a334c4a4c42fdb79d7ebc3e73b517e6f8">agent_behaviour_type::none</a> = 1 &lt;&lt; 0, 
-<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076">agent_behaviour_type::seek</a>, 
+<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88ae6f6362248805a36c61d205dbc6f4076">agent_behaviour_type::seek</a> = 1 &lt;&lt; 1, 
 <a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88a918634f9410d3be95b2c6074f18cc62b">agent_behaviour_type::flee</a> = 1 &lt;&lt; 2, 
 <a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0">agent_behaviour_type::arrival</a> = 1 &lt;&lt; 3, 
 <br />
-&#160;&#160;<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4">agent_behaviour_type::collision_avoidance</a> = 1 &lt;&lt; 4
+&#160;&#160;<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4">agent_behaviour_type::collision_avoidance</a> = 1 &lt;&lt; 4, 
+<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88a6fdb0358d9b651e9e9eb5c255ab998e0">agent_behaviour_type::unaligned_collision_avoidance</a> = 1 &lt;&lt; 5, 
+<a class="el" href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88af30345cdf3a84d8528df256adaa00e20">agent_behaviour_type::walk_with_me</a> = 1 &lt;&lt; 6
 <br />
  }<tr class="memdesc:a033757595f7862a0fc8a389d79bf9c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different types of behaviours for an agent.  <a href="namespacephysim_1_1particles.html#a033757595f7862a0fc8a389d79bf9c88">More...</a><br /></td></tr>
 </td></tr>
@@ -185,12 +187,19 @@ Available online at:<br />
 <p>Its weight is <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#ad7824cd0742b42f803542d8b4d5eae98">agent_particle::flee_weight</a>. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a033757595f7862a0fc8a389d79bf9c88a0d4144ffc7e8e66a72800ea2b4101fd0"></a>arrival&#160;</td><td class="fielddoc"><p>Arrival. The agent slows down as it approaches its target. </p>
-<p>The distance at which the agent starts to slow down is defined in <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#a1c3e4357a84047b45ea827a2e90cd14b">agent_particle::slowing_distance</a>.</p>
+<p>The distance at which the agent starts to slow down is defined in <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#ab042fe6b2ee2ebb86bf0de7c23c09d04">agent_particle::arrival_distance</a>.</p>
 <p>Its weight is <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#aaeb579f8b30b7604d7205bb7aff5197b">agent_particle::arrival_weight</a>. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a033757595f7862a0fc8a389d79bf9c88aa150bf2057adbf0518b8bd2a4019d5a4"></a>collision_avoidance&#160;</td><td class="fielddoc"><p>Collision avoidance. </p>
 <p>The agent will try to move away from an obstacle as it moves.</p>
-<p>Its weight is <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#acf2c406d0b41c07d3f786701dec35020">agent_particle::coll_avoid_weight</a>. </p>
+<p>Its weight is <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#af026f67b9cd8c190fdee03ef143d6e83">agent_particle::coll_weight</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a033757595f7862a0fc8a389d79bf9c88a6fdb0358d9b651e9e9eb5c255ab998e0"></a>unaligned_collision_avoidance&#160;</td><td class="fielddoc"><p>Unaligned collision avoidance. </p>
+<p>Agent try to avoid colliding with other agents.</p>
+<p>Its weight is <a class="el" href="classphysim_1_1particles_1_1agent__particle.html#ab25fc01e8a49f57aca2be031f048edea">agent_particle::ucoll_weight</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a033757595f7862a0fc8a389d79bf9c88af30345cdf3a84d8528df256adaa00e20"></a>walk_with_me&#160;</td><td class="fielddoc"><p>Walk off with. </p>
+<p>Agents nearby will try to align their velocities so that it looks like they are walking together. </p>
 </td></tr>
 </table>
 

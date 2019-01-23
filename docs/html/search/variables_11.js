@@ -6,7 +6,6 @@ var searchData=
   ['seek_5fweight',['seek_weight',['../classphysim_1_1particles_1_1agent__particle.html#a853c72c7dbd902a126af1a90d50af222',1,'physim::particles::agent_particle']]],
   ['shear',['shear',['../classphysim_1_1meshes_1_1mesh1d.html#a941f796d30c2204e3aa995e984063355',1,'physim::meshes::mesh1d::shear()'],['../classphysim_1_1meshes_1_1mesh2d__regular.html#af25bf35485aa0a40e21a10f4e472721a',1,'physim::meshes::mesh2d_regular::shear()']]],
   ['sized_5fglobal_5femit',['sized_global_emit',['../classphysim_1_1simulator.html#a61d4f20480309e95fce1db56b7fc8a88',1,'physim::simulator']]],
-  ['slowing_5fdistance',['slowing_distance',['../classphysim_1_1particles_1_1agent__particle.html#a1c3e4357a84047b45ea827a2e90cd14b',1,'physim::particles::agent_particle']]],
   ['solver',['solver',['../classphysim_1_1simulator.html#a22425d61c50ef57ea39566d39c14e6a0',1,'physim::simulator']]],
   ['source',['source',['../classphysim_1_1emitters_1_1free__emitters_1_1hose.html#a0b4f4a66f8eda0638692f3f45e301cd1',1,'physim::emitters::free_emitters::hose']]],
   ['sources',['sources',['../classphysim_1_1emitters_1_1free__emitters_1_1multisource.html#af6304e14f12572ab5b768b0d5ec54d35',1,'physim::emitters::free_emitters::multisource']]],
