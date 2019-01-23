@@ -11,8 +11,12 @@ and systems of particles, including:
 
 ## Examples
 
-See the [examples](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples) directory to see
-how to use this library.
+See the [examples](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples)
+directory to see how to use this library. Some of these examples have been
+recorded and pieced together to make some videos:
+- Simulation of [particles](https://youtu.be/cjhv6R0XVQ0).
+- Simulation of [spring meshes](https://youtu.be/mnILFxv_1is).
+- Simulation of [fluids](https://youtu.be/15qUi43HnmI).
 
 Also, the [character-animation](https://github.com/lluisalemanypuig/character-animation/) project shows how to
 use this library for crowd simulation.

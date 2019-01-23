@@ -9,10 +9,11 @@ a command-line application that uses the __physim__ library. Mainly used for deb
 contains some OpenGL-based interactive applications implementing several simulations each.
     - The [particles](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples/interfaces/particles)
     interface sets up several simulations involving sizeless-particles and sized-particles. Some of
-    the applications mix the the two types of particles.
+    the applications mix the the two types of particles. There are many simulations
+    ready, but only a few of them were used to make this [video](https://youtu.be/cjhv6R0XVQ0).
     - The [spring-meshes](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples/interfaces/spring-meshes)
-    interface sets up four different simulations involving both 1-dimensional and 2-dimensional
-    simulations.
+    interface sets up five different simulations involving both 1-dimensional and 2-dimensional
+    simulations. Three of them were used to make a [video](https://youtu.be/mnILFxv_1is).
     - The [fluids](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples/interfaces/fluids)
     interface allows the user to define a fluid by giving values to several parameters (density, fluidity, ...).
     Three different simulations have been prepared: one to simulate a droplet of a fluid, another to fill up a
@@ -117,7 +118,8 @@ can be run issuing the following commands:
 	cd interfaces-release/spring-meshes ; ./spring-meshes --list
 	cd interfaces-release/fluids ; ./fluids --list
 
-- The _particles_ example offers several simulations. When issuing the corresponding command the following
+- The _particles_ example offers several simulations. See this [video](https://youtu.be/cjhv6R0XVQ0)
+to see some of these simulations. When issuing the corresponding command the following
 message summarising each of them will appear on screeen:
 	
 		Welcome to the particles renderer
@@ -157,8 +159,10 @@ message summarising each of them will appear on screeen:
 		    200 : A shower of free particles on a sized particle.
 		    201 : A sized particle going through a shower of free particles.
 
-- The _spring-meshes_ example offers four simulations of spring meshes. When issuing the corresponding
-command the following message summarising each of them will appear on screeen:
+- The _spring-meshes_ example offers four simulations of spring meshes.
+See this [video](https://youtu.be/mnILFxv_1is) to see some of these simulations.
+When issuing the corresponding command the following message summarising
+each of them will appear on screeen:
 
 		Welcome to the Spring-meshes renderer
 		The list of simulations available are:
@@ -180,8 +184,9 @@ command the following message summarising each of them will appear on screeen:
 			Most of its parameters (mass, size, elasticity, ...)
 			can be modified. The model of the mesh is a regular grid.
 
-- The _fluids_ example offers three simulations. When issuing the corresponding command the following
-message summarising each of them will appear on screeen:
+- The _fluids_ example offers three simulations. This [video](https://youtu.be/15qUi43HnmI)
+is the result of recording some of the simulations. When issuing the corresponding
+command the following message summarising each of them will appear on screeen:
 
 		Welcome to the Fluids renderer
 		The list of simulations available are:
