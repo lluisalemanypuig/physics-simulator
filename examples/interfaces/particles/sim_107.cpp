@@ -121,7 +121,10 @@ namespace study_cases {
 
 		cout << "Simulation 107 description:" << endl;
 		cout << endl;
-		cout << "PENDING" << endl;
+		cout << "This simulation shows a sized particle bouncing on non-trivial" << endl;
+		cout << "geometry. A model is loaded from disk and then stored in an octree" << endl;
+		cout << "A single size-less particle bounces on it to debug collisions." << endl;
+		cout << "The user can visualise the octree's boxes by pressing letter 'w'" << endl;
 		cout << endl;
 	}
 

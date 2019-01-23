@@ -54,11 +54,13 @@ namespace study_cases {
 
 		p1.cur_pos = math::vec3(2.3f, 0.0f, 2.0f);
 		p1.cur_vel = math::vec3(0.8f, 0.0f, 1.0f);
-		p1.R = 1.0f;
+		p1.R = 0.5f;
+		p1.mass = 0.5f;
 
 		p2.cur_pos = math::vec3(18.2f, 0.0f, 18.0f);
 		p2.cur_vel = math::vec3(-1.5f, 0.0f, -1.0f);
-		p2.R = 1.0f;
+		p2.R = 1.75f;
+		p2.mass = 1.75f;
 
 		SR.get_simulator().set_particle_particle_collisions(true);
 		SR.get_simulator().set_viscous_drag(0.0f);
@@ -126,7 +128,9 @@ namespace study_cases {
 
 		cout << "Simulation 104 description:" << endl;
 		cout << endl;
-		cout << "PENDING" << endl;
+		cout << "Two sized particles of different masses (0.5Kg and 1.75Kg) bounce" << endl;
+		cout << "within a quadrilateral. There is no gravity. Each particle has a" << endl;
+		cout << "radius proportional to its mass." << endl;
 		cout << endl;
 	}
 

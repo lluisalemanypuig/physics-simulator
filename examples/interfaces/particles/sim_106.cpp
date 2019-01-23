@@ -61,15 +61,18 @@ namespace study_cases {
 
 		p1.cur_pos = math::vec3(2.0f, 5.0f, 2.0f);
 		p1.cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
-		p1.R = 1.0f;
+		p1.R = 0.75f;
+		p1.mass = 0.75f;
 
 		p2.cur_pos = math::vec3(18.0f, 5.0f, 18.0f);
 		p2.cur_vel = math::vec3(-1.0f, 0.0f, -1.0f);
 		p2.R = 1.0f;
+		p2.mass = 1.0f;
 
 		p3.cur_pos = math::vec3(16.0f, 5.0f, 4.0f);
 		p3.cur_vel = math::vec3(1.0f, 0.0f, 1.0f);
 		p3.R = 2.0f;
+		p3.mass = 2.0f;
 
 		S.set_particle_particle_collisions(true);
 		S.set_viscous_drag(0.0f);
@@ -144,7 +147,9 @@ namespace study_cases {
 
 		cout << "Simulation 106 description:" << endl;
 		cout << endl;
-		cout << "PENDING" << endl;
+		cout << "Three sized particles of different masses (0.75Kg, 1.0Kg and 2.0Kg)" << endl;
+		cout << "bounce within a quadrilateral. There is gravity. Each particle has a" << endl;
+		cout << "radius proportional to its mass." << endl;
 		cout << endl;
 	}
 
