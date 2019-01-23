@@ -142,19 +142,10 @@ bool simulator::find_update_geomcoll_free
 	return collision;
 }
 
-// Correct the position of a free particle
-// after colliding with a sized particle
-#define free_pos_correction													\
-	if (__physim_Sj.is_inside(coll_pred.cur_pos)) {							\
-		__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j].cur_pos);	\
-		float l = __pm3_norm(centre_particle);								\
-		__pm3_add_acc_vs													\
-		(coll_pred.cur_pos, centre_particle, sps[j].R*__pm_inv(l) + 0.001f);\
-	}
-
-// s1, s2: speed before collision
+/*
+// v1, v2: speed before collision
 static inline void update_particles_velocity
-(free_particle& in, free_particle& out, float s1, float s2)
+(float v1, float v2, free_particle& in, free_particle& out)
 {
 	// following the steps in
 	// https://www.atmos.illinois.edu/courses/atmos100/userdocs/3Dcollisions.html
@@ -201,14 +192,63 @@ static inline void update_particles_velocity
 	__pm3_add_v_v(in.cur_vel, c2, n1);
 	__pm3_add_v_v(out.cur_vel, c1, n2);
 
-	// 6. The new velocies must have
-	// the same norm as before
+	// 6. The new velocies must comply with the conservation
+	// of energy laws
+	float m1 = in.mass;
+	float m2 = out.mass;
+	float C1 = 0.5f*m1*v1*v1 + 0.5f*m2*v2*v2;
+	float C2 = m1*v1 + m2*v2;
+
+	cout << "---------------" << endl;
+	cout << "m1= " << m1 << endl;
+	cout << "v1= " << v1 << endl;
+	cout << "m2= " << m2 << endl;
+	cout << "v2= " << v2 << endl;
+	cout << "C1= " << C1 << endl;
+	cout << "C2= " << C2 << endl;
+
+	float alpha = m1*m1 + m1*m2;
+	float beta = -2.0f*C2*m1;
+	float gamma = C2*C2 - 2.0f*m2*C1;
+
+	float in_vel = (-beta + std::sqrt(beta*beta - 4.0f*alpha*gamma))/(2.0f*alpha);
+	float out_vel = (C2 - m1*in_vel)/(m2);
+
+	cout << "nv1= " << in_vel << endl;
+	cout << "nv2= " << out_vel << endl;
+
 	normalise(in.cur_vel, in.cur_vel);
 	normalise(out.cur_vel, out.cur_vel);
+	__pm3_assign_vs(in.cur_vel, in.cur_vel,in_vel);
+	__pm3_assign_vs(out.cur_vel, out.cur_vel,out_vel);
+}
+*/
 
-	// velocity correction (2/2)
-	__pm3_assign_vs(in.cur_vel, in.cur_vel,s1);
-	__pm3_assign_vs(out.cur_vel, out.cur_vel,s2);
+// v1, v2: velocities before collision
+static inline void update_particles_velocity
+(const vec3& v1, const vec3& v2, free_particle& in, free_particle& out)
+{
+	// use formula at:
+	// https://en.wikipedia.org/wiki/Elastic_collision#Two-dimensional_collision_with_two_moving_objects
+	vec3 v1v2;
+	__pm3_sub_v_v(v1v2, v1, v2);
+	vec3 v2v1;
+	__pm3_sub_v_v(v2v1, v2, v1);
+
+	vec3 p1p2;
+	__pm3_sub_v_v(p1p2, in.cur_pos, out.cur_pos);
+	vec3 p2p1;
+	__pm3_sub_v_v(p2p1, out.cur_pos, in.cur_pos);
+
+	float m1 = in.mass;
+	float m2 = out.mass;
+
+	float d2 = __pm3_dist2(in.cur_pos, out.cur_pos);
+	float C1 = 2.0f*m2*(__pm_inv(m1 + m2))*(__pm_inv(d2))*(__pm3_dot(v1v2, p1p2));
+	float C2 = 2.0f*m1*(__pm_inv(m1 + m2))*(__pm_inv(d2))*(__pm3_dot(v1v2, p1p2));
+
+	__pm3_sub_v_vs(in.cur_vel, v1, p1p2, C1);
+	__pm3_sub_v_vs(out.cur_vel, v2, p2p1, C2);
 }
 
 bool simulator::find_update_partcoll_free
@@ -221,9 +261,7 @@ bool simulator::find_update_partcoll_free
 	geometric::sphere __physim_Sj;
 	vec3 centre_particle;
 	bool collision = false;
-
-	// old speeds
-	float s1,s2;
+	vec3 v1,v2;
 
 	for (size_t j = 0; j < sps.size(); ++j) {
 
@@ -246,17 +284,20 @@ bool simulator::find_update_partcoll_free
 			// First, check whether the current position is inside
 			// the sphere. If so, change it to the closest point
 			// on the surface of the surface, plus some epsillon
-			free_pos_correction
+			if (__physim_Sj.is_inside(coll_pred.cur_pos)) {
+				__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j].cur_pos);
+				float l = __pm3_norm(centre_particle);
+				__pm3_add_acc_vs
+				(coll_pred.cur_pos, centre_particle, sps[j].R*__pm_inv(l) + 0.001f);
+			}
 
-			// velocity correction (1/2)
-			s1 = __pm3_norm(coll_pred.cur_vel);
-			s2 = __pm3_norm(sps[j].cur_vel);
+			__pm3_assign_v(v1, p.cur_vel);
+			__pm3_assign_v(v2, sps[j].cur_vel);
 
 			// the geometry updates the predicted particle
 			__physim_Sj.update_particle(pred_pos, pred_vel, coll_pred);
 
-			// velocity correction (2/2)
-			update_particles_velocity(coll_pred, sps[j], s1, s2);
+			update_particles_velocity(v1,v2, coll_pred, sps[j]);
 
 			if (solver == solver_type::Verlet) {
 				// this solver needs a correct position
@@ -294,17 +335,20 @@ bool simulator::find_update_partcoll_free
 			// First, check whether the current position is inside
 			// the sphere. If so, change it to the closest point
 			// on the surface of the surface, plus some epsillon
-			free_pos_correction
+			if (__physim_Sj.is_inside(coll_pred.cur_pos)) {
+				__pm3_sub_v_v(centre_particle, coll_pred.cur_pos, sps[j].cur_pos);
+				float l = __pm3_norm(centre_particle);
+				__pm3_add_acc_vs
+				(coll_pred.cur_pos, centre_particle, sps[j].R*__pm_inv(l) + 0.001f);
+			}
 
-			// velocity correction (1/2)
-			s1 = __pm3_norm(coll_pred.cur_vel);
-			s2 = __pm3_norm(aps[j].cur_vel);
+			v1 = __pm3_norm(p.cur_vel);
+			v2 = __pm3_norm(sps[j].cur_vel);
 
 			// the geometry updates the predicted particle
 			__physim_Sj.update_particle(pred_pos, pred_vel, coll_pred);
 
-			// velocity correction (2/2)
-			update_particles_velocity(coll_pred, sps[j], s1, s2);
+			update_particles_velocity(v1,v2, coll_pred, sps[j]);
 
 			if (solver == solver_type::Verlet) {
 				// this solver needs a correct position
@@ -454,7 +498,7 @@ static inline void update_particles_position
 void simulator::find_update_partcoll_sized
 (sized_particle& in, size_t i)
 {
-	float s1, s2;
+	vec3 v1,v2;
 
 	for (size_t j = i + 1; j < sps.size(); ++j) {
 
@@ -463,11 +507,11 @@ void simulator::find_update_partcoll_sized
 			// updating velocities
 			update_particles_position(in, sps[j]);
 
-			s1 = __pm3_norm(in.cur_vel);
-			s2 = __pm3_norm(sps[j].cur_vel);
+			__pm3_assign_v(v1, in.cur_vel);
+			__pm3_assign_v(v2, sps[j].cur_vel);
 
 			// collision between particle 'in' and particle 'j'
-			update_particles_velocity(in, sps[j], s1, s2);
+			update_particles_velocity(v1,v2, in, sps[j]);
 
 			// compute valid previous positions
 			// for Verlet solver
@@ -490,11 +534,11 @@ void simulator::find_update_partcoll_sized
 			// updating velocities
 			update_particles_position(in, aps[j]);
 
-			s1 = __pm3_norm(in.cur_vel);
-			s2 = __pm3_norm(aps[j].cur_vel);
+			__pm3_assign_v(v1, in.cur_vel);
+			__pm3_assign_v(v2, aps[j].cur_vel);
 
 			// collision between particle 'in' and particle 'j'
-			update_particles_velocity(in, aps[j], s1, s2);
+			update_particles_velocity(v1,v2, in, aps[j]);
 
 			// compute valid previous positions
 			// for Verlet solver
@@ -514,7 +558,7 @@ void simulator::find_update_partcoll_sized
 void simulator::find_update_partcoll_agent
 (agent_particle& in, size_t i)
 {
-	float s1,s2;
+	vec3 v1,v2;
 
 	// check collisions with sized particles
 	for (size_t j = 0; j < sps.size(); ++j) {
@@ -524,11 +568,11 @@ void simulator::find_update_partcoll_agent
 			// updating velocities
 			update_particles_position(in, sps[j]);
 
-			s1 = __pm3_norm(in.cur_vel);
-			s2 = __pm3_norm(sps[j].cur_vel);
+			__pm3_assign_v(v1, in.cur_vel);
+			__pm3_assign_v(v2, sps[j].cur_vel);
 
 			// collision between particle 'in' and particle 'j'
-			update_particles_velocity(in, sps[j], s1, s2);
+			update_particles_velocity(v1,v2, in, sps[j]);
 
 			// compute valid previous positions
 			// for Verlet solver
@@ -551,11 +595,11 @@ void simulator::find_update_partcoll_agent
 			// updating velocities
 			update_particles_position(in, aps[j]);
 
-			s1 = __pm3_norm(in.cur_vel);
-			s2 = __pm3_norm(aps[j].cur_vel);
+			__pm3_assign_v(v1, in.cur_vel);
+			__pm3_assign_v(v2, aps[j].cur_vel);
 
 			// collision between particle 'in' and particle 'j'
-			update_particles_velocity(in, aps[j], s1, s2);
+			update_particles_velocity(v1,v2, in, aps[j]);
 
 			// compute valid previous positions
 			// for Verlet solver
