@@ -237,7 +237,7 @@ void regular_keys_keyboard(unsigned char c, int x, int y) {
 	case '+': if (FPS < 60) { ++FPS; } break;
 	case '-': if (FPS > 1)  { --FPS; } break;
 	case 'w': draw_boxes_octree = not draw_boxes_octree; break;
-	case 'm':
+	case 'g':
 		record = not record;
 		if (record) {
 			cout << "Start recording!" << endl;
@@ -246,7 +246,7 @@ void regular_keys_keyboard(unsigned char c, int x, int y) {
 			cout << "STOP recording!" << endl;
 		}
 		break;
-	case 'b':
+	case 'x':
 		run = not run;
 		if (run) {
 			cout << "Start simulation!" << endl;
@@ -271,8 +271,8 @@ void help() {
 	cout << "    h: display the options available" << endl;
 	cout << "    +: increase FPS limit by one (up to at most 60)" << endl;
 	cout << "    -: decrease FPS limit by one (down to at least 1)" << endl;
-	cout << "    m: start/stop record video" << endl;
-	cout << "    b: start/stop simulation" << endl;
+	cout << "    g: start/stop record video" << endl;
+	cout << "    x: start/stop simulation" << endl;
 	cout << endl;
 	cout << "Parameters:" << endl;
 	cout << "    --dt t" << endl;

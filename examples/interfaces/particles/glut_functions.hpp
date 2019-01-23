@@ -26,36 +26,36 @@ using namespace glut_variables;
 
 namespace glut_functions {
 
-	/* -------------- */
-	/* glut functions */
+/* -------------- */
+/* glut functions */
 
-	void init_glut_variables();
-	void init_shaders();
-	void clear_shaders();
+void init_glut_variables();
+void init_shaders();
+void clear_shaders();
 
-	void clear_simulation();
-	void finish_simulation();
-	void parse_common_params(int argc, char *argv[]);
+void clear_simulation();
+void finish_simulation();
+void parse_common_params(int argc, char *argv[]);
 
-	/* scene rendering */
-	void shader_render();
-	void refresh();
-	void timed_refresh(int value);
+/* scene rendering */
+void shader_render();
+void refresh();
+void timed_refresh(int value);
 
-	/* window resizing */
-	void resize(int w,int h);
+/* window resizing */
+void resize(int w,int h);
 
-	/* event handling */
+/* event handling */
 
-	// mouse
-	void mouse_click_event(int b, int s, int x, int y);
-	void mouse_movement(int x, int y);
-	void mouse_drag_event(int x, int y);
-	// keyboard
-	void special_keys_keyboard(int key, int x, int y);
-	void regular_keys_keyboard(unsigned char c, int x, int y);
+// mouse
+void mouse_click_event(int b, int s, int x, int y);
+void mouse_movement(int x, int y);
+void mouse_drag_event(int x, int y);
+// keyboard
+void special_keys_keyboard(int key, int x, int y);
+void regular_keys_keyboard(unsigned char c, int x, int y);
 
-	/* help display */
-	void help();
+/* help display */
+void help();
 
 } // -- namespace glut_functions
