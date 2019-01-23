@@ -16,7 +16,8 @@ contains some OpenGL-based interactive applications implementing several simulat
     - The [fluids](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples/interfaces/fluids)
     interface allows the user to define a fluid by giving values to several parameters (density, fluidity, ...).
     Three different simulations have been prepared: one to simulate a droplet of a fluid, another to fill up a
-    small box, and another simulating a fluid falling on top of a money's head.
+    small box, and another simulating a fluid falling on top of a money's head. Some examples were recorded in
+    this [video](https://youtu.be/15qUi43HnmI).
 
 ## Compilation of the examples
 
