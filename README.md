@@ -14,6 +14,9 @@ and systems of particles, including:
 See the [examples](https://github.com/lluisalemanypuig/physics-simulator/tree/master/examples) directory to see
 how to use this library.
 
+Also, the [character-animation](https://github.com/lluisalemanypuig/character-animation/) project shows how to
+use this library for crowd simulation.
+
 ## Documentation
 
 The [docs](https://github.com/lluisalemanypuig/physics-simulator/tree/master/docs) contains the library's
